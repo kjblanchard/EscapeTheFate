@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using UnityEngine;
 using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.UI;
@@ -46,6 +47,8 @@ public class TTUI : MonoBehaviour
 
     [Header("My Hand Images")] [SerializeField]
     Image[] myHandCardImages;
+
+
 
 
     public void GeneratePages()

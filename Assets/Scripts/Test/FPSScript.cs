@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class fps : MonoBehaviour
+public class FPSScript : MonoBehaviour
 {
 
     private int AverageFPS;
@@ -72,3 +72,4 @@ public class fps : MonoBehaviour
     }
     
 }
+

@@ -90,15 +90,15 @@ public class TTCardSelectionProcessor : MonoBehaviour
         {
             StopCoroutine(_continuousCoroutineReference);
         }
-        else if (Input.GetKeyUp(KeyCode.A)|| (Input.GetButtonUp("right")))
+        else if (Input.GetKeyUp(KeyCode.A)|| (Input.GetButtonUp("left")))
         {
             StopCoroutine(_continuousCoroutineReference);
         }
-        else if (Input.GetKeyUp(KeyCode.W)|| (Input.GetButtonUp("right")))
+        else if (Input.GetKeyUp(KeyCode.W)|| (Input.GetButtonUp("up")))
         {
             StopCoroutine(_continuousCoroutineReference);
         }
-        else if (Input.GetKeyUp(KeyCode.S)|| (Input.GetButtonUp("right")))
+        else if (Input.GetKeyUp(KeyCode.S)|| (Input.GetButtonUp("down")))
         {
             StopCoroutine(_continuousCoroutineReference);
         }
@@ -117,15 +117,15 @@ public class TTCardSelectionProcessor : MonoBehaviour
         switch (whichWayToScroll)
         {
             case PageScrollDirections.GoingForward:
-
+                
                 canPageSwitch =ttLogic.CanISwitchPages(true,currentPageNumber);
-                if (canPageSwitch)
-                {
+                 if (canPageSwitch)
+                 {
                     StartCoroutine(ttUi.MoveForwardScrollAnimation(totalNumberOfPages));
                     MoveCursorToNextPage(true);
                     SoundManager.instance.PlaySFX(6);
 
-                }
+                 }
                 break;
             case PageScrollDirections.GoingBackward:
                 canPageSwitch = ttLogic.CanISwitchPages(false,currentPageNumber);
