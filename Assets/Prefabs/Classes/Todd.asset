@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c51e7b5862d7246ac84ee526f111f8, type: 3}
+  m_Name: Todd
+  m_EditorClassIdentifier: 
+  currentHP: 20
+  maxHP: 0000000014000000280000003c0000005000000064000000
+  currentMP: 10
+  maxMP: 000000000a000000140000001e0000002800000032000000
+  str: 00000000020000000400000006000000080000000a000000
+  def: 00000000020000000400000006000000080000000a000000
+  mag: 00000000020000000400000006000000080000000a000000
+  spr: 00000000020000000400000006000000080000000a000000
+  speed: 00000000020000000400000006000000080000000a000000
+  hit: 100
+  luck: 00000000020000000400000006000000080000000a000000
+  currentLevel: 2
+  maxLevel: 5
+  limitGuage: 10
+  currentEXP: 2
+  expToNextLevel: 00000000140000001e000000320000003c00000050000000
+  characterName: Todd
+  characterClass: Saiyan
+  characterBio: Goku Jr?
+  equippedWeapon: {fileID: 11400000, guid: 3ce1efd289f4c47758a26ba8a316d7b1, type: 2}
+  equippedArmor: {fileID: 11400000, guid: 21e023d27c0e24e1dbababfed3b38d24, type: 2}
+  equippedAccessory: {fileID: 11400000, guid: a628f7c293c354b3bb31335229670525, type: 2}
+  characterPortrait: {fileID: 21300000, guid: 33cc7511a40444b4e98a61a62d8ea17c, type: 3}
+  characterAnimation: {fileID: 21300002, guid: 83865de310c3c4445a6a9ea320bfe64f, type: 3}
+  characterWalkAnim: {fileID: 9100000, guid: 299005f3d1a64a14fa2bc647c8d90fb1, type: 2}
+  weaponEquippedMateria:
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: 15f05bf0effc740f99aefc5f36fcc5af, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  armorEquippedMateria:
+  - {fileID: 11400000, guid: 39a626a56dc744027af0863eb2110bc6, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  accEquippedMateria:
+  - {fileID: 11400000, guid: 15f05bf0effc740f99aefc5f36fcc5af, type: 2}
+  - {fileID: 11400000, guid: 15f05bf0effc740f99aefc5f36fcc5af, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  whoCanUse: 3

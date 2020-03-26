@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a6356c90de2d94a9f12cce69bf8475, type: 3}
+  m_Name: Shirt
+  m_EditorClassIdentifier: 
+  name: Shirt
+  itemID: 400
+  icon: {fileID: -4793004793065429146, guid: 24684e08d2b3d48479c48b59dc68e3a8, type: 3}
+  description: Kind of like armor
+  buyPrice: 1
+  sellPrice: 0
+  effect: Armor + 5 Mag Def + 5
+  useBy: 0
+  type: 3
+  power: 0
+  armor: 5
+  magicAttack: 0
+  magicDefense: 5
+  crit: 0
+  speed: 0
+  hit: 0
+  dodge: 0
+  numberOfSlots: 0
+  intNoOfSlots: 0

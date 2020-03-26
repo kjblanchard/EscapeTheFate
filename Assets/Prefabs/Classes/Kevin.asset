@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c51e7b5862d7246ac84ee526f111f8, type: 3}
+  m_Name: Kevin
+  m_EditorClassIdentifier: 
+  currentHP: 10
+  maxHP: 000000000a000000140000001e0000002800000032000000
+  currentMP: 5
+  maxMP: 00000000050000000a0000000f0000001400000019000000
+  str: 000000000100000002000000030000000400000005000000
+  def: 000000000100000002000000030000000400000005000000
+  mag: 000000000100000002000000030000000400000005000000
+  spr: 000000000100000002000000030000000400000005000000
+  speed: 000000000100000002000000030000000400000005000000
+  hit: 150
+  luck: 000000000100000002000000030000000400000005000000
+  currentLevel: 3
+  maxLevel: 5
+  limitGuage: 25
+  currentEXP: 5
+  expToNextLevel: 000000000a000000140000001e0000002800000032000000
+  characterName: Kevin
+  characterClass: The One
+  characterBio: Controls Surroundings
+  equippedWeapon: {fileID: 11400000, guid: c4a0c9505be374f5099cbc49f48b7476, type: 2}
+  equippedArmor: {fileID: 11400000, guid: 1a25227ee16b742a8b7fba996b55acea, type: 2}
+  equippedAccessory: {fileID: 11400000, guid: 7e719e061b80e48d8aecabc9d604d080, type: 2}
+  characterPortrait: {fileID: 21300000, guid: 0d592eac1eee2ef46a1a00578168b88c, type: 3}
+  characterAnimation: {fileID: 21300008, guid: dfdffd29ccb0a3241b390daed9d03658, type: 3}
+  characterWalkAnim: {fileID: 9100000, guid: f052e3680fd5ba54bbbe3c3d9649ed77, type: 2}
+  weaponEquippedMateria:
+  - {fileID: 11400000, guid: 15f05bf0effc740f99aefc5f36fcc5af, type: 2}
+  - {fileID: 11400000, guid: c4b176ecd559f4dc69994b10fb1e3bf4, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  armorEquippedMateria:
+  - {fileID: 11400000, guid: e6c91fbf1b81f47e5b1500094dcca8bf, type: 2}
+  - {fileID: 11400000, guid: 9af906ba0d8764071a0d7568ca802be8, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  accEquippedMateria:
+  - {fileID: 11400000, guid: 39a626a56dc744027af0863eb2110bc6, type: 2}
+  - {fileID: 11400000, guid: c4b176ecd559f4dc69994b10fb1e3bf4, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  whoCanUse: 2

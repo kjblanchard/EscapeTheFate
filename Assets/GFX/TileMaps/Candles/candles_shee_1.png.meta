@@ -1,0 +1,2294 @@
+fileFormatVersion: 2
+guid: 3896f3f8faa54fc4a8f03bd6ada9d384
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: candles_shee_1_0
+  - first:
+      213: 21300002
+    second: candles_shee_1_1
+  - first:
+      213: 21300004
+    second: candles_shee_1_2
+  - first:
+      213: 21300006
+    second: candles_shee_1_3
+  - first:
+      213: 21300008
+    second: candles_shee_1_4
+  - first:
+      213: 21300010
+    second: candles_shee_1_5
+  - first:
+      213: 21300012
+    second: candles_shee_1_6
+  - first:
+      213: 21300014
+    second: candles_shee_1_7
+  - first:
+      213: 21300016
+    second: candles_shee_1_8
+  - first:
+      213: 21300018
+    second: candles_shee_1_9
+  - first:
+      213: 21300020
+    second: candles_shee_1_10
+  - first:
+      213: 21300022
+    second: candles_shee_1_11
+  - first:
+      213: 21300024
+    second: candles_shee_1_12
+  - first:
+      213: 21300026
+    second: candles_shee_1_13
+  - first:
+      213: 21300028
+    second: candles_shee_1_14
+  - first:
+      213: 21300030
+    second: candles_shee_1_15
+  - first:
+      213: 21300032
+    second: candles_shee_1_16
+  - first:
+      213: 21300034
+    second: candles_shee_1_17
+  - first:
+      213: 21300036
+    second: candles_shee_1_18
+  - first:
+      213: 21300038
+    second: candles_shee_1_19
+  - first:
+      213: 21300040
+    second: candles_shee_1_20
+  - first:
+      213: 21300042
+    second: candles_shee_1_21
+  - first:
+      213: 21300044
+    second: candles_shee_1_22
+  - first:
+      213: 21300046
+    second: candles_shee_1_23
+  - first:
+      213: 21300048
+    second: candles_shee_1_24
+  - first:
+      213: 21300050
+    second: candles_shee_1_25
+  - first:
+      213: 21300052
+    second: candles_shee_1_26
+  - first:
+      213: 21300054
+    second: candles_shee_1_27
+  - first:
+      213: 21300056
+    second: candles_shee_1_28
+  - first:
+      213: 21300058
+    second: candles_shee_1_29
+  - first:
+      213: 21300060
+    second: candles_shee_1_30
+  - first:
+      213: 21300062
+    second: candles_shee_1_31
+  - first:
+      213: 21300064
+    second: candles_shee_1_32
+  - first:
+      213: 21300066
+    second: candles_shee_1_33
+  - first:
+      213: 21300068
+    second: candles_shee_1_34
+  - first:
+      213: 21300070
+    second: candles_shee_1_35
+  - first:
+      213: 21300072
+    second: candles_shee_1_36
+  - first:
+      213: 21300074
+    second: candles_shee_1_37
+  - first:
+      213: 21300076
+    second: candles_shee_1_38
+  - first:
+      213: 21300078
+    second: candles_shee_1_39
+  - first:
+      213: 21300080
+    second: candles_shee_1_40
+  - first:
+      213: 21300082
+    second: candles_shee_1_41
+  - first:
+      213: 21300084
+    second: candles_shee_1_42
+  - first:
+      213: 21300086
+    second: candles_shee_1_43
+  - first:
+      213: 21300088
+    second: candles_shee_1_44
+  - first:
+      213: 21300090
+    second: candles_shee_1_45
+  - first:
+      213: 21300092
+    second: candles_shee_1_46
+  - first:
+      213: 21300094
+    second: candles_shee_1_47
+  - first:
+      213: 21300096
+    second: candles_shee_1_48
+  - first:
+      213: 21300098
+    second: candles_shee_1_49
+  - first:
+      213: 21300100
+    second: candles_shee_1_50
+  - first:
+      213: 21300102
+    second: candles_shee_1_51
+  - first:
+      213: 21300104
+    second: candles_shee_1_52
+  - first:
+      213: 21300106
+    second: candles_shee_1_53
+  - first:
+      213: 21300108
+    second: candles_shee_1_54
+  - first:
+      213: 21300110
+    second: candles_shee_1_55
+  - first:
+      213: 21300112
+    second: candles_shee_1_56
+  - first:
+      213: 21300114
+    second: candles_shee_1_57
+  - first:
+      213: 21300116
+    second: candles_shee_1_58
+  - first:
+      213: 21300118
+    second: candles_shee_1_59
+  - first:
+      213: 21300120
+    second: candles_shee_1_60
+  - first:
+      213: 21300122
+    second: candles_shee_1_61
+  - first:
+      213: 21300124
+    second: candles_shee_1_62
+  - first:
+      213: 21300126
+    second: candles_shee_1_63
+  - first:
+      213: 21300128
+    second: candles_shee_1_64
+  - first:
+      213: 21300130
+    second: candles_shee_1_65
+  - first:
+      213: 21300132
+    second: candles_shee_1_66
+  - first:
+      213: 21300134
+    second: candles_shee_1_67
+  - first:
+      213: 21300136
+    second: candles_shee_1_68
+  - first:
+      213: 21300138
+    second: candles_shee_1_69
+  - first:
+      213: 21300140
+    second: candles_shee_1_70
+  - first:
+      213: 21300142
+    second: candles_shee_1_71
+  - first:
+      213: 21300144
+    second: candles_shee_1_72
+  - first:
+      213: 21300146
+    second: candles_shee_1_73
+  - first:
+      213: 21300148
+    second: candles_shee_1_74
+  - first:
+      213: 21300150
+    second: candles_shee_1_75
+  - first:
+      213: 21300152
+    second: candles_shee_1_76
+  - first:
+      213: 21300154
+    second: candles_shee_1_77
+  - first:
+      213: 21300156
+    second: candles_shee_1_78
+  - first:
+      213: 21300158
+    second: candles_shee_1_79
+  - first:
+      213: 21300160
+    second: candles_shee_1_80
+  - first:
+      213: 21300162
+    second: candles_shee_1_81
+  - first:
+      213: 21300164
+    second: candles_shee_1_82
+  - first:
+      213: 21300166
+    second: candles_shee_1_83
+  - first:
+      213: 21300168
+    second: candles_shee_1_84
+  - first:
+      213: 21300170
+    second: candles_shee_1_85
+  - first:
+      213: 21300172
+    second: candles_shee_1_86
+  - first:
+      213: 21300174
+    second: candles_shee_1_87
+  - first:
+      213: 21300176
+    second: candles_shee_1_88
+  - first:
+      213: 21300178
+    second: candles_shee_1_89
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 256
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: candles_shee_1_0
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 146
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1110b90b36038124f8012cb7a3144b0a
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_1
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 146
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ef4b716a6125e54d9917f61148ba02a
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_2
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 146
+        width: 5
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f84d7d1aadf4164fbb89bea25ce883c
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_3
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 144
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 745411706cb21f8408940bc4c7eb8be7
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_4
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 144
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e76701f385444b748ac3e710d439625c
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_5
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 144
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9af02da18d0b6934f9cbf8506b232b74
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_6
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 144
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e89b1ac714f9164c83c9ee979f199fe
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_7
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 144
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 50c7e9e92c6097f44b509a255e1beb1a
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_8
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 144
+        width: 7
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94e592b08c93d4943aee2fd07635cdfb
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_9
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 152
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 23137656e5ce4404283038579d12439a
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_10
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 151
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ab64b36c3e50fa49bb13806e1fa2135
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_11
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 151
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 02cc958fe055b9446b72a7a094ece820
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_12
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 126
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2574888bce9396d498760010ac62b463
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_13
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 126
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d233775ff65c0954cb5103bba402fca8
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_14
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 126
+        width: 5
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05ae37bc9fa29c54ab30a3ffe3bad44d
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_15
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 124
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 308acf16c02b6854a8835bfbe247377c
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_16
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 124
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e4338daef43fc24e870b64f1ed96bb0
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_17
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 124
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 724045923cc6a06438ecae711dc99fcd
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_18
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 124
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f18715b12e66f0409998af26e9e133d
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_19
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 124
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 651cc260afd879c42a107c1e0b89b2cf
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_20
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 124
+        width: 7
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaab7034e837ecb499a6c10c3a5b6a25
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_21
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 130
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1355f65349d8fbc49962a5c183e8acfc
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_22
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 129
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7692770e634c013428dfa2b54ca80fac
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_23
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 129
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4864d8fab920a904abb9dbb1414da99d
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_24
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 106
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ebf0b162ec481d47a751c7b89b0f2b6
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_25
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 106
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 892d5e022c20f664f81b66c137168f37
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_26
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 106
+        width: 5
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 633638857549a7748b95c43b06345588
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_27
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 104
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2f5d35346bf997848ace6059f32509c5
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_28
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 104
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d9bfbd99e98fe4a830c8122a3a4d9a
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_29
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 104
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ff51f8735840b874aa86d963b7b6aa9a
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_30
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 104
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00b00e2a14b69c34b88d768e4010b22d
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_31
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 104
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f14596844f42c214bbeff2b3909ffa45
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_32
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 104
+        width: 7
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51b84ba517f8b244aa17b087799a3495
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_33
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 108
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ae18d800b0f06ca4fa671d23ea338e2d
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_34
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 107
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6c2f93927dbbb141b4093058d1884d3
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_35
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 107
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c8d2e0f6303170b4db45876581d11538
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_36
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 86
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 110bfa0b9ba985343bc8033f84c252ba
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_37
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 86
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a444b4d54af04564a8f6489007eb23b2
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_38
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 86
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 98344e9f3c223d4438abd91a21f4c443
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_39
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 84
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc918bb41c08af8419f163fd63134562
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_40
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 84
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 720ea926837d487488251378276d3afd
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_41
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 84
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b2b76423e4da9b84886076acca641883
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_42
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 84
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 05adef596e7d7ac46bf43644a181b842
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_43
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 84
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2ff9bf361de6e9c4db826a6a10f4eb66
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_44
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 84
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89306d739021f954cb2d620c91ca405d
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_45
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 63
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 072896add88f34f42abec51e31608c91
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_46
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 63
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a8115f5225a93d24682acfe97af914d9
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_47
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 63
+        width: 5
+        height: 12
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83517e9bb898820478d3fb1b3e9e31bd
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_48
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 62
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1559291bcb0494248a73e808b55f1188
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_49
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 62
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4e5f4e412f9bb7f4d98df9418d84ccf8
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_50
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 62
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2932219e0bfec2b4eba8d4d7a1123d17
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_51
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 62
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f83ebb390f81514eb7aee361f133c54
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_52
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 62
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9735a3317eeb2494cb387a0e7f2b33e5
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_53
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 62
+        width: 7
+        height: 15
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaa252d9ab1ec634fa066885546ba6bb
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_54
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 72
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3d585fd13a832e14b943a82328a4b4bd
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_55
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 71
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e736fd98d0abf846bd7084f8e553538
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_56
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 71
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d6c911f8cd2e8d44974ad80c0e07daf
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_57
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 43
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df62f92a58bb43845a06ff8382316835
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_58
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 43
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e7779e1eb938f5c499b7245d1b37f4ff
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_59
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 43
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e1e0049969b0d1843aa1656438f84ebc
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_60
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 42
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 775975b2b51a0c84ea2d12f978083239
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_61
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 42
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 64837d7c43410964c855dffa3124f3a0
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_62
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 42
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1075bbee84db8574a9694553c40b492d
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_63
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 42
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82e19aa915d90734aaad50f49cf6f0da
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_64
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 42
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: be1fb66ffb4f52c4898bcd366ac282fa
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_65
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 42
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42f5af926b76ca04d8688fb33f7fc3f3
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_66
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 50
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8668b8849374eff4e9650d153e715114
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_67
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 49
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0bbf6b7f107842147b045da08ba97c11
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_68
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 49
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ab7bf0bf7087a3e46abdf3393cf9f7c0
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_69
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 23
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f1e0e81b6b8c40942bcb63092782ae58
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_70
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 23
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c6d0987d2e555f49a3338adb2474219
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_71
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 23
+        width: 5
+        height: 8
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 252e309886091e044adf44007527f2a1
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_72
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 22
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53f13bf544eccf542bb541a4ac6f0b26
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_73
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 22
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da54d7c6b2600b14c9e9ed57208d1eaa
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_74
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 22
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32a1d2a0da00da84fb79361973979d3b
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_75
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 22
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66fa26e2bf77e994186f316982604e2d
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_76
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 22
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f94fd395015fa941a80279b6ea26cdf
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_77
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 22
+        width: 7
+        height: 11
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ccc251cd80743d74483705805a306b42
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_78
+      rect:
+        serializedVersion: 2
+        x: 149
+        y: 28
+        width: 7
+        height: 7
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a429873f3393e8148a85aef5a2593b2b
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_79
+      rect:
+        serializedVersion: 2
+        x: 164
+        y: 27
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1d3a5200bb04e0b4da21e5167ff887ce
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_80
+      rect:
+        serializedVersion: 2
+        x: 180
+        y: 27
+        width: 9
+        height: 9
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 96622ba75901d78498e8d790bb1e3ddf
+      internalID: 21300160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_81
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 3
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0978f0305bd386449bdf817bb60c6179
+      internalID: 21300162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_82
+      rect:
+        serializedVersion: 2
+        x: 22
+        y: 3
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ea8bcf661958fd4fa57fe9043cadb62
+      internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_83
+      rect:
+        serializedVersion: 2
+        x: 38
+        y: 3
+        width: 5
+        height: 10
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cdc2d591f245b8f4c93c01596da37ac4
+      internalID: 21300166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_84
+      rect:
+        serializedVersion: 2
+        x: 53
+        y: 0
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2296270d1c3a96488605be3378d0b66
+      internalID: 21300168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_85
+      rect:
+        serializedVersion: 2
+        x: 69
+        y: 0
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bc315678145c2d44e94e2c08b2f5b998
+      internalID: 21300170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_86
+      rect:
+        serializedVersion: 2
+        x: 85
+        y: 0
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 38513efc429516443acb748ef5ed51e0
+      internalID: 21300172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_87
+      rect:
+        serializedVersion: 2
+        x: 101
+        y: 0
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 42ec83e3c3db88f42ac0a36699c9ee5b
+      internalID: 21300174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_88
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 0
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48cd81cfa58e31b43b2b3bc1c85559a9
+      internalID: 21300176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: candles_shee_1_89
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 0
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 007f8618439cb4d4f97e33ade8bbef4e
+      internalID: 21300178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 602b5e90b493b1542bb7715517701208
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

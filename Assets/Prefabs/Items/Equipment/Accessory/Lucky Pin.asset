@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a6356c90de2d94a9f12cce69bf8475, type: 3}
+  m_Name: Lucky Pin
+  m_EditorClassIdentifier: 
+  name: Lucky Pin
+  itemID: 302
+  icon: {fileID: 8942862329406757710, guid: 24684e08d2b3d48479c48b59dc68e3a8, type: 3}
+  description: RNG mode activated
+  buyPrice: 4000
+  sellPrice: 0
+  effect: Crit + 30, Dodge + 30, Hit -10
+  useBy: 0
+  type: 4
+  power: 0
+  armor: 0
+  magicAttack: 0
+  magicDefense: 0
+  crit: 30
+  speed: 0
+  hit: -10
+  dodge: 30
+  numberOfSlots: 9
+  intNoOfSlots: 4

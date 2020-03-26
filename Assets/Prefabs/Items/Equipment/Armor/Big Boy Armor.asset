@@ -1,0 +1,33 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40a6356c90de2d94a9f12cce69bf8475, type: 3}
+  m_Name: Big Boy Armor
+  m_EditorClassIdentifier: 
+  name: Big Boy Armor
+  itemID: 403
+  icon: {fileID: -8880449216016425374, guid: 24684e08d2b3d48479c48b59dc68e3a8, type: 3}
+  description: You just grew up
+  buyPrice: 9999
+  sellPrice: 0
+  effect: Armor + 40 Mag Def + 40
+  useBy: 0
+  type: 3
+  power: 0
+  armor: 40
+  magicAttack: 0
+  magicDefense: 40
+  crit: 0
+  speed: 0
+  hit: 0
+  dodge: 0
+  numberOfSlots: 35
+  intNoOfSlots: 8

@@ -1,0 +1,2438 @@
+fileFormatVersion: 2
+guid: 5c0fa6b3ff7405e4faab0ef9f232abb2
+TextureImporter:
+  internalIDToNameTable:
+  - first:
+      213: 21300000
+    second: magic_circles_1_0
+  - first:
+      213: 21300002
+    second: magic_circles_1_1
+  - first:
+      213: 21300004
+    second: magic_circles_1_2
+  - first:
+      213: 21300006
+    second: magic_circles_1_3
+  - first:
+      213: 21300008
+    second: magic_circles_1_4
+  - first:
+      213: 21300010
+    second: magic_circles_1_5
+  - first:
+      213: 21300012
+    second: magic_circles_1_6
+  - first:
+      213: 21300014
+    second: magic_circles_1_7
+  - first:
+      213: 21300016
+    second: magic_circles_1_8
+  - first:
+      213: 21300018
+    second: magic_circles_1_9
+  - first:
+      213: 21300020
+    second: magic_circles_1_10
+  - first:
+      213: 21300022
+    second: magic_circles_1_11
+  - first:
+      213: 21300024
+    second: magic_circles_1_12
+  - first:
+      213: 21300026
+    second: magic_circles_1_13
+  - first:
+      213: 21300028
+    second: magic_circles_1_14
+  - first:
+      213: 21300030
+    second: magic_circles_1_15
+  - first:
+      213: 21300032
+    second: magic_circles_1_16
+  - first:
+      213: 21300034
+    second: magic_circles_1_17
+  - first:
+      213: 21300036
+    second: magic_circles_1_18
+  - first:
+      213: 21300038
+    second: magic_circles_1_19
+  - first:
+      213: 21300040
+    second: magic_circles_1_20
+  - first:
+      213: 21300042
+    second: magic_circles_1_21
+  - first:
+      213: 21300044
+    second: magic_circles_1_22
+  - first:
+      213: 21300046
+    second: magic_circles_1_23
+  - first:
+      213: 21300048
+    second: magic_circles_1_24
+  - first:
+      213: 21300050
+    second: magic_circles_1_25
+  - first:
+      213: 21300052
+    second: magic_circles_1_26
+  - first:
+      213: 21300054
+    second: magic_circles_1_27
+  - first:
+      213: 21300056
+    second: magic_circles_1_28
+  - first:
+      213: 21300058
+    second: magic_circles_1_29
+  - first:
+      213: 21300060
+    second: magic_circles_1_30
+  - first:
+      213: 21300062
+    second: magic_circles_1_31
+  - first:
+      213: 21300064
+    second: magic_circles_1_32
+  - first:
+      213: 21300066
+    second: magic_circles_1_33
+  - first:
+      213: 21300068
+    second: magic_circles_1_34
+  - first:
+      213: 21300070
+    second: magic_circles_1_35
+  - first:
+      213: 21300072
+    second: magic_circles_1_36
+  - first:
+      213: 21300074
+    second: magic_circles_1_37
+  - first:
+      213: 21300076
+    second: magic_circles_1_38
+  - first:
+      213: 21300078
+    second: magic_circles_1_39
+  - first:
+      213: 21300080
+    second: magic_circles_1_40
+  - first:
+      213: 21300082
+    second: magic_circles_1_41
+  - first:
+      213: 21300084
+    second: magic_circles_1_42
+  - first:
+      213: 21300086
+    second: magic_circles_1_43
+  - first:
+      213: 21300088
+    second: magic_circles_1_44
+  - first:
+      213: 21300090
+    second: magic_circles_1_45
+  - first:
+      213: 21300092
+    second: magic_circles_1_46
+  - first:
+      213: 21300094
+    second: magic_circles_1_47
+  - first:
+      213: 21300096
+    second: magic_circles_1_48
+  - first:
+      213: 21300098
+    second: magic_circles_1_49
+  - first:
+      213: 21300100
+    second: magic_circles_1_50
+  - first:
+      213: 21300102
+    second: magic_circles_1_51
+  - first:
+      213: 21300104
+    second: magic_circles_1_52
+  - first:
+      213: 21300106
+    second: magic_circles_1_53
+  - first:
+      213: 21300108
+    second: magic_circles_1_54
+  - first:
+      213: 21300110
+    second: magic_circles_1_55
+  - first:
+      213: 21300112
+    second: magic_circles_1_56
+  - first:
+      213: 21300114
+    second: magic_circles_1_57
+  - first:
+      213: 21300116
+    second: magic_circles_1_58
+  - first:
+      213: 21300118
+    second: magic_circles_1_59
+  - first:
+      213: 21300120
+    second: magic_circles_1_60
+  - first:
+      213: 21300122
+    second: magic_circles_1_61
+  - first:
+      213: 21300124
+    second: magic_circles_1_62
+  - first:
+      213: 21300126
+    second: magic_circles_1_63
+  - first:
+      213: 21300128
+    second: magic_circles_1_64
+  - first:
+      213: 21300130
+    second: magic_circles_1_65
+  - first:
+      213: 21300132
+    second: magic_circles_1_66
+  - first:
+      213: 21300134
+    second: magic_circles_1_67
+  - first:
+      213: 21300136
+    second: magic_circles_1_68
+  - first:
+      213: 21300138
+    second: magic_circles_1_69
+  - first:
+      213: 21300140
+    second: magic_circles_1_70
+  - first:
+      213: 21300142
+    second: magic_circles_1_71
+  - first:
+      213: 21300144
+    second: magic_circles_1_72
+  - first:
+      213: 21300146
+    second: magic_circles_1_73
+  - first:
+      213: 21300148
+    second: magic_circles_1_74
+  - first:
+      213: 21300150
+    second: magic_circles_1_75
+  - first:
+      213: 21300152
+    second: magic_circles_1_76
+  - first:
+      213: 21300154
+    second: magic_circles_1_77
+  - first:
+      213: 21300156
+    second: magic_circles_1_78
+  - first:
+      213: 21300158
+    second: magic_circles_1_79
+  - first:
+      213: 21300160
+    second: magic_circles_1_80
+  - first:
+      213: 21300162
+    second: magic_circles_1_81
+  - first:
+      213: 21300164
+    second: magic_circles_1_82
+  - first:
+      213: 21300166
+    second: magic_circles_1_83
+  - first:
+      213: 21300168
+    second: magic_circles_1_84
+  - first:
+      213: 21300170
+    second: magic_circles_1_85
+  - first:
+      213: 21300172
+    second: magic_circles_1_86
+  - first:
+      213: 21300174
+    second: magic_circles_1_87
+  - first:
+      213: 21300176
+    second: magic_circles_1_88
+  - first:
+      213: 21300178
+    second: magic_circles_1_89
+  - first:
+      213: 21300180
+    second: magic_circles_1_90
+  - first:
+      213: 21300182
+    second: magic_circles_1_91
+  - first:
+      213: 21300184
+    second: magic_circles_1_92
+  - first:
+      213: 21300186
+    second: magic_circles_1_93
+  - first:
+      213: 21300188
+    second: magic_circles_1_94
+  - first:
+      213: 21300190
+    second: magic_circles_1_95
+  externalObjects: {}
+  serializedVersion: 10
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: -1
+    mipBias: -100
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - serializedVersion: 2
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: iPhone
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Android
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: WebGL
+    maxTextureSize: 512
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 0
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: magic_circles_1_0
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 282
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c566bf9ca10adb43ad8e4be07f529e1
+      internalID: 21300000
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_1
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 282
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf0e11211244a0748a6c44eed735974a
+      internalID: 21300002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_2
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 282
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aa42baa6aef279043bb5a73fa0972355
+      internalID: 21300004
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_3
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11eb89ad8ddc9b640995c5c80886940d
+      internalID: 21300006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_4
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c819a50682c36d40941ae297c945948
+      internalID: 21300008
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_5
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 180cf82860cd6f8418885d26eb944e69
+      internalID: 21300010
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_6
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbc3f76b759f13b42b3d41fed50dcaa6
+      internalID: 21300012
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_7
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a7ecdb6c1b991c438604c1e4691b5da
+      internalID: 21300014
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_8
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 038eb0aa14148214b81125e3bfdd41e3
+      internalID: 21300016
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_9
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e93e9cb811de0604c91cad8cd4553cf8
+      internalID: 21300018
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_10
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e61c9129e19b6744996fa0a5cb54b5e0
+      internalID: 21300020
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_11
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 283
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f1e884abd6f2814aa4630588cdff2a6
+      internalID: 21300022
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_12
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 242
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d229d9d553a46334e94e3a8d6e2f7d53
+      internalID: 21300024
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_13
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 242
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8249ca6de2ef1c1429122771de9ee3c8
+      internalID: 21300026
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_14
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 242
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cda1f52e69738a1469f795411ac99f11
+      internalID: 21300028
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_15
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46198a05a4622cc4eb24bdc38aa8f928
+      internalID: 21300030
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_16
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fce2d536df917a84f85a745bf90dfe4b
+      internalID: 21300032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_17
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 13a5c8b7c6d2e5d489041f36868ba273
+      internalID: 21300034
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_18
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 10dec14d8bd96c742b58ec06b72654c8
+      internalID: 21300036
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_19
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a4de8064874959408c9c62113037d5b
+      internalID: 21300038
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_20
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7fd7be31ffb2c6f4da94bd95888c918a
+      internalID: 21300040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_21
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5b97d1126b63fd489e75e5e60bc82f5
+      internalID: 21300042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_22
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b78b4b99293d1e47839f01e759746e2
+      internalID: 21300044
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_23
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 243
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f9d0c54c948bc246b8d1a030ebd4da7
+      internalID: 21300046
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_24
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 202
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3471b0121deda447b6834814f806382
+      internalID: 21300048
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_25
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 202
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c547a2a75982773429831d4091c662e6
+      internalID: 21300050
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_26
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 202
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d504e8d4650992944bc38321c475269b
+      internalID: 21300052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_27
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9da36604984a85a48bd24166d1a65d96
+      internalID: 21300054
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_28
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b9a4fa3a0543da54aab535763b219014
+      internalID: 21300056
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_29
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e302021d30a65b842b29dec1fd97fd3d
+      internalID: 21300058
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_30
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d0d544b18a52df74e9eb6ee58fd18b5c
+      internalID: 21300060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_31
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b0fa17039074be4eb68cbfb8b7c1e83
+      internalID: 21300062
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_32
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c847f7f11a8a714d8bc008967a08e00
+      internalID: 21300064
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_33
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e87bb7b5a4a52b64ca7b9ed981c0e2cc
+      internalID: 21300066
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_34
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 11919f38bf22de442a4db20de42aec6f
+      internalID: 21300068
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_35
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 203
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77d05a1f0a49b5040975b0f3a895f1c1
+      internalID: 21300070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_36
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 162
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 63892466eab952640bd9d12f9e9e28df
+      internalID: 21300072
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_37
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 162
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a9234b1ecf16e8b4e8032d85900cc46f
+      internalID: 21300074
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_38
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 162
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e8747ff368dac44eb1a24b359a56664
+      internalID: 21300076
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_39
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c5f4e0d4349fa84a96f6691d0b2a9b8
+      internalID: 21300078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_40
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f3e47162510f66341a737fdf6083b3b5
+      internalID: 21300080
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_41
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 73034b0ed590b424d9c7e373d3067bbd
+      internalID: 21300082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_42
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4dd1dd4ab9893fe4f921d4e17ebd6760
+      internalID: 21300084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_43
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6570ded33bc95a44a95f9f9e4c1ca77b
+      internalID: 21300086
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_44
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 31c7340c7904bb447865f677723f73be
+      internalID: 21300088
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_45
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 71efb500078aa0e43a978e56556666be
+      internalID: 21300090
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_46
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7f4273b510fe8f84cb80a17fc7714c2f
+      internalID: 21300092
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_47
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 163
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e49dc77c7befadd4cb339ddd610e0cb8
+      internalID: 21300094
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_48
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 122
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bb011974c05a0f74db074c4463a80beb
+      internalID: 21300096
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_49
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 122
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8d38cce3d6f93f499da65b8939008bb
+      internalID: 21300098
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_50
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 122
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6108e852796dbb449961c1c387f800f1
+      internalID: 21300100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_51
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 883c3653a906e2b4ea520f3db2c2fa9b
+      internalID: 21300102
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_52
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c83464e06d7a5247b2545fdc35ed95f
+      internalID: 21300104
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_53
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 216bc487d9a671a4cb18b7cdd8b4c0b5
+      internalID: 21300106
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_54
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e26a0aea7e3764e4da1118e05f80357a
+      internalID: 21300108
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_55
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ef0bb81cda4acb4f879f0c788e5b3b5
+      internalID: 21300110
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_56
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d24f307661b1b8941a7ad09366791b60
+      internalID: 21300112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_57
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a43c946415ed6c64e8c794f4af908142
+      internalID: 21300114
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_58
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a3f58d8afacd85242857d39d1dbcb14e
+      internalID: 21300116
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_59
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 123
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bf00158d414dbde4da127090e45a8bd3
+      internalID: 21300118
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_60
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 82
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b50a5a8ccaa7afa43b0ff86a4d7fb6d8
+      internalID: 21300120
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_61
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 82
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79bd0abbbb4c9f24e9ec652819ccd4f5
+      internalID: 21300122
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_62
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 82
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b25d4d45195f0040bfc072e683d697b
+      internalID: 21300124
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_63
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c1dcccb5d09a38942b23e3531019bcab
+      internalID: 21300126
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_64
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: feb1d88bc5f320949ad847510ec6c3a0
+      internalID: 21300128
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_65
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4d350c063f65d3842905bc2816e29372
+      internalID: 21300130
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_66
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1e3294f716c233147b224f9ca2c69dc2
+      internalID: 21300132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_67
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a006e3757cab9304d980a98021948227
+      internalID: 21300134
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_68
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4c7f8288c7310e84c9a7289eadecab51
+      internalID: 21300136
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_69
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43308fb7fde6c1540bf94f94e67dd23c
+      internalID: 21300138
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_70
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0505fff1e9f4a5e4c97713a876d49be3
+      internalID: 21300140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_71
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 83
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3836778b3e9888744bbf21cdbbf34690
+      internalID: 21300142
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_72
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 42
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 784f1d61b01571d418a31ab2d1124d71
+      internalID: 21300144
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_73
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 42
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0d410d865bc725b438d1efcf71149b43
+      internalID: 21300146
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_74
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 42
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 423f13ec77c09da45a8619bafb47ddb1
+      internalID: 21300148
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_75
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a094bd6775bf373439561499025c8192
+      internalID: 21300150
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_76
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e04e48d7b806f9d46a1eaa74da001cef
+      internalID: 21300152
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_77
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 43fdd4665ec5d91449fd201940c81483
+      internalID: 21300154
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_78
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0ce9323e7913304f8a38ef7e3f640d5
+      internalID: 21300156
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_79
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7c2ae665402ce83479e7c9d41654a0a2
+      internalID: 21300158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_80
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 644596b63c4a0004588354f2cce0aa56
+      internalID: 21300160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_81
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2640f6ca31f9e2e42a9d25c960f2f218
+      internalID: 21300162
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_82
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4993ac80ce2c5aa45a8ab592419e6bdd
+      internalID: 21300164
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_83
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 43
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3b83b20069c64b458256e84062a9c09
+      internalID: 21300166
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_84
+      rect:
+        serializedVersion: 2
+        x: 2
+        y: 2
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3610791eac66f9749b21fa6f718e7e28
+      internalID: 21300168
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_85
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 2
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8d771cf7ba438114886a7c8e1484d695
+      internalID: 21300170
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_86
+      rect:
+        serializedVersion: 2
+        x: 82
+        y: 2
+        width: 36
+        height: 34
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 32485b430b930894ab2b9a9edeca274d
+      internalID: 21300172
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_87
+      rect:
+        serializedVersion: 2
+        x: 123
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 149f6eeedbc0d0047b35e30ded241eca
+      internalID: 21300174
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_88
+      rect:
+        serializedVersion: 2
+        x: 163
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20029e2d87f2e39498de53412095943d
+      internalID: 21300176
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_89
+      rect:
+        serializedVersion: 2
+        x: 203
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f95e288a9b4674545ac152eee310b3db
+      internalID: 21300178
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_90
+      rect:
+        serializedVersion: 2
+        x: 244
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 07dc5927bdf97bd43afc1c5c4789baee
+      internalID: 21300180
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_91
+      rect:
+        serializedVersion: 2
+        x: 284
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ad9b1a3e9c393c4997fa492bdf79a4b
+      internalID: 21300182
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_92
+      rect:
+        serializedVersion: 2
+        x: 324
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b05c07393ca851d498f0cb2169ca6b98
+      internalID: 21300184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_93
+      rect:
+        serializedVersion: 2
+        x: 364
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 459b4d760725b9845a1c6af3c1a285a4
+      internalID: 21300186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_94
+      rect:
+        serializedVersion: 2
+        x: 404
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88623aeead88bc448b64786a05e0e26e
+      internalID: 21300188
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: magic_circles_1_95
+      rect:
+        serializedVersion: 2
+        x: 444
+        y: 3
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 298e3f00f6a4a1b4faffe4602f7b5715
+      internalID: 21300190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: a299ed75a47eb144aac8f5781e510fab
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

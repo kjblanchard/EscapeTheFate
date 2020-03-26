@@ -1,0 +1,67 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 25c51e7b5862d7246ac84ee526f111f8, type: 3}
+  m_Name: Tabby
+  m_EditorClassIdentifier: 
+  currentHP: 7
+  maxHP: 00000000140000001e00000028000000320000003c000000
+  currentMP: 20
+  maxMP: 00000000140000001e00000028000000320000003c000000
+  str: 00000000140000001e00000028000000320000003c000000
+  def: 00000000140000001e00000028000000320000003c000000
+  mag: 00000000140000001e00000028000000320000003c000000
+  spr: 00000000140000001e00000028000000320000003c000000
+  speed: 00000000140000001e00000028000000320000003c000000
+  hit: 0
+  luck: 00000000140000001e00000028000000320000003c000000
+  currentLevel: 3
+  maxLevel: 5
+  limitGuage: 100
+  currentEXP: 20
+  expToNextLevel: 0000000064000000c80000002c01000090010000f4010000
+  characterName: Tabby
+  characterClass: Oracle
+  characterBio: Controls Surroundings
+  equippedWeapon: {fileID: 11400000, guid: c8a48b029b67e458a8954553156ee00c, type: 2}
+  equippedArmor: {fileID: 11400000, guid: 25f9d8bbf47af5c4992f3f596646fd05, type: 2}
+  equippedAccessory: {fileID: 11400000, guid: fae2f108c1ef00e42908fde046ce64dd, type: 2}
+  characterPortrait: {fileID: 21300000, guid: d557be081c994ac4f82af716ab0369a6, type: 3}
+  characterAnimation: {fileID: 21300104, guid: 83865de310c3c4445a6a9ea320bfe64f, type: 3}
+  characterWalkAnim: {fileID: 0}
+  weaponEquippedMateria:
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  armorEquippedMateria:
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  accEquippedMateria:
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  - {fileID: 11400000, guid: a68c070f9aba84bd2b54feee531d9858, type: 2}
+  whoCanUse: 0

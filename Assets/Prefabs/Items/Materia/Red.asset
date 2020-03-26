@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce9829175ee34264a3af4b993d1adcf, type: 3}
+  m_Name: Red
+  m_EditorClassIdentifier: 
+  name: Red
+  itemID: 805
+  icon: {fileID: 7086230649586348361, guid: 96171fa2b217748549ddb6a6504fbf63, type: 3}
+  description: 
+  effect: 
+  useBy: 2
+  type: 5
+  currentLevel: 0
+  maxLevel: 2
+  currentAP: 33
+  apToLevel: e8030000d0070000b80b0000b80b0000
+  skillNames:
+  - Red
+  - Red II
+  - Red III
+  - Red III
+  skillDescriptions:
+  - Getting Strong
+  - Super
+  - Super Saiyan
+  - Super Saiyan
+  bonusStats: []
+  materiaType: 0

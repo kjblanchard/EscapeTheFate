@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1c24628d1b065e469f0b4e5f5628ad4, type: 3}
+  m_Name: Fast Eddie
+  m_EditorClassIdentifier: 
+  name: Fast Eddie
+  itemID: 0
+  icon: {fileID: 21300420, guid: 69fb500e2e2a66744a9c0806a8be191f, type: 3}
+  description: No one knows its importance!  Large.  Fast
+  slots: 0
+  effect: 
+  useBy: 0
+  type: 1
+  hpAmount: 10
+  mpAmount: 0

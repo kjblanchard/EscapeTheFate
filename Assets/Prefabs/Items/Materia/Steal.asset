@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1ce9829175ee34264a3af4b993d1adcf, type: 3}
+  m_Name: Steal
+  m_EditorClassIdentifier: 
+  name: Steal
+  itemID: 804
+  icon: {fileID: 4327003322401655189, guid: 96171fa2b217748549ddb6a6504fbf63, type: 3}
+  description: 
+  effect: 
+  useBy: 0
+  type: 5
+  currentLevel: 1
+  maxLevel: 3
+  currentAP: 22
+  apToLevel: 64000000c80000002c01000090010000
+  skillNames:
+  - Steal I
+  - Steal II
+  - Mug
+  - Super Mug
+  skillDescriptions:
+  - 50% Effective
+  - 100% Effective
+  - 50% Mug
+  - 100% Mug
+  bonusStats: []
+  materiaType: 2
