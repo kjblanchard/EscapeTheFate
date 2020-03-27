@@ -58,5 +58,5 @@ public partial class TTDB
           currentEnemyHandList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
         }
     }
-    
+    //temp
 }
