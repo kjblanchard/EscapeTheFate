@@ -107,8 +107,20 @@ public class TTCardSelectionProcessor : MonoBehaviour
 
     }
 
-
-
+    public void InitializeCardSelectionFromRulesScreen()
+    {//initializes the cardselectionscreen from the main screen
+        ttUi.ResetScrollRectPosition();
+        ttUi.GeneratePages();
+        CardInventory.instance.CreateUsableBattleCardLists();//this only needs to be ran once, it generates all of the lists for card usage
+        ttDb.BringInUsableBattleCards();
+        ttUi.InitializeUiFromTtBattleList();
+        currentPageNumber = 1;
+        ttUi.UpdatePageNum(currentPageNumber);
+        currentSpotInCardInventory = 0;
+        fingerLocationOnCurrentPage = 0;
+        ttUi.UpdateCardDisplayUI(0);
+        ttDb.ClearBattleSelectionsList();
+    }
     private void ChangePage(PageScrollDirections whichWayToScroll)
     {//uses ttlogic to figure out if you can page switch, and if you can then move the cursor and start the animation and sound
         bool canPageSwitch;
@@ -122,7 +134,7 @@ public class TTCardSelectionProcessor : MonoBehaviour
                  if (canPageSwitch)
                  {
                     StartCoroutine(ttUi.MoveForwardScrollAnimation(totalNumberOfPages));
-                    MoveCursorToNextPage(true);
+                    MoveCursorToNextPage(whichWayToScroll);
                     SoundManager.instance.PlaySFX(6);
 
                  }
@@ -132,7 +144,7 @@ public class TTCardSelectionProcessor : MonoBehaviour
                 if (canPageSwitch)
                 {
                     StartCoroutine(ttUi.MoveBackwardScrollAnimation(totalNumberOfPages));
-                    MoveCursorToNextPage(false);
+                    MoveCursorToNextPage(whichWayToScroll);
                     SoundManager.instance.PlaySFX(6);
                 }
                 break;
@@ -140,22 +152,6 @@ public class TTCardSelectionProcessor : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(whichWayToScroll), whichWayToScroll, null);
         }
     }
-
-    public void InitializeBattleCardAlbum()
-    {
-        ttUi.ResetScrollRectPosition();
-        ttUi.GeneratePages();
-        ttDb.BringInUsableBattleCards();
-        ttUi.InitializeUiFromTtBattleList();
-        currentPageNumber = 1;
-        ttUi.UpdatePageNum(currentPageNumber);
-        currentSpotInCardInventory = 0;
-        fingerLocationOnCurrentPage = 0;
-        ttUi.UpdateCardDisplayUI(0);
-        ttDb.ClearBattleSelectionsList();
-    }
-
-
     private void MoveCursorUpDownInMenu(WhichScrollDirection whichWayToScroll)
     {
         bool canScroll;
@@ -165,7 +161,7 @@ public class TTCardSelectionProcessor : MonoBehaviour
                 canScroll = ttLogic.CanIScrollOnCardSelect(true, currentPageNumber);
                 if (!canScroll) return;
                 var isGoingToLoopInMenu =
-                    ttLogic.AreYouGoingToLoopInCardConfirm(fingerLocationOnCurrentPage, currentPageNumber,
+                    ttLogic.AreYouGoingToLoopInCardSelection(fingerLocationOnCurrentPage, currentPageNumber,
                         whichWayToScroll);
                 if (isGoingToLoopInMenu)
                 {
@@ -235,34 +231,39 @@ public class TTCardSelectionProcessor : MonoBehaviour
 
     }
 
-    private void MoveCursorToNextPage(bool isIncrementing)
+    private void MoveCursorToNextPage(PageScrollDirections scrollDirection)
     {
-        if (isIncrementing)
+        switch (scrollDirection)
         {
-            currentPageNumber++;
-            ttUi.UpdatePageNum(currentPageNumber);
-            currentSpotInCardInventory = currentSpotInCardInventory + 10;
-            if (currentSpotInCardInventory < ttDb.RetrieveTotalNumberOfBattleCards())
-            {
-                ttUi.UpdateCardDisplayUI(currentSpotInCardInventory);
-            }
-            else
-            { //this will bounce your cursor up
-                fingerLocationOnCurrentPage = ttUi.listOfPages[currentPageNumber - 1].currentActiveCardsOnPage - 1;
-                currentSpotInCardInventory = ttDb.RetrieveTotalNumberOfBattleCards() - 1;
-                ttUi.UpdateCardDisplayUI(currentSpotInCardInventory);
+            case PageScrollDirections.GoingForward:
+                currentPageNumber++;
+                ttUi.UpdatePageNum(currentPageNumber);
+                currentSpotInCardInventory = currentSpotInCardInventory + 10;
+                if (currentSpotInCardInventory < ttDb.RetrieveTotalNumberOfBattleCards())
+                {
+                    ttUi.UpdateCardDisplayUI(currentSpotInCardInventory);
+                }
+                else
+                {
+                    BounceCursorUpOnPageMove();
+                }
 
-            }
-        }
-        else
-        {
-            currentPageNumber--;
-            ttUi.UpdatePageNum(currentPageNumber);
-            currentSpotInCardInventory = currentSpotInCardInventory - 10;
-            ttUi.UpdateCardDisplayUI(currentSpotInCardInventory);
+                break;
+            case PageScrollDirections.GoingBackward:
+                currentPageNumber--;
+                ttUi.UpdatePageNum(currentPageNumber);
+                currentSpotInCardInventory = currentSpotInCardInventory - 10;
+                ttUi.UpdateCardDisplayUI(currentSpotInCardInventory);
+                break;
         }
     }
 
+    private void BounceCursorUpOnPageMove()
+    {
+        fingerLocationOnCurrentPage = ttUi.listOfPages[currentPageNumber - 1].currentActiveCardsOnPage - 1;
+        currentSpotInCardInventory = ttDb.RetrieveTotalNumberOfBattleCards() - 1;
+        ttUi.UpdateCardDisplayUI(currentSpotInCardInventory);
+    }
 
 
     private IEnumerator ScrollContinuously(WhichScrollDirection scrollDirection)
@@ -292,32 +293,27 @@ public class TTCardSelectionProcessor : MonoBehaviour
         while (true)
         {
             ChangePage(whichWayToScroll);
-            yield return new WaitForSeconds(autoScrollSpeed*.75f);
+            yield return new WaitForSeconds(autoScrollSpeed * .75f);
         }
         // ReSharper disable once IteratorNeverReturns
     }
 
-    // public void UpdateCursorInUI()
-    // {
-    //     ttUi.KeepFingerOnProperLocationInCardSelection(currentPageNumber, fingerLocationOnCurrentPage);;
-    // }
-
     private void CardSelection(int cardToSelect)
     {
         if (!ttLogic.CanSelectCardInCardSelection(cardToSelect)) {SoundManager.instance.PlaySFX(3); return;}
-        ttUi.UpdateMyHandImage(ttDb.currentCardSelectionsList.Count, cardToSelect);
-        ttUi.PlayMyHandAnimation(ttDb.currentCardSelectionsList.Count);
+        ttUi.UpdateMyHandImage(ttDb.currentHandSelectionsList.Count, cardToSelect);
+        ttUi.PlayMyHandAnimation(ttDb.currentHandSelectionsList.Count);
         AddChoiceToCardSelectionList(cardToSelect);
         ModifyCardQuantity(ModifyingCardQuantity.IsAddingCard);
         SoundManager.instance.PlaySFX(6);
-        if (ttDb.currentCardSelectionsList.Count == 5)
+        if (ttDb.currentHandSelectionsList.Count == 5)
         {
             TripleTriadManager.instance.ChangeToCardConfirmGameState();
         }
     }
 
     private void ModifyCardQuantity(ModifyingCardQuantity whatToDoWithQuantity)
-    {
+    {//used to modify the card select quantity in screen and in the db
         switch (whatToDoWithQuantity)
         {
             case ModifyingCardQuantity.IsAddingCard:
@@ -337,37 +333,35 @@ public class TTCardSelectionProcessor : MonoBehaviour
 
                 break;
             case ModifyingCardQuantity.IsRemovingCard:
-                var spotInSelectionsListToCheck = ttDb.currentCardSelectionsList.Count - 1;
+                var spotInSelectionsListToCheck = ttDb.currentHandSelectionsList.Count - 1;
                 ttDb.currentBattleQuantityForCards[
-                    ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].spotInCardInv]++;
+                    ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotInCardInv]++;
                 ttUi.UpdateQuantityAfterSelecting(
-                    ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].pageNum,
-                    ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].spotOnPage,
-                    ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].spotInCardInv);
+                    ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].pageNum,
+                    ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotOnPage,
+                    ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotInCardInv);
                 ttUi.UpdateColorOfCardSelectionText(
                     ttDb.currentBattleQuantityForCards[
-                        ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].spotInCardInv],
-                    ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].pageNum,
-                    ttDb.currentCardSelectionsList[spotInSelectionsListToCheck].spotOnPage);
+                        ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotInCardInv],
+                    ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].pageNum,
+                    ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotOnPage);
                 break;
         }
     }
 
     private void AddChoiceToCardSelectionList(int cardToSelect)
-    {
+    {//used when you press select
         var cardChoice = new LastItemChosen(currentPageNumber, fingerLocationOnCurrentPage, cardToSelect);
-        ttDb.currentCardSelectionsList.Add(cardChoice);
+        ttDb.currentHandSelectionsList.Add(cardChoice);
     }
 
     public void CancelLastSelection()
-    {
-        if (ttLogic.CanRemoveCardFromCardSelection())
-        {
-            ModifyCardQuantity(ModifyingCardQuantity.IsRemovingCard);
-            ttUi.PlayRestAnimation(ttDb.currentCardSelectionsList.Count - 1);
-            ttDb.currentCardSelectionsList.RemoveAt(ttDb.currentCardSelectionsList.Count - 1);
-            SoundManager.instance.PlaySFX(1);
-        }
+    {//used when you press cancel button
+        if (!ttLogic.CanRemoveCardFromCardSelection()) return;
+        ModifyCardQuantity(ModifyingCardQuantity.IsRemovingCard);
+        ttUi.PlayRestAnimation(ttDb.currentHandSelectionsList.Count - 1);
+        ttDb.currentHandSelectionsList.RemoveAt(ttDb.currentHandSelectionsList.Count - 1);
+        SoundManager.instance.PlaySFX(1);
     }
 
     public void StopTheCoroutineScrolling()

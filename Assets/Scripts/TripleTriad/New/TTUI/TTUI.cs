@@ -1,12 +1,10 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
-using System.Globalization;
 using UnityEngine;
-using UnityEngine.Experimental.PlayerLoop;
 using UnityEngine.UI;
 
-public class TTUI : MonoBehaviour
-{
+public partial class TTUI : MonoBehaviour
+{//this is the master TTUI, and also for the card selectionscreen
 
     [Header("Script Reference")] [SerializeField]
     TTDB ttdb;
@@ -34,12 +32,6 @@ public class TTUI : MonoBehaviour
     [SerializeField] Image cardImage;
     [SerializeField] Text cardRarity;
     [SerializeField] Text pageNumText;
-
-
-
-    [Header("Card Confirm - UI References")]
-    [SerializeField] Transform[] cardConfirmFingerLocations;
-    [SerializeField] GameObject CardConfirmCanvas;
 
     [Header("Animation")] [SerializeField] Animator cardDisplayAnimator;
     [SerializeField] Animator[] myHandCardAnimators;
@@ -229,23 +221,7 @@ public class TTUI : MonoBehaviour
         }
     }
 
-    public void KeepFingerOnProperLocationInCardConfirmation(int fingerPos)
-    {
-        //finger is turned on and off when in update method by the isloading bool
-        if (isLoading == false)
-        {
-            if (!fingerPrefab.gameObject.activeInHierarchy)
-            {
-                fingerPrefab.gameObject.SetActive(true);
-            }
 
-            fingerPrefab.transform.position = cardConfirmFingerLocations[fingerPos].transform.position;
-        }
-        else
-        {
-            fingerPrefab.gameObject.SetActive(false);
-        }
-    }
 
     public void InitializeCardConfirmScreen()
     {
@@ -259,16 +235,8 @@ public class TTUI : MonoBehaviour
         CardConfirmCanvas.SetActive(false);
     }
 
-    private IEnumerator PlayCardConfirmAnimator()
-    {
-        cardConfirmAnimator.Play("Displaying");
-        yield return new WaitForSeconds(0.750f);
-        isLoading = false;
-    }
 
-    public int ReturnCardConfirmFingerPosCount()
-    {
-        return cardConfirmFingerLocations.Length;
-    }
+
+
 }
 

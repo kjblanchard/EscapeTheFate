@@ -11,7 +11,7 @@ public class TripleTriadManager : MonoBehaviour
         SHOWING_RULES,
         CHOOSING_CARDS,
         CONFIRMING_CARDS,
-        DISPLAY_ENEMY_CARDS,
+        CHOOSE_ENEMY_CARDS,
         TURN_SELECTION,
         CARD_SELECTION,
         LOCATION_SELECTION,
@@ -24,9 +24,10 @@ public class TripleTriadManager : MonoBehaviour
 
     [Header("Script References")]
     [SerializeField] TTUI ttUI;
-    [SerializeField] TTDB ttDb;
+    public TTDB ttDb;
     public TTCardSelectionProcessor ttCardSelectProcessor;
     public TTConfirmCardProcessor ttConfirmCardProcessor;
+    public EnemyHandSelectionProcessor ttEnemyHandSelectionProcessor;
 
 
     [Header("Script References")]
@@ -42,6 +43,7 @@ public class TripleTriadManager : MonoBehaviour
     {//so that we start from the proper screen
         ChangeToCardSelectProcessor();
         GameManager.instance.TurnOnDirectionalJoystick();
+
     }
 
 
@@ -63,15 +65,16 @@ public class TripleTriadManager : MonoBehaviour
 
     public void ChangeToCardSelectProcessor()
     {
-        ttCardSelectProcessor.InitializeBattleCardAlbum();
+        ttCardSelectProcessor.InitializeCardSelectionFromRulesScreen();
         ttUI.InitializeCardSelectionScreen();
+
         tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSING_CARDS;
     }
     public void ChangeToCardConfirmGameState()
     {
         
         tripleTriadCurrentGameState = TripleTriadGameStates.CONFIRMING_CARDS;
-        ttConfirmCardProcessor.TurnOnInitializer();
+        ttConfirmCardProcessor.InitializeCardConfirmScreen();
         
     }
 
@@ -80,5 +83,12 @@ public class TripleTriadManager : MonoBehaviour
         ttCardSelectProcessor.CancelLastSelection();
         ttUI.InitializeCardSelectionScreen();
         tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSING_CARDS;
+    }
+
+    public void ChangeFromCardConfirmationToChooseEnemyHand()
+    {
+        ttEnemyHandSelectionProcessor.EnemyHandSelectionRoutine();
+        tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSE_ENEMY_CARDS;
+
     }
 }

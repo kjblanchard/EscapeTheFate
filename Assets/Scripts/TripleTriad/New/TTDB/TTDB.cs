@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class TTDB : MonoBehaviour
+public partial class TTDB : MonoBehaviour
 {
  [Header("Card Battle References")]
     private int _numberofBattleCardsOnPage = 10;
@@ -13,18 +13,11 @@ public class TTDB : MonoBehaviour
     public List<Card> currentBattleSelectableCards = new List<Card>(); 
     public List<int> currentBattleQuantityForCards = new List<int>(); 
     
-
-    
     
     [Header("Card Select References")]
-    public List<LastItemChosen> currentCardSelectionsList = new List<LastItemChosen>();
+    public List<LastItemChosen> currentHandSelectionsList = new List<LastItemChosen>();
 
 
-    public void UpdateNumbersFromCardInventory()
-    {
-        
-    }
-    
     public void CalculateTtBattleNumbers()
     {//looks at your master card list, and figures out how many pages and remaining cards are needed
         _totalNumberOfBattleCards = CardInventory.instance.RetrieveTotalNumberOfCardsInMasterList();
@@ -53,15 +46,15 @@ public class TTDB : MonoBehaviour
 
     public void ClearBattleSelectionsList()
     {//clears the current card choices List
-        currentCardSelectionsList.Clear();
+        currentHandSelectionsList.Clear();
     }
 
     public void BringInUsableBattleCards()
     {//this will copy the current list of battle cards to our list of cards that can be used
-        CardInventory.instance.CreateUsableBattleCardLists();
         currentBattleSelectableCards = CardInventory.instance.RetrieveBattleCardList();
         currentBattleQuantityForCards = CardInventory.instance.RetrieveBattleQuantityList();
     }
     
     
+
 }

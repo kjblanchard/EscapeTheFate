@@ -29,9 +29,11 @@ public class Card : ScriptableObject
     public bool myCard;
     public bool enemyCard;
     public int cardSlot;
+    public int percentChanceForEnemyToUseInBattle;
 
     //new test stuff
     public int[] cardValues = new int[4];
-
+    
+    
 }
 

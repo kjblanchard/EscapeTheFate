@@ -3,8 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TTLogic : MonoBehaviour
-{
+public partial class TTLogic : MonoBehaviour
+{// this is the master class of ttlogic, as well as the card selection logic
     [SerializeField] TTUI ttUi;
     [SerializeField] TTDB ttDb;
 
@@ -16,27 +16,6 @@ public class TTLogic : MonoBehaviour
             return ttUi.listOfPages[currentPageNumber - 1].currentActiveCardsOnPage > 1;
         }
         return ttUi.listOfPages[currentPageNumber - 1].currentActiveCardsOnPage > 1;
-    }
-    public bool CanIScrollOnCardConfirm(bool isIncrementing, int currentFingerPos)
-    {
-        if (ttUi.isLoading) { return false; }
-
-        if (isIncrementing)
-        {
-            if(currentFingerPos < ttUi.ReturnCardConfirmFingerPosCount()-1)
-            {
-                return true;
-            }
-        }
-        else
-        {
-            if (currentFingerPos > 0)
-            {
-                return true;
-            }
-        }
-        return false;
-
     }
 
     public bool CanISwitchPages(bool isIncrementing, int currentPageNumber)
@@ -56,7 +35,7 @@ public class TTLogic : MonoBehaviour
 
     public bool CanRemoveCardFromCardSelection()
     {
-        if (ttDb.currentCardSelectionsList.Count > 0)
+        if (ttDb.currentHandSelectionsList.Count > 0)
         {
             return true;
         }
@@ -64,7 +43,7 @@ public class TTLogic : MonoBehaviour
         return false;
     }
 
-    public bool AreYouGoingToLoopInCardConfirm(int currentFingerPosition, int currentPageNumber,
+    public bool AreYouGoingToLoopInCardSelection(int currentFingerPosition, int currentPageNumber,
         TTCardSelectionProcessor.WhichScrollDirection whichWayToCheck)
     {
         switch (whichWayToCheck)
@@ -93,4 +72,6 @@ public class TTLogic : MonoBehaviour
                 throw new ArgumentOutOfRangeException(nameof(whichWayToCheck), whichWayToCheck, null);
         }
     }
+
+
 }

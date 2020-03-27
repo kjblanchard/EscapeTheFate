@@ -7,6 +7,7 @@ public class CardInventory : MonoBehaviour
     public Card[] masterCardList;
     public List<Card> renumberedCardList = new List<Card>();
     private readonly List<Card> _ttBattleCardList = new List<Card>();
+    public List<Card> ttCardListOfCommonCards = new List<Card>();
     private readonly List<int> _temporaryCardQuantityList = new List<int>();
     
 
@@ -53,7 +54,7 @@ public class CardInventory : MonoBehaviour
     }
     
         public void CreateUsableBattleCardLists()
-    {
+    {//this probably only needs to be called once ever, Since it generates the entire list of everything
         _ttBattleCardList.Clear();
         _temporaryCardQuantityList.Clear();
 
@@ -62,6 +63,7 @@ public class CardInventory : MonoBehaviour
             if (t.cardsRarity != Card.cardRarity.Common || t.amountOwned <= 0) continue;
             _ttBattleCardList.Add(t);
             _temporaryCardQuantityList.Add(t.amountOwned);
+            ttCardListOfCommonCards.Add(t);
         }
         foreach (var t in masterCardList)
         {
@@ -119,4 +121,5 @@ public class CardInventory : MonoBehaviour
     {
         return _temporaryCardQuantityList;
     }
+    
 }
