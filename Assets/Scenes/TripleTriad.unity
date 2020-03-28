@@ -134,9 +134,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   tripleTriadCurrentGameState: 1
   ttUI: {fileID: 9030617816674780376}
-  ttDb: {fileID: 0}
+  ttDb: {fileID: 818606792456178717}
   ttCardSelectProcessor: {fileID: 818606792456178716}
   ttConfirmCardProcessor: {fileID: 818606792456178719}
+  ttEnemyHandSelectionProcessor: {fileID: 818606792456178720}
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -202,6 +203,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2e3a63454a383f04696cf7c3528a6d14, type: 2}
   - {fileID: 11400000, guid: b32abdd4af7e65c4f89a750a1ddec4d3, type: 2}
   renumberedCardList: []
+  ttCardListOfCommonCards: []
   emptyCard: {fileID: 11400000, guid: fc5095c73d50d434bbe00b84f2075b1b, type: 2}
   cardList: []
   cardAmount: 
@@ -462,6 +464,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: EssentialsLoader
+      objectReference: {fileID: 0}
+    - target: {fileID: 3294933561659595832, guid: 723316385ada7744e91d6d6da59d32a7,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3294933561659595834, guid: 723316385ada7744e91d6d6da59d32a7,
         type: 3}
@@ -3691,6 +3698,8 @@ GameObject:
   - component: {fileID: 818606792456178717}
   - component: {fileID: 818606792456178718}
   - component: {fileID: 818606792456178719}
+  - component: {fileID: 818606792456178721}
+  - component: {fileID: 818606792456178720}
   m_Layer: 5
   m_Name: TripleTriadCanvas
   m_TagString: Untagged
@@ -3772,7 +3781,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   currentBattleSelectableCards: []
   currentBattleQuantityForCards: 
-  currentCardSelectionsList: []
+  currentHandSelectionsList: []
+  currentEnemyHandList: []
 --- !u!114 &818606792456178718
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3801,6 +3811,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ttUi: {fileID: 9030617816674780376}
   ttLogic: {fileID: 818606792456178718}
+--- !u!114 &818606792456178720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818606792456178713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bf04c77e59e72e7409b3286b57725565, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ttdb: {fileID: 818606792456178717}
+--- !u!114 &818606792456178721
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 818606792456178713}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _whatTypeOfPlayerAmI: 1
+  _myAvailableCardsToUse: []
+  _listOfRareCardsOwned:
+  - {fileID: 11400000, guid: 01f12c465851bee49ae445592469da3c, type: 2}
 --- !u!223 &818606792456178724
 Canvas:
   m_ObjectHideFlags: 0
@@ -4731,6 +4770,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: FPSCounter
       objectReference: {fileID: 0}
+    - target: {fileID: 4240681186239727924, guid: 02ff594f81d9a3044a780cfdace750e3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4240681186239727925, guid: 02ff594f81d9a3044a780cfdace750e3,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5148,6 +5192,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 427d567746e7bcf4f963368cef7bdfa6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardConfirmFingerLocations:
+  - {fileID: 1470436757}
+  - {fileID: 1430525684}
+  CardConfirmCanvas: {fileID: 1179955580}
   ttdb: {fileID: 818606792456178717}
   ttMan: {fileID: 11}
   isLoading: 0
@@ -5172,10 +5220,6 @@ MonoBehaviour:
   cardImage: {fileID: 818606791630019539}
   cardRarity: {fileID: 4016555278543706852}
   pageNumText: {fileID: 803717331}
-  cardConfirmFingerLocations:
-  - {fileID: 1470436757}
-  - {fileID: 1430525684}
-  CardConfirmCanvas: {fileID: 1179955580}
   cardDisplayAnimator: {fileID: 818606791630019540}
   myHandCardAnimators:
   - {fileID: 2068866359}

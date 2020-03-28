@@ -16,8 +16,8 @@ public partial class TTUI
     
     private IEnumerator PlayCardConfirmAnimator()
     {
-        cardConfirmAnimator.Play("Displaying");
-        yield return new WaitForSeconds(0.750f);
+        cardConfirmAnimator.Play("CardConfirmWindowDisplaying");
+        yield return new WaitForSeconds(0.50f);
         isLoading = false;
     }
     public void KeepFingerOnProperLocationInCardConfirmation(int fingerPos)
@@ -36,5 +36,11 @@ public partial class TTUI
         {
             fingerPrefab.gameObject.SetActive(false);
         }
+    }
+    public void InitializeCardConfirmScreen()
+    {
+        isLoading = true;   
+        CardConfirmCanvas.SetActive(true);
+        StartCoroutine(PlayCardConfirmAnimator());
     }
 }

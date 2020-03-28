@@ -431,12 +431,14 @@ MonoBehaviour:
   - {fileID: 0}
   characterBenchGameObject: {fileID: 99257714861283947}
   characterBench: {fileID: 7449182745744092184}
-  joystickEnabled: 1
+  joystickEnabled: 0
   joystickMaster: {fileID: 8966087438222840319}
   regularJoystick:
   - {fileID: 7077112211849530796}
   - {fileID: 7077112209787518082}
   directionalJoystick: {fileID: 7077112211101959761}
+  frameRateOf60: 0
+  frameRateOf120: 0
   shouldFade: 0
   totalPlayedTime: 0
 --- !u!1001 &6232102605406228048

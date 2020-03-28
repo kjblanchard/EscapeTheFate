@@ -9,6 +9,7 @@ public partial class TTDB
     private EnemyCardHand.WhatTypeOfCardPlayerAmI _typeOfEnemyPlayer;
     private List<Card> _currentEnemyRareCards;
     public List<Card> currentEnemyHandList = new List<Card>();
+    public TripleTriadCard[] currentEnemyTripleTriadCards;
     
     
     public void BringInEnemyCardInformation(EnemyCardHand.WhatTypeOfCardPlayerAmI typeOfEnemyPlayer,List<Card> currentEnemyRareCards)
@@ -34,6 +35,7 @@ public partial class TTDB
             DetermineIfRareCardsShouldBeAddedToHand();
         }
         BeginnerAddCardsToHandUntilFull();
+        AddEnemySelectedHandToTheEnemyGameObjects();
     }
     
 
@@ -58,5 +60,12 @@ public partial class TTDB
           currentEnemyHandList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
         }
     }
-    //temp
+
+    private void AddEnemySelectedHandToTheEnemyGameObjects()
+    {
+        for (int i = 0; i < currentEnemyTripleTriadCards.Length; i++)
+        {
+            currentEnemyTripleTriadCards[i].SetMyCurrentCard(currentEnemyHandList[i]);
+        }
+    }
 }

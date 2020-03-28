@@ -27,7 +27,7 @@ public class TripleTriadManager : MonoBehaviour
     public TTDB ttDb;
     public TTCardSelectionProcessor ttCardSelectProcessor;
     public TTConfirmCardProcessor ttConfirmCardProcessor;
-    public EnemyHandSelectionProcessor ttEnemyHandSelectionProcessor;
+    public TtEnemyHandSelectionProcessor ttEnemyHandSelectionProcessor;
 
 
     [Header("Script References")]
@@ -87,6 +87,7 @@ public class TripleTriadManager : MonoBehaviour
 
     public void ChangeFromCardConfirmationToChooseEnemyHand()
     {
+        StartCoroutine(ttUI.InitializeEnemyHandSelectScreenUI());
         ttEnemyHandSelectionProcessor.EnemyHandSelectionRoutine();
         tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSE_ENEMY_CARDS;
 

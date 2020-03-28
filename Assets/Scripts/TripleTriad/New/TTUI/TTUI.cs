@@ -8,10 +8,11 @@ public partial class TTUI : MonoBehaviour
 
     [Header("Script Reference")] [SerializeField]
     TTDB ttdb;
-
     [SerializeField] TripleTriadManager ttMan;
 
-    [Header("State Controls")] public bool isLoading = false;
+    [Header("Card Selection Stuff")] public GameObject cardSelectionGameObject;
+    [Header("State Controls")] 
+    public bool isLoading = false;
 
     [Header("Scroll Rect Stuff")] [SerializeField]
     ScrollRect imTheScrollRect;
@@ -33,9 +34,11 @@ public partial class TTUI : MonoBehaviour
     [SerializeField] Text cardRarity;
     [SerializeField] Text pageNumText;
 
-    [Header("Animation")] [SerializeField] Animator cardDisplayAnimator;
+    [Header("CardSelectionAnimators")] [SerializeField] Animator cardDisplayAnimator;
     [SerializeField] Animator[] myHandCardAnimators;
     [SerializeField] Animator cardConfirmAnimator;
+    [SerializeField] Animator cardSelectionWindowAnimator;
+    [SerializeField] Animator cardSelectionCardDisplayAnimator;
 
     [Header("My Hand Images")] [SerializeField]
     Image[] myHandCardImages;
@@ -223,12 +226,7 @@ public partial class TTUI : MonoBehaviour
 
 
 
-    public void InitializeCardConfirmScreen()
-    {
-        isLoading = true;   
-        CardConfirmCanvas.SetActive(true);
-        StartCoroutine(PlayCardConfirmAnimator());
-    }
+
 
     public void InitializeCardSelectionScreen()
     {

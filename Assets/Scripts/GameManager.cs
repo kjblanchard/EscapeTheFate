@@ -55,6 +55,8 @@ public class GameManager : MonoBehaviour
     public GameObject joystickMaster;
     public GameObject[] regularJoystick;
     public GameObject directionalJoystick;
+    public bool frameRateOf60;
+    public bool frameRateOf120;
 
     [Header("FadeControl")]
     public bool shouldFade;
@@ -65,6 +67,18 @@ public class GameManager : MonoBehaviour
 
     private void Awake()
     {
+        if (frameRateOf60)
+        {
+            SetVsync1();
+        }
+        else if (frameRateOf120)
+        {
+            SetVsync0_120FPS();
+        }
+        else
+        {
+            SetVsync1();
+        }
         instance = this;
 
         int gameManagerCount = FindObjectsOfType<GameManager>().Length;
@@ -234,10 +248,23 @@ public class GameManager : MonoBehaviour
         {
             joystickMaster.SetActive(false);
         }
+
+
     }
 
+    public void SetVsync0_120FPS()
+    {//turns of vsync and tries to get 120fps, best for stable framerate
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 120;
+    }
 
-
+    public void SetVsync0_Default()
+    {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = -1;
+    }
+    
+    public void SetVsync1            ()    {    QualitySettings.vSyncCount = 1;    Application.targetFrameRate =  -1;    }
 
 
 }
