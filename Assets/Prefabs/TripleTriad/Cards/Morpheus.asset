@@ -16,8 +16,8 @@ MonoBehaviour:
   description: The whole world is a lie
   cardsRarity: 3
   cardName: Morpheus
-  AImage: {fileID: 21300000, guid: e3fa4d991ac65d0438c9257ded039130, type: 3}
-  BImage: {fileID: 21300000, guid: afcb0f0132251f84090216c85bf8b299, type: 3}
+  AImage: {fileID: 21300000, guid: f51854db12b53d441a89106523c46bd8, type: 3}
+  BImage: {fileID: 21300000, guid: fa3733763a4887143afaf798b93196d0, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

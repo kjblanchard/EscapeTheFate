@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Dark Boi
   cardsRarity: 2
   cardName: Dark Link
-  AImage: {fileID: 21300000, guid: 616839b50e40721459f7db275c62db18, type: 3}
-  BImage: {fileID: 21300000, guid: 023619e3219ad104e84f2828f513700c, type: 3}
+  AImage: {fileID: 21300000, guid: 87c4363e9ae983b40a07d96392f09d35, type: 3}
+  BImage: {fileID: 21300000, guid: 30a4e3d6cd32fe54ba2373e0232139e7, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

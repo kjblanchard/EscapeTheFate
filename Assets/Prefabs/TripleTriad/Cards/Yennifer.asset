@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Smells of Gooseberries
   cardsRarity: 2
   cardName: Yennifer
-  AImage: {fileID: 21300000, guid: 0f7c982ec1fdb3f4b8fc6a40e25a0aca, type: 3}
-  BImage: {fileID: 21300000, guid: d905cc33c571135459c73a31dfb8d29c, type: 3}
+  AImage: {fileID: 21300000, guid: f26651d7ad1d9a648b63064c6b305572, type: 3}
+  BImage: {fileID: 21300000, guid: 5d31aa124e9977e40b34e0e2b1aefa2b, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

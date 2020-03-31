@@ -16,8 +16,8 @@ MonoBehaviour:
   description: I was lookin at the blood
   cardsRarity: 3
   cardName: Tifa
-  AImage: {fileID: 21300000, guid: 2a2e536f9cb95734cbb98815ef4f1bf2, type: 3}
-  BImage: {fileID: 21300000, guid: 767ad7e8b1ac2c14bae168b50bd205ad, type: 3}
+  AImage: {fileID: 21300000, guid: 0855f5a286002204a9b655262950c60a, type: 3}
+  BImage: {fileID: 21300000, guid: bc0d59a079b4b0e4aab963faf354c87d, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

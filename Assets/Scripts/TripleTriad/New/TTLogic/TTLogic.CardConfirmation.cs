@@ -5,38 +5,42 @@ using UnityEngine;
 public partial class TTLogic
 {
 
-    public bool CanIScrollOnCardConfirm(bool isIncrementing, int currentFingerPos)
+    public bool CanIScrollOnCardConfirm(CardConfirmationState.WhichWayToScroll whichWayToScroll)
     {
-        if (ttUi.isLoading) { return false; }
+        switch (whichWayToScroll)
+        {
+            case CardConfirmationState.WhichWayToScroll.IncrementingFinger:
+                if (ttUi.isLoading)
+                {
+                    return false;
+                }
+                return ttDb.RetrieveCurrentFingerPositionInCardConfirmation() < ttUi.ReturnCardConfirmFingerPosCount() - 1;
+            case CardConfirmationState.WhichWayToScroll.DecrementingFinger:
+                if (ttUi.isLoading)
+                {
+                    return false;
+                }
+                return ttDb.RetrieveCurrentFingerPositionInCardConfirmation() > 0;
+        }
 
-        if (isIncrementing)
-        {
-            if(currentFingerPos < ttUi.ReturnCardConfirmFingerPosCount()-1)
-            {
-                return true;
-            }
-        }
-        else
-        {
-            if (currentFingerPos > 0)
-            {
-                return true;
-            }
-        }
         return false;
-
     }
 
-    public bool CanIPressCancelButtonOnConfirmScreen(int currentFingerPosition)
+    public bool CanIPressCancelButtonOnConfirmScreen()
     {
         if(ttUi.isLoading){return false;}
 
-        return currentFingerPosition != 1;
+        return ttDb.RetrieveCurrentFingerPositionInCardConfirmation() != 1;
     }
-    public bool CanIGoBackToCardSelectionScreenFromConfirmScreen(int currentFingerPosition)
+    public bool CanIGoBackToCardSelectionScreenFromConfirmScreen()
     {
         if(ttUi.isLoading){return false;}
-        return currentFingerPosition == 1;
+        return ttDb.RetrieveCurrentFingerPositionInCardConfirmation() == 1;
+    }
+
+    public bool CanIAdvanceToChooseEnemyHandScreen()
+    {
+        return ttDb.RetrieveCurrentFingerPositionInCardConfirmation() == 0 && ttUi.isLoading == false;
     }
     
 }

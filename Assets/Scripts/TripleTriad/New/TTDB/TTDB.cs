@@ -11,13 +11,11 @@ public partial class TTDB : MonoBehaviour
     private int _totalNumberOfBattlePages;
     private int _totalNumberOfCardsOnLastBattlePage;
     public List<Card> currentBattleSelectableCards = new List<Card>(); 
-    public List<int> currentBattleQuantityForCards = new List<int>(); 
-    
-    
-    [Header("Card Select References")]
-    public List<LastItemChosen> currentHandSelectionsList = new List<LastItemChosen>();
+    public List<int> currentBattleQuantityForCards = new List<int>();
 
 
+    [SerializeField] TripleTriadManager ttMan;
+    
     public void CalculateTtBattleNumbers()
     {//looks at your master card list, and figures out how many pages and remaining cards are needed
         _totalNumberOfBattleCards = CardInventory.instance.RetrieveTotalNumberOfCardsInMasterList();

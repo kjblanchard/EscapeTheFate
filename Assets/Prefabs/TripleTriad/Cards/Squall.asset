@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Squall
   m_EditorClassIdentifier: 
   cardID: 42
-  description: '...'
+  description: ...
   cardsRarity: 3
   cardName: Squall
-  AImage: {fileID: 21300000, guid: ae46be4c7f5ddcd49942c59bf499c007, type: 3}
-  BImage: {fileID: 21300000, guid: d24d71bc6df2a624cb5a5986b86b2dd3, type: 3}
+  AImage: {fileID: 21300000, guid: 23fd83bd29f92ca4ca86de96cf3b6889, type: 3}
+  BImage: {fileID: 21300000, guid: b2aedad22c43ab7478b8e7fdc813100b, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

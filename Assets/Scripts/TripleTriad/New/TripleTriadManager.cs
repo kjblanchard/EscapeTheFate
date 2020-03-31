@@ -8,88 +8,61 @@ public class TripleTriadManager : MonoBehaviour
     public enum TripleTriadGameStates
     {
         DISABLED,
-        SHOWING_RULES,
+        SHOWING_RULES, //SHOWING RULES NEEDS TO RESET CARD SELECTION COMING FROM TO SHOWING RULES WHEN IT ENDS for his startup to work right
         CHOOSING_CARDS,
         CONFIRMING_CARDS,
         CHOOSE_ENEMY_CARDS,
         TURN_SELECTION,
-        CARD_SELECTION,
+        PLAYER_CARD_SELECTION,
         LOCATION_SELECTION,
         ENEMY_SELECTION,
         ENEMY_LOCATION_SELECTION,
         END,
     }
 
-    [SerializeField] TripleTriadGameStates tripleTriadCurrentGameState;
-
     [Header("Script References")]
-    [SerializeField] TTUI ttUI;
+    public TTUI ttUi;
     public TTDB ttDb;
-    public TTCardSelectionProcessor ttCardSelectProcessor;
-    public TTConfirmCardProcessor ttConfirmCardProcessor;
-    public TtEnemyHandSelectionProcessor ttEnemyHandSelectionProcessor;
-
-
-    [Header("Script References")]
+    public TTLogic ttLogic;
+    [SerializeField] TtStateMachine ttStateMachine;
+    
+    [Header("States")]
+    public CardSelectionState cardSelectionState;
+    public CardConfirmationState cardConfirmationState;
+    public EnemyHandSelectionState enemyHandSelectionState;
+    public TurnSelectionState turnSelectionState;
+    public PlayerTurnState playerTurnState;
+    
+    [Header("Singleton")]
     public static TripleTriadManager instance;
 
     private void Awake()
     {
         instance = this;
     }
-
-
+    
     private void Start()
-    {//so that we start from the proper screen
-        ChangeToCardSelectProcessor();
+    {
+        CardInventory.instance
+            .CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
         GameManager.instance.TurnOnDirectionalJoystick();
-
+        SendStateChange(cardSelectionState);
     }
-
-
+    
     void Update()
     {
-        switch (tripleTriadCurrentGameState)
-        {
-            case TripleTriadGameStates.CHOOSING_CARDS:
-                ttCardSelectProcessor.TtCardSelectProcessor();
-                break;
-            case TripleTriadGameStates.CONFIRMING_CARDS:
-                ttConfirmCardProcessor.TtConfirmCardProcessor();
-                break;
-                
-
-
-        }
+        ttStateMachine.RunCurrentState();
     }
 
-    public void ChangeToCardSelectProcessor()
+    public void SendStateChange(TtState stateToChangeTo)
     {
-        ttCardSelectProcessor.InitializeCardSelectionFromRulesScreen();
-        ttUI.InitializeCardSelectionScreen();
-
-        tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSING_CARDS;
+        GC.Collect();
+        ttStateMachine.ChangeState(stateToChangeTo);
     }
-    public void ChangeToCardConfirmGameState()
+
+    public void SendChangeToPreviousState()
     {
-        
-        tripleTriadCurrentGameState = TripleTriadGameStates.CONFIRMING_CARDS;
-        ttConfirmCardProcessor.InitializeCardConfirmScreen();
-        
+        ttStateMachine.ChangeStateToPreviousState();
     }
-
-    public void ChangeBackToChoosingCards()
-    {
-        ttCardSelectProcessor.CancelLastSelection();
-        ttUI.InitializeCardSelectionScreen();
-        tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSING_CARDS;
-    }
-
-    public void ChangeFromCardConfirmationToChooseEnemyHand()
-    {
-        StartCoroutine(ttUI.InitializeEnemyHandSelectScreenUI());
-        ttEnemyHandSelectionProcessor.EnemyHandSelectionRoutine();
-        tripleTriadCurrentGameState = TripleTriadGameStates.CHOOSE_ENEMY_CARDS;
-
-    }
+    
 }

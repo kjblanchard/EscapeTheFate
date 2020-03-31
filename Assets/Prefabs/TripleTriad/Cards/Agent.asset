@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Cool Shades Bro
   cardsRarity: 1
   cardName: Agent Smith
-  AImage: {fileID: 21300000, guid: 7a0831ae4944cec48a3de1953e2ce01a, type: 3}
-  BImage: {fileID: 21300000, guid: 898e992da6a7f084e9fc4ed7d70c8062, type: 3}
+  AImage: {fileID: 21300000, guid: 0f8f496d7a32dfb44abae0e675a6b6b1, type: 3}
+  BImage: {fileID: 21300000, guid: c1dc76a7298f3694c89b4ec990baf22a, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

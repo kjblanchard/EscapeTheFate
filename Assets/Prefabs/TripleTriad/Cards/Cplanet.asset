@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Saver of Earth
   cardsRarity: 3
   cardName: Capt. Planet
-  AImage: {fileID: 21300000, guid: ede77cbe304ab57469ee102888b728ac, type: 3}
-  BImage: {fileID: 21300000, guid: d8908e49fe4b22145892baf4d92a0d0b, type: 3}
+  AImage: {fileID: 21300000, guid: bb57a55f4c379c94b977d2705f7e7ee0, type: 3}
+  BImage: {fileID: 21300000, guid: 5687c7945f4373d4b99e38b8d1364575, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

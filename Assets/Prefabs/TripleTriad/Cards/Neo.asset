@@ -16,8 +16,8 @@ MonoBehaviour:
   description: The "One" Dude
   cardsRarity: 1
   cardName: Neo
-  AImage: {fileID: 21300000, guid: 352d493bccae6884484d68f5e44276fe, type: 3}
-  BImage: {fileID: 21300000, guid: 843ea7cebbe93114ab89fead4c1395e9, type: 3}
+  AImage: {fileID: 21300000, guid: 1b67da7dca4ed1d46b3ccf56b8ed8227, type: 3}
+  BImage: {fileID: 21300000, guid: 2cba84a02db180240950044fea1a2916, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

@@ -17,7 +17,7 @@ public class TTManager : MonoBehaviour
     //public int[] ownedCardQuantity;
     //public Sprite defaultCardBack;
     public static TTManager instance;
-    public TTCardSelectionProcessor ttSelectionController;
+    //public TTCardSelectionProcessor ttSelectionController;
     public float[] waitTime;
     public bool playerTurn;
     public bool enemyTurn;

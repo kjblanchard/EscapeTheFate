@@ -46,44 +46,53 @@ public class CardInventory : MonoBehaviour
     }
 
     public void CalculateNumbers()
-    {//looks at your master card list, and figures out how many pages and remaining cards are needed, these Values are referenced by other scripts
+    {
+        //looks at your master card list, and figures out how many pages and remaining cards are needed, these Values are referenced by other scripts
         _totalNumberOfCards = masterCardList.Length;
-        var notRoundedUpPagesCount = ((float)_totalNumberOfCards) / _numberOfCardsOnPage;
-        _totalNumberOfPages = (int)Mathf.Ceil(notRoundedUpPagesCount);
+        var notRoundedUpPagesCount = ((float) _totalNumberOfCards) / _numberOfCardsOnPage;
+        _totalNumberOfPages = (int) Mathf.Ceil(notRoundedUpPagesCount);
         _totalNumberOfCardsOnLastPage = _totalNumberOfCards % _numberOfCardsOnPage;
     }
-    
-        public void CreateUsableBattleCardLists()
-    {//this probably only needs to be called once ever, Since it generates the entire list of everything
+
+    public void CreateUsableBattleCardLists()
+    {
+        //this probably only needs to be called once ever, Since it generates the entire list of everything
         _ttBattleCardList.Clear();
         _temporaryCardQuantityList.Clear();
+        ttCardListOfCommonCards.Clear();
 
-        foreach (var t in masterCardList)
+        //foreach (var t in masterCardList)
+        for (int i = 0; i < masterCardList.Length; i++)
         {
-            if (t.cardsRarity != Card.cardRarity.Common || t.amountOwned <= 0) continue;
-            _ttBattleCardList.Add(t);
-            _temporaryCardQuantityList.Add(t.amountOwned);
-            ttCardListOfCommonCards.Add(t);
-        }
-        foreach (var t in masterCardList)
-        {
-            if (t.cardsRarity != Card.cardRarity.Uncommon || t.amountOwned <= 0) continue;
-            _ttBattleCardList.Add(t);
-            _temporaryCardQuantityList.Add(t.amountOwned);
-        }
-        foreach (var t in masterCardList)
-        {
-            if (t.cardsRarity != Card.cardRarity.Rare || t.amountOwned <= 0) continue;
-            _ttBattleCardList.Add(t);
-            _temporaryCardQuantityList.Add(t.amountOwned);
-        }
-        foreach (var t in masterCardList)
-        {
-            if (t.cardsRarity != Card.cardRarity.Elite || t.amountOwned <= 0) continue;
-            _ttBattleCardList.Add(t);
-            _temporaryCardQuantityList.Add(t.amountOwned);
+            if (masterCardList[i].cardsRarity != Card.cardRarity.Common || masterCardList[i].amountOwned <= 0) continue;
+            _ttBattleCardList.Add(masterCardList[i]);
+            _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+            ttCardListOfCommonCards.Add(masterCardList[i]);
         }
 
+        //foreach (var t in masterCardList)
+        for (int i = 0; i < masterCardList.Length; i++)
+        {
+            if (masterCardList[i].cardsRarity != Card.cardRarity.Uncommon ||
+                masterCardList[i].amountOwned <= 0) continue;
+            _ttBattleCardList.Add(masterCardList[i]);
+            _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+        }
+
+        //foreach (var t in masterCardList)
+        for (int i = 0; i < masterCardList.Length; i++)
+        {
+            if (masterCardList[i].cardsRarity != Card.cardRarity.Rare || masterCardList[i].amountOwned <= 0) continue;
+            _ttBattleCardList.Add(masterCardList[i]);
+            _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+        }
+
+        for (int i = 0; i < masterCardList.Length; i++)
+        {
+            if (masterCardList[i].cardsRarity != Card.cardRarity.Elite || masterCardList[i].amountOwned <= 0) continue;
+            _ttBattleCardList.Add(masterCardList[i]);
+            _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+        }
     }
 
 

@@ -15,7 +15,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &7290129109567326266
 Transform:
@@ -60,7 +60,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &5345510530273749743
 Transform:
@@ -163,7 +163,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2206599872854056158
 Transform:
@@ -266,7 +266,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &4382863986644680663
 Transform:
@@ -369,7 +369,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &6753380924061804502
 Transform:
@@ -431,14 +431,14 @@ MonoBehaviour:
   - {fileID: 0}
   characterBenchGameObject: {fileID: 99257714861283947}
   characterBench: {fileID: 7449182745744092184}
-  joystickEnabled: 0
+  joystickEnabled: 1
   joystickMaster: {fileID: 8966087438222840319}
   regularJoystick:
   - {fileID: 7077112211849530796}
   - {fileID: 7077112209787518082}
   directionalJoystick: {fileID: 7077112211101959761}
   frameRateOf60: 0
-  frameRateOf120: 0
+  frameRateOf120: 1
   shouldFade: 0
   totalPlayedTime: 0
 --- !u!1001 &6232102605406228048
@@ -513,16 +513,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3767846320219402960, guid: e148e617aa9434107b977fb8911159cd,
-        type: 3}
-      propertyPath: autoHide
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3767846319026961930, guid: e148e617aa9434107b977fb8911159cd,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3767846319026961924, guid: e148e617aa9434107b977fb8911159cd,
         type: 3}
       propertyPath: m_ReferenceResolution.x
@@ -533,15 +523,10 @@ PrefabInstance:
       propertyPath: m_ReferenceResolution.y
       value: 600
       objectReference: {fileID: 0}
-    - target: {fileID: 3767846320438272465, guid: e148e617aa9434107b977fb8911159cd,
+    - target: {fileID: 3767846319026961930, guid: e148e617aa9434107b977fb8911159cd,
         type: 3}
-      propertyPath: AxisName
-      value: right
-      objectReference: {fileID: 0}
-    - target: {fileID: 3767846319745865725, guid: e148e617aa9434107b977fb8911159cd,
-        type: 3}
-      propertyPath: AxisName
-      value: up
+      propertyPath: m_LocalPosition.z
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3767846319112107355, guid: e148e617aa9434107b977fb8911159cd,
         type: 3}
@@ -552,6 +537,21 @@ PrefabInstance:
         type: 3}
       propertyPath: AxisName
       value: down
+      objectReference: {fileID: 0}
+    - target: {fileID: 3767846319745865725, guid: e148e617aa9434107b977fb8911159cd,
+        type: 3}
+      propertyPath: AxisName
+      value: up
+      objectReference: {fileID: 0}
+    - target: {fileID: 3767846320219402960, guid: e148e617aa9434107b977fb8911159cd,
+        type: 3}
+      propertyPath: autoHide
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3767846320438272465, guid: e148e617aa9434107b977fb8911159cd,
+        type: 3}
+      propertyPath: AxisName
+      value: right
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e148e617aa9434107b977fb8911159cd, type: 3}

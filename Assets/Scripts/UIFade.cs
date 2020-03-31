@@ -21,7 +21,7 @@ public class UIFade : MonoBehaviour
     }
     void Start()
     {
-        DontDestroyOnLoad(gameObject); // keeps the UIfade alive between scenes right now it is made on countryside1
+        //DontDestroyOnLoad(gameObject); // keeps the UIfade alive between scenes right now it is made on countryside1
 
         //StartingFadeIn(); //adding in to start a fade in testing
     }

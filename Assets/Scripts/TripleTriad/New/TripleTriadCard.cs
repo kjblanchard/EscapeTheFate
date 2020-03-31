@@ -9,7 +9,7 @@ public class TripleTriadCard : MonoBehaviour
 
     public Card whatCardIAm;
     [SerializeField] Image cardImage;
-    [SerializeField]  Animator cardAnimator;
+    public Animator cardAnimator;
      // public bool shouldIflipTheCard;
 
 
@@ -23,15 +23,6 @@ public class TripleTriadCard : MonoBehaviour
         cardImage.sprite = CardInventory.instance.emptyCard.BImage;
     }
 
-    // private void Update()
-    // {
-    //     if (shouldIflipTheCard)
-    //     {
-    //         shouldIflipTheCard = false;
-    //         cardAnimator.Play("CardFlip");
-    //     }
-    // }
-
     public void SetMyCurrentCard(Card whatCardImGonnaBe)
     {
         whatCardIAm = whatCardImGonnaBe;
@@ -40,5 +31,19 @@ public class TripleTriadCard : MonoBehaviour
     public void PlayFlipCardAnimation()
     {
         cardAnimator.Play("CardFlip");
+    }
+
+    public void PlayCardFlipSound()
+    {
+        SoundManager.instance.PlaySFX(4);
+    }
+
+    public void InFocus()
+    {
+        cardAnimator.SetTrigger("inFocus");
+    }
+    public void OutFocus()
+    {
+        cardAnimator.SetTrigger("outFocus");
     }
 }

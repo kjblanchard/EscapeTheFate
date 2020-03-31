@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Hyrules Savior
   cardsRarity: 2
   cardName: Link
-  AImage: {fileID: 21300000, guid: 9cbe53c20ceed8345990fd6ef77cd045, type: 3}
-  BImage: {fileID: 21300000, guid: f19cd6f2ed30bf04aa1e783775b837f9, type: 3}
+  AImage: {fileID: 21300000, guid: dc85009b1542f0547acbf2db60c8d6ee, type: 3}
+  BImage: {fileID: 21300000, guid: 9d4fef49cf67a8340952711f229960d6, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

@@ -37,9 +37,9 @@ public class EssentialsLoader : MonoBehaviour
         Instantiate(soundManager);
         
         //Instantiate(ttManager);
-        Instantiate(dialogManager);
-        Instantiate(shopManager);
-        Instantiate(optionsCanvas);//keep this at the end for the uifade since I put it here like a noob
+        //Instantiate(dialogManager);
+        //Instantiate(shopManager);
+        //Instantiate(optionsCanvas);//keep this at the end for the uifade since I put it here like a noob
     }
 
 }

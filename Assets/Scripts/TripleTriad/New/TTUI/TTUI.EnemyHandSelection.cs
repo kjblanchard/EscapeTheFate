@@ -1,22 +1,26 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public partial class TTUI
 {
 
     [Header("Stuff For EnemyHandSelection")]
-    [SerializeField] Animator[] enemyHandAnimator;
+    //[SerializeField] Animator[] enemyHandAnimator;
 
     [SerializeField] Animator enemyHandDialogBoxAnimator;
     private float _randomNumberForCardDisplaying;
-    [SerializeField]  Animator blinkingHorizontalFingerAnimator;
+    [SerializeField]  Animator turnIndicatorFingerAnimator;
+    [SerializeField] private Text enemyDialogBoxNameText;
+    [SerializeField] private Text enemyDialogBoxDialogText;
 
-    public IEnumerator PlayEnemyFullHandAnimation()
+    private IEnumerator PlayEnemyFullHandAnimation()
     {
-        for (int i = 0; i < enemyHandAnimator.Length; i++)
+        
+        for (int i = 0; i < ttdb.currentEnemyTripleTriadCards.Length; i++)
         {
-            _randomNumberForCardDisplaying = Random.Range(0.05f, 0.2f);
+            _randomNumberForCardDisplaying = Random.Range(0.05f, 0.1f);
             yield return new WaitForSeconds(_randomNumberForCardDisplaying);
             PlayEnemyHandAnimation(i);
         }
@@ -25,16 +29,18 @@ public partial class TTUI
     
     private void PlayEnemyHandAnimation(int cardToDisplay)
     {
-        enemyHandAnimator[cardToDisplay].Play("MyHandSelect");
+        ttdb.currentEnemyTripleTriadCards[cardToDisplay].cardAnimator.Play("MyHandSelect");
         SoundManager.instance.PlaySFX(6);
     }
     
-    public IEnumerator InitializeEnemyHandSelectScreenUI()
-    {
+    public IEnumerator InitializeEnemyHandSelectScreenUi()
+    {//initializes the gameobjects and activates them, also loads in texts to be displayed in the boxes, as well as turning off the things after the animations are done playing;
         isLoading = true;
         PlayCardSelectCanvasLeavingAnimation();
         PlayCardSelectCardDisplayInfoLeavingAnimation();
         PlayCardConfirmWindowLeavingAnimation();
+        UpdateEnemyNameInTextBox();
+        UpdateEnemyDialogBoxToChoosingCards();
         PlayEnemyHandDialogBoxAnimation();
         yield return new WaitForSeconds(0.5f);
         cardSelectionGameObject.SetActive(false);
@@ -43,27 +49,27 @@ public partial class TTUI
         StartCoroutine(PlayEnemyFullHandAnimation());
     }
 
-    public void PlayCardSelectCanvasLeavingAnimation()
+    private void PlayCardSelectCanvasLeavingAnimation()
     {
         cardSelectionWindowAnimator.Play("CardWindowLeaving");
     }
 
-    public void PlayCardSelectCardDisplayInfoLeavingAnimation()
+    private void PlayCardSelectCardDisplayInfoLeavingAnimation()
     {
         cardSelectionCardDisplayAnimator.Play("CardDisplayLeaving");
     }
     
-    public void PlayCardConfirmWindowLeavingAnimation()
+    private void PlayCardConfirmWindowLeavingAnimation()
     {
         cardConfirmAnimator.Play("CardConfirmWindowLeaving");
     }
 
-    public void PlayEnemyHandDialogBoxAnimation()
+    private void PlayEnemyHandDialogBoxAnimation()
     {
         enemyHandDialogBoxAnimator.Play("EnemyHandDialogBoxDisplaying");
     }
 
-    public IEnumerator PlayEnemyHandCardFlipAnimations()
+    private IEnumerator PlayEnemyHandCardFlipAnimations()
     {
         for (int i = 0; i < ttdb.currentEnemyTripleTriadCards.Length; i++)
         {
@@ -73,13 +79,19 @@ public partial class TTUI
 
         yield return new WaitForSeconds(1f);
         isLoading = false;
-        ttMan.ttEnemyHandSelectionProcessor.changeTheTextToSelectingTurn();
-        switchToFingerTurnSelectionAnimation();
+        ttMan.SendStateChange(ttMan.turnSelectionState);
+    }
+    
+
+    public void UpdateEnemyNameInTextBox()
+    {
+        enemyDialogBoxNameText.text = ttdb.WhatIsTheEnemyNpcName() + " :";
     }
 
-    public void switchToFingerTurnSelectionAnimation()
+    public void UpdateEnemyDialogBoxToChoosingCards()
     {
-        SoundManager.instance.PlaySFX(5);
-        blinkingHorizontalFingerAnimator.Play("TurnSelectionFinger");
+        enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenChoosingCards();
     }
+
+
 }
