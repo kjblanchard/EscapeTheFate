@@ -3,15 +3,19 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class TTCardPage : MonoBehaviour
+namespace ETF
 {
-    public List<Transform> fingerLocations = new List<Transform>();
-    public GameObject[] cardGameObjects;
+    public class TTCardPage : MonoBehaviour
+    {
+        public List<Transform> fingerLocations = new List<Transform>();
+        public GameObject[] cardGameObjects;
 
-    public Text[] cardNameLocations;
-    public Text[] cardQuantityLocations;
-   // public Text[] cardDescriptions;
+        public Text[] cardNameLocations;
 
-    public int currentActiveCardsOnPage = 10;
+        public Text[] cardQuantityLocations;
+        // public Text[] cardDescriptions;
+
+        public int currentActiveCardsOnPage = 10;
+    }
 }
 

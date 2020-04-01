@@ -2,43 +2,48 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class TTUI
+namespace ETF
 {
-    [SerializeField] GameObject playerSelectionFinger;
-    
-    public void InitializePlayerTurnCanvasFromTurnSelection()
+    public partial class TTUI
     {
-        enemyHandDialogBoxAnimator.gameObject.SetActive(false);
-        setFocusOnPlayerCardSelected(0);
-    }
+        [SerializeField] GameObject playerSelectionFinger;
 
-    public void keepPlayerSelectionFingerOnProperLocation(int fingerPointLocationToGoTo)
-    {
-        if (isLoading == false)
+        public void InitializePlayerTurnCanvasFromTurnSelection()
         {
-            if (!playerSelectionFinger.gameObject.activeInHierarchy)
+            enemyHandDialogBoxAnimator.gameObject.SetActive(false);
+            setFocusOnPlayerCardSelected();
+        }
+
+        public void keepPlayerSelectionFingerOnProperLocation()
+        {
+            if (isLoading == false)
             {
-                fingerPrefab.gameObject.SetActive(true);
+                if (!playerSelectionFinger.gameObject.activeInHierarchy)
+                {
+                    
+                    playerSelectionFinger.gameObject.SetActive(true);
+                }
+
+                playerSelectionFinger.transform.position =
+                    myHandFingerPoints[ttdb.RetrievePlayerTurnCurrentSelection()].transform.position;
+            }
+            else
+            {
+                playerSelectionFinger.gameObject.SetActive(false);
             }
 
-            playerSelectionFinger.transform.position = myHandFingerPoints[fingerPointLocationToGoTo].transform.position;
         }
-        else
+
+        public void setFocusOnPlayerCardSelected()
         {
-            fingerPrefab.gameObject.SetActive(false);
+            myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("inFocus");
+        }
+
+        public void setOutFocusOnPlayerCardSelected()
+        {
+            myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("outFocus");
+
         }
 
     }
-
-    public void setFocusOnPlayerCardSelected(int currentPlayerCardSelected)
-    {
-        myHandCardAnimators[currentPlayerCardSelected].SetTrigger("inFocus");
-    }
-
-    public void setOutFocusOnPlayerCardSelected(int currentPlayerCardSelected)
-    {
-        myHandCardAnimators[currentPlayerCardSelected].SetTrigger("outFocus");
-
-    }
-
 }

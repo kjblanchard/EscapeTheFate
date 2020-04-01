@@ -2,19 +2,23 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class LastItemChosen
+namespace ETF
 {
-    public readonly int pageNum;
-    public readonly  int spotOnPage;
-    public readonly int spotInCardInv;
-
-
-
-    public LastItemChosen(int pageNum, int spotOnPage, int spotInCardInv)
+    public class LastItemChosen
     {
-        this.pageNum = pageNum;
-        this.spotOnPage = spotOnPage;
-        this.spotInCardInv = spotInCardInv;
+        public readonly int pageNum;
+        public readonly int spotOnPage;
+        public readonly int spotInCardInv;
+
+
+
+        public LastItemChosen(int pageNum, int spotOnPage, int spotInCardInv)
+        {
+            this.pageNum = pageNum;
+            this.spotOnPage = spotOnPage;
+            this.spotInCardInv = spotInCardInv;
+        }
+
     }
 
 }

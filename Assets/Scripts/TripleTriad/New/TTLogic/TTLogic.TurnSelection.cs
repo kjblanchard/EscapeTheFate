@@ -4,29 +4,33 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public partial class TTLogic
+namespace ETF
 {
-    [SerializeField]  bool myTurnFirst;
-    [SerializeField]  bool enemyTurnFirst;
-    
-    private int _tempTurnValue;
-
-    public int TurnSelector()
+    public partial class TTLogic
     {
-        if (myTurnFirst)
-        {
-            return 0;
-        }
-        else if (enemyTurnFirst)
-        {
-            return 1;
-        }
-        else
-        {
-            _tempTurnValue = Random.Range(0, 2);
-            return _tempTurnValue;
-        }
-    }
+        [SerializeField] bool myTurnFirst;
+        [SerializeField] bool enemyTurnFirst;
 
+        private int _tempTurnValue;
+
+        public int TurnSelector()
+        {
+            if (myTurnFirst)
+            {
+                return 0;
+            }
+            else if (enemyTurnFirst)
+            {
+                return 1;
+            }
+            else
+            {
+                _tempTurnValue = Random.Range(0, 2);
+                return _tempTurnValue;
+            }
+        }
+
+
+    }
 
 }

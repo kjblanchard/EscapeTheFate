@@ -2,19 +2,22 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class TTDB
+namespace ETF
 {
-    private int _whichPlayerGetsToGoFirst;
-
-
-    public void SetWhoGetsToGoFirst(int whoGoesFirst)
+    public partial class TTDB
     {
-        _whichPlayerGetsToGoFirst = whoGoesFirst;
-    }
+        private int _whichPlayerGetsToGoFirst;
 
-    public int ReturnWhichPlayerGetsToGoFirst()
-    {
-        return _whichPlayerGetsToGoFirst;
-    }
 
+        public void SetWhoGetsToGoFirst(int whoGoesFirst)
+        {
+            _whichPlayerGetsToGoFirst = whoGoesFirst;
+        }
+
+        public int ReturnWhichPlayerGetsToGoFirst()
+        {
+            return _whichPlayerGetsToGoFirst;
+        }
+
+    }
 }

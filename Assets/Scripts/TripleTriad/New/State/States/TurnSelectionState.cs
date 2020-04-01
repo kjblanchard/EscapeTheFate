@@ -2,30 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TurnSelectionState : TtState
+namespace ETF
 {
-    #region Configuration
-
-    [SerializeField] TripleTriadManager ttMan;
-
-    #endregion
-    public override void Startup()
+    public class TurnSelectionState : TtState
     {
-        ttMan.ttUi.InitializeTurnSelection();
-        ttMan.ttDb.SetWhoGetsToGoFirst(ttMan.ttLogic.TurnSelector());
-        ttMan.ttUi.switchToFingerTurnSelectionAnimation();
-    }
+        #region Configuration
 
-    public override void Execute()
-    {
+        [SerializeField] TripleTriadManager ttMan;
 
-        //this is ended from an animation event at the end of the finger move
-    }
+        #endregion
 
-    public override void End()
-    {
-        base.End();
+        public override void Startup()
+        {
+            ttMan.ttUi.InitializeTurnSelection();
+            ttMan.ttDb.SetWhoGetsToGoFirst(ttMan.ttLogic.TurnSelector());
+            ttMan.ttUi.switchToFingerTurnSelectionAnimation();
+        }
+
+        public override void Execute()
+        {
+
+            //this is ended from an animation event at the end of the finger move
+        }
+
+        public override void End()
+        {
+            base.End();
+        }
+
+
     }
-    
-    
 }

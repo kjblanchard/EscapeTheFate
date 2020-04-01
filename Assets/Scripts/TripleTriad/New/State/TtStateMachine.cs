@@ -3,35 +3,39 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-public class TtStateMachine : MonoBehaviour
+namespace ETF
 {
-    
-    [SerializeField] TtState _currentState;
-    [SerializeField] TtState _previousState;
-
-
-    public void RunCurrentState()
+    public class TtStateMachine : MonoBehaviour
     {
+
+        [SerializeField] TtState _currentState;
+        [SerializeField] TtState _previousState;
+
+
+        public void RunCurrentState()
+        {
 
             _currentState.Execute();
 
-    }
+        }
 
-    public void ChangeState(TtState stateToChangeTo)
-    {
-        if (_currentState != null)
+        public void ChangeState(TtState stateToChangeTo)
+        {
+            if (_currentState != null)
+            {
+                _currentState.End();
+                _previousState = _currentState;
+            }
+
+            _currentState = stateToChangeTo;
+            _currentState.Startup();
+        }
+
+        public void ChangeStateToPreviousState()
         {
             _currentState.End();
-            _previousState = _currentState;
+            _currentState = _previousState;
+            _currentState.Startup();
         }
-        _currentState = stateToChangeTo;
-        _currentState.Startup();
-    }
-
-    public void ChangeStateToPreviousState()
-    {
-        _currentState.End();
-        _currentState = _previousState;
-        _currentState.Startup();
     }
 }

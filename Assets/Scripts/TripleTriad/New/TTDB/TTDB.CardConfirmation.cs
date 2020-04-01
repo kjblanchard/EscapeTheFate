@@ -2,37 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public partial class TTDB
+namespace ETF
 {
-    [Header("Card Confirmation Section")]
-    private int _currentFingerPositionInCardConfirmation;
-
-    public int RetrieveCurrentFingerPositionInCardConfirmation()
+    public partial class TTDB
     {
-        return _currentFingerPositionInCardConfirmation;
-    }
+        [Header("Card Confirmation Section")] private int _currentFingerPositionInCardConfirmation;
 
-    public void InitializeCardConfirmationDbValues()
-    {
-        _currentFingerPositionInCardConfirmation = 0;
-    }
-
-    public void CardConfirmCancelButtonPress()
-    {
-        _currentFingerPositionInCardConfirmation = 1;
-    }
-
-    public void CardConfirmLeftRightUpdateDb(CardConfirmationState.WhichWayToScroll whichWayToScroll)
-    {
-        switch (whichWayToScroll)
+        public int RetrieveCurrentFingerPositionInCardConfirmation()
         {
-            case CardConfirmationState.WhichWayToScroll.IncrementingFinger:
-                _currentFingerPositionInCardConfirmation++;
-                break;
-            case CardConfirmationState.WhichWayToScroll.DecrementingFinger:
-                _currentFingerPositionInCardConfirmation--;
-                break;
+            return _currentFingerPositionInCardConfirmation;
         }
+
+        public void InitializeCardConfirmationDbValues()
+        {
+            _currentFingerPositionInCardConfirmation = 0;
+        }
+
+        public void CardConfirmCancelButtonPress()
+        {
+            _currentFingerPositionInCardConfirmation = 1;
+        }
+
+        public void CardConfirmLeftRightUpdateDb(CardConfirmationState.WhichWayToScroll whichWayToScroll)
+        {
+            switch (whichWayToScroll)
+            {
+                case CardConfirmationState.WhichWayToScroll.IncrementingFinger:
+                    _currentFingerPositionInCardConfirmation++;
+                    break;
+                case CardConfirmationState.WhichWayToScroll.DecrementingFinger:
+                    _currentFingerPositionInCardConfirmation--;
+                    break;
+            }
+        }
+
     }
-    
 }

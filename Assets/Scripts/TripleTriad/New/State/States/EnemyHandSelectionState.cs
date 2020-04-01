@@ -2,26 +2,29 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyHandSelectionState : TtState
+namespace ETF
 {
-    #region Configuration
-
-    [SerializeField] TripleTriadManager ttMan;
-
-    #endregion
-    
-    public override void Startup()
+    public class EnemyHandSelectionState : TtState
     {
-        StartCoroutine(ttMan.ttUi.InitializeEnemyHandSelectScreenUi());
-    }
+        #region Configuration
 
-    public override void Execute()
-    {
-       ttMan.ttDb.GenerateEnemyCardHand();
-    }
+        [SerializeField] TripleTriadManager ttMan;
 
-    public override void End()
-    {
-        base.End();
+        #endregion
+
+        public override void Startup()
+        {
+            StartCoroutine(ttMan.ttUi.InitializeEnemyHandSelectScreenUi());
+        }
+
+        public override void Execute()
+        {
+            ttMan.ttDb.GenerateEnemyCardHand();
+        }
+
+        public override void End()
+        {
+            base.End();
+        }
     }
 }

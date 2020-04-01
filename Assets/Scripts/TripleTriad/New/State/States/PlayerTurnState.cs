@@ -2,51 +2,79 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerTurnState : TtState
+namespace ETF
 {
-    #region Configuration
-
-    [SerializeField] private TripleTriadManager ttMan;
-    private int _playerTurnCurrentSelection;
-
-    #endregion
-
-
-    public override void Startup()
+    public class PlayerTurnState : TtState
     {
-        ttMan.ttUi.InitializePlayerTurnCanvasFromTurnSelection();
-        InitializePlayerTurnValues();
-    }
+        #region Configuration
 
-    public override void Execute()
-    {
-        if (Input.GetKeyDown(KeyCode.W))
+        [SerializeField] private TripleTriadManager ttMan;
+
+        #endregion
+
+
+        public override void Startup()
         {
-            ttMan.ttUi.setOutFocusOnPlayerCardSelected(_playerTurnCurrentSelection);
-            _playerTurnCurrentSelection--;
-            SoundManager.instance.PlaySFX(0);
-            ttMan.ttUi.setFocusOnPlayerCardSelected(_playerTurnCurrentSelection);
+            ttMan.ttUi.InitializePlayerTurnCanvasFromTurnSelection();
+            ttMan.ttDb.InitializePlayerTurnDbValues();
+
         }
-        else if (Input.GetKeyDown(KeyCode.S))
+
+        public override void Execute()
         {
-            ttMan.ttUi.setOutFocusOnPlayerCardSelected(_playerTurnCurrentSelection);
-            _playerTurnCurrentSelection++;
-            SoundManager.instance.PlaySFX(0);
-            ttMan.ttUi.setFocusOnPlayerCardSelected(_playerTurnCurrentSelection);
+            ListenForInput();
+            
+            ttMan.ttUi.keepPlayerSelectionFingerOnProperLocation();
+        }
+
+        private void ListenForInput()
+        {
+            if ((Input.GetKeyDown(KeyCode.W) || Input.GetButtonDown("up")))
+            {
+                if(ttMan.ttLogic.CanIScrollUpInPlayerTurn())
+                {
+
+                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+                    ttMan.ttDb.MovePlayerTurnCurrentSelectionUp();
+                    SoundManager.instance.PlaySFX(0);
+                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                }
+                else if(ttMan.ttLogic.CanILoopUpInPlayerTurn())
+                {
+                    
+                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+                    ttMan.ttDb.MovePlayerTurnCurrentSelectionToBottom();
+                    SoundManager.instance.PlaySFX(0);
+                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                }
+            }
+            else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("down")))
+            {
+                if (ttMan.ttLogic.CanIScrollDownInPlayerTurn())
+                {
+                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+                    ttMan.ttDb.MovePlayerTurnCurrentSelectionDown();
+                    SoundManager.instance.PlaySFX(0);
+                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                }
+                else if (ttMan.ttLogic.CanILoopDownInPlayerTurn())
+                {
+                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+                    ttMan.ttDb.MovePlayerTurnCurrentSelectionTop();
+                    SoundManager.instance.PlaySFX(0);
+                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                }
+            }
+            else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")))
+            {
+                ttMan.SendStateChange(ttMan.locationSelectionState);
+            }
+        }
+
+        public override void End()
+        {
+            base.End();
         }
         
-        //listen for inputs
-        ttMan.ttUi.keepPlayerSelectionFingerOnProperLocation(_playerTurnCurrentSelection);
-    }
-
-    public override void End()
-    {
-        base.End();
-    }
-    
-
-    public void InitializePlayerTurnValues()
-    {
-        _playerTurnCurrentSelection = 0;
     }
 }
