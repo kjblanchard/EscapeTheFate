@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
 
 	public partial class TTDB

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
     public partial class TTDB
     {

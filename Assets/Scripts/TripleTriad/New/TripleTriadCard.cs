@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
     public class TripleTriadCard : MonoBehaviour
     {

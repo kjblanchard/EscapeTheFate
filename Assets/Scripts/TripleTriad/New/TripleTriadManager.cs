@@ -3,10 +3,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
     public class TripleTriadManager : MonoBehaviour
     {
+
+        #region Configuration
+
         public enum TripleTriadGameStates
         {
             DISABLED,
@@ -36,6 +39,9 @@ namespace ETF
 
         [Header("Singleton")] public static TripleTriadManager instance;
 
+        #endregion
+
+
         private void Awake()
         {
             instance = this;
@@ -54,6 +60,8 @@ namespace ETF
             ttStateMachine.RunCurrentState();
         }
 
+        #region Functions
+
         public void SendStateChange(TtState stateToChangeTo)
         {
             GC.Collect();
@@ -64,6 +72,10 @@ namespace ETF
         {
             ttStateMachine.ChangeStateToPreviousState();
         }
+
+        #endregion
+
+
 
     }
 }

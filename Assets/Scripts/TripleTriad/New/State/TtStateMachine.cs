@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
     public class TtStateMachine : MonoBehaviour
     {

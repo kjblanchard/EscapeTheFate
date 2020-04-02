@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
     public partial class TTDB : MonoBehaviour
     {

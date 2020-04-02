@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ETF
+namespace ETF.TripleTriad
 {
 
 	public class LocationSelectionState : TtState
@@ -22,19 +22,19 @@ namespace ETF
 
 		public override void Execute()
 		{
-			if (Input.GetKeyDown(KeyCode.W))
+			if (Input.GetKeyDown(KeyCode.W) || Input.GetButtonDown("up"))
 			{
 				ttMan.ttDb.MoveLocationFingerUpInDb();
 			}
-			else if (Input.GetKeyDown(KeyCode.S))
+			else if (Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("down"))
 			{
 				ttMan.ttDb.MoveLocationFingerDownInDb();
 			}
-			else if (Input.GetKeyDown(KeyCode.D))
+			else if (Input.GetKeyDown(KeyCode.D)|| Input.GetButtonDown("right"))
 			{
 				ttMan.ttDb.MoveLocationFingerRightInDb();
 			}
-			else if (Input.GetKeyDown(KeyCode.A))
+			else if (Input.GetKeyDown(KeyCode.A)|| Input.GetButtonDown("left"))
 			{
 				ttMan.ttDb.MoveLocationFingerLeftInDb();
 			}
@@ -42,7 +42,7 @@ namespace ETF
 			{
 				//go back to card selection
 			}
-			else if (Input.GetKeyDown(KeyCode.Space))
+			else if (Input.GetKeyDown(KeyCode.Space)|| Input.GetButtonDown("Fire1"))
 			{
 				ttMan.ttDb.RetrieveTripleTriadCardInPlayerSelection().SetLocationToGoTo(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
 				ttMan.ttUi.PlayCardInLocationSelection();
