@@ -49,27 +49,19 @@ namespace ETF.TripleTriad
 
         public override void Startup()
         {
-            if (_gameStateComingFrom != TripleTriadManager.TripleTriadGameStates.CHOOSING_CARDS)
+            if (_gameStateComingFrom != TripleTriadManager.TripleTriadGameStates.ChoosingCards)
             {
-                ttMan.ttDb.ClearBattleSelectionsList();
-                ttMan.ttDb.BringInUsableBattleCards();
-                ttMan.ttDb.InitializeCardSelectionValuesInDB();
+                InitializeDbForCardSelection();
 
-                ttMan.ttUi.InitializeCardSelectionScreen();
-                ttMan.ttUi.ResetScrollRectPosition();
-                ttMan.ttUi.GeneratePages();
-                ttMan.ttUi.InitializeUiFromTtBattleList();
-                ttMan.ttUi.UpdatePageNum();
-                ttMan.ttUi.UpdateTheBigCardDisplayUi();
+                InitializeUiForCardSelection();
             }
-            else if (_gameStateComingFrom == TripleTriadManager.TripleTriadGameStates.CHOOSING_CARDS)
+            else if (_gameStateComingFrom == TripleTriadManager.TripleTriadGameStates.ChoosingCards)
             {
-                ttMan.ttUi.InitializeCardSelectionScreen();
+                ttMan.ttUi.TurnOnCardSelectionScreenUiElements();
                 CancelLastSelection();
             }
-
         }
-
+        
         public override void Execute()
         {
             ListenForUserInputs();
@@ -78,7 +70,7 @@ namespace ETF.TripleTriad
 
         public override void End()
         {
-            _gameStateComingFrom = TripleTriadManager.TripleTriadGameStates.CHOOSING_CARDS;
+            _gameStateComingFrom = TripleTriadManager.TripleTriadGameStates.ChoosingCards;
             StopCoroutine(_continuousCoroutineReference);
             ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
         }
@@ -271,6 +263,7 @@ namespace ETF.TripleTriad
 
                 }
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         private IEnumerator PageScrollContinuouslyCo(PageScrollDirections whichWayToScroll)
@@ -281,6 +274,7 @@ namespace ETF.TripleTriad
                 yield return new WaitForSeconds(ttMan.ttUi.RetrieveRegularAutoScrollSpeed() * .75f);
 
             }
+            // ReSharper disable once IteratorNeverReturns
         }
 
         private void CardSelection()
@@ -357,9 +351,22 @@ namespace ETF.TripleTriad
             StopCoroutine(_continuousCoroutineReference);
         }
 
-        public void ChangeGameStateBackToOriginal()
+
+        private void InitializeDbForCardSelection()
         {
-            _gameStateComingFrom = TripleTriadManager.TripleTriadGameStates.SHOWING_RULES;
+            ttMan.ttDb.ClearBattleSelectionsList();
+            ttMan.ttDb.BringInUsableBattleCards();
+            ttMan.ttDb.InitializeCardSelectionValuesInDB();
+        }
+
+        private void InitializeUiForCardSelection()
+        {
+            ttMan.ttUi.TurnOnCardSelectionScreenUiElements();
+            ttMan.ttUi.ResetScrollRectPosition();
+            ttMan.ttUi.GeneratePages();
+            ttMan.ttUi.InitializeUiFromTtBattleList();
+            ttMan.ttUi.UpdatePageNum();
+            ttMan.ttUi.UpdateTheBigCardDisplayUi();
         }
 
         #endregion

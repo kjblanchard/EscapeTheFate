@@ -53,6 +53,12 @@ namespace ETF.TripleTriad
 			return _boardTripleTriadCards[boardLocation];
 		}
 
+		public TripleTriadCard RetrieveCard2InMyHandTest()
+		{
+			return _myHandTripleTriadCards[1];
+		}
+		
+
 		#endregion
 	}
 }

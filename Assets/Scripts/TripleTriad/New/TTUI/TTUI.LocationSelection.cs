@@ -50,7 +50,16 @@ namespace ETF.TripleTriad
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImage();
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).MoveToBoard();
 		}
-		
+
+		public void RealignCardsInHandAfterCardIsPlayed()
+		{
+			//for each card in my hand
+			//that has a number HIGHER THAN ME
+			//That hasNOT been played
+			//move itsPosition upBy one
+			//play the animation to move him up by one
+			
+		}
 
 		#endregion
 	}

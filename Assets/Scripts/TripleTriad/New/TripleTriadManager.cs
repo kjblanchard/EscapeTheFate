@@ -12,17 +12,17 @@ namespace ETF.TripleTriad
 
         public enum TripleTriadGameStates
         {
-            DISABLED,
-            SHOWING_RULES, //SHOWING RULES NEEDS TO RESET CARD SELECTION COMING FROM TO SHOWING RULES WHEN IT ENDS for his startup to work right
-            CHOOSING_CARDS,
-            CONFIRMING_CARDS,
-            CHOOSE_ENEMY_CARDS,
-            TURN_SELECTION,
-            PLAYER_CARD_SELECTION,
-            LOCATION_SELECTION,
-            ENEMY_SELECTION,
-            ENEMY_LOCATION_SELECTION,
-            END,
+            Disabled,
+            ShowingRules, //SHOWING RULES NEEDS TO RESET CARD SELECTION COMING FROM TO SHOWING RULES WHEN IT ENDS for his startup to work right
+            ChoosingCards,
+            ConfirmingCards,
+            ChooseEnemyCards,
+            TurnSelection,
+            PlayerCardSelection,
+            LocationSelection,
+            EnemySelection,
+            EnemyLocationSelection,
+            End,
         }
 
         [Header("Script References")] public TTUI ttUi;

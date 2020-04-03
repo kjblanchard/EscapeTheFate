@@ -282,7 +282,7 @@ namespace ETF.TripleTriad
         }
 
 
-        public void InitializeCardSelectionScreen()
+        public void TurnOnCardSelectionScreenUiElements()
         {
             cardSelectionGameObject.SetActive(true);
             CardConfirmCanvas.SetActive(false);
