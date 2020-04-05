@@ -15,11 +15,12 @@ namespace ETF.TripleTriad
         public override void Startup()
         {
             StartCoroutine(ttMan.ttUi.InitializeEnemyHandSelectScreenUi());
+            ttMan.ttDb.GenerateEnemyCardHand();
         }
 
         public override void Execute()
         {
-            ttMan.ttDb.GenerateEnemyCardHand();
+
         }
 
         public override void End()

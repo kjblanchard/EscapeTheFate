@@ -68,7 +68,7 @@ namespace ETF.TripleTriad
             {
                 DetermineIfRareCardsShouldBeAddedToHand();
             }
-
+            print("did the moderatechoosecards");
             ModerateAddCardsToHandUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
         }
@@ -85,6 +85,8 @@ namespace ETF.TripleTriad
                 {
                     currentEnemyHandList.Add(_currentEnemyRareCards[i]);
                 }
+
+                print("did the search for rare cards");
             }
         }
 
@@ -102,6 +104,7 @@ namespace ETF.TripleTriad
             //this will choose a random card from the list of common cards until the enemy's hand is full
             while (currentEnemyHandList.Count < 5)
             {
+                print("added card to hand until I hit 5");
                 var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfUncommonCards.Count);
                 currentEnemyHandList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
             }
