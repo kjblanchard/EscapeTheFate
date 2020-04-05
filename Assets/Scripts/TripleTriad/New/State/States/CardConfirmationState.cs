@@ -28,6 +28,24 @@ namespace ETF.TripleTriad
 
         public override void Execute()
         {
+            ListenForUserInputs();
+
+            ttMan.ttUi.KeepFingerOnProperLocationInCardConfirmation(ttMan.ttDb
+                .RetrieveCurrentFingerPositionInCardConfirmation());
+        }
+
+
+
+        public override void End()
+        {
+            //ttMan.cardSelectionState.ChangeGameStateBackToOriginal(); Put this somewhere, not here.
+        }
+
+        #region Functions
+
+        
+        private void ListenForUserInputs()
+        {
             if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("right")) &&
                 ttMan.ttLogic.CanIScrollOnCardConfirm(WhichWayToScroll.IncrementingFinger))
             {
@@ -53,18 +71,8 @@ namespace ETF.TripleTriad
             {
                 ttMan.SendStateChange(ttMan.enemyHandSelectionState);
             }
-
-            ttMan.ttUi.KeepFingerOnProperLocationInCardConfirmation(ttMan.ttDb
-                .RetrieveCurrentFingerPositionInCardConfirmation());
         }
-
-        public override void End()
-        {
-            //ttMan.cardSelectionState.ChangeGameStateBackToOriginal(); Put this somewhere, not here.
-        }
-
-        #region Functions
-
+        
         private void CardConfirmLeftRightScroll(WhichWayToScroll directionToMove)
         {
             switch (directionToMove)

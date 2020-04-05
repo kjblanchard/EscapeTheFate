@@ -13,7 +13,6 @@ namespace ETF.TripleTriad
 		private int _currentFingerLocationInLocationSelection;
 		[SerializeField] private TripleTriadCardOnBoard[] _boardTripleTriadCards;
 		
-		//private List<TripleTriadCardInHand> tempTripleTriadListForRenumbering = new List<TripleTriadCardInHand>();
 
 		#endregion
 
@@ -45,11 +44,6 @@ namespace ETF.TripleTriad
 			_currentFingerLocationInLocationSelection -= 3;
 		}
 
-		// public TripleTriadCardInHand RetrieveTripleTriadCardInPlayerSelection()
-		// {
-		// 	return _myFullHandTripleTriadCards[_playerTurnCurrentSelection];
-		// }
-		
 		public TripleTriadCardInHand RetrieveTripleTriadCardInPlayerSelection()
 		{
 			return _myCurrentHandTripleTriadCards[_playerTurnCurrentSelection];

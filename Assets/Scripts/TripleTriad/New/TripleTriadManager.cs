@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace ETF.TripleTriad
@@ -71,6 +69,7 @@ namespace ETF.TripleTriad
 
         public void SendChangeToPreviousState()
         {
+            GC.Collect();
             ttStateMachine.ChangeStateToPreviousState();
         }
 

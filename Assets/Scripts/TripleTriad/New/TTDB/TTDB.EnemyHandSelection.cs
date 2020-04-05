@@ -44,6 +44,9 @@ namespace ETF.TripleTriad
                 case EnemyCardHand.WhatTypeOfCardPlayerAmI.Beginner:
                     BeginnerChooseCards();
                     break;
+                case EnemyCardHand.WhatTypeOfCardPlayerAmI.Moderate:
+                    ModerateChooseCards();
+                    break;
             }
         }
 
@@ -56,6 +59,17 @@ namespace ETF.TripleTriad
             }
 
             BeginnerAddCardsToHandUntilFull();
+            AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+        }
+        private void ModerateChooseCards()
+        {
+            //chooses cards for the beginner ruleset
+            if (_currentEnemyRareCards.Count > 0)
+            {
+                DetermineIfRareCardsShouldBeAddedToHand();
+            }
+
+            ModerateAddCardsToHandUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
         }
 
@@ -81,6 +95,15 @@ namespace ETF.TripleTriad
             {
                 var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfCommonCards.Count);
                 currentEnemyHandList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
+            }
+        }
+        private void ModerateAddCardsToHandUntilFull()
+        {
+            //this will choose a random card from the list of common cards until the enemy's hand is full
+            while (currentEnemyHandList.Count < 5)
+            {
+                var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfUncommonCards.Count);
+                currentEnemyHandList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
             }
         }
 

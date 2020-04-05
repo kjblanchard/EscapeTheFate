@@ -63,6 +63,11 @@ namespace ETF.TripleTriad
 			
 		}
 
+		public int RetrieveLocationSelectionTransformCount()
+		{
+			return locationSelectionFingerLocation.Length;
+		}
+
 		#endregion
 	}
 }

@@ -8,6 +8,9 @@ public class CardInventory : MonoBehaviour
     public List<Card> renumberedCardList = new List<Card>();
     private readonly List<Card> _ttBattleCardList = new List<Card>();
     public List<Card> ttCardListOfCommonCards = new List<Card>();
+    public List<Card> ttCardListOfUncommonCards = new List<Card>();
+    public List<Card> ttCardListOfRareCards = new List<Card>();
+    public List<Card> ttCardListOfEliteCards = new List<Card>();
     private readonly List<int> _temporaryCardQuantityList = new List<int>();
     
 
@@ -56,12 +59,11 @@ public class CardInventory : MonoBehaviour
 
     public void CreateUsableBattleCardLists()
     {
-        //this probably only needs to be called once ever, Since it generates the entire list of everything
         _ttBattleCardList.Clear();
         _temporaryCardQuantityList.Clear();
         ttCardListOfCommonCards.Clear();
-
-        //foreach (var t in masterCardList)
+        
+        //create lists of cards by type
         for (int i = 0; i < masterCardList.Length; i++)
         {
             if (masterCardList[i].cardsRarity != Card.cardRarity.Common || masterCardList[i].amountOwned <= 0) continue;
@@ -69,22 +71,22 @@ public class CardInventory : MonoBehaviour
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
             ttCardListOfCommonCards.Add(masterCardList[i]);
         }
-
-        //foreach (var t in masterCardList)
+        
         for (int i = 0; i < masterCardList.Length; i++)
         {
             if (masterCardList[i].cardsRarity != Card.cardRarity.Uncommon ||
                 masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+            ttCardListOfUncommonCards.Add(masterCardList[i]);
         }
-
-        //foreach (var t in masterCardList)
+        
         for (int i = 0; i < masterCardList.Length; i++)
         {
             if (masterCardList[i].cardsRarity != Card.cardRarity.Rare || masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+            ttCardListOfRareCards.Add(masterCardList[i]);
         }
 
         for (int i = 0; i < masterCardList.Length; i++)
@@ -92,6 +94,7 @@ public class CardInventory : MonoBehaviour
             if (masterCardList[i].cardsRarity != Card.cardRarity.Elite || masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
+            ttCardListOfEliteCards.Add(masterCardList[i]);
         }
     }
 
@@ -130,5 +133,5 @@ public class CardInventory : MonoBehaviour
     {
         return _temporaryCardQuantityList;
     }
-    
+
 }

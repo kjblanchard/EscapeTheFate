@@ -8,12 +8,20 @@ namespace ETF.TripleTriad
 {
     public class TripleTriadCardOnBoard : TripleTriadCard
     {
+
+        #region configuration
+
         [SerializeField] public int[] locationBoardAdjacency;
         [SerializeField] public int[] myValueToCheck;
         [SerializeField] public int[] adjacencyValueToCheck;
         [SerializeField] public bool cardInPlay;
 
-        
+        #endregion
+
+
+
+        #region functions
+
         public void ChangeToPlayerTurn()
         {
             ttMan.ttDb.ModifyPlayerTurnIsCancelling(false);
@@ -51,6 +59,11 @@ namespace ETF.TripleTriad
         {
             cardAnimator.SetTrigger("cardFlipDown");
         }
+
+        #endregion
+
+        
+
         
         
     }

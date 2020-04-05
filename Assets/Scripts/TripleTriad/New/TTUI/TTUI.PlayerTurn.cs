@@ -8,7 +8,7 @@ namespace ETF.TripleTriad
     {
         [SerializeField] GameObject playerSelectionFinger;
 
-        public void InitializePlayerTurnCanvasFromTurnSelection()
+        public void InitializePlayerTurnCanvas()
         {
             enemyHandDialogBoxAnimator.gameObject.SetActive(false);
             locationSelectionFinger.SetActive(false);

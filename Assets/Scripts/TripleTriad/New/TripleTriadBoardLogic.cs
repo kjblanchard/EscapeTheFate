@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ETF.TripleTriad
 {
@@ -18,21 +16,17 @@ namespace ETF.TripleTriad
 		
 	
 		#endregion
-
-
-
+		
 		#region Functions
 
 		public void CheckToSeeIfCardsAreFlipping(int locationCardPlaced)
 		{
 			for (int i = 0; i < _tripleTriadBoardCards[locationCardPlaced].locationBoardAdjacency.Length; i++)
 			{
-
 				_adjacentCardLocationToCheckCached = _tripleTriadBoardCards[locationCardPlaced].locationBoardAdjacency[i];
 				//print($"checking adjacency [i], which is location {_adjacentCardLocationToCheckCached} and is he in play?  {_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].cardInPlay} ");
 				if (_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].cardInPlay)
 				{
-
 					_myCardValueCached = _tripleTriadBoardCards[locationCardPlaced].whatCardIAm
 						.cardValues[_tripleTriadBoardCards[locationCardPlaced].myValueToCheck[i]];
 					_enemyCardValueCached = _tripleTriadBoardCards[_adjacentCardLocationToCheckCached].whatCardIAm
@@ -40,26 +34,21 @@ namespace ETF.TripleTriad
 					//print($"my value is {_myCardValueCached} and his value is {_enemyCardValueCached} and he is at location {_adjacentCardLocationToCheckCached}");
 					if (_myCardValueCached > _enemyCardValueCached)
 					{
-						//print($"flipping card");
-
-						if (_tripleTriadBoardCards[locationCardPlaced].adjacencyValueToCheck[i] == 0)
+						switch (_tripleTriadBoardCards[locationCardPlaced].adjacencyValueToCheck[i])
 						{
-							_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipUp();
+							case 0:
+								_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipUp();
+								break;
+							case 1:
+								_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipRight();
+								break;
+							case 2:
+								_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipDown();
+								break;
+							case 3:
+								_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipLeft();
+								break;
 						}
-						else if (_tripleTriadBoardCards[locationCardPlaced].adjacencyValueToCheck[i] == 1)
-						{
-							_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipRight();
-							
-						}
-						else if (_tripleTriadBoardCards[locationCardPlaced].adjacencyValueToCheck[i] == 2)
-						{
-							_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipDown();
-						}
-						else if(_tripleTriadBoardCards[locationCardPlaced].adjacencyValueToCheck[i] == 3)
-						{
-							_tripleTriadBoardCards[_adjacentCardLocationToCheckCached].BoardCardFlipLeft();
-						}
-
 					}
 				}
 			}

@@ -19,7 +19,7 @@ namespace ETF.TripleTriad
             if (!ttMan.ttDb.RetrievePlayerTurnIsComingFromCancelScreen())
             {
                 ttMan.ttDb.InitializePlayerTurnDbValues();
-                ttMan.ttUi.InitializePlayerTurnCanvasFromTurnSelection();
+                ttMan.ttUi.InitializePlayerTurnCanvas();
             }
             else
             {
@@ -34,55 +34,36 @@ namespace ETF.TripleTriad
             ttMan.ttUi.keepPlayerSelectionFingerOnProperLocation();
         }
 
+
+
+        public override void End()
+        {
+        }
+
+        #region Functions
+
         private void ListenForInput()
         {
             if ((Input.GetKeyDown(KeyCode.W) || Input.GetButtonDown("up")))
             {
-                if(ttMan.ttLogic.CanIScrollUpInPlayerTurn())
+                if (ttMan.ttLogic.CanIScrollUpInPlayerTurn())
                 {
-
-                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
-                    ttMan.ttDb.MovePlayerTurnCurrentSelectionUp();
-                    SoundManager.instance.PlaySFX(0);
-                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                    ScrollUp();
                 }
-                else if(ttMan.ttLogic.CanILoopUpInPlayerTurn())
+                else if (ttMan.ttLogic.CanILoopUpInPlayerTurn())
                 {
-                    
-                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
-                    ttMan.ttDb.MovePlayerTurnCurrentSelectionToBottom();
-                    SoundManager.instance.PlaySFX(0);
-                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                    LoopToBottom();
                 }
             }
             else if ((Input.GetKeyDown(KeyCode.S) || Input.GetButtonDown("down")))
             {
                 if (ttMan.ttLogic.CanIScrollDownInPlayerTurn())
                 {
-                    // if (!ttMan.ttLogic.HasThisCardBeenPlayedInPlayerTurn())
-                    // {
-                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
-                    ttMan.ttDb.MovePlayerTurnCurrentSelectionDown();
-                    SoundManager.instance.PlaySFX(0);
-                    ttMan.ttUi.setFocusOnPlayerCardSelected();
-                    // }
-                    // else
-                    // {
-                    //     
-                    //     ttMan.ttUi.setOutFocusOnPlayerCardSelected();
-                    //     SoundManager.instance.PlaySFX(0);
-                    //     ttMan.ttDb.SearchForNextUsableCardInCurrentHandAndChangeSelection();
-                    //     ttMan.ttUi.setFocusOnPlayerCardSelected();
-                    //
-                    // }
-
+                    ScrollDown();
                 }
                 else if (ttMan.ttLogic.CanILoopDownInPlayerTurn())
                 {
-                    ttMan.ttUi.setOutFocusOnPlayerCardSelected();
-                    ttMan.ttDb.MovePlayerTurnCurrentSelectionTop();
-                    SoundManager.instance.PlaySFX(0);
-                    ttMan.ttUi.setFocusOnPlayerCardSelected();
+                    LoopToTop();
                 }
             }
             else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")))
@@ -91,9 +72,41 @@ namespace ETF.TripleTriad
             }
         }
 
-        public override void End()
+        private void LoopToTop()
         {
+            ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+            ttMan.ttDb.MovePlayerTurnCurrentSelectionTop();
+            SoundManager.instance.PlaySFX(0);
+            ttMan.ttUi.setFocusOnPlayerCardSelected();
         }
+
+        private void ScrollDown()
+        {
+            ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+            ttMan.ttDb.MovePlayerTurnCurrentSelectionDown();
+            SoundManager.instance.PlaySFX(0);
+            ttMan.ttUi.setFocusOnPlayerCardSelected();
+        }
+
+        private void LoopToBottom()
+        {
+            ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+            ttMan.ttDb.MovePlayerTurnCurrentSelectionToBottom();
+            SoundManager.instance.PlaySFX(0);
+            ttMan.ttUi.setFocusOnPlayerCardSelected();
+        }
+
+        private void ScrollUp()
+        {
+            ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+            ttMan.ttDb.MovePlayerTurnCurrentSelectionUp();
+            SoundManager.instance.PlaySFX(0);
+            ttMan.ttUi.setFocusOnPlayerCardSelected();
+        }
+
+        #endregion
+        
+        
         
     }
 }

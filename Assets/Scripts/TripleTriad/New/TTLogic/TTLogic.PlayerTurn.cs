@@ -24,11 +24,7 @@ namespace ETF.TripleTriad
 		{
 			return ttDb.RetrievePlayerTurnCurrentSelection() > 0&& ttDb.RetrieveCurrentTripleTriadHandLength() > 1 && !ttUi.isLoading;
 		}
-
-		// public bool HasThisCardBeenPlayedInPlayerTurn()
-		// {
-		// 	return ttDb.RetrieveNextTripleTriadCardInPlayerSelection().HaveIBeenPlayed();
-		// }
+		
 
 		public bool CanILoopDownInPlayerTurn()
 		{
