@@ -21,11 +21,13 @@ namespace ETF.TripleTriad
 
         private IEnumerator PlayEnemyFullHandAnimationCo()
         {
-
+            _randomNumberForCardDisplaying = Random.Range(0.05f, 0.12f);
+            var _cachedWaitForSeconds = new WaitForSeconds(_randomNumberForCardDisplaying);
+            
             for (int i = 0; i < ttdb.currentEnemyTripleTriadCards.Length; i++)
             {
-                _randomNumberForCardDisplaying = Random.Range(0.05f, 0.1f);
-                yield return new WaitForSeconds(_randomNumberForCardDisplaying);
+
+                yield return _cachedWaitForSeconds;
                 PlayEnemyHandAnimation(i);
             }
 
@@ -49,8 +51,8 @@ namespace ETF.TripleTriad
             UpdateEnemyDialogBoxToChoosingCards();
             PlayEnemyHandDialogBoxAnimation();
             yield return new WaitForSeconds(0.5f);
-            cardSelectionGameObject.SetActive(false);
-            CardConfirmCanvas.SetActive(false);
+            // cardSelectionGameObject.SetActive(false);
+            // CardConfirmCanvas.SetActive(false);
 
             StartCoroutine(PlayEnemyFullHandAnimationCo());
         }
@@ -77,10 +79,11 @@ namespace ETF.TripleTriad
 
         private IEnumerator PlayEnemyHandCardFlipAnimations()
         {
+            var _cachedWaitForSeconds = new WaitForSeconds(0.2f);
             for (int i = 0; i < ttdb.currentEnemyTripleTriadCards.Length; i++)
             {
                 ttdb.currentEnemyTripleTriadCards[i].PlayFlipCardAnimation();
-                yield return new WaitForSeconds(0.2f);
+                yield return _cachedWaitForSeconds;
             }
 
             yield return new WaitForSeconds(1f);

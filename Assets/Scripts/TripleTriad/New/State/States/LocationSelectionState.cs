@@ -66,19 +66,27 @@ namespace ETF.TripleTriad
 				SoundManager.instance.PlaySFX(0);
 
 			}
-			else if (Input.GetKeyDown(KeyCode.C))
+			else if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire2")) && !ttMan.ttUi.isLoading)
 			{
 				ttMan.ttDb.ModifyPlayerTurnIsCancelling(true);
 				ttMan.SendChangeToPreviousState();
 			}
-			else if (Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))
+			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))  && !ttMan.ttUi.isLoading)
 			{
-				ttMan.ttDb.RetrieveTripleTriadCardInPlayerSelection()
-					.SetLocationToGoTo(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
-				ttMan.ttDb.ChangeCurrentLocationCardToPlayed();
-				ttMan.ttUi.PlayCardInLocationSelection();
+				if (ttMan.ttLogic.CanIPlaceCardInLocationSelection())
+				{
+					ttMan.ttDb.RetrieveTripleTriadCardInPlayerSelection()
+						.SetLocationToGoTo(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
+					ttMan.ttDb.ChangeCurrentLocationCardToPlayed();
+					ttMan.ttUi.PlayCardInLocationSelection();	
+					SoundManager.instance.PlaySFX(6);
+				}
+				else
+				{
+					SoundManager.instance.PlaySFX(3);
+				}
 
-				SoundManager.instance.PlaySFX(6);
+
 			}
 		}
 
