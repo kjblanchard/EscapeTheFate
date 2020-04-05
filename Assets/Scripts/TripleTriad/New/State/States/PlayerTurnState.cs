@@ -9,15 +9,22 @@ namespace ETF.TripleTriad
         #region Configuration
 
         [SerializeField] private TripleTriadManager ttMan;
+    
 
         #endregion
 
 
         public override void Startup()
         {
-            ttMan.ttUi.InitializePlayerTurnCanvasFromTurnSelection();
-            ttMan.ttDb.InitializePlayerTurnDbValues();
-
+            if (!ttMan.ttDb.RetrievePlayerTurnIsComingFromCancelScreen())
+            {
+                ttMan.ttDb.InitializePlayerTurnDbValues();
+                ttMan.ttUi.InitializePlayerTurnCanvasFromTurnSelection();
+            }
+            else
+            {
+                ttMan.ttUi.InitializePlayerTurnCanvasFromLocationSelectionCancel();
+            }
         }
 
         public override void Execute()
@@ -52,10 +59,23 @@ namespace ETF.TripleTriad
             {
                 if (ttMan.ttLogic.CanIScrollDownInPlayerTurn())
                 {
+                    // if (!ttMan.ttLogic.HasThisCardBeenPlayedInPlayerTurn())
+                    // {
                     ttMan.ttUi.setOutFocusOnPlayerCardSelected();
                     ttMan.ttDb.MovePlayerTurnCurrentSelectionDown();
                     SoundManager.instance.PlaySFX(0);
                     ttMan.ttUi.setFocusOnPlayerCardSelected();
+                    // }
+                    // else
+                    // {
+                    //     
+                    //     ttMan.ttUi.setOutFocusOnPlayerCardSelected();
+                    //     SoundManager.instance.PlaySFX(0);
+                    //     ttMan.ttDb.SearchForNextUsableCardInCurrentHandAndChangeSelection();
+                    //     ttMan.ttUi.setFocusOnPlayerCardSelected();
+                    //
+                    // }
+
                 }
                 else if (ttMan.ttLogic.CanILoopDownInPlayerTurn())
                 {
@@ -73,7 +93,6 @@ namespace ETF.TripleTriad
 
         public override void End()
         {
-            base.End();
         }
         
     }

@@ -17,22 +17,27 @@ namespace ETF.TripleTriad
 
 		public bool CanIScrollDownInPlayerTurn()
 		{
-			return ttDb.RetrievePlayerTurnCurrentSelection() < ttDb.RetrieveTripleTriadCardLength() -1 && ttDb.RetrieveTripleTriadCardLength() > 1 && !ttUi.isLoading;
+			return ttDb.RetrievePlayerTurnCurrentSelection() < ttDb.RetrieveCurrentTripleTriadHandLength() -1 && ttDb.RetrieveCurrentTripleTriadHandLength() > 1 && !ttUi.isLoading;
 		}
 
 		public bool CanIScrollUpInPlayerTurn()
 		{
-			return ttDb.RetrievePlayerTurnCurrentSelection() > 0&& ttDb.RetrieveTripleTriadCardLength() > 1 && !ttUi.isLoading;
+			return ttDb.RetrievePlayerTurnCurrentSelection() > 0&& ttDb.RetrieveCurrentTripleTriadHandLength() > 1 && !ttUi.isLoading;
 		}
+
+		// public bool HasThisCardBeenPlayedInPlayerTurn()
+		// {
+		// 	return ttDb.RetrieveNextTripleTriadCardInPlayerSelection().HaveIBeenPlayed();
+		// }
 
 		public bool CanILoopDownInPlayerTurn()
 		{
-			return ttDb.RetrievePlayerTurnCurrentSelection() == ttDb.RetrieveTripleTriadCardLength()-1 && ttDb.RetrieveTripleTriadCardLength() > 1 && !ttUi.isLoading;
+			return ttDb.RetrievePlayerTurnCurrentSelection() == ttDb.RetrieveCurrentTripleTriadHandLength()-1 && ttDb.RetrieveCurrentTripleTriadHandLength() > 1 && !ttUi.isLoading;
 		}
 
 		public bool CanILoopUpInPlayerTurn()
 		{
-			return ttDb.RetrievePlayerTurnCurrentSelection() == 0 && ttDb.RetrieveTripleTriadCardLength() > 1 && !ttUi.isLoading;
+			return ttDb.RetrievePlayerTurnCurrentSelection() == 0 && ttDb.RetrieveCurrentTripleTriadHandLength() > 1 && !ttUi.isLoading;
 		}
 
 		#endregion

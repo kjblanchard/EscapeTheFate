@@ -24,7 +24,7 @@ namespace ETF.TripleTriad
 		{
 			if (isLoading == false)
 			{
-				if (!locationSelectionFinger.gameObject.activeInHierarchy)
+				if (!locationSelectionFinger.gameObject.activeInHierarchy && ttMan.RetrieveCurrentState() == ttMan.locationSelectionState)
 				{
                     
 					locationSelectionFinger.gameObject.SetActive(true);
@@ -47,17 +47,19 @@ namespace ETF.TripleTriad
 		public void PlayCardToBoardInLocationSelection(int boardLocation, Card cardToBecome)
 		{
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).SetMyCurrentCard(cardToBecome);
-			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImage();
+			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImageToPlayer();
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).MoveToBoard();
 		}
 
 		public void RealignCardsInHandAfterCardIsPlayed()
 		{
-			//for each card in my hand
-			//that has a number HIGHER THAN ME
-			//That hasNOT been played
-			//move itsPosition upBy one
 			//play the animation to move him up by one
+			
+		}
+
+		public void InitializeLocationSelectionUiElements()
+		{
+			playerSelectionFinger.SetActive(false);
 			
 		}
 

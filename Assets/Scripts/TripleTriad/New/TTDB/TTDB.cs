@@ -63,6 +63,12 @@ namespace ETF.TripleTriad
             currentBattleQuantityForCards = CardInventory.instance.RetrieveBattleQuantityList();
         }
 
+        public void InitializeDbValuesForStartingTripleTriad()
+        {
+            _isComingFromLocationCancel = false;    
+            //UpdateMyCurrentHandCountTo5();
+        }
+
 
 
     }

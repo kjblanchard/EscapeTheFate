@@ -286,6 +286,7 @@ MonoBehaviour:
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 699987030}
   cardAnimator: {fileID: 17766647}
+  fingerPointer: {fileID: 0}
 --- !u!1 &27292093
 GameObject:
   m_ObjectHideFlags: 0
@@ -311,7 +312,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 27292093}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -353,12 +354,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 27292093}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 73787782}
   cardAnimator: {fileID: 27292095}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 020000000400000008000000
+  myValueToCheck: 000000000300000002000000
+  adjacencyValueToCheck: 020000000100000000000000
+  cardInPlay: 0
 --- !u!1 &28592170
 GameObject:
   m_ObjectHideFlags: 0
@@ -480,12 +486,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 29533845}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 975899079}
   cardAnimator: {fileID: 29533848}
+  fingerPointer: {fileID: 170483150}
 --- !u!95 &29533848
 Animator:
   serializedVersion: 3
@@ -532,12 +539,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 54422559}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 367161775}
   cardAnimator: {fileID: 54422561}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 0500000007000000
+  myValueToCheck: 0000000003000000
+  adjacencyValueToCheck: 0200000001000000
+  cardInPlay: 0
 --- !u!95 &54422561
 Animator:
   serializedVersion: 3
@@ -796,12 +808,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 87742177}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 1248836543}
   cardAnimator: {fileID: 87742179}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 0100000003000000
+  myValueToCheck: 0100000002000000
+  adjacencyValueToCheck: 0300000000000000
+  cardInPlay: 0
 --- !u!1 &162187889
 GameObject:
   m_ObjectHideFlags: 0
@@ -1062,12 +1079,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 228288057}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 595455553}
   cardAnimator: {fileID: 228288060}
+  fingerPointer: {fileID: 831702856}
 --- !u!95 &228288060
 Animator:
   serializedVersion: 3
@@ -1227,12 +1245,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 287483202}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 1833033688}
   cardAnimator: {fileID: 287483204}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 0300000007000000
+  myValueToCheck: 0000000001000000
+  adjacencyValueToCheck: 0200000003000000
+  cardInPlay: 0
 --- !u!1 &291215326
 GameObject:
   m_ObjectHideFlags: 0
@@ -1524,6 +1547,7 @@ MonoBehaviour:
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 1339915534}
   cardAnimator: {fileID: 439288534}
+  fingerPointer: {fileID: 0}
 --- !u!1 &457098485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1737,12 +1761,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 465892943}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 249175567}
   cardAnimator: {fileID: 465892945}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 040000000600000008000000
+  myValueToCheck: 000000000300000001000000
+  adjacencyValueToCheck: 020000000100000003000000
+  cardInPlay: 0
 --- !u!1 &468716265
 GameObject:
   m_ObjectHideFlags: 0
@@ -2416,6 +2445,7 @@ MonoBehaviour:
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 1447446686}
   cardAnimator: {fileID: 614764155}
+  fingerPointer: {fileID: 0}
 --- !u!1 &654430520
 GameObject:
   m_ObjectHideFlags: 0
@@ -2637,12 +2667,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 663243392}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 461351276}
   cardAnimator: {fileID: 663243394}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 01000000030000000500000007000000
+  myValueToCheck: 00000000030000000100000002000000
+  adjacencyValueToCheck: 02000000010000000300000000000000
+  cardInPlay: 0
 --- !u!1 &680469577
 GameObject:
   m_ObjectHideFlags: 0
@@ -2988,12 +3023,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 763893419}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 958534893}
   cardAnimator: {fileID: 763893421}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 000000000200000004000000
+  myValueToCheck: 030000000100000002000000
+  adjacencyValueToCheck: 010000000300000000000000
+  cardInPlay: 0
 --- !u!1 &803717329
 GameObject:
   m_ObjectHideFlags: 0
@@ -3417,12 +3457,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1071538147}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 1722070025}
   cardAnimator: {fileID: 1071538150}
+  fingerPointer: {fileID: 1676145583}
 --- !u!95 &1071538150
 Animator:
   serializedVersion: 3
@@ -3796,6 +3837,7 @@ MonoBehaviour:
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 474442621}
   cardAnimator: {fileID: 1209887723}
+  fingerPointer: {fileID: 0}
 --- !u!1 &1248836541
 GameObject:
   m_ObjectHideFlags: 0
@@ -3919,7 +3961,7 @@ PrefabInstance:
     - target: {fileID: 3294933561659595834, guid: 723316385ada7744e91d6d6da59d32a7,
         type: 3}
       propertyPath: m_RootOrder
-      value: 4
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3294933561659595834, guid: 723316385ada7744e91d6d6da59d32a7,
         type: 3}
@@ -4011,6 +4053,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1307176960}
   m_CullTransparentMesh: 0
+--- !u!1 &1319695399
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1319695401}
+  - component: {fileID: 1319695400}
+  m_Layer: 0
+  m_Name: pkmnBattleUncut
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1319695400
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319695399}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: d1ce8f0ee9d2d854795bb174f8ca2b11, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.5
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1319695401
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1319695399}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1339915532
 GameObject:
   m_ObjectHideFlags: 0
@@ -4297,12 +4466,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1382258029}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 28592172}
   cardAnimator: {fileID: 1382258031}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 0100000005000000
+  myValueToCheck: 0300000002000000
+  adjacencyValueToCheck: 0100000000000000
+  cardInPlay: 0
 --- !u!1 &1385529674
 GameObject:
   m_ObjectHideFlags: 0
@@ -4412,6 +4586,7 @@ MonoBehaviour:
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 457098487}
   cardAnimator: {fileID: 1396401948}
+  fingerPointer: {fileID: 0}
 --- !u!1 &1399130308
 GameObject:
   m_ObjectHideFlags: 0
@@ -5048,12 +5223,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 1550489221}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 680469579}
   cardAnimator: {fileID: 1550489224}
+  fingerPointer: {fileID: 1689396226}
 --- !u!95 &1550489224
 Animator:
   serializedVersion: 3
@@ -5658,12 +5834,17 @@ MonoBehaviour:
   m_GameObject: {fileID: 1786668867}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: ae87c90355351cb4fadfbfb7d90d2020, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 437162230}
   cardAnimator: {fileID: 1786668869}
+  fingerPointer: {fileID: 0}
+  locationBoardAdjacency: 000000000400000006000000
+  myValueToCheck: 000000000100000002000000
+  adjacencyValueToCheck: 020000000300000000000000
+  cardInPlay: 0
 --- !u!1 &1807532708
 GameObject:
   m_ObjectHideFlags: 0
@@ -5673,8 +5854,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1807532709}
+  - component: {fileID: 1807532710}
   m_Layer: 5
-  m_Name: BoardCards
+  m_Name: Board
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5708,6 +5890,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1807532710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1807532708}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 158d6dae16ed797429fa7c9937f0752f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tripleTriadBoardCards:
+  - {fileID: 87742180}
+  - {fileID: 763893422}
+  - {fileID: 1382258032}
+  - {fileID: 1786668870}
+  - {fileID: 663243395}
+  - {fileID: 27292096}
+  - {fileID: 287483205}
+  - {fileID: 465892946}
+  - {fileID: 54422560}
 --- !u!1 &1831411143
 GameObject:
   m_ObjectHideFlags: 0
@@ -6074,133 +6278,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890037164}
   m_CullTransparentMesh: 0
---- !u!1 &1958356579
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1958356581}
-  - component: {fileID: 1958356580}
-  m_Layer: 0
-  m_Name: duke3dTheme
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1958356580
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958356579}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: d75133818db7f3d42b2bd426c2984362, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.3
-  m_Pitch: 1
-  Loop: 1
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1958356581
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1958356579}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1986547707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6424,12 +6501,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 2068866357}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
   cardImage: {fileID: 1307176962}
   cardAnimator: {fileID: 2068866359}
+  fingerPointer: {fileID: 734431872}
 --- !u!1 &2086540659
 GameObject:
   m_ObjectHideFlags: 0
@@ -6745,7 +6823,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &23032884154960577
 GameObject:
@@ -7493,7 +7571,7 @@ MonoBehaviour:
   _fingerLocationOnCurrentPage: 0
   _currentPageNumber: 0
   _currentSpotInCardInventory: 0
-  _myHandTripleTriadCards:
+  _myFullHandTripleTriadCards:
   - {fileID: 2068866360}
   - {fileID: 29533847}
   - {fileID: 228288059}
@@ -7535,6 +7613,7 @@ MonoBehaviour:
   enemyTurnFirst: 0
   ttUi: {fileID: 9030617816674780376}
   ttDb: {fileID: 818606792456178717}
+  ttBoardLogic: {fileID: 1807532710}
 --- !u!114 &818606792456178721
 MonoBehaviour:
   m_ObjectHideFlags: 0

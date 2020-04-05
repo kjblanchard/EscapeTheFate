@@ -8,7 +8,50 @@ namespace ETF.TripleTriad
 {
     public class TripleTriadCardOnBoard : TripleTriadCard
     {
+        [SerializeField] public int[] locationBoardAdjacency;
+        [SerializeField] public int[] myValueToCheck;
+        [SerializeField] public int[] adjacencyValueToCheck;
+        [SerializeField] public bool cardInPlay;
 
+        
+        public void ChangeToPlayerTurn()
+        {
+            ttMan.ttDb.ModifyPlayerTurnIsCancelling(false);
+            ttMan.SendStateChange(ttMan.playerTurnState);
+        }
+        
+        public void MoveToBoard()
+        {
+            cardAnimator.SetTrigger("moveToBoard");
+        }
+
+        public void ChangeToCardInPlay()
+        {
+            cardInPlay = true;
+        }
+
+        public void CheckToSeeIfCardsFlipped()
+        {
+            ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
+        }
+
+        public void BoardCardFlipRight()
+        {
+            cardAnimator.SetTrigger("cardFlipRight");
+        }
+        public void BoardCardFlipUp()
+        {
+            cardAnimator.SetTrigger("cardFlipUp");
+        }
+        public void BoardCardFlipLeft()
+        {
+            cardAnimator.SetTrigger("cardFlipLeft");
+        }
+        public void BoardCardFlipDown()
+        {
+            cardAnimator.SetTrigger("cardFlipDown");
+        }
+        
         
     }
 

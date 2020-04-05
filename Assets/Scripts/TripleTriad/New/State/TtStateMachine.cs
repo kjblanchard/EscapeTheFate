@@ -37,5 +37,10 @@ namespace ETF.TripleTriad
             _currentState = _previousState;
             _currentState.Startup();
         }
+
+        public TtState ReturnCurrentState()
+        {
+            return _currentState;
+        }
     }
 }

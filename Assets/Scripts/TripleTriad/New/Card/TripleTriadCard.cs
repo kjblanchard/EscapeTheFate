@@ -8,17 +8,15 @@ namespace ETF.TripleTriad
 {
     public class TripleTriadCard : MonoBehaviour
     {
-        private static TripleTriadManager ttMan;
+        protected static TripleTriadManager ttMan;
 
         public Card whatCardIAm;
-        [SerializeField] Image cardImage;
+        [SerializeField] protected Image cardImage;
 
         public Animator cardAnimator;
 
-        private bool _hasPlayedCard;
-
-        private int _locationToGoTo;
-        // public bool shouldIflipTheCard;
+        [SerializeField] public Transform fingerPointer;
+        
 
         private void Awake()
         {
@@ -50,61 +48,37 @@ namespace ETF.TripleTriad
             SoundManager.instance.PlaySFX(4);
         }
 
-        public void InFocus()
-        {
-            cardAnimator.SetTrigger("inFocus");
-        }
 
-        public void OutFocus()
-        {
-            cardAnimator.SetTrigger("outFocus");
-        }
         
-        public void CardPlayed()
-        {
-            cardAnimator.SetTrigger("isPlayed");
-        }
+
+
         
-        public void MoveToBoard()
-        {
-            cardAnimator.SetTrigger("moveToBoard");
-        }
-
-        public void SetTtCardToHaveNotPlayed()
-        {
-            _hasPlayedCard = false;
-        }
-
-        public void SetTtCardToHavePlayed()
-        {
-            _hasPlayedCard = true;
-        }
-
-        public void SetLocationToGoTo(int boardLocation)
-        {
-            _locationToGoTo = boardLocation;
-        }
-
-        public void SendCallToUiToStartBoardAnimation()
-        {
-            ttMan.ttUi.PlayCardToBoardInLocationSelection(_locationToGoTo,whatCardIAm);
-        }
-
-        public void ChangeImage()
+        public void ChangeImageToPlayer()
         {
             cardImage.sprite = whatCardIAm.AImage;
         }
-
-        public void ChangeToPlayerTurn()
-        {
-            ttMan.SendStateChange(ttMan.playerTurnState);
-        }
         
-        public void MoveToSlot1(int posToGoTo)
-        { 
-            print("did it");
-            ttMan.ttDb.RetrieveCard2InMyHandTest().cardAnimator.Play($"Pos{posToGoTo}SelectedRest");
+        public void ChangeImageToEnemy()
+        {
+            cardImage.sprite = whatCardIAm.BImage;
         }
+
+        public void ControlUiLoadingModifier(int shouldIBeLoading)
+        {
+            if (shouldIBeLoading == 0)
+            {
+                ttMan.ttUi.isLoading = true;
+            }
+            else
+            {
+                ttMan.ttUi.isLoading = false;
+            }
+
+        }
+
+
+        
+
         
     }
 

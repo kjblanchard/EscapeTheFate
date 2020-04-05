@@ -52,6 +52,7 @@ namespace ETF.TripleTriad
             CardInventory.instance
                 .CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
             GameManager.instance.TurnOnDirectionalJoystick();
+            ttDb.InitializeDbValuesForStartingTripleTriad();
             SendStateChange(cardSelectionState);
         }
 
@@ -71,6 +72,11 @@ namespace ETF.TripleTriad
         public void SendChangeToPreviousState()
         {
             ttStateMachine.ChangeStateToPreviousState();
+        }
+
+        public TtState RetrieveCurrentState()
+        {
+            return ttStateMachine.ReturnCurrentState();
         }
 
         #endregion

@@ -11,7 +11,9 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		private int _currentFingerLocationInLocationSelection;
-		[SerializeField] private TripleTriadCard[] _boardTripleTriadCards;
+		[SerializeField] private TripleTriadCardOnBoard[] _boardTripleTriadCards;
+		
+		//private List<TripleTriadCardInHand> tempTripleTriadListForRenumbering = new List<TripleTriadCardInHand>();
 
 		#endregion
 
@@ -43,19 +45,50 @@ namespace ETF.TripleTriad
 			_currentFingerLocationInLocationSelection -= 3;
 		}
 
-		public TripleTriadCard RetrieveTripleTriadCardInPlayerSelection()
+		// public TripleTriadCardInHand RetrieveTripleTriadCardInPlayerSelection()
+		// {
+		// 	return _myFullHandTripleTriadCards[_playerTurnCurrentSelection];
+		// }
+		
+		public TripleTriadCardInHand RetrieveTripleTriadCardInPlayerSelection()
 		{
-			return _myHandTripleTriadCards[_playerTurnCurrentSelection];
+			return _myCurrentHandTripleTriadCards[_playerTurnCurrentSelection];
+		}
+		public TripleTriadCardInHand RetrieveNextTripleTriadCardInPlayerSelection()
+		{
+			return _myFullHandTripleTriadCards[_playerTurnCurrentSelection + 1];
 		}
 
-		public TripleTriadCard RetrieveTripleTriadCardInBoardSelection(int boardLocation)
+		public TripleTriadCardOnBoard RetrieveTripleTriadCardInBoardSelection(int boardLocation)
 		{
 			return _boardTripleTriadCards[boardLocation];
 		}
 
 		public TripleTriadCard RetrieveCard2InMyHandTest()
 		{
-			return _myHandTripleTriadCards[1];
+			return _myFullHandTripleTriadCards[1];
+		}
+		
+		
+		public void InitializeLocationSelectionDbValues()
+		{
+			_currentFingerLocationInLocationSelection = 0;
+		}
+
+		public void modifyCurrentHandListWhenCardIsPlayed()
+		{
+			_myCurrentHandTripleTriadCards.RemoveAt(_playerTurnCurrentSelection);
+			for (int i = _playerTurnCurrentSelection; i < _myCurrentHandTripleTriadCards.Count; i++)
+			{
+				//_myCurrentHandTripleTriadCards[i].positionInCardHand--;
+				_myCurrentHandTripleTriadCards[i].MoveCardUpOneSpot();
+				//_myCurrentHandTripleTriadCards[i].MoveToNewLocationInHandWhenCardIsPlayed(_myCurrentHandTripleTriadCards[i].positionInCardHand);
+			}
+		}
+
+		public void ChangeCurrentLocationCardToPlayed()
+		{
+			_boardTripleTriadCards[_currentFingerLocationInLocationSelection].ChangeToCardInPlay();
 		}
 		
 

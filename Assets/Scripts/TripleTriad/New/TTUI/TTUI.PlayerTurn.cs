@@ -11,21 +11,28 @@ namespace ETF.TripleTriad
         public void InitializePlayerTurnCanvasFromTurnSelection()
         {
             enemyHandDialogBoxAnimator.gameObject.SetActive(false);
+            locationSelectionFinger.SetActive(false);
             setFocusOnPlayerCardSelected();
+        }
+
+        public void InitializePlayerTurnCanvasFromLocationSelectionCancel()
+        {
+            locationSelectionFinger.SetActive(false);
         }
 
         public void keepPlayerSelectionFingerOnProperLocation()
         {
             if (isLoading == false)
             {
-                if (!playerSelectionFinger.gameObject.activeInHierarchy)
+                if (!playerSelectionFinger.gameObject.activeInHierarchy &&
+                    ttMan.RetrieveCurrentState() == ttMan.playerTurnState) 
                 {
                     
                     playerSelectionFinger.gameObject.SetActive(true);
                 }
 
                 playerSelectionFinger.transform.position =
-                    myHandFingerPoints[ttdb.RetrievePlayerTurnCurrentSelection()].transform.position;
+                    ttdb.RetrieveTripleTriadCardInPlayerSelection().fingerPointer.transform.position;// [ttdb.RetrievePlayerTurnCurrentSelection()].transform.position;
             }
             else
             {
@@ -36,12 +43,14 @@ namespace ETF.TripleTriad
 
         public void setFocusOnPlayerCardSelected()
         {
-            myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("inFocus");
+            ttdb.RetrieveTripleTriadCardInPlayerSelection().cardAnimator.SetTrigger("inFocus");
+            //myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("inFocus");
         }
 
         public void setOutFocusOnPlayerCardSelected()
         {
-            myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("outFocus");
+            ttdb.RetrieveTripleTriadCardInPlayerSelection().cardAnimator.SetTrigger("outFocus");
+            //myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("outFocus");
 
         }
 

@@ -15,7 +15,8 @@ namespace ETF.TripleTriad
         [Header("Card Selection References")]
         public List<LastItemChosen> currentHandSelectionsList = new List<LastItemChosen>();
 
-        [SerializeField] private TripleTriadCard[] _myHandTripleTriadCards;
+        [SerializeField] private TripleTriadCardInHand[] _myFullHandTripleTriadCards;
+       private List<TripleTriadCardInHand> _myCurrentHandTripleTriadCards = new List<TripleTriadCardInHand>();
 
         public int RetrieveCardSelectionFingerLocationOnCurrentPage()
         {
@@ -94,17 +95,40 @@ namespace ETF.TripleTriad
 
         public void UpdateMyHandTripleTriadCardsWithMySelectionList()
         {
+
             for (int i = 0; i < currentHandSelectionsList.Count; i++)
             {
-                _myHandTripleTriadCards[i].whatCardIAm =
+                _myFullHandTripleTriadCards[i].whatCardIAm =
                     currentBattleSelectableCards[currentHandSelectionsList[i].spotInCardInv];
-                _myHandTripleTriadCards[i].SetTtCardToHaveNotPlayed();
+                //_myFullHandTripleTriadCards[i].SetTtCardToHaveNotPlayed();
+                //_myFullHandTripleTriadCards[i].positionInCardHand = (i + 1);
             }
+
+            for (int i = 0; i < _myFullHandTripleTriadCards.Length; i++)
+            {
+                _myCurrentHandTripleTriadCards.Add(_myFullHandTripleTriadCards[i]);
+            }
+            
         }
 
-        public int RetrieveTripleTriadCardLength()
+        // public void UpdateMyCurrentHandCountTo5()
+        // {
+        //     _currentCardsInHand = 5;
+        // }
+
+        // public void RemoveOneFromCurrentHand()
+        // {
+        //     _currentCardsInHand--;
+        // }
+
+        public int RetrieveCurrentTripleTriadHandLength()
         {
-            return _myHandTripleTriadCards.Length;
+            return _myCurrentHandTripleTriadCards.Count;
+        }
+        
+        public int RetrieveFullTripleTriadHandLength()
+        {
+            return _myFullHandTripleTriadCards.Length;
         }
 
 
