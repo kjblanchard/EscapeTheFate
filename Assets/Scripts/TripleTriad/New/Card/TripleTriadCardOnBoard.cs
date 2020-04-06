@@ -40,7 +40,15 @@ namespace ETF.TripleTriad
 
         public void CheckToSeeIfCardsFlipped()
         {
-            ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
+            if (!ttMan.ttDb.isEnemyTurn)
+            {
+                ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
+                
+            }
+            else if (ttMan.ttDb.isEnemyTurn)
+            {
+                ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttLogic.RetrieveBoardPositionToPlaceCard());
+            }
         }
 
         public void BoardCardFlipRight()

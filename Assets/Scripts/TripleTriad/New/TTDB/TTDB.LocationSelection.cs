@@ -84,6 +84,11 @@ namespace ETF.TripleTriad
 		{
 			_boardTripleTriadCards[_currentFingerLocationInLocationSelection].ChangeToCardInPlay();
 		}
+
+		public int RetrieveBoardLocationsCount()
+		{
+			return _boardTripleTriadCards.Length;
+		}
 		
 
 		#endregion

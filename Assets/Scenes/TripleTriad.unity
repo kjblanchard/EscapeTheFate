@@ -265,7 +265,7 @@ Animator:
   m_GameObject: {fileID: 17766645}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 6605a2af34ff99d4bb7a8a3d58e0d8fd, type: 2}
+  m_Controller: {fileID: 9100000, guid: c24417e4a9db4334c9ce50adf268a6c5, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -283,7 +283,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 17766645}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
@@ -1526,7 +1526,7 @@ Animator:
   m_GameObject: {fileID: 439288532}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5e8df7daed1214b4bb5ce51bfb6fb869, type: 2}
+  m_Controller: {fileID: 9100000, guid: 4b9fd5e7656f3d246a40d677240408c8, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1544,7 +1544,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 439288532}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
@@ -2424,7 +2424,7 @@ Animator:
   m_GameObject: {fileID: 614764153}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 5c578f878fc1c8a4fb76e1b1bddc7ccd, type: 2}
+  m_Controller: {fileID: 9100000, guid: 29ad93ff30ac70d4a819963efd06406d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -2442,7 +2442,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 614764153}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
@@ -3816,7 +3816,7 @@ Animator:
   m_GameObject: {fileID: 1209887721}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4905d86e28d6f0b43976fd8f40489b11, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1a32e0d201f1dad4da45298931ead98b, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -3834,7 +3834,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1209887721}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
@@ -4565,7 +4565,7 @@ Animator:
   m_GameObject: {fileID: 1396401946}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a94e8579c11ba614490fefa58d916af2, type: 2}
+  m_Controller: {fileID: 9100000, guid: 18eadd086a27cf441906cbce93bc4c9d, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -4583,7 +4583,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1396401946}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1b58c9e8bb5cd0841a79006a0111fcc6, type: 3}
+  m_Script: {fileID: 11500000, guid: b08622b0ea7c06d40bfac1502aaf8851, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   whatCardIAm: {fileID: 0}
@@ -7580,13 +7580,14 @@ MonoBehaviour:
   - {fileID: 228288059}
   - {fileID: 1550489223}
   - {fileID: 1071538149}
-  currentEnemyHandList: []
-  currentEnemyTripleTriadCards:
+  currentEnemyTripleTriadCardsInHand: []
+  fullEnemyTripleTriadCards:
   - {fileID: 614764156}
   - {fileID: 439288535}
   - {fileID: 17766648}
   - {fileID: 1396401949}
   - {fileID: 1209887724}
+  isEnemyTurn: 0
   _boardTripleTriadCards:
   - {fileID: 87742180}
   - {fileID: 763893422}
@@ -7629,10 +7630,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 2
+  _whatTypeOfPlayerAmI: 1
   _myAvailableCardsToUse: []
   _listOfRareCardsOwned:
-  - {fileID: 11400000, guid: 01f12c465851bee49ae445592469da3c, type: 2}
+  - {fileID: 11400000, guid: 99671d0268186f84a928214a4101ea39, type: 2}
+  - {fileID: 11400000, guid: acb77e5ea7d98da4c857a9c7ee54a1fb, type: 2}
   whatToSayWhenTurnIsBeingSelected: Who gets to go first
   whatToSayWhenPlayerWins: 
   whatToSayWhenPlayerLoses: 

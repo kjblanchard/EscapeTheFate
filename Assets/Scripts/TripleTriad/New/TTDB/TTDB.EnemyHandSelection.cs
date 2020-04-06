@@ -10,8 +10,9 @@ namespace ETF.TripleTriad
         [Header("EnemyHandReferences")] private EnemyCardHand.WhatTypeOfCardPlayerAmI _typeOfEnemyPlayer;
         private List<Card> _currentEnemyRareCards;
 
-        public List<Card> currentEnemyHandList = new List<Card>();
-        public TripleTriadCard[] currentEnemyTripleTriadCards;
+        private List<Card> currentEnemyCardSelectionList = new List<Card>();
+        public List<TripleTriadCardInHand> currentEnemyTripleTriadCardsInHand = new List<TripleTriadCardInHand>(); 
+        public TripleTriadCardInHand[] fullEnemyTripleTriadCards;
         private string _whatToSayWhenTurnIsBeingSelected;
         private string _whatToSayWhenPlayerWins;
         private string _whatToSayWhenPlayerLoses;
@@ -58,8 +59,9 @@ namespace ETF.TripleTriad
                 DetermineIfRareCardsShouldBeAddedToHand();
             }
 
-            BeginnerAddCardsToHandUntilFull();
+            BeginnerAddCardsToHandSelectionsUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+            AddEnemySelectedCardsToHandList();
         }
         private void ModerateChooseCards()
         {
@@ -68,9 +70,9 @@ namespace ETF.TripleTriad
             {
                 DetermineIfRareCardsShouldBeAddedToHand();
             }
-            print("did the moderatechoosecards");
-            ModerateAddCardsToHandUntilFull();
+            ModerateAddCardsToHandSelectionsUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+            AddEnemySelectedCardsToHandList();
         }
 
 
@@ -83,39 +85,45 @@ namespace ETF.TripleTriad
                 _chanceToUse = _currentEnemyRareCards[i].percentChanceForEnemyToUseInBattle;
                 if (_randomNumber <= _chanceToUse)
                 {
-                    currentEnemyHandList.Add(_currentEnemyRareCards[i]);
+                    currentEnemyCardSelectionList.Add(_currentEnemyRareCards[i]);
                 }
-
-                print("did the search for rare cards");
+                
             }
         }
 
-        private void BeginnerAddCardsToHandUntilFull()
+        private void BeginnerAddCardsToHandSelectionsUntilFull()
         {
             //this will choose a random card from the list of common cards until the enemy's hand is full
-            while (currentEnemyHandList.Count < 5)
+            while (currentEnemyCardSelectionList.Count < 5)
             {
                 var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfCommonCards.Count);
-                currentEnemyHandList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
+                currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
             }
         }
-        private void ModerateAddCardsToHandUntilFull()
+        private void ModerateAddCardsToHandSelectionsUntilFull()
         {
             //this will choose a random card from the list of common cards until the enemy's hand is full
-            while (currentEnemyHandList.Count < 5)
+            while (currentEnemyCardSelectionList.Count < 5)
             {
-                print("added card to hand until I hit 5");
                 var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfUncommonCards.Count);
-                currentEnemyHandList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
+                currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
             }
         }
 
         private void AddEnemySelectedHandToTheEnemyCardHandGameObjects()
         {
             //uses the information in the DB to set the card gameobject so that is has a reference to the card list that was chosen
-            for (int i = 0; i < currentEnemyTripleTriadCards.Length; i++)
+            for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
             {
-                currentEnemyTripleTriadCards[i].SetMyCurrentCard(currentEnemyHandList[i]);
+                fullEnemyTripleTriadCards[i].SetMyCurrentCard(currentEnemyCardSelectionList[i]);
+            }
+        }
+
+        private void AddEnemySelectedCardsToHandList()
+        {
+            for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
+            {
+                currentEnemyTripleTriadCardsInHand.Add(fullEnemyTripleTriadCards[i]);
             }
         }
 
@@ -139,5 +147,11 @@ namespace ETF.TripleTriad
             //returns data to the ui
             return _npcName;
         }
+
+        public EnemyCardHand.WhatTypeOfCardPlayerAmI RetrieveEnemyDifficulty()
+        {
+            return _typeOfEnemyPlayer;
+        }
+        
     }
 }

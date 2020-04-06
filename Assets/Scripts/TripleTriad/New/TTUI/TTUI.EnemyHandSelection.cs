@@ -24,7 +24,7 @@ namespace ETF.TripleTriad
             _randomNumberForCardDisplaying = Random.Range(0.05f, 0.12f);
             var _cachedWaitForSeconds = new WaitForSeconds(_randomNumberForCardDisplaying);
             
-            for (int i = 0; i < ttdb.currentEnemyTripleTriadCards.Length; i++)
+            for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
             {
 
                 yield return _cachedWaitForSeconds;
@@ -36,7 +36,7 @@ namespace ETF.TripleTriad
 
         private void PlayEnemyHandAnimation(int cardToDisplay)
         {
-            ttdb.currentEnemyTripleTriadCards[cardToDisplay].cardAnimator.Play("MyHandSelect");
+            ttdb.fullEnemyTripleTriadCards[cardToDisplay].cardAnimator.Play("MyHandSelect");
             SoundManager.instance.PlaySFX(6);
         }
 
@@ -80,9 +80,9 @@ namespace ETF.TripleTriad
         private IEnumerator PlayEnemyHandCardFlipAnimations()
         {
             var _cachedWaitForSeconds = new WaitForSeconds(0.2f);
-            for (int i = 0; i < ttdb.currentEnemyTripleTriadCards.Length; i++)
+            for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
             {
-                ttdb.currentEnemyTripleTriadCards[i].PlayFlipCardAnimation();
+                ttdb.fullEnemyTripleTriadCards[i].PlayFlipCardAnimation();
                 yield return _cachedWaitForSeconds;
             }
 

@@ -52,6 +52,10 @@ namespace ETF.TripleTriad
         {//removes the card from your hand when it is played
             ttMan.ttDb.modifyCurrentHandListWhenCardIsPlayed();
         }
+        public void ModifyEnemyHandCurrentCardList()
+        {//removes the card from your hand when it is played
+            ttMan.ttDb.ModifyEnemyCurrentHandListWhenCardIsPlayed();
+        }
 
 
         
