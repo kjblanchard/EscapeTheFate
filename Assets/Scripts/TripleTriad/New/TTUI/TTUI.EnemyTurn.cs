@@ -35,6 +35,13 @@ namespace ETF.TripleTriad
 
 		}
 
+		public void InitializeBetweenTurnUiPlayerToEnemy()
+		{
+			setOutFocusOnPlayerCardSelected();
+			isLoading = true;
+			playerSelectionFinger.SetActive(false);
+		}
+
 		#endregion
 	}
 }

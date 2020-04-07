@@ -70,36 +70,7 @@ namespace ETF.TripleTriad
             {
                 ttMan.SendStateChange(ttMan.locationSelectionState);
             }
-            else if (Input.GetKeyDown(KeyCode.Y))
-            {
-                ttMan.ttDb.InitializeEnemyTurnDbValues();
-                if (ttMan.ttDb.isEnemyTurn)
-                {
-                    ttMan.ttDb.isEnemyTurn = false;
-                }
-                else if (!ttMan.ttDb.isEnemyTurn)
-                {
-                    ttMan.ttDb.isEnemyTurn = true;
-                }
 
-                print($"is enemy turn is equal to {ttMan.ttDb.isEnemyTurn}");
-            }
-            else if (Input.GetKeyDown(KeyCode.P))
-            {
-                
-                ttMan.ttLogic.FullEnemyTurnHandChoices();
-            }
-            else if (Input.GetKeyDown(KeyCode.L))
-            {
-                var boardLocation = ttMan.ttLogic.RetrieveBoardPositionToPlaceCard();
-                var handPosition = ttMan.ttLogic.RetrieveHandPositionToPlaceCard();
-                ttMan.ttDb.currentEnemyTripleTriadCardsInHand[handPosition].SetLocationToGoTo(boardLocation);
-                ttMan.ttDb.ChangeBoardLocationToInPlayEnemy(boardLocation);
-                ttMan.ttUi.setFocusOnEnemyCardSelected();
-                ttMan.ttUi.PlayCardInEnemyTurn(handPosition);
-                
-                print($"the spot I'm going to put the card is {boardLocation} and I'm going to use this spot in my hand {handPosition}, which is card {ttMan.ttDb.currentEnemyTripleTriadCardsInHand[handPosition].whatCardIAm.name}");
-            }
         }
 
         private void LoopToTop()

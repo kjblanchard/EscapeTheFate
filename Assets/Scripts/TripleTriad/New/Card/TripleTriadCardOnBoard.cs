@@ -40,15 +40,16 @@ namespace ETF.TripleTriad
 
         public void CheckToSeeIfCardsFlipped()
         {
-            if (!ttMan.ttDb.isEnemyTurn)
+            if (ttMan.RetrieveCurrentState() == ttMan.locationSelectionState)
             {
                 ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
                 
             }
-            else if (ttMan.ttDb.isEnemyTurn)
+            else //if (ttMan.RetrieveCurrentState() == ttMan.enemyTurnState)
             {
                 ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttLogic.RetrieveBoardPositionToPlaceCard());
             }
+            //print($"current state is {ttMan.RetrieveCurrentState()}");
         }
 
         public void BoardCardFlipRight()

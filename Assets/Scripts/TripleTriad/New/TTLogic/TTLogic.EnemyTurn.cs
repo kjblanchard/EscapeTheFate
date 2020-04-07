@@ -59,7 +59,7 @@ namespace ETF.TripleTriad
 							_enemyCurrentValue = _cardToCheckAgainst.whatCardIAm.cardValues[_enemySideToCheck];
 							if (_myCurrentValue > _enemyCurrentValue)
 							{			//check to see if my value is higher than theirs
-								print($"My Value is higher than theirs with card {enemyCard.cardName}, and I'm going to go to position {i} cause my value is {_myCurrentValue} and their value is {_enemyCurrentValue}");
+								//print($"My Value is higher than theirs with card {enemyCard.cardName}, and I'm going to go to position {i} cause my value is {_myCurrentValue} and their value is {_enemyCurrentValue}");
 								ttDb.AddBoardLocationToPotentialOneCardMoves(i);
 								ttDb.AddCardNumberToPotentialOneCardMoves(cardNumberInInventory);
 								_howManyCardsCanIFlipHere++;
@@ -68,7 +68,7 @@ namespace ETF.TripleTriad
 									switch(_howManyCardsCanIFlipHere)
 									{
 										case 2:
-											print($"I can flip 2 cards at position {i} with my card {enemyCard.name} and he is in spot {cardNumberInInventory} in my card hand");
+											//print($"I can flip 2 cards at position {i} with my card {enemyCard.name} and he is in spot {cardNumberInInventory} in my card hand");
 											ttDb.AddBoardLocationToPotentialTwoCardMoves(i);
 											ttDb.AddCardNumberToPotentialTwoCardMoves(cardNumberInInventory);
 											break;

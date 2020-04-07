@@ -47,7 +47,16 @@ namespace ETF.TripleTriad
 		public void PlayCardToBoardInLocationSelection(int boardLocation, Card cardToBecome)
 		{
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).SetMyCurrentCard(cardToBecome);
-			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImageToPlayer();
+			if (ttMan.RetrieveCurrentState() == ttMan.locationSelectionState)
+			{
+				ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImageToPlayer();
+				
+			}
+			else
+			{
+				ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImageToEnemy();
+				print(ttMan.RetrieveCurrentState());
+			}
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).MoveToBoard();
 		}
 

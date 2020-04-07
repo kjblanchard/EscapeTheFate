@@ -28,7 +28,7 @@ namespace ETF.TripleTriad
 		private int  _enemySelectedBoardLocation;
 		private int _enemySelectedHandPosition;
 
-		public bool isEnemyTurn;
+		//public bool isEnemyTurn;
 		
 		#endregion
 	

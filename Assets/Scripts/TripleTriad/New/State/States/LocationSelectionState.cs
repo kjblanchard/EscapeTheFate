@@ -71,6 +71,10 @@ namespace ETF.TripleTriad
 				ttMan.ttDb.ModifyPlayerTurnIsCancelling(true);
 				ttMan.SendChangeToPreviousState();
 			}
+			else if (Input.GetKeyDown(KeyCode.Y))
+			{
+				ttMan.SwitchToEnemyTurn();
+			}
 			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))  && !ttMan.ttUi.isLoading)
 			{
 				if (ttMan.ttLogic.CanIPlaceCardInLocationSelection())
