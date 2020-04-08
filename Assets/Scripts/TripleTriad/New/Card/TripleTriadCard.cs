@@ -16,6 +16,8 @@ namespace ETF.TripleTriad
         public Animator cardAnimator;
 
         [SerializeField] public Transform fingerPointer;
+        [SerializeField] public bool cardOwnedByPlayer;
+
         
 
         private void Awake()
@@ -49,8 +51,18 @@ namespace ETF.TripleTriad
         }
 
 
-        
 
+        public void ChangeImageToProperPlayer()
+        {
+            if (cardOwnedByPlayer)
+            {
+                cardImage.sprite = whatCardIAm.AImage;   
+            }
+            else
+            {
+                cardImage.sprite = whatCardIAm.BImage;
+            }
+        }
 
         
         public void ChangeImageToPlayer()

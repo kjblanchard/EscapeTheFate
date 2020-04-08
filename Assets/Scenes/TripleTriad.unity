@@ -144,7 +144,7 @@ MonoBehaviour:
   playerTurnState: {fileID: 2086540666}
   locationSelectionState: {fileID: 2086540667}
   enemyTurnState: {fileID: 2086540668}
-  turnController: {fileID: 818606791972105358}
+  fingerAnimationChanger: {fileID: 818606791972105357}
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,6 +292,7 @@ MonoBehaviour:
   cardImage: {fileID: 699987030}
   cardAnimator: {fileID: 17766647}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
 --- !u!1 &27292093
 GameObject:
   m_ObjectHideFlags: 0
@@ -366,6 +367,7 @@ MonoBehaviour:
   cardImage: {fileID: 73787782}
   cardAnimator: {fileID: 27292095}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 020000000400000008000000
   myValueToCheck: 000000000300000002000000
   adjacencyValueToCheck: 020000000100000000000000
@@ -498,6 +500,7 @@ MonoBehaviour:
   cardImage: {fileID: 975899079}
   cardAnimator: {fileID: 29533848}
   fingerPointer: {fileID: 170483150}
+  cardOwnedByPlayer: 0
 --- !u!95 &29533848
 Animator:
   serializedVersion: 3
@@ -551,6 +554,7 @@ MonoBehaviour:
   cardImage: {fileID: 367161775}
   cardAnimator: {fileID: 54422561}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 0500000007000000
   myValueToCheck: 0000000003000000
   adjacencyValueToCheck: 0200000001000000
@@ -820,6 +824,7 @@ MonoBehaviour:
   cardImage: {fileID: 1248836543}
   cardAnimator: {fileID: 87742179}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 0100000003000000
   myValueToCheck: 0100000002000000
   adjacencyValueToCheck: 0300000000000000
@@ -1091,6 +1096,7 @@ MonoBehaviour:
   cardImage: {fileID: 595455553}
   cardAnimator: {fileID: 228288060}
   fingerPointer: {fileID: 831702856}
+  cardOwnedByPlayer: 0
 --- !u!95 &228288060
 Animator:
   serializedVersion: 3
@@ -1257,6 +1263,7 @@ MonoBehaviour:
   cardImage: {fileID: 1833033688}
   cardAnimator: {fileID: 287483204}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 0300000007000000
   myValueToCheck: 0000000001000000
   adjacencyValueToCheck: 0200000003000000
@@ -1553,6 +1560,7 @@ MonoBehaviour:
   cardImage: {fileID: 1339915534}
   cardAnimator: {fileID: 439288534}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
 --- !u!1 &457098485
 GameObject:
   m_ObjectHideFlags: 0
@@ -1773,6 +1781,7 @@ MonoBehaviour:
   cardImage: {fileID: 249175567}
   cardAnimator: {fileID: 465892945}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 040000000600000008000000
   myValueToCheck: 000000000300000001000000
   adjacencyValueToCheck: 020000000100000003000000
@@ -2451,6 +2460,7 @@ MonoBehaviour:
   cardImage: {fileID: 1447446686}
   cardAnimator: {fileID: 614764155}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
 --- !u!1 &654430520
 GameObject:
   m_ObjectHideFlags: 0
@@ -2679,6 +2689,7 @@ MonoBehaviour:
   cardImage: {fileID: 461351276}
   cardAnimator: {fileID: 663243394}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 01000000030000000500000007000000
   myValueToCheck: 00000000030000000100000002000000
   adjacencyValueToCheck: 02000000010000000300000000000000
@@ -3035,6 +3046,7 @@ MonoBehaviour:
   cardImage: {fileID: 958534893}
   cardAnimator: {fileID: 763893421}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 000000000200000004000000
   myValueToCheck: 030000000100000002000000
   adjacencyValueToCheck: 010000000300000000000000
@@ -3469,6 +3481,7 @@ MonoBehaviour:
   cardImage: {fileID: 1722070025}
   cardAnimator: {fileID: 1071538150}
   fingerPointer: {fileID: 1676145583}
+  cardOwnedByPlayer: 0
 --- !u!95 &1071538150
 Animator:
   serializedVersion: 3
@@ -3843,6 +3856,7 @@ MonoBehaviour:
   cardImage: {fileID: 474442621}
   cardAnimator: {fileID: 1209887723}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
 --- !u!1 &1248836541
 GameObject:
   m_ObjectHideFlags: 0
@@ -4351,6 +4365,7 @@ MonoBehaviour:
   cardImage: {fileID: 28592172}
   cardAnimator: {fileID: 1382258031}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 0100000005000000
   myValueToCheck: 0300000002000000
   adjacencyValueToCheck: 0100000000000000
@@ -4465,6 +4480,7 @@ MonoBehaviour:
   cardImage: {fileID: 457098487}
   cardAnimator: {fileID: 1396401948}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
 --- !u!1 &1399130308
 GameObject:
   m_ObjectHideFlags: 0
@@ -5108,6 +5124,7 @@ MonoBehaviour:
   cardImage: {fileID: 680469579}
   cardAnimator: {fileID: 1550489224}
   fingerPointer: {fileID: 1689396226}
+  cardOwnedByPlayer: 0
 --- !u!95 &1550489224
 Animator:
   serializedVersion: 3
@@ -5200,6 +5217,133 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1569917476}
   m_CullTransparentMesh: 0
+--- !u!1 &1586196249
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1586196251}
+  - component: {fileID: 1586196250}
+  m_Layer: 0
+  m_Name: y2mate.com - 007 Goldeneye OST Facility_Ew8AoVAXaDk
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!82 &1586196250
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586196249}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 94180d5dff052d04a90c82c8694bdc43, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.75
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!4 &1586196251
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1586196249}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1621260010
 GameObject:
   m_ObjectHideFlags: 0
@@ -5719,6 +5863,7 @@ MonoBehaviour:
   cardImage: {fileID: 437162230}
   cardAnimator: {fileID: 1786668869}
   fingerPointer: {fileID: 0}
+  cardOwnedByPlayer: 0
   locationBoardAdjacency: 000000000400000006000000
   myValueToCheck: 000000000100000002000000
   adjacencyValueToCheck: 020000000300000000000000
@@ -6156,133 +6301,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1890037164}
   m_CullTransparentMesh: 0
---- !u!1 &1982699944
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1982699946}
-  - component: {fileID: 1982699945}
-  m_Layer: 0
-  m_Name: emeraldHillZone
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!82 &1982699945
-AudioSource:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982699944}
-  m_Enabled: 1
-  serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a758d9328ff925749902ae4717853eac, type: 3}
-  m_PlayOnAwake: 1
-  m_Volume: 0.5
-  m_Pitch: 1
-  Loop: 0
-  Mute: 0
-  Spatialize: 0
-  SpatializePostEffects: 0
-  Priority: 128
-  DopplerLevel: 1
-  MinDistance: 1
-  MaxDistance: 500
-  Pan2D: 0
-  rolloffMode: 0
-  BypassEffects: 0
-  BypassListenerEffects: 0
-  BypassReverbZones: 0
-  rolloffCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    - serializedVersion: 3
-      time: 1
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  panLevelCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  spreadCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 0
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  reverbZoneMixCustomCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 0
-      weightedMode: 0
-      inWeight: 0.33333334
-      outWeight: 0.33333334
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
---- !u!4 &1982699946
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1982699944}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 4
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1986547707
 GameObject:
   m_ObjectHideFlags: 0
@@ -6513,6 +6531,7 @@ MonoBehaviour:
   cardImage: {fileID: 1307176962}
   cardAnimator: {fileID: 2068866359}
   fingerPointer: {fileID: 734431872}
+  cardOwnedByPlayer: 0
 --- !u!1 &2086540659
 GameObject:
   m_ObjectHideFlags: 0
@@ -7372,6 +7391,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c92ee0b57556e1b4f988dc012d40546e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ttMan: {fileID: 11}
   fingerAnimator: {fileID: 818606791972105356}
 --- !u!114 &818606791972105358
 MonoBehaviour:

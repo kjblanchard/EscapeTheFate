@@ -22,11 +22,13 @@ namespace ETF.TripleTriad
 
         #region functions
 
-        public void ChangeToPlayerTurn()
+        private void SendCallToTurnControllerToChangeTurn()
         {
-            ttMan.ttDb.ModifyPlayerTurnIsCancelling(false);
-            ttMan.SendStateChange(ttMan.playerTurnState);
+            ttMan.fingerAnimationChanger.ChangeTurn();
         }
+        
+        
+
         
         public void MoveToBoard()
         {

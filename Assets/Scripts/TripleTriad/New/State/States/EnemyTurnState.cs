@@ -21,7 +21,7 @@ namespace ETF.TripleTriad
 
 		public override void Execute()
 		{
-			print("in enemy Turn");
+			//print("in enemy Turn");
 		}
 
 		#region Functions
@@ -44,7 +44,7 @@ namespace ETF.TripleTriad
 			
 			var boardLocation = ttMan.ttLogic.RetrieveBoardPositionToPlaceCard();
 			var handPosition = ttMan.ttLogic.RetrieveHandPositionToPlaceCard();
-			print($"the spot I'm going to put the card is {boardLocation} and I'm going to use this spot in my hand {handPosition}, which is card {ttMan.ttDb.currentEnemyTripleTriadCardsInHand[handPosition].whatCardIAm.name}");
+			//print($"the spot I'm going to put the card is {boardLocation} and I'm going to use this spot in my hand {handPosition}, which is card {ttMan.ttDb.currentEnemyTripleTriadCardsInHand[handPosition].whatCardIAm.name}");
 
 			ttMan.ttDb.currentEnemyTripleTriadCardsInHand[handPosition].SetLocationToGoTo(boardLocation);
 			ttMan.ttDb.ChangeBoardLocationToInPlayEnemy(boardLocation);

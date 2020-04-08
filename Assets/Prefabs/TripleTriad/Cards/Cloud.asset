@@ -16,7 +16,7 @@ MonoBehaviour:
   description: Spiky Boi
   cardsRarity: 3
   cardName: Cloud
-  AImage: {fileID: 21300000, guid: 2505c401c435f484dae2cb0e3b20634b, type: 3}
+  AImage: {fileID: 21300000, guid: 4b57a18e5a891a9488c4e78695841738, type: 3}
   BImage: {fileID: 21300000, guid: 2505c401c435f484dae2cb0e3b20634b, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1

@@ -170,7 +170,7 @@ namespace ETF.TripleTriad
 			}
 			else
 			{
-				print("noCardsCanBeFlipped");
+				//print("noCardsCanBeFlipped");
 				SearchForRandomCardPlacement();
 				_randomCardMoves = ttDb.RetrieveNumberOfPotentialMovesRandomCards();
 				_boardLocInListToPlay = Random.Range(0, _randomCardMoves);

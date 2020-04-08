@@ -41,6 +41,7 @@ namespace ETF.TripleTriad
 
 		public void PlayCardInLocationSelection()
 		{
+			//ttdb.RetrieveTripleTriadCardInPlayerSelection().
 			ttdb.RetrieveTripleTriadCardInPlayerSelection().CardPlayed();
 		}
 
@@ -50,12 +51,13 @@ namespace ETF.TripleTriad
 			if (ttMan.RetrieveCurrentState() == ttMan.locationSelectionState)
 			{
 				ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImageToPlayer();
-				
+				ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).cardOwnedByPlayer = true;
+
 			}
 			else
 			{
 				ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).ChangeImageToEnemy();
-				print(ttMan.RetrieveCurrentState());
+				//print(ttMan.RetrieveCurrentState());
 			}
 			ttdb.RetrieveTripleTriadCardInBoardSelection(boardLocation).MoveToBoard();
 		}

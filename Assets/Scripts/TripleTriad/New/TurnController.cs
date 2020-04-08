@@ -33,20 +33,7 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
-		private void ChangeToEnemyTurn()
-		{
-			_ttMan.SendStateChange(_ttMan.enemyTurnState);
-		}
 
-		public void PlayChangeToEnemyTurnAnimation()
-		{
-			fingerAnimator.SetTrigger("PlayerToEnemy");
-		}
-
-		private void ChangeFromPlayerToEnemyState()
-		{
-			_ttMan.ttUi.InitializeBetweenTurnUiPlayerToEnemy();
-		}
 
 		#endregion
 	}

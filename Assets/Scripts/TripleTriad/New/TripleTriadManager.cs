@@ -35,7 +35,7 @@ namespace ETF.TripleTriad
         public PlayerTurnState playerTurnState;
         public LocationSelectionState locationSelectionState;
         public EnemyTurnState enemyTurnState;
-        public TurnController turnController;
+        public FingerAnimationChanger fingerAnimationChanger;
 
         [Header("Singleton")] public static TripleTriadManager instance;
 
@@ -82,7 +82,7 @@ namespace ETF.TripleTriad
 
         public void SwitchToEnemyTurn()
         {
-            turnController.PlayChangeToEnemyTurnAnimation();
+            fingerAnimationChanger.ChangeTurn();
         }
 
         #endregion

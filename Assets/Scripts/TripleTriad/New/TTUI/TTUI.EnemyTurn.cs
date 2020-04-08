@@ -37,9 +37,14 @@ namespace ETF.TripleTriad
 
 		public void InitializeBetweenTurnUiPlayerToEnemy()
 		{
-			setOutFocusOnPlayerCardSelected();
+			//setOutFocusOnPlayerCardSelected();
 			isLoading = true;
 			playerSelectionFinger.SetActive(false);
+		}
+		
+		public void InitializeBetweenTurnUiEnemyToPlayer()
+		{
+			isLoading = false;
 		}
 
 		#endregion

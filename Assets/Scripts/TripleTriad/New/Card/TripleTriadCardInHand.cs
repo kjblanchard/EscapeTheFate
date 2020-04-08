@@ -12,6 +12,7 @@ namespace ETF.TripleTriad
 
         private bool _hasPlayedCard;
         private int _locationToGoTo;
+        private bool _isPlayerCard;
 
         #endregion
 
