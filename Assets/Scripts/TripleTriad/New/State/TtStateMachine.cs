@@ -42,5 +42,10 @@ namespace ETF.TripleTriad
         {
             return _currentState;
         }
+        
+        public TtState ReturnPreviousState()
+        {
+            return _previousState;
+        }
     }
 }

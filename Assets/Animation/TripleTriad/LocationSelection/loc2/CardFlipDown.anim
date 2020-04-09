@@ -869,6 +869,13 @@ AnimationClip:
     floatParameter: 0
     intParameter: 0
     messageOptions: 0
+  - time: 0
+    functionName: ChangeCanvasToOverrideSort
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
   - time: 0.15
     functionName: SetToEmptyCardBack
     data: 
@@ -877,7 +884,7 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.3
-    functionName: ChangeImageToEnemy
+    functionName: ChangeImageToProperPlayer
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
@@ -891,7 +898,14 @@ AnimationClip:
     intParameter: 0
     messageOptions: 0
   - time: 0.6
-    functionName: ChangeImageToEnemy
+    functionName: ChangeImageToProperPlayer
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.75
+    functionName: ChangeCanvasBackToNormal
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0

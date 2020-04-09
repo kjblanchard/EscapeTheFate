@@ -12,19 +12,19 @@ namespace ETF.TripleTriad
         private static readonly int kWhichWay = Animator.StringToHash("WhichWay");
 
 
-        public void ChangeTurn()
-        {
-            if (_ttMan.RetrieveCurrentState() == _ttMan.locationSelectionState)
-            {
-                PlayChangeToEnemyTurnAnimation();
-                //ChangeToEnemyTurn();
-            }
-            else
-            {
-                PlayChangeToPlayerTurnAnimation();
-                //ChangeToPlayerTurn();
-            }
-        }
+        // public void ChangeTurn()
+        // {
+        //     if (_ttMan.RetrieveCurrentState() == _ttMan.locationSelectionState)
+        //     {
+        //         PlayChangeToEnemyTurnAnimation();
+        //         //ChangeToEnemyTurn();
+        //     }
+        //     else
+        //     {
+        //         PlayChangeToPlayerTurnAnimation();
+        //         //ChangeToPlayerTurn();
+        //     }
+        // }
         
         
         private void ChangeToPlayerTurn()
@@ -55,12 +55,12 @@ namespace ETF.TripleTriad
             }
         }
 
-        private void PlayChangeToEnemyTurnAnimation()
+        public void PlayChangeToEnemyTurnAnimation()
         {//these are used to call from ttman to start the animation/turn change
             fingerAnimator.SetTrigger("PlayerToEnemy");
         }
         
-        private void PlayChangeToPlayerTurnAnimation()
+        public void PlayChangeToPlayerTurnAnimation()
         {
             fingerAnimator.SetTrigger("EnemyToPlayer");
         }

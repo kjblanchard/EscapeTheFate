@@ -6,17 +6,39 @@ using UnityEngine;
 namespace ETF.TripleTriad
 {
 
-	public class BetweenTurns : TtState
+	public class BetweenTurnState : TtState
 	{
 
 		#region Configuration
 
+		private TtState _stateComingFrom;
+		[SerializeField] private TripleTriadManager _ttMan;
+		[SerializeField] private FingerAnimationChanger _turnSelectionFinger;
 
 		#endregion
 
 		public override void Startup()
 		{
-			base.Startup();
+			_ttMan.ttUi.UpdateScoreCount();
+			
+			if (!_ttMan.ttLogic.CheckToSeeIfWeShouldEndTheGame())
+			{
+				_stateComingFrom = _ttMan.RetrievePreviousState();
+				if (_stateComingFrom == _ttMan.locationSelectionState)
+				{
+					_turnSelectionFinger.PlayChangeToEnemyTurnAnimation();
+				}
+				else if (_stateComingFrom == _ttMan.enemyTurnState)
+				{
+					_turnSelectionFinger.PlayChangeToPlayerTurnAnimation();
+				}
+			}else
+			{
+				print("GameEnd");
+			}
+			
+			
+
 		}
 
 		public override void End()

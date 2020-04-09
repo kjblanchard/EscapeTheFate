@@ -48,7 +48,7 @@ namespace ETF.TripleTriad
 					_howManyCardsCanIFlipHere = 0;
 					for (int j = 0; j < _potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency.Length; j++)
 					{			//search adjacent sides
-						if (ttDb.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency[j])).cardInPlay)
+						if (ttDb.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency[j])).cardInPlay && ttDb.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency[j])).cardOwnedByPlayer )
 						{			//that are in play
 							//var adjacentSideNumber = j;
 							_cardToCheckAgainst = ttDb.RetrieveTripleTriadCardInBoardSelection(

@@ -15,6 +15,7 @@ namespace ETF.TripleTriad
         [SerializeField] public int[] myValueToCheck;
         [SerializeField] public int[] adjacencyValueToCheck;
         [SerializeField] public bool cardInPlay;
+        [SerializeField] private Canvas _cardCanvas;
 
         #endregion
 
@@ -24,7 +25,19 @@ namespace ETF.TripleTriad
 
         private void SendCallToTurnControllerToChangeTurn()
         {
-            ttMan.fingerAnimationChanger.ChangeTurn();
+            ttMan.SendStateChange(ttMan.betweenTurnState);
+        }
+
+        private void ChangeCanvasToOverrideSort()
+        {
+            _cardCanvas.overrideSorting = true;
+            _cardCanvas.sortingOrder = 1;
+        }
+        
+        private void ChangeCanvasBackToNormal()
+        {
+            _cardCanvas.sortingOrder = 0;
+            _cardCanvas.overrideSorting = false;
         }
         
         
@@ -44,12 +57,12 @@ namespace ETF.TripleTriad
         {
             if (ttMan.RetrieveCurrentState() == ttMan.locationSelectionState)
             {
-                ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
+                ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlippingForPlayer(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
                 
             }
             else //if (ttMan.RetrieveCurrentState() == ttMan.enemyTurnState)
             {
-                ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlipping(ttMan.ttLogic.RetrieveBoardPositionToPlaceCard());
+                ttMan.ttLogic.ttBoardLogic.CheckToSeeIfCardsAreFlippingForEnemy(ttMan.ttLogic.RetrieveBoardPositionToPlaceCard());
             }
             //print($"current state is {ttMan.RetrieveCurrentState()}");
         }

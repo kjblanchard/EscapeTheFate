@@ -24,4 +24,4 @@ MonoBehaviour:
   enemyCard: 0
   cardSlot: 0
   percentChanceForEnemyToUseInBattle: 100
-  cardValues: 06000000050000000400000007000000
+  cardValues: 06000000050000000700000004000000
