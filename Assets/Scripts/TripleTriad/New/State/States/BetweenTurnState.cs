@@ -17,6 +17,7 @@ namespace ETF.TripleTriad
 
 		#endregion
 
+		
 		public override void Startup()
 		{
 			_ttMan.ttUi.UpdateScoreCount();
@@ -34,17 +35,18 @@ namespace ETF.TripleTriad
 				}
 			}else
 			{
-				print("GameEnd");
+				_ttMan.SendStateChange(_ttMan.endGameState);
 			}
 			
 			
 
 		}
 
-		public override void End()
-		{
-			base.End();
-		}
+		// public override void End()
+		// {
+		// 	_ttMan.ttUi.LeavingTurnSelectionUiChange();
+		// 	print("hi");
+		// }
 
 
 		#region Functions

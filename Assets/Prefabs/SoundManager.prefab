@@ -858,6 +858,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: fb7db31594e394a6d8cdb68ceafd8b90, type: 2}
   - {fileID: 11400000, guid: 3f34b32ecbf1b4e6f811df8be1e0a5a2, type: 2}
   - {fileID: 11400000, guid: 95257c2e53236461089ec84cafb5c7b9, type: 2}
+  - {fileID: 11400000, guid: 8b9e3207da216ff4892847589f11dfbc, type: 2}
   bgmToPlay: 0
 --- !u!114 &1720170476
 MonoBehaviour:

@@ -11,7 +11,7 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		[SerializeField] private TripleTriadManager ttMan;
-		[SerializeField] private WaitForSeconds inFocusWait = new WaitForSeconds(0.3f);
+		[SerializeField] private WaitForSeconds inFocusWait = new WaitForSeconds(0.4f);
 		#endregion
 
 		public override void Startup()

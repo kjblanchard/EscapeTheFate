@@ -19,6 +19,13 @@ namespace ETF.TripleTriad
 		public void PlayCardInEnemyTurn(int enemyHandCardNumber)
 		{
 			ttdb.currentEnemyTripleTriadCardsInHand[enemyHandCardNumber].CardPlayed();
+			SoundManager.instance.PlaySFX(6);
+		}
+
+		public void InitializeEnemyTurnStateUi()
+		{
+			enemyHandDialogBoxAnimator.gameObject.SetActive(false);
+			locationSelectionFinger.SetActive(false);
 		}
 		
 		

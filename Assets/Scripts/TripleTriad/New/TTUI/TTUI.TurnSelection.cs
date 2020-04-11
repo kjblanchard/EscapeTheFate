@@ -10,6 +10,9 @@ namespace ETF.TripleTriad
         public void InitializeTurnSelection()
         {
             //turns on and updates elements needed for turn selection
+            turnIndicatorFingerAnimator.gameObject.SetActive(true);
+            _enemyScoreText.gameObject.SetActive(true);
+            _playerScoreText.gameObject.SetActive(true);
             UpdateEnemyDialogBoxToTurnSelection();
         }
 
@@ -23,6 +26,12 @@ namespace ETF.TripleTriad
         {
             SoundManager.instance.PlaySFX(5);
             turnIndicatorFingerAnimator.Play("TurnSelectionFinger");
+        }
+        
+        public void LeavingTurnSelectionUiChange()
+        {
+            enemyHandDialogBoxAnimator.gameObject.SetActive(false);
+            locationSelectionFinger.SetActive(false);
         }
 
 

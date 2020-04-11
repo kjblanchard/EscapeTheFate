@@ -10,8 +10,8 @@ namespace ETF.TripleTriad
 
         public void InitializePlayerTurnCanvas()
         {
-            enemyHandDialogBoxAnimator.gameObject.SetActive(false);
-            locationSelectionFinger.SetActive(false);
+            // enemyHandDialogBoxAnimator.gameObject.SetActive(false);
+            // locationSelectionFinger.SetActive(false);
             setFocusOnPlayerCardSelected();
         }
 

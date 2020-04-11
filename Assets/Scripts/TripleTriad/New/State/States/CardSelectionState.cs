@@ -367,6 +367,7 @@ namespace ETF.TripleTriad
             ttMan.ttUi.InitializeUiFromTtBattleList();
             ttMan.ttUi.UpdatePageNum();
             ttMan.ttUi.UpdateTheBigCardDisplayUi();
+            ttMan.ttUi.isLoading = false;
         }
 
         #endregion

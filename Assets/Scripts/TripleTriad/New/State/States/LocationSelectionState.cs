@@ -69,6 +69,7 @@ namespace ETF.TripleTriad
 			}
 			else if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire2")) && !ttMan.ttUi.isLoading)
 			{
+				SoundManager.instance.PlaySFX(1);
 				ttMan.ttDb.ModifyPlayerTurnIsCancelling(true);
 				ttMan.SendChangeToPreviousState();
 			}
@@ -80,7 +81,8 @@ namespace ETF.TripleTriad
 			{
 				if (ttMan.ttLogic.CanIPlaceCardInLocationSelection())
 				{
-					//ttMan.ttUi.isLoading = true;
+					//ttMan.ttUi.InitializeBetweenTurnUiPlayerToEnemy();
+					ttMan.ttUi.keepPlayerSelectionFingerOnProperLocation();
 					ttMan.ttDb.RetrieveTripleTriadCardInPlayerSelection()
 						.SetLocationToGoTo(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
 					ttMan.ttDb.ChangeCurrentLocationCardToPlayed();

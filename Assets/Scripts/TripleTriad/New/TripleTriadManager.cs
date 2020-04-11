@@ -28,7 +28,8 @@ namespace ETF.TripleTriad
         public TTLogic ttLogic;
         [SerializeField] TtStateMachine ttStateMachine;
 
-        [Header("States")] public CardSelectionState cardSelectionState;
+        [Header("States")] public ShowingRulesState showingRulesState;
+        public CardSelectionState cardSelectionState;
         public CardConfirmationState cardConfirmationState;
         public EnemyHandSelectionState enemyHandSelectionState;
         public TurnSelectionState turnSelectionState;
@@ -37,6 +38,7 @@ namespace ETF.TripleTriad
         public EnemyTurnState enemyTurnState;
        // public FingerAnimationChanger fingerAnimationChanger;
        public BetweenTurnState betweenTurnState;
+       public EndGameState endGameState;
 
         [Header("Singleton")] public static TripleTriadManager instance;
 
@@ -54,7 +56,7 @@ namespace ETF.TripleTriad
                 .CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
             GameManager.instance.TurnOnDirectionalJoystick();
             ttDb.InitializeDbValuesForStartingTripleTriad();
-            SendStateChange(cardSelectionState);
+            SendStateChange(showingRulesState);
         }
 
         void Update()

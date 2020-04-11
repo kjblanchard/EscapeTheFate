@@ -27,7 +27,7 @@ namespace ETF.TripleTriad
 
         public override void End()
         {
-            base.End();
+            ttMan.ttUi.LeavingTurnSelectionUiChange();
         }
 
 
