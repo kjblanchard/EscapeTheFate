@@ -16,8 +16,8 @@ MonoBehaviour:
   description: KAKAROT!!!
   cardsRarity: 3
   cardName: Vegeta
-  AImage: {fileID: 21300000, guid: 4acd37909f0fc65458641b4cea5fe3bd, type: 3}
-  BImage: {fileID: 21300000, guid: 2783d973128401b41b51fd47a6b67f67, type: 3}
+  playerImage: {fileID: 21300000, guid: 4acd37909f0fc65458641b4cea5fe3bd, type: 3}
+  enemyImage: {fileID: 21300000, guid: 2783d973128401b41b51fd47a6b67f67, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

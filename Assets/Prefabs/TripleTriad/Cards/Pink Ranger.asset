@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Better with age
   cardsRarity: 2
   cardName: Pink Ranger
-  AImage: {fileID: 21300000, guid: bb2d9f924231891469a5deecab79eaf6, type: 3}
-  BImage: {fileID: 21300000, guid: 4115d40d511ec5b468f057e2e7f405eb, type: 3}
+  playerImage: {fileID: 21300000, guid: bb2d9f924231891469a5deecab79eaf6, type: 3}
+  enemyImage: {fileID: 21300000, guid: 4115d40d511ec5b468f057e2e7f405eb, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

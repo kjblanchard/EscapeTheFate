@@ -329,7 +329,7 @@ void Start()
             initializingFields = true;
         }
 
-        currentCardImage = cardHolders[chooseCardLocation].cardHeld.AImage;
+        currentCardImage = cardHolders[chooseCardLocation].cardHeld.playerImage;
         cardSelectionImage.sprite = currentCardImage;
         horizontalFinger.transform.position = chooseCardList[chooseCardLocation].transform.position;
     }
@@ -788,7 +788,7 @@ void Start()
         for (int i = 0; i < myHandList.Count; i++)
         {
             myHand[i].SetActive(true);
-            myHand[i].GetComponent<Image>().sprite = myHandList[i].AImage;
+            myHand[i].GetComponent<Image>().sprite = myHandList[i].playerImage;
             Debug.Log("I just updated " + myHand[i] + " with" + myHandList[i]);
         }
     }
@@ -974,7 +974,7 @@ void Start()
                 StartCoroutine(OneFrame()); // needed for sorting properly
                 enemyHand[i].SetActive(true);
             SoundManager.instance.PlaySFX(4);
-            enemyHand[i].GetComponent<Image>().sprite = enemyHandList[i].BImage;
+            enemyHand[i].GetComponent<Image>().sprite = enemyHandList[i].enemyImage;
             StartCoroutine(RotateCard(enemyHand[i]));
             yield return new WaitForSeconds(waitTime[index]);
         }
@@ -991,7 +991,7 @@ void Start()
                 enemyHand[i].SetActive(true);
                 SoundManager.instance.PlaySFX(4);
                 //enemyHand[i].GetComponent<Image>().sprite = defaultCardBack;
-                enemyHand[i].GetComponent<Image>().sprite = CardInventory.instance.emptyCard.AImage;
+                enemyHand[i].GetComponent<Image>().sprite = CardInventory.instance.emptyCard.playerImage;
                 yield return new WaitForSeconds(waitTime[index]);
             }
             gameState = GameStates.TURN_SELECTION;
@@ -1265,7 +1265,7 @@ void Start()
             int timesToRotate = 20;
             int speed = 5;
             Sprite referenceSprite = thingToRotate.GetComponent<Image>().sprite;
-            thingToRotate.GetComponent<Image>().sprite = CardInventory.instance.emptyCard.AImage;
+            thingToRotate.GetComponent<Image>().sprite = CardInventory.instance.emptyCard.playerImage;
             for (int i = 0; i < timesToRotate; i++)
 
             {

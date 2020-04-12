@@ -16,8 +16,8 @@ MonoBehaviour:
   description: rip
   cardsRarity: 0
   cardName: Yamcha
-  AImage: {fileID: 21300000, guid: bc559db5efe49ef44a24abb55377d926, type: 3}
-  BImage: {fileID: 21300000, guid: ed01b69add65617458713c91fe3c95f6, type: 3}
+  playerImage: {fileID: 21300000, guid: bc559db5efe49ef44a24abb55377d926, type: 3}
+  enemyImage: {fileID: 21300000, guid: ed01b69add65617458713c91fe3c95f6, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

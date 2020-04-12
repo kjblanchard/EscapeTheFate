@@ -27,12 +27,12 @@ namespace ETF.TripleTriad
 
         public void FlipCard() // used for enemy cards currently for flipping
         {
-            cardImage.sprite = whatCardIAm.BImage;
+            cardImage.sprite = whatCardIAm.enemyImage;
         }
 
         public void SetToEmptyCardBack()
         {
-            cardImage.sprite = CardInventory.instance.emptyCard.BImage;
+            cardImage.sprite = CardInventory.instance.emptyCard.enemyImage;
         }
 
         public void SetMyCurrentCard(Card whatCardImGonnaBe)
@@ -56,23 +56,23 @@ namespace ETF.TripleTriad
         {
             if (cardOwnedByPlayer)
             {
-                cardImage.sprite = whatCardIAm.AImage;   
+                cardImage.sprite = whatCardIAm.playerImage;   
             }
             else
             {
-                cardImage.sprite = whatCardIAm.BImage;
+                cardImage.sprite = whatCardIAm.enemyImage;
             }
         }
 
         
         public void ChangeImageToPlayer()
         {
-            cardImage.sprite = whatCardIAm.AImage;
+            cardImage.sprite = whatCardIAm.playerImage;
         }
         
         public void ChangeImageToEnemy()
         {
-            cardImage.sprite = whatCardIAm.BImage;
+            cardImage.sprite = whatCardIAm.enemyImage;
         }
 
         public void ControlUiLoadingModifier(int shouldIBeLoading)

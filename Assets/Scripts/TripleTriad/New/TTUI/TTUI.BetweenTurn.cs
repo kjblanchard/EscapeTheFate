@@ -27,6 +27,10 @@ namespace ETF.TripleTriad
 			_enemyScoreText.text = ttdb.NumberOfEnemyOwnedCards().ToString();
 		}
 
+		public void InitializeBetweenTurnStateUi()
+		{
+			_infoPanelCanvas.enabled = false;
+		}
 
 		
 		#endregion

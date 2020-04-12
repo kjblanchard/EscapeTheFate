@@ -13,11 +13,13 @@ namespace ETF.TripleTriad
             // enemyHandDialogBoxAnimator.gameObject.SetActive(false);
             // locationSelectionFinger.SetActive(false);
             setFocusOnPlayerCardSelected();
+            _infoPanelCanvas.enabled = false;
         }
 
         public void InitializePlayerTurnCanvasFromLocationSelectionCancel()
         {
             locationSelectionFinger.SetActive(false);
+            _infoPanelCanvas.enabled = false;
         }
 
         public void keepPlayerSelectionFingerOnProperLocation()

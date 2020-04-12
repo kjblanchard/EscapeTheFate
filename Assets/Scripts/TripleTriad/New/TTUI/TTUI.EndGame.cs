@@ -22,8 +22,25 @@ namespace ETF.TripleTriad
 		public void InitializeEndGameUi()
 		{
 			SoundManager.instance.PlayIntroLoop(3);
-			locationSelectionFinger.SetActive(false);
+			turnIndicatorFingerAnimator.gameObject.SetActive(false);
+
+			ttMan.ttUi.enemyHandDialogBoxAnimator.gameObject.SetActive(true);
+			UpdateEnemyDialogBoxToEndGameWin();
+			PlayEnemyHandDialogBoxAnimation();
+
 			_endGameCanvas.gameObject.SetActive(true);
+			
+		}
+		
+		
+		private void UpdateEnemyDialogBoxToEndGameWin()
+		{
+			enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerWins();
+		}
+		
+		public void UpdateEnemyDialogBoxToEndGameLose()
+		{
+			enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerLoses();
 		}
 
 

@@ -25,14 +25,14 @@ namespace ETF.TripleTriad
 		{
 			ListenForUserInputs();
 			ttMan.ttUi.KeepFingerOnProperLocationInLocationSelection();
-			print("inlocationselection");
+			//print("inlocationselection");
 		}
 
 
 
 		public override void End()
 		{
-			base.End();
+			
 		}
 
 		#region Functions
@@ -43,6 +43,7 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIMoveUpInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerUpInDb();
+				ttMan.ttUi.UpdateInfoPanelCardName();
 				SoundManager.instance.PlaySFX(0);
 
 			}
@@ -50,6 +51,8 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIMoveDownInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerDownInDb();
+				ttMan.ttUi.UpdateInfoPanelCardName();
+
 				SoundManager.instance.PlaySFX(0);
 
 			}
@@ -57,6 +60,8 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIScrollRightInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerRightInDb();
+				ttMan.ttUi.UpdateInfoPanelCardName();
+
 				SoundManager.instance.PlaySFX(0);
 
 			}
@@ -64,6 +69,8 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIScrollLeftInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerLeftInDb();
+				ttMan.ttUi.UpdateInfoPanelCardName();
+
 				SoundManager.instance.PlaySFX(0);
 
 			}

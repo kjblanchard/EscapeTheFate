@@ -7,6 +7,9 @@ namespace ETF.TripleTriad
 {
     public partial class TTDB
     {
+
+        #region configuration
+
         [Header("EnemyHandReferences")] private EnemyCardHand.WhatTypeOfCardPlayerAmI _typeOfEnemyPlayer;
         private List<Card> _currentEnemyRareCards;
 
@@ -20,11 +23,17 @@ namespace ETF.TripleTriad
         private string _npcName;
         private int _randomNumber;
         private int _chanceToUse;
+        private EnemyCardHand.WhatTypeOfWinReward _typeOfWinReward;
+        private bool _isEnemyHandOpen;
+        private bool _isRandomCardSelection;
+        private bool _isPlus;
+        private bool _isSame;
 
-
+        #endregion
+        
         public void BringInEnemyCardInformation(EnemyCardHand.WhatTypeOfCardPlayerAmI typeOfEnemyPlayer,
             List<Card> currentEnemyRareCards, string turnSelectionText, string playerWinText, string playerLoseText,
-            string choosingCardText, string npcName)
+            string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward)
         {
             //this is used to get information from the npc, it is called by enemy hand script, which will be on every npc..  Gets his rare cards, type of difficulty, and Information
             _typeOfEnemyPlayer = typeOfEnemyPlayer;
@@ -34,6 +43,33 @@ namespace ETF.TripleTriad
             _whatToSayWhenPlayerLoses = playerLoseText;
             _whatToSayWhenChoosingCards = choosingCardText;
             _npcName = npcName;
+            _isEnemyHandOpen = isEnemyHandOpen;
+            _isRandomCardSelection = isRandomCardSelection;
+            _isPlus = isPlus;
+            _isSame = isSame;
+            _typeOfWinReward = typeOfWinReward;
+        }
+
+        public string RetrieveRuleEnemyHandOpen()
+        {
+            return _isEnemyHandOpen.ToString();
+        }
+        
+        public string RetrieveRuleRandom()
+        {
+            return _isRandomCardSelection.ToString();
+        }
+        public string RetrieveRulePlus()
+        {
+            return _isPlus.ToString();
+        }
+        public string RetrieveRuleSame()
+        {
+            return _isSame.ToString();
+        }
+        public string RetrieveRuleWinReward()
+        {
+            return _typeOfWinReward.ToString();
         }
 
 
@@ -146,6 +182,18 @@ namespace ETF.TripleTriad
         {
             //returns data to the ui
             return _npcName;
+        }
+        
+        public string WhatWillTheEnemySayWhenPlayerWins()
+        {
+            //returns data to the ui
+            return _whatToSayWhenPlayerWins;
+        }
+        
+        public string WhatWillTheEnemySayWhenPlayerLoses()
+        {
+            //returns data to the ui
+            return _whatToSayWhenPlayerLoses;
         }
 
         public EnemyCardHand.WhatTypeOfCardPlayerAmI RetrieveEnemyDifficulty()

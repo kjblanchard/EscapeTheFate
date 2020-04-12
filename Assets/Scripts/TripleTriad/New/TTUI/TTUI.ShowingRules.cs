@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ETF.TripleTriad
 {
@@ -14,8 +15,16 @@ namespace ETF.TripleTriad
 		private Canvas _showingRulesCanvas;
 		[SerializeField] private Transform[] _showingRulesFingerLocations;
 		public Animator showingRulesAnimator;
-
+		[Header("EnemyHandReferences")] private EnemyCardHand.WhatTypeOfCardPlayerAmI _typeOfEnemyPlayer;
+		private List<Card> _currentEnemyRareCards;
 		
+		[SerializeField] private Text _typeOfWinRewardText;
+		[SerializeField] private Text _isEnemyHandOpenText;
+		[SerializeField] private Text _isRandomCardSelectionText;
+		[SerializeField] private Text _isPlusText;
+		[SerializeField] private Text _isSameText;
+
+
 		#endregion
 
 
@@ -30,6 +39,16 @@ namespace ETF.TripleTriad
 			_enemyScoreText.gameObject.SetActive(false);
 			_playerScoreText.gameObject.SetActive(false);
 			turnIndicatorFingerAnimator.gameObject.SetActive(false);
+			UpdateRulesText();
+		}
+
+		public void UpdateRulesText()
+		{
+			_typeOfWinRewardText.text = ttdb.RetrieveRuleWinReward();
+			_isRandomCardSelectionText.text = ttdb.RetrieveRuleRandom();
+			_isEnemyHandOpenText.text = ttdb.RetrieveRuleEnemyHandOpen();
+			_isPlusText.text = ttdb.RetrieveRulePlus();
+			_isSameText.text = ttdb.RetrieveRuleSame();
 		}
 
 

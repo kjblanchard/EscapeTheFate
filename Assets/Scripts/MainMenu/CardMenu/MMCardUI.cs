@@ -133,14 +133,14 @@ public class MMCardUI : MonoBehaviour
                 listOfPages[pageToPutThisOn].cardQuantityLocations[positionToPutThisOn].text = CardInventory.instance.renumberedCardList[i].amountOwned.ToString();
                 listOfPages[pageToPutThisOn].cardNameLocations[positionToPutThisOn].text = CardInventory.instance.renumberedCardList[i].cardName;
                 listOfPages[pageToPutThisOn].cardNameLocations[positionToPutThisOn].color = Color.white;
-                listOfPages[pageToPutThisOn].cardImageLocations[positionToPutThisOn].sprite = CardInventory.instance.renumberedCardList[i].AImage;
+                listOfPages[pageToPutThisOn].cardImageLocations[positionToPutThisOn].sprite = CardInventory.instance.renumberedCardList[i].playerImage;
             }
             else if(CardInventory.instance.renumberedCardList[i].hasOwnedBefore)
             {
                 listOfPages[pageToPutThisOn].cardQuantityLocations[positionToPutThisOn].text = "0";
                 listOfPages[pageToPutThisOn].cardNameLocations[positionToPutThisOn].text = CardInventory.instance.renumberedCardList[i].cardName;
                 listOfPages[pageToPutThisOn].cardNameLocations[positionToPutThisOn].color = Color.gray;
-                listOfPages[pageToPutThisOn].cardImageLocations[positionToPutThisOn].sprite = CardInventory.instance.renumberedCardList[i].AImage;
+                listOfPages[pageToPutThisOn].cardImageLocations[positionToPutThisOn].sprite = CardInventory.instance.renumberedCardList[i].playerImage;
 
             }
             else
@@ -148,7 +148,7 @@ public class MMCardUI : MonoBehaviour
                 listOfPages[pageToPutThisOn].cardQuantityLocations[positionToPutThisOn].text = "0";
                 listOfPages[pageToPutThisOn].cardNameLocations[positionToPutThisOn].text = CardInventory.instance.emptyCard.cardName;
                 listOfPages[pageToPutThisOn].cardNameLocations[positionToPutThisOn].color = Color.gray;
-                listOfPages[pageToPutThisOn].cardImageLocations[positionToPutThisOn].sprite = CardInventory.instance.emptyCard.AImage;
+                listOfPages[pageToPutThisOn].cardImageLocations[positionToPutThisOn].sprite = CardInventory.instance.emptyCard.playerImage;
 
             }
         }
@@ -160,7 +160,7 @@ public class MMCardUI : MonoBehaviour
         {
             bigCardNameText.text = CardInventory.instance.renumberedCardList[cardToLookup].cardName;
             bigCardNumberText.text = "# " + CardInventory.instance.renumberedCardList[cardToLookup].cardID.ToString();
-            bigCardImage.sprite = CardInventory.instance.renumberedCardList[cardToLookup].AImage;
+            bigCardImage.sprite = CardInventory.instance.renumberedCardList[cardToLookup].playerImage;
             smallCardNameText.text = CardInventory.instance.renumberedCardList[cardToLookup].cardName;
             smallCardRarityText.text = CardInventory.instance.renumberedCardList[cardToLookup].cardsRarity.ToString();
             smallCardOriginText.text = "N/A";
@@ -170,7 +170,7 @@ public class MMCardUI : MonoBehaviour
         {
             bigCardNameText.text = CardInventory.instance.renumberedCardList[cardToLookup].cardName;
             bigCardNumberText.text = "# " + CardInventory.instance.renumberedCardList[cardToLookup].cardID.ToString();
-            bigCardImage.sprite = CardInventory.instance.renumberedCardList[cardToLookup].AImage;
+            bigCardImage.sprite = CardInventory.instance.renumberedCardList[cardToLookup].playerImage;
             smallCardNameText.text = CardInventory.instance.renumberedCardList[cardToLookup].cardName;
             smallCardRarityText.text = CardInventory.instance.renumberedCardList[cardToLookup].cardsRarity.ToString();
             smallCardOriginText.text = "You Lost it to {Someone}";
@@ -180,7 +180,7 @@ public class MMCardUI : MonoBehaviour
         {
             bigCardNameText.text = CardInventory.instance.emptyCard.cardName;
             bigCardNumberText.text = "";
-            bigCardImage.sprite = CardInventory.instance.emptyCard.AImage;
+            bigCardImage.sprite = CardInventory.instance.emptyCard.playerImage;
             smallCardNameText.text = "";
             smallCardRarityText.text = "";
             smallCardOriginText.text = "";

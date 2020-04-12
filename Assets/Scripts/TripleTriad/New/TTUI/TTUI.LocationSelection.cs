@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace ETF.TripleTriad
 {
@@ -15,6 +16,8 @@ namespace ETF.TripleTriad
 		[SerializeField] private Transform[] locationSelectionFingerLocation;
 
 		[SerializeField] private GameObject locationSelectionFinger;
+		[SerializeField] private Canvas _infoPanelCanvas;
+		[SerializeField] private Text _infoPanelCardText;
 
 		#endregion
 
@@ -37,6 +40,12 @@ namespace ETF.TripleTriad
 			{
 				locationSelectionFinger.gameObject.SetActive(false);
 			}
+		}
+
+		public void UpdateInfoPanelCardName()
+		{
+			_infoPanelCardText.text =
+				ttdb.RetrieveTripleTriadCardInBoardSelection(ttdb.RetrieveLocationSelectionCurrentSelection()).whatCardIAm.cardName;
 		}
 
 		public void PlayCardInLocationSelection()
@@ -70,8 +79,11 @@ namespace ETF.TripleTriad
 
 		public void InitializeLocationSelectionUiElements()
 		{
-			playerSelectionFinger.SetActive(false);
 			
+			playerSelectionFinger.SetActive(false);
+			_infoPanelCanvas.enabled = true;
+			UpdateInfoPanelCardName();
+
 		}
 
 		public int RetrieveLocationSelectionTransformCount()

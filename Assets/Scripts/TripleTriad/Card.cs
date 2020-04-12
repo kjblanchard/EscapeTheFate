@@ -21,8 +21,8 @@ public class Card : ScriptableObject
     public string cardName;
 
 
-    public Sprite AImage;
-    public Sprite BImage;
+    public Sprite playerImage;
+    public Sprite enemyImage;
     public int amountOwned = 0;
     public bool hasOwnedBefore = false;
 

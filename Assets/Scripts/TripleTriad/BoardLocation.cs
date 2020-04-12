@@ -54,12 +54,12 @@ public class BoardLocation : MonoBehaviour
         {
             if (playerOwned)
             {
-                imageReference.sprite = cardHeld.AImage;
+                imageReference.sprite = cardHeld.playerImage;
                  imageReference.color = new Color(1f, 1f, 1f, 1f);
             }
             else
             {
-                imageReference.sprite = cardHeld.BImage;
+                imageReference.sprite = cardHeld.enemyImage;
                 imageReference.color = new Color(1f, 1f, 1f, 1f);
             }
         }
@@ -143,7 +143,7 @@ public class BoardLocation : MonoBehaviour
         */
         if (directionToFlip == 1)
         {
-            imageReference.sprite = CardInventory.instance.emptyCard.AImage;
+            imageReference.sprite = CardInventory.instance.emptyCard.playerImage;
             
             for (int i = 0; i < timesToRotate; i++)
 
@@ -155,7 +155,7 @@ public class BoardLocation : MonoBehaviour
         }
         else if (directionToFlip == 2)
         {
-            imageReference.sprite = CardInventory.instance.emptyCard.AImage;
+            imageReference.sprite = CardInventory.instance.emptyCard.playerImage;
             for (int i = 0; i < timesToRotate; i++)
 
             {
@@ -166,7 +166,7 @@ public class BoardLocation : MonoBehaviour
         }
         else if (directionToFlip == 3)
         {
-            imageReference.sprite = CardInventory.instance.emptyCard.AImage;
+            imageReference.sprite = CardInventory.instance.emptyCard.playerImage;
             for (int i = 0; i < timesToRotate; i++)
 
             {
@@ -177,7 +177,7 @@ public class BoardLocation : MonoBehaviour
         }
         else if (directionToFlip == 0)
         {
-            imageReference.sprite = CardInventory.instance.emptyCard.AImage;
+            imageReference.sprite = CardInventory.instance.emptyCard.playerImage;
             for (int i = 0; i < timesToRotate; i++)
 
             {

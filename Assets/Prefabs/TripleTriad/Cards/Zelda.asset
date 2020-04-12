@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Hyrules Finest
   cardsRarity: 3
   cardName: Zelda
-  AImage: {fileID: 21300000, guid: a07751673c9cada48a859d101ec99542, type: 3}
-  BImage: {fileID: 21300000, guid: f06823f00b913df4885e9b764c1af5a1, type: 3}
+  playerImage: {fileID: 21300000, guid: a07751673c9cada48a859d101ec99542, type: 3}
+  enemyImage: {fileID: 21300000, guid: f06823f00b913df4885e9b764c1af5a1, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

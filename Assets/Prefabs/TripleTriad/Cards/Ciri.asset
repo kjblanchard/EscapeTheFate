@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Geralt shod me da wai
   cardsRarity: 3
   cardName: Ciri
-  AImage: {fileID: 21300000, guid: 21c50e63a700f884b8f783eba653ffc8, type: 3}
-  BImage: {fileID: 21300000, guid: a6d92c3a675238942b30e42ad5371327, type: 3}
+  playerImage: {fileID: 21300000, guid: 21c50e63a700f884b8f783eba653ffc8, type: 3}
+  enemyImage: {fileID: 21300000, guid: a6d92c3a675238942b30e42ad5371327, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

@@ -16,8 +16,8 @@ MonoBehaviour:
   description: '. . . '
   cardsRarity: 3
   cardName: Kid
-  AImage: {fileID: 21300000, guid: 205c5fff4adfac046bac1d14f3a7c815, type: 3}
-  BImage: {fileID: 21300000, guid: 42d42c6dc6115d24b88a282c791fd7c9, type: 3}
+  playerImage: {fileID: 21300000, guid: 205c5fff4adfac046bac1d14f3a7c815, type: 3}
+  enemyImage: {fileID: 21300000, guid: 42d42c6dc6115d24b88a282c791fd7c9, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0

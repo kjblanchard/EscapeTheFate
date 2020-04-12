@@ -182,7 +182,7 @@ namespace ETF.TripleTriad
             cardRarity.text = ttdb.currentBattleSelectableCards[ttdb.RetrieveCardSelectionCurrentSpotInInventory()]
                 .cardsRarity.ToString();
             cardImage.sprite = ttdb.currentBattleSelectableCards[ttdb.RetrieveCardSelectionCurrentSpotInInventory()]
-                .AImage;
+                .playerImage;
             PlayDisplayCardAnimation();
         }
 
@@ -209,7 +209,7 @@ namespace ETF.TripleTriad
         public void UpdateMyHandImage()
         {
             myHandCardImages[ttdb.currentHandSelectionsList.Count].sprite = ttdb
-                .currentBattleSelectableCards[ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory()].AImage;
+                .currentBattleSelectableCards[ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory()].playerImage;
         }
 
         public void UpdateQuantityAfterSelecting()

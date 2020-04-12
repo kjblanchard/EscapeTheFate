@@ -16,8 +16,8 @@ MonoBehaviour:
   description: Luke.. I am your.....????
   cardsRarity: 3
   cardName: Vader
-  AImage: {fileID: 21300000, guid: 396b9dcdf95bcea418afb8ea08dbf006, type: 3}
-  BImage: {fileID: 21300000, guid: 327da813f5f84894398bb8f25d543fd1, type: 3}
+  playerImage: {fileID: 21300000, guid: 396b9dcdf95bcea418afb8ea08dbf006, type: 3}
+  enemyImage: {fileID: 21300000, guid: 327da813f5f84894398bb8f25d543fd1, type: 3}
   amountOwned: 3
   hasOwnedBefore: 1
   myCard: 0
