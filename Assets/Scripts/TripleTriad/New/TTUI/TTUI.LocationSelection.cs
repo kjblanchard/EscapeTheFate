@@ -50,7 +50,7 @@ namespace ETF.TripleTriad
 
 		public void PlayCardInLocationSelection()
 		{
-			//ttdb.RetrieveTripleTriadCardInPlayerSelection().
+			_infoPanelCanvas.enabled = false;
 			ttdb.RetrieveTripleTriadCardInPlayerSelection().CardPlayed();
 		}
 

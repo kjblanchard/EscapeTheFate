@@ -16,8 +16,21 @@ namespace ETF.TripleTriad
 
 		public override void Startup()
 		{
-			_ttMan.ttUi.InitializeEndGameUi();
+			_ttMan.ttUi.InitializeEndGameInitialUi();
 			
+			if (_ttMan.ttDb.NumberOfPlayerOwnedCards() > _ttMan.ttDb.NumberOfEnemyOwnedCards())
+			{
+				_ttMan.ttUi.InitializeWinEndGameUi();
+			}
+			else if (_ttMan.ttDb.NumberOfPlayerOwnedCards() == _ttMan.ttDb.NumberOfEnemyOwnedCards())
+			{
+				_ttMan.ttUi.InitializeTieEndGameUi();
+			}
+			else
+			{
+				_ttMan.ttUi.InitializeLoseEndGameUi();
+			}
+
 		}
 
 		#region Functions

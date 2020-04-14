@@ -19,6 +19,7 @@ namespace ETF.TripleTriad
         private string _whatToSayWhenTurnIsBeingSelected;
         private string _whatToSayWhenPlayerWins;
         private string _whatToSayWhenPlayerLoses;
+        private string _whatToSayWhenPlayerTies;
         private string _whatToSayWhenChoosingCards;
         private string _npcName;
         private int _randomNumber;
@@ -32,7 +33,7 @@ namespace ETF.TripleTriad
         #endregion
         
         public void BringInEnemyCardInformation(EnemyCardHand.WhatTypeOfCardPlayerAmI typeOfEnemyPlayer,
-            List<Card> currentEnemyRareCards, string turnSelectionText, string playerWinText, string playerLoseText,
+            List<Card> currentEnemyRareCards, string turnSelectionText, string playerWinText, string playerLoseText, string playerTieText,
             string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward)
         {
             //this is used to get information from the npc, it is called by enemy hand script, which will be on every npc..  Gets his rare cards, type of difficulty, and Information
@@ -41,6 +42,7 @@ namespace ETF.TripleTriad
             _whatToSayWhenTurnIsBeingSelected = turnSelectionText;
             _whatToSayWhenPlayerWins = playerWinText;
             _whatToSayWhenPlayerLoses = playerLoseText;
+            _whatToSayWhenPlayerTies = playerTieText;
             _whatToSayWhenChoosingCards = choosingCardText;
             _npcName = npcName;
             _isEnemyHandOpen = isEnemyHandOpen;
@@ -194,6 +196,11 @@ namespace ETF.TripleTriad
         {
             //returns data to the ui
             return _whatToSayWhenPlayerLoses;
+        }
+        public string WhatWillTheEnemySayWhenPlayerTies()
+        {
+            //returns data to the ui
+            return _whatToSayWhenPlayerTies;
         }
 
         public EnemyCardHand.WhatTypeOfCardPlayerAmI RetrieveEnemyDifficulty()

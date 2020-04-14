@@ -31,6 +31,7 @@ namespace ETF.TripleTriad
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenTurnIsBeingSelected = "Who goes first..";
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenPlayerWins = "You win chump";
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenPlayerLoses = "You lose sucker";
+        [TextArea(4, 5)] [SerializeField] private string whatToSayWhenPlayerTies = "You lose sucker";
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenChoosingCards = "I'm Choosing da cards";
         [SerializeField] private string npcName = "Enemy Player";
         [SerializeField] private bool isEnemyHandOpen;
@@ -46,7 +47,7 @@ namespace ETF.TripleTriad
         private void Awake()
         {//this is here for testing, will be moved to loading into triple triad afterwards
             TripleTriadManager.instance.ttDb.BringInEnemyCardInformation(_whatTypeOfPlayerAmI, _listOfRareCardsOwned,
-                whatToSayWhenTurnIsBeingSelected, whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,
+                whatToSayWhenTurnIsBeingSelected, whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,whatToSayWhenPlayerTies,
                 whatToSayWhenChoosingCards, npcName, isEnemyHandOpen, isRandomCardSelection, isPlus, isSame,
                 _typeOfWinReward);
         }
