@@ -55,6 +55,7 @@ namespace ETF.TripleTriad
         Image[] myHandCardImages;
 
         [SerializeField] Transform[] myHandFingerPoints;
+        
 
 
         public void GeneratePages()

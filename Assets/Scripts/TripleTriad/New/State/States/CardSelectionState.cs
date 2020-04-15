@@ -47,7 +47,7 @@ namespace ETF.TripleTriad
 
         #endregion
 
-        public override void Startup()
+        public override void Startup(int additionalArgs = 0)
         {
             if (_gameStateComingFrom != TripleTriadManager.TripleTriadGameStates.ChoosingCards)
             {

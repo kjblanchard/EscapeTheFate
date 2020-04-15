@@ -7,7 +7,7 @@ namespace ETF.TripleTriad
 {
     public abstract class TtState : MonoBehaviour
     {
-        public virtual void Startup()
+        public virtual void Startup(int additionalArgs = 0)
         {
 
         }

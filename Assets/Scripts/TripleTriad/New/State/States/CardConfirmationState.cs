@@ -20,7 +20,7 @@ namespace ETF.TripleTriad
 
         #endregion
 
-        public override void Startup()
+        public override void Startup(int additionalArgs = 0)
         {
             ttMan.ttDb.InitializeCardConfirmationDbValues();
             ttMan.ttUi.InitializeCardConfirmScreen();

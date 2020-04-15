@@ -39,6 +39,7 @@ namespace ETF.TripleTriad
        // public FingerAnimationChanger fingerAnimationChanger;
        public BetweenTurnState betweenTurnState;
        public EndGameState endGameState;
+       public RewardSelectionState rewardSelectionState;
 
         [Header("Singleton")] public static TripleTriadManager instance;
 

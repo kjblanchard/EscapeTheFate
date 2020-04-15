@@ -12,7 +12,7 @@ namespace ETF.TripleTriad
 
         #endregion
 
-        public override void Startup()
+        public override void Startup(int additionalArgs = 0)
         {
             ttMan.ttUi.InitializeTurnSelection();
             ttMan.ttDb.SetWhoGetsToGoFirst(ttMan.ttLogic.TurnSelector());

@@ -14,7 +14,7 @@ namespace ETF.TripleTriad
 		[SerializeField] private TripleTriadManager _ttMan;	
 		#endregion
 
-		public override void Startup()
+		public override void Startup(int additionalArgs = 0)
 		{
 			_ttMan.ttUi.InitializeEndGameInitialUi();
 			
@@ -33,9 +33,27 @@ namespace ETF.TripleTriad
 
 		}
 
+		public override void Execute()
+		{
+			ListenForUserInput();
+		}
+
+		public override void End()
+		{
+			_ttMan.ttUi.RewardSelectionFadeOut();
+		}
+
 		#region Functions
 
-
+		public void ListenForUserInput()
+		{
+			if (Input.GetKeyDown(KeyCode.Space))
+			{
+				_ttMan.SendStateChange(_ttMan.rewardSelectionState);
+			}
+		}
+		
+		
 
 		#endregion
 	}

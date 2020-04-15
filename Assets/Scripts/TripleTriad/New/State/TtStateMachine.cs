@@ -19,7 +19,7 @@ namespace ETF.TripleTriad
 
         }
 
-        public void ChangeState(TtState stateToChangeTo)
+        public void ChangeState(TtState stateToChangeTo, int additionalArguments = 0)
         {
             if (_currentState != null)
             {
@@ -28,7 +28,7 @@ namespace ETF.TripleTriad
             }
 
             _currentState = stateToChangeTo;
-            _currentState.Startup();
+            _currentState.Startup(additionalArguments);
         }
 
         public void ChangeStateToPreviousState()

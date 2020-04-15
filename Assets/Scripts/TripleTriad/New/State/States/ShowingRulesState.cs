@@ -15,7 +15,7 @@ namespace ETF.TripleTriad
 		#endregion
 
 
-		public override void Startup()
+		public override void Startup(int additionalArgs = 0)
 		{
 			_ttMan.ttDb.InitializeShowingRulesDbValues();
 			_ttMan.ttUi.InitializeShowingRulesUi();

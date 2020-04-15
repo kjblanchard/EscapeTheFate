@@ -14,7 +14,7 @@ namespace ETF.TripleTriad
 		[SerializeField] private WaitForSeconds inFocusWait = new WaitForSeconds(0.4f);
 		#endregion
 
-		public override void Startup()
+		public override void Startup(int additionalArgs = 0)
 		{
 			StartCoroutine(CycleThroughCardsAnimation());
 		}

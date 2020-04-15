@@ -12,7 +12,7 @@ namespace ETF.TripleTriad
 
         #endregion
 
-        public override void Startup()
+        public override void Startup(int additionalArgs = 0)
         {
             StartCoroutine(ttMan.ttUi.InitializeEnemyHandSelectScreenUi());
             ttMan.ttDb.GenerateEnemyCardHand();
