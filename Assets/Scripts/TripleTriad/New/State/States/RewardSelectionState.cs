@@ -39,7 +39,8 @@ namespace ETF.TripleTriad
 
 		public override void Execute()
 		{
-			base.Execute();
+			ListenForUserInputs();
+			_ttMan.ttUi.keepRewardSelectionFingerOnProperLocation();
 		}
 
 		public override void End()
@@ -49,6 +50,28 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
+		private void ListenForUserInputs()
+		{
+			if (Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("right"))
+			{
+				_ttMan.ttDb.MoveRewardSelectionCurrentOptionRight();
+				SoundManager.instance.PlaySFX(0);
+
+			}
+			else if (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("left"))
+			{
+				_ttMan.ttDb.MoveRewardSelectionCurrentOptionLeft();
+				SoundManager.instance.PlaySFX(0);
+
+			}
+
+			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) && !_ttMan.ttUi.isLoading)
+			{
+				
+				_ttMan.ttUi.FlipCurrentCardSelected();
+				_ttMan.SendStateChange(_ttMan.rewardConfirmState);
+			}
+		}
 
 
 		#endregion

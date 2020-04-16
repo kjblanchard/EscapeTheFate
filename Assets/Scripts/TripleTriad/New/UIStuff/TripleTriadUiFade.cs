@@ -27,11 +27,19 @@ namespace ETF.TripleTriad
 		public void StartShootingCards()
 		{
 			StartCoroutine(_ttMan.ttUi.MoveAllPlayerHandCardsToRewardSelection());
+			StartCoroutine(_ttMan.ttUi.MoveAllEnemyHandCardsToRewardSelection());
 		}
 
 		public void ReturnBoardCardsToBase()
 		{
 			_ttMan.ttUi.ReturnAllBoardCardsToBase();
+		}
+
+		public void ReturnHandCardsToPreReward()
+		{
+			_ttMan.ttUi.MoveAllPlayerHandCardsToPreReward();
+			_ttMan.ttUi.MoveAllEnemyHandCardsToPreReward();
+	
 		}
 
 		public void InitializeRewardScreenUi()

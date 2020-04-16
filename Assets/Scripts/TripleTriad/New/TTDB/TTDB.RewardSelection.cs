@@ -11,6 +11,8 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
+		private int _rewardSelectionCurrentOption;
+		
 
 		#endregion
 
@@ -28,6 +30,29 @@ namespace ETF.TripleTriad
 			return _myFullHandTripleTriadCards;
 		}
 
-		#endregion
+		public Transform RetrieveCursorPositionInRewardScreen()
+		{
+			return fullEnemyTripleTriadCards[_rewardSelectionCurrentOption].fingerPointer.transform;
+		}
+
+		public void MoveRewardSelectionCurrentOptionRight()
+		{
+			_rewardSelectionCurrentOption++;
+		}
+
+		public void MoveRewardSelectionCurrentOptionLeft()
+		{
+			_rewardSelectionCurrentOption--;
+		}
+
+		public TripleTriadCardInHand RetrieveTripleTriadCardInEnemyHandSelected()
+		{
+			return fullEnemyTripleTriadCards[_rewardSelectionCurrentOption];
+		}
+		
+
+
+		
+			#endregion
 	}
 }

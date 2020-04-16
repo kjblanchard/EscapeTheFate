@@ -40,6 +40,7 @@ namespace ETF.TripleTriad
        public BetweenTurnState betweenTurnState;
        public EndGameState endGameState;
        public RewardSelectionState rewardSelectionState;
+       public RewardConfirmState rewardConfirmState;
 
         [Header("Singleton")] public static TripleTriadManager instance;
 

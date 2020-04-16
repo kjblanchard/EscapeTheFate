@@ -40,6 +40,7 @@ namespace ETF.TripleTriad
 
 		public override void End()
 		{
+			_ttMan.ttUi.isLoading = true;
 			_ttMan.ttUi.RewardSelectionFadeOut();
 		}
 
