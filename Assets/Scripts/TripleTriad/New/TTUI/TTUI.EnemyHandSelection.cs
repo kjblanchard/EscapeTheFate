@@ -21,7 +21,7 @@ namespace ETF.TripleTriad
 
         private IEnumerator PlayEnemyFullHandAnimationCo()
         {
-            _randomNumberForCardDisplaying = Random.Range(0.05f, 0.12f);
+            _randomNumberForCardDisplaying = 0.1f; //Random.Range(0.05f, 0.12f);
             var _cachedWaitForSeconds = new WaitForSeconds(_randomNumberForCardDisplaying);
             
             for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)

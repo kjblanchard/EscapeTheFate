@@ -11,11 +11,13 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
-		[SerializeField] private TripleTriadManager _ttMan;	
+		[SerializeField] private TripleTriadManager _ttMan;
+		private int whoWonTheGame;
 		#endregion
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			whoWonTheGame = additionalArgs;
 			_ttMan.ttUi.InitializeEndGameInitialUi();
 			
 			if (_ttMan.ttDb.NumberOfPlayerOwnedCards() > _ttMan.ttDb.NumberOfEnemyOwnedCards())
@@ -50,7 +52,15 @@ namespace ETF.TripleTriad
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				_ttMan.SendStateChange(_ttMan.rewardSelectionState);
+				_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
+				// put this back in when you get all the turns working
+				// switch (whoWonTheGame)  
+				// {
+				// 	case 1:
+				// 		_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
+				// 		break;
+				//
+				// }
 			}
 		}
 		

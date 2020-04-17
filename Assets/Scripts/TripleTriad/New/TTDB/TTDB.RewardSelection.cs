@@ -35,19 +35,30 @@ namespace ETF.TripleTriad
 			return fullEnemyTripleTriadCards[_rewardSelectionCurrentOption].fingerPointer.transform;
 		}
 
+		public int RetrieveNumberOfCurrentSelectionInRewardSelection()
+		{
+			//print(_rewardSelectionCurrentOption);
+			return _rewardSelectionCurrentOption;
+		}
+
 		public void MoveRewardSelectionCurrentOptionRight()
 		{
-			_rewardSelectionCurrentOption++;
+			_rewardSelectionCurrentOption--;
 		}
 
 		public void MoveRewardSelectionCurrentOptionLeft()
 		{
-			_rewardSelectionCurrentOption--;
+			_rewardSelectionCurrentOption++;
 		}
 
 		public TripleTriadCardInHand RetrieveTripleTriadCardInEnemyHandSelected()
 		{
 			return fullEnemyTripleTriadCards[_rewardSelectionCurrentOption];
+		}
+
+		public void InitializeRewardSelectionDb()
+		{
+			_rewardSelectionCurrentOption = 4;
 		}
 		
 

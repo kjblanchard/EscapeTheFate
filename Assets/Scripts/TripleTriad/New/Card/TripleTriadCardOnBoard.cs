@@ -15,7 +15,7 @@ namespace ETF.TripleTriad
         [SerializeField] public int[] myValueToCheck;
         [SerializeField] public int[] adjacencyValueToCheck;
         [SerializeField] public bool cardInPlay;
-        [SerializeField] private Canvas _cardCanvas;
+
 
         #endregion
 
@@ -28,17 +28,7 @@ namespace ETF.TripleTriad
             ttMan.SendStateChange(ttMan.betweenTurnState);
         }
 
-        private void ChangeCanvasToOverrideSort()
-        {
-            _cardCanvas.overrideSorting = true;
-            _cardCanvas.sortingOrder = 1;
-        }
-        
-        private void ChangeCanvasBackToNormal()
-        {
-            _cardCanvas.sortingOrder = 0;
-            _cardCanvas.overrideSorting = false;
-        }
+
         
         
 

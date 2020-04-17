@@ -16,6 +16,8 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			_ttMan.ttDb.InitializeRewardConfirmDb();
+			//_ttMan.ttUi.isLoading = false;
 			_ttMan.ttUi.InitializeRewardConfirmUi();
 		}
 
@@ -25,31 +27,48 @@ namespace ETF.TripleTriad
 			_ttMan.ttUi.KeepFingerOnProperLocationInRewardConfirm();
 		}
 
+		public override void End()
+		{
+			
+		}
+
 		#region Functions
 
 		private void ListenForUserInput()
 		{
-			if(Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("right"))
+			if((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("right")) && _ttMan.ttLogic.CanIScrollRightInRewardConfirm())
 			{
 
-				_ttMan.ttDb.MoveCursorLeftInRewardConfirm();
-				SoundManager.instance.PlaySFX(0);
-
-			}
-			else if (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("left"))
-			{
 				_ttMan.ttDb.MoveCursorRightInRewardConfirm();
 				SoundManager.instance.PlaySFX(0);
 
 			}
-			else if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire2")) && !_ttMan.ttUi.isLoading)
+			else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("left"))&& _ttMan.ttLogic.CanIScrollLeftInRewardConfirm())
 			{
-				SoundManager.instance.PlaySFX(1);
+				_ttMan.ttDb.MoveCursorLeftInRewardConfirm();
+				SoundManager.instance.PlaySFX(0);
+
+			}
+			else if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire2")) && _ttMan.ttLogic.CanISelectInRewardSelection())
+			{
+				_ttMan.ttDb.SetCursorToCancelRewardConfirmation();
 			}
 
-			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) && !_ttMan.ttUi.isLoading)
+			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) && _ttMan.ttLogic.CanISelectInRewardSelection())
 			{
-				SoundManager.instance.PlaySFX(6);
+				if (_ttMan.ttDb.RetrieveCurrentSelectionInRewardConfirm() == 1)
+				{
+					_ttMan.ttUi.isLoading = true;
+					_ttMan.ttUi.GoingBackToRewardSelectionUi();
+					_ttMan.ttUi.FlipCurrentCardSelected();
+					SoundManager.instance.PlaySFX(1);
+				}
+				else
+				{
+					_ttMan.ttUi.isLoading = true;
+					_ttMan.SendStateChange(_ttMan.rewardSelectedState);
+				}
+
 			}
 		}
 

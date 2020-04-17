@@ -41,6 +41,7 @@ namespace ETF.TripleTriad
        public EndGameState endGameState;
        public RewardSelectionState rewardSelectionState;
        public RewardConfirmState rewardConfirmState;
+       public RewardSelectedState rewardSelectedState;
 
         [Header("Singleton")] public static TripleTriadManager instance;
 
@@ -68,10 +69,10 @@ namespace ETF.TripleTriad
 
         #region Functions
 
-        public void SendStateChange(TtState stateToChangeTo)
+        public void SendStateChange(TtState stateToChangeTo,int additionalArgs=0)
         {
             GC.Collect();
-            ttStateMachine.ChangeState(stateToChangeTo);
+            ttStateMachine.ChangeState(stateToChangeTo,additionalArgs);
         }
 
         public void SendChangeToPreviousState()

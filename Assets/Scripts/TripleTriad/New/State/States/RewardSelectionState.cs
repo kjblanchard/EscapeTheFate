@@ -24,7 +24,7 @@ namespace ETF.TripleTriad
 			
 			if (additionalArgs == 1)
 			{
-				//player can select
+				_ttMan.ttDb.InitializeRewardSelectionDb();
 			}
 
 			if (additionalArgs == 2)
@@ -34,6 +34,14 @@ namespace ETF.TripleTriad
 			else
 			{
 				//no selectionhappens
+			}
+
+			if (additionalArgs == 4)
+			{//coming back from card selection screen
+				_ttMan.ttUi.GoingBackToRewardSelectionUi();
+				_ttMan.ttUi.isLoading = false;
+				
+
 			}
 		}
 
@@ -52,24 +60,26 @@ namespace ETF.TripleTriad
 
 		private void ListenForUserInputs()
 		{
-			if (Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("right"))
+			if ((Input.GetKeyDown(KeyCode.D) ||
+			    Input.GetButtonDown("right")) && _ttMan.ttLogic.CanIScrollRightInRewardSelection())
 			{
 				_ttMan.ttDb.MoveRewardSelectionCurrentOptionRight();
 				SoundManager.instance.PlaySFX(0);
+				_ttMan.ttUi.UpdateTextInInfoPanelRewardSelection();
 
 			}
-			else if (Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("left"))
+			else if ((Input.GetKeyDown(KeyCode.A) ||
+			         Input.GetButtonDown("left")) && _ttMan.ttLogic.CanIScrollLeftInRewardSelection())
 			{
 				_ttMan.ttDb.MoveRewardSelectionCurrentOptionLeft();
 				SoundManager.instance.PlaySFX(0);
-
+				_ttMan.ttUi.UpdateTextInInfoPanelRewardSelection();
 			}
 
-			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) && !_ttMan.ttUi.isLoading)
+			else if ((Input.GetKeyDown(KeyCode.Space) ||
+			         Input.GetButtonDown("Fire1")) && _ttMan.ttLogic.CanISelectInRewardSelection())
 			{
-				
 				_ttMan.ttUi.FlipCurrentCardSelected();
-				_ttMan.SendStateChange(_ttMan.rewardConfirmState);
 			}
 		}
 

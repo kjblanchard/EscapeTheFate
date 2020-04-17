@@ -58,6 +58,30 @@ namespace ETF.TripleTriad
             ttMan.ttDb.ModifyEnemyCurrentHandListWhenCardIsPlayed();
         }
 
+        public void ChangeStateInCardRewards()
+        {
+            if (ttMan.RetrieveCurrentState() == ttMan.rewardConfirmState)
+            {
+                ttMan.SendStateChange(ttMan.rewardSelectionState,4);                
+            }
+            else
+            {
+                ttMan.SendStateChange(ttMan.rewardConfirmState);
+                
+            }
+
+
+        }
+        public void TurnOnCardWonCanvas()
+        {
+            ttMan.ttUi.TurnOnCardWonCanvas();
+        }
+
+        public void StartUiFadeOut()
+        {
+            ttMan.ttUi.RewardSelectionFadeOut();
+        }
+
 
         
         

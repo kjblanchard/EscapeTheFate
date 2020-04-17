@@ -17,6 +17,7 @@ namespace ETF.TripleTriad
 
         [SerializeField] public Transform fingerPointer;
         [SerializeField] public bool cardOwnedByPlayer;
+        [SerializeField] private Canvas _cardCanvas;
 
         
 
@@ -86,6 +87,18 @@ namespace ETF.TripleTriad
                 ttMan.ttUi.isLoading = false;
             }
 
+        }
+        
+        private void ChangeCanvasToOverrideSort()
+        {
+            _cardCanvas.overrideSorting = true;
+            _cardCanvas.sortingOrder = 1;
+        }
+        
+        private void ChangeCanvasBackToNormal()
+        {
+            _cardCanvas.sortingOrder = 0;
+            _cardCanvas.overrideSorting = false;
         }
 
 

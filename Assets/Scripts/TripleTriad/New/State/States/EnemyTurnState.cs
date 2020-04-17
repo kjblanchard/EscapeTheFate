@@ -11,11 +11,15 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		[SerializeField] private TripleTriadManager ttMan;
-		[SerializeField] private WaitForSeconds inFocusWait = new WaitForSeconds(0.4f);
+		[Range(0f,1f)]
+		[SerializeField] private float enemyThinkingTimer = 0.4f;
+
+		[SerializeField] private WaitForSeconds inFocusWait;
 		#endregion
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			inFocusWait = new WaitForSeconds(enemyThinkingTimer);
 			StartCoroutine(CycleThroughCardsAnimation());
 		}
 

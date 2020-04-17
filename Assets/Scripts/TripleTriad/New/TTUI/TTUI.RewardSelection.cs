@@ -12,6 +12,8 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		[SerializeField] private TripleTriadUiFade _tripleTriadUiFade;
+		[SerializeField] private Canvas _cardRewardCanvas;
+		[SerializeField] private Text _cardRewardText;
 
 		#endregion
 		
@@ -82,7 +84,9 @@ namespace ETF.TripleTriad
 			_playerScoreText.gameObject.SetActive(false);
 			_enemyScoreText.gameObject.SetActive(false);
 			enemyHandDialogBoxAnimator.gameObject.SetActive(false);
-			print("done");
+			_cardRewardCanvas.enabled = true;
+			UpdateTextInInfoPanelRewardSelection();
+			// print("done");
 		}
 		
 		public void keepRewardSelectionFingerOnProperLocation()
@@ -124,6 +128,13 @@ namespace ETF.TripleTriad
 
 			}
 		}
+
+		public void UpdateTextInInfoPanelRewardSelection()
+		{
+			_cardRewardText.text = ttdb.fullEnemyTripleTriadCards[ttdb.RetrieveNumberOfCurrentSelectionInRewardSelection()].whatCardIAm.cardName;
+		}
+		
+		
 
 		#endregion
 	}

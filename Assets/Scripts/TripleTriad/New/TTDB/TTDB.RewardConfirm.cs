@@ -32,7 +32,16 @@ namespace ETF.TripleTriad
 		{
 			_currentSelectionInRewardConfirm--;
 		}
-		
+
+		public void SetCursorToCancelRewardConfirmation()
+		{
+			_currentSelectionInRewardConfirm = 1;
+		}
+
+		public void InitializeRewardConfirmDb()
+		{
+			_currentSelectionInRewardConfirm = 0;
+		}
 
 		#endregion
 	}

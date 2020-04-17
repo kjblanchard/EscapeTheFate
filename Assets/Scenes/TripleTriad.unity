@@ -148,7 +148,7 @@ MonoBehaviour:
   betweenTurnState: {fileID: 2086540669}
   endGameState: {fileID: 2086540671}
   rewardSelectionState: {fileID: 2086540672}
-  rewardConfirmState: {fileID: 0}
+  rewardConfirmState: {fileID: 2086540673}
 --- !u!114 &12
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10420,7 +10420,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2042718983}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -10625,6 +10625,7 @@ GameObject:
   - component: {fileID: 2086540670}
   - component: {fileID: 2086540671}
   - component: {fileID: 2086540672}
+  - component: {fileID: 2086540673}
   m_Layer: 5
   m_Name: TripleTriadStateMachine
   m_TagString: Untagged
@@ -10806,6 +10807,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e81d8707be988d748877cc62d686dd01, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _ttMan: {fileID: 11}
+--- !u!114 &2086540673
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2086540659}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0b95c3538ebf6b48bca0ff2d09f129d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _ttMan: {fileID: 11}
@@ -13107,7 +13121,7 @@ MonoBehaviour:
   _rewardScreenConfirmFingerPoints:
   - {fileID: 416864593}
   - {fileID: 713565975}
-  _rewardConfirmCanvas: {fileID: 0}
+  _rewardConfirmCanvas: {fileID: 2042718987}
   _tripleTriadUiFade: {fileID: 433113553}
   _showingRulesCanvas: {fileID: 351110536}
   _showingRulesFingerLocations:

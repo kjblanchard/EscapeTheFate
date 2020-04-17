@@ -42,6 +42,11 @@ namespace ETF.TripleTriad
 			}
 		}
 
+		public void GoingBackToRewardSelectionUi()
+		{
+			_rewardConfirmCanvas.enabled = false;
+		}
+
 		#endregion
 	}
 }
