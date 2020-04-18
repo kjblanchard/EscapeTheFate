@@ -72,7 +72,7 @@ namespace ETF.TripleTriad
         {
             _gameStateComingFrom = TripleTriadManager.TripleTriadGameStates.ChoosingCards;
             StopCoroutine(_continuousCoroutineReference);
-            ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
+            //ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
         }
 
         #region Functions

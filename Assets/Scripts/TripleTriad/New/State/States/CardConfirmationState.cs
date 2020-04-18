@@ -38,6 +38,7 @@ namespace ETF.TripleTriad
 
         public override void End()
         {
+            // ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
             //ttMan.cardSelectionState.ChangeGameStateBackToOriginal(); Put this somewhere, not here.
         }
 
@@ -69,6 +70,7 @@ namespace ETF.TripleTriad
             else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) &&
                      ttMan.ttLogic.CanIAdvanceToChooseEnemyHandScreen())
             {
+                ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
                 ttMan.SendStateChange(ttMan.enemyHandSelectionState);
             }
         }

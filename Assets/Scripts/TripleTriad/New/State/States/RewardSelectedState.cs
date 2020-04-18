@@ -17,11 +17,12 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
-			_ttMan.ttUi.InitializeRewardSelectedUi();
+	
 			wonCard = _ttMan.ttDb.fullEnemyTripleTriadCards[
 				_ttMan.ttDb.RetrieveNumberOfCurrentSelectionInRewardSelection()];
+			_ttMan.ttUi.InitializeRewardSelectedUi(wonCard.whatCardIAm.cardName);
 			wonCard.cardAnimator.SetTrigger("rewardSelected");
-			SoundManager.instance.PlaySFX(6);
+			//SoundManager.instance.PlaySFX(6);
 		}
 
 		public override void Execute()

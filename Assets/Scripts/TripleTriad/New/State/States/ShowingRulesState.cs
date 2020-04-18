@@ -19,7 +19,7 @@ namespace ETF.TripleTriad
 		{
 			_ttMan.ttDb.InitializeShowingRulesDbValues();
 			_ttMan.ttUi.InitializeShowingRulesUi();
-			SoundManager.instance.PlayIntroLoop(7);
+			SoundManager.instance.PlayIntroLoop(4);
 		}
 
 		public override void Execute()

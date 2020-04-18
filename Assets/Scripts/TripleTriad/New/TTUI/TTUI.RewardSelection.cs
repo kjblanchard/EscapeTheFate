@@ -84,9 +84,15 @@ namespace ETF.TripleTriad
 			_playerScoreText.gameObject.SetActive(false);
 			_enemyScoreText.gameObject.SetActive(false);
 			enemyHandDialogBoxAnimator.gameObject.SetActive(false);
-			_cardRewardCanvas.enabled = true;
+			//_cardRewardCanvas.enabled = true;
 			UpdateTextInInfoPanelRewardSelection();
 			// print("done");
+		}
+
+		public void TurnOnCardRewardCanvas()
+		{
+			_cardRewardCanvas.enabled = true;
+
 		}
 		
 		public void keepRewardSelectionFingerOnProperLocation()

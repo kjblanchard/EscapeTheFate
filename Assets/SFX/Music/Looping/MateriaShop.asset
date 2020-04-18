@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cd7c3672a89964589361a843fb5884, type: 3}
   m_Name: MateriaShop
   m_EditorClassIdentifier: 
-  volume: 0.657
+  volume: 0.5
   pitch: 1
   audioClip: {fileID: 8300000, guid: 7b60406f365c64bcfbd1608efd4272c4, type: 3}
   introBoundary: 77.389

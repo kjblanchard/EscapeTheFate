@@ -47,7 +47,7 @@ namespace ETF.TripleTriad
         private void Awake()
         {//this is here for testing, will be moved to loading into triple triad afterwards
             TripleTriadManager.instance.ttDb.BringInEnemyCardInformation(_whatTypeOfPlayerAmI, _listOfRareCardsOwned,
-                whatToSayWhenTurnIsBeingSelected, whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,whatToSayWhenPlayerTies,
+                whatToSayWhenTurnIsBeingSelected, /*whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,whatToSayWhenPlayerTies,*/
                 whatToSayWhenChoosingCards, npcName, isEnemyHandOpen, isRandomCardSelection, isPlus, isSame,
                 _typeOfWinReward);
         }

@@ -19,8 +19,9 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
-		public void InitializeRewardSelectedUi()
+		public void InitializeRewardSelectedUi(string cardName)
 		{
+			_cardWonText.text = $"{cardName} card obtained!";
 			_rewardConfirmCanvas.enabled = false;
 			_cardRewardCanvas.enabled = false;
 		}
@@ -28,6 +29,11 @@ namespace ETF.TripleTriad
 		public void TurnOnCardWonCanvas()
 		{
 			_cardWonCanvas.enabled = true;
+		}
+		
+		public void FinishedGameFadeOut()
+		{
+			_tripleTriadUiFade.animator.SetTrigger("finishGameFadeOut");
 		}
 
 		#endregion

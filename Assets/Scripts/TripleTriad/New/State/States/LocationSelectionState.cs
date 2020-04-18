@@ -17,8 +17,11 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
-			ttMan.ttDb.InitializeLocationSelectionDbValues();
-			ttMan.ttUi.InitializeLocationSelectionUiElements();
+
+				
+				ttMan.ttUi.InitializeLocationSelectionUiElements();
+
+
 		}
 
 		public override void Execute()

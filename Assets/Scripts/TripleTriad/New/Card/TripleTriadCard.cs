@@ -101,6 +101,11 @@ namespace ETF.TripleTriad
             _cardCanvas.overrideSorting = false;
         }
 
+        private void PlaySoundEffect(int soundToPlay)
+        {
+            SoundManager.instance.PlaySFX(soundToPlay);
+        }
+
 
         
 

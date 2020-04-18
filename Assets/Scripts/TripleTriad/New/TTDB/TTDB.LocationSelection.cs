@@ -66,7 +66,7 @@ namespace ETF.TripleTriad
 		
 		public void InitializeLocationSelectionDbValues()
 		{
-			_currentFingerLocationInLocationSelection = 0;
+			_currentFingerLocationInLocationSelection = 4;
 		}
 
 		public void modifyCurrentHandListWhenCardIsPlayed()

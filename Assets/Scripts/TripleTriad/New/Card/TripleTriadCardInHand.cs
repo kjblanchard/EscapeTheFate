@@ -82,6 +82,18 @@ namespace ETF.TripleTriad
             ttMan.ttUi.RewardSelectionFadeOut();
         }
 
+        public void TurnOnRewardCanvas()
+        {
+            ttMan.ttUi.TurnOnCardRewardCanvas();
+
+        }
+        
+        public void StartEndGameFadeOut()
+        {
+            ttMan.ttUi.FinishedGameFadeOut();
+        }
+        
+
 
         
         

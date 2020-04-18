@@ -33,16 +33,16 @@ namespace ETF.TripleTriad
         #endregion
         
         public void BringInEnemyCardInformation(EnemyCardHand.WhatTypeOfCardPlayerAmI typeOfEnemyPlayer,
-            List<Card> currentEnemyRareCards, string turnSelectionText, string playerWinText, string playerLoseText, string playerTieText,
+            List<Card> currentEnemyRareCards, string turnSelectionText, /*string playerWinText, string playerLoseText, string playerTieText,*/
             string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward)
         {
             //this is used to get information from the npc, it is called by enemy hand script, which will be on every npc..  Gets his rare cards, type of difficulty, and Information
             _typeOfEnemyPlayer = typeOfEnemyPlayer;
             _currentEnemyRareCards = currentEnemyRareCards;
             _whatToSayWhenTurnIsBeingSelected = turnSelectionText;
-            _whatToSayWhenPlayerWins = playerWinText;
-            _whatToSayWhenPlayerLoses = playerLoseText;
-            _whatToSayWhenPlayerTies = playerTieText;
+           // _whatToSayWhenPlayerWins = playerWinText;
+           //_whatToSayWhenPlayerLoses = playerLoseText;
+            //_whatToSayWhenPlayerTies = playerTieText;
             _whatToSayWhenChoosingCards = choosingCardText;
             _npcName = npcName;
             _isEnemyHandOpen = isEnemyHandOpen;
@@ -186,22 +186,22 @@ namespace ETF.TripleTriad
             return _npcName;
         }
         
-        public string WhatWillTheEnemySayWhenPlayerWins()
-        {
-            //returns data to the ui
-            return _whatToSayWhenPlayerWins;
-        }
-        
-        public string WhatWillTheEnemySayWhenPlayerLoses()
-        {
-            //returns data to the ui
-            return _whatToSayWhenPlayerLoses;
-        }
-        public string WhatWillTheEnemySayWhenPlayerTies()
-        {
-            //returns data to the ui
-            return _whatToSayWhenPlayerTies;
-        }
+        // public string WhatWillTheEnemySayWhenPlayerWins()
+        // {
+        //     //returns data to the ui
+        //     return _whatToSayWhenPlayerWins;
+        // }
+        //
+        // public string WhatWillTheEnemySayWhenPlayerLoses()
+        // {
+        //     //returns data to the ui
+        //     return _whatToSayWhenPlayerLoses;
+        // }
+        // public string WhatWillTheEnemySayWhenPlayerTies()
+        // {
+        //     //returns data to the ui
+        //     return _whatToSayWhenPlayerTies;
+        // }
 
         public EnemyCardHand.WhatTypeOfCardPlayerAmI RetrieveEnemyDifficulty()
         {

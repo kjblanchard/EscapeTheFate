@@ -28,24 +28,25 @@ namespace ETF.TripleTriad
 
 		public void InitializeEndGameInitialUi()
 		{
+			isLoading = true;
 			turnIndicatorFingerAnimator.gameObject.SetActive(false);
-			_endGameCanvas.gameObject.SetActive(true);
+			_endGameCanvas.enabled = true;
 		}
 		
 		
 		public void InitializeWinEndGameUi()
 		{
 			SoundManager.instance.PlayIntroLoop(3);
-			UpdateEnemyDialogBoxToEndGameWin();
-			ttMan.ttUi.enemyHandDialogBoxAnimator.gameObject.SetActive(true);
-			PlayEnemyHandDialogBoxAnimation();
-			_endGameText.text = "You Win!";
-			_endGameAnimator.SetTrigger("win");
+			//UpdateEnemyDialogBoxToEndGameWin();
+			//ttMan.ttUi.enemyHandDialogBoxAnimator.gameObject.SetActive(true);
+			//PlayEnemyHandDialogBoxAnimation();
+			//_endGameText.text = "You Win!";
+			_endGameAnimator.SetTrigger("play");
 
 		}
 		public void InitializeTieEndGameUi()
 		{
-			UpdateEnemyDialogBoxToEndGameTie();
+			//UpdateEnemyDialogBoxToEndGameTie();
 			ttMan.ttUi.enemyHandDialogBoxAnimator.gameObject.SetActive(true);
 			PlayEnemyHandDialogBoxAnimation();
 			_endGameText.text = "Tie..";
@@ -55,7 +56,7 @@ namespace ETF.TripleTriad
 		public void InitializeLoseEndGameUi()
 		{
 			SoundManager.instance.PlaySFX(16);
-			UpdateEnemyDialogBoxToEndGameLose();
+			//UpdateEnemyDialogBoxToEndGameLose();
 			ttMan.ttUi.enemyHandDialogBoxAnimator.gameObject.SetActive(true);
 			PlayEnemyHandDialogBoxAnimation();
 			_endGameText.text = "Loser!";
@@ -65,20 +66,20 @@ namespace ETF.TripleTriad
 		
 		
 		
-		private void UpdateEnemyDialogBoxToEndGameWin()
-		{
-			enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerWins();
-		}
-		
-		public void UpdateEnemyDialogBoxToEndGameLose()
-		{
-			enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerLoses();
-		}
-		
-		public void UpdateEnemyDialogBoxToEndGameTie()
-		{
-			enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerTies();
-		}
+		// private void UpdateEnemyDialogBoxToEndGameWin()
+		// {
+		// 	enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerWins();
+		// }
+		//
+		// public void UpdateEnemyDialogBoxToEndGameLose()
+		// {
+		// 	enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerLoses();
+		// }
+		//
+		// public void UpdateEnemyDialogBoxToEndGameTie()
+		// {
+		// 	enemyDialogBoxDialogText.text = ttdb.WhatWillTheEnemySayWhenPlayerTies();
+		// }
 
 
 		#endregion

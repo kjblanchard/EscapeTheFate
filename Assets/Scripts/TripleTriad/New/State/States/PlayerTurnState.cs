@@ -18,8 +18,10 @@ namespace ETF.TripleTriad
         {
             if (!ttMan.ttDb.RetrievePlayerTurnIsComingFromCancelScreen())
             {
+                ttMan.ttDb.InitializeLocationSelectionDbValues();
                 ttMan.ttDb.InitializePlayerTurnDbValues();
                 ttMan.ttUi.InitializePlayerTurnCanvas();
+                
             }
             else
             {
