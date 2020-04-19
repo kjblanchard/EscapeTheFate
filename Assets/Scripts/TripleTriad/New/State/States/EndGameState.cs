@@ -18,22 +18,25 @@ namespace ETF.TripleTriad
 		public override void Startup(int additionalArgs = 0)
 		{
 			
-			whoWonTheGame = additionalArgs;
+			//whoWonTheGame = additionalArgs;
 			_ttMan.ttUi.InitializeEndGameInitialUi();
-			_ttMan.ttUi.InitializeWinEndGameUi();
+			//_ttMan.ttUi.InitializeWinEndGameUi();
 			
-			// if (_ttMan.ttDb.NumberOfPlayerOwnedCards() > _ttMan.ttDb.NumberOfEnemyOwnedCards())
-			// {
-			// 	_ttMan.ttUi.InitializeWinEndGameUi();
-			// }
-			// else if (_ttMan.ttDb.NumberOfPlayerOwnedCards() == _ttMan.ttDb.NumberOfEnemyOwnedCards())
-			// {
-			// 	_ttMan.ttUi.InitializeTieEndGameUi();
-			// }
-			// else
-			// {
-			// 	_ttMan.ttUi.InitializeLoseEndGameUi();
-			// }
+			if (_ttMan.ttDb.NumberOfPlayerOwnedCards() > _ttMan.ttDb.NumberOfEnemyOwnedCards())
+			{
+				whoWonTheGame = 1;
+				_ttMan.ttUi.InitializeWinEndGameUi();
+			}
+			else if (_ttMan.ttDb.NumberOfPlayerOwnedCards() == _ttMan.ttDb.NumberOfEnemyOwnedCards())
+			{
+				_ttMan.ttUi.InitializeTieEndGameUi();
+				whoWonTheGame = 2;
+			}
+			else
+			{
+				_ttMan.ttUi.InitializeLoseEndGameUi();
+				whoWonTheGame = 3;
+			}
 
 		}
 
@@ -54,15 +57,20 @@ namespace ETF.TripleTriad
 		{
 			if (Input.GetKeyDown(KeyCode.Space) && !_ttMan.ttUi.isLoading)
 			{
-				_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
-				// put this back in when you get all the turns working
-				// switch (whoWonTheGame)  
-				// {
-				// 	case 1:
-				// 		_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
-				// 		break;
-				//
-				// }
+				switch (whoWonTheGame)  
+				{
+					case 1:
+						_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
+						break;
+					case 2:
+						_ttMan.ttUi.isLoading = true;
+						_ttMan.ttUi.FinishedGameFadeOut();
+						break;
+					case 3:
+						_ttMan.SendStateChange(_ttMan.rewardSelectionState,3);
+						break;
+				
+				}
 			}
 		}
 		

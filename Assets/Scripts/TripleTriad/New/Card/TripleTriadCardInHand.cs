@@ -69,8 +69,21 @@ namespace ETF.TripleTriad
                 ttMan.SendStateChange(ttMan.rewardConfirmState);
                 
             }
-
-
+            
+        }
+        
+        public void ChangeStateInCardRewardsEnemy(int additionArgs = 0)
+        {
+            if (ttMan.RetrieveCurrentState() == ttMan.rewardConfirmState)
+            {
+                ttMan.SendStateChange(ttMan.rewardSelectionState,4);                
+            }
+            else
+            {
+                ttMan.SendStateChange(ttMan.rewardSelectedState,additionArgs);
+                
+            }
+            
         }
         public void TurnOnCardWonCanvas()
         {
@@ -82,9 +95,20 @@ namespace ETF.TripleTriad
             ttMan.ttUi.RewardSelectionFadeOut();
         }
 
-        public void TurnOnRewardCanvas()
+        public void StartRewardSelection()
         {
-            ttMan.ttUi.TurnOnCardRewardCanvas();
+            if (ttMan.ttDb.RetrieveWhoWonTheGame() == 1)
+            {
+                ttMan.ttUi.TurnOnCardRewardCanvas();
+            }
+            else
+            {
+                //cpu chooses reward
+                var cpuCard =  ttMan.ttLogic.EnemyRewardSelection();
+                ttMan.ttDb.RetrievePlayerTripleTriadCardAtLocation(cpuCard).cardAnimator.SetTrigger("cardFlip");
+                //ttMan.SendStateChange(ttMan.rewardSelectedState,cpuCard);
+            }
+
 
         }
         

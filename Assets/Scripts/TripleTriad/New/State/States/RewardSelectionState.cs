@@ -11,32 +11,36 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		[SerializeField] private TripleTriadManager _ttMan;
+		private int whoWon;
 
 		#endregion
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			whoWon = additionalArgs;
+			_ttMan.ttDb.SetWhoWonTheGame(additionalArgs);
 			//_ttMan.ttUi.ReturnAllBoardCardsToBase();
 			//_ttMan.ttUi.RewardSelectionFadeIn();
 			//_ttMan.ttUi.MoveAllPlayerHandCardsToRewardSelection();
 			//_ttMan.ttUi.MoveAllEnemyHandCardsToRewardSelection();
 			
 			
-			if (additionalArgs == 1)
+			if (whoWon == 1)
 			{
 				_ttMan.ttDb.InitializeRewardSelectionDb();
 			}
 
-			if (additionalArgs == 2)
+			if (whoWon == 2)
 			{
-				//enemy can select
+				//draw
 			}
 			else
 			{
-				//no selectionhappens
+				//enemyWillSelect
+				
 			}
 
-			if (additionalArgs == 4)
+			if (whoWon == 4)
 			{//coming back from card selection screen
 				_ttMan.ttUi.GoingBackToRewardSelectionUi();
 				_ttMan.ttUi.isLoading = false;
@@ -47,13 +51,10 @@ namespace ETF.TripleTriad
 
 		public override void Execute()
 		{
+			if (whoWon != 1 && whoWon != 4) return;
 			ListenForUserInputs();
 			_ttMan.ttUi.keepRewardSelectionFingerOnProperLocation();
-		}
 
-		public override void End()
-		{
-			base.End();
 		}
 
 		#region Functions

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ETF.TripleTriad;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -88,8 +89,11 @@ public class DialogManager : MonoBehaviour
                             //TurnOffPanel();
                             dialogBoxGameObject.SetActive(false);
                             //SoundManager.instance.StopBGM();
-                            TTfade.instance.FadeToBlack();
-                            StartCoroutine(Oneframe());
+                            TripleTriadManager.instance.ttDb.InitializeDbValuesForStartingTripleTriad();
+                            TripleTriadManager.instance.SendStateChange(TripleTriadManager.instance.showingRulesState);
+                            
+                            // TTfade.instance.FadeToBlack();
+                            // StartCoroutine(Oneframe());
                         }
                     }
                     else

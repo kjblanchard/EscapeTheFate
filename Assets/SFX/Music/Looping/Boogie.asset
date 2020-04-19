@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2cd7c3672a89964589361a843fb5884, type: 3}
   m_Name: Boogie
   m_EditorClassIdentifier: 
-  volume: 1
+  volume: 0.5
   pitch: 1
   audioClip: {fileID: 8300000, guid: 67f91b6e0bf094db99b9759bef73497d, type: 3}
   introBoundary: 56.123

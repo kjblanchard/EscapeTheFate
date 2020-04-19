@@ -17,12 +17,24 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
-	
-			wonCard = _ttMan.ttDb.fullEnemyTripleTriadCards[
-				_ttMan.ttDb.RetrieveNumberOfCurrentSelectionInRewardSelection()];
-			_ttMan.ttUi.InitializeRewardSelectedUi(wonCard.whatCardIAm.cardName);
-			wonCard.cardAnimator.SetTrigger("rewardSelected");
-			//SoundManager.instance.PlaySFX(6);
+			var whoWonTheGame = _ttMan.ttDb.RetrieveWhoWonTheGame();
+
+			if (whoWonTheGame == 1)
+			{//playerwon
+				wonCard = _ttMan.ttDb.fullEnemyTripleTriadCards[
+					_ttMan.ttDb.RetrieveNumberOfCurrentSelectionInRewardSelection()];
+				_ttMan.ttUi.InitializeRewardSelectedUiWin(wonCard.whatCardIAm.cardName);
+				wonCard.cardAnimator.SetTrigger("rewardSelected");
+				//SoundManager.instance.PlaySFX(6);
+			}
+			else
+			{//enemy won
+				wonCard = _ttMan.ttDb.RetrievePlayerTripleTriadCardAtLocation(additionalArgs);
+				_ttMan.ttUi.InitializeRewardSelectedUiLose(wonCard.whatCardIAm.cardName);
+				wonCard.cardAnimator.SetTrigger("rewardSelected");
+				
+			}
+
 		}
 
 		public override void Execute()

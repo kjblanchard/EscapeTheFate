@@ -12,6 +12,8 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		[Header("Showing Rules Stuff")] [SerializeField]
+		private Canvas _tripleTriadFullCanvas;
+		[SerializeField]
 		private Canvas _showingRulesCanvas;
 		[SerializeField] private Transform[] _showingRulesFingerLocations;
 		public Animator showingRulesAnimator;
@@ -31,8 +33,12 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
+		
+		
 		public void InitializeShowingRulesUi()
 		{
+			// _tripleTriadFullCanvas.gameObject.SetActive(true);
+			// _tripleTriadFullCanvas.enabled = true;
 			_showingRulesCanvas.gameObject.SetActive(true);
 			locationSelectionFinger.SetActive(false);
 			playerSelectionFinger.SetActive(false);

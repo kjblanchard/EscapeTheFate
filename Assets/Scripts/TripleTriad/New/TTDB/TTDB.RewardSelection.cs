@@ -12,6 +12,7 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		private int _rewardSelectionCurrentOption;
+		private int _whoWonTheGame;
 		
 
 		#endregion
@@ -60,10 +61,24 @@ namespace ETF.TripleTriad
 		{
 			_rewardSelectionCurrentOption = 4;
 		}
-		
+
+		public int RetrieveWhoWonTheGame()
+		{
+			return _whoWonTheGame;
+		}
+
+		public void SetWhoWonTheGame(int whoWon)
+		{
+			_whoWonTheGame = whoWon;
+		}
+
+		public TripleTriadCardInHand RetrievePlayerTripleTriadCardAtLocation(int locationToGrab)
+		{
+			return _myFullHandTripleTriadCards[locationToGrab];
+		}
 
 
-		
-			#endregion
+
+		#endregion
 	}
 }

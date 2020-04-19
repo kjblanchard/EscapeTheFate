@@ -19,9 +19,15 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
-		public void InitializeRewardSelectedUi(string cardName)
+		public void InitializeRewardSelectedUiWin(string cardName)
 		{
 			_cardWonText.text = $"{cardName} card obtained!";
+			_rewardConfirmCanvas.enabled = false;
+			_cardRewardCanvas.enabled = false;
+		}
+		public void InitializeRewardSelectedUiLose(string cardName)
+		{
+			_cardWonText.text = $"{cardName} card lost..";
 			_rewardConfirmCanvas.enabled = false;
 			_cardRewardCanvas.enabled = false;
 		}
