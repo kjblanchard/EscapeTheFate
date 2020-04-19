@@ -17,6 +17,7 @@ public class CharStatsHolder : MonoBehaviour
     public int currentDef;
     public int currentMag;
     public int currentSpr;
+    [Range(0,255)]
     public int currentSpeed;
     public int currentLuck;
     public int currentPower;
