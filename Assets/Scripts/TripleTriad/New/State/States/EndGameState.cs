@@ -59,13 +59,16 @@ namespace ETF.TripleTriad
 			{
 				switch (whoWonTheGame)  
 				{
+					//playerwin
 					case 1:
 						_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
 						break;
+					//tie
 					case 2:
 						_ttMan.ttUi.isLoading = true;
 						_ttMan.ttUi.FinishedGameFadeOut();
 						break;
+					//playerlose
 					case 3:
 						_ttMan.SendStateChange(_ttMan.rewardSelectionState,3);
 						break;

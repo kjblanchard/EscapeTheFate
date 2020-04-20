@@ -12,14 +12,15 @@ namespace ETF.TripleTriad
 
 		[SerializeField] private TripleTriadManager _ttMan;
 		private TripleTriadCardInHand wonCard;
+		private int _whoWonTheGame;
 
 		#endregion
 
 		public override void Startup(int additionalArgs = 0)
 		{
-			var whoWonTheGame = _ttMan.ttDb.RetrieveWhoWonTheGame();
+			_whoWonTheGame = _ttMan.ttDb.RetrieveWhoWonTheGame();
 
-			if (whoWonTheGame == 1)
+			if (_whoWonTheGame == 1)
 			{//playerwon
 				wonCard = _ttMan.ttDb.fullEnemyTripleTriadCards[
 					_ttMan.ttDb.RetrieveNumberOfCurrentSelectionInRewardSelection()];
@@ -53,8 +54,17 @@ namespace ETF.TripleTriad
 		{
 			if (Input.GetKeyDown(KeyCode.Space))
 			{
-				SoundManager.instance.PlaySFX(17);
+				if(_whoWonTheGame ==1)
+				{
+					SoundManager.instance.PlaySFX(17);
+					
+				}
+				else
+				{
+					SoundManager.instance.PlaySFX(6);
+				}
 				wonCard.cardAnimator.SetTrigger("rewardConfirmed");
+
 			}
 		}
 

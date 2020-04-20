@@ -111,7 +111,7 @@ namespace ETF.TripleTriad
 		
 		public void FullEnemyTurnHandChoices()
 		{
-			print("searching");
+			//print("searching");
 			for (int i = 0; i < ttDb.currentEnemyTripleTriadCardsInHand.Count; i++)
 			{
 				SearchEnemyHandForCardToPlay(ttDb.currentEnemyTripleTriadCardsInHand[i].whatCardIAm,i);

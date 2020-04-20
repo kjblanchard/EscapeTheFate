@@ -33,10 +33,13 @@ namespace ETF.TripleTriad
 			if (whoWon == 2)
 			{
 				//draw
+				//this never gets hit, cause draw fade will happen and close the game out
 			}
 			else
 			{
 				//enemyWillSelect
+				//probably controlled by card 5s enemy animator.
+				//StartRewardSelection()
 				
 			}
 

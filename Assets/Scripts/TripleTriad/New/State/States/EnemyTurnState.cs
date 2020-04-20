@@ -33,15 +33,20 @@ namespace ETF.TripleTriad
 		private IEnumerator CycleThroughCardsAnimation()
 		{
 			ttMan.ttDb.InitializeEnemyTurnDbValues();
-			
-			for (int i = 0; i < ttMan.ttDb.currentEnemyTripleTriadCardsInHand.Count; i++)
-			{
-				ttMan.ttDb.currentEnemyTripleTriadCardsInHand[i].InFocus();
-				yield return inFocusWait;
-				ttMan.ttDb.currentEnemyTripleTriadCardsInHand[i].OutFocus();
-				//yield return inFocusWait;
 
-			}
+
+				for (int i = 0; i < ttMan.ttDb.currentEnemyTripleTriadCardsInHand.Count; i++)
+				{
+					ttMan.ttDb.currentEnemyTripleTriadCardsInHand[i].InFocus();
+					yield return inFocusWait;
+					if (i != ttMan.ttDb.currentEnemyTripleTriadCardsInHand.Count-1)
+					{
+						ttMan.ttDb.currentEnemyTripleTriadCardsInHand[i].OutFocus();
+					}
+					
+				}
+
+			
 			
 			ttMan.ttLogic.FullEnemyTurnHandChoices();
 			

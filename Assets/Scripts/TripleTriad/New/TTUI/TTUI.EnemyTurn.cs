@@ -31,8 +31,18 @@ namespace ETF.TripleTriad
 		
 		public void setFocusOnEnemyCardSelected()
 		{
-			ttdb.currentEnemyTripleTriadCardsInHand[ttMan.ttLogic.RetrieveHandPositionToPlaceCard()].cardAnimator.SetTrigger("inFocus");
-			//myHandCardAnimators[ttdb.RetrievePlayerTurnCurrentSelection()].SetTrigger("inFocus");
+			if (ttMan.ttLogic.RetrieveHandPositionToPlaceCard() != ttdb.currentEnemyTripleTriadCardsInHand.Count-1)
+			{
+				ttdb.currentEnemyTripleTriadCardsInHand[ttdb.currentEnemyTripleTriadCardsInHand.Count -1].cardAnimator.SetTrigger("outFocus");
+				ttdb.currentEnemyTripleTriadCardsInHand[ttMan.ttLogic.RetrieveHandPositionToPlaceCard()].cardAnimator.SetTrigger("inFocus");
+			}
+			else
+			{
+				ttdb.currentEnemyTripleTriadCardsInHand[ttMan.ttLogic.RetrieveHandPositionToPlaceCard()].cardAnimator.SetTrigger("inFocus");
+
+			}
+			// ttdb.currentEnemyTripleTriadCardsInHand[ttMan.ttLogic.RetrieveHandPositionToPlaceCard()].cardAnimator.SetTrigger("inFocus");
+			
 		}
 
 		public void setOutFocusOnEnemyCardSelected()

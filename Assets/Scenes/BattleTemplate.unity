@@ -245,7 +245,7 @@ MonoBehaviour:
   currentDef: 0
   currentMag: 0
   currentSpr: 0
-  currentSpeed: 250
+  currentSpeed: 15
   currentLuck: 0
   currentPower: 0
   currentArmor: 0
@@ -4075,7 +4075,7 @@ MonoBehaviour:
   currentCrit: 0
   currentDodge: 0
   currentHit: 0
-  currentLevel: 0
+  currentLevel: 3
   currentLimit: 0
   currentEXP: 0
   EXPtoNextLevel: 0
@@ -4315,7 +4315,7 @@ MonoBehaviour:
   currentCrit: 0
   currentDodge: 0
   currentHit: 0
-  currentLevel: 0
+  currentLevel: 3
   currentLimit: 0
   currentEXP: 0
   EXPtoNextLevel: 0
