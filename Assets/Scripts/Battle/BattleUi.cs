@@ -10,10 +10,10 @@ namespace ETF.Battle
 	{
 
 		#region Configuration
-
+		[Header("Turn Order Image References")]
 		public Image[] turnImages;
-
 		public Image[] tempTurnImagesFullDisplay;
+		public Image[] tempTurnImagesFullDisplayMoveCalculation;
 
 
 		#endregion
@@ -27,6 +27,14 @@ namespace ETF.Battle
 			turnImages[spotToUpdate].sprite = pictureToChangeTo;
 
 			tempTurnImagesFullDisplay[spotToUpdate].sprite = pictureToChangeTo;
+
+		}
+		
+		public void UpdateImageInTurnMoveCalcList(int spotToUpdate,Sprite pictureToChangeTo)
+		{
+			
+
+			tempTurnImagesFullDisplayMoveCalculation[spotToUpdate].sprite = pictureToChangeTo;
 
 		}
 

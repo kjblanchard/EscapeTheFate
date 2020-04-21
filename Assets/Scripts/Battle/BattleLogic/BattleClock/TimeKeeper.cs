@@ -1,6 +1,8 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace ETF.Battle
 {
@@ -10,13 +12,15 @@ namespace ETF.Battle
 
 		#region Configuration
 
+		[Header("Script References")]
 		private BattleUi _battleUi;
+		private MoveTimeCalculator _moveTimeCalculator;
+
 		
 		public PositionHolder[] allBattlePositions;
-		public int maxClockValue = 256;
+		private readonly int _maxClockValue = 512;
 		public List<TempTime> turnOrderList = new List<TempTime>();
 		
-		public List<int> tempFiveTurnList = new List<int>();
 
 
 		#endregion
@@ -24,15 +28,16 @@ namespace ETF.Battle
 		void Awake()
 		{
 			_battleUi = FindObjectOfType<BattleUi>();
+			_moveTimeCalculator = FindObjectOfType<MoveTimeCalculator>();
 		}
-		
+
 		void Start()
 		{
 			DecideInitialTickValues();
 			CalculateNextFiveTurnsForEachPlayerBattleStart();
 		}
 
-		
+
 		void Update()
 		{
 			if (Input.GetKeyDown(KeyCode.P))
@@ -44,67 +49,98 @@ namespace ETF.Battle
 			{
 				CalculateNextFiveTurnsForEachPlayerBattleStart();
 			}
+
+			if (Input.GetKeyDown(KeyCode.O))
+			{
+				_moveTimeCalculator.CalculateNextFiveTurnsForMoveCalculationOn(0, 2f);
+			}
+
+			if (Input.GetKeyDown(KeyCode.I))
+			{
+				_moveTimeCalculator.CalculateNextFiveTurnsForMoveCalculationOn(0,0.5f);
+			}
+
+
 		}
 
 		#region Functions
-		
 
 
-		public void DecideInitialTickValues()
+
+		private void DecideInitialTickValues()
 		{
-			var RandomNumber = 0;
-			var speedToStartWith = 0;
 			for (int i = 0; i < allBattlePositions.Length; i++)
 			{
 				var playerLevel = allBattlePositions[i].positionStats.currentLevel;
-				RandomNumber = Random.Range(0, playerLevel);
-				speedToStartWith = maxClockValue / (RandomNumber + allBattlePositions[i].positionStats.currentSpeed);
+				var randomNumber = Random.Range(0, playerLevel);
+				var speedToStartWith = (_maxClockValue / 2) /
+				                       (randomNumber + allBattlePositions[i].positionStats.currentSpeed);
 				allBattlePositions[i].currentSpotInClock = speedToStartWith;
 			}
+			GC.Collect();
 		}
-		
-		public void CalculateNextFiveTurnsForEachPlayerBattleStart()
+
+		private void CalculateNextFiveTurnsForEachPlayerBattleStart()
 		{
-			//clear list
+			
 			turnOrderList.Clear();
-			//add Initial Values, this is only for the battle start
-			for (int i = 0; i < allBattlePositions.Length; i++)
-			{
-				var newTurnOrder = new TempTime(i,allBattlePositions[i].currentSpotInClock);
-				turnOrderList.Add(newTurnOrder);
-			}
-			
-			//this will callculate the next 5 turns for each player
-			for (int i = 0; i < allBattlePositions.Length; i++)
-			{
-				//grab their current clock speed for each player
-				var currentClock = allBattlePositions[i].currentSpotInClock;
-				var skillSpeedModifier = 1;
-				//calculate the players regular speed value when using a regular attack
-				var playerFullSpeedBar = maxClockValue/ allBattlePositions[i].positionStats.currentSpeed ;
-				for (int j = 0; j < 5; j++)
-				{
-					//calculate the next 5 turns if he were to use regular attacks
-					var newClock = currentClock + playerFullSpeedBar;
-					currentClock = newClock;
-					var newTurnOrder = new TempTime(i,newClock);	
-					turnOrderList.Add(newTurnOrder);
-				}
-		
-			}
-			//after all players have been calculated, sort them
+			AddEachBattlerCurrentClockToList();
+			CalcEachBattlerFiveTurns();
 			turnOrderList.Sort();
-			
-			//display the next 10 turns in the turn bar
-			for (int i = 0; i < 10; i++)
+			UpdateUiTurnSprites();
+			GC.Collect();
+		}
+
+		private void CalcEachBattlerFiveTurns()
+		{
+			for (int i = 0; i < allBattlePositions.Length; i++)
 			{
-				print($"The sorted Players turn number {i} is going to be {allBattlePositions[turnOrderList[i].RetrievePosition()].positionStats.characterName} cause his value is {turnOrderList[i].RetrieveSpeed()}");
-				_battleUi.UpdateImageInTurnList(i,allBattlePositions[turnOrderList[i].RetrievePosition()].positionStats.characterPortrait);
+				var currentClock = allBattlePositions[i].currentSpotInClock;
+				var battlersFullTurnLength = CalculateBattlerFullTurnLength(i);
+				CalculateNextFiveTurnsForBattler(currentClock, battlersFullTurnLength, i);
+			}
+			GC.Collect();
+		}
+
+		private void CalculateNextFiveTurnsForBattler(int currentClock, int battlersFullTurnLength, int battlerPosToSearch)
+		{
+			for (int j = 0; j < 5; j++)
+			{
+				//calculate the next 5 turns if he were to use regular attacks
+				var newClock = currentClock + battlersFullTurnLength;
+				currentClock = newClock;
+				var newTurnOrder = new TempTime(battlerPosToSearch, newClock);
+				turnOrderList.Add(newTurnOrder);
 			}
 		}
 
+		private void AddEachBattlerCurrentClockToList()
+		{
+			for (int i = 0; i < allBattlePositions.Length; i++)
+			{
+				var newTurnOrder = new TempTime(i, allBattlePositions[i].currentSpotInClock);
+				turnOrderList.Add(newTurnOrder);
+			}
+		}
+
+		private void UpdateUiTurnSprites()
+		{
+			for (int i = 0; i < 10; i++)
+			{
+				_battleUi.UpdateImageInTurnList(i,
+					allBattlePositions[turnOrderList[i].RetrievePosition()].positionStats.characterPortrait);
+			}
+		}
+
+		private int CalculateBattlerFullTurnLength(int i, float abilitySpeedOffset = 1)
+		{
+			return (int) Math.Round(_maxClockValue / (allBattlePositions[i].positionStats.currentSpeed) *
+			                        abilitySpeedOffset);
+		}
+		
 		#endregion
 	}
+
 }
 
 #region oldstuff
