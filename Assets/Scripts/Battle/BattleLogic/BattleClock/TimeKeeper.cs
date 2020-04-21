@@ -18,7 +18,7 @@ namespace ETF.Battle
 
 		
 		public PositionHolder[] allBattlePositions;
-		private readonly int _maxClockValue = 512;
+		private readonly int _maxClockValue = 1024;
 		public List<TempTime> turnOrderList = new List<TempTime>();
 		
 
@@ -57,7 +57,7 @@ namespace ETF.Battle
 
 			if (Input.GetKeyDown(KeyCode.I))
 			{
-				_moveTimeCalculator.CalculateNextFiveTurnsForMoveCalculationOn(0,0.5f);
+				_moveTimeCalculator.CalculateNextFiveTurnsForMoveCalculationOn(0,0.3f);
 			}
 
 
@@ -73,6 +73,7 @@ namespace ETF.Battle
 			{
 				var playerLevel = allBattlePositions[i].positionStats.currentLevel;
 				var randomNumber = Random.Range(0, playerLevel);
+				print(randomNumber);
 				var speedToStartWith = (_maxClockValue / 2) /
 				                       (randomNumber + allBattlePositions[i].positionStats.currentSpeed);
 				allBattlePositions[i].currentSpotInClock = speedToStartWith;
@@ -128,13 +129,14 @@ namespace ETF.Battle
 			for (int i = 0; i < 10; i++)
 			{
 				_battleUi.UpdateImageInTurnList(i,
-					allBattlePositions[turnOrderList[i].RetrievePosition()].positionStats.characterPortrait);
+					allBattlePositions[turnOrderList[i].RetrievePosition()].positionStats.characterPortrait,turnOrderList[i].RetrieveSpeed());
+				//print($"The sorted Players turn number {i} is going to be {allBattlePositions[turnOrderList[i].RetrievePosition()].positionStats.characterName} cause his value is {turnOrderList[i].RetrieveSpeed()}");
 			}
 		}
 
 		private int CalculateBattlerFullTurnLength(int i, float abilitySpeedOffset = 1)
 		{
-			return (int) Math.Round(_maxClockValue / (allBattlePositions[i].positionStats.currentSpeed) *
+			return (int) (_maxClockValue / (allBattlePositions[i].positionStats.currentSpeed) *
 			                        abilitySpeedOffset);
 		}
 		

@@ -47,9 +47,17 @@ namespace ETF.Battle
 			return _currentSpeed;
 		}
 
-		public void ModifySpeed(float skillSpeedModifier = 1.0f)
+		public int ModifySpeed(float skillSpeedModifier = 1.0f)
 		{
+			var clockDifference = (int) (_currentSpeed - _currentSpeed * skillSpeedModifier);
 			_currentSpeed = (int) (_currentSpeed * skillSpeedModifier);
+			return clockDifference;
+
+		}
+
+		public void ModifySpeedByValue(int clockTimeToModifyBy)
+		{
+			_currentSpeed += clockTimeToModifyBy;
 		}
 
 		#endregion

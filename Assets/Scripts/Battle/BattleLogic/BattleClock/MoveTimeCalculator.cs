@@ -40,7 +40,8 @@ namespace ETF.Battle
 			{
 				_battleUi.UpdateImageInTurnMoveCalcList(i,
 					_timeKeeper.allBattlePositions[tempMoveTimeCalculatorList[i].RetrievePosition()].positionStats
-						.characterPortrait);
+						.characterPortrait,tempMoveTimeCalculatorList[i].RetrieveSpeed());
+				//print($"The sorted Players turn number {i} is going to be {_timeKeeper.allBattlePositions[tempMoveTimeCalculatorList[i].RetrievePosition()].positionStats.characterName} cause his value is {tempMoveTimeCalculatorList[i].RetrieveSpeed()}");
 			}
 		}
 
@@ -62,11 +63,25 @@ namespace ETF.Battle
 
 		private void ModifyNextTurnsSpeed(int whichPositionIsTheCharacterToModify, float skillSpeedModifier)
 		{
+			var whenToStartModifyingYourSpeed = 0;
+			var whatToModifyClockBy = 0;
+			
 			for (int i = 1; i < tempMoveTimeCalculatorList.Count; i++)
 			{
 				if (tempMoveTimeCalculatorList[i].RetrievePosition() != whichPositionIsTheCharacterToModify) continue;
-				tempMoveTimeCalculatorList[i].ModifySpeed(skillSpeedModifier);
+				whatToModifyClockBy =  tempMoveTimeCalculatorList[i].ModifySpeed(skillSpeedModifier);
+				whatToModifyClockBy = whatToModifyClockBy * -1;
+				print($"{whatToModifyClockBy} is the number we are going to modify the rest of the turns by");
+				whenToStartModifyingYourSpeed = i+1;
 				break;
+			}
+
+			for (int i = whenToStartModifyingYourSpeed; i < tempMoveTimeCalculatorList.Count; i++)
+			{
+				if (tempMoveTimeCalculatorList[i].RetrievePosition() == whichPositionIsTheCharacterToModify)
+				{
+					tempMoveTimeCalculatorList[i].ModifySpeedByValue(whatToModifyClockBy);
+				}
 			}
 		}
 

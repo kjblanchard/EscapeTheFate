@@ -15,6 +15,11 @@ namespace ETF.Battle
 		public Image[] tempTurnImagesFullDisplay;
 		public Image[] tempTurnImagesFullDisplayMoveCalculation;
 
+		[Header("Turn Order TMP References")] 
+		public TMPro.TMP_Text[] tempTurnTmpFullDisplay;
+		public TMPro.TMP_Text[] tempTurnTmpFullDisplayMoveCalculation;
+		
+
 
 		#endregion
 
@@ -22,19 +27,22 @@ namespace ETF.Battle
 
 		#region Functions
 
-		public void UpdateImageInTurnList(int spotToUpdate,Sprite pictureToChangeTo)
+		public void UpdateImageInTurnList(int spotToUpdate,Sprite pictureToChangeTo,int clockValue)
 		{
 			turnImages[spotToUpdate].sprite = pictureToChangeTo;
 
 			tempTurnImagesFullDisplay[spotToUpdate].sprite = pictureToChangeTo;
 
+			tempTurnTmpFullDisplay[spotToUpdate].text = clockValue.ToString();
+
 		}
 		
-		public void UpdateImageInTurnMoveCalcList(int spotToUpdate,Sprite pictureToChangeTo)
+		public void UpdateImageInTurnMoveCalcList(int spotToUpdate,Sprite pictureToChangeTo, int clockValue)
 		{
 			
 
 			tempTurnImagesFullDisplayMoveCalculation[spotToUpdate].sprite = pictureToChangeTo;
+			tempTurnTmpFullDisplayMoveCalculation[spotToUpdate].text = clockValue.ToString();
 
 		}
 
