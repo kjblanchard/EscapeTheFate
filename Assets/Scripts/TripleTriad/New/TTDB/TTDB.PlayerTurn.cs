@@ -57,10 +57,10 @@ namespace ETF.TripleTriad
 			return _isComingFromLocationCancel;
 		}
 
-		public void ModifyPlayerTurnIsCancelling(bool isComingFromLocationScreenCancel)
-		{
-			_isComingFromLocationCancel = isComingFromLocationScreenCancel;
-		}
+		// public void ModifyPlayerTurnIsCancelling(bool isComingFromLocationScreenCancel)
+		// {
+		// 	_isComingFromLocationCancel = isComingFromLocationScreenCancel;
+		// }
 
 		// public void SearchForNextUsableCardInCurrentHandAndChangeSelection()
 		// {

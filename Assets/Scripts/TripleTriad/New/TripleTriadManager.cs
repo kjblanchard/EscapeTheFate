@@ -5,30 +5,15 @@ namespace ETF.TripleTriad
 {
     public class TripleTriadManager : MonoBehaviour
     {
-
         #region Configuration
-
-        public enum TripleTriadGameStates
-        {
-            Disabled,
-            ShowingRules, //SHOWING RULES NEEDS TO RESET CARD SELECTION COMING FROM TO SHOWING RULES WHEN IT ENDS for his startup to work right
-            ChoosingCards,
-            ConfirmingCards,
-            ChooseEnemyCards,
-            TurnSelection,
-            PlayerCardSelection,
-            LocationSelection,
-            EnemySelection,
-            EnemyLocationSelection,
-            End,
-        }
 
         [Header("Script References")] public TTUI ttUi;
         public TTDB ttDb;
         public TTLogic ttLogic;
         [SerializeField] TtStateMachine ttStateMachine;
 
-        [Header("States")] public ShowingRulesState showingRulesState;
+        [Header("States")] 
+        public ShowingRulesState showingRulesState;
         public CardSelectionState cardSelectionState;
         public CardConfirmationState cardConfirmationState;
         public EnemyHandSelectionState enemyHandSelectionState;
@@ -36,14 +21,15 @@ namespace ETF.TripleTriad
         public PlayerTurnState playerTurnState;
         public LocationSelectionState locationSelectionState;
         public EnemyTurnState enemyTurnState;
-       // public FingerAnimationChanger fingerAnimationChanger;
-       public BetweenTurnState betweenTurnState;
-       public EndGameState endGameState;
-       public RewardSelectionState rewardSelectionState;
-       public RewardConfirmState rewardConfirmState;
-       public RewardSelectedState rewardSelectedState;
+        public BetweenTurnState betweenTurnState;
+        public EndGameState endGameState;
+        public RewardSelectionState rewardSelectionState;
+        public RewardConfirmState rewardConfirmState;
+        public RewardSelectedState rewardSelectedState;
 
-        [Header("Singleton")] public static TripleTriadManager instance;
+        [Header("Singleton")] 
+        
+        public static TripleTriadManager instance;
 
         #endregion
 

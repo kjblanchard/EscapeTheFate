@@ -10,8 +10,7 @@ namespace ETF.TripleTriad
 	{
 
 		#region Configuration
-
-		private TtState _stateComingFrom;
+		
 		[SerializeField] private TripleTriadManager _ttMan;
 		[SerializeField] private FingerAnimationChanger _turnSelectionFinger;
 
@@ -25,12 +24,12 @@ namespace ETF.TripleTriad
 			
 			if (!_ttMan.ttLogic.CheckToSeeIfWeShouldEndTheGame())
 			{
-				_stateComingFrom = _ttMan.RetrievePreviousState();
-				if (_stateComingFrom == _ttMan.locationSelectionState)
+				var stateComingFrom = _ttMan.RetrievePreviousState();
+				if (stateComingFrom == _ttMan.locationSelectionState)
 				{
 					_turnSelectionFinger.PlayChangeToEnemyTurnAnimation();
 				}
-				else if (_stateComingFrom == _ttMan.enemyTurnState)
+				else if (stateComingFrom == _ttMan.enemyTurnState)
 				{
 					_turnSelectionFinger.PlayChangeToPlayerTurnAnimation();
 				}

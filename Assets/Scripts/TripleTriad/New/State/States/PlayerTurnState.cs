@@ -16,7 +16,7 @@ namespace ETF.TripleTriad
 
         public override void Startup(int additionalArgs = 0)
         {
-            if (!ttMan.ttDb.RetrievePlayerTurnIsComingFromCancelScreen())
+            if (additionalArgs == 0)
             {
                 ttMan.ttDb.InitializeLocationSelectionDbValues();
                 ttMan.ttDb.InitializePlayerTurnDbValues();
@@ -35,12 +35,7 @@ namespace ETF.TripleTriad
             
             ttMan.ttUi.keepPlayerSelectionFingerOnProperLocation();
         }
-
-
-
-        public override void End()
-        {
-        }
+        
 
         #region Functions
 

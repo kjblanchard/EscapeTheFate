@@ -7,15 +7,14 @@ namespace ETF.TripleTriad
 {
     public class CardSelectionState : TtState
     {
-        #region configuration variables
+        #region configuration
 
-        //reference for used values
+
         private int _numberToIncrement;
         private bool _regularAutoScrollSpeed;
         [SerializeField] TripleTriadManager ttMan;
 
         //reference to the gamestate that we were coming from
-        private TripleTriadManager.TripleTriadGameStates _gameStateComingFrom;
 
         //reference to the running coroutine
         Coroutine _continuousCoroutineReference;
@@ -39,23 +38,18 @@ namespace ETF.TripleTriad
             IsMovingDown,
             IsMovingUp,
         }
-        // private enum WhichWayToLoop
-        // {
-        //     LoopToTop,
-        //     LoopToBottom,
-        // }
-
+        
         #endregion
 
         public override void Startup(int additionalArgs = 0)
         {
-            if (_gameStateComingFrom != TripleTriadManager.TripleTriadGameStates.ChoosingCards)
+            if (additionalArgs == 0)
             {
                 InitializeDbForCardSelection();
 
                 InitializeUiForCardSelection();
             }
-            else if (_gameStateComingFrom == TripleTriadManager.TripleTriadGameStates.ChoosingCards)
+            else if (additionalArgs == 1)
             {
                 ttMan.ttUi.TurnOnCardSelectionScreenUiElements();
                 CancelLastSelection();
@@ -70,9 +64,7 @@ namespace ETF.TripleTriad
 
         public override void End()
         {
-            _gameStateComingFrom = TripleTriadManager.TripleTriadGameStates.ChoosingCards;
             StopCoroutine(_continuousCoroutineReference);
-            //ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
         }
 
         #region Functions
@@ -82,42 +74,56 @@ namespace ETF.TripleTriad
         {
             if (Input.GetKeyDown(KeyCode.D) || (Input.GetButtonDown("right")))
             {
-                if (_continuousCoroutineReference != null)
+                if (!ttMan.ttUi.isLoading)
                 {
-                    StopTheCoroutineScrolling();
+                    if (_continuousCoroutineReference != null)
+                    {
+                        StopTheCoroutineScrolling();
+                    }
+
+                    _continuousCoroutineReference =
+                        StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingForward));
                 }
 
-                _continuousCoroutineReference =
-                    StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingForward));
             }
             else if (Input.GetKeyDown(KeyCode.A) || (Input.GetButtonDown("left")))
             {
-                if (_continuousCoroutineReference != null)
+                if (!ttMan.ttUi.isLoading)
                 {
-                    StopTheCoroutineScrolling();
-                }
+                    if (_continuousCoroutineReference != null)
+                    {
+                        StopTheCoroutineScrolling();
+                    }
 
-                _continuousCoroutineReference =
-                    StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingBackward));
+                    _continuousCoroutineReference =
+                        StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingBackward));
+                }
             }
             else if (Input.GetKeyDown(KeyCode.W) || (Input.GetButtonDown("up")))
             {
-                if (_continuousCoroutineReference != null)
+                if (!ttMan.ttUi.isLoading)
                 {
-                    StopTheCoroutineScrolling();
-                }
+                    if (_continuousCoroutineReference != null)
+                    {
+                        StopTheCoroutineScrolling();
+                    }
 
-                _continuousCoroutineReference =
-                    StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingUp));
+                    _continuousCoroutineReference =
+                        StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingUp));
+                }
             }
             else if (Input.GetKeyDown(KeyCode.S) || (Input.GetButtonDown("down")))
             {
-                if (_continuousCoroutineReference != null)
+                if (!ttMan.ttUi.isLoading)
                 {
-                    StopTheCoroutineScrolling();
-                }
+                    if (_continuousCoroutineReference != null)
+                    {
+                        StopTheCoroutineScrolling();
+                    }
 
-                _continuousCoroutineReference = StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingDown));
+                    _continuousCoroutineReference =
+                        StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingDown));
+                }
             }
             else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")))
             {
@@ -160,8 +166,6 @@ namespace ETF.TripleTriad
 
         private void ChangePage(PageScrollDirections whichWayToScroll)
         {
-            //uses ttlogic to figure out if you can page switch, and if you can then move the cursor and start the animation and sound
-            //bool canPageSwitch;
             switch (whichWayToScroll)
             {
                 case PageScrollDirections.GoingForward:

@@ -30,17 +30,10 @@ namespace ETF.TripleTriad
         {
             ListenForUserInputs();
 
-            ttMan.ttUi.KeepFingerOnProperLocationInCardConfirmation(ttMan.ttDb
-                .RetrieveCurrentFingerPositionInCardConfirmation());
+            ttMan.ttUi.KeepFingerOnProperLocationInCardConfirmation();
         }
 
-
-
-        public override void End()
-        {
-            // ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
-            //ttMan.cardSelectionState.ChangeGameStateBackToOriginal(); Put this somewhere, not here.
-        }
+        
 
         #region Functions
 
@@ -65,7 +58,7 @@ namespace ETF.TripleTriad
             else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) &&
                      ttMan.ttLogic.CanIGoBackToCardSelectionScreenFromConfirmScreen())
             {
-                ttMan.SendChangeToPreviousState();
+                ttMan.SendStateChange(ttMan.cardSelectionState,1);
             }
             else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) &&
                      ttMan.ttLogic.CanIAdvanceToChooseEnemyHandScreen())

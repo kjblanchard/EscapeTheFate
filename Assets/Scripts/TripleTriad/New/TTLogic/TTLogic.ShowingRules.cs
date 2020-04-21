@@ -19,17 +19,17 @@ namespace ETF.TripleTriad
 
 		public bool CanIScrollRightOnRuleSelection()
 		{
-			return ttDb.ReturnFingerPositionInShowingRules() < ttUi.ReturnShowingRulesFingerPositionCount() - 1;
+			return ttDb.ReturnFingerPositionInShowingRules() < ttUi.ReturnShowingRulesFingerPositionCount() - 1 && !ttUi.isLoading;
 		}
 		
 		public bool CanIScrollLeftOnRuleSelection()
 		{
-			return ttDb.ReturnFingerPositionInShowingRules() > 0 ;
+			return ttDb.ReturnFingerPositionInShowingRules() > 0 && !ttUi.isLoading ;
 		}
 		
 		public bool CanIPressCancelOnRuleSelection()
 		{
-			return ttDb.ReturnFingerPositionInShowingRules() == 0 ;
+			return ttDb.ReturnFingerPositionInShowingRules() == 0 && !ttUi.isLoading ;
 		}
 
 		#endregion

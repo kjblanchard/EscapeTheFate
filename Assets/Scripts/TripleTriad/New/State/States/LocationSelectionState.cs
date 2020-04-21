@@ -17,26 +17,15 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
-
-				
-				ttMan.ttUi.InitializeLocationSelectionUiElements();
-
-
+			ttMan.ttUi.InitializeLocationSelectionUiElements();
 		}
 
 		public override void Execute()
 		{
 			ListenForUserInputs();
 			ttMan.ttUi.KeepFingerOnProperLocationInLocationSelection();
-			//print("inlocationselection");
 		}
-
-
-
-		public override void End()
-		{
-			
-		}
+		
 
 		#region Functions
 
@@ -46,7 +35,7 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIMoveUpInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerUpInDb();
-				ttMan.ttUi.UpdateInfoPanelCardName();
+				ttMan.ttUi.ControlInfoPanelInLocationSelection();
 				SoundManager.instance.PlaySFX(0);
 
 			}
@@ -54,8 +43,7 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIMoveDownInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerDownInDb();
-				ttMan.ttUi.UpdateInfoPanelCardName();
-
+				ttMan.ttUi.ControlInfoPanelInLocationSelection();
 				SoundManager.instance.PlaySFX(0);
 
 			}
@@ -63,8 +51,7 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIScrollRightInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerRightInDb();
-				ttMan.ttUi.UpdateInfoPanelCardName();
-
+				ttMan.ttUi.ControlInfoPanelInLocationSelection();
 				SoundManager.instance.PlaySFX(0);
 
 			}
@@ -72,26 +59,20 @@ namespace ETF.TripleTriad
 			{
 				if (!ttMan.ttLogic.CanIScrollLeftInLocationSelection()) return;
 				ttMan.ttDb.MoveLocationFingerLeftInDb();
-				ttMan.ttUi.UpdateInfoPanelCardName();
-
+				ttMan.ttUi.ControlInfoPanelInLocationSelection();
 				SoundManager.instance.PlaySFX(0);
 
 			}
 			else if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire2")) && !ttMan.ttUi.isLoading)
 			{
 				SoundManager.instance.PlaySFX(1);
-				ttMan.ttDb.ModifyPlayerTurnIsCancelling(true);
-				ttMan.SendChangeToPreviousState();
+				ttMan.SendStateChange(ttMan.playerTurnState,1);
 			}
-			// else if (Input.GetKeyDown(KeyCode.Y))
-			// {
-			// 	ttMan.SwitchToEnemyTurn();
-			// }
 			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1"))  && !ttMan.ttUi.isLoading)
 			{
 				if (ttMan.ttLogic.CanIPlaceCardInLocationSelection())
 				{
-					//ttMan.ttUi.InitializeBetweenTurnUiPlayerToEnemy();
+					//turns the finger off in this case
 					ttMan.ttUi.keepPlayerSelectionFingerOnProperLocation();
 					ttMan.ttDb.RetrieveTripleTriadCardInPlayerSelection()
 						.SetLocationToGoTo(ttMan.ttDb.RetrieveLocationSelectionCurrentSelection());
@@ -103,8 +84,6 @@ namespace ETF.TripleTriad
 				{
 					SoundManager.instance.PlaySFX(3);
 				}
-
-
 			}
 		}
 

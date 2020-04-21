@@ -9,34 +9,21 @@ namespace ETF.TripleTriad
     {
         [SerializeField] private TripleTriadManager _ttMan;
         [SerializeField] Animator fingerAnimator;
-        private static readonly int kWhichWay = Animator.StringToHash("WhichWay");
+        //private static readonly int kWhichWay = Animator.StringToHash("WhichWay");
+        private static readonly int kGoToPlayerSide = Animator.StringToHash("GoToPlayerSide");
+        private static readonly int kGoToEnemySide = Animator.StringToHash("GoToEnemySide");
+        private static readonly int kPlayerToEnemy = Animator.StringToHash("PlayerToEnemy");
+        private static readonly int kEnemyToPlayer = Animator.StringToHash("EnemyToPlayer");
 
 
-        // public void ChangeTurn()
-        // {
-        //     if (_ttMan.RetrieveCurrentState() == _ttMan.locationSelectionState)
-        //     {
-        //         PlayChangeToEnemyTurnAnimation();
-        //         //ChangeToEnemyTurn();
-        //     }
-        //     else
-        //     {
-        //         PlayChangeToPlayerTurnAnimation();
-        //         //ChangeToPlayerTurn();
-        //     }
-        // }
-        
-        
         private void ChangeToPlayerTurn()
-        {//these are used to call the change of state from within the animation
-            _ttMan.ttDb.ModifyPlayerTurnIsCancelling(false);
+        {
             _ttMan.ttUi.InitializeBetweenTurnUiEnemyToPlayer();
             _ttMan.SendStateChange(_ttMan.playerTurnState);
-            //print("playerturn" + _ttMan.RetrieveCurrentState());
         }
         private void ChangeToEnemyTurn()
         {
-            //ttMan.ttDb.ModifyPlayerTurnIsCancelling(false);
+
             _ttMan.SendStateChange(_ttMan.enemyTurnState);
         }
         
@@ -44,34 +31,34 @@ namespace ETF.TripleTriad
         public void ChooseWhichAnimationToPlay()
         {
             if (TripleTriadManager.instance.ttDb.ReturnWhichPlayerGetsToGoFirst() == 0)
-            {//these are used when the turn is selected in player turn
-                fingerAnimator.SetTrigger("GoToPlayerSide");
-                //play the going to me
+            {
+                fingerAnimator.SetTrigger(kGoToPlayerSide);
+
             }
             else
             {
-                fingerAnimator.SetTrigger("GoToEnemySide");
-                //play the going to me
+                fingerAnimator.SetTrigger(kGoToEnemySide);
+
             }
         }
 
         public void PlayChangeToEnemyTurnAnimation()
         {//these are used to call from ttman to start the animation/turn change
-            fingerAnimator.SetTrigger("PlayerToEnemy");
+            fingerAnimator.SetTrigger(kPlayerToEnemy);
         }
         
         public void PlayChangeToPlayerTurnAnimation()
         {
-            fingerAnimator.SetTrigger("EnemyToPlayer");
+            fingerAnimator.SetTrigger(kEnemyToPlayer);
         }
 
         private void ChangeFromPlayerToEnemyState()
-        {//for fingerturning off, could probably change the name in the future if nothing else comes of this.
+        {
             _ttMan.ttUi.InitializeBetweenTurnUiPlayerToEnemy();
         }
         
         private void ChangeFromEnemyToPlayerState()
-        {//for fingerturning off, could probably change the name in the future if nothing else comes of this.
+        {
             _ttMan.ttUi.InitializeBetweenTurnUiEnemyToPlayer();
         }
 

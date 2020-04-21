@@ -36,6 +36,7 @@ namespace ETF.TripleTriad
 		
 		public void RewardSelectionFadeOut()
 		{
+			isLoading = true;
 			_tripleTriadUiFade.animator.SetTrigger("rewardFadeOut");
 		}
 		

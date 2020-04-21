@@ -65,13 +65,13 @@ namespace ETF.Battle
 		{
 			var whenToStartModifyingYourSpeed = 0;
 			var whatToModifyClockBy = 0;
-			
+
 			for (int i = 1; i < tempMoveTimeCalculatorList.Count; i++)
 			{
 				if (tempMoveTimeCalculatorList[i].RetrievePosition() != whichPositionIsTheCharacterToModify) continue;
 				whatToModifyClockBy =  tempMoveTimeCalculatorList[i].ModifySpeed(skillSpeedModifier);
 				whatToModifyClockBy = whatToModifyClockBy * -1;
-				print($"{whatToModifyClockBy} is the number we are going to modify the rest of the turns by");
+				//print($"{whatToModifyClockBy} is the number we are going to modify the rest of the turns by");
 				whenToStartModifyingYourSpeed = i+1;
 				break;
 			}

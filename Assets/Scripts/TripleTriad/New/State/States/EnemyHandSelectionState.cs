@@ -14,18 +14,9 @@ namespace ETF.TripleTriad
 
         public override void Startup(int additionalArgs = 0)
         {
-            StartCoroutine(ttMan.ttUi.InitializeEnemyHandSelectScreenUi());
+            StartCoroutine(ttMan.ttUi.InitializeEnemyHandSelectScreenUiCo());
             ttMan.ttDb.GenerateEnemyCardHand();
         }
-
-        public override void Execute()
-        {
-
-        }
-
-        public override void End()
-        {
-            base.End();
-        }
+        
     }
 }

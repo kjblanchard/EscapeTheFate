@@ -24,7 +24,7 @@ using UnityEngine;
              isLoading = false;
          }
 
-         public void KeepFingerOnProperLocationInCardConfirmation(int fingerPos)
+         public void KeepFingerOnProperLocationInCardConfirmation()
          {
              //finger is turned on and off when in update method by the isloading bool
              if (isLoading == false)
@@ -34,7 +34,8 @@ using UnityEngine;
                      fingerPrefab.gameObject.SetActive(true);
                  }
 
-                 fingerPrefab.transform.position = cardConfirmFingerLocations[fingerPos].transform.position;
+                 fingerPrefab.transform.position = cardConfirmFingerLocations[ttMan.ttDb
+                     .RetrieveCurrentFingerPositionInCardConfirmation()].transform.position;
              }
              else
              {

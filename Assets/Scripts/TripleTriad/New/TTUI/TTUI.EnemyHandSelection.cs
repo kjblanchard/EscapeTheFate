@@ -21,7 +21,7 @@ namespace ETF.TripleTriad
 
         private IEnumerator PlayEnemyFullHandAnimationCo()
         {
-            _randomNumberForCardDisplaying = 0.1f; //Random.Range(0.05f, 0.12f);
+            _randomNumberForCardDisplaying = 0.1f;
             var _cachedWaitForSeconds = new WaitForSeconds(_randomNumberForCardDisplaying);
             
             for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
@@ -40,7 +40,7 @@ namespace ETF.TripleTriad
             SoundManager.instance.PlaySFX(6);
         }
 
-        public IEnumerator InitializeEnemyHandSelectScreenUi()
+        public IEnumerator InitializeEnemyHandSelectScreenUiCo()
         {
             //initializes the gameobjects and activates them, also loads in texts to be displayed in the boxes, as well as turning off the things after the animations are done playing;
             isLoading = true;
@@ -51,8 +51,6 @@ namespace ETF.TripleTriad
             UpdateEnemyDialogBoxToChoosingCards();
             PlayEnemyHandDialogBoxAnimation();
             yield return new WaitForSeconds(0.5f);
-            // cardSelectionGameObject.SetActive(false);
-            // CardConfirmCanvas.SetActive(false);
 
             StartCoroutine(PlayEnemyFullHandAnimationCo());
         }
@@ -87,7 +85,7 @@ namespace ETF.TripleTriad
             }
 
             yield return new WaitForSeconds(1f);
-            isLoading = false;
+            //isLoading = false;
             ttMan.SendStateChange(ttMan.turnSelectionState);
         }
 

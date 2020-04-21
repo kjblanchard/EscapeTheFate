@@ -57,7 +57,7 @@ namespace ETF.Battle
 
 			if (Input.GetKeyDown(KeyCode.I))
 			{
-				_moveTimeCalculator.CalculateNextFiveTurnsForMoveCalculationOn(0,0.3f);
+				_moveTimeCalculator.CalculateNextFiveTurnsForMoveCalculationOn(0,0.5f);
 			}
 
 
@@ -73,8 +73,8 @@ namespace ETF.Battle
 			{
 				var playerLevel = allBattlePositions[i].positionStats.currentLevel;
 				var randomNumber = Random.Range(0, playerLevel);
-				print(randomNumber);
-				var speedToStartWith = (_maxClockValue / 2) /
+				//print(randomNumber);
+				var speedToStartWith = (_maxClockValue) /
 				                       (randomNumber + allBattlePositions[i].positionStats.currentSpeed);
 				allBattlePositions[i].currentSpotInClock = speedToStartWith;
 			}

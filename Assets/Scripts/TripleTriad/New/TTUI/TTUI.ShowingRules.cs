@@ -37,8 +37,6 @@ namespace ETF.TripleTriad
 		
 		public void InitializeShowingRulesUi()
 		{
-			// _tripleTriadFullCanvas.gameObject.SetActive(true);
-			// _tripleTriadFullCanvas.enabled = true;
 			_showingRulesCanvas.gameObject.SetActive(true);
 			locationSelectionFinger.SetActive(false);
 			playerSelectionFinger.SetActive(false);

@@ -79,11 +79,22 @@ namespace ETF.TripleTriad
 
 		public void InitializeLocationSelectionUiElements()
 		{
-			
 			playerSelectionFinger.SetActive(false);
-			_infoPanelCanvas.enabled = true;
-			UpdateInfoPanelCardName();
 
+			ControlInfoPanelInLocationSelection();
+		}
+
+		public void ControlInfoPanelInLocationSelection()
+		{
+			if (ttdb.CheckIfCardIsInTheBoardLocation())
+			{
+				_infoPanelCanvas.enabled = true;
+				UpdateInfoPanelCardName();
+			}
+			else
+			{
+				_infoPanelCanvas.enabled = false;
+			}
 		}
 
 		public int RetrieveLocationSelectionTransformCount()

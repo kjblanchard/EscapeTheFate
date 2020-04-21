@@ -35,7 +35,7 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
-		public void SearchEnemyHandForCardToPlay(Card enemyCard, int cardNumberInInventory)
+		private void SearchForPotentialMovesOnBoard(Card enemyCard, int cardNumberInInventory)
 		{//creates a list of all the spots on the board that he can flip a card
 
 			//for each board location
@@ -109,12 +109,11 @@ namespace ETF.TripleTriad
 			}
 		}
 		
-		public void FullEnemyTurnHandChoices()
+		public void FullEnemyTurnHandPlacementChoices()
 		{
-			//print("searching");
 			for (int i = 0; i < ttDb.currentEnemyTripleTriadCardsInHand.Count; i++)
 			{
-				SearchEnemyHandForCardToPlay(ttDb.currentEnemyTripleTriadCardsInHand[i].whatCardIAm,i);
+				SearchForPotentialMovesOnBoard(ttDb.currentEnemyTripleTriadCardsInHand[i].whatCardIAm,i);
 					
 			}
 		}

@@ -49,10 +49,12 @@ namespace ETF.Battle
 
 		public int ModifySpeed(float skillSpeedModifier = 1.0f)
 		{
+			var goalSpeed = (int) (_currentSpeed * skillSpeedModifier);
 			var clockDifference = (int) (_currentSpeed - _currentSpeed * skillSpeedModifier);
-			_currentSpeed = (int) (_currentSpeed * skillSpeedModifier);
-			return clockDifference;
 
+				_currentSpeed = goalSpeed;
+				return clockDifference;
+				
 		}
 
 		public void ModifySpeedByValue(int clockTimeToModifyBy)

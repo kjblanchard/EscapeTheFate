@@ -35,7 +35,7 @@ namespace ETF.TripleTriad
 
 		#region Functions
 
-		public void InitializeEnemyTurnDbValues()
+		public void ClearAllEnemyCardPlacementLists()
 		{
 			_positionToPlaceCardOnBoardOneCardList.Clear();
 			_positionInHandForCardPlacementOneCardList.Clear();
