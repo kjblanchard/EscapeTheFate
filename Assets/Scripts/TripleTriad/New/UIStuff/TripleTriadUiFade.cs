@@ -47,6 +47,11 @@ namespace ETF.TripleTriad
 			_ttMan.ttUi.InitializeRewardScreenUiElements();
 		}
 
+		public void QuitGame()
+		{
+			Application.Quit();
+		}
+
 		#endregion
 	}
 }

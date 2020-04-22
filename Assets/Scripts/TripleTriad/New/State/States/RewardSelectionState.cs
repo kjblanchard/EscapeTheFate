@@ -17,8 +17,12 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
-			whoWon = additionalArgs;
-			_ttMan.ttDb.SetWhoWonTheGame(additionalArgs);
+			if (additionalArgs != 4)
+			{
+				whoWon = additionalArgs;
+				_ttMan.ttDb.SetWhoWonTheGame(whoWon);
+			}
+
 			//_ttMan.ttUi.ReturnAllBoardCardsToBase();
 			//_ttMan.ttUi.RewardSelectionFadeIn();
 			//_ttMan.ttUi.MoveAllPlayerHandCardsToRewardSelection();
