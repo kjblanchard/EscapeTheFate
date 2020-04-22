@@ -13,6 +13,8 @@ namespace ETF.TripleTriad
         [SerializeField] TtStateMachine ttStateMachine;
 
         [Header("States")] 
+        public DisabledState disabledState;
+        public GameStartedState gameStartedState;
         public ShowingRulesState showingRulesState;
         public CardSelectionState cardSelectionState;
         public CardConfirmationState cardConfirmationState;
@@ -26,6 +28,7 @@ namespace ETF.TripleTriad
         public RewardSelectionState rewardSelectionState;
         public RewardConfirmState rewardConfirmState;
         public RewardSelectedState rewardSelectedState;
+        public GameEndedState gameEndedState;
 
         [Header("Singleton")] 
         
@@ -37,17 +40,14 @@ namespace ETF.TripleTriad
         private void Awake()
         {
             instance = this;
+            
         }
 
         private void Start()
         {
-            ttUi.InitializeAndCacheAllUiElementsForGameStart();
-            
-            CardInventory.instance
-                .CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
-            GameManager.instance.TurnOnDirectionalJoystick();
-            ttDb.InitializeDbValuesForStartingTripleTriad();
-            SendStateChange(showingRulesState);
+
+            SendStateChange(disabledState);
+            gameObject.SetActive(false);
         }
 
         void Update()

@@ -13,13 +13,14 @@ namespace ETF.TripleTriad
         TTDB ttdb;
 
         [SerializeField] TripleTriadManager ttMan;
-        private static readonly int kProperty = Animator.StringToHash("default");
-        private static readonly int kMoveToBase = Animator.StringToHash("moveToBase");
+        // private static readonly int kProperty = Animator.StringToHash("default");
+        // private static readonly int kMoveToBase = Animator.StringToHash("moveToBase");
         [SerializeField] private Canvas fingerCanvas;
 
 
         public void InitializeAndCacheAllUiElementsForGameStart(bool isGameEnded = false)
         {
+            print("donethis");
             //start all Canvas's
             _showingRulesCanvas.enabled = true;
             _cardSelectionCanvas.enabled = true;
@@ -48,58 +49,31 @@ namespace ETF.TripleTriad
             _rewardConfirmCanvas.enabled = true;
             _cardWonCanvas.enabled = true;
             fingerCanvas.enabled = true;
-            
-            
-            
 
-            //set all animators to default
-            if (isGameEnded)
-            {
-                showingRulesAnimator.Rebind();
-                cardSelectionWindowAnimator.Rebind();
-                cardConfirmAnimator.Rebind();
-                for (int i = 0; i < playerHand.Length; i++)
-                {
-                    playerHand[i].cardAnimator.Rebind();
-                }
-                for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
-                {
-                    ttdb.fullEnemyTripleTriadCards[i].cardAnimator.Rebind();
-                }
-                for (int i = 0; i < boardCards.Length ; i++)
-                {
-                    boardCards[i].cardAnimator.Rebind();
-                }
-                enemyHandDialogBoxAnimator.Rebind();
-                _youWinAnimator.Rebind();
-                _youLoseAnimator.Rebind();
-                _youLoseAnimator.Rebind();
-
-
-
-
-                // showingRulesAnimator.SetTrigger(kProperty);
-                // cardSelectionWindowAnimator.SetTrigger(kProperty);
-                // cardConfirmAnimator.SetTrigger(kProperty);
-                // for (int i = 0; i < playerHand.Length; i++)
-                // {
-                //     playerHand[i].cardAnimator.SetTrigger(kProperty);
-                // }
-                // for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
-                // {
-                //     ttdb.fullEnemyTripleTriadCards[i].cardAnimator.SetTrigger(kProperty);
-                // }
-                // for (int i = 0; i < boardCards.Length ; i++)
-                // {
-                //     boardCards[i].cardAnimator.SetTrigger(kMoveToBase);
-                // }
-                // enemyHandDialogBoxAnimator.SetTrigger(kProperty);
-                // _youWinAnimator.SetTrigger(kProperty);
-                // _youLoseAnimator.SetTrigger(kProperty);
-                // _youLoseAnimator.SetTrigger(kProperty);
-
-            }
-
+            //reset all animations
+            // showingRulesAnimator.Rebind();
+            // cardSelectionWindowAnimator.Rebind();
+            // cardConfirmAnimator.Rebind();
+            // for (int i = 0; i < playerHand.Length; i++)
+            // {
+            //     playerHand[i].cardAnimator.Rebind();
+            // }
+            //
+            // for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
+            // {
+            //     ttdb.fullEnemyTripleTriadCards[i].cardAnimator.Rebind();
+            // }
+            //
+            // for (int i = 0; i < boardCards.Length; i++)
+            // {
+            //     boardCards[i].cardAnimator.Rebind();
+            // }
+            //
+            // enemyHandDialogBoxAnimator.Rebind();
+            // _youWinAnimator.Rebind();
+            // _youLoseAnimator.Rebind();
+            // _youLoseAnimator.Rebind();
+                
             //close all canvas'
             _showingRulesCanvas.enabled = false;
             _cardSelectionCanvas.enabled = false;
@@ -125,6 +99,11 @@ namespace ETF.TripleTriad
             _cardRewardCanvas.enabled = false;
             _rewardConfirmCanvas.enabled = false;
             _cardWonCanvas.enabled = false;
+        }
+        
+        public void StartGameFadeIn()
+        {
+            _tripleTriadUiFade.animator.SetTrigger("startGame");
         }
         
     }

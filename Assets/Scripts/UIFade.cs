@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ETF.TripleTriad;
 using UnityEngine;
 using UnityEngine.UI; // needs to access the UI
 
@@ -12,6 +13,8 @@ public class UIFade : MonoBehaviour
     public bool shouldFadeToBlack;
     public bool shouldFadeFromBlack; //bool is true or false, like a checkbox
     public float fadeSpeed = 1;
+
+    [SerializeField] private TripleTriadManager _ttMan;
 
     // Start is called before the first frame update
 
@@ -172,6 +175,36 @@ public class UIFade : MonoBehaviour
         PlayerController.instance.canMove = true;
         GameManager.instance.inShop = false;
         ShopManager.instance.shopDialog.closingMenu = false;
+    }
+    
+    public IEnumerator StartCardBattleFade(float timeToWait)
+    {
+        FadeToBlack();
+        yield return new WaitForSeconds(timeToWait);
+        //FadeFromBlack();
+        //GameManager.instance.TurnOnDirectionalJoystick();
+        TripleTriadManager.instance.gameObject.SetActive(true);
+        GameManager.instance.ttCanvas.SetActive(true);
+        PlayerController.instance.canMove = false;
+
+        //GameManager.instance.ttActive = true;
+        TripleTriadManager.instance.SendStateChange(TripleTriadManager.instance.gameStartedState);
+
+
+    }
+
+    public IEnumerator EndCardBattleFade(float timeTOWait)
+    {
+        FadeFromBlack();
+        yield return new WaitForSeconds(0.5f);
+        GameManager.instance.TurnOnRegularJoystick();
+        GameManager.instance.ttActive = false;
+        GameManager.instance.dialogActive = false;
+        //PlayerController.instance.canMove = false;
+        //yield return new WaitForSeconds(0.5f);
+        GameManager.instance.afterCardBattle = true;
+        
+        //_ttMan.gameObject.SetActive(false);
     }
 
 }

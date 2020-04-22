@@ -75,6 +75,7 @@ namespace ETF.TripleTriad
             for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
             {
                 fullEnemyTripleTriadCards[i].whatCardIAm = emptyCardReference;
+                
             }
             currentEnemyTripleTriadCardsInHand.Clear();
             _myCurrentHandTripleTriadCards.Clear();
@@ -84,6 +85,7 @@ namespace ETF.TripleTriad
                 _boardTripleTriadCards[i].cardOwnedByPlayer = false;
                 _boardTripleTriadCards[i].whatCardIAm = emptyCardReference;
             }
+            //ttMan.ttUi.UpdateScoreCount();
             //_isComingFromLocationCancel = false;    
             //UpdateMyCurrentHandCountTo5();
         }

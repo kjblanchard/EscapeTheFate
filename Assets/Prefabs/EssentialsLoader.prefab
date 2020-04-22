@@ -51,7 +51,7 @@ MonoBehaviour:
     type: 3}
   optionsCanvas: {fileID: 2313362212941572123, guid: 8f3f731d7177f4349a10162b0f997925,
     type: 3}
-  ttManager: {fileID: 1481000472652509701, guid: 1de5c09527f047143b71cee3cf7049e8,
+  ttManager: {fileID: 8831509724291729387, guid: fd245c335cb52e64e8dfb18214c8f313,
     type: 3}
   dialogManager: {fileID: 7226594208931743733, guid: 6cbffe33b0ee8624d914b4dcf0c423db,
     type: 3}

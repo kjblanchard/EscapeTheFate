@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using ETF.TripleTriad;
 using UnityEngine;
 using UnityEngine.UI; // needs to access the UI
 
@@ -76,10 +77,10 @@ public class TTfade : MonoBehaviour
     public IEnumerator StartCardBattleFade(float timeToWait)
     {
         yield return new WaitForSeconds(timeToWait);
-        FadeFromBlack();
-        GameManager.instance.TurnOnDirectionalJoystick();
+        //FadeFromBlack();
+        //GameManager.instance.TurnOnDirectionalJoystick();
         GameManager.instance.ttCanvas.SetActive(true);
-        TTManager.instance.startGame = true;
+        TripleTriadManager.instance.SendStateChange(TripleTriadManager.instance.gameStartedState);
 
 
     }

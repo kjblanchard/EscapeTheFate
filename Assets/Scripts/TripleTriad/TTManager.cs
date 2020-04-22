@@ -263,9 +263,9 @@ void Start()
             //RestartGame();
             initializingFields = true;
             PlayerController.instance.canMove = false;
-            TurnOnElements(true);
-            GameManager.instance.ttActive = true;
 
+            GameManager.instance.ttActive = true;
+            TurnOnElements(true);
             gameState = GameStates.CHOOSE_CARDS;
             
         }

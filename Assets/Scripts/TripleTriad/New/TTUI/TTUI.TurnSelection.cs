@@ -10,6 +10,7 @@ namespace ETF.TripleTriad
         public void InitializeTurnSelection()
         {
             turnIndicatorFingerAnimator.gameObject.SetActive(true);
+            UpdateScoreCount();
             _scoreDisplayCanvas.enabled = true;
             UpdateEnemyDialogBoxToTurnSelection();
         }

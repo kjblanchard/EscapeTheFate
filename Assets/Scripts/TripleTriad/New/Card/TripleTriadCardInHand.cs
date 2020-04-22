@@ -116,7 +116,8 @@ namespace ETF.TripleTriad
         
         public void StartEndGameFadeOut()
         {
-            ttMan.ttUi.FinishedGameFadeOut();
+            ttMan.SendStateChange(ttMan.gameEndedState);
+            //ttMan.ttUi.FinishedGameFadeOut();
         }
         
 

@@ -89,11 +89,11 @@ public class DialogManager : MonoBehaviour
                             //TurnOffPanel();
                             dialogBoxGameObject.SetActive(false);
                             //SoundManager.instance.StopBGM();
-                            TripleTriadManager.instance.ttDb.InitializeDbValuesForStartingTripleTriad();
-                            TripleTriadManager.instance.SendStateChange(TripleTriadManager.instance.showingRulesState);
-                            
-                            // TTfade.instance.FadeToBlack();
-                            // StartCoroutine(Oneframe());
+                            //TripleTriadManager.instance.ttDb.InitializeDbValuesForStartingTripleTriad();
+                            //TripleTriadManager.instance.SendStateChange(TripleTriadManager.instance.showingRulesState);
+
+                            StartCoroutine(UIFade.instance.StartCardBattleFade(0.5f));
+                            //StartCoroutine(Oneframe());
                         }
                     }
                     else

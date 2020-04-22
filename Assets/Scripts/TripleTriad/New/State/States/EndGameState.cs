@@ -61,7 +61,7 @@ namespace ETF.TripleTriad
 				//tie
 				case 2:
 					_ttMan.ttUi.isLoading = true;
-					_ttMan.ttUi.FinishedGameFadeOut();
+					_ttMan.SendStateChange(_ttMan.gameEndedState);
 					break;
 				//playerlose
 				case 3:
