@@ -11,7 +11,8 @@ namespace ETF.TripleTriad
         [Range(0, 1)] [SerializeField] float _continuousFastAutoScrollSpeed;
 
 
-        [Header("Card Selection Stuff")] public GameObject cardSelectionGameObject;
+        [Header("Card Selection Stuff")] 
+        [SerializeField] private Canvas _cardSelectionCanvas;
         [Header("State Controls")] public bool isLoading = false;
 
         [Header("Scroll Rect Stuff")] [SerializeField]
@@ -64,7 +65,15 @@ namespace ETF.TripleTriad
             ttdb.CalculateTtBattleNumbers();
             _totalOfCardsOnLastPage = ttdb.RetrieveTotalNumberOfCardsOnLastBattlePage();
             _totalPages = ttdb.RetrieveTotalNumberOfBattlePages();
+            if (listOfPages.Count > 0)
+            {
+                for (int i = 0; i < listOfPages.Count; i++)
+                {
+                    Destroy(listOfPages[i].gameObject);
+                }
+            }
             listOfPages.Clear();
+            
 
             for (int i = 0; i < _totalPages; i++)
             {
@@ -207,6 +216,16 @@ namespace ETF.TripleTriad
             myHandCardAnimators[cardToDisplay].Play("Rest");
         }
 
+        public void TurnOnHandAnimator()
+        {
+            ttdb.RetrievePlayerHandCardAtCurrentPosition().cardCanvas.enabled = true;
+        }
+        public void TurnOffHandAnimatorForCancel()
+        {
+            ttdb.RetrievePlayerHandCardAtCancelPosition().cardCanvas.enabled = false;
+            PlayRestAnimation(ttMan.ttDb.currentHandSelectionsList.Count -1);
+        }
+
         public void UpdateMyHandImage()
         {
             myHandCardImages[ttdb.currentHandSelectionsList.Count].sprite = ttdb
@@ -285,8 +304,10 @@ namespace ETF.TripleTriad
 
         public void TurnOnCardSelectionScreenUiElements()
         {
-            cardSelectionGameObject.SetActive(true);
-            CardConfirmCanvas.SetActive(false);
+            _cardSelectionCanvas.enabled = true;
+            _cardConfirmCanvas.enabled = false;
+            
+            
         }
 
         public int RetrieveNumberOfCardsActiveOnPage(int currentPageToCheck)
@@ -303,5 +324,11 @@ namespace ETF.TripleTriad
         {
             return _continuousFastAutoScrollSpeed;
         }
+
+        public void TurnOffCardSelectionCanvas()
+        {
+            _cardSelectionCanvas.enabled = false;
+        }
+        
     }
 }

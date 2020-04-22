@@ -49,7 +49,8 @@ namespace ETF.TripleTriad
 
 		public void QuitGame()
 		{
-			Application.Quit();
+			_ttMan.SendStateChange(_ttMan.showingRulesState,1);
+			//Application.Quit();
 		}
 
 		#endregion

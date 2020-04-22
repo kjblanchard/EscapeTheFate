@@ -10,8 +10,7 @@ namespace ETF.TripleTriad
         public void InitializeTurnSelection()
         {
             turnIndicatorFingerAnimator.gameObject.SetActive(true);
-            _enemyScoreText.gameObject.SetActive(true);
-            _playerScoreText.gameObject.SetActive(true);
+            _scoreDisplayCanvas.enabled = true;
             UpdateEnemyDialogBoxToTurnSelection();
         }
 
@@ -29,7 +28,9 @@ namespace ETF.TripleTriad
         
         public void LeavingTurnSelectionUiChange()
         {
-            enemyHandDialogBoxAnimator.gameObject.SetActive(false);
+            enemyHandDialogBoxAnimator.SetTrigger("default");
+            _enemyDialogBoxCanvas.enabled = false;
+            //enemyHandDialogBoxAnimator.gameObject.SetActive(false);
             //locationSelectionFinger.SetActive(false);
         }
 

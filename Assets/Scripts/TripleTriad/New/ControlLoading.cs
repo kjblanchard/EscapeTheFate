@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace ETF.TripleTriad
 {
@@ -8,24 +9,45 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
+		private TTUI _ttui;
 
 		#endregion
 
-
+		private void Awake()
+		{
+			_ttui = FindObjectOfType<TTUI>();
+		}
 
 		#region Functions
 
-		public void ControlUiLoadingModifier(int shouldIBeLoading)
+		private void ControlUiLoadingModifier(int shouldIBeLoading)
 		{
 			if (shouldIBeLoading == 0)
 			{
-				TripleTriadManager.instance.ttUi.isLoading = true;
+				_ttui.isLoading = true;
 			}
 			else
 			{
-				TripleTriadManager.instance.ttUi.isLoading = false;
+				_ttui.isLoading = false;
 			}
 		}
+
+
+		private void TurnOffShowingRulesCanvas()
+		{
+			_ttui.TurnOffShowingRulesCanvas();
+		}
+
+		private void TurnOffCardSelectCanvas()
+		{
+			_ttui.TurnOffCardSelectionCanvas();
+		}
+		
+		private void TurnOffCardConfirmCanvas()
+		{
+			_ttui.TurnOffCardConfirmCanvas();
+		}
+		
 
 		#endregion
 	}

@@ -7,18 +7,126 @@ namespace ETF.TripleTriad
 {
     public partial class TTUI : MonoBehaviour
     {
-        //this is the master TTUI, and also for the card selectionscreen
+        //this is the master TTUI
         
         [Header("Script Reference")] [SerializeField]
         TTDB ttdb;
 
         [SerializeField] TripleTriadManager ttMan;
+        private static readonly int kProperty = Animator.StringToHash("default");
+        private static readonly int kMoveToBase = Animator.StringToHash("moveToBase");
+        [SerializeField] private Canvas fingerCanvas;
+
+
+        public void InitializeAndCacheAllUiElementsForGameStart(bool isGameEnded = false)
+        {
+            //start all Canvas's
+            _showingRulesCanvas.enabled = true;
+            _cardSelectionCanvas.enabled = true;
+            _cardConfirmCanvas.enabled = true;
+            var playerHand = ttdb.RetrieveAllPlayerHandCardsFull();
+            for (int i = 0; i < playerHand.Length; i++)
+            {
+                playerHand[i].cardCanvas.enabled = true;
+            }
+            for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
+            {
+                ttdb.fullEnemyTripleTriadCards[i].cardCanvas.enabled = true;
+            }
+            var boardCards = ttdb.RetrieveAllCardsOnBoard();
+            for (int i = 0; i < boardCards.Length ; i++)
+            {
+                boardCards[i].cardCanvas.enabled = true;
+            }
+
+            _scoreDisplayCanvas.enabled = true;
+
+            _enemyDialogBoxCanvas.enabled = true;
+            _endGameCanvas.enabled = true;
+            
+            _cardRewardCanvas.enabled = true;
+            _rewardConfirmCanvas.enabled = true;
+            _cardWonCanvas.enabled = true;
+            fingerCanvas.enabled = true;
+            
+            
+            
+
+            //set all animators to default
+            if (isGameEnded)
+            {
+                showingRulesAnimator.Rebind();
+                cardSelectionWindowAnimator.Rebind();
+                cardConfirmAnimator.Rebind();
+                for (int i = 0; i < playerHand.Length; i++)
+                {
+                    playerHand[i].cardAnimator.Rebind();
+                }
+                for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
+                {
+                    ttdb.fullEnemyTripleTriadCards[i].cardAnimator.Rebind();
+                }
+                for (int i = 0; i < boardCards.Length ; i++)
+                {
+                    boardCards[i].cardAnimator.Rebind();
+                }
+                enemyHandDialogBoxAnimator.Rebind();
+                _youWinAnimator.Rebind();
+                _youLoseAnimator.Rebind();
+                _youLoseAnimator.Rebind();
 
 
 
 
+                // showingRulesAnimator.SetTrigger(kProperty);
+                // cardSelectionWindowAnimator.SetTrigger(kProperty);
+                // cardConfirmAnimator.SetTrigger(kProperty);
+                // for (int i = 0; i < playerHand.Length; i++)
+                // {
+                //     playerHand[i].cardAnimator.SetTrigger(kProperty);
+                // }
+                // for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
+                // {
+                //     ttdb.fullEnemyTripleTriadCards[i].cardAnimator.SetTrigger(kProperty);
+                // }
+                // for (int i = 0; i < boardCards.Length ; i++)
+                // {
+                //     boardCards[i].cardAnimator.SetTrigger(kMoveToBase);
+                // }
+                // enemyHandDialogBoxAnimator.SetTrigger(kProperty);
+                // _youWinAnimator.SetTrigger(kProperty);
+                // _youLoseAnimator.SetTrigger(kProperty);
+                // _youLoseAnimator.SetTrigger(kProperty);
 
+            }
 
+            //close all canvas'
+            _showingRulesCanvas.enabled = false;
+            _cardSelectionCanvas.enabled = false;
+            _cardConfirmCanvas.enabled = false;
+            for (int i = 0; i < playerHand.Length; i++)
+            {
+                playerHand[i].cardCanvas.enabled = false;
+            }
+            for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
+            {
+                ttdb.fullEnemyTripleTriadCards[i].cardCanvas.enabled = false;
+            }
+            for (int i = 0; i < boardCards.Length ; i++)
+            {
+                boardCards[i].cardCanvas.enabled = false;
+            }
+
+            _scoreDisplayCanvas.enabled = false;
+
+            _enemyDialogBoxCanvas.enabled = false;
+            _endGameCanvas.enabled = false;
+            
+            _cardRewardCanvas.enabled = false;
+            _rewardConfirmCanvas.enabled = false;
+            _cardWonCanvas.enabled = false;
+        }
+        
     }
 }
 

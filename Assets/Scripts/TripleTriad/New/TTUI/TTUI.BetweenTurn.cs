@@ -11,7 +11,8 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
-		[Header("Between Turn Stuff")]
+		[Header("Between Turn Stuff")] [SerializeField]
+		private Canvas _scoreDisplayCanvas;
 		[SerializeField] private Text _playerScoreText;
 		[SerializeField] private Text _enemyScoreText;
 

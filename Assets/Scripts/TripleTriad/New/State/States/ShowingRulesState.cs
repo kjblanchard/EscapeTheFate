@@ -17,9 +17,22 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			
+			
 			_ttMan.ttDb.InitializeShowingRulesDbValues();
 			_ttMan.ttUi.InitializeShowingRulesUi();
 			SoundManager.instance.PlayIntroLoop(1);
+
+			if (additionalArgs == 1)
+			{
+				CardInventory.instance
+					.CreateUsableBattleCardLists();
+				_ttMan.ttUi.InitializeAndCacheAllUiElementsForGameStart(true);
+				_ttMan.ttDb.InitializeDbValuesForStartingTripleTriad();
+				_ttMan.ttDb.InitializeShowingRulesDbValues();
+				_ttMan.ttUi.InitializeShowingRulesUi();
+				SoundManager.instance.PlayIntroLoop(1);
+			}
 		}
 
 		public override void Execute()

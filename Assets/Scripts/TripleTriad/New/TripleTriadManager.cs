@@ -41,6 +41,8 @@ namespace ETF.TripleTriad
 
         private void Start()
         {
+            ttUi.InitializeAndCacheAllUiElementsForGameStart();
+            
             CardInventory.instance
                 .CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
             GameManager.instance.TurnOnDirectionalJoystick();

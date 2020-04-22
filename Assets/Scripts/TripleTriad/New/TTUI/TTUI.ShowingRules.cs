@@ -37,11 +37,14 @@ namespace ETF.TripleTriad
 		
 		public void InitializeShowingRulesUi()
 		{
-			_showingRulesCanvas.gameObject.SetActive(true);
+
+			_showingRulesCanvas.enabled = true;
+			showingRulesAnimator.SetTrigger("opening");
+			
+			
+			//_showingRulesCanvas.gameObject.SetActive(true);
 			locationSelectionFinger.SetActive(false);
 			playerSelectionFinger.SetActive(false);
-			_enemyScoreText.gameObject.SetActive(false);
-			_playerScoreText.gameObject.SetActive(false);
 			turnIndicatorFingerAnimator.gameObject.SetActive(false);
 			UpdateRulesText();
 		}
@@ -79,6 +82,11 @@ namespace ETF.TripleTriad
 		public int ReturnShowingRulesFingerPositionCount()
 		{
 			return _showingRulesFingerLocations.Length;
+		}
+
+		public void TurnOffShowingRulesCanvas()
+		{
+			_showingRulesCanvas.enabled = false;
 		}
 		
 

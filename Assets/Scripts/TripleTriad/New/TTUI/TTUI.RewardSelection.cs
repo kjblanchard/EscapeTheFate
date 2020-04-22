@@ -24,7 +24,8 @@ namespace ETF.TripleTriad
 		{
 			var boardCards = ttdb.RetrieveAllCardsOnBoard();
 			for (int i = 0; i < boardCards.Length; i++)
-			{	
+			{
+				boardCards[i].cardCanvas.enabled = false;
 				boardCards[i].cardAnimator.SetTrigger("moveToBase");
 			}
 		}

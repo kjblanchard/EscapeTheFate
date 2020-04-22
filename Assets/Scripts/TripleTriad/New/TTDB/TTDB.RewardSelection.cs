@@ -30,6 +30,14 @@ namespace ETF.TripleTriad
 		{
 			return _myFullHandTripleTriadCards;
 		}
+		public TripleTriadCardInHand RetrievePlayerHandCardAtCurrentPosition()
+		{
+			return _myFullHandTripleTriadCards[currentHandSelectionsList.Count ];
+		}
+		public TripleTriadCardInHand RetrievePlayerHandCardAtCancelPosition()
+		{
+			return _myFullHandTripleTriadCards[currentHandSelectionsList.Count - 1];
+		}
 
 		public Transform RetrieveCursorPositionInRewardScreen()
 		{

@@ -10,18 +10,23 @@ using UnityEngine;
          [Header("Card Confirm - UI References")] [SerializeField]
          Transform[] cardConfirmFingerLocations;
 
-         [SerializeField] GameObject CardConfirmCanvas;
+         [SerializeField] private Canvas _cardConfirmCanvas;
 
          public int ReturnCardConfirmFingerPosCount()
          {
              return cardConfirmFingerLocations.Length;
          }
 
-         private IEnumerator PlayCardConfirmAnimator()
+         private void PlayCardConfirmAnimator()
          {
-             cardConfirmAnimator.Play("CardConfirmWindowDisplaying");
-             yield return new WaitForSeconds(0.50f);
-             isLoading = false;
+             cardConfirmAnimator.SetTrigger("displaying");
+
+         }
+
+         public void CloseCardConfirmAnimatorForCancel()
+         {
+             print("done");
+             cardConfirmAnimator.SetTrigger("cancel");
          }
 
          public void KeepFingerOnProperLocationInCardConfirmation()
@@ -46,8 +51,13 @@ using UnityEngine;
          public void InitializeCardConfirmScreen()
          {
              isLoading = true;
-             CardConfirmCanvas.SetActive(true);
-             StartCoroutine(PlayCardConfirmAnimator());
+             _cardConfirmCanvas.enabled = true;
+             PlayCardConfirmAnimator();
+         }
+
+         public void TurnOffCardConfirmCanvas()
+         {
+             _cardConfirmCanvas.enabled = false;
          }
 
      }

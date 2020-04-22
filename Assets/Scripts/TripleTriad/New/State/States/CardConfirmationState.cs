@@ -23,7 +23,7 @@ namespace ETF.TripleTriad
         public override void Startup(int additionalArgs = 0)
         {
             ttMan.ttDb.InitializeCardConfirmationDbValues();
-            ttMan.ttUi.InitializeCardConfirmScreen();
+            ttMan.ttUi.InitializeCardConfirmScreen(); 
         }
 
         public override void Execute()
@@ -58,6 +58,7 @@ namespace ETF.TripleTriad
             else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) &&
                      ttMan.ttLogic.CanIGoBackToCardSelectionScreenFromConfirmScreen())
             {
+                ttMan.ttUi.CloseCardConfirmAnimatorForCancel();
                 ttMan.SendStateChange(ttMan.cardSelectionState,1);
             }
             else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) &&
@@ -86,6 +87,7 @@ namespace ETF.TripleTriad
 
         private void ChangeToGoBackOnCancelButton()
         {
+            
             ttMan.ttDb.CardConfirmCancelButtonPress();
             SoundManager.instance.PlaySFX(0);
         }

@@ -16,6 +16,7 @@ namespace ETF.TripleTriad
 
         private float _randomNumberForCardDisplaying;
         [SerializeField] Animator turnIndicatorFingerAnimator;
+        [SerializeField] private Canvas _enemyDialogBoxCanvas;
         [SerializeField] private Text enemyDialogBoxNameText;
         [SerializeField] private Text enemyDialogBoxDialogText;
 
@@ -36,7 +37,9 @@ namespace ETF.TripleTriad
 
         private void PlayEnemyHandAnimation(int cardToDisplay)
         {
-            ttdb.fullEnemyTripleTriadCards[cardToDisplay].cardAnimator.Play("MyHandSelect");
+            var cachedCard = ttdb.fullEnemyTripleTriadCards[cardToDisplay];
+            cachedCard.cardCanvas.enabled = true;
+            cachedCard.cardAnimator.Play("MyHandSelect");
             SoundManager.instance.PlaySFX(6);
         }
 
@@ -44,6 +47,7 @@ namespace ETF.TripleTriad
         {
             //initializes the gameobjects and activates them, also loads in texts to be displayed in the boxes, as well as turning off the things after the animations are done playing;
             isLoading = true;
+            _enemyDialogBoxCanvas.enabled = true;
             PlayCardSelectCanvasLeavingAnimation();
             PlayCardSelectCardDisplayInfoLeavingAnimation();
             PlayCardConfirmWindowLeavingAnimation();
@@ -51,10 +55,15 @@ namespace ETF.TripleTriad
             UpdateEnemyDialogBoxToChoosingCards();
             PlayEnemyHandDialogBoxAnimation();
             yield return new WaitForSeconds(0.5f);
-
+            //TurnOffEnemyDialogBoxCanvas();
             StartCoroutine(PlayEnemyFullHandAnimationCo());
         }
 
+        private void TurnOffEnemyDialogBoxCanvas()
+        {
+            _enemyDialogBoxCanvas.enabled = false;
+        }
+        
         private void PlayCardSelectCanvasLeavingAnimation()
         {
             cardSelectionWindowAnimator.Play("CardWindowLeaving");
@@ -72,7 +81,7 @@ namespace ETF.TripleTriad
 
         private void PlayEnemyHandDialogBoxAnimation()
         {
-            enemyHandDialogBoxAnimator.Play("EnemyHandDialogBoxDisplaying");
+            enemyHandDialogBoxAnimator.SetTrigger("play");
         }
 
         private IEnumerator PlayEnemyHandCardFlipAnimations()

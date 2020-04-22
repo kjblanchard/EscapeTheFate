@@ -15,6 +15,7 @@ namespace ETF.TripleTriad
         [SerializeField] public int[] myValueToCheck;
         [SerializeField] public int[] adjacencyValueToCheck;
         [SerializeField] public bool cardInPlay;
+        //[SerializeField] public Canvas cardCanvas;
 
 
         #endregion
@@ -35,6 +36,7 @@ namespace ETF.TripleTriad
         
         public void MoveToBoard()
         {
+            //cardCanvas.enabled = true;
             cardAnimator.SetTrigger("moveToBoard");
         }
 

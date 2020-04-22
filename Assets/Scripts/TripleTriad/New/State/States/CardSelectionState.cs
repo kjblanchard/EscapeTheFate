@@ -17,7 +17,10 @@ namespace ETF.TripleTriad
         //reference to the gamestate that we were coming from
 
         //reference to the running coroutine
-        Coroutine _continuousCoroutineReference;
+        Coroutine _continuousCoroutineReferenceDown;
+        Coroutine _continuousCoroutineReferenceLeft;
+        Coroutine _continuousCoroutineReferenceRight;
+        Coroutine _continuousCoroutineReferenceUp;
 
 
         //enums to use for methods
@@ -64,7 +67,26 @@ namespace ETF.TripleTriad
 
         public override void End()
         {
-            StopCoroutine(_continuousCoroutineReference);
+            if (_continuousCoroutineReferenceDown != null)
+            {
+                StopCoroutine(_continuousCoroutineReferenceDown);
+
+            }
+            if (_continuousCoroutineReferenceUp != null)
+            {
+                StopCoroutine(_continuousCoroutineReferenceUp);
+
+            }
+            if (_continuousCoroutineReferenceRight != null)
+            {
+                StopCoroutine(_continuousCoroutineReferenceRight);
+
+            }
+            if (_continuousCoroutineReferenceLeft != null)
+            {
+                StopCoroutine(_continuousCoroutineReferenceLeft);
+
+            }
         }
 
         #region Functions
@@ -76,12 +98,12 @@ namespace ETF.TripleTriad
             {
                 if (!ttMan.ttUi.isLoading)
                 {
-                    if (_continuousCoroutineReference != null)
+                    if (_continuousCoroutineReferenceRight != null)
                     {
-                        StopTheCoroutineScrolling();
+                        StopTheCoroutineScrollingRight();
                     }
 
-                    _continuousCoroutineReference =
+                    _continuousCoroutineReferenceRight =
                         StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingForward));
                 }
 
@@ -90,12 +112,12 @@ namespace ETF.TripleTriad
             {
                 if (!ttMan.ttUi.isLoading)
                 {
-                    if (_continuousCoroutineReference != null)
+                    if (_continuousCoroutineReferenceLeft != null)
                     {
-                        StopTheCoroutineScrolling();
+                        StopTheCoroutineScrollingLeft();
                     }
 
-                    _continuousCoroutineReference =
+                    _continuousCoroutineReferenceLeft =
                         StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingBackward));
                 }
             }
@@ -103,12 +125,12 @@ namespace ETF.TripleTriad
             {
                 if (!ttMan.ttUi.isLoading)
                 {
-                    if (_continuousCoroutineReference != null)
+                    if (_continuousCoroutineReferenceUp != null)
                     {
-                        StopTheCoroutineScrolling();
+                        StopTheCoroutineScrollingUp();
                     }
 
-                    _continuousCoroutineReference =
+                    _continuousCoroutineReferenceUp =
                         StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingUp));
                 }
             }
@@ -116,12 +138,12 @@ namespace ETF.TripleTriad
             {
                 if (!ttMan.ttUi.isLoading)
                 {
-                    if (_continuousCoroutineReference != null)
+                    if (_continuousCoroutineReferenceDown != null)
                     {
-                        StopTheCoroutineScrolling();
+                        StopTheCoroutineScrollingDown();
                     }
 
-                    _continuousCoroutineReference =
+                    _continuousCoroutineReferenceDown =
                         StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingDown));
                 }
             }
@@ -136,30 +158,30 @@ namespace ETF.TripleTriad
 
             if (Input.GetKeyUp(KeyCode.D) || (Input.GetButtonUp("right")))
             {
-                if (_continuousCoroutineReference != null)
+                if (_continuousCoroutineReferenceRight!= null)
                 {
-                    StopTheCoroutineScrolling();
+                    StopTheCoroutineScrollingRight();
                 }
             }
             else if (Input.GetKeyUp(KeyCode.A) || (Input.GetButtonUp("left")))
             {
-                if (_continuousCoroutineReference != null)
+                if (_continuousCoroutineReferenceLeft != null)
                 {
-                    StopTheCoroutineScrolling();
+                    StopTheCoroutineScrollingLeft();
                 }
             }
             else if (Input.GetKeyUp(KeyCode.W) || (Input.GetButtonUp("up")))
             {
-                if (_continuousCoroutineReference != null)
+                if (_continuousCoroutineReferenceUp != null)
                 {
-                    StopTheCoroutineScrolling();
+                    StopTheCoroutineScrollingUp();
                 }
             }
             else if (Input.GetKeyUp(KeyCode.S) || (Input.GetButtonUp("down")))
             {
-                if (_continuousCoroutineReference != null)
+                if (_continuousCoroutineReferenceDown != null)
                 {
-                    StopTheCoroutineScrolling();
+                    StopTheCoroutineScrollingDown();
                 }
             }
         }
@@ -288,7 +310,7 @@ namespace ETF.TripleTriad
                 SoundManager.instance.PlaySFX(3);
                 return;
             }
-
+            //ttMan.ttUi.TurnOnHandAnimator();
             ttMan.ttUi.UpdateMyHandImage();
             ttMan.ttUi.PlayMyHandAnimation(ttMan.ttDb.currentHandSelectionsList.Count);
             AddChoiceToCardSelectionList();
@@ -345,14 +367,27 @@ namespace ETF.TripleTriad
             //used when you press cancel button
             if (!ttMan.ttLogic.CanRemoveCardFromCardSelection()) return;
             ModifyCardQuantity(ModifyingCardQuantity.IsRemovingCard);
-            ttMan.ttUi.PlayRestAnimation(ttMan.ttDb.currentHandSelectionsList.Count - 1);
+            ttMan.ttUi.TurnOffHandAnimatorForCancel();
+            //ttMan.ttUi.PlayRestAnimation(ttMan.ttDb.currentHandSelectionsList.Count - 1);
             ttMan.ttDb.currentHandSelectionsList.RemoveAt(ttMan.ttDb.currentHandSelectionsList.Count - 1);
             SoundManager.instance.PlaySFX(1);
         }
 
-        private void StopTheCoroutineScrolling()
+        private void StopTheCoroutineScrollingRight()
         {
-            StopCoroutine(_continuousCoroutineReference);
+            StopCoroutine(_continuousCoroutineReferenceRight);
+        }
+        private void StopTheCoroutineScrollingUp()
+        {
+            StopCoroutine(_continuousCoroutineReferenceUp);
+        }
+        private void StopTheCoroutineScrollingDown()
+        {
+            StopCoroutine(_continuousCoroutineReferenceDown);
+        }
+        private void StopTheCoroutineScrollingLeft()
+        {
+            StopCoroutine(_continuousCoroutineReferenceLeft);
         }
 
 

@@ -17,7 +17,7 @@ namespace ETF.TripleTriad
 
         [SerializeField] public Transform fingerPointer;
         [SerializeField] public bool cardOwnedByPlayer;
-        [SerializeField] private Canvas _cardCanvas;
+        public Canvas cardCanvas;
 
         
 
@@ -91,14 +91,14 @@ namespace ETF.TripleTriad
         
         private void ChangeCanvasToOverrideSort()
         {
-            _cardCanvas.overrideSorting = true;
-            _cardCanvas.sortingOrder = 1;
+            cardCanvas.overrideSorting = true;
+            cardCanvas.sortingOrder = 1;
         }
         
         private void ChangeCanvasBackToNormal()
         {
-            _cardCanvas.sortingOrder = 0;
-            _cardCanvas.overrideSorting = false;
+            cardCanvas.sortingOrder = 0;
+            cardCanvas.overrideSorting = false;
         }
 
         private void PlaySoundEffect(int soundToPlay)
@@ -106,7 +106,14 @@ namespace ETF.TripleTriad
             SoundManager.instance.PlaySFX(soundToPlay);
         }
 
-
+        public void TurnOnCardCanvas()
+        {
+            cardCanvas.enabled = true;
+        }
+        public void TurnOffCardCanvas()
+        {
+            cardCanvas.enabled = false;
+        }
         
 
         

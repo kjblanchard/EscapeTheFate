@@ -14,22 +14,7 @@ namespace ETF.TripleTriad
 		[SerializeField] private Animator fingerAnimator;
 
 		#endregion
-
-		void Awake()
-		{
-			
-		}
 		
-		void Start()
-		{
-			
-		}
-
-		
-		void Update()
-		{
-			
-		}
 
 		#region Functions
 

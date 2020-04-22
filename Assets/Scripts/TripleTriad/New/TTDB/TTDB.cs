@@ -65,7 +65,26 @@ namespace ETF.TripleTriad
 
         public void InitializeDbValuesForStartingTripleTriad()
         {
-            _isComingFromLocationCancel = false;    
+            var emptyCardReference = CardInventory.instance.emptyCard;
+            
+            for (int i = 0; i < _myFullHandTripleTriadCards.Length; i++)
+            {
+                _myFullHandTripleTriadCards[i].whatCardIAm = emptyCardReference;
+            }
+
+            for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
+            {
+                fullEnemyTripleTriadCards[i].whatCardIAm = emptyCardReference;
+            }
+            currentEnemyTripleTriadCardsInHand.Clear();
+            _myCurrentHandTripleTriadCards.Clear();
+            for (int i = 0; i < _boardTripleTriadCards.Length; i++)
+            {
+                _boardTripleTriadCards[i].cardInPlay = false;
+                _boardTripleTriadCards[i].cardOwnedByPlayer = false;
+                _boardTripleTriadCards[i].whatCardIAm = emptyCardReference;
+            }
+            //_isComingFromLocationCancel = false;    
             //UpdateMyCurrentHandCountTo5();
         }
 
