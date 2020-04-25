@@ -98,6 +98,30 @@ public class CardInventory : MonoBehaviour
         }
     }
 
+    public void AddCardToInventory(int cardId)
+    {
+        for (int i = 0; i < masterCardList.Length; i++)
+        {
+            if (masterCardList[i].cardID == cardId)
+            {
+                masterCardList[i].amountOwned++;
+                break;
+            } 
+        }
+    }
+
+    public void RemoveCardFromInventory(int cardId)
+    {
+        for (int i = 0; i < masterCardList.Length; i++)
+        {
+            if (masterCardList[i].cardID == cardId)
+            {
+                masterCardList[i].amountOwned--;
+                break;
+            } 
+        }
+    }
+
 
 
     public int RetrieveNumberOfCardsOnPage()

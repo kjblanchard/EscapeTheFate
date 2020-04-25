@@ -14,6 +14,9 @@ namespace ETF.TripleTriad
 
         [Header("States")] 
         public DisabledState disabledState;
+
+        public TitleScreenState titleScreenState;
+        public OpponentSelectState opponentSelectState;
         public GameStartedState gameStartedState;
         public ShowingRulesState showingRulesState;
         public CardSelectionState cardSelectionState;
@@ -46,8 +49,8 @@ namespace ETF.TripleTriad
         private void Start()
         {
 
-            SendStateChange(disabledState);
-            gameObject.SetActive(false);
+            SendStateChange(gameStartedState);
+            //gameObject.SetActive(false);
         }
 
         void Update()

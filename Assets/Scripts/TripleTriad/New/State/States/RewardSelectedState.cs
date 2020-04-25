@@ -53,6 +53,15 @@ namespace ETF.TripleTriad
 			SoundManager.instance.PlaySFX(_whoWonTheGame == 1 ? 17 : 6);
 			_wonCard.cardAnimator.SetTrigger("rewardConfirmed");
 			_ttMan.ttUi.isLoading = true;
+			switch (_whoWonTheGame)
+			{
+				case 1:
+					CardInventory.instance.AddCardToInventory(_wonCard.whatCardIAm.cardID);
+					break;
+				case 3:
+					CardInventory.instance.RemoveCardFromInventory(_wonCard.whatCardIAm.cardID);
+					break;
+			}
 		}
 
 		#endregion

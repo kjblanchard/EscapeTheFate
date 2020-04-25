@@ -44,7 +44,7 @@ namespace ETF.TripleTriad
 
 		public override void End()
 		{
-			_ttMan.ttUi.RewardSelectionFadeOut();
+			
 		}
 
 		#region Functions
@@ -56,7 +56,9 @@ namespace ETF.TripleTriad
 			{
 				//playerwin
 				case 1:
+					_ttMan.ttUi.RewardSelectionFadeOut();
 					_ttMan.SendStateChange(_ttMan.rewardSelectionState,1);
+					
 					break;
 				//tie
 				case 2:
@@ -65,6 +67,7 @@ namespace ETF.TripleTriad
 					break;
 				//playerlose
 				case 3:
+					_ttMan.ttUi.RewardSelectionFadeOut();
 					_ttMan.SendStateChange(_ttMan.rewardSelectionState,3);
 					break;
 				

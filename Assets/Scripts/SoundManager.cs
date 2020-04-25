@@ -64,4 +64,11 @@ public class SoundManager : MonoBehaviour
     {
         IntroloopPlayer.Instance.Stop();
     }
+
+    public void CacheNextMusic(int musicToCache)
+    {
+        IntroloopPlayer.Instance.Preload(allIntroloopAudio[musicToCache]);
+    }
+
+
 }

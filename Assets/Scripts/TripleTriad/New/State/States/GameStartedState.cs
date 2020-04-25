@@ -22,7 +22,7 @@ namespace ETF.TripleTriad
 				.CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
 			GameManager.instance.TurnOnDirectionalJoystick();
 			_ttMan.ttDb.InitializeDbValuesForStartingTripleTriad();
-			SoundManager.instance.PlayIntroLoop(1);
+			//SoundManager.instance.PlayIntroLoop(1);
 			_ttMan.ttUi.StartGameFadeIn();
 
 		}

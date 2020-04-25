@@ -77,6 +77,7 @@ namespace ETF.TripleTriad
 
         public void GenerateEnemyCardHand()
         {
+            currentEnemyCardSelectionList.Clear();
             //this is the switch for each type of enemy, currently only have beginner choices
             switch (_typeOfEnemyPlayer)
             {
@@ -97,7 +98,8 @@ namespace ETF.TripleTriad
                 DetermineIfRareCardsShouldBeAddedToHand();
             }
 
-            BeginnerAddCardsToHandSelectionsUntilFull();
+            //BeginnerAddCardsToHandSelectionsUntilFull();
+            RandomAddCardsToHandSelectionsUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
             AddEnemySelectedCardsToHandList();
         }
@@ -145,6 +147,16 @@ namespace ETF.TripleTriad
             {
                 var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfUncommonCards.Count);
                 currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
+            }
+        }
+        
+        private void RandomAddCardsToHandSelectionsUntilFull()
+        {
+            //this will choose a random card from the list of common cards until the enemy's hand is full
+            while (currentEnemyCardSelectionList.Count < 5)
+            {
+                var randomNumber = Random.Range(0, CardInventory.instance.masterCardList.Length);
+                currentEnemyCardSelectionList.Add(CardInventory.instance.masterCardList[randomNumber]);
             }
         }
 

@@ -22,6 +22,8 @@ namespace ETF.TripleTriad
         {
             print("donethis");
             //start all Canvas's
+            _titleScreenCanvas.enabled = true;
+            _opponentSelectionCanvas.enabled = true;
             _showingRulesCanvas.enabled = true;
             _cardSelectionCanvas.enabled = true;
             _cardConfirmCanvas.enabled = true;
@@ -51,30 +53,38 @@ namespace ETF.TripleTriad
             fingerCanvas.enabled = true;
 
             //reset all animations
-            // showingRulesAnimator.Rebind();
-            // cardSelectionWindowAnimator.Rebind();
-            // cardConfirmAnimator.Rebind();
-            // for (int i = 0; i < playerHand.Length; i++)
-            // {
-            //     playerHand[i].cardAnimator.Rebind();
-            // }
-            //
-            // for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
-            // {
-            //     ttdb.fullEnemyTripleTriadCards[i].cardAnimator.Rebind();
-            // }
-            //
-            // for (int i = 0; i < boardCards.Length; i++)
-            // {
-            //     boardCards[i].cardAnimator.Rebind();
-            // }
-            //
-            // enemyHandDialogBoxAnimator.Rebind();
-            // _youWinAnimator.Rebind();
-            // _youLoseAnimator.Rebind();
-            // _youLoseAnimator.Rebind();
+            
+             showingRulesAnimator.Rebind();
+             cardSelectionWindowAnimator.Rebind();
+             cardConfirmAnimator.Rebind();
+             for (int i = 0; i < playerHand.Length; i++)
+             {
+                 playerHand[i].cardAnimator.Rebind();
+             }
+            
+             for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
+             {
+                 ttdb.fullEnemyTripleTriadCards[i].cardAnimator.Rebind();
+             }
+            
+             for (int i = 0; i < boardCards.Length; i++)
+             {
+                 boardCards[i].cardAnimator.Rebind();
+             }
+            
+             enemyHandDialogBoxAnimator.Rebind();
+             _youWinAnimator.Rebind();
+             _youLoseAnimator.Rebind();
+             _drawAnimator.Rebind();
+             cardDisplayAnimator.Rebind();
+             cardConfirmAnimator.Rebind();
+             cardSelectionWindowAnimator.Rebind();
+             cardSelectionCardDisplayAnimator.Rebind();
                 
             //close all canvas'
+            
+            _titleScreenCanvas.enabled = false;
+            _opponentSelectionCanvas.enabled = false;
             _showingRulesCanvas.enabled = false;
             _cardSelectionCanvas.enabled = false;
             _cardConfirmCanvas.enabled = false;

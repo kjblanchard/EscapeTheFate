@@ -62,58 +62,61 @@ public class MMCardController : MonoBehaviour
 
     private void Update()
     {
+        var _menuOpened = false;
+        if (_menuOpened)
+        {
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
+                currentPageScrollDirection = PageScrollDirections.GoingForward;
+                continuousCoroutineReference = StartCoroutine(PageScrollContinuously());
+                SetCoryBoolWalking();//for fun
+            }
+            else if (Input.GetKeyDown(KeyCode.A))
+            {
+                if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
+                currentPageScrollDirection = PageScrollDirections.GoingBackward;
+                continuousCoroutineReference = StartCoroutine(PageScrollContinuously());
+                SetCoryBoolWalking();//for fun
 
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
-            currentPageScrollDirection = PageScrollDirections.GoingForward;
-            continuousCoroutineReference = StartCoroutine(PageScrollContinuously());
-            SetCoryBoolWalking();//for fun
-        }
-        else if (Input.GetKeyDown(KeyCode.A))
-        {
-            if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
-            currentPageScrollDirection = PageScrollDirections.GoingBackward;
-            continuousCoroutineReference = StartCoroutine(PageScrollContinuously());
-            SetCoryBoolWalking();//for fun
+            }
+            else if (Input.GetKeyDown(KeyCode.W))
+            {
+                if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
+                continuousCoroutineReference = StartCoroutine(ScrollContinuously(false));
+                SetCoryBoolSwordIdle();//for fun
 
-        }
-        else if (Input.GetKeyDown(KeyCode.W))
-        {
-            if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
-            continuousCoroutineReference = StartCoroutine(ScrollContinuously(false));
-            SetCoryBoolSwordIdle();//for fun
+            }
+            else if (Input.GetKeyDown(KeyCode.S))
+            {
+                if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
+                continuousCoroutineReference = StartCoroutine(ScrollContinuously(true));
+                SetCoryBoolSwordIdle();//for fun
+            }
+            else if (Input.GetKeyDown(KeyCode.Space))
+            {
+                StartCoroutine(SetCoryBoolSwordAtk2());//for fun
+            }
 
-        }
-        else if (Input.GetKeyDown(KeyCode.S))
-        {
-            if (continuousCoroutineReference != null) { StopCoroutine(continuousCoroutineReference); }
-            continuousCoroutineReference = StartCoroutine(ScrollContinuously(true));
-            SetCoryBoolSwordIdle();//for fun
-        }
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartCoroutine(SetCoryBoolSwordAtk2());//for fun
-        }
+            if (Input.GetKeyUp(KeyCode.D))
+            {
+                StopCoroutine(continuousCoroutineReference);
+            }
+            else if (Input.GetKeyUp(KeyCode.A))
+            {
+                StopCoroutine(continuousCoroutineReference);
+            }
+            else if (Input.GetKeyUp(KeyCode.W))
+            {
+                StopCoroutine(continuousCoroutineReference);
+            }
+            else if (Input.GetKeyUp(KeyCode.S))
+            {
+                StopCoroutine(continuousCoroutineReference);
+            }
 
-        if (Input.GetKeyUp(KeyCode.D))
-        {
-            StopCoroutine(continuousCoroutineReference);
+            cardUI.KeepFingerOnProperLocation(currentPageNumber, fingerLocationOnCurrentPage);
         }
-        else if (Input.GetKeyUp(KeyCode.A))
-        {
-            StopCoroutine(continuousCoroutineReference);
-        }
-        else if (Input.GetKeyUp(KeyCode.W))
-        {
-            StopCoroutine(continuousCoroutineReference);
-        }
-        else if (Input.GetKeyUp(KeyCode.S))
-        {
-            StopCoroutine(continuousCoroutineReference);
-        }
-
-        cardUI.KeepFingerOnProperLocation(currentPageNumber, fingerLocationOnCurrentPage);
 
     }
 

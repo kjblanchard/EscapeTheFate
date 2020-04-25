@@ -50,8 +50,8 @@ namespace ETF.TripleTriad
 		public void QuitGame()
 		{
 			//_ttMan.SendStateChange(_ttMan.showingRulesState,1);
-			_ttMan.SendStateChange(_ttMan.disabledState);
-			TurnOffTripleTriad();
+			_ttMan.SendStateChange(_ttMan.gameStartedState);
+			//TurnOffTripleTriad();
 			//Application.Quit();
 		}
 
@@ -65,6 +65,23 @@ namespace ETF.TripleTriad
 			SoundManager.instance.PlayIntroLoop(SoundManager.instance.bgmToPlay);
 			StartCoroutine(UIFade.instance.EndCardBattleFade(0.5f));
 
+		}
+		
+		public void ChangeToTitleScreenState()
+		{
+			SoundManager.instance.PlayIntroLoop(9);
+			_ttMan.SendStateChange(_ttMan.titleScreenState);
+			SoundManager.instance.CacheNextMusic(10);
+		}
+
+		private void IsLoading()
+		{
+			_ttMan.ttUi.isLoading = true;
+		}
+
+		private void IsNotLoading()
+		{
+			_ttMan.ttUi.isLoading = false;
 		}
 		
 
