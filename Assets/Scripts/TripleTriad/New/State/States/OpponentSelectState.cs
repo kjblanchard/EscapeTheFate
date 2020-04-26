@@ -38,30 +38,31 @@ namespace ETF.TripleTriad
 				if (Input.GetKeyDown(KeyCode.D) || (Input.GetButtonDown("right")))
 				{
 					_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Right);
-					TurnOnProperBoxImage();
+					TurnOnBoxImageAndAnimator();
+					
 					SoundManager.instance.PlaySFX(18);
 				}
 				else if (Input.GetKeyDown(KeyCode.A) || (Input.GetButtonDown("left")))
 				{
 					_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Left);
-					TurnOnProperBoxImage();
+					TurnOnBoxImageAndAnimator();
 					SoundManager.instance.PlaySFX(18);
 				}
 				else if (Input.GetKeyDown(KeyCode.W) || (Input.GetButtonDown("up")))
 				{
 					_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Up);
-					TurnOnProperBoxImage();
+					TurnOnBoxImageAndAnimator();
 					SoundManager.instance.PlaySFX(18);
 				}
 				else if (Input.GetKeyDown(KeyCode.S) || (Input.GetButtonDown("down")))
 				{
 					_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Down);
-					TurnOnProperBoxImage();
+					TurnOnBoxImageAndAnimator();
 					SoundManager.instance.PlaySFX(18);
 				}
 				else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")))
 				{
-					
+					TurnOnSelectedAnimator();
 					SoundManager.instance.PlaySFX(19);
 				}
 				else if (Input.GetKeyDown(KeyCode.C) || (Input.GetButtonDown("Fire2")))
@@ -73,6 +74,22 @@ namespace ETF.TripleTriad
 		private void TurnOnProperBoxImage()
 		{
 			_ttMan.ttUi.TurnOnProperBoxImage();
+		}
+
+		private void TurnOnProperAnimator()
+		{
+			_ttMan.ttUi.TurnOnProperAnimatorOpponentSelection();
+		}
+
+		private void TurnOnBoxImageAndAnimator()
+		{
+			TurnOnProperBoxImage();
+			TurnOnProperAnimator();
+		}
+
+		private void TurnOnSelectedAnimator()
+		{
+			_ttMan.ttUi.SelectedAnimatorOpponentSelection();
 		}
 
 		#endregion

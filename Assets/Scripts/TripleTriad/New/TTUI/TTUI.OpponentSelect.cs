@@ -14,6 +14,10 @@ namespace ETF.TripleTriad
 		[Header("Opponent Selection Stuff")]
 		[SerializeField] private Canvas _opponentSelectionCanvas;
 		[SerializeField] private Image[] _opponentBoxImages;
+		[SerializeField] private Animator[] _opponentAnimators;
+		private static readonly int kRest = Animator.StringToHash("rest");
+		private static readonly int kIdle = Animator.StringToHash("idle");
+		private static readonly int kSelected = Animator.StringToHash("selected");
 
 		#endregion
 
@@ -34,6 +38,20 @@ namespace ETF.TripleTriad
 
 			_opponentBoxImages[ttdb.RetrieveOpponentSelectionCurrentValue()].enabled = true;
 
+		}
+
+		public void TurnOnProperAnimatorOpponentSelection()
+		{
+			for (int i = 0; i < _opponentAnimators.Length; i++)
+			{
+				_opponentAnimators[i].SetBool(kIdle,false);
+			}
+			_opponentAnimators[ttdb.RetrieveOpponentSelectionCurrentValue()].SetBool(kIdle,true);
+		}
+
+		public void SelectedAnimatorOpponentSelection()
+		{
+		_opponentAnimators[ttdb.RetrieveOpponentSelectionCurrentValue()].SetTrigger(kSelected);
 		}
 
 		#endregion
