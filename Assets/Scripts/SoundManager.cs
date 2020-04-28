@@ -14,7 +14,7 @@ public class SoundManager : MonoBehaviour
 
     public AudioSource[] SFX;
     public AudioSource[] BGM;
-    public AudioClip SFXTest;
+    //public AudioClip SFXTest;
 
     public IntroloopAudio[] allIntroloopAudio;
 
@@ -36,8 +36,9 @@ public class SoundManager : MonoBehaviour
         }
     }
 
-    public void PlayBGM(int musicToPlay)
+    public void PlayBgm(int musicToPlay)
     {
+        StopBGM();
         BGM[musicToPlay].Play();
     } 
 
@@ -49,10 +50,15 @@ public class SoundManager : MonoBehaviour
 
     public void StopBGM()
     {
-        for ( int i = 0; i < allIntroloopAudio.Length; i++)
+
+        for (int i = 0; i < BGM.Length; i++)
         {
-            IntroloopPlayer.Instance.Stop(i);
+            BGM[i].Stop();
         }
+        // for ( int i = 0; i < allIntroloopAudio.Length; i++)
+        // {
+        //     IntroloopPlayer.Instance.Stop(i);
+        // }
     }
 
     public void PlayIntroLoop(int musicToPlay)

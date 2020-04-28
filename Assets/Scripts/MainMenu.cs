@@ -221,7 +221,7 @@ public class MainMenu : MonoBehaviour
 
     public void DebugRoom()
     {
-        SoundManager.instance.StopBGM();
+        //SoundManager.instance.StopBGM();
         SceneLoader.instance.NewGame();
     }
 

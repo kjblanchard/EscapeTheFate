@@ -49,19 +49,22 @@ namespace ETF.TripleTriad
 		private void ListenForUserInput()
 		{
 			if (_ttMan.ttUi.isLoading) return;
-			if (!Input.GetKeyDown(KeyCode.Space)) return;
-			SoundManager.instance.PlaySFX(_whoWonTheGame == 1 ? 17 : 6);
-			_wonCard.cardAnimator.SetTrigger("rewardConfirmed");
-			_ttMan.ttUi.isLoading = true;
-			switch (_whoWonTheGame)
+			if ((Input.GetKeyDown(KeyCode.Space)) || Input.GetButtonDown("Fire1"))
 			{
-				case 1:
-					CardInventory.instance.AddCardToInventory(_wonCard.whatCardIAm.cardID);
-					break;
-				case 3:
-					CardInventory.instance.RemoveCardFromInventory(_wonCard.whatCardIAm.cardID);
-					break;
+				SoundManager.instance.PlaySFX(_whoWonTheGame == 1 ? 17 : 6);
+				_wonCard.cardAnimator.SetTrigger("rewardConfirmed");
+				_ttMan.ttUi.isLoading = true;
+				switch (_whoWonTheGame)
+				{
+					case 1:
+						CardInventory.instance.AddCardToInventory(_wonCard.whatCardIAm.cardID);
+						break;
+					case 3:
+						CardInventory.instance.RemoveCardFromInventory(_wonCard.whatCardIAm.cardID);
+						break;
+				}
 			}
+
 		}
 
 		#endregion

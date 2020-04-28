@@ -20,7 +20,7 @@ namespace ETF.TripleTriad
 
         public void InitializeAndCacheAllUiElementsForGameStart(bool isGameEnded = false)
         {
-            print("donethis");
+            //print("donethis");
             //start all Canvas's
             _titleScreenCanvas.enabled = true;
             _opponentSelectionCanvas.enabled = true;
@@ -53,10 +53,15 @@ namespace ETF.TripleTriad
             fingerCanvas.enabled = true;
 
             //reset all animations
-            
-             showingRulesAnimator.Rebind();
-             cardSelectionWindowAnimator.Rebind();
-             cardConfirmAnimator.Rebind();
+
+            for (int i = 0; i < _opponentAnimators.Length; i++)
+            {
+                _opponentAnimators[i].Rebind();
+            }
+
+            showingRulesAnimator.Rebind();
+            cardSelectionWindowAnimator.Rebind();
+            cardConfirmAnimator.Rebind();
              for (int i = 0; i < playerHand.Length; i++)
              {
                  playerHand[i].cardAnimator.Rebind();

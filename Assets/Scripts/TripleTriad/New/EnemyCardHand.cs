@@ -33,6 +33,7 @@ namespace ETF.TripleTriad
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenPlayerLoses = "You lose sucker";
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenPlayerTies = "You lose sucker";
         [TextArea(4, 5)] [SerializeField] private string whatToSayWhenChoosingCards = "I'm Choosing da cards";
+        [TextArea(4, 5)] [SerializeField] private string opponentDescription;
         [SerializeField] private string npcName = "Enemy Player";
         [SerializeField] private bool isEnemyHandOpen;
         [SerializeField] private bool isRandomCardSelection;
@@ -46,11 +47,40 @@ namespace ETF.TripleTriad
 
         private void Awake()
         {//this is here for testing, will be moved to loading into triple triad afterwards
+
+        }
+
+        public void SendInfoToTtDb()
+        {
             TripleTriadManager.instance.ttDb.BringInEnemyCardInformation(_whatTypeOfPlayerAmI, _listOfRareCardsOwned,
                 whatToSayWhenTurnIsBeingSelected, /*whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,whatToSayWhenPlayerTies,*/
                 whatToSayWhenChoosingCards, npcName, isEnemyHandOpen, isRandomCardSelection, isPlus, isSame,
-                _typeOfWinReward);
+                _typeOfWinReward,opponentDescription);
+        }
+
+        public string RetrieveName()
+        {
+            return npcName;
+        }
+        public string RetrieveDescription()
+        {
+            return opponentDescription;
+        }
+        public string RetrieveDifficulty()
+        {
+            return _whatTypeOfPlayerAmI.ToString();
+        }
+        public string RetrieveRares()
+        {
+            return _listOfRareCardsOwned.Count.ToString();
+        }
+        public string RetrieveRandom()
+        {
+            return isRandomCardSelection.ToString();
+        }
+        public string RetrieveOpen()
+        {
+            return isEnemyHandOpen.ToString();
         }
     }
-
 }

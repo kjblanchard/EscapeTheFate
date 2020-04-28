@@ -47,6 +47,11 @@ namespace ETF.TripleTriad
 		{
 			_ttui.TurnOffCardConfirmCanvas();
 		}
+
+		private void StartShowingRulesFade()
+		{
+			_ttui.StartShowingRulesFadeOut();
+		}
 		
 
 		#endregion

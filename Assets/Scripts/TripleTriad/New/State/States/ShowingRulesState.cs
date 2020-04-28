@@ -17,8 +17,17 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			if (Application.platform == RuntimePlatform.WebGLPlayer) 
+			{
+				SoundManager.instance.PlayBgm(2);
+			}
+			else
+			{
+				SoundManager.instance.PlayIntroLoop(1);
+				SoundManager.instance.CacheNextMusic(3);
+			}
 			
-			
+
 			_ttMan.ttDb.InitializeShowingRulesDbValues();
 			_ttMan.ttUi.InitializeShowingRulesUi();
 			//SoundManager.instance.PlayIntroLoop(1);

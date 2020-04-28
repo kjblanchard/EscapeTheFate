@@ -20,6 +20,9 @@ namespace ETF.TripleTriad
 		}
 		private int _opponentSelectionCurrentSelection;
 
+		[SerializeField] private EnemyCardHand[] _opponentEnemyCardHands;
+		
+		
 		#endregion
 
 
@@ -55,6 +58,17 @@ namespace ETF.TripleTriad
 			return _opponentSelectionCurrentSelection;
 		}
 
+
+		public void BringInCurrentSelectedEnemyInformationToDb()
+		{
+			_opponentEnemyCardHands[_opponentSelectionCurrentSelection].SendInfoToTtDb();
+		}
+
+		public EnemyCardHand RetrieveCurrentSelectedEnemyInfo()
+		{
+			return _opponentEnemyCardHands[_opponentSelectionCurrentSelection];
+		}
+		
 		#endregion
 	}
 }

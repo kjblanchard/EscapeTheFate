@@ -69,9 +69,18 @@ namespace ETF.TripleTriad
 		
 		public void ChangeToTitleScreenState()
 		{
-			SoundManager.instance.PlayIntroLoop(9);
+			if (Application.platform == RuntimePlatform.WebGLPlayer) 
+			{
+				SoundManager.instance.PlayBgm(0);
+			}
+			else
+			{
+				SoundManager.instance.PlayIntroLoop(9);
+				SoundManager.instance.CacheNextMusic(10);
+			}
+
 			_ttMan.SendStateChange(_ttMan.titleScreenState);
-			SoundManager.instance.CacheNextMusic(10);
+
 		}
 
 		private void IsLoading()
@@ -82,6 +91,15 @@ namespace ETF.TripleTriad
 		private void IsNotLoading()
 		{
 			_ttMan.ttUi.isLoading = false;
+		}
+		
+		public void StartShowingRulesFadeIn()
+		{
+			animator.SetTrigger("showingRulesFadeIn");
+		}
+		public void SwitchToShowingRulesState()
+		{
+			_ttMan.SendStateChange(_ttMan.showingRulesState);
 		}
 		
 

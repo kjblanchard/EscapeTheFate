@@ -10,7 +10,8 @@ namespace ETF.TripleTriad
 
         #region configuration
 
-        [Header("EnemyHandReferences")] private EnemyCardHand.WhatTypeOfCardPlayerAmI _typeOfEnemyPlayer;
+        [Header("EnemyHandReferences")] 
+        private EnemyCardHand.WhatTypeOfCardPlayerAmI _typeOfEnemyPlayer;
         private List<Card> _currentEnemyRareCards;
 
         private List<Card> currentEnemyCardSelectionList = new List<Card>();
@@ -29,12 +30,13 @@ namespace ETF.TripleTriad
         private bool _isRandomCardSelection;
         private bool _isPlus;
         private bool _isSame;
+        private string _opponentDescription;
 
         #endregion
         
         public void BringInEnemyCardInformation(EnemyCardHand.WhatTypeOfCardPlayerAmI typeOfEnemyPlayer,
             List<Card> currentEnemyRareCards, string turnSelectionText, /*string playerWinText, string playerLoseText, string playerTieText,*/
-            string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward)
+            string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward,string opponentDescription)
         {
             //this is used to get information from the npc, it is called by enemy hand script, which will be on every npc..  Gets his rare cards, type of difficulty, and Information
             _typeOfEnemyPlayer = typeOfEnemyPlayer;
@@ -50,7 +52,10 @@ namespace ETF.TripleTriad
             _isPlus = isPlus;
             _isSame = isSame;
             _typeOfWinReward = typeOfWinReward;
+            _opponentDescription = opponentDescription;
         }
+        
+        
 
         public string RetrieveRuleEnemyHandOpen()
         {

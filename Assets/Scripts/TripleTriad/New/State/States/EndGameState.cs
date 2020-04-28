@@ -51,7 +51,7 @@ namespace ETF.TripleTriad
 
 		private void ListenForUserInput()
 		{
-			if (!Input.GetKeyDown(KeyCode.Space) || _ttMan.ttUi.isLoading) return;
+			if ((!Input.GetKeyDown(KeyCode.Space) && !Input.GetButtonDown("Fire1")) || _ttMan.ttUi.isLoading) return;
 			switch (_whoWonTheGame)  
 			{
 				//playerwin
@@ -72,6 +72,7 @@ namespace ETF.TripleTriad
 					break;
 				
 			}
+
 		}
 		
 		

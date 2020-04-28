@@ -38,7 +38,16 @@ namespace ETF.TripleTriad
 		
 		public void InitializeWinEndGameUi()
 		{
-			SoundManager.instance.PlayIntroLoop(3);
+			if (Application.platform == RuntimePlatform.WebGLPlayer) 
+			{
+				SoundManager.instance.PlayBgm(3);
+			}
+			else
+			{
+				SoundManager.instance.PlayIntroLoop(3);
+				SoundManager.instance.CacheNextMusic(9);
+			}
+
 			//UpdateEnemyDialogBoxToEndGameWin();
 			//ttMan.ttUi.enemyHandDialogBoxAnimator.gameObject.SetActive(true);
 			//PlayEnemyHandDialogBoxAnimation();

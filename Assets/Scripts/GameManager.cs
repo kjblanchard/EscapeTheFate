@@ -98,7 +98,8 @@ public class GameManager : MonoBehaviour
 
         InitializeCharacterClasses();
         UpdateStatsHolders(); 
-        GameMenus.instance.UpdateCharInfoPanel(0);//updates menu to show first players equipment when opening for looks
+        Debug.Log("I commented this section below out to get rid of an error");
+        //GameMenus.instance.UpdateCharInfoPanel(0);//updates menu to show first players equipment when opening for looks
 
 
     }

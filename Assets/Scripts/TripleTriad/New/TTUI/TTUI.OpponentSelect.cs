@@ -19,6 +19,15 @@ namespace ETF.TripleTriad
 		private static readonly int kIdle = Animator.StringToHash("idle");
 		private static readonly int kSelected = Animator.StringToHash("selected");
 
+
+		[SerializeField] private Text _opponentNameText;
+		[SerializeField] private Text _opponentDescriptionText;
+		[SerializeField] private Text _isRandomText;
+		[SerializeField] private Text _isOpenText;
+		[SerializeField] private Text _rareCardText;
+		[SerializeField] private Text _aiDifficultyText;
+
+
 		#endregion
 
 
@@ -53,6 +62,32 @@ namespace ETF.TripleTriad
 		{
 		_opponentAnimators[ttdb.RetrieveOpponentSelectionCurrentValue()].SetTrigger(kSelected);
 		}
+
+		public void StartShowingRulesFadeOut()
+		{
+			_tripleTriadUiFade.animator.SetTrigger("showingRulesFadeOut");
+		}
+
+		public void UpdateOpponentInfoOpponentSelection()
+		{
+			var enemyInfo = ttdb.RetrieveCurrentSelectedEnemyInfo();
+			_opponentNameText.text = enemyInfo.RetrieveName();
+			_opponentDescriptionText.text = enemyInfo.RetrieveDescription();
+			_isOpenText.text = enemyInfo.RetrieveOpen();
+			_aiDifficultyText.text = enemyInfo.RetrieveOpen();
+			_rareCardText.text = enemyInfo.RetrieveRares();
+			_isRandomText.text = enemyInfo.RetrieveRandom();
+
+
+		}
+
+		public void TurnOffOpponentSelectUi()
+		{
+			_opponentSelectionCanvas.enabled = false;
+		}
+
+
+		
 
 		#endregion
 	}
