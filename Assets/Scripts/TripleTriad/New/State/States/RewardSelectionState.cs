@@ -21,29 +21,10 @@ namespace ETF.TripleTriad
 			{
 				whoWon = additionalArgs;
 				_ttMan.ttDb.SetWhoWonTheGame(whoWon);
-			}
-
-			//_ttMan.ttUi.ReturnAllBoardCardsToBase();
-			//_ttMan.ttUi.RewardSelectionFadeIn();
-			//_ttMan.ttUi.MoveAllPlayerHandCardsToRewardSelection();
-			//_ttMan.ttUi.MoveAllEnemyHandCardsToRewardSelection();
-			
-			
-			if (whoWon == 1)
-			{
-				_ttMan.ttDb.InitializeRewardSelectionDb();
-			}
-
-			if (whoWon == 2)
-			{
-				//draw
-				//this never gets hit, cause draw fade will happen and close the game out
-			}
-			else
-			{
-				//enemyWillSelect
-				//probably controlled by card 5s enemy animator.
-				//StartRewardSelection()
+				if (whoWon == 1)
+				{
+					_ttMan.ttDb.InitializeRewardSelectionDb();
+				}
 				
 			}
 

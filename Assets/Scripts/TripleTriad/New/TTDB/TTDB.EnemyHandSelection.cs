@@ -178,6 +178,7 @@ namespace ETF.TripleTriad
         {
             for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
             {
+                fullEnemyTripleTriadCards[i].cardOwnedByPlayer = false;
                 currentEnemyTripleTriadCardsInHand.Add(fullEnemyTripleTriadCards[i]);
             }
         }

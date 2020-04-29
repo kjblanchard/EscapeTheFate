@@ -26,7 +26,7 @@ namespace ETF.TripleTriad
 		private int _cardInListToPlay;
 		private int _boardLocInListToPlay;
 
-		private int _cardInHandToPlay;
+		private EnemyPotentialMove _moveToPlay;
 		private int _boardLocationToPlaceCard;
 
 
@@ -36,75 +36,68 @@ namespace ETF.TripleTriad
 		#region Functions
 
 		private void SearchForPotentialMovesOnBoard(Card enemyCard, int cardNumberInInventory)
-		{//creates a list of all the spots on the board that he can flip a card
-
+		{
 			//for each board location
 			for (int i = 0; i < ttDb.RetrieveBoardLocationsCount(); i++)
 			{
 				if (!ttDb.RetrieveTripleTriadCardInBoardSelection(i).cardInPlay)
-				{			//that is not in play
+				{
+					//that is not in play
 					//var potentialSpotToPlay = i;
 					_potentialEmptyTripleTriadSpotToPlay = ttDb.RetrieveTripleTriadCardInBoardSelection(i);
-					_howManyCardsCanIFlipHere = 0;
+					_howManyCardsCanIFlipHere = 1;
 					for (int j = 0; j < _potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency.Length; j++)
-					{			//search adjacent sides
-						if (ttDb.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency[j])).cardInPlay && ttDb.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay.locationBoardAdjacency[j])).cardOwnedByPlayer )
-						{			//that are in play
+					{
+						//search adjacent sides
+						if (ttDb.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay
+							.locationBoardAdjacency[j])).cardInPlay && ttDb
+							.RetrieveTripleTriadCardInBoardSelection((_potentialEmptyTripleTriadSpotToPlay
+								.locationBoardAdjacency[j])).cardOwnedByPlayer)
+						{
+							//that are in play
 							//var adjacentSideNumber = j;
 							_cardToCheckAgainst = ttDb.RetrieveTripleTriadCardInBoardSelection(
 								_potentialEmptyTripleTriadSpotToPlay
 									.locationBoardAdjacency[j]);
-							_myCurrentValue = enemyCard.cardValues[_potentialEmptyTripleTriadSpotToPlay.myValueToCheck[j]];
+							_myCurrentValue =
+								enemyCard.cardValues[_potentialEmptyTripleTriadSpotToPlay.myValueToCheck[j]];
 							_enemySideToCheck = _potentialEmptyTripleTriadSpotToPlay.adjacencyValueToCheck[j];
 							_enemyCurrentValue = _cardToCheckAgainst.whatCardIAm.cardValues[_enemySideToCheck];
 							if (_myCurrentValue > _enemyCurrentValue)
-							{			//check to see if my value is higher than theirs
+							{
+								//check to see if my value is higher than theirs
 								//print($"My Value is higher than theirs with card {enemyCard.cardName}, and I'm going to go to position {i} cause my value is {_myCurrentValue} and their value is {_enemyCurrentValue}");
-								ttDb.AddBoardLocationToPotentialOneCardMoves(i);
-								ttDb.AddCardNumberToPotentialOneCardMoves(cardNumberInInventory);
+								var potentialMove = new EnemyPotentialMove(i, cardNumberInInventory,enemyCard);
+								ttDb.AddMoveToCardMoves(potentialMove, _howManyCardsCanIFlipHere);
 								_howManyCardsCanIFlipHere++;
-								if (_howManyCardsCanIFlipHere > 1)
-								{
-									switch(_howManyCardsCanIFlipHere)
-									{
-										case 2:
-											//print($"I can flip 2 cards at position {i} with my card {enemyCard.name} and he is in spot {cardNumberInInventory} in my card hand");
-											ttDb.AddBoardLocationToPotentialTwoCardMoves(i);
-											ttDb.AddCardNumberToPotentialTwoCardMoves(cardNumberInInventory);
-											break;
-										case 3:
-											//print($"I can flip 3 cards at position {i} with my card {enemyCard.name} and he is in spot {cardNumberInInventory} in my card hand");
-											ttDb.AddBoardLocationToPotentialThreeCardMoves(i);
-											ttDb.AddCardNumberToPotentialThreeCardMoves(cardNumberInInventory);
-											break;
-										case 4:
-											//print($"I can flip 4 cards at position {i} with my card {enemyCard.name} and he is in spot {cardNumberInInventory} in my card hand");
-											ttDb.AddBoardLocationToPotentialFourCardMoves(i);
-											ttDb.AddCardNumberToPotentialFourCardMoves(cardNumberInInventory);
-											break;
-									}
-								}
 							}
-							// else
-							// {
-							// 	print($"Found a spot at {potentialSpotToPlay}, but I can't flip it cause my value is {myCurrentValue} and their value is {enemyCurrentValue}");
-							// }
 						}
 					}
 				}
 			}
-			//play card at this location below..
-			ChooseCardToPlayFromListOfChoices();
-			
+
+			//ChooseCardToPlayFromListOfChoices();
 		}
 
-		private void SearchForRandomCardPlacement()
+		private void SearchForRandomCardPlacementBeginner()
 		{
 			for (int i = 0; i < ttDb.RetrieveBoardLocationsCount(); i++)
 			{
 				if (!ttDb.RetrieveTripleTriadCardInBoardSelection(i).cardInPlay)
 				{
 					ttDb.AddBoardLocationToPotentialRandomCardMoves(i);
+				}
+			}
+		}
+
+		private void CreateModerateRandomCardList()
+		{
+			for (int i = 0; i < ttDb.currentEnemyTripleTriadCardsInHand.Count; i++)
+			{
+				for (int j = 0; j < ttDb.RetrieveBoardLocationsCount(); j++)
+				{
+					var potentialMove = new EnemyPotentialMove(j,i,ttDb.currentEnemyTripleTriadCardsInHand[i].whatCardIAm);
+					ttDb.AddMoveToCardMoves(potentialMove,0);
 				}
 			}
 		}
@@ -118,7 +111,7 @@ namespace ETF.TripleTriad
 			}
 		}
 
-		private void ChooseCardToPlayFromListOfChoices()
+		public void ChooseCardToPlayFromListOfChoices()
 		{
 			var enemyDifficulty = ttDb.RetrieveEnemyDifficulty();
 			switch(enemyDifficulty)
@@ -127,6 +120,7 @@ namespace ETF.TripleTriad
 					ChooseCardMoveAndReturnCardToPlayInHandBeginner();
 					break;
 				case EnemyCardHand.WhatTypeOfCardPlayerAmI.Moderate:
+					ChooseCardMoveAndReturnCardToPlayInHandModerate();
 					break;
 				case EnemyCardHand.WhatTypeOfCardPlayerAmI.Hard:
 					break;
@@ -137,65 +131,145 @@ namespace ETF.TripleTriad
 
 		private void ChooseCardMoveAndReturnCardToPlayInHandBeginner()
 		{
+			int whichCardList;
 			GatherPotentialMoveCountsFromDb();
 			
 			if (_fourCardMoves > 0)
 			{
-
-				_cardInListToPlay = Random.Range(0, _fourCardMoves);
-				_cardInHandToPlay =  ttDb.FindCardToPlayInFourCardList(_cardInListToPlay);
-				_boardLocationToPlaceCard = ttDb.FindBoardLocationToPlayInFourCardList(_cardInListToPlay);
+				whichCardList = 4;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
 
 			}
 			else if (_threeCardMoves > 0)
 			{
-				_cardInListToPlay = Random.Range(0, _threeCardMoves);
-				_cardInHandToPlay =  ttDb.FindCardToPlayInThreeCardList(_cardInListToPlay);
-				_boardLocationToPlaceCard = ttDb.FindBoardLocationToPlayInThreeCardList(_cardInListToPlay);
+				
+				whichCardList = 3;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
 
 			}
 			else if (_twoCardMoves > 0)
 			{
-				_cardInListToPlay = Random.Range(0, _twoCardMoves);
-				_cardInHandToPlay =  ttDb.FindCardToPlayInTwoCardList(_cardInListToPlay);
-				_boardLocationToPlaceCard = ttDb.FindBoardLocationToPlayInTwoCardList(_cardInListToPlay);
+				whichCardList = 2;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
 
 			}
 			else if (_oneCardMoves > 0)
 			{
-				_cardInListToPlay = Random.Range(0, _oneCardMoves);
-				_cardInHandToPlay =  ttDb.FindCardToPlayInOneCardList(_cardInListToPlay);
-				_boardLocationToPlaceCard = ttDb.FindBoardLocationToPlayInOneCardList(_cardInListToPlay);
+				whichCardList = 1;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
 
 			}
 			else
 			{
 				//print("noCardsCanBeFlipped");
-				SearchForRandomCardPlacement();
+				SearchForRandomCardPlacementBeginner();
 				_randomCardMoves = ttDb.RetrieveNumberOfPotentialMovesRandomCards();
 				_boardLocInListToPlay = Random.Range(0, _randomCardMoves);
 				_boardLocationToPlaceCard =  ttDb.FindBoardLocationToPlayInRandomCardList(_boardLocInListToPlay);
-				_cardInHandToPlay = Random.Range(0, ttDb.currentEnemyTripleTriadCardsInHand.Count);
+				_moveToPlay = new EnemyPotentialMove(_boardLocationToPlaceCard,Random.Range(0, ttDb.currentEnemyTripleTriadCardsInHand.Count));
 			}
+		}
+		private void ChooseCardMoveAndReturnCardToPlayInHandModerate()
+		{
+			int whichCardList;
+			GatherPotentialMoveCountsFromDb();
+			
+			if (_fourCardMoves > 0)
+			{
+				whichCardList = 4;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
+
+			}
+			else if (_threeCardMoves > 0)
+			{
+				
+				whichCardList = 3;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
+
+			}
+			else if (_twoCardMoves > 0)
+			{
+				whichCardList = 2;
+				_cardInListToPlay = Random.Range(0, ttDb.RetrieveNumberOfMovesInList(whichCardList));
+				_moveToPlay = ttDb.FindMoveInList(whichCardList, _cardInListToPlay);
+
+			}
+			else if (_oneCardMoves > 0)
+			{
+				whichCardList = 1;
+				_moveToPlay = ModerateChooseBestCard(whichCardList);
+
+			}
+			else
+			{
+				whichCardList = 0;
+				CreateModerateRandomCardList();
+				_moveToPlay = ModerateChooseBestCard(whichCardList);
+			}
+			print($"my moves defense is {_moveToPlay.RetrieveDefense()}");
+		}
+
+		private EnemyPotentialMove ModerateChooseBestCard(int whichCardList)
+		{
+			var movesList = ttDb.RetrieveMovesList(whichCardList);
+			for (int i = 0; i < movesList.Count; i++)
+			{
+				var potentialMoveBoardLocation = ttDb.RetrieveTripleTriadCardInBoardSelection(movesList[i].RetrieveBoardLocation());
+				for (int j = 0; j < potentialMoveBoardLocation.locationBoardAdjacency.Length; j++)
+				{
+					var locationToCheckIfInPlay = ttDb.RetrieveTripleTriadCardInBoardSelection(
+						potentialMoveBoardLocation.locationBoardAdjacency[j]);
+					if (locationToCheckIfInPlay.cardInPlay)
+					{
+						//there is a card there, so add 10 to the defense value
+						//print($"adding defense of 10 and my card is {movesList[i].RetrieveCard()} cause there is a card in play at position {locationToCheckIfInPlay}");
+						movesList[i].AddToDefenseValue(10);
+					}
+					else
+					{//calculate the defense value to add
+						var cardDefensevalue = movesList[i].RetrieveCard()
+							.cardValues[potentialMoveBoardLocation.myValueToCheck[j]];
+						 // print(
+						 // 	$"I'm adding the defense value of {cardDefensevalue} and my card is {movesList[i].RetrieveCard()} cause the card isn't in play at position {locationToCheckIfInPlay}  ");
+
+						movesList[i].AddToDefenseValue(cardDefensevalue);
+					}
+				}
+				
+			}
+
+			for (int i = 0; i < movesList.Count; i++)
+			{
+				movesList[i].CalculateDefenseValue();
+			}
+			movesList.Sort();
+			return movesList[0];
 		}
 
 		private void GatherPotentialMoveCountsFromDb()
 		{
-			_fourCardMoves = ttDb.RetrieveNumberOfPotentialMovesFourCards();
-			_threeCardMoves = ttDb.RetrieveNumberOfPotentialMovesThreeCards();
-			_twoCardMoves = ttDb.RetrieveNumberOfPotentialMovesTwoCards();
-			_oneCardMoves = ttDb.RetrieveNumberOfPotentialMovesOneCard();
+			//print("hi");
+			_fourCardMoves = ttDb.RetrieveNumberOfMovesInList(4);
+			_threeCardMoves = ttDb.RetrieveNumberOfMovesInList(3);
+			_twoCardMoves = ttDb.RetrieveNumberOfMovesInList(2);
+			_oneCardMoves = ttDb.RetrieveNumberOfMovesInList(1);
 
 		}
 
 		public int RetrieveBoardPositionToPlaceCard()
 		{
-			return _boardLocationToPlaceCard;
+			return _moveToPlay.RetrieveBoardLocation();
 		}
-
+		
 		public int RetrieveHandPositionToPlaceCard()
 		{
-			return _cardInHandToPlay;
+			return _moveToPlay.RetrieveCardLocation();
 		}
 		
 		#endregion

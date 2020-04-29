@@ -38,6 +38,7 @@ namespace ETF.TripleTriad
 				}
 			}
 			ttMan.ttLogic.FullEnemyTurnHandPlacementChoices();
+			ttMan.ttLogic.ChooseCardToPlayFromListOfChoices();
 			var boardLocation = ttMan.ttLogic.RetrieveBoardPositionToPlaceCard();
 			var handPosition = ttMan.ttLogic.RetrieveHandPositionToPlaceCard();
 			//print($"the spot I'm going to put the card is {boardLocation} and I'm going to use this spot in my hand {handPosition}, which is card {ttMan.ttDb.currentEnemyTripleTriadCardsInHand[handPosition].whatCardIAm.name}");
