@@ -20,7 +20,7 @@ namespace ETF.TripleTriad
 		}
 		private int _opponentSelectionCurrentSelection;
 
-		[SerializeField] private EnemyCardHand[] _opponentEnemyCardHands;
+		//[SerializeField] private EnemyCardHand[] _opponentEnemyCardHands;
 		
 		
 		#endregion
@@ -31,7 +31,7 @@ namespace ETF.TripleTriad
 
 		public void InitializeOpponentSelectionDb()
 		{
-			_opponentSelectionCurrentSelection = 6;
+			_opponentSelectionCurrentSelection = 7;
 		}
 		
 		public void MoveOpponentSelectionInDb(MovementDirections whichWayToMove)
@@ -61,14 +61,9 @@ namespace ETF.TripleTriad
 
 		public void BringInCurrentSelectedEnemyInformationToDb()
 		{
-			_opponentEnemyCardHands[_opponentSelectionCurrentSelection].SendInfoToTtDb();
+			 ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].opponentCardInfo.SendInfoToTtDb();
 		}
 
-		public EnemyCardHand RetrieveCurrentSelectedEnemyInfo()
-		{
-			return _opponentEnemyCardHands[_opponentSelectionCurrentSelection];
-		}
-		
 		#endregion
 	}
 }

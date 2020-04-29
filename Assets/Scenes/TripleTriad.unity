@@ -1346,8 +1346,9 @@ GameObject:
   - component: {fileID: 124996122}
   - component: {fileID: 124996124}
   - component: {fileID: 124996123}
+  - component: {fileID: 124996125}
   m_Layer: 5
-  m_Name: SelectedOutline (4)
+  m_Name: Box4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1409,6 +1410,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 124996121}
   m_CullTransparentMesh: 0
+--- !u!114 &124996125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 124996121}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 124996123}
+  opponentAnimator: {fileID: 343759565}
+  canSelectOpponent: 1
+  opponentCardInfo: {fileID: 343759566}
 --- !u!1 &162187889
 GameObject:
   m_ObjectHideFlags: 0
@@ -2031,10 +2048,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5e1e422308628824cacd8844bfd12965, type: 3}
-    m_FontSize: 16
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 5
     m_AlignByGeometry: 0
@@ -2586,6 +2603,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 260018557}
   m_CullTransparentMesh: 0
+--- !u!1 &261377649
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 261377650}
+  - component: {fileID: 261377652}
+  - component: {fileID: 261377651}
+  - component: {fileID: 261377653}
+  m_Layer: 5
+  m_Name: Box8
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &261377650
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261377649}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 1494498457}
+  m_Father: {fileID: 501409856}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 134.8, y: -133.4}
+  m_SizeDelta: {x: 127.33, y: 121.87}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &261377651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261377649}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5639f0d18d62de845ae23442bad483c7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &261377652
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261377649}
+  m_CullTransparentMesh: 0
+--- !u!114 &261377653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261377649}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 261377651}
+  opponentAnimator: {fileID: 818606792711966117}
+  canSelectOpponent: 0
+  opponentCardInfo: {fileID: 0}
 --- !u!1 &269115107
 GameObject:
   m_ObjectHideFlags: 0
@@ -3280,6 +3388,7 @@ GameObject:
   - component: {fileID: 343759562}
   - component: {fileID: 343759565}
   - component: {fileID: 343759566}
+  - component: {fileID: 343759567}
   m_Layer: 5
   m_Name: Phantom
   m_TagString: Untagged
@@ -3303,8 +3412,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 3.7399902, y: -23.1}
-  m_SizeDelta: {x: 30, y: 50}
+  m_AnchoredPosition: {x: -3.3, y: -3.62}
+  m_SizeDelta: {x: 61.05, y: 90.07}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &343759562
 MonoBehaviour:
@@ -3388,7 +3497,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 0
+  _whatTypeOfPlayerAmI: 2
   _myAvailableCardsToUse: []
   _listOfRareCardsOwned: []
   whatToSayWhenTurnIsBeingSelected: Who goes first..
@@ -3396,13 +3505,25 @@ MonoBehaviour:
   whatToSayWhenPlayerLoses: You lose sucker
   whatToSayWhenPlayerTies: You lose sucker
   whatToSayWhenChoosingCards: I'm Choosing da cards
-  opponentDescription: 
-  npcName: Enemy Player
+  opponentDescription: i liek turtles
+  npcName: Phantom?
   isEnemyHandOpen: 0
   isRandomCardSelection: 0
   isPlus: 0
   isSame: 0
   _typeOfWinReward: 0
+--- !u!114 &343759567
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 343759560}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29aa219c39474786fc8f60edec7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &349820591
 GameObject:
   m_ObjectHideFlags: 0
@@ -3947,6 +4068,7 @@ GameObject:
   - component: {fileID: 422828383}
   - component: {fileID: 422828386}
   - component: {fileID: 422828387}
+  - component: {fileID: 422828388}
   m_Layer: 5
   m_Name: Light
   m_TagString: Untagged
@@ -3970,8 +4092,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 1.01, y: -20.1}
-  m_SizeDelta: {x: 71.9, y: 80.97}
+  m_AnchoredPosition: {x: 0.00021935, y: -17}
+  m_SizeDelta: {x: 127.33, y: 121.52}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &422828383
 MonoBehaviour:
@@ -4006,7 +4128,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 1255398418292354650, guid: c75bdabc93a73834ab7fac9f69d595b5,
+  m_Sprite: {fileID: 2464617576568603765, guid: 7ee5b0b0bbe425345834341b1d58baea,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -4056,7 +4178,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 0
+  _whatTypeOfPlayerAmI: 1
   _myAvailableCardsToUse: []
   _listOfRareCardsOwned: []
   whatToSayWhenTurnIsBeingSelected: Who goes first..
@@ -4064,13 +4186,25 @@ MonoBehaviour:
   whatToSayWhenPlayerLoses: You lose sucker
   whatToSayWhenPlayerTies: You lose sucker
   whatToSayWhenChoosingCards: I'm Choosing da cards
-  opponentDescription: 
-  npcName: Enemy Player
+  opponentDescription: Let's get this over with!
+  npcName: Lightning
   isEnemyHandOpen: 0
   isRandomCardSelection: 0
   isPlus: 0
   isSame: 0
   _typeOfWinReward: 0
+--- !u!114 &422828388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 422828381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29aa219c39474786fc8f60edec7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &428318776
 GameObject:
   m_ObjectHideFlags: 0
@@ -5087,6 +5221,9 @@ RectTransform:
   - {fileID: 1247960994}
   - {fileID: 124996122}
   - {fileID: 953095007}
+  - {fileID: 2092429198}
+  - {fileID: 969012291}
+  - {fileID: 261377650}
   m_Father: {fileID: 1165411158}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -6499,6 +6636,7 @@ GameObject:
   - component: {fileID: 669515970}
   - component: {fileID: 669515973}
   - component: {fileID: 669515974}
+  - component: {fileID: 669515975}
   m_Layer: 5
   m_Name: Cloud
   m_TagString: Untagged
@@ -6522,8 +6660,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.07, y: -20.6}
-  m_SizeDelta: {x: 78.62, y: 83.84}
+  m_AnchoredPosition: {x: 0.0014858, y: -0.7925}
+  m_SizeDelta: {x: 127.33, y: 123.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &669515970
 MonoBehaviour:
@@ -6558,7 +6696,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 2975185358099397529, guid: e67ec870624f0374f91c16e8ce7963af,
+  m_Sprite: {fileID: 1024810574660351392, guid: 6fcd4a8b386a45541b636c09d66512ea,
     type: 3}
   m_Type: 0
   m_PreserveAspect: 0
@@ -6608,7 +6746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 0
+  _whatTypeOfPlayerAmI: 2
   _myAvailableCardsToUse: []
   _listOfRareCardsOwned: []
   whatToSayWhenTurnIsBeingSelected: Who goes first..
@@ -6616,13 +6754,25 @@ MonoBehaviour:
   whatToSayWhenPlayerLoses: You lose sucker
   whatToSayWhenPlayerTies: You lose sucker
   whatToSayWhenChoosingCards: I'm Choosing da cards
-  opponentDescription: 
-  npcName: Enemy Player
+  opponentDescription: I'll do it for the right price
+  npcName: Cloud
   isEnemyHandOpen: 0
   isRandomCardSelection: 0
   isPlus: 0
   isSame: 0
   _typeOfWinReward: 0
+--- !u!114 &669515975
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 669515968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29aa219c39474786fc8f60edec7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &677531866
 GameObject:
   m_ObjectHideFlags: 0
@@ -8565,8 +8715,9 @@ GameObject:
   - component: {fileID: 953095007}
   - component: {fileID: 953095009}
   - component: {fileID: 953095008}
+  - component: {fileID: 953095010}
   m_Layer: 5
-  m_Name: SelectedOutline (5)
+  m_Name: Box5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8628,6 +8779,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 953095006}
   m_CullTransparentMesh: 0
+--- !u!114 &953095010
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 953095006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 953095008}
+  opponentAnimator: {fileID: 1409692006}
+  canSelectOpponent: 1
+  opponentCardInfo: {fileID: 1409692008}
 --- !u!1 &958534891
 GameObject:
   m_ObjectHideFlags: 0
@@ -8713,8 +8880,9 @@ GameObject:
   - component: {fileID: 969012294}
   - component: {fileID: 969012293}
   - component: {fileID: 969012292}
+  - component: {fileID: 969012295}
   m_Layer: 5
-  m_Name: QuitText
+  m_Name: Box7
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8732,8 +8900,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 448570884}
-  m_Father: {fileID: 1165411158}
-  m_RootOrder: 3
+  m_Father: {fileID: 501409856}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -8795,6 +8963,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 969012290}
   m_CullTransparentMesh: 0
+--- !u!114 &969012295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 969012290}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 448570885}
+  opponentAnimator: {fileID: 818606792711966117}
+  canSelectOpponent: 0
+  opponentCardInfo: {fileID: 0}
 --- !u!1 &969774147
 GameObject:
   m_ObjectHideFlags: 0
@@ -8853,10 +9037,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5e1e422308628824cacd8844bfd12965, type: 3}
-    m_FontSize: 16
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -9505,8 +9689,9 @@ GameObject:
   - component: {fileID: 1062796425}
   - component: {fileID: 1062796427}
   - component: {fileID: 1062796426}
+  - component: {fileID: 1062796428}
   m_Layer: 5
-  m_Name: SelectedOutline (1)
+  m_Name: Box1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9568,6 +9753,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1062796424}
   m_CullTransparentMesh: 0
+--- !u!114 &1062796428
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1062796424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 1062796426}
+  opponentAnimator: {fileID: 1494699200}
+  canSelectOpponent: 1
+  opponentCardInfo: {fileID: 1494699201}
 --- !u!1 &1071538147
 GameObject:
   m_ObjectHideFlags: 0
@@ -10086,10 +10287,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5e1e422308628824cacd8844bfd12965, type: 3}
-    m_FontSize: 16
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 3
     m_AlignByGeometry: 0
@@ -10444,7 +10645,6 @@ RectTransform:
   - {fileID: 501409856}
   - {fileID: 104209549}
   - {fileID: 229093653}
-  - {fileID: 969012291}
   m_Father: {fileID: 818606792456178725}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -10499,7 +10699,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165411157}
-  m_Enabled: 0
+  m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -10879,8 +11079,9 @@ GameObject:
   - component: {fileID: 1247960994}
   - component: {fileID: 1247960996}
   - component: {fileID: 1247960995}
+  - component: {fileID: 1247960997}
   m_Layer: 5
-  m_Name: SelectedOutline (3)
+  m_Name: Box3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10942,6 +11143,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1247960993}
   m_CullTransparentMesh: 0
+--- !u!114 &1247960997
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1247960993}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 1247960995}
+  opponentAnimator: {fileID: 669515973}
+  canSelectOpponent: 1
+  opponentCardInfo: {fileID: 669515974}
 --- !u!1 &1248836541
 GameObject:
   m_ObjectHideFlags: 0
@@ -11249,6 +11466,7 @@ GameObject:
   - component: {fileID: 1313494564}
   - component: {fileID: 1313494567}
   - component: {fileID: 1313494568}
+  - component: {fileID: 1313494569}
   m_Layer: 5
   m_Name: Pika
   m_TagString: Untagged
@@ -11366,13 +11584,25 @@ MonoBehaviour:
   whatToSayWhenPlayerLoses: You lose sucker
   whatToSayWhenPlayerTies: You lose sucker
   whatToSayWhenChoosingCards: Pi..ka..
-  opponentDescription: 
+  opponentDescription: Who tf made my shite animations
   npcName: Pikachu
   isEnemyHandOpen: 1
   isRandomCardSelection: 0
   isPlus: 0
   isSame: 0
   _typeOfWinReward: 0
+--- !u!114 &1313494569
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1313494562}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29aa219c39474786fc8f60edec7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1339915532
 GameObject:
   m_ObjectHideFlags: 0
@@ -12113,7 +12343,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 1
+  _whatTypeOfPlayerAmI: 3
   _myAvailableCardsToUse: []
   _listOfRareCardsOwned: []
   whatToSayWhenTurnIsBeingSelected: Who goes first..
@@ -12716,6 +12946,50 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1482688878}
   m_CullTransparentMesh: 0
+--- !u!1 &1494498456
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1494498457}
+  - component: {fileID: 1494498458}
+  m_Layer: 5
+  m_Name: Tommy
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1494498457
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494498456}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 261377650}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -0.0000023842, y: 1.4875}
+  m_SizeDelta: {x: 127.33, y: 118.89}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1494498458
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494498456}
+  m_CullTransparentMesh: 0
 --- !u!1 &1494699195
 GameObject:
   m_ObjectHideFlags: 0
@@ -12730,6 +13004,7 @@ GameObject:
   - component: {fileID: 1494699197}
   - component: {fileID: 1494699200}
   - component: {fileID: 1494699201}
+  - component: {fileID: 1494699202}
   m_Layer: 5
   m_Name: Cory
   m_TagString: Untagged
@@ -12838,7 +13113,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 0
+  _whatTypeOfPlayerAmI: 1
   _myAvailableCardsToUse: []
   _listOfRareCardsOwned: []
   whatToSayWhenTurnIsBeingSelected: Who goes first..
@@ -12846,13 +13121,25 @@ MonoBehaviour:
   whatToSayWhenPlayerLoses: You lose sucker
   whatToSayWhenPlayerTies: You lose sucker
   whatToSayWhenChoosingCards: I'm Choosing da cards
-  opponentDescription: 
-  npcName: Enemy Player
+  opponentDescription: Rookie Trainer Extraordinaire
+  npcName: Cory
   isEnemyHandOpen: 0
   isRandomCardSelection: 0
   isPlus: 0
   isSame: 0
   _typeOfWinReward: 0
+--- !u!114 &1494699202
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1494699195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0cb29aa219c39474786fc8f60edec7e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1495922482
 GameObject:
   m_ObjectHideFlags: 0
@@ -15481,8 +15768,9 @@ GameObject:
   - component: {fileID: 1899888928}
   - component: {fileID: 1899888930}
   - component: {fileID: 1899888929}
+  - component: {fileID: 1899888931}
   m_Layer: 5
-  m_Name: SelectedOutline (2)
+  m_Name: Box2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15544,6 +15832,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1899888927}
   m_CullTransparentMesh: 0
+--- !u!114 &1899888931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1899888927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 1899888929}
+  opponentAnimator: {fileID: 422828386}
+  canSelectOpponent: 1
+  opponentCardInfo: {fileID: 422828387}
 --- !u!1 &1900127819
 GameObject:
   m_ObjectHideFlags: 0
@@ -15632,8 +15936,9 @@ GameObject:
   - component: {fileID: 1904457961}
   - component: {fileID: 1904457963}
   - component: {fileID: 1904457962}
+  - component: {fileID: 1904457964}
   m_Layer: 5
-  m_Name: SelectedOutline
+  m_Name: Box0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -15695,6 +16000,22 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1904457960}
   m_CullTransparentMesh: 0
+--- !u!114 &1904457964
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1904457960}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 1904457962}
+  opponentAnimator: {fileID: 1313494567}
+  canSelectOpponent: 1
+  opponentCardInfo: {fileID: 1313494568}
 --- !u!1 &1920842704
 GameObject:
   m_ObjectHideFlags: 0
@@ -15906,10 +16227,10 @@ MonoBehaviour:
       m_Calls: []
   m_FontData:
     m_Font: {fileID: 12800000, guid: 5e1e422308628824cacd8844bfd12965, type: 3}
-    m_FontSize: 16
+    m_FontSize: 14
     m_FontStyle: 0
     m_BestFit: 0
-    m_MinSize: 10
+    m_MinSize: 1
     m_MaxSize: 40
     m_Alignment: 5
     m_AlignByGeometry: 0
@@ -17665,6 +17986,96 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &2092429197
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2092429198}
+  - component: {fileID: 2092429200}
+  - component: {fileID: 2092429199}
+  - component: {fileID: 2092429201}
+  m_Layer: 5
+  m_Name: Box6
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2092429198
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092429197}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 501409856}
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -136.6, y: -134.1}
+  m_SizeDelta: {x: 127.33, y: 121.87}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2092429199
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092429197}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 5639f0d18d62de845ae23442bad483c7, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &2092429200
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092429197}
+  m_CullTransparentMesh: 0
+--- !u!114 &2092429201
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092429197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a766a751737e4d4e9081db68d78bea5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  squareBoxImage: {fileID: 2092429199}
+  opponentAnimator: {fileID: 818606792711966117}
+  canSelectOpponent: 0
+  opponentCardInfo: {fileID: 0}
 --- !u!1 &2102015321
 GameObject:
   m_ObjectHideFlags: 0
@@ -18715,13 +19126,6 @@ MonoBehaviour:
   - {fileID: 287483205}
   - {fileID: 465892946}
   - {fileID: 54422560}
-  _opponentEnemyCardHands:
-  - {fileID: 1313494568}
-  - {fileID: 1494699201}
-  - {fileID: 422828387}
-  - {fileID: 669515974}
-  - {fileID: 343759566}
-  - {fileID: 1409692008}
   currentBattleSelectableCards: []
   currentBattleQuantityForCards: 
   ttMan: {fileID: 11}
@@ -19880,21 +20284,16 @@ MonoBehaviour:
   _infoPanelCanvas: {fileID: 981406709}
   _infoPanelCardText: {fileID: 1495922484}
   _opponentSelectionCanvas: {fileID: 1165411161}
-  _opponentBoxImages:
-  - {fileID: 1904457962}
-  - {fileID: 1062796426}
-  - {fileID: 1899888929}
-  - {fileID: 1247960995}
-  - {fileID: 124996123}
-  - {fileID: 953095008}
-  - {fileID: 448570885}
-  _opponentAnimators:
-  - {fileID: 1313494567}
-  - {fileID: 1494699200}
-  - {fileID: 422828386}
-  - {fileID: 669515973}
-  - {fileID: 343759565}
-  - {fileID: 1409692006}
+  _opponentBoxes:
+  - {fileID: 1904457964}
+  - {fileID: 1062796428}
+  - {fileID: 1899888931}
+  - {fileID: 1247960997}
+  - {fileID: 124996125}
+  - {fileID: 953095010}
+  - {fileID: 2092429201}
+  - {fileID: 969012295}
+  - {fileID: 261377653}
   _opponentNameText: {fileID: 677531868}
   _opponentDescriptionText: {fileID: 1516039158}
   _isRandomText: {fileID: 228515268}

@@ -13,8 +13,11 @@ namespace ETF.TripleTriad
 
 		[Header("Opponent Selection Stuff")]
 		[SerializeField] private Canvas _opponentSelectionCanvas;
-		[SerializeField] private Image[] _opponentBoxImages;
-		[SerializeField] private Animator[] _opponentAnimators;
+
+		public OpponentBox[] _opponentBoxes;
+		
+		// [SerializeField] private Image[] _opponentBoxImages;
+		// [SerializeField] private Animator[] _opponentAnimators;
 		private static readonly int kRest = Animator.StringToHash("rest");
 		private static readonly int kIdle = Animator.StringToHash("idle");
 		private static readonly int kSelected = Animator.StringToHash("selected");
@@ -40,27 +43,35 @@ namespace ETF.TripleTriad
 		
 		public void TurnOnProperBoxImage()
 		{//probably make this do the right ones not all of them in the future
-			for (int i = 0; i < _opponentBoxImages.Length; i++)
+			for (int i = 0; i < _opponentBoxes.Length; i++)
 			{
-				_opponentBoxImages[i].enabled = false;
+				_opponentBoxes[i].squareBoxImage.enabled = false;
 			}
 
-			_opponentBoxImages[ttdb.RetrieveOpponentSelectionCurrentValue()].enabled = true;
+			_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].squareBoxImage.enabled = true;
 
 		}
 
 		public void TurnOnProperAnimatorOpponentSelection()
 		{
-			for (int i = 0; i < _opponentAnimators.Length; i++)
+			for (int i = 0; i < _opponentBoxes.Length; i++)
 			{
-				_opponentAnimators[i].SetBool(kIdle,false);
+				if (_opponentBoxes[i].canSelectOpponent)
+				{
+					_opponentBoxes[i].opponentAnimator.SetBool(kIdle,false);
+				}
+
 			}
-			_opponentAnimators[ttdb.RetrieveOpponentSelectionCurrentValue()].SetBool(kIdle,true);
+
+			var spotToLook = ttdb.RetrieveOpponentSelectionCurrentValue();
+			if (!_opponentBoxes[spotToLook].canSelectOpponent) return;
+			_opponentBoxes[spotToLook].opponentAnimator.SetBool(kIdle, true);
+
 		}
 
 		public void SelectedAnimatorOpponentSelection()
 		{
-		_opponentAnimators[ttdb.RetrieveOpponentSelectionCurrentValue()].SetTrigger(kSelected);
+		_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].opponentAnimator.SetTrigger(kSelected);
 		}
 
 		public void StartShowingRulesFadeOut()
@@ -70,13 +81,17 @@ namespace ETF.TripleTriad
 
 		public void UpdateOpponentInfoOpponentSelection()
 		{
-			var enemyInfo = ttdb.RetrieveCurrentSelectedEnemyInfo();
-			_opponentNameText.text = enemyInfo.RetrieveName();
-			_opponentDescriptionText.text = enemyInfo.RetrieveDescription();
-			_isOpenText.text = enemyInfo.RetrieveOpen();
-			_aiDifficultyText.text = enemyInfo.RetrieveOpen();
-			_rareCardText.text = enemyInfo.RetrieveRares();
-			_isRandomText.text = enemyInfo.RetrieveRandom();
+
+			if (_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].canSelectOpponent)
+			{
+				var enemyInfo = _opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].opponentCardInfo;
+				_opponentNameText.text = enemyInfo.RetrieveName();
+				_opponentDescriptionText.text = enemyInfo.RetrieveDescription();
+				_isOpenText.text = enemyInfo.RetrieveOpen();
+				_aiDifficultyText.text = enemyInfo.RetrieveDifficulty();
+				_rareCardText.text = enemyInfo.RetrieveRares();
+				_isRandomText.text = enemyInfo.RetrieveRandom();
+			}
 
 
 		}

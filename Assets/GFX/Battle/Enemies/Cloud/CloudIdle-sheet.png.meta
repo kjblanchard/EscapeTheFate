@@ -1,19 +1,19 @@
 fileFormatVersion: 2
-guid: e67ec870624f0374f91c16e8ce7963af
+guid: 6fcd4a8b386a45541b636c09d66512ea
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: 2975185358099397529
-    second: 207000105_idle_0
+      213: 1024810574660351392
+    second: CloudIdle-sheet_0
   - first:
-      213: -9044240575572930359
-    second: 207000105_idle_1
+      213: -2065297856134250768
+    second: CloudIdle-sheet_1
   - first:
-      213: -1949501212399876019
-    second: 207000105_idle_2
+      213: 7859691918999806837
+    second: CloudIdle-sheet_2
   - first:
-      213: 9201959443865034178
-    second: 207000105_idle_3
+      213: -3215746902953819059
+    second: CloudIdle-sheet_3
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -135,76 +135,13 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: 207000105_idle_0
-      rect:
-        serializedVersion: 2
-        x: 0
-        y: 69
-        width: 86
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 99b357ae15bf94920800000000000000
-      internalID: 2975185358099397529
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 207000105_idle_1
-      rect:
-        serializedVersion: 2
-        x: 86
-        y: 69
-        width: 86
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: 9c01dcd6d176c7280800000000000000
-      internalID: -9044240575572930359
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 207000105_idle_2
-      rect:
-        serializedVersion: 2
-        x: 172
-        y: 69
-        width: 86
-        height: 69
-      alignment: 0
-      pivot: {x: 0, y: 0}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      physicsShape: []
-      tessellationDetail: 0
-      bones: []
-      spriteID: d4846b9e9faf1f4e0800000000000000
-      internalID: -1949501212399876019
-      vertices: []
-      indices: 
-      edges: []
-      weights: []
-    - serializedVersion: 2
-      name: 207000105_idle_3
+      name: CloudIdle-sheet_0
       rect:
         serializedVersion: 2
         x: 0
         y: 0
-        width: 86
-        height: 69
+        width: 118
+        height: 111
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -212,8 +149,71 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2cd50213c5de3bf70800000000000000
-      internalID: 9201959443865034178
+      spriteID: 0a5b1b8b9cbd83e00800000000000000
+      internalID: 1024810574660351392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloudIdle-sheet_1
+      rect:
+        serializedVersion: 2
+        x: 118
+        y: 0
+        width: 118
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fefdb1da869653e0800000000000000
+      internalID: -2065297856134250768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloudIdle-sheet_2
+      rect:
+        serializedVersion: 2
+        x: 236
+        y: 0
+        width: 118
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 573edfb682c331d60800000000000000
+      internalID: 7859691918999806837
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: CloudIdle-sheet_3
+      rect:
+        serializedVersion: 2
+        x: 354
+        y: 0
+        width: 118
+        height: 111
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4400e1ca3f5f53d0800000000000000
+      internalID: -3215746902953819059
       vertices: []
       indices: 
       edges: []

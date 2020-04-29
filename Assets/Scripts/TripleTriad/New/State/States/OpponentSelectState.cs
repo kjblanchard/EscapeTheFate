@@ -11,25 +11,17 @@ namespace ETF.TripleTriad
 		#region Configuration
 
 		[SerializeField] private TripleTriadManager _ttMan;
+		private TTDB.MovementDirections whichWayToMove;
 		
 
 		#endregion
 
 		public override void Startup(int additionalArgs = 0)
-		{			if (Application.platform == RuntimePlatform.WebGLPlayer) 
-			{
-				SoundManager.instance.PlayBgm(1);
-			}
-			else
-			{
-				SoundManager.instance.PlayIntroLoop(10);
-				SoundManager.instance.CacheNextMusic(1);
-			}
-
-			_ttMan.ttUi.isLoading = false;
-			_ttMan.ttUi.InitializeOpponentSelectionUi();
-			_ttMan.ttDb.InitializeOpponentSelectionDb();
+		{
+			Initialize();
 		}
+
+
 
 		public override void Execute()
 		{
@@ -49,23 +41,40 @@ namespace ETF.TripleTriad
 			if (_ttMan.ttUi.isLoading) return;
 			if (Input.GetKeyDown(KeyCode.D) || (Input.GetButtonDown("right")))
 			{
-				_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Right);
-				TurnOnBoxImageAndAnimator();
+				whichWayToMove = TTDB.MovementDirections.Right;
+				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				{
+					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					TurnOnBoxImageAndAnimator();
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.A) || (Input.GetButtonDown("left")))
 			{
-				_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Left);
-				TurnOnBoxImageAndAnimator();
+				whichWayToMove = TTDB.MovementDirections.Left;
+
+				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				{
+					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					TurnOnBoxImageAndAnimator();
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.W) || (Input.GetButtonDown("up")))
 			{
-				_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Up);
-				TurnOnBoxImageAndAnimator();
+				whichWayToMove = TTDB.MovementDirections.Up;
+				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				{
+					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					TurnOnBoxImageAndAnimator();
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.S) || (Input.GetButtonDown("down")))
 			{
-				_ttMan.ttDb.MoveOpponentSelectionInDb(TTDB.MovementDirections.Down);
-				TurnOnBoxImageAndAnimator();
+				whichWayToMove = TTDB.MovementDirections.Down;
+				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				{
+					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					TurnOnBoxImageAndAnimator();
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")))
 			{
@@ -76,6 +85,24 @@ namespace ETF.TripleTriad
 			else if (Input.GetKeyDown(KeyCode.C) || (Input.GetButtonDown("Fire2")))
 			{
 			}
+		}
+		
+		private void Initialize()
+		{
+			if (Application.platform == RuntimePlatform.WebGLPlayer)
+			{
+				SoundManager.instance.PlayBgm(1);
+			}
+			else
+			{
+				SoundManager.instance.PlayIntroLoop(10);
+				SoundManager.instance.CacheNextMusic(1);
+			}
+
+			_ttMan.ttUi.isLoading = false;
+			_ttMan.ttDb.InitializeOpponentSelectionDb();
+			TurnOnProperBoxImage();
+			_ttMan.ttUi.InitializeOpponentSelectionUi();
 		}
 
 		

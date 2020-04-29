@@ -290,8 +290,296 @@ TextureImporter:
   - first:
       213: 21300190
     second: ToddTabEmote_95
+  - first:
+      213: 5962666677582226676
+    second: ToddTabEmote_0
+  - first:
+      213: 5310340677164235929
+    second: ToddTabEmote_1
+  - first:
+      213: 4619288222238698487
+    second: ToddTabEmote_2
+  - first:
+      213: 6992542446163811220
+    second: ToddTabEmote_3
+  - first:
+      213: 34372553686573037
+    second: ToddTabEmote_4
+  - first:
+      213: -6122195624692517347
+    second: ToddTabEmote_5
+  - first:
+      213: 4149324616520909985
+    second: ToddTabEmote_6
+  - first:
+      213: -2448754799591571646
+    second: ToddTabEmote_7
+  - first:
+      213: -7448800139161398895
+    second: ToddTabEmote_8
+  - first:
+      213: -1400541079781847875
+    second: ToddTabEmote_9
+  - first:
+      213: -2391203420634231606
+    second: ToddTabEmote_10
+  - first:
+      213: -3124352493864092263
+    second: ToddTabEmote_11
+  - first:
+      213: -1890626439302153024
+    second: ToddTabEmote_12
+  - first:
+      213: 8724104912663700565
+    second: ToddTabEmote_13
+  - first:
+      213: -4266766567275683468
+    second: ToddTabEmote_14
+  - first:
+      213: -2318057975239225334
+    second: ToddTabEmote_15
+  - first:
+      213: 5267729432477945230
+    second: ToddTabEmote_16
+  - first:
+      213: -8209103722722985596
+    second: ToddTabEmote_17
+  - first:
+      213: -4521113940897257537
+    second: ToddTabEmote_18
+  - first:
+      213: 71851768731885608
+    second: ToddTabEmote_19
+  - first:
+      213: -9117728766315081579
+    second: ToddTabEmote_20
+  - first:
+      213: -5395504793662556103
+    second: ToddTabEmote_21
+  - first:
+      213: 6413210609178207756
+    second: ToddTabEmote_22
+  - first:
+      213: -8398667302483353233
+    second: ToddTabEmote_23
+  - first:
+      213: -8355724452190606970
+    second: ToddTabEmote_24
+  - first:
+      213: -7041476261229228818
+    second: ToddTabEmote_25
+  - first:
+      213: -2616432643204692050
+    second: ToddTabEmote_26
+  - first:
+      213: -7450168587757583048
+    second: ToddTabEmote_27
+  - first:
+      213: 1508532608671345080
+    second: ToddTabEmote_28
+  - first:
+      213: 3055620354233611730
+    second: ToddTabEmote_29
+  - first:
+      213: 8160001818534263256
+    second: ToddTabEmote_30
+  - first:
+      213: -4372649427492957530
+    second: ToddTabEmote_31
+  - first:
+      213: 2658872431459799764
+    second: ToddTabEmote_32
+  - first:
+      213: 385341187311655878
+    second: ToddTabEmote_33
+  - first:
+      213: 1591100015325253686
+    second: ToddTabEmote_34
+  - first:
+      213: -991796366169394610
+    second: ToddTabEmote_35
+  - first:
+      213: 2266598481540241855
+    second: ToddTabEmote_36
+  - first:
+      213: 2369529238514363661
+    second: ToddTabEmote_37
+  - first:
+      213: -7851141284712113813
+    second: ToddTabEmote_38
+  - first:
+      213: 3754355511466245251
+    second: ToddTabEmote_39
+  - first:
+      213: -602399823128327753
+    second: ToddTabEmote_40
+  - first:
+      213: -8628271724951152856
+    second: ToddTabEmote_41
+  - first:
+      213: -4074620558077835707
+    second: ToddTabEmote_42
+  - first:
+      213: 8314879710610106651
+    second: ToddTabEmote_43
+  - first:
+      213: -5447811290918208928
+    second: ToddTabEmote_44
+  - first:
+      213: 2661377396055306229
+    second: ToddTabEmote_45
+  - first:
+      213: -6540614702165262519
+    second: ToddTabEmote_46
+  - first:
+      213: 2197883919472299848
+    second: ToddTabEmote_47
+  - first:
+      213: 209939175617210822
+    second: ToddTabEmote_48
+  - first:
+      213: -6017615922136762533
+    second: ToddTabEmote_49
+  - first:
+      213: 6521628547650473255
+    second: ToddTabEmote_50
+  - first:
+      213: 616163583956884988
+    second: ToddTabEmote_51
+  - first:
+      213: -7248614790934303291
+    second: ToddTabEmote_52
+  - first:
+      213: 5080201071170033798
+    second: ToddTabEmote_53
+  - first:
+      213: -4576639151976764876
+    second: ToddTabEmote_54
+  - first:
+      213: 3572931716331960630
+    second: ToddTabEmote_55
+  - first:
+      213: -3670065935709991469
+    second: ToddTabEmote_56
+  - first:
+      213: -3394395740089995098
+    second: ToddTabEmote_57
+  - first:
+      213: -8042089511156015254
+    second: ToddTabEmote_58
+  - first:
+      213: 3282396764662003513
+    second: ToddTabEmote_59
+  - first:
+      213: 8497455367030820490
+    second: ToddTabEmote_60
+  - first:
+      213: -6010864320287717130
+    second: ToddTabEmote_61
+  - first:
+      213: 1941822102415999751
+    second: ToddTabEmote_62
+  - first:
+      213: 1905036972488932261
+    second: ToddTabEmote_63
+  - first:
+      213: 1297559159097152675
+    second: ToddTabEmote_64
+  - first:
+      213: -6621978313213612663
+    second: ToddTabEmote_65
+  - first:
+      213: -5402503662646398507
+    second: ToddTabEmote_66
+  - first:
+      213: 4334598120144755709
+    second: ToddTabEmote_67
+  - first:
+      213: -3390699192509732893
+    second: ToddTabEmote_68
+  - first:
+      213: -4103359595124053077
+    second: ToddTabEmote_69
+  - first:
+      213: 9062974210016450301
+    second: ToddTabEmote_70
+  - first:
+      213: 6528651337100979540
+    second: ToddTabEmote_71
+  - first:
+      213: -4125638312949227991
+    second: ToddTabEmote_72
+  - first:
+      213: -3851572339077086922
+    second: ToddTabEmote_73
+  - first:
+      213: 1746031630577683443
+    second: ToddTabEmote_74
+  - first:
+      213: -7987820040051304435
+    second: ToddTabEmote_75
+  - first:
+      213: 5531633021418072820
+    second: ToddTabEmote_76
+  - first:
+      213: 543595296936349863
+    second: ToddTabEmote_77
+  - first:
+      213: 5056150628945613019
+    second: ToddTabEmote_78
+  - first:
+      213: 6448271292663102552
+    second: ToddTabEmote_79
+  - first:
+      213: -3828000958404342825
+    second: ToddTabEmote_80
+  - first:
+      213: -710288491703428404
+    second: ToddTabEmote_81
+  - first:
+      213: 2035056812633563292
+    second: ToddTabEmote_82
+  - first:
+      213: 1198670692626709096
+    second: ToddTabEmote_83
+  - first:
+      213: -3250539315613395158
+    second: ToddTabEmote_84
+  - first:
+      213: -8658103643108249772
+    second: ToddTabEmote_85
+  - first:
+      213: 2963140996592756685
+    second: ToddTabEmote_86
+  - first:
+      213: 5948560349864415893
+    second: ToddTabEmote_87
+  - first:
+      213: 4252711706073173502
+    second: ToddTabEmote_88
+  - first:
+      213: -745378745007097568
+    second: ToddTabEmote_89
+  - first:
+      213: -5089454086999281235
+    second: ToddTabEmote_90
+  - first:
+      213: -8523436888033809953
+    second: ToddTabEmote_91
+  - first:
+      213: -2501738767379302337
+    second: ToddTabEmote_92
+  - first:
+      213: 8486620498394019084
+    second: ToddTabEmote_93
+  - first:
+      213: 463462053219577101
+    second: ToddTabEmote_94
+  - first:
+      213: -4485523764237612470
+    second: ToddTabEmote_95
   externalObjects: {}
-  serializedVersion: 10
+  serializedVersion: 11
   mipmaps:
     mipMapMode: 0
     enableMipMap: 1
@@ -345,8 +633,9 @@ TextureImporter:
   maxTextureSizeSet: 0
   compressionQualitySet: 0
   textureFormatSet: 0
+  applyGammaDecoding: 1
   platformSettings:
-  - serializedVersion: 2
+  - serializedVersion: 3
     buildTarget: DefaultTexturePlatform
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -357,7 +646,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Standalone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -368,7 +658,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: iPhone
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -379,7 +670,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: Android
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -390,7 +682,8 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
-  - serializedVersion: 2
+    forceMaximumCompressionQuality_BC6H_BC7: 1
+  - serializedVersion: 3
     buildTarget: WebGL
     maxTextureSize: 2048
     resizeAlgorithm: 0
@@ -401,6 +694,7 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 1
   spriteSheet:
     serializedVersion: 2
     sprites:
@@ -408,10 +702,10 @@ TextureImporter:
       name: ToddTabEmote_0
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 252
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -419,8 +713,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c7ff78b4d4168f4991847a605d23fb2
-      internalID: 21300000
+      spriteID: 4f4e85f60c5afb250800000000000000
+      internalID: 5962666677582226676
       vertices: []
       indices: 
       edges: []
@@ -429,10 +723,10 @@ TextureImporter:
       name: ToddTabEmote_1
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 252
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -440,8 +734,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5e553d6f7d714d747963f728de7e05d5
-      internalID: 21300002
+      spriteID: 99c7ea2e5be12b940800000000000000
+      internalID: 5310340677164235929
       vertices: []
       indices: 
       edges: []
@@ -450,10 +744,10 @@ TextureImporter:
       name: ToddTabEmote_2
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 252
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -461,8 +755,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6280c2ccac4176b4d8134e15fe55a5e3
-      internalID: 21300004
+      spriteID: 7fbeea10a220b1040800000000000000
+      internalID: 4619288222238698487
       vertices: []
       indices: 
       edges: []
@@ -471,10 +765,10 @@ TextureImporter:
       name: ToddTabEmote_3
       rect:
         serializedVersion: 2
-        x: 80
+        x: 78
         y: 252
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -482,8 +776,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3e46c12e8e7ef4448ea0b6c624ca8b6
-      internalID: 21300006
+      spriteID: 49b5f648e408a0160800000000000000
+      internalID: 6992542446163811220
       vertices: []
       indices: 
       edges: []
@@ -492,10 +786,10 @@ TextureImporter:
       name: ToddTabEmote_4
       rect:
         serializedVersion: 2
-        x: 106
+        x: 104
         y: 252
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -503,8 +797,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28103f64f7d3f704a8f1977a22c2a3f5
-      internalID: 21300008
+      spriteID: defd28cc7ad1a7000800000000000000
+      internalID: 34372553686573037
       vertices: []
       indices: 
       edges: []
@@ -513,10 +807,10 @@ TextureImporter:
       name: ToddTabEmote_5
       rect:
         serializedVersion: 2
-        x: 132
+        x: 130
         y: 252
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -524,8 +818,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 987e3a3dd64ca9b448854e0ed2a2e54c
-      internalID: 21300010
+      spriteID: d1670c02487990ba0800000000000000
+      internalID: -6122195624692517347
       vertices: []
       indices: 
       edges: []
@@ -534,10 +828,10 @@ TextureImporter:
       name: ToddTabEmote_6
       rect:
         serializedVersion: 2
-        x: 160
+        x: 156
         y: 252
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -545,8 +839,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 91fb57a3f3da0b74d8e60c033d9b926a
-      internalID: 21300012
+      spriteID: 1a4438131cc559930800000000000000
+      internalID: 4149324616520909985
       vertices: []
       indices: 
       edges: []
@@ -555,10 +849,10 @@ TextureImporter:
       name: ToddTabEmote_7
       rect:
         serializedVersion: 2
-        x: 186
+        x: 182
         y: 252
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -566,8 +860,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6530183cbb2b48e46af6cfe2185df5eb
-      internalID: 21300014
+      spriteID: 24fbf4cdb76440ed0800000000000000
+      internalID: -2448754799591571646
       vertices: []
       indices: 
       edges: []
@@ -576,10 +870,10 @@ TextureImporter:
       name: ToddTabEmote_8
       rect:
         serializedVersion: 2
-        x: 212
+        x: 208
         y: 252
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -587,8 +881,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8fcbbb7249cf2124bb4ce079c4aef7c3
-      internalID: 21300016
+      spriteID: 19197662dbb80a890800000000000000
+      internalID: -7448800139161398895
       vertices: []
       indices: 
       edges: []
@@ -597,10 +891,10 @@ TextureImporter:
       name: ToddTabEmote_9
       rect:
         serializedVersion: 2
-        x: 238
+        x: 234
         y: 252
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -608,8 +902,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a5462d911603afc408c2545051ad68e1
-      internalID: 21300018
+      spriteID: dbcc24eee47409ce0800000000000000
+      internalID: -1400541079781847875
       vertices: []
       indices: 
       edges: []
@@ -618,10 +912,10 @@ TextureImporter:
       name: ToddTabEmote_10
       rect:
         serializedVersion: 2
-        x: 264
+        x: 260
         y: 252
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -629,8 +923,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6e4c4770bb2777c47b670a30bda42848
-      internalID: 21300020
+      spriteID: accc567782db0ded0800000000000000
+      internalID: -2391203420634231606
       vertices: []
       indices: 
       edges: []
@@ -639,10 +933,10 @@ TextureImporter:
       name: ToddTabEmote_11
       rect:
         serializedVersion: 2
-        x: 290
+        x: 286
         y: 252
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -650,8 +944,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 524a647862beaaf45b25aeac0433e1af
-      internalID: 21300022
+      spriteID: 99dff1ad5f114a4d0800000000000000
+      internalID: -3124352493864092263
       vertices: []
       indices: 
       edges: []
@@ -660,10 +954,10 @@ TextureImporter:
       name: ToddTabEmote_12
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 216
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -671,8 +965,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9cb8e2d0d1c94584d87381265be67556
-      internalID: 21300024
+      spriteID: 0ccfe6a354523c5e0800000000000000
+      internalID: -1890626439302153024
       vertices: []
       indices: 
       edges: []
@@ -681,10 +975,10 @@ TextureImporter:
       name: ToddTabEmote_13
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 216
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -692,8 +986,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c9f9a1ae7711b6641910f186dc074ad0
-      internalID: 21300026
+      spriteID: 5546f8e123f321970800000000000000
+      internalID: 8724104912663700565
       vertices: []
       indices: 
       edges: []
@@ -702,10 +996,10 @@ TextureImporter:
       name: ToddTabEmote_14
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 216
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -713,8 +1007,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f84b0ddcba8297346a8c2e64ca3bf1f2
-      internalID: 21300028
+      spriteID: 4712502d96669c4c0800000000000000
+      internalID: -4266766567275683468
       vertices: []
       indices: 
       edges: []
@@ -723,10 +1017,10 @@ TextureImporter:
       name: ToddTabEmote_15
       rect:
         serializedVersion: 2
-        x: 81
+        x: 78
         y: 216
-        width: 19
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -734,8 +1028,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 582155c61c77eee40a545acc9096b93f
-      internalID: 21300030
+      spriteID: a00da199d8a94dfd0800000000000000
+      internalID: -2318057975239225334
       vertices: []
       indices: 
       edges: []
@@ -744,10 +1038,10 @@ TextureImporter:
       name: ToddTabEmote_16
       rect:
         serializedVersion: 2
-        x: 106
+        x: 104
         y: 216
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -755,8 +1049,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 475c3222625e2a443a76889d0fa7cc69
-      internalID: 21300032
+      spriteID: e8dc7bb520cba1940800000000000000
+      internalID: 5267729432477945230
       vertices: []
       indices: 
       edges: []
@@ -765,10 +1059,10 @@ TextureImporter:
       name: ToddTabEmote_17
       rect:
         serializedVersion: 2
-        x: 133
+        x: 130
         y: 216
-        width: 19
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -776,8 +1070,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9933082c4e79ac743805f20c769d983d
-      internalID: 21300034
+      spriteID: 48972ca68a7631e80800000000000000
+      internalID: -8209103722722985596
       vertices: []
       indices: 
       edges: []
@@ -786,10 +1080,10 @@ TextureImporter:
       name: ToddTabEmote_18
       rect:
         serializedVersion: 2
-        x: 160
+        x: 156
         y: 216
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -797,8 +1091,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b01a224ffd5cc444a99d2b04c5f79381
-      internalID: 21300036
+      spriteID: fb7a0cb13d6c141c0800000000000000
+      internalID: -4521113940897257537
       vertices: []
       indices: 
       edges: []
@@ -807,10 +1101,10 @@ TextureImporter:
       name: ToddTabEmote_19
       rect:
         serializedVersion: 2
-        x: 186
+        x: 182
         y: 216
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -818,8 +1112,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e294816712a47274390ce02147782a62
-      internalID: 21300038
+      spriteID: 8206fbf8dc44ff000800000000000000
+      internalID: 71851768731885608
       vertices: []
       indices: 
       edges: []
@@ -828,10 +1122,10 @@ TextureImporter:
       name: ToddTabEmote_20
       rect:
         serializedVersion: 2
-        x: 212
+        x: 208
         y: 216
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -839,8 +1133,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 28b6f31abb998db4eac8934fe9bf46ca
-      internalID: 21300040
+      spriteID: 590dd6daef1577180800000000000000
+      internalID: -9117728766315081579
       vertices: []
       indices: 
       edges: []
@@ -849,10 +1143,10 @@ TextureImporter:
       name: ToddTabEmote_21
       rect:
         serializedVersion: 2
-        x: 238
+        x: 234
         y: 216
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -860,8 +1154,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7c30a5d41070438498df89e539e2c70b
-      internalID: 21300042
+      spriteID: 93873dd0af05f15b0800000000000000
+      internalID: -5395504793662556103
       vertices: []
       indices: 
       edges: []
@@ -870,10 +1164,10 @@ TextureImporter:
       name: ToddTabEmote_22
       rect:
         serializedVersion: 2
-        x: 264
+        x: 260
         y: 216
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -881,8 +1175,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8dbf4082234bd8c4ea36bd0c4385f06b
-      internalID: 21300044
+      spriteID: c0665d5021d400950800000000000000
+      internalID: 6413210609178207756
       vertices: []
       indices: 
       edges: []
@@ -891,10 +1185,10 @@ TextureImporter:
       name: ToddTabEmote_23
       rect:
         serializedVersion: 2
-        x: 290
+        x: 286
         y: 216
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -902,8 +1196,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e51526c9638a3f4449c811c2a61cc6bf
-      internalID: 21300046
+      spriteID: f61aac02690f17b80800000000000000
+      internalID: -8398667302483353233
       vertices: []
       indices: 
       edges: []
@@ -912,10 +1206,10 @@ TextureImporter:
       name: ToddTabEmote_24
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 180
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -923,8 +1217,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b64eedd85fe45b94ba3850cb8cd80d24
-      internalID: 21300048
+      spriteID: 689222a91e08a0c80800000000000000
+      internalID: -8355724452190606970
       vertices: []
       indices: 
       edges: []
@@ -933,10 +1227,10 @@ TextureImporter:
       name: ToddTabEmote_25
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 180
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -944,8 +1238,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f5b623536840b5e4fa0e2f7c978fa201
-      internalID: 21300050
+      spriteID: eec0613d5a6a74e90800000000000000
+      internalID: -7041476261229228818
       vertices: []
       indices: 
       edges: []
@@ -954,10 +1248,10 @@ TextureImporter:
       name: ToddTabEmote_26
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 180
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -965,8 +1259,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 199395de30f38fd41ad3cf20059d869b
-      internalID: 21300052
+      spriteID: ea74c0b9f5090bbd0800000000000000
+      internalID: -2616432643204692050
       vertices: []
       indices: 
       edges: []
@@ -975,10 +1269,10 @@ TextureImporter:
       name: ToddTabEmote_27
       rect:
         serializedVersion: 2
-        x: 80
+        x: 78
         y: 180
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -986,8 +1280,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 88379f54acead0843af29bf2ebe5e578
-      internalID: 21300054
+      spriteID: 8358fe1642fab9890800000000000000
+      internalID: -7450168587757583048
       vertices: []
       indices: 
       edges: []
@@ -996,10 +1290,10 @@ TextureImporter:
       name: ToddTabEmote_28
       rect:
         serializedVersion: 2
-        x: 106
+        x: 104
         y: 180
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1007,8 +1301,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 32e27c26e6c99cd4bb0ef63f3f2c8ec9
-      internalID: 21300056
+      spriteID: 8b9e2ff3a626fe410800000000000000
+      internalID: 1508532608671345080
       vertices: []
       indices: 
       edges: []
@@ -1017,10 +1311,10 @@ TextureImporter:
       name: ToddTabEmote_29
       rect:
         serializedVersion: 2
-        x: 132
+        x: 130
         y: 180
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1028,8 +1322,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4ef1d6a242402bb4da4ac9411eea5906
-      internalID: 21300058
+      spriteID: 2d53c86d58eb76a20800000000000000
+      internalID: 3055620354233611730
       vertices: []
       indices: 
       edges: []
@@ -1038,10 +1332,10 @@ TextureImporter:
       name: ToddTabEmote_30
       rect:
         serializedVersion: 2
-        x: 160
+        x: 156
         y: 180
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1049,8 +1343,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: db6b7fc4518c56149936f8f1855a0bab
-      internalID: 21300060
+      spriteID: 8d9b640ab662e3170800000000000000
+      internalID: 8160001818534263256
       vertices: []
       indices: 
       edges: []
@@ -1059,10 +1353,10 @@ TextureImporter:
       name: ToddTabEmote_31
       rect:
         serializedVersion: 2
-        x: 186
+        x: 182
         y: 180
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1070,8 +1364,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ca30a6c15921964cb955f99af2da8ad
-      internalID: 21300062
+      spriteID: 6a297f2538a3153c0800000000000000
+      internalID: -4372649427492957530
       vertices: []
       indices: 
       edges: []
@@ -1080,10 +1374,10 @@ TextureImporter:
       name: ToddTabEmote_32
       rect:
         serializedVersion: 2
-        x: 212
+        x: 208
         y: 180
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1091,8 +1385,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 133e3d34ca7d7c04b8c26f921e3fdc53
-      internalID: 21300064
+      spriteID: 4d29d3c936636e420800000000000000
+      internalID: 2658872431459799764
       vertices: []
       indices: 
       edges: []
@@ -1101,10 +1395,10 @@ TextureImporter:
       name: ToddTabEmote_33
       rect:
         serializedVersion: 2
-        x: 238
+        x: 234
         y: 180
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1112,8 +1406,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 96954e4fdacb7c84baa89d00839ae699
-      internalID: 21300066
+      spriteID: 6cbd90ba4c1095500800000000000000
+      internalID: 385341187311655878
       vertices: []
       indices: 
       edges: []
@@ -1122,10 +1416,10 @@ TextureImporter:
       name: ToddTabEmote_34
       rect:
         serializedVersion: 2
-        x: 264
+        x: 260
         y: 180
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1133,8 +1427,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: bdaa4d5a096154a46bffb9f867aeeffd
-      internalID: 21300068
+      spriteID: 630949fa809b41610800000000000000
+      internalID: 1591100015325253686
       vertices: []
       indices: 
       edges: []
@@ -1143,10 +1437,10 @@ TextureImporter:
       name: ToddTabEmote_35
       rect:
         serializedVersion: 2
-        x: 290
+        x: 286
         y: 180
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1154,8 +1448,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a39629905b085494997363125e973be4
-      internalID: 21300070
+      spriteID: e4233f0b57e6c32f0800000000000000
+      internalID: -991796366169394610
       vertices: []
       indices: 
       edges: []
@@ -1164,10 +1458,10 @@ TextureImporter:
       name: ToddTabEmote_36
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 144
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1175,8 +1469,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6ae9a96ea03a8e1468e51da0418f8d1d
-      internalID: 21300072
+      spriteID: fb955ac5f43947f10800000000000000
+      internalID: 2266598481540241855
       vertices: []
       indices: 
       edges: []
@@ -1185,10 +1479,10 @@ TextureImporter:
       name: ToddTabEmote_37
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 144
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1196,8 +1490,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 838f4550a10dc9848a71ab395213ad07
-      internalID: 21300074
+      spriteID: d0dec82c94242e020800000000000000
+      internalID: 2369529238514363661
       vertices: []
       indices: 
       edges: []
@@ -1206,10 +1500,10 @@ TextureImporter:
       name: ToddTabEmote_38
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 144
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1217,8 +1511,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4e1b0c3fc120bcf4785701b211e83954
-      internalID: 21300076
+      spriteID: b69945349942b0390800000000000000
+      internalID: -7851141284712113813
       vertices: []
       indices: 
       edges: []
@@ -1227,10 +1521,10 @@ TextureImporter:
       name: ToddTabEmote_39
       rect:
         serializedVersion: 2
-        x: 80
+        x: 78
         y: 144
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1238,8 +1532,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e1019eca63ced8c49973ccb2b0807bd8
-      internalID: 21300078
+      spriteID: 38cb97d32762a1430800000000000000
+      internalID: 3754355511466245251
       vertices: []
       indices: 
       edges: []
@@ -1248,10 +1542,10 @@ TextureImporter:
       name: ToddTabEmote_40
       rect:
         serializedVersion: 2
-        x: 106
+        x: 104
         y: 144
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1259,8 +1553,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: de5c394c9f5e99b4b8a184df6e731174
-      internalID: 21300080
+      spriteID: 7b98da17d88d3a7f0800000000000000
+      internalID: -602399823128327753
       vertices: []
       indices: 
       edges: []
@@ -1269,10 +1563,10 @@ TextureImporter:
       name: ToddTabEmote_41
       rect:
         serializedVersion: 2
-        x: 132
+        x: 130
         y: 144
-        width: 21
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1280,8 +1574,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: b2a75124b41527e478866c8c7b47ef6e
-      internalID: 21300082
+      spriteID: 8275db8a498324880800000000000000
+      internalID: -8628271724951152856
       vertices: []
       indices: 
       edges: []
@@ -1290,10 +1584,10 @@ TextureImporter:
       name: ToddTabEmote_42
       rect:
         serializedVersion: 2
-        x: 160
+        x: 156
         y: 144
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1301,8 +1595,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: fbbce6a5dafb10247912d05958068d3b
-      internalID: 21300084
+      spriteID: 5464441d03a0477c0800000000000000
+      internalID: -4074620558077835707
       vertices: []
       indices: 
       edges: []
@@ -1311,10 +1605,10 @@ TextureImporter:
       name: ToddTabEmote_43
       rect:
         serializedVersion: 2
-        x: 186
+        x: 182
         y: 144
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1322,8 +1616,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c859f6fb1d1ec9e40973e882acbd35bc
-      internalID: 21300086
+      spriteID: b19a40dea03646370800000000000000
+      internalID: 8314879710610106651
       vertices: []
       indices: 
       edges: []
@@ -1332,10 +1626,10 @@ TextureImporter:
       name: ToddTabEmote_44
       rect:
         serializedVersion: 2
-        x: 212
+        x: 208
         y: 144
-        width: 17
-        height: 28
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1343,8 +1637,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5dc46461712420b4bb73b66cae766fe4
-      internalID: 21300088
+      spriteID: 06a3571ae7c7564b0800000000000000
+      internalID: -5447811290918208928
       vertices: []
       indices: 
       edges: []
@@ -1353,10 +1647,10 @@ TextureImporter:
       name: ToddTabEmote_45
       rect:
         serializedVersion: 2
-        x: 238
+        x: 234
         y: 144
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1364,8 +1658,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8587307e1d8545942843d25271976994
-      internalID: 21300090
+      spriteID: 5ff612124ac1fe420800000000000000
+      internalID: 2661377396055306229
       vertices: []
       indices: 
       edges: []
@@ -1374,10 +1668,10 @@ TextureImporter:
       name: ToddTabEmote_46
       rect:
         serializedVersion: 2
-        x: 264
+        x: 260
         y: 144
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1385,8 +1679,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 9cc201ba947cc9f4c976fae1824bfe14
-      internalID: 21300092
+      spriteID: 94ffdb005911b35a0800000000000000
+      internalID: -6540614702165262519
       vertices: []
       indices: 
       edges: []
@@ -1395,10 +1689,10 @@ TextureImporter:
       name: ToddTabEmote_47
       rect:
         serializedVersion: 2
-        x: 290
+        x: 286
         y: 144
-        width: 17
-        height: 29
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1406,8 +1700,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ea2b1a560ef4c104fb991882ef1b41dd
-      internalID: 21300094
+      spriteID: 84f80b5a7c3708e10800000000000000
+      internalID: 2197883919472299848
       vertices: []
       indices: 
       edges: []
@@ -1416,10 +1710,10 @@ TextureImporter:
       name: ToddTabEmote_48
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 108
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1427,8 +1721,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 8913500bb3e420e4391fe8eee19837f4
-      internalID: 21300096
+      spriteID: 6c92a13619ad9e200800000000000000
+      internalID: 209939175617210822
       vertices: []
       indices: 
       edges: []
@@ -1437,10 +1731,10 @@ TextureImporter:
       name: ToddTabEmote_49
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 108
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1448,8 +1742,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: e4ee201a8f63a6847a38a405abfe13a4
-      internalID: 21300098
+      spriteID: b57bd4693322d7ca0800000000000000
+      internalID: -6017615922136762533
       vertices: []
       indices: 
       edges: []
@@ -1458,10 +1752,10 @@ TextureImporter:
       name: ToddTabEmote_50
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 108
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1469,8 +1763,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1ecc8e305552a8b4bb4441a3fea96f6c
-      internalID: 21300100
+      spriteID: 72dc0cb6c9a718a50800000000000000
+      internalID: 6521628547650473255
       vertices: []
       indices: 
       edges: []
@@ -1479,10 +1773,10 @@ TextureImporter:
       name: ToddTabEmote_51
       rect:
         serializedVersion: 2
-        x: 79
+        x: 78
         y: 108
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1490,8 +1784,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 0096ed0fb0a728e4a8823930f7ad4c23
-      internalID: 21300102
+      spriteID: cfd1849d38d0d8800800000000000000
+      internalID: 616163583956884988
       vertices: []
       indices: 
       edges: []
@@ -1500,10 +1794,10 @@ TextureImporter:
       name: ToddTabEmote_52
       rect:
         serializedVersion: 2
-        x: 105
+        x: 104
         y: 108
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1511,8 +1805,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dea93c6106fa6d742bc8d7adfbc94d69
-      internalID: 21300104
+      spriteID: 5cde7b0a04fb76b90800000000000000
+      internalID: -7248614790934303291
       vertices: []
       indices: 
       edges: []
@@ -1521,10 +1815,10 @@ TextureImporter:
       name: ToddTabEmote_53
       rect:
         serializedVersion: 2
-        x: 131
+        x: 130
         y: 108
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1532,8 +1826,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: df7d74d3efe8b414b9d86b335ea55eeb
-      internalID: 21300106
+      spriteID: 68816aa45ff708640800000000000000
+      internalID: 5080201071170033798
       vertices: []
       indices: 
       edges: []
@@ -1542,10 +1836,10 @@ TextureImporter:
       name: ToddTabEmote_54
       rect:
         serializedVersion: 2
-        x: 158
+        x: 156
         y: 108
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1553,8 +1847,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 05fd721b7a927754bb5e5d2483442ede
-      internalID: 21300108
+      spriteID: 43aa74970f28c70c0800000000000000
+      internalID: -4576639151976764876
       vertices: []
       indices: 
       edges: []
@@ -1563,10 +1857,10 @@ TextureImporter:
       name: ToddTabEmote_55
       rect:
         serializedVersion: 2
-        x: 184
+        x: 182
         y: 108
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1574,8 +1868,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2ee0b743373e4b24180d14b7f43f872e
-      internalID: 21300110
+      spriteID: 63971be377a959130800000000000000
+      internalID: 3572931716331960630
       vertices: []
       indices: 
       edges: []
@@ -1584,10 +1878,10 @@ TextureImporter:
       name: ToddTabEmote_56
       rect:
         serializedVersion: 2
-        x: 210
+        x: 208
         y: 108
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1595,8 +1889,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c81b3d1f9b574b54da967b7a74affc0a
-      internalID: 21300112
+      spriteID: 3dd8ebfe97e411dc0800000000000000
+      internalID: -3670065935709991469
       vertices: []
       indices: 
       edges: []
@@ -1605,10 +1899,10 @@ TextureImporter:
       name: ToddTabEmote_57
       rect:
         serializedVersion: 2
-        x: 236
+        x: 234
         y: 108
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1616,8 +1910,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 85f785675b971e64a9e1916a28c6b26c
-      internalID: 21300114
+      spriteID: 6a036d40f0fa4e0d0800000000000000
+      internalID: -3394395740089995098
       vertices: []
       indices: 
       edges: []
@@ -1626,10 +1920,10 @@ TextureImporter:
       name: ToddTabEmote_58
       rect:
         serializedVersion: 2
-        x: 262
+        x: 260
         y: 108
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1637,8 +1931,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2362575ee70b8c043a681b8576c052d5
-      internalID: 21300116
+      spriteID: a6f96abc232c46090800000000000000
+      internalID: -8042089511156015254
       vertices: []
       indices: 
       edges: []
@@ -1647,10 +1941,10 @@ TextureImporter:
       name: ToddTabEmote_59
       rect:
         serializedVersion: 2
-        x: 288
+        x: 286
         y: 108
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1658,8 +1952,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4933054187900cd4f9de9083aade56cc
-      internalID: 21300118
+      spriteID: 937f191777a6d8d20800000000000000
+      internalID: 3282396764662003513
       vertices: []
       indices: 
       edges: []
@@ -1668,10 +1962,10 @@ TextureImporter:
       name: ToddTabEmote_60
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 72
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1679,8 +1973,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 5bc359b2320aabe4e8a53abcd39337fb
-      internalID: 21300120
+      spriteID: a8ecb9682a60de570800000000000000
+      internalID: 8497455367030820490
       vertices: []
       indices: 
       edges: []
@@ -1689,10 +1983,10 @@ TextureImporter:
       name: ToddTabEmote_61
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 72
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1700,8 +1994,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 111106611ecc1934a9331cca04a9f595
-      internalID: 21300122
+      spriteID: 6f84e246fbe159ca0800000000000000
+      internalID: -6010864320287717130
       vertices: []
       indices: 
       edges: []
@@ -1710,10 +2004,10 @@ TextureImporter:
       name: ToddTabEmote_62
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 72
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1721,8 +2015,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: dc6398f95c306b4409115bae6161639a
-      internalID: 21300124
+      spriteID: 7030287f9ecb2fa10800000000000000
+      internalID: 1941822102415999751
       vertices: []
       indices: 
       edges: []
@@ -1731,10 +2025,10 @@ TextureImporter:
       name: ToddTabEmote_63
       rect:
         serializedVersion: 2
-        x: 79
+        x: 78
         y: 72
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1742,8 +2036,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 99b52dbd11c2d7641991da65e23d3b8f
-      internalID: 21300126
+      spriteID: 5ab303d780d007a10800000000000000
+      internalID: 1905036972488932261
       vertices: []
       indices: 
       edges: []
@@ -1752,10 +2046,10 @@ TextureImporter:
       name: ToddTabEmote_64
       rect:
         serializedVersion: 2
-        x: 105
+        x: 104
         y: 72
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1763,8 +2057,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 2d6fd557d8187ab4b8ccbb71f2aae122
-      internalID: 21300128
+      spriteID: 3a45a013e2bd10210800000000000000
+      internalID: 1297559159097152675
       vertices: []
       indices: 
       edges: []
@@ -1773,10 +2067,10 @@ TextureImporter:
       name: ToddTabEmote_65
       rect:
         serializedVersion: 2
-        x: 131
+        x: 130
         y: 72
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1784,8 +2078,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 58a538e13cefb5f4e9d97549cb02bb79
-      internalID: 21300130
+      spriteID: 98def821fc10a14a0800000000000000
+      internalID: -6621978313213612663
       vertices: []
       indices: 
       edges: []
@@ -1794,10 +2088,10 @@ TextureImporter:
       name: ToddTabEmote_66
       rect:
         serializedVersion: 2
-        x: 158
+        x: 156
         y: 72
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1805,8 +2099,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: f0e9ec08f533c0e4681bd5d936dc1ed5
-      internalID: 21300132
+      spriteID: 5d1f632ea837605b0800000000000000
+      internalID: -5402503662646398507
       vertices: []
       indices: 
       edges: []
@@ -1815,10 +2109,10 @@ TextureImporter:
       name: ToddTabEmote_67
       rect:
         serializedVersion: 2
-        x: 184
+        x: 182
         y: 72
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1826,8 +2120,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: ae9e54ffc94f6a144951456f0d5e11e2
-      internalID: 21300134
+      spriteID: dfbdd4b4606972c30800000000000000
+      internalID: 4334598120144755709
       vertices: []
       indices: 
       edges: []
@@ -1836,10 +2130,10 @@ TextureImporter:
       name: ToddTabEmote_68
       rect:
         serializedVersion: 2
-        x: 210
+        x: 208
         y: 72
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1847,8 +2141,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: c3b235e9f813bdc48b3b33fa7d91fd95
-      internalID: 21300136
+      spriteID: 3e7e0429c01d1f0d0800000000000000
+      internalID: -3390699192509732893
       vertices: []
       indices: 
       edges: []
@@ -1857,10 +2151,10 @@ TextureImporter:
       name: ToddTabEmote_69
       rect:
         serializedVersion: 2
-        x: 236
+        x: 234
         y: 72
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1868,8 +2162,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 60a25b6e696d12c4496ae38ad90bd6f0
-      internalID: 21300138
+      spriteID: baba0f25030fd07c0800000000000000
+      internalID: -4103359595124053077
       vertices: []
       indices: 
       edges: []
@@ -1878,10 +2172,10 @@ TextureImporter:
       name: ToddTabEmote_70
       rect:
         serializedVersion: 2
-        x: 262
+        x: 260
         y: 72
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1889,8 +2183,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1f52a9f361d6f2b459e459793866ed21
-      internalID: 21300140
+      spriteID: df69e8cb60726cd70800000000000000
+      internalID: 9062974210016450301
       vertices: []
       indices: 
       edges: []
@@ -1899,10 +2193,10 @@ TextureImporter:
       name: ToddTabEmote_71
       rect:
         serializedVersion: 2
-        x: 288
+        x: 286
         y: 72
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1910,8 +2204,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d614586c7ec9cd54e81a2d3da1e88968
-      internalID: 21300142
+      spriteID: 45d68420dcd6a9a50800000000000000
+      internalID: 6528651337100979540
       vertices: []
       indices: 
       edges: []
@@ -1920,10 +2214,10 @@ TextureImporter:
       name: ToddTabEmote_72
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 36
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1931,8 +2225,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: da3f026fb78620f4198a20963cfd7cfa
-      internalID: 21300144
+      spriteID: 92e5bec10d9ceb6c0800000000000000
+      internalID: -4125638312949227991
       vertices: []
       indices: 
       edges: []
@@ -1941,10 +2235,10 @@ TextureImporter:
       name: ToddTabEmote_73
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 36
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1952,8 +2246,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a78ff4828faa415449ee87c3d1b5617c
-      internalID: 21300146
+      spriteID: 63107963d577c8ac0800000000000000
+      internalID: -3851572339077086922
       vertices: []
       indices: 
       edges: []
@@ -1962,10 +2256,10 @@ TextureImporter:
       name: ToddTabEmote_74
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 36
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1973,8 +2267,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 4b44fce027c28ce48a13cb95a78942ce
-      internalID: 21300148
+      spriteID: 3fbcd2364862b3810800000000000000
+      internalID: 1746031630577683443
       vertices: []
       indices: 
       edges: []
@@ -1983,10 +2277,10 @@ TextureImporter:
       name: ToddTabEmote_75
       rect:
         serializedVersion: 2
-        x: 79
+        x: 78
         y: 36
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -1994,8 +2288,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 141f174aa8cadc34c8133840b8d39d0a
-      internalID: 21300150
+      spriteID: d08defeaeff852190800000000000000
+      internalID: -7987820040051304435
       vertices: []
       indices: 
       edges: []
@@ -2004,10 +2298,10 @@ TextureImporter:
       name: ToddTabEmote_76
       rect:
         serializedVersion: 2
-        x: 105
+        x: 104
         y: 36
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2015,8 +2309,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aa4dd6f0a51faa44b9ff18d7038dc12a
-      internalID: 21300152
+      spriteID: 4fae175dcee44cc40800000000000000
+      internalID: 5531633021418072820
       vertices: []
       indices: 
       edges: []
@@ -2025,10 +2319,10 @@ TextureImporter:
       name: ToddTabEmote_77
       rect:
         serializedVersion: 2
-        x: 131
+        x: 130
         y: 36
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2036,8 +2330,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1059c3907b3621f41ab357bafcad2a6e
-      internalID: 21300154
+      spriteID: 7a0d67fda0d3b8700800000000000000
+      internalID: 543595296936349863
       vertices: []
       indices: 
       edges: []
@@ -2046,10 +2340,10 @@ TextureImporter:
       name: ToddTabEmote_78
       rect:
         serializedVersion: 2
-        x: 158
+        x: 156
         y: 36
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2057,8 +2351,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 79c106db1b8839f45bfa0be56f7844d4
-      internalID: 21300156
+      spriteID: bd0db29553e0b2640800000000000000
+      internalID: 5056150628945613019
       vertices: []
       indices: 
       edges: []
@@ -2067,10 +2361,10 @@ TextureImporter:
       name: ToddTabEmote_79
       rect:
         serializedVersion: 2
-        x: 184
+        x: 182
         y: 36
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2078,8 +2372,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 7a7e78ce28897d44f9aae96cb48d4e4c
-      internalID: 21300158
+      spriteID: 85c7886839cdc7950800000000000000
+      internalID: 6448271292663102552
       vertices: []
       indices: 
       edges: []
@@ -2088,10 +2382,10 @@ TextureImporter:
       name: ToddTabEmote_80
       rect:
         serializedVersion: 2
-        x: 210
+        x: 208
         y: 36
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2099,8 +2393,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 46747dbe9c078254d8b7bf7e41b04402
-      internalID: 21300160
+      spriteID: 7db4472f86530eac0800000000000000
+      internalID: -3828000958404342825
       vertices: []
       indices: 
       edges: []
@@ -2109,10 +2403,10 @@ TextureImporter:
       name: ToddTabEmote_81
       rect:
         serializedVersion: 2
-        x: 236
+        x: 234
         y: 36
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2120,8 +2414,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: a20ef2cdb206d544db7388e1d9a1bfa1
-      internalID: 21300162
+      spriteID: cca18fb416c8426f0800000000000000
+      internalID: -710288491703428404
       vertices: []
       indices: 
       edges: []
@@ -2130,10 +2424,10 @@ TextureImporter:
       name: ToddTabEmote_82
       rect:
         serializedVersion: 2
-        x: 262
+        x: 260
         y: 36
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2141,8 +2435,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 433f082df08876e419512e8759be048d
-      internalID: 21300164
+      spriteID: c9023ce8369fd3c10800000000000000
+      internalID: 2035056812633563292
       vertices: []
       indices: 
       edges: []
@@ -2151,10 +2445,10 @@ TextureImporter:
       name: ToddTabEmote_83
       rect:
         serializedVersion: 2
-        x: 288
+        x: 286
         y: 36
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2162,8 +2456,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d35e67f358ec0134ea5ccb6272252558
-      internalID: 21300166
+      spriteID: 86abfa4e4a882a010800000000000000
+      internalID: 1198670692626709096
       vertices: []
       indices: 
       edges: []
@@ -2172,10 +2466,10 @@ TextureImporter:
       name: ToddTabEmote_84
       rect:
         serializedVersion: 2
-        x: 4
+        x: 0
         y: 0
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2183,8 +2477,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: d98c42086fca5a94d871f483b15593b4
-      internalID: 21300168
+      spriteID: a271c6ce6b3c3e2d0800000000000000
+      internalID: -3250539315613395158
       vertices: []
       indices: 
       edges: []
@@ -2193,10 +2487,10 @@ TextureImporter:
       name: ToddTabEmote_85
       rect:
         serializedVersion: 2
-        x: 30
+        x: 26
         y: 0
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2204,8 +2498,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 387b2566b879ce443bfcb93840409bf1
-      internalID: 21300170
+      spriteID: 45f6404fb9c38d780800000000000000
+      internalID: -8658103643108249772
       vertices: []
       indices: 
       edges: []
@@ -2214,10 +2508,10 @@ TextureImporter:
       name: ToddTabEmote_86
       rect:
         serializedVersion: 2
-        x: 56
+        x: 52
         y: 0
-        width: 17
-        height: 30
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2225,8 +2519,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 6a242dc58e405c148a24eed55649bf64
-      internalID: 21300172
+      spriteID: dc7ee4979013f1920800000000000000
+      internalID: 2963140996592756685
       vertices: []
       indices: 
       edges: []
@@ -2235,10 +2529,10 @@ TextureImporter:
       name: ToddTabEmote_87
       rect:
         serializedVersion: 2
-        x: 79
+        x: 78
         y: 0
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2246,8 +2540,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 926dc310565cab747a5666b74789ed75
-      internalID: 21300174
+      spriteID: 59254a21f188d8250800000000000000
+      internalID: 5948560349864415893
       vertices: []
       indices: 
       edges: []
@@ -2256,10 +2550,10 @@ TextureImporter:
       name: ToddTabEmote_88
       rect:
         serializedVersion: 2
-        x: 105
+        x: 104
         y: 0
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2267,8 +2561,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1d698f5b01083494ea8fbb1c47763c1d
-      internalID: 21300176
+      spriteID: efd03acc3caa40b30800000000000000
+      internalID: 4252711706073173502
       vertices: []
       indices: 
       edges: []
@@ -2277,10 +2571,10 @@ TextureImporter:
       name: ToddTabEmote_89
       rect:
         serializedVersion: 2
-        x: 131
+        x: 130
         y: 0
-        width: 23
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2288,8 +2582,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: aeebb7612cc43da40b45a57e3cb132e2
-      internalID: 21300178
+      spriteID: 029b9b80bf1e7a5f0800000000000000
+      internalID: -745378745007097568
       vertices: []
       indices: 
       edges: []
@@ -2298,10 +2592,10 @@ TextureImporter:
       name: ToddTabEmote_90
       rect:
         serializedVersion: 2
-        x: 158
+        x: 156
         y: 0
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2309,8 +2603,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 08c6b173727816348b815071d148f6ff
-      internalID: 21300180
+      spriteID: da17fb31970ae59b0800000000000000
+      internalID: -5089454086999281235
       vertices: []
       indices: 
       edges: []
@@ -2319,10 +2613,10 @@ TextureImporter:
       name: ToddTabEmote_91
       rect:
         serializedVersion: 2
-        x: 184
+        x: 182
         y: 0
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2330,8 +2624,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 557212457e5948e4eb073538e6eb34d3
-      internalID: 21300182
+      spriteID: fd9a8473f4ba6b980800000000000000
+      internalID: -8523436888033809953
       vertices: []
       indices: 
       edges: []
@@ -2340,10 +2634,10 @@ TextureImporter:
       name: ToddTabEmote_92
       rect:
         serializedVersion: 2
-        x: 210
+        x: 208
         y: 0
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2351,8 +2645,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 72aed6e14227e8849bf8017793ae44e1
-      internalID: 21300184
+      spriteID: f38788988d9084dd0800000000000000
+      internalID: -2501738767379302337
       vertices: []
       indices: 
       edges: []
@@ -2361,10 +2655,10 @@ TextureImporter:
       name: ToddTabEmote_93
       rect:
         serializedVersion: 2
-        x: 236
+        x: 234
         y: 0
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2372,8 +2666,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 814887070ace8b940b4473eb0ccd8cbb
-      internalID: 21300186
+      spriteID: c05f256116886c570800000000000000
+      internalID: 8486620498394019084
       vertices: []
       indices: 
       edges: []
@@ -2382,10 +2676,10 @@ TextureImporter:
       name: ToddTabEmote_94
       rect:
         serializedVersion: 2
-        x: 262
+        x: 260
         y: 0
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2393,8 +2687,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 1919e94b988b5f640badfc8e4dec5d3e
-      internalID: 21300188
+      spriteID: d0da609284c8e6600800000000000000
+      internalID: 463462053219577101
       vertices: []
       indices: 
       edges: []
@@ -2403,10 +2697,10 @@ TextureImporter:
       name: ToddTabEmote_95
       rect:
         serializedVersion: 2
-        x: 288
+        x: 286
         y: 0
-        width: 21
-        height: 31
+        width: 26
+        height: 36
       alignment: 0
       pivot: {x: 0, y: 0}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -2414,8 +2708,8 @@ TextureImporter:
       physicsShape: []
       tessellationDetail: 0
       bones: []
-      spriteID: 62088e7f8fefed34abac438d560ed3f5
-      internalID: 21300190
+      spriteID: a4a4b09d6e730c1c0800000000000000
+      internalID: -4485523764237612470
       vertices: []
       indices: 
       edges: []

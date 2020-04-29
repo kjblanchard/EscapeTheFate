@@ -54,9 +54,9 @@ namespace ETF.TripleTriad
 
             //reset all animations
 
-            for (int i = 0; i < _opponentAnimators.Length; i++)
+            for (int i = 0; i < _opponentBoxes.Length; i++)
             {
-                _opponentAnimators[i].Rebind();
+                 _opponentBoxes[i].opponentAnimator.Rebind();
             }
 
             showingRulesAnimator.Rebind();
