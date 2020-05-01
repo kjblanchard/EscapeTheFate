@@ -124,6 +124,8 @@ public class CardInventory : MonoBehaviour
 
 
 
+
+
     public int RetrieveNumberOfCardsOnPage()
     {//other functions use this to get the private variables
         return _numberOfCardsOnPage;

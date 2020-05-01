@@ -92,6 +92,9 @@ namespace ETF.TripleTriad
                 case EnemyCardHand.WhatTypeOfCardPlayerAmI.Moderate:
                     ModerateChooseCards();
                     break;
+                case EnemyCardHand.WhatTypeOfCardPlayerAmI.Hard:
+                    HardChooseCards();
+                    break;
             }
         }
 
@@ -103,8 +106,7 @@ namespace ETF.TripleTriad
                 DetermineIfRareCardsShouldBeAddedToHand();
             }
 
-            //BeginnerAddCardsToHandSelectionsUntilFull();
-            RandomAddCardsToHandSelectionsUntilFull();
+            BeginnerAddCardsToHandSelectionsUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
             AddEnemySelectedCardsToHandList();
         }
@@ -116,6 +118,18 @@ namespace ETF.TripleTriad
                 DetermineIfRareCardsShouldBeAddedToHand();
             }
             ModerateAddCardsToHandSelectionsUntilFull();
+            AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+            AddEnemySelectedCardsToHandList();
+        }
+        
+        private void HardChooseCards()
+        {
+            //chooses cards for the beginner ruleset
+            if (_currentEnemyRareCards.Count > 0)
+            {
+                DetermineIfRareCardsShouldBeAddedToHand();
+            }
+            RandomAddCardsToHandSelectionsUntilFull();
             AddEnemySelectedHandToTheEnemyCardHandGameObjects();
             AddEnemySelectedCardsToHandList();
         }
@@ -160,7 +174,7 @@ namespace ETF.TripleTriad
             //this will choose a random card from the list of common cards until the enemy's hand is full
             while (currentEnemyCardSelectionList.Count < 5)
             {
-                var randomNumber = Random.Range(0, CardInventory.instance.masterCardList.Length);
+                var randomNumber = Random.Range(20, CardInventory.instance.masterCardList.Length);
                 currentEnemyCardSelectionList.Add(CardInventory.instance.masterCardList[randomNumber]);
             }
         }

@@ -3629,7 +3629,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _whatTypeOfPlayerAmI: 2
   _myAvailableCardsToUse: []
-  _listOfRareCardsOwned: []
+  _listOfRareCardsOwned:
+  - {fileID: 11400000, guid: 243e327c4b9e2dc4486183c38e460cb6, type: 2}
+  - {fileID: 11400000, guid: 78bf5ab84cbe61846b4a385717cddfba, type: 2}
+  - {fileID: 11400000, guid: 01f12c465851bee49ae445592469da3c, type: 2}
   whatToSayWhenTurnIsBeingSelected: Who goes first..
   whatToSayWhenPlayerWins: You win chump
   whatToSayWhenPlayerLoses: You lose sucker
@@ -7130,7 +7133,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _whatTypeOfPlayerAmI: 2
   _myAvailableCardsToUse: []
-  _listOfRareCardsOwned: []
+  _listOfRareCardsOwned:
+  - {fileID: 11400000, guid: 243e327c4b9e2dc4486183c38e460cb6, type: 2}
+  - {fileID: 11400000, guid: 78bf5ab84cbe61846b4a385717cddfba, type: 2}
+  - {fileID: 11400000, guid: 01f12c465851bee49ae445592469da3c, type: 2}
   whatToSayWhenTurnIsBeingSelected: Who goes first..
   whatToSayWhenPlayerWins: You win chump
   whatToSayWhenPlayerLoses: You lose sucker
@@ -12853,12 +12859,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _whatTypeOfPlayerAmI: 3
   _myAvailableCardsToUse: []
-  _listOfRareCardsOwned: []
-  whatToSayWhenTurnIsBeingSelected: Who goes first..
+  _listOfRareCardsOwned:
+  - {fileID: 11400000, guid: bd62c261ab9f76e44bab02a004f21081, type: 2}
+  - {fileID: 11400000, guid: ec395a6390f60d34b9c9ee82c712b328, type: 2}
+  - {fileID: 11400000, guid: 94273ad9a72c91f45a93168d35f5d45d, type: 2}
+  - {fileID: 11400000, guid: 611a1acd3d67ce740b2aa1441816ad5b, type: 2}
+  - {fileID: 11400000, guid: b5e828669fe7e914b887a9844b022a05, type: 2}
+  whatToSayWhenTurnIsBeingSelected: DRAGONZORD!!!
   whatToSayWhenPlayerWins: You win chump
   whatToSayWhenPlayerLoses: You lose sucker
   whatToSayWhenPlayerTies: You lose sucker
-  whatToSayWhenChoosingCards: I'm Choosing da cards
+  whatToSayWhenChoosingCards: It's Morphin' time!
   opponentDescription: Angel Grove Teenager?
   npcName: Tommy
   isEnemyHandOpen: 0
@@ -19650,7 +19661,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   myTurnFirst: 0
-  enemyTurnFirst: 1
+  enemyTurnFirst: 0
   ttUi: {fileID: 9030617816674780376}
   ttDb: {fileID: 818606792456178717}
   ttBoardLogic: {fileID: 1807532710}

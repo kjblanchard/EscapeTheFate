@@ -43,6 +43,7 @@ namespace ETF.TripleTriad
 
 		public void ClearAllEnemyCardPlacementLists()
 		{
+			_positionToPlaceCardOnBoardRandomCardList.Clear();
 			_zeroCardMoveList.Clear();
 			_oneCardMoveList.Clear();
 			_twoCardMoveList.Clear();
@@ -265,6 +266,7 @@ namespace ETF.TripleTriad
 		{
 			return _enemySelectedBoardLocation;
 		}
+		
 		
 
 

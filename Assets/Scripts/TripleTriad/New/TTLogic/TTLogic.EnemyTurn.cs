@@ -83,7 +83,7 @@ namespace ETF.TripleTriad
 		{
 			for (int i = 0; i < ttDb.RetrieveBoardLocationsCount(); i++)
 			{
-				if (!ttDb.RetrieveTripleTriadCardInBoardSelection(i).cardInPlay)
+				if (ttDb.RetrieveTripleTriadCardInBoardSelection(i).cardInPlay == false)
 				{
 					ttDb.AddBoardLocationToPotentialRandomCardMoves(i);
 				}
@@ -92,12 +92,18 @@ namespace ETF.TripleTriad
 
 		private void CreateModerateRandomCardList()
 		{
+			var boardCards = ttDb.RetrieveAllCardsOnBoard();
 			for (int i = 0; i < ttDb.currentEnemyTripleTriadCardsInHand.Count; i++)
 			{
-				for (int j = 0; j < ttDb.RetrieveBoardLocationsCount(); j++)
+				for (int j = 0; j < boardCards.Length; j++)
 				{
-					var potentialMove = new EnemyPotentialMove(j,i,ttDb.currentEnemyTripleTriadCardsInHand[i].whatCardIAm);
-					ttDb.AddMoveToCardMoves(potentialMove,0);
+					if (boardCards[j].cardInPlay == false)
+					{
+						var potentialMove = new EnemyPotentialMove(j,i,ttDb.currentEnemyTripleTriadCardsInHand[i].whatCardIAm);
+						ttDb.AddMoveToCardMoves(potentialMove,0);
+					}
+
+
 				}
 			}
 		}
@@ -123,6 +129,7 @@ namespace ETF.TripleTriad
 					ChooseCardMoveAndReturnCardToPlayInHandModerate();
 					break;
 				case EnemyCardHand.WhatTypeOfCardPlayerAmI.Hard:
+					ChooseCardMoveAndReturnCardToPlayInHandModerate();
 					break;
 				case EnemyCardHand.WhatTypeOfCardPlayerAmI.ChooseAllMyCards:
 					break;

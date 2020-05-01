@@ -78,6 +78,7 @@ namespace ETF.TripleTriad
 			}
 			else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")))
 			{
+				_ttMan.ttDb.SetCurrentOpponentYouArePlaying();
 				TurnOnSelectedAnimator();
 				_ttMan.ttDb.BringInCurrentSelectedEnemyInformationToDb();
 				SoundManager.instance.PlaySFX(19);

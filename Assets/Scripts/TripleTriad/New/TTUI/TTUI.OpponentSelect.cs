@@ -101,6 +101,18 @@ namespace ETF.TripleTriad
 			_opponentSelectionCanvas.enabled = false;
 		}
 
+		public void RemoveCardFromCurrentOpponent(int cardId)
+		{
+			_opponentBoxes[ttdb.RetrieveCurrentOpponentInOpponentList()].opponentCardInfo.RemoveRareFromList(cardId);
+			
+		}
+		
+		public void AddCardToCurrentOpponent(int cardId)
+		{
+			_opponentBoxes[ttdb.RetrieveCurrentOpponentInOpponentList()].opponentCardInfo.AddRareToList(cardId);
+			
+		}
+
 
 		
 

@@ -58,13 +58,32 @@ namespace ETF.TripleTriad
 				{
 					case 1:
 						CardInventory.instance.AddCardToInventory(_wonCard.whatCardIAm.cardID);
+						CheckToSeeIfOpponentShouldLoseTheCard();
 						break;
 					case 3:
 						CardInventory.instance.RemoveCardFromInventory(_wonCard.whatCardIAm.cardID);
+						CheckToSeeIfOpponentShouldGainTheCard();
 						break;
 				}
 			}
 
+		}
+
+		private void CheckToSeeIfOpponentShouldLoseTheCard()
+		{
+			if (_wonCard.whatCardIAm.cardsRarity == Card.cardRarity.Rare ||
+			    _wonCard.whatCardIAm.cardsRarity == Card.cardRarity.Elite)
+			{
+				_ttMan.ttUi.RemoveCardFromCurrentOpponent(_wonCard.whatCardIAm.cardID);
+			}
+		}
+		private void CheckToSeeIfOpponentShouldGainTheCard()
+		{
+			if (_wonCard.whatCardIAm.cardsRarity == Card.cardRarity.Rare ||
+			    _wonCard.whatCardIAm.cardsRarity == Card.cardRarity.Elite)
+			{
+				_ttMan.ttUi.AddCardToCurrentOpponent(_wonCard.whatCardIAm.cardID);
+			}
 		}
 
 		#endregion

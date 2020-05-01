@@ -19,6 +19,7 @@ namespace ETF.TripleTriad
 			Down
 		}
 		private int _opponentSelectionCurrentSelection;
+		private int _currentOpponentPlaying;
 
 		//[SerializeField] private EnemyCardHand[] _opponentEnemyCardHands;
 		
@@ -62,6 +63,16 @@ namespace ETF.TripleTriad
 		public void BringInCurrentSelectedEnemyInformationToDb()
 		{
 			 ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].opponentCardInfo.SendInfoToTtDb();
+		}
+
+		public void SetCurrentOpponentYouArePlaying()
+		{
+			_currentOpponentPlaying = _opponentSelectionCurrentSelection;
+		}
+
+		public int RetrieveCurrentOpponentInOpponentList()
+		{
+			return _currentOpponentPlaying;
 		}
 
 		#endregion

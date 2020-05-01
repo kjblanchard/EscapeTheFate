@@ -46,7 +46,8 @@ namespace ETF.TripleTriad
 
 
         private void Awake()
-        {//this is here for testing, will be moved to loading into triple triad afterwards
+        {
+            //this is here for testing, will be moved to loading into triple triad afterwards
 
         }
 
@@ -55,32 +56,61 @@ namespace ETF.TripleTriad
             TripleTriadManager.instance.ttDb.BringInEnemyCardInformation(_whatTypeOfPlayerAmI, _listOfRareCardsOwned,
                 whatToSayWhenTurnIsBeingSelected, /*whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,whatToSayWhenPlayerTies,*/
                 whatToSayWhenChoosingCards, npcName, isEnemyHandOpen, isRandomCardSelection, isPlus, isSame,
-                _typeOfWinReward,opponentDescription);
+                _typeOfWinReward, opponentDescription);
         }
 
         public string RetrieveName()
         {
             return npcName;
         }
+
         public string RetrieveDescription()
         {
             return opponentDescription;
         }
+
         public string RetrieveDifficulty()
         {
             return _whatTypeOfPlayerAmI.ToString();
         }
+
         public string RetrieveRares()
         {
             return _listOfRareCardsOwned.Count.ToString();
         }
+
         public string RetrieveRandom()
         {
             return isRandomCardSelection.ToString();
         }
+
         public string RetrieveOpen()
         {
             return isEnemyHandOpen.ToString();
+        }
+
+        public void RemoveRareFromList(int cardId)
+        {
+            for (int i = 0; i < _listOfRareCardsOwned.Count; i++)
+            {
+                if (_listOfRareCardsOwned[i].cardID == cardId)
+                {
+                    _listOfRareCardsOwned.RemoveAt(i);
+                }
+            }
+        }
+
+        public void AddRareToList(int cardId)
+        {
+            for (int i = 0; i < CardInventory.instance.masterCardList.Length; i++)
+            {
+                if (CardInventory.instance.masterCardList[i].cardID == cardId)
+                {
+                    _listOfRareCardsOwned.Add(CardInventory.instance.masterCardList[i]);
+                }
+            }
+
+
         }
     }
 }
