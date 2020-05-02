@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Mewtwo
   playerImage: {fileID: 21300000, guid: 1deade5e60e97b44088f72efa829b54d, type: 3}
   enemyImage: {fileID: 21300000, guid: 8222258cea5daa44894f7b4f70a9e357, type: 3}
-  amountOwned: 3
+  amountOwned: 0
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

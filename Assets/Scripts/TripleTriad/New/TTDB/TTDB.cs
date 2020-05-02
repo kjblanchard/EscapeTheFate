@@ -20,7 +20,7 @@ namespace ETF.TripleTriad
         public void CalculateTtBattleNumbers()
         {
             //looks at your master card list, and figures out how many pages and remaining cards are needed
-            _totalNumberOfBattleCards = CardInventory.instance.RetrieveTotalNumberOfCardsInMasterList();
+            _totalNumberOfBattleCards = CardInventory.instance.RetrieveTotalNumberOfBattleCards();
             var notRoundedUpBattlePageCount = ((float) _totalNumberOfBattleCards) / _numberofBattleCardsOnPage;
             _totalNumberOfBattlePages = (int) Mathf.Ceil(notRoundedUpBattlePageCount);
             _totalNumberOfCardsOnLastBattlePage = (int) _totalNumberOfBattleCards % _numberofBattleCardsOnPage;

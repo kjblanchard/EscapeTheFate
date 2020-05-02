@@ -54,7 +54,16 @@ namespace ETF.TripleTriad
             _typeOfWinReward = typeOfWinReward;
             _opponentDescription = opponentDescription;
         }
-        
+
+        public bool RetrieveIsHandOpen()
+        {
+            return _isEnemyHandOpen;
+        }
+
+        public bool RetrieveIsRandomPlayerCards()
+        {
+            return _isRandomCardSelection;
+        }
         
 
         public string RetrieveRuleEnemyHandOpen()

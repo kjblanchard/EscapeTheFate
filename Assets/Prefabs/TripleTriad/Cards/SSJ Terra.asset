@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: SSJ Terra
   playerImage: {fileID: 21300000, guid: 5638d9a4e275dd2488c069dac67698d2, type: 3}
   enemyImage: {fileID: 21300000, guid: 647013dab3d2cd04e8ecf4f53a622369, type: 3}
-  amountOwned: 3
+  amountOwned: 0
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

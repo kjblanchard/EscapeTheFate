@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Lysithia
   playerImage: {fileID: 21300000, guid: 12d33a18bc1c048498f6fe4c94d20e02, type: 3}
   enemyImage: {fileID: 21300000, guid: a8815fe0cda1b234283b12e3fd06d174, type: 3}
-  amountOwned: 3
+  amountOwned: 0
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

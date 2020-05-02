@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Lightning
   playerImage: {fileID: 21300000, guid: 9f9bbc2b7a271b64389abe820090c7d9, type: 3}
   enemyImage: {fileID: 21300000, guid: b477a15d4ed1d2b46aa9a0ec7320f023, type: 3}
-  amountOwned: 3
+  amountOwned: 0
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

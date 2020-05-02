@@ -18,10 +18,10 @@ MonoBehaviour:
   cardName: Beast Boy
   playerImage: {fileID: 21300000, guid: a4c98f4b81b20514e833fe4eacc00aad, type: 3}
   enemyImage: {fileID: 21300000, guid: fbb9bfd62fa75584286de7bdc8f1406e, type: 3}
-  amountOwned: 3
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0
-  cardSlot: 0
+  cardSlot: 10
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 07000000050000000500000007000000

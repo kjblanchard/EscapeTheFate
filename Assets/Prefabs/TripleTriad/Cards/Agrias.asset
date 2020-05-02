@@ -18,10 +18,10 @@ MonoBehaviour:
   cardName: Agrias
   playerImage: {fileID: 21300000, guid: f875727c904042944b0bc2478c6e6bdf, type: 3}
   enemyImage: {fileID: 21300000, guid: 3302b468e9ff7764c9923f57357e54dd, type: 3}
-  amountOwned: 3
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0
-  cardSlot: 0
+  cardSlot: 10
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 09000000020000000300000008000000

@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Pikachu
   playerImage: {fileID: 21300000, guid: 04a00c32a83f3044dbfaaebbf42cbda1, type: 3}
   enemyImage: {fileID: 21300000, guid: 2b996b2421473cf4581ba9373d7587e4, type: 3}
-  amountOwned: 3
+  amountOwned: 0
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

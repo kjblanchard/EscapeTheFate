@@ -2,6 +2,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
+
+//using Random = System.Random;
 
 namespace ETF.TripleTriad
 {
@@ -71,6 +74,29 @@ namespace ETF.TripleTriad
         {
             return ttDb.RetrieveCardSelectionCurrentSpotInInventory() >= ttDb.RetrieveTotalNumberOfBattleCards();
         }
+
+        // public List<int> DetermineRandomCardForPlayerRandom()
+        // {
+        //     var battleCardList = ttDb.currentBattleSelectableCards;
+        //     var battleQtyList = ttDb.currentBattleQuantityForCards;
+        //     List<int> playerRandomCards = new List<int>();
+        //     while (playerRandomCards.Count < 5)
+        //     {
+        //         var potentialChoice = Random.Range(0, battleCardList.Count);
+        //         if (battleQtyList[potentialChoice] > 0)
+        //         {
+        //             playerRandomCards.Add(potentialChoice);
+        //             cardListQty[potentialChoice]--;
+        //         }
+        //     }
+        //
+        //     for (int i = 0; i < playerRandomCards.Count; i++)
+        //     {
+        //         cardListQty[playerRandomCards[i]]++;
+        //     }
+        //
+        //     return playerRandomCards;
+        // }
 
 
     }

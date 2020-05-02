@@ -57,6 +57,14 @@ namespace ETF.TripleTriad
                 ttMan.ttUi.TurnOnCardSelectionScreenUiElements();
                 CancelLastSelection();
             }
+            else if (additionalArgs == 2)
+            {
+                InitializeDbForCardSelection();
+                StartCoroutine(ttMan.ttDb.UpdateMyHandTripleTriadCardsWithRandomSelection());
+                //ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
+               
+                
+            }
         }
         
         public override void Execute()

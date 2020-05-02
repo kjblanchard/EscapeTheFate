@@ -18,10 +18,10 @@ MonoBehaviour:
   cardName: Barret
   playerImage: {fileID: 21300000, guid: 02363dfb083c0c24f9ad0da660f31815, type: 3}
   enemyImage: {fileID: 21300000, guid: f35441f91d261a840a0b1700641d433f, type: 3}
-  amountOwned: 3
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0
-  cardSlot: 0
+  cardSlot: 10
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 0a000000020000000700000009000000

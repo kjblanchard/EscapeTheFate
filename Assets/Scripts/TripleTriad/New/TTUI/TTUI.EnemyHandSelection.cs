@@ -86,15 +86,27 @@ namespace ETF.TripleTriad
 
         private IEnumerator PlayEnemyHandCardFlipAnimations()
         {
-            var _cachedWaitForSeconds = new WaitForSeconds(0.2f);
-            for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
+            
+            if (ttdb.RetrieveIsHandOpen())
             {
-                ttdb.fullEnemyTripleTriadCards[i].PlayFlipCardAnimation();
-                yield return _cachedWaitForSeconds;
+                
+                for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
+                {
+                    var cachedWaitForSeconds = new WaitForSeconds(0.2f);
+                    ttdb.fullEnemyTripleTriadCards[i].PlayFlipCardAnimation();
+                    yield return cachedWaitForSeconds;
+                }
+
+
+                yield return new WaitForSeconds(1f);
+                //isLoading = false;
+            }
+            else
+            {
+                
+                yield return new WaitForSeconds(0.5f);
             }
 
-            yield return new WaitForSeconds(1f);
-            //isLoading = false;
             ttMan.SendStateChange(ttMan.turnSelectionState);
         }
 

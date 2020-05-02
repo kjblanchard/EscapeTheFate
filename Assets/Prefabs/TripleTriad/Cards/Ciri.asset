@@ -18,10 +18,10 @@ MonoBehaviour:
   cardName: Ciri
   playerImage: {fileID: 21300000, guid: 21c50e63a700f884b8f783eba653ffc8, type: 3}
   enemyImage: {fileID: 21300000, guid: a6d92c3a675238942b30e42ad5371327, type: 3}
-  amountOwned: 3
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0
-  cardSlot: 0
+  cardSlot: 10
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 0100000009000000060000000a000000

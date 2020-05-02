@@ -86,7 +86,15 @@ namespace ETF.TripleTriad
 			_ttMan.ttUi.isLoading = true;
 			_ttMan.ttUi.showingRulesAnimator.SetTrigger("closing");
 			yield return new WaitForSeconds(0.5f);
-			_ttMan.SendStateChange(_ttMan.cardSelectionState);
+			if (_ttMan.ttDb.RetrieveIsRandomPlayerCards())
+			{
+				_ttMan.SendStateChange(_ttMan.cardSelectionState,2);
+			}
+			else
+			{
+				_ttMan.SendStateChange(_ttMan.cardSelectionState);
+
+			}
 
 		}
 

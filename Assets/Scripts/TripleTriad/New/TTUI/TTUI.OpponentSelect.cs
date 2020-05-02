@@ -39,6 +39,8 @@ namespace ETF.TripleTriad
 		public void InitializeOpponentSelectionUi()
 		{
 			_opponentSelectionCanvas.enabled = true;
+			_tripleTriadBoardImage.color = Color.white;
+			
 		}
 		
 		public void TurnOnProperBoxImage()

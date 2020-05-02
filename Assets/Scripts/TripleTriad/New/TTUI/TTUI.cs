@@ -17,7 +17,9 @@ namespace ETF.TripleTriad
         // private static readonly int kMoveToBase = Animator.StringToHash("moveToBase");
         [SerializeField] private Canvas fingerCanvas;
 
+        [SerializeField] private Image _tripleTriadBoardImage;
 
+        
         public void InitializeAndCacheAllUiElementsForGameStart(bool isGameEnded = false)
         {
             //print("donethis");
@@ -35,6 +37,7 @@ namespace ETF.TripleTriad
             for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length ; i++)
             {
                 ttdb.fullEnemyTripleTriadCards[i].cardCanvas.enabled = true;
+                ttdb.fullEnemyTripleTriadCards[i].SetToEmptyCardBack();
             }
             var boardCards = ttdb.RetrieveAllCardsOnBoard();
             for (int i = 0; i < boardCards.Length ; i++)

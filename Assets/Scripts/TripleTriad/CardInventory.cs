@@ -66,35 +66,39 @@ public class CardInventory : MonoBehaviour
         //create lists of cards by type
         for (int i = 0; i < masterCardList.Length; i++)
         {
+            ttCardListOfCommonCards.Add(masterCardList[i]);
             if (masterCardList[i].cardsRarity != Card.cardRarity.Common || masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-            ttCardListOfCommonCards.Add(masterCardList[i]);
+
         }
         
         for (int i = 0; i < masterCardList.Length; i++)
         {
+            ttCardListOfUncommonCards.Add(masterCardList[i]);
             if (masterCardList[i].cardsRarity != Card.cardRarity.Uncommon ||
                 masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-            ttCardListOfUncommonCards.Add(masterCardList[i]);
+
         }
         
         for (int i = 0; i < masterCardList.Length; i++)
         {
+            ttCardListOfRareCards.Add(masterCardList[i]);
             if (masterCardList[i].cardsRarity != Card.cardRarity.Rare || masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-            ttCardListOfRareCards.Add(masterCardList[i]);
+
         }
 
         for (int i = 0; i < masterCardList.Length; i++)
         {
+            ttCardListOfEliteCards.Add(masterCardList[i]);
             if (masterCardList[i].cardsRarity != Card.cardRarity.Elite || masterCardList[i].amountOwned <= 0) continue;
             _ttBattleCardList.Add(masterCardList[i]);
             _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-            ttCardListOfEliteCards.Add(masterCardList[i]);
+
         }
     }
 
@@ -158,6 +162,11 @@ public class CardInventory : MonoBehaviour
     public List<int> RetrieveBattleQuantityList()
     {
         return _temporaryCardQuantityList;
+    }
+
+    public int RetrieveTotalNumberOfBattleCards()
+    {
+        return _ttBattleCardList.Count;
     }
 
 }

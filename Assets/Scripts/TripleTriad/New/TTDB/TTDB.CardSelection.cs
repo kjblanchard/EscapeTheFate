@@ -17,6 +17,7 @@ namespace ETF.TripleTriad
 
         [SerializeField] private TripleTriadCardInHand[] _myFullHandTripleTriadCards;
        private List<TripleTriadCardInHand> _myCurrentHandTripleTriadCards = new List<TripleTriadCardInHand>();
+       private List<int> _randomCardIntList = new List<int>();
 
         public int RetrieveCardSelectionFingerLocationOnCurrentPage()
         {
@@ -38,6 +39,7 @@ namespace ETF.TripleTriad
             _fingerLocationOnCurrentPage = 0;
             _currentPageNumber = 0;
             _currentSpotInCardInventory = 0;
+            _randomCardIntList.Clear();
         }
 
         public void UpdateCardSelectionFingerPositionForScrollingInDb(
@@ -108,6 +110,48 @@ namespace ETF.TripleTriad
             {
                 _myCurrentHandTripleTriadCards.Add(_myFullHandTripleTriadCards[i]);
             }
+            
+        }
+        public IEnumerator UpdateMyHandTripleTriadCardsWithRandomSelection()
+        {
+            
+            while (_randomCardIntList.Count < 5)
+            {
+                var potentialChoice = Random.Range(0, currentBattleSelectableCards.Count);
+                if (currentBattleQuantityForCards[potentialChoice] > 0)
+                {
+                    _randomCardIntList.Add(potentialChoice);
+                    currentBattleQuantityForCards[potentialChoice]--;
+                }
+            }
+
+            for (int i = 0; i < _randomCardIntList.Count; i++)
+            {
+                currentBattleQuantityForCards[_randomCardIntList[i]]++;
+            }
+            
+
+            for (int i = 0; i < _randomCardIntList.Count; i++)
+            {
+                _myFullHandTripleTriadCards[i].whatCardIAm =
+                    currentBattleSelectableCards[_randomCardIntList[i]];
+                //_myFullHandTripleTriadCards[i].
+            }
+
+            for (int i = 0; i < _myFullHandTripleTriadCards.Length; i++)
+            {
+                _myCurrentHandTripleTriadCards.Add(_myFullHandTripleTriadCards[i]);
+            }
+            ttMan.ttUi.UpdateMyHandImagesRandom();
+
+            for (int i = 0; i < 5; i++)
+            {
+                ttMan.ttUi.PlayMyHandAnimation(i);
+                SoundManager.instance.PlaySFX(6);
+                yield return new WaitForSeconds(0.1f);
+
+            }
+            ttMan.SendStateChange(ttMan.enemyHandSelectionState);
             
         }
 

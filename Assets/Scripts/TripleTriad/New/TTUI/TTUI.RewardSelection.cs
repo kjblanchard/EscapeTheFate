@@ -76,6 +76,7 @@ namespace ETF.TripleTriad
 			for (int i = 0; i < ttdb.fullEnemyTripleTriadCards.Length; i++)
 			{
 				ttdb.fullEnemyTripleTriadCards[i].cardAnimator.SetTrigger("preRewardScreen");
+				ttdb.fullEnemyTripleTriadCards[i].FlipCard();
 			}
 		}
 		

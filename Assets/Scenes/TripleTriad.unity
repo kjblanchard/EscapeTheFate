@@ -12101,7 +12101,7 @@ MonoBehaviour:
   opponentDescription: Who tf made my shite animations
   npcName: Pikachu
   isEnemyHandOpen: 1
-  isRandomCardSelection: 0
+  isRandomCardSelection: 1
   isPlus: 0
   isSame: 0
   _typeOfWinReward: 0
@@ -20041,7 +20041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2823645, g: 0.1945087, b: 0.4433962, a: 1}
   m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
@@ -20844,3 +20844,4 @@ MonoBehaviour:
   ttdb: {fileID: 818606792456178717}
   ttMan: {fileID: 11}
   fingerCanvas: {fileID: 818606791487793578}
+  _tripleTriadBoardImage: {fileID: 818606792879078058}

@@ -231,6 +231,14 @@ namespace ETF.TripleTriad
             myHandCardImages[ttdb.currentHandSelectionsList.Count].sprite = ttdb
                 .currentBattleSelectableCards[ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory()].playerImage;
         }
+        public void UpdateMyHandImagesRandom()
+        {
+            var ttCards = ttdb.RetrieveAllPlayerHandCardsFull();
+            for (int i = 0; i < ttCards.Length; i++)
+            {
+                myHandCardImages[i].sprite = ttCards[i].whatCardIAm.playerImage;
+            }
+        }
 
         public void UpdateQuantityAfterSelecting()
         {
