@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Neo
   playerImage: {fileID: 21300000, guid: 1b67da7dca4ed1d46b3ccf56b8ed8227, type: 3}
   enemyImage: {fileID: 21300000, guid: 2cba84a02db180240950044fea1a2916, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

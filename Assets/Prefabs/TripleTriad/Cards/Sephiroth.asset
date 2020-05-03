@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Sephiroth
   playerImage: {fileID: 21300000, guid: 6b809e0e571cff94dbf901f2a2d50524, type: 3}
   enemyImage: {fileID: 21300000, guid: f1a926a692b2f1043b641f7513f726b0, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

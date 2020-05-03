@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Squall
   playerImage: {fileID: 21300000, guid: 23fd83bd29f92ca4ca86de96cf3b6889, type: 3}
   enemyImage: {fileID: 21300000, guid: b2aedad22c43ab7478b8e7fdc813100b, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

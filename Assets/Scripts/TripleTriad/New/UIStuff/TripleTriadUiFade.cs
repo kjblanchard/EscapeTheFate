@@ -102,6 +102,25 @@ namespace ETF.TripleTriad
 			_ttMan.SendStateChange(_ttMan.showingRulesState);
 		}
 		
+		public void StartTitleScreenFadeOut()
+		{
+			animator.SetTrigger("titleScreenFadeOut");
+		}
+
+		public void SwitchToOpponentSelectionState()
+		{
+			_ttMan.SendStateChange(_ttMan.opponentSelectState);
+		}
+
+		public void TurnOffParticleSystem()
+		{
+			
+		}
+		public void TurnOnParticleSystem()
+		{
+			
+		}
+		
 
 		#endregion
 	}

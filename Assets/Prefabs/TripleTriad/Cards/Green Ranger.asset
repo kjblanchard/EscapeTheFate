@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Green Ranger
   playerImage: {fileID: 21300000, guid: b2ac04b33d44a514cacea4ad1125e338, type: 3}
   enemyImage: {fileID: 21300000, guid: 65199359facabec4fbdee56a78eeff33, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

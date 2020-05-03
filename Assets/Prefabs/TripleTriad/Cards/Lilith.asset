@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Lilith
   playerImage: {fileID: 21300000, guid: c7f42f4a53bf7334c90fad08c0b7782f, type: 3}
   enemyImage: {fileID: 21300000, guid: 2ef42eb256567a24db5c717973a3b18c, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

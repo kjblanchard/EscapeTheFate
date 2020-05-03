@@ -17,8 +17,9 @@ namespace ETF.TripleTriad
         // private static readonly int kMoveToBase = Animator.StringToHash("moveToBase");
         [SerializeField] private Canvas fingerCanvas;
 
-        [SerializeField] private Image _tripleTriadBoardImage;
+        [SerializeField] public Image _tripleTriadBoardImage;
 
+        
         
         public void InitializeAndCacheAllUiElementsForGameStart(bool isGameEnded = false)
         {
@@ -59,7 +60,11 @@ namespace ETF.TripleTriad
 
             for (int i = 0; i < _opponentBoxes.Length; i++)
             {
-                 _opponentBoxes[i].opponentAnimator.Rebind();
+                if (_opponentBoxes[i].canSelectOpponent)
+                {
+                    _opponentBoxes[i].opponentAnimator.Rebind();
+
+                }
             }
 
             showingRulesAnimator.Rebind();
@@ -117,6 +122,7 @@ namespace ETF.TripleTriad
             _cardRewardCanvas.enabled = false;
             _rewardConfirmCanvas.enabled = false;
             _cardWonCanvas.enabled = false;
+            _tripleTriadBoardImage.color = new Color(0.28f,0.19f,0.44f);
         }
         
         public void StartGameFadeIn()

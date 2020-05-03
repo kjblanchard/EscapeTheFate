@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Goku
   playerImage: {fileID: 21300000, guid: 27351bdcd49f1a441b446987fddc8ea5, type: 3}
   enemyImage: {fileID: 21300000, guid: ea04fd1ede080ed47886944c77ef35cb, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

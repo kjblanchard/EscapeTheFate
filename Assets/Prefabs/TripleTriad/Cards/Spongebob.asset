@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Spongebob
   playerImage: {fileID: 21300000, guid: f7e1f6a883b245740b7d4f53cb092485, type: 3}
   enemyImage: {fileID: 21300000, guid: 1c8106445a94541418aa12a8b4c8f5fe, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

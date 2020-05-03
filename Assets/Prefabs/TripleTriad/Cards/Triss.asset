@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Triss
   playerImage: {fileID: 21300000, guid: c0c56179e62b7ca4f942bdeca6d02801, type: 3}
   enemyImage: {fileID: 21300000, guid: 38ac342452d413f4cb21c07b689d5f46, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

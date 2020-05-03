@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Claude
   playerImage: {fileID: 21300000, guid: 9be923d6ac0125646814a11e9e977c52, type: 3}
   enemyImage: {fileID: 21300000, guid: d6b69575ae6972d438aaa2455c4cfd69, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

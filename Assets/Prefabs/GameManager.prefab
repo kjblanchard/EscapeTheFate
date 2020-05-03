@@ -439,7 +439,7 @@ MonoBehaviour:
   - {fileID: 7077112209787518082}
   directionalJoystick: {fileID: 7077112211101959761}
   frameRateOf60: 0
-  frameRateOf120: 1
+  frameRateOf120: 0
   shouldFade: 0
   totalPlayedTime: 0
 --- !u!1001 &6232102605406228048

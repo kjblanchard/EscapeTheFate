@@ -62,7 +62,16 @@ namespace ETF.TripleTriad
 
 		public void BringInCurrentSelectedEnemyInformationToDb()
 		{
-			 ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].opponentCardInfo.SendInfoToTtDb();
+			if (ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].canSelectOpponent)
+			{
+				ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].opponentCardInfo.SendInfoToTtDb();
+				SoundManager.instance.PlaySFX(19);
+
+			}
+			else
+			{
+				SoundManager.instance.PlaySFX(3);
+			}
 		}
 
 		public void SetCurrentOpponentYouArePlaying()

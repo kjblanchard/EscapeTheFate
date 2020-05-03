@@ -41,7 +41,10 @@ namespace ETF.TripleTriad
 			{
 				if (Input.anyKey)
 				{
-					_ttMan.SendStateChange(_ttMan.opponentSelectState);
+					_ttui.isLoading = true;
+					SoundManager.instance.PlaySFX(20);
+					_ttui.TitleScreenFadeOut();
+					//_ttMan.SendStateChange(_ttMan.opponentSelectState);
 				}
 			}
 		}

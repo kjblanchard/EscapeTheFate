@@ -11,7 +11,7 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
-		public Image squareBoxImage;
+		public Transform cursorTransform;
 		//public Image opponentImage;
 		public Animator opponentAnimator = null;
 		public bool canSelectOpponent;

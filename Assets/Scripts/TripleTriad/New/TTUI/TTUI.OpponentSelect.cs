@@ -15,6 +15,7 @@ namespace ETF.TripleTriad
 		[SerializeField] private Canvas _opponentSelectionCanvas;
 
 		public OpponentBox[] _opponentBoxes;
+		public Image _opponentSelectCursorImage;
 		
 		// [SerializeField] private Image[] _opponentBoxImages;
 		// [SerializeField] private Animator[] _opponentAnimators;
@@ -39,25 +40,34 @@ namespace ETF.TripleTriad
 		public void InitializeOpponentSelectionUi()
 		{
 			_opponentSelectionCanvas.enabled = true;
-			_tripleTriadBoardImage.color = Color.white;
+			//_tripleTriadBoardImage.color = Color.white;
 			
 		}
 		
-		public void TurnOnProperBoxImage()
-		{//probably make this do the right ones not all of them in the future
-			for (int i = 0; i < _opponentBoxes.Length; i++)
+		public void KeepCursorOnProperSelectionOpponentSelect()
+		{
+			//finger is turned on and off when in update method by the isloading bool
+			if (isLoading == false)
 			{
-				_opponentBoxes[i].squareBoxImage.enabled = false;
+				if (!_opponentSelectCursorImage.gameObject.activeInHierarchy)
+				{
+					_opponentSelectCursorImage.gameObject.SetActive(true);
+				}
+
+				_opponentSelectCursorImage.transform.position = _opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()]
+					.cursorTransform.transform.position;
 			}
-
-			_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].squareBoxImage.enabled = true;
-
+			else
+			{
+				fingerPrefab.gameObject.SetActive(false);
+			}
 		}
 
 		public void TurnOnProperAnimatorOpponentSelection()
 		{
 			for (int i = 0; i < _opponentBoxes.Length; i++)
 			{
+				
 				if (_opponentBoxes[i].canSelectOpponent)
 				{
 					_opponentBoxes[i].opponentAnimator.SetBool(kIdle,false);
@@ -71,9 +81,15 @@ namespace ETF.TripleTriad
 
 		}
 
+		public void CheatCodeEntered()
+		{
+			_opponentBoxes[6].opponentAnimator.SetTrigger("cheatEntered");
+		}
+
 		public void SelectedAnimatorOpponentSelection()
 		{
-		_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].opponentAnimator.SetTrigger(kSelected);
+			if (_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].canSelectOpponent)
+				_opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()].opponentAnimator.SetTrigger(kSelected);
 		}
 
 		public void StartShowingRulesFadeOut()
@@ -93,6 +109,16 @@ namespace ETF.TripleTriad
 				_aiDifficultyText.text = enemyInfo.RetrieveDifficulty();
 				_rareCardText.text = enemyInfo.RetrieveRares();
 				_isRandomText.text = enemyInfo.RetrieveRandom();
+			}
+			else
+			{
+				var blank = "";
+				_opponentNameText.text = blank;
+				_opponentDescriptionText.text = blank;
+				_isOpenText.text = blank;
+				_aiDifficultyText.text = blank;
+				_rareCardText.text = blank;
+				_isRandomText.text = blank;
 			}
 
 

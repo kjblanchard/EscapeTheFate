@@ -12,20 +12,32 @@ namespace ETF.TripleTriad
 
 		[SerializeField] private TripleTriadManager _ttMan;
 		private TTDB.MovementDirections whichWayToMove;
-		
+		private string[] _cheatCode;
+		private int _index;
 
 		#endregion
 
 		public override void Startup(int additionalArgs = 0)
 		{
+			_ttui._tripleTriadBoardImage.enabled = false;
 			Initialize();
+			_cheatCode = new[] { "k", "b", "c", "a", "r", "d", "s" };
+			_index = 0; 
 		}
+		
+
+		
+ 
+		void Update() {
+
+			}
 
 
 
 		public override void Execute()
 		{
 			ListenForUserInput();
+			_ttMan.ttUi.KeepCursorOnProperSelectionOpponentSelect();
 		}
 
 		public override void End()
@@ -81,10 +93,33 @@ namespace ETF.TripleTriad
 				_ttMan.ttDb.SetCurrentOpponentYouArePlaying();
 				TurnOnSelectedAnimator();
 				_ttMan.ttDb.BringInCurrentSelectedEnemyInformationToDb();
-				SoundManager.instance.PlaySFX(19);
 			}
 			else if (Input.GetKeyDown(KeyCode.C) || (Input.GetButtonDown("Fire2")))
 			{
+			}
+			// Check if any key is pressed
+			if (Input.anyKeyDown)
+			{
+				// Check if the next key in the code is pressed
+				if (Input.GetKeyDown(_cheatCode[_index]))
+				{
+					// Add 1 to index to check the next key in the code
+					_index++;
+				}
+				// Wrong key entered, we reset code typing
+				else
+				{
+					_index = 0;
+				}
+			}
+
+			// If index reaches the length of the cheatCode string, 
+			// the entire code was correctly entered
+			if (_index == _cheatCode.Length)
+			{
+				SoundManager.instance.PlaySFX(20);
+				_index = 0;
+				_ttMan.ttUi.CheatCodeEntered();
 			}
 		}
 		
@@ -100,17 +135,14 @@ namespace ETF.TripleTriad
 				SoundManager.instance.CacheNextMusic(1);
 			}
 
-			_ttMan.ttUi.isLoading = false;
+			//_ttMan.ttUi.isLoading = false;
 			_ttMan.ttDb.InitializeOpponentSelectionDb();
-			TurnOnProperBoxImage();
+			//TurnOnProperBoxImage();
 			_ttMan.ttUi.InitializeOpponentSelectionUi();
 		}
 
 		
-		private void TurnOnProperBoxImage()
-		{
-			_ttMan.ttUi.TurnOnProperBoxImage();
-		}
+
 
 		private void TurnOnProperAnimator()
 		{
@@ -120,14 +152,16 @@ namespace ETF.TripleTriad
 		private void UpdateOpponent()
 		{
 			_ttMan.ttUi.UpdateOpponentInfoOpponentSelection();
+			SoundManager.instance.PlaySFX(18);
+
 		}
 
 		private void TurnOnBoxImageAndAnimator()
 		{
-			TurnOnProperBoxImage();
+			//TurnOnProperBoxImage();
 			TurnOnProperAnimator();
 			UpdateOpponent();
-			SoundManager.instance.PlaySFX(18);
+			
 		}
 
 		private void TurnOnSelectedAnimator()

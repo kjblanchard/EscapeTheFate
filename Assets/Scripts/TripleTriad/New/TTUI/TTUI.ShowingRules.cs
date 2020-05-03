@@ -37,12 +37,13 @@ namespace ETF.TripleTriad
 		
 		public void InitializeShowingRulesUi()
 		{
-
+			_tripleTriadBoardImage.enabled = true;
 			_showingRulesCanvas.enabled = true;
 			showingRulesAnimator.SetTrigger("opening");
 			
 			
 			//_showingRulesCanvas.gameObject.SetActive(true);
+			_tripleTriadBoardImage.color = Color.white;
 			locationSelectionFinger.SetActive(false);
 			playerSelectionFinger.SetActive(false);
 			turnIndicatorFingerAnimator.gameObject.SetActive(false);

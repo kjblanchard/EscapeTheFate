@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Edelgard
   playerImage: {fileID: 21300000, guid: b121d4b79a1f7f34c9420631524d57ac, type: 3}
   enemyImage: {fileID: 21300000, guid: 0914e8a1c1e7f584e9242e368c83e606, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

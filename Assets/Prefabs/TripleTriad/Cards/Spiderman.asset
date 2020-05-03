@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Spiderman
   playerImage: {fileID: 21300000, guid: a177f8a241065464c9da49315b34ff5b, type: 3}
   enemyImage: {fileID: 21300000, guid: a1271a6a970688c48ae625f037f431e4, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0

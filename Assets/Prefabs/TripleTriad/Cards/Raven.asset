@@ -18,7 +18,7 @@ MonoBehaviour:
   cardName: Raven
   playerImage: {fileID: 21300000, guid: 65e2f1696abce3243a2d2cc93feeabbd, type: 3}
   enemyImage: {fileID: 21300000, guid: f60aa95e239be48408b7eff3b0d3b62d, type: 3}
-  amountOwned: 0
+  amountOwned: 2
   hasOwnedBefore: 1
   myCard: 0
   enemyCard: 0
