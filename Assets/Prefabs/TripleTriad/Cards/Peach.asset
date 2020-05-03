@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Peach
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 45
   description: Booty Bump
   cardsRarity: 1
   cardName: Peach
   playerImage: {fileID: 21300000, guid: dc9048f1d1b3a9647b815433654422cb, type: 3}
   enemyImage: {fileID: 21300000, guid: 15c75a5f2fa24504ebdc3fd98ba74143, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 08000000030000000500000008000000

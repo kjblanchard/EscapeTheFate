@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms;
 
 namespace ETF.TripleTriad
 {
@@ -40,6 +41,8 @@ namespace ETF.TripleTriad
         [SerializeField] private bool isPlus;
         [SerializeField] private bool isSame;
         [SerializeField] private WhatTypeOfWinReward _typeOfWinReward;
+        [SerializeField] private int minimumCardIdToUse;
+        [SerializeField] private int maximumCardIdToUse = 1;
 
 
 
@@ -56,7 +59,7 @@ namespace ETF.TripleTriad
             TripleTriadManager.instance.ttDb.BringInEnemyCardInformation(_whatTypeOfPlayerAmI, _listOfRareCardsOwned,
                 whatToSayWhenTurnIsBeingSelected, /*whatToSayWhenPlayerWins, whatToSayWhenPlayerLoses,whatToSayWhenPlayerTies,*/
                 whatToSayWhenChoosingCards, npcName, isEnemyHandOpen, isRandomCardSelection, isPlus, isSame,
-                _typeOfWinReward, opponentDescription);
+                _typeOfWinReward, opponentDescription, minimumCardIdToUse,maximumCardIdToUse);
         }
 
         public string RetrieveName()

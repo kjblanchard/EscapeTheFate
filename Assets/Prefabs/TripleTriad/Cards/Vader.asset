@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Vader
   m_EditorClassIdentifier: 
-  cardID: 47
+  cardID: 108
   description: Luke.. I am your.....????
   cardsRarity: 3
   cardName: Vader
   playerImage: {fileID: 21300000, guid: 396b9dcdf95bcea418afb8ea08dbf006, type: 3}
   enemyImage: {fileID: 21300000, guid: 327da813f5f84894398bb8f25d543fd1, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 100
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 07000000070000000700000007000000

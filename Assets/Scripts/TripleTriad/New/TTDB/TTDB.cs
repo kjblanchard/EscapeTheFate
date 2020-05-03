@@ -58,6 +58,8 @@ namespace ETF.TripleTriad
 
         public void BringInUsableBattleCards()
         {
+            // currentBattleSelectableCards.Clear();
+            // currentBattleQuantityForCards.Clear();
             //this will copy the current list of battle cards to our list of cards that can be used
             currentBattleSelectableCards = CardInventory.instance.RetrieveBattleCardList();
             currentBattleQuantityForCards = CardInventory.instance.RetrieveBattleQuantityList();

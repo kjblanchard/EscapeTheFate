@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Bubbles
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 18
   description: I'm Sensitive...
   cardsRarity: 0
   cardName: Bubbles
   playerImage: {fileID: 21300000, guid: 69f6c8ae7f99410498675ca979537e67, type: 3}
   enemyImage: {fileID: 21300000, guid: de4d385e3a32c764d9e61b2e3164e170, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 06000000020000000700000003000000

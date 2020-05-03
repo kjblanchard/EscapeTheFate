@@ -24,6 +24,8 @@ namespace ETF.TripleTriad
 
 		public void InitializeShowingRulesDbValues()
 		{
+			CardInventory.instance
+				.CreateUsableBattleCardLists();
 			_currentFingerPositionInShowingRules = 0;
 		}
 

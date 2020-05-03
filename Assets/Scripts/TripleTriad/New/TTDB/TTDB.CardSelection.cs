@@ -114,10 +114,12 @@ namespace ETF.TripleTriad
         }
         public IEnumerator UpdateMyHandTripleTriadCardsWithRandomSelection()
         {
-            
+            _randomCardIntList.Clear();
+            _myCurrentHandTripleTriadCards.Clear();
+            var random = new System.Random();
             while (_randomCardIntList.Count < 5)
             {
-                var potentialChoice = Random.Range(0, currentBattleSelectableCards.Count);
+                var potentialChoice = random.Next(0, currentBattleSelectableCards.Count);
                 if (currentBattleQuantityForCards[potentialChoice] > 0)
                 {
                     _randomCardIntList.Add(potentialChoice);

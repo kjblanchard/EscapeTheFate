@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Zack
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 54
   description: First Class
   cardsRarity: 1
   cardName: Zack
   playerImage: {fileID: 21300000, guid: b0edd48cb543e3e4497bcf639e0d343a, type: 3}
-  enemyImage: {fileID: 21300000, guid: b0edd48cb543e3e4497bcf639e0d343a, type: 3}
-  amountOwned: 2
+  enemyImage: {fileID: 21300000, guid: 76377aada445fdd47993421d63356bbe, type: 3}
+  amountOwned: 0
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 0
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 07000000070000000200000008000000

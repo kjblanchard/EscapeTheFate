@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Zidane
   m_EditorClassIdentifier: 
-  cardID: 50
+  cardID: 111
   description: Thief? Player? ???
   cardsRarity: 3
   cardName: Zidane
   playerImage: {fileID: 21300000, guid: 29b10c5945c766741b85316e142c34cd, type: 3}
   enemyImage: {fileID: 21300000, guid: 95f10c8722621a54b870314005f34784, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 100
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 07000000090000000700000009000000

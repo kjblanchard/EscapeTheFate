@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Sephiroth
   m_EditorClassIdentifier: 
-  cardID: 39
+  cardID: 203
   description: The Villian
   cardsRarity: 3
   cardName: Sephiroth
   playerImage: {fileID: 21300000, guid: 6b809e0e571cff94dbf901f2a2d50524, type: 3}
   enemyImage: {fileID: 21300000, guid: f1a926a692b2f1043b641f7513f726b0, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 50
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 0a0000000a0000000a0000000a000000

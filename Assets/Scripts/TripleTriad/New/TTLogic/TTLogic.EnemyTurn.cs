@@ -219,7 +219,7 @@ namespace ETF.TripleTriad
 				CreateModerateRandomCardList();
 				_moveToPlay = ModerateChooseBestCard(whichCardList);
 			}
-			print($"my moves defense is {_moveToPlay.RetrieveDefense()}");
+			//print($"my moves defense is {_moveToPlay.RetrieveDefense()}");
 		}
 
 		private EnemyPotentialMove ModerateChooseBestCard(int whichCardList)

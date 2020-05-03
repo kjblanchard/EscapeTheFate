@@ -104,7 +104,7 @@ namespace ETF.TripleTriad
             else
             {
                 
-                yield return new WaitForSeconds(0.5f);
+                yield return new WaitForSeconds(0.25f);
             }
 
             ttMan.SendStateChange(ttMan.turnSelectionState);

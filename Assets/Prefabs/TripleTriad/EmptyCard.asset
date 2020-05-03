@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: EmptyCard
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 999
   description: 
   cardsRarity: 0
   cardName: Empty
@@ -20,8 +20,5 @@ MonoBehaviour:
   enemyImage: {fileID: 21300000, guid: 6732aa9ba5ead7b4eaab10b3cef8898b, type: 3}
   amountOwned: 0
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 00000000000000000000000000000000

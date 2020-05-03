@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Yamcha
   m_EditorClassIdentifier: 
-  cardID: 2
+  cardID: 9
   description: rip
   cardsRarity: 0
   cardName: Yamcha
   playerImage: {fileID: 21300000, guid: bc559db5efe49ef44a24abb55377d926, type: 3}
   enemyImage: {fileID: 21300000, guid: ed01b69add65617458713c91fe3c95f6, type: 3}
-  amountOwned: 2
+  amountOwned: 5
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 100
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 03000000030000000300000003000000

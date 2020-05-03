@@ -18,10 +18,7 @@ MonoBehaviour:
   cardName: Bat
   playerImage: {fileID: 21300000, guid: 0c8a1086e537c3a48a2d7974ac005259, type: 3}
   enemyImage: {fileID: 21300000, guid: 80a4684c765115543a8118bdbc122acd, type: 3}
-  amountOwned: 2
+  amountOwned: 5
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 02000000010000000600000001000000

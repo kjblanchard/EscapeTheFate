@@ -31,12 +31,14 @@ namespace ETF.TripleTriad
         private bool _isPlus;
         private bool _isSame;
         private string _opponentDescription;
+        private int _minCardId;
+        private int _maxCardId;
 
         #endregion
         
         public void BringInEnemyCardInformation(EnemyCardHand.WhatTypeOfCardPlayerAmI typeOfEnemyPlayer,
             List<Card> currentEnemyRareCards, string turnSelectionText, /*string playerWinText, string playerLoseText, string playerTieText,*/
-            string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward,string opponentDescription)
+            string choosingCardText, string npcName,bool isEnemyHandOpen,bool isRandomCardSelection,bool isPlus,bool isSame,EnemyCardHand.WhatTypeOfWinReward typeOfWinReward,string opponentDescription, int minCardId, int maxCardId)
         {
             //this is used to get information from the npc, it is called by enemy hand script, which will be on every npc..  Gets his rare cards, type of difficulty, and Information
             _typeOfEnemyPlayer = typeOfEnemyPlayer;
@@ -53,8 +55,20 @@ namespace ETF.TripleTriad
             _isSame = isSame;
             _typeOfWinReward = typeOfWinReward;
             _opponentDescription = opponentDescription;
+            _minCardId = minCardId;
+            _maxCardId = maxCardId;
         }
 
+        public int RetrieveMinCardLevel()
+        {
+            return _minCardId;
+        }
+
+        public int RetrieveMaxCardLevel()
+        {
+            return _maxCardId;
+        }
+        
         public bool RetrieveIsHandOpen()
         {
             return _isEnemyHandOpen;
@@ -92,56 +106,72 @@ namespace ETF.TripleTriad
         public void GenerateEnemyCardHand()
         {
             currentEnemyCardSelectionList.Clear();
-            //this is the switch for each type of enemy, currently only have beginner choices
-            switch (_typeOfEnemyPlayer)
-            {
-                case EnemyCardHand.WhatTypeOfCardPlayerAmI.Beginner:
-                    BeginnerChooseCards();
-                    break;
-                case EnemyCardHand.WhatTypeOfCardPlayerAmI.Moderate:
-                    ModerateChooseCards();
-                    break;
-                case EnemyCardHand.WhatTypeOfCardPlayerAmI.Hard:
-                    HardChooseCards();
-                    break;
-            }
+            ChooseCards();
+            // //this is the switch for each type of enemy, currently only have beginner choices
+            // switch (_typeOfEnemyPlayer)
+            // {
+            //     case EnemyCardHand.WhatTypeOfCardPlayerAmI.Beginner:
+            //         BeginnerChooseCards();
+            //         break;
+            //     case EnemyCardHand.WhatTypeOfCardPlayerAmI.Moderate:
+            //         ModerateChooseCards();
+            //         break;
+            //     case EnemyCardHand.WhatTypeOfCardPlayerAmI.Hard:
+            //         HardChooseCards();
+            //         break;
+            // }
         }
 
-        private void BeginnerChooseCards()
+        private void ChooseCards()
         {
-            //chooses cards for the beginner ruleset
-            if (_currentEnemyRareCards.Count > 0)
             {
-                DetermineIfRareCardsShouldBeAddedToHand();
-            }
-
-            BeginnerAddCardsToHandSelectionsUntilFull();
-            AddEnemySelectedHandToTheEnemyCardHandGameObjects();
-            AddEnemySelectedCardsToHandList();
-        }
-        private void ModerateChooseCards()
-        {
-            //chooses cards for the beginner ruleset
-            if (_currentEnemyRareCards.Count > 0)
-            {
-                DetermineIfRareCardsShouldBeAddedToHand();
-            }
-            ModerateAddCardsToHandSelectionsUntilFull();
-            AddEnemySelectedHandToTheEnemyCardHandGameObjects();
-            AddEnemySelectedCardsToHandList();
-        }
+                //chooses cards for the beginner ruleset
+                if (_currentEnemyRareCards.Count > 0)
+                {
+                    DetermineIfRareCardsShouldBeAddedToHand();
+                }
         
-        private void HardChooseCards()
-        {
-            //chooses cards for the beginner ruleset
-            if (_currentEnemyRareCards.Count > 0)
-            {
-                DetermineIfRareCardsShouldBeAddedToHand();
+                AddCardsToHandSelectionsUntilFull();
+                AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+                AddEnemySelectedCardsToHandList();
             }
-            RandomAddCardsToHandSelectionsUntilFull();
-            AddEnemySelectedHandToTheEnemyCardHandGameObjects();
-            AddEnemySelectedCardsToHandList();
         }
+
+        // private void BeginnerChooseCards()
+        // {
+        // //chooses cards for the beginner ruleset
+        // if (_currentEnemyRareCards.Count > 0)
+        // {
+        //     DetermineIfRareCardsShouldBeAddedToHand();
+        // }
+        //
+        // BeginnerAddCardsToHandSelectionsUntilFull();
+        // AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+        // AddEnemySelectedCardsToHandList();
+        // }
+        // private void ModerateChooseCards()
+        // {
+        //     //chooses cards for the beginner ruleset
+        //     if (_currentEnemyRareCards.Count > 0)
+        //     {
+        //         DetermineIfRareCardsShouldBeAddedToHand();
+        //     }
+        //     ModerateAddCardsToHandSelectionsUntilFull();
+        //     AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+        //     AddEnemySelectedCardsToHandList();
+        // }
+        //
+        // private void HardChooseCards()
+        // {
+        //     //chooses cards for the beginner ruleset
+        //     if (_currentEnemyRareCards.Count > 0)
+        //     {
+        //         DetermineIfRareCardsShouldBeAddedToHand();
+        //     }
+        //     RandomAddCardsToHandSelectionsUntilFull();
+        //     AddEnemySelectedHandToTheEnemyCardHandGameObjects();
+        //     AddEnemySelectedCardsToHandList();
+        // }
 
 
         private void DetermineIfRareCardsShouldBeAddedToHand()
@@ -149,44 +179,62 @@ namespace ETF.TripleTriad
             //this determines if the enemy will use his rare card in his hand or not.
             for (var i = 0; i < _currentEnemyRareCards.Count; i++)
             {
+                if (_currentEnemyRareCards[i].cardID == 999)
+                {
+                    return;
+                    
+                }
                 _randomNumber = Random.Range(0, 100);
                 _chanceToUse = _currentEnemyRareCards[i].percentChanceForEnemyToUseInBattle;
                 if (_randomNumber <= _chanceToUse)
                 {
                     currentEnemyCardSelectionList.Add(_currentEnemyRareCards[i]);
+                    return;
                 }
                 
             }
         }
 
-        private void BeginnerAddCardsToHandSelectionsUntilFull()
+        private void AddCardsToHandSelectionsUntilFull()
         {
-            //this will choose a random card from the list of common cards until the enemy's hand is full
+            var random = new System.Random();
             while (currentEnemyCardSelectionList.Count < 5)
             {
-                var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfCommonCards.Count);
-                currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
+                  
+                var randomNumber = random.Next(RetrieveMinCardLevel(), RetrieveMaxCardLevel() +1);  
+            
+                currentEnemyCardSelectionList.Add(CardInventory.instance.CardLookupById(randomNumber));
             }
         }
-        private void ModerateAddCardsToHandSelectionsUntilFull()
-        {
-            //this will choose a random card from the list of common cards until the enemy's hand is full
-            while (currentEnemyCardSelectionList.Count < 5)
-            {
-                var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfUncommonCards.Count);
-                currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
-            }
-        }
-        
-        private void RandomAddCardsToHandSelectionsUntilFull()
-        {
-            //this will choose a random card from the list of common cards until the enemy's hand is full
-            while (currentEnemyCardSelectionList.Count < 5)
-            {
-                var randomNumber = Random.Range(20, CardInventory.instance.masterCardList.Length);
-                currentEnemyCardSelectionList.Add(CardInventory.instance.masterCardList[randomNumber]);
-            }
-        }
+
+        // private void BeginnerAddCardsToHandSelectionsUntilFull()
+        // {
+        //     //this will choose a random card from the list of common cards until the enemy's hand is full
+        //     while (currentEnemyCardSelectionList.Count < 5)
+        //     {
+        //         var randomNumber = Random.Range(RetrieveMinCardLevel(), RetrieveMaxCardLevel() +1);
+        //         currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfCommonCards[randomNumber]);
+        //     }
+        // }
+        // private void ModerateAddCardsToHandSelectionsUntilFull()
+        // {
+        //     //this will choose a random card from the list of common cards until the enemy's hand is full
+        //     while (currentEnemyCardSelectionList.Count < 5)
+        //     {
+        //         var randomNumber = Random.Range(0, CardInventory.instance.ttCardListOfUncommonCards.Count);
+        //         currentEnemyCardSelectionList.Add(CardInventory.instance.ttCardListOfUncommonCards[randomNumber]);
+        //     }
+        // }
+        //
+        // private void RandomAddCardsToHandSelectionsUntilFull()
+        // {
+        //     //this will choose a random card from the list of common cards until the enemy's hand is full
+        //     while (currentEnemyCardSelectionList.Count < 5)
+        //     {
+        //         var randomNumber = Random.Range(20, CardInventory.instance.masterCardList.Length);
+        //         currentEnemyCardSelectionList.Add(CardInventory.instance.masterCardList[randomNumber]);
+        //     }
+        // }
 
         private void AddEnemySelectedHandToTheEnemyCardHandGameObjects()
         {
@@ -225,6 +273,19 @@ namespace ETF.TripleTriad
         {
             //returns data to the ui
             return _npcName;
+        }
+
+        public bool CheckToSeeIfCardIsInRareList(int cardId)
+        {
+            for (int i = 0; i < _currentEnemyRareCards.Count; i++)
+            {
+                if (_currentEnemyRareCards[i].cardID == cardId)
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
         
         // public string WhatWillTheEnemySayWhenPlayerWins()

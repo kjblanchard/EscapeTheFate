@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Zelda
   m_EditorClassIdentifier: 
-  cardID: 49
+  cardID: 110
   description: Hyrules Finest
   cardsRarity: 3
   cardName: Zelda
   playerImage: {fileID: 21300000, guid: a07751673c9cada48a859d101ec99542, type: 3}
   enemyImage: {fileID: 21300000, guid: f06823f00b913df4885e9b764c1af5a1, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 100
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 01000000060000000900000007000000

@@ -93,6 +93,10 @@ namespace ETF.TripleTriad
 				_ttMan.ttDb.SetCurrentOpponentYouArePlaying();
 				TurnOnSelectedAnimator();
 				_ttMan.ttDb.BringInCurrentSelectedEnemyInformationToDb();
+				if (_ttdb.RetrieveOpponentSelectionCurrentValue() == 7)
+				{
+					Application.Quit();
+				}
 			}
 			else if (Input.GetKeyDown(KeyCode.C) || (Input.GetButtonDown("Fire2")))
 			{
@@ -117,9 +121,10 @@ namespace ETF.TripleTriad
 			// the entire code was correctly entered
 			if (_index == _cheatCode.Length)
 			{
-				SoundManager.instance.PlaySFX(20);
+				SoundManager.instance.PlaySFX(21);
 				_index = 0;
 				_ttMan.ttUi.CheatCodeEntered();
+				CardInventory.instance.CheatCodeEntered();
 			}
 		}
 		

@@ -18,8 +18,8 @@ namespace ETF.TripleTriad
 		{
 			_ttMan.ttUi.InitializeAndCacheAllUiElementsForGameStart();
             
-			CardInventory.instance
-				.CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
+			// CardInventory.instance
+			// 	.CreateUsableBattleCardLists(); //this only needs to be ran once, it generates all of the lists for card usage
 			GameManager.instance.TurnOnDirectionalJoystick();
 			_ttMan.ttDb.InitializeDbValuesForStartingTripleTriad();
 			//SoundManager.instance.PlayIntroLoop(1);

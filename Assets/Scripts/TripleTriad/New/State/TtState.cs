@@ -7,11 +7,21 @@ namespace ETF.TripleTriad
 {
     public abstract class TtState : MonoBehaviour
     {
-        public static TTUI _ttui;
+        protected static TTUI _ttui;
+        protected static TripleTriadManager _ttMan;
+        protected static TTDB _ttdb;
+        protected static bool hasInitiated;
 
         private void Awake()
         {
-            _ttui = FindObjectOfType<TTUI>();
+            if (!hasInitiated)
+            {
+                hasInitiated = true;
+                _ttui = FindObjectOfType<TTUI>();
+                _ttMan = FindObjectOfType<TripleTriadManager>();
+                _ttdb = FindObjectOfType<TTDB>();
+            }
+            
         }
 
         public virtual void Startup(int additionalArgs = 0)

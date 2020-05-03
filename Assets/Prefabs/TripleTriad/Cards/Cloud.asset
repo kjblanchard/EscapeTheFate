@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Cloud
   m_EditorClassIdentifier: 
-  cardID: 25
+  cardID: 83
   description: Spiky Boi
   cardsRarity: 3
   cardName: Cloud
   playerImage: {fileID: 21300000, guid: 4b57a18e5a891a9488c4e78695841738, type: 3}
   enemyImage: {fileID: 21300000, guid: 2505c401c435f484dae2cb0e3b20634b, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 10
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 0a000000010000000400000001000000

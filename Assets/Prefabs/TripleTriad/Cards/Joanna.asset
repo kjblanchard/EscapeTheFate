@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Joanna
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 35
   description: MeatSims?
   cardsRarity: 1
   cardName: Joanna Dark
   playerImage: {fileID: 21300000, guid: e64c800fbb09fc1498d143da88b978af, type: 3}
   enemyImage: {fileID: 21300000, guid: 7e72218ccf271ad4eb627b8255abd1ba, type: 3}
-  amountOwned: 2
+  amountOwned: 1
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 08000000080000000500000004000000

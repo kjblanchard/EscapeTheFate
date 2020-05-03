@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Griffey
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 34
   description: '*Points bat to Outfield*'
   cardsRarity: 1
   cardName: Griffey Jr
   playerImage: {fileID: 21300000, guid: b8718075c294be446903e79a4255e717, type: 3}
   enemyImage: {fileID: 21300000, guid: 10f97c7d7a89b294c9933f62f03ae448, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 0
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 08000000040000000400000008000000

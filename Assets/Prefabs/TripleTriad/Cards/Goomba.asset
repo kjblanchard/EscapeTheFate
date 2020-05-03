@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Goomba
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 3
   description: Plz dnt jmp on me hed
   cardsRarity: 0
   cardName: Goomba
   playerImage: {fileID: 21300000, guid: 14f92470d9d7b2c46b7ec984fcb8db6f, type: 3}
   enemyImage: {fileID: 21300000, guid: 8804966f0f309bd47833983b26890e0b, type: 3}
-  amountOwned: 2
+  amountOwned: 5
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 01000000050000000400000001000000

@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: MrMage
   m_EditorClassIdentifier: 
-  cardID: 0
+  cardID: 22
   description: I haz spell
   cardsRarity: 0
   cardName: Mr Mage
   playerImage: {fileID: 21300000, guid: 9707dfd27a40a1f4b9a0f7438b8aaefe, type: 3}
   enemyImage: {fileID: 21300000, guid: e3447233a59d82a4d8c629ae9f6b3dbd, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 0
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 0
   cardValues: 02000000030000000600000007000000

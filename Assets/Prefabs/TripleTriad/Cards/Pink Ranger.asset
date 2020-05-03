@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Pink Ranger
   m_EditorClassIdentifier: 
-  cardID: 19
+  cardID: 72
   description: Better with age
   cardsRarity: 2
   cardName: Pink Ranger
   playerImage: {fileID: 21300000, guid: bb2d9f924231891469a5deecab79eaf6, type: 3}
   enemyImage: {fileID: 21300000, guid: 4115d40d511ec5b468f057e2e7f405eb, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 06000000050000000600000006000000

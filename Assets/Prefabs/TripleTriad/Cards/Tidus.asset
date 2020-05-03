@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Tidus
   m_EditorClassIdentifier: 
-  cardID: 45
+  cardID: 105
   description: I'm not crying
   cardsRarity: 3
   cardName: Tidus
   playerImage: {fileID: 21300000, guid: e5d8c7abb227eca4a8f9b2e986c6962d, type: 3}
   enemyImage: {fileID: 21300000, guid: d075233191a15a047b00042bf57d3433, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 0
-  percentChanceForEnemyToUseInBattle: 100
+  percentChanceForEnemyToUseInBattle: 30
   cardValues: 07000000010000000a00000009000000

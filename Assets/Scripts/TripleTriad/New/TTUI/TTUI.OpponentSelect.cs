@@ -59,9 +59,15 @@ namespace ETF.TripleTriad
 			}
 			else
 			{
-				fingerPrefab.gameObject.SetActive(false);
+				_opponentSelectCursorImage.gameObject.SetActive(false);
 			}
 		}
+		public void ReturnCursorToDefaultOpponentSelect()
+		{
+			_opponentSelectCursorImage.transform.position = _opponentBoxes[ttdb.RetrieveOpponentSelectionCurrentValue()]
+					.cursorTransform.transform.position;
+			
+	}
 
 		public void TurnOnProperAnimatorOpponentSelection()
 		{
@@ -127,6 +133,8 @@ namespace ETF.TripleTriad
 		public void TurnOffOpponentSelectUi()
 		{
 			_opponentSelectionCanvas.enabled = false;
+			ttdb.InitializeOpponentSelectionDb();
+			ReturnCursorToDefaultOpponentSelect();
 		}
 
 		public void RemoveCardFromCurrentOpponent(int cardId)
@@ -134,6 +142,8 @@ namespace ETF.TripleTriad
 			_opponentBoxes[ttdb.RetrieveCurrentOpponentInOpponentList()].opponentCardInfo.RemoveRareFromList(cardId);
 			
 		}
+
+
 		
 		public void AddCardToCurrentOpponent(int cardId)
 		{

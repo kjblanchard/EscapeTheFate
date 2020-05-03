@@ -6,11 +6,11 @@ public class CardInventory : MonoBehaviour
     [Header("Card List and Empty Card Reference")]
     public Card[] masterCardList;
     public List<Card> renumberedCardList = new List<Card>();
-    private readonly List<Card> _ttBattleCardList = new List<Card>();
-    public List<Card> ttCardListOfCommonCards = new List<Card>();
-    public List<Card> ttCardListOfUncommonCards = new List<Card>();
-    public List<Card> ttCardListOfRareCards = new List<Card>();
-    public List<Card> ttCardListOfEliteCards = new List<Card>();
+    public List<Card> ttBattleCardList = new List<Card>();
+    // public List<Card> ttCardListOfCommonCards = new List<Card>();
+    // public List<Card> ttCardListOfUncommonCards = new List<Card>();
+    // public List<Card> ttCardListOfRareCards = new List<Card>();
+    // public List<Card> ttCardListOfEliteCards = new List<Card>();
     private readonly List<int> _temporaryCardQuantityList = new List<int>();
     
 
@@ -57,74 +57,37 @@ public class CardInventory : MonoBehaviour
         _totalNumberOfCardsOnLastPage = _totalNumberOfCards % _numberOfCardsOnPage;
     }
 
-    public void CreateUsableBattleCardLists()
+        public void CreateUsableBattleCardLists()
     {
-        _ttBattleCardList.Clear();
+        ttBattleCardList.Clear();
         _temporaryCardQuantityList.Clear();
-        ttCardListOfCommonCards.Clear();
-        int cardIdNumber = 0;
+        //ttCardListOfCommonCards.Clear();
+        //int cardIdNumber = 0;
         
         //create lists of cards by type
         for (int i = 0; i < masterCardList.Length; i++)
         {
-            if (masterCardList[i].cardsRarity == Card.cardRarity.Common)
+            if (masterCardList[i].amountOwned > 0)
             {
-                ttCardListOfCommonCards.Add(masterCardList[i]);
-                masterCardList[i].cardID = cardIdNumber;
-                cardIdNumber++;
-                if (masterCardList[i].amountOwned >= 0)
-                {
-                    _ttBattleCardList.Add(masterCardList[i]);
-                    _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-                }
+                ttBattleCardList.Add(masterCardList[i]);
             }
         }
-
-        for (int i = 0; i < masterCardList.Length; i++)
+        ttBattleCardList.Sort();
+        for (int i = 0; i < ttBattleCardList.Count; i++)
         {
-            if (masterCardList[i].cardsRarity == Card.cardRarity.Uncommon)
-            {
-                ttCardListOfUncommonCards.Add(masterCardList[i]);
-                masterCardList[i].cardID = cardIdNumber;
-                cardIdNumber++;
-                if (masterCardList[i].amountOwned >= 0)
-                {
-                    _ttBattleCardList.Add(masterCardList[i]);
-                    _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-                }
-            }
-        }
-
-        for (int i = 0; i < masterCardList.Length; i++)
-        {
-            if (masterCardList[i].cardsRarity == Card.cardRarity.Rare)
-            {
-                ttCardListOfRareCards.Add(masterCardList[i]);
-                masterCardList[i].cardID = cardIdNumber;
-                cardIdNumber++;
-                if (masterCardList[i].amountOwned >= 0)
-                {
-                    _ttBattleCardList.Add(masterCardList[i]);
-                    _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-                }
-            }
-        }
-
-        for (int i = 0; i < masterCardList.Length; i++)
-        {
-            if (masterCardList[i].cardsRarity == Card.cardRarity.Elite)
-            {
-                ttCardListOfEliteCards.Add(masterCardList[i]);
-                masterCardList[i].cardID = cardIdNumber;
-                cardIdNumber++;
-                if (masterCardList[i].amountOwned >= 0)
-                {
-                    _ttBattleCardList.Add(masterCardList[i]);
-                    _temporaryCardQuantityList.Add(masterCardList[i].amountOwned);
-                }
-            }
+            _temporaryCardQuantityList.Add(ttBattleCardList[i].amountOwned);
         }
     }
+
+        public void CheatCodeEntered()
+        {
+            for (int i = 0; i < masterCardList.Length; i++)
+            {
+                masterCardList[i].amountOwned = 3;
+            }
+        }
+
+        
 
     public void AddCardToInventory(int cardId)
     {
@@ -136,6 +99,19 @@ public class CardInventory : MonoBehaviour
                 break;
             } 
         }
+    }
+
+    public Card CardLookupById(int cardId)
+    {
+        for (int i = 0; i < masterCardList.Length; i++)
+        {
+            if (masterCardList[i].cardID == cardId)
+            {
+                return masterCardList[i];
+            }
+        }
+
+        return masterCardList[0];
     }
 
     public void RemoveCardFromInventory(int cardId)
@@ -180,7 +156,7 @@ public class CardInventory : MonoBehaviour
 
     public List<Card> RetrieveBattleCardList()
     {
-        return _ttBattleCardList;
+        return ttBattleCardList;
     }
 
     public List<int> RetrieveBattleQuantityList()
@@ -190,7 +166,7 @@ public class CardInventory : MonoBehaviour
 
     public int RetrieveTotalNumberOfBattleCards()
     {
-        return _ttBattleCardList.Count;
+        return ttBattleCardList.Count;
     }
 
 }

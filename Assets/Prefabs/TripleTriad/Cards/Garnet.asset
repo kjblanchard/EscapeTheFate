@@ -12,16 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 126dde21535b456498c1fa43234e94ab, type: 3}
   m_Name: Garnet
   m_EditorClassIdentifier: 
-  cardID: 27
+  cardID: 86
   description: Short hair is the worst
   cardsRarity: 3
   cardName: Garnet
   playerImage: {fileID: 21300000, guid: ad1ad6a3699a2ec46b8695baa8de498e, type: 3}
   enemyImage: {fileID: 21300000, guid: cf09964c19cbc60448b4352568890e62, type: 3}
-  amountOwned: 2
+  amountOwned: 0
   hasOwnedBefore: 1
-  myCard: 0
-  enemyCard: 0
-  cardSlot: 10
   percentChanceForEnemyToUseInBattle: 100
   cardValues: 090000000a0000000300000002000000
