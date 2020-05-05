@@ -19,7 +19,7 @@ namespace ETF.TripleTriad
 
 		public override void Startup(int additionalArgs = 0)
 		{
-			_ttui._tripleTriadBoardImage.enabled = false;
+			_ttUi._tripleTriadBoardImage.enabled = false;
 			Initialize();
 			_cheatCode = new[] { "k", "b", "c", "a", "r", "d", "s" };
 			_index = 0; 
@@ -27,10 +27,7 @@ namespace ETF.TripleTriad
 		
 
 		
- 
-		void Update() {
-
-			}
+		
 
 
 
@@ -93,7 +90,7 @@ namespace ETF.TripleTriad
 				_ttMan.ttDb.SetCurrentOpponentYouArePlaying();
 				TurnOnSelectedAnimator();
 				_ttMan.ttDb.BringInCurrentSelectedEnemyInformationToDb();
-				if (_ttdb.RetrieveOpponentSelectionCurrentValue() == 7)
+				if (_ttDb.RetrieveOpponentSelectionCurrentValue() == 7)
 				{
 					Application.Quit();
 				}

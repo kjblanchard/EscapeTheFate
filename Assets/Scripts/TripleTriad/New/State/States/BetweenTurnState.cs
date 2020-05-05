@@ -19,10 +19,10 @@ namespace ETF.TripleTriad
 		
 		public override void Startup(int additionalArgs = 0)
 		{
-			_ttMan.ttUi.InitializeBetweenTurnStateUi();
-			_ttMan.ttUi.UpdateScoreCount();
+			_ttUi.InitializeBetweenTurnStateUi();
+			_ttUi.UpdateScoreCount();
 			
-			if (!_ttMan.ttLogic.CheckToSeeIfWeShouldEndTheGame())
+			if (!_ttLogic.CheckToSeeIfWeShouldEndTheGame())
 			{
 				var stateComingFrom = _ttMan.RetrievePreviousState();
 				if (stateComingFrom == _ttMan.locationSelectionState)

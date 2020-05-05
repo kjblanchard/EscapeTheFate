@@ -1005,8 +1005,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0.0015659, y: 0.0012593}
-  m_SizeDelta: {x: 134.19, y: 139.5}
+  m_AnchoredPosition: {x: 2.2, y: 0.66}
+  m_SizeDelta: {x: 122.74, y: 127.62}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &59121800
 MonoBehaviour:
@@ -8131,8 +8131,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -1.32, y: 0.0000015497}
-  m_SizeDelta: {x: 131.56, y: 139.5}
+  m_AnchoredPosition: {x: 1.38, y: -0.8999994}
+  m_SizeDelta: {x: 126.15, y: 127.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &712258667
 MonoBehaviour:
@@ -14458,8 +14458,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0018721, y: 0.0000076293945}
-  m_SizeDelta: {x: 134.19, y: 139.5}
+  m_AnchoredPosition: {x: 0.81, y: -0.2}
+  m_SizeDelta: {x: 125.32, y: 124.59}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &906062375
 MonoBehaviour:
@@ -14909,8 +14909,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0021849, y: -2.11}
-  m_SizeDelta: {x: 134.19, y: 120.57}
+  m_AnchoredPosition: {x: 0.52, y: -0.7925}
+  m_SizeDelta: {x: 122.07, y: 117.94}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &961297376
 MonoBehaviour:
@@ -17006,7 +17006,7 @@ Canvas:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1165411157}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_RenderMode: 0
   m_Camera: {fileID: 0}
@@ -23006,8 +23006,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0015583, y: 0.0000019073}
-  m_SizeDelta: {x: 134.19, y: 139.5}
+  m_AnchoredPosition: {x: 0.66, y: -0.76}
+  m_SizeDelta: {x: 124.9, y: 127.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1828736802
 MonoBehaviour:
@@ -23477,8 +23477,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0018978, y: 0.0000019073}
-  m_SizeDelta: {x: 134.19, y: 139.5}
+  m_AnchoredPosition: {x: 1.24, y: 0.21}
+  m_SizeDelta: {x: 123.44, y: 126.68}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1864789862
 MonoBehaviour:
@@ -23772,7 +23772,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.0012703, y: 0}
+  m_AnchoredPosition: {x: -0.0012702942, y: 0}
   m_SizeDelta: {x: 134.19, y: 139.5}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1900017780
@@ -26951,7 +26951,6 @@ GameObject:
   - component: {fileID: 11}
   - component: {fileID: 818606792456178717}
   - component: {fileID: 818606792456178718}
-  - component: {fileID: 818606792456178721}
   - component: {fileID: 818606792456178716}
   - component: {fileID: 818606792456178719}
   m_Layer: 5
@@ -27198,36 +27197,6 @@ MonoBehaviour:
   cardAmount: 
   enemyCards: []
   _numberOfCardsOnPage: 10
---- !u!114 &818606792456178721
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 818606792456178713}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1320afcd02cf3cf49875745f2282d40e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _whatTypeOfPlayerAmI: 1
-  _myAvailableCardsToUse: []
-  _listOfRareCardsOwned:
-  - {fileID: 11400000, guid: 99671d0268186f84a928214a4101ea39, type: 2}
-  whatToSayWhenTurnIsBeingSelected: Hope I get to go first..
-  whatToSayWhenPlayerWins: Can't believe I lost to a lil chump like you
-  whatToSayWhenPlayerLoses: Straight Garbage bra
-  whatToSayWhenPlayerTies: Arent even good enough to win....
-  whatToSayWhenChoosingCards: Picking Best possible hand to scrape you up
-  opponentDescription: 
-  npcName: Cool Guy
-  isEnemyHandOpen: 1
-  isRandomCardSelection: 0
-  isPlus: 0
-  isSame: 0
-  _typeOfWinReward: 0
-  minimumCardIdToUse: 1
-  maximumCardIdToUse: 1
 --- !u!223 &818606792456178724
 Canvas:
   m_ObjectHideFlags: 0

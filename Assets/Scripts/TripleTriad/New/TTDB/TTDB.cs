@@ -13,13 +13,13 @@ namespace ETF.TripleTriad
         private int _totalNumberOfCardsOnLastBattlePage;
         public List<Card> currentBattleSelectableCards = new List<Card>();
         public List<int> currentBattleQuantityForCards = new List<int>();
+        
 
 
         [SerializeField] TripleTriadManager ttMan;
 
         public void CalculateTtBattleNumbers()
         {
-            //looks at your master card list, and figures out how many pages and remaining cards are needed
             _totalNumberOfBattleCards = CardInventory.instance.RetrieveTotalNumberOfBattleCards();
             var notRoundedUpBattlePageCount = ((float) _totalNumberOfBattleCards) / _numberofBattleCardsOnPage;
             _totalNumberOfBattlePages = (int) Mathf.Ceil(notRoundedUpBattlePageCount);

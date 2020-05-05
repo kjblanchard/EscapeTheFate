@@ -7,9 +7,10 @@ namespace ETF.TripleTriad
 {
     public abstract class TtState : MonoBehaviour
     {
-        protected static TTUI _ttui;
+        protected static TTUI _ttUi;
         protected static TripleTriadManager _ttMan;
-        protected static TTDB _ttdb;
+        protected static TTDB _ttDb;
+        protected static TTLogic _ttLogic;
         protected static bool hasInitiated;
 
         private void Awake()
@@ -17,9 +18,10 @@ namespace ETF.TripleTriad
             if (!hasInitiated)
             {
                 hasInitiated = true;
-                _ttui = FindObjectOfType<TTUI>();
+                _ttUi = FindObjectOfType<TTUI>();
                 _ttMan = FindObjectOfType<TripleTriadManager>();
-                _ttdb = FindObjectOfType<TTDB>();
+                _ttDb = FindObjectOfType<TTDB>();
+                _ttLogic = FindObjectOfType<TTLogic>();
             }
             
         }
@@ -38,5 +40,7 @@ namespace ETF.TripleTriad
         {
 
         }
+        
+
     }
 }

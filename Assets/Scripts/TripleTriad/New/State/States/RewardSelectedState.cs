@@ -71,7 +71,7 @@ namespace ETF.TripleTriad
 
 		private void CheckToSeeIfOpponentShouldLoseTheCard()
 		{
-			if (_ttdb.CheckToSeeIfCardIsInRareList(_wonCard.whatCardIAm.cardID))
+			if (_ttDb.CheckToSeeIfCardIsInRareList(_wonCard.whatCardIAm.cardID))
 			{
 				_ttMan.ttUi.RemoveCardFromCurrentOpponent(_wonCard.whatCardIAm.cardID);
 			}

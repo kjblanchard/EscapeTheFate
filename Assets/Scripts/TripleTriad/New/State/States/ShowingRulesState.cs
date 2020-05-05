@@ -45,10 +45,11 @@ namespace ETF.TripleTriad
 
 		private void ListenForUserInputs()
 		{
+			if (_ttUi.isLoading) return;
 			if ((Input.GetKeyDown(KeyCode.D) || Input.GetButtonDown("right")) &&
-			    _ttMan.ttLogic.CanIScrollRightOnRuleSelection())
+			    _ttLogic.CanIScrollRightOnRuleSelection())
 			{
-				_ttMan.ttDb.ScrollRightInShowingRulesDb();
+				_ttDb.ScrollRightInShowingRulesDb();
 				SoundManager.instance.PlaySFX(0);
 			}
 			else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("left")) &&
@@ -68,10 +69,6 @@ namespace ETF.TripleTriad
 
 			{
 				StartCoroutine(ChangeToCardSelectionScreen());
-			}
-			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")))
-			{
-
 			}
 		}
 
