@@ -99,7 +99,7 @@ namespace ETF.TripleTriad
 
         private void ListenForUserInputs()
         {
-            if (!_ttUi.isLoading)
+            if (_ttUi.isLoading)
             {
                 return;
             }
