@@ -310,7 +310,7 @@ namespace ETF.TripleTriad
         }
 
 
-        public void TurnOnCardSelectionScreenUiElements()
+        public void TurnOnCardSelectionScreenUiElementsFromCancel()
         {
             _cardSelectionCanvas.enabled = true;
             _cardConfirmCanvas.enabled = false;

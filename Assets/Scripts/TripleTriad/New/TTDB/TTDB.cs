@@ -1,23 +1,27 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace ETF.TripleTriad
 {
     public partial class TTDB : MonoBehaviour
     {
+
+        #region configuration
+
         [Header("Card Battle References")] private int _numberofBattleCardsOnPage = 10;
         private int _totalNumberOfBattleCards;
         private int _totalNumberOfBattlePages;
         private int _totalNumberOfCardsOnLastBattlePage;
         public List<Card> currentBattleSelectableCards = new List<Card>();
         public List<int> currentBattleQuantityForCards = new List<int>();
-        
 
 
         [SerializeField] TripleTriadManager ttMan;
 
+        #endregion
+
+        #region public Methods
+        
         public void CalculateTtBattleNumbers()
         {
             _totalNumberOfBattleCards = CardInventory.instance.RetrieveTotalNumberOfBattleCards();
@@ -28,39 +32,31 @@ namespace ETF.TripleTriad
 
         public int RetrieveTotalNumberOfCardsOnPage()
         {
-            //returns the total number of battle pages
             return _numberofBattleCardsOnPage;
         }
 
         public int RetrieveTotalNumberOfBattleCards()
         {
-            //returns the total number of battle pages
             return _totalNumberOfBattleCards;
         }
 
         public int RetrieveTotalNumberOfBattlePages()
         {
-            //returns the total number of battle pages
             return _totalNumberOfBattlePages;
         }
 
         public int RetrieveTotalNumberOfCardsOnLastBattlePage()
         {
-            //returns the total number of battle pages
             return _totalNumberOfCardsOnLastBattlePage;
         }
 
         public void ClearBattleSelectionsList()
         {
-            //clears the current card choices List
             currentHandSelectionsList.Clear();
         }
 
         public void BringInUsableBattleCards()
         {
-            // currentBattleSelectableCards.Clear();
-            // currentBattleQuantityForCards.Clear();
-            //this will copy the current list of battle cards to our list of cards that can be used
             currentBattleSelectableCards = CardInventory.instance.RetrieveBattleCardList();
             currentBattleQuantityForCards = CardInventory.instance.RetrieveBattleQuantityList();
         }
@@ -68,31 +64,46 @@ namespace ETF.TripleTriad
         public void InitializeDbValuesForStartingTripleTriad()
         {
             var emptyCardReference = CardInventory.instance.emptyCard;
-            
-            for (int i = 0; i < _myFullHandTripleTriadCards.Length; i++)
-            {
-                _myFullHandTripleTriadCards[i].whatCardIAm = emptyCardReference;
-            }
+            EmptyAllGameCards(emptyCardReference);
+        }
+        #endregion
 
-            for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
-            {
-                fullEnemyTripleTriadCards[i].whatCardIAm = emptyCardReference;
-                
-            }
-            currentEnemyTripleTriadCardsInHand.Clear();
-            _myCurrentHandTripleTriadCards.Clear();
+        #region private Methods
+        
+        private void EmptyBoardCards(Card emptyCardReference)
+        {
             for (int i = 0; i < _boardTripleTriadCards.Length; i++)
             {
                 _boardTripleTriadCards[i].cardInPlay = false;
                 _boardTripleTriadCards[i].cardOwnedByPlayer = false;
                 _boardTripleTriadCards[i].whatCardIAm = emptyCardReference;
             }
-            //ttMan.ttUi.UpdateScoreCount();
-            //_isComingFromLocationCancel = false;    
-            //UpdateMyCurrentHandCountTo5();
         }
 
+        private void EmptyAllGameCards(Card emptyCardReference)
+        {
+            EmptyPlayerCards(emptyCardReference);
+            EmptyEnemyCards(emptyCardReference);
+            EmptyBoardCards(emptyCardReference);
+            currentEnemyTripleTriadCardsInHand.Clear();
+            _myCurrentHandTripleTriadCards.Clear();
+        }
 
+        private void EmptyEnemyCards(Card emptyCardReference)
+        {
+            for (int i = 0; i < fullEnemyTripleTriadCards.Length; i++)
+            {
+                fullEnemyTripleTriadCards[i].whatCardIAm = emptyCardReference;
+            }
+        }
 
+        private void EmptyPlayerCards(Card emptyCardReference)
+        {
+            for (int i = 0; i < _myFullHandTripleTriadCards.Length; i++)
+            {
+                _myFullHandTripleTriadCards[i].whatCardIAm = emptyCardReference;
+            }
+        }
+        #endregion
     }
 }

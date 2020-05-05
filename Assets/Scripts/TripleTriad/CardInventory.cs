@@ -61,10 +61,7 @@ public class CardInventory : MonoBehaviour
     {
         ttBattleCardList.Clear();
         _temporaryCardQuantityList.Clear();
-        //ttCardListOfCommonCards.Clear();
-        //int cardIdNumber = 0;
         
-        //create lists of cards by type
         for (int i = 0; i < masterCardList.Length; i++)
         {
             if (masterCardList[i].amountOwned > 0)

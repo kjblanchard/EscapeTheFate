@@ -12,7 +12,7 @@ namespace ETF.TripleTriad
 
         private int _numberToIncrement;
         private bool _regularAutoScrollSpeed;
-        [SerializeField] TripleTriadManager ttMan;
+        //[SerializeField] TripleTriadManager ttMan;
 
         //reference to the gamestate that we were coming from
 
@@ -49,28 +49,25 @@ namespace ETF.TripleTriad
             if (additionalArgs == 0)
             {
                 InitializeDbForCardSelection();
-
                 InitializeUiForCardSelection();
             }
             else if (additionalArgs == 1)
             {
-                ttMan.ttUi.TurnOnCardSelectionScreenUiElements();
+                _ttUi.TurnOnCardSelectionScreenUiElementsFromCancel();
                 CancelLastSelection();
             }
             else if (additionalArgs == 2)
             {
                 InitializeDbForCardSelection();
-                StartCoroutine(ttMan.ttDb.UpdateMyHandTripleTriadCardsWithRandomSelection());
+                StartCoroutine(_ttDb.UpdateMyHandTripleTriadCardsWithRandomSelection());
                 //ttMan.ttDb.UpdateMyHandTripleTriadCardsWithMySelectionList();
-               
-                
             }
         }
         
         public override void Execute()
         {
             ListenForUserInputs();
-            ttMan.ttUi.KeepFingerOnProperLocationInCardSelection();
+            _ttUi.KeepFingerOnProperLocationInCardSelection();
         }
 
         public override void End()
@@ -102,58 +99,48 @@ namespace ETF.TripleTriad
 
         private void ListenForUserInputs()
         {
+            if (!_ttUi.isLoading)
+            {
+                return;
+            }
             if (Input.GetKeyDown(KeyCode.D) || (Input.GetButtonDown("right")))
             {
-                if (!ttMan.ttUi.isLoading)
+                if (_continuousCoroutineReferenceRight != null)
                 {
-                    if (_continuousCoroutineReferenceRight != null)
-                    {
-                        StopTheCoroutineScrollingRight();
-                    }
-
-                    _continuousCoroutineReferenceRight =
-                        StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingForward));
+                    StopTheCoroutineScrollingRight();
                 }
 
+                _continuousCoroutineReferenceRight =
+                    StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingForward));
             }
             else if (Input.GetKeyDown(KeyCode.A) || (Input.GetButtonDown("left")))
             {
-                if (!ttMan.ttUi.isLoading)
+                if (_continuousCoroutineReferenceLeft != null)
                 {
-                    if (_continuousCoroutineReferenceLeft != null)
-                    {
-                        StopTheCoroutineScrollingLeft();
-                    }
-
-                    _continuousCoroutineReferenceLeft =
-                        StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingBackward));
+                    StopTheCoroutineScrollingLeft();
                 }
+                _continuousCoroutineReferenceLeft =
+                    StartCoroutine(PageScrollContinuouslyCo(PageScrollDirections.GoingBackward));
             }
             else if (Input.GetKeyDown(KeyCode.W) || (Input.GetButtonDown("up")))
             {
-                if (!ttMan.ttUi.isLoading)
+                if (_continuousCoroutineReferenceUp != null)
                 {
-                    if (_continuousCoroutineReferenceUp != null)
-                    {
-                        StopTheCoroutineScrollingUp();
-                    }
-
-                    _continuousCoroutineReferenceUp =
-                        StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingUp));
+                    StopTheCoroutineScrollingUp();
                 }
+
+                _continuousCoroutineReferenceUp =
+                    StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingUp));
             }
             else if (Input.GetKeyDown(KeyCode.S) || (Input.GetButtonDown("down")))
             {
-                if (!ttMan.ttUi.isLoading)
+                if (_continuousCoroutineReferenceDown != null)
                 {
-                    if (_continuousCoroutineReferenceDown != null)
-                    {
-                        StopTheCoroutineScrollingDown();
-                    }
-
-                    _continuousCoroutineReferenceDown =
-                        StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingDown));
+                    StopTheCoroutineScrollingDown();
                 }
+
+                _continuousCoroutineReferenceDown =
+                    StartCoroutine(ScrollContinuously(WhichUpDownDirection.IsMovingDown));
             }
             else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")))
             {
@@ -200,18 +187,18 @@ namespace ETF.TripleTriad
             {
                 case PageScrollDirections.GoingForward:
 
-                    if (ttMan.ttLogic.CanISwitchPages(whichWayToScroll))
+                    if (_ttLogic.CanISwitchPages(whichWayToScroll))
                     {
-                        StartCoroutine(ttMan.ttUi.PlayCardSelectionPageScrollAnimation(whichWayToScroll));
+                        StartCoroutine(_ttUi.PlayCardSelectionPageScrollAnimation(whichWayToScroll));
                         MoveCursorToNextPageInUiAndDb(whichWayToScroll);
                         SoundManager.instance.PlaySFX(6);
                     }
 
                     break;
                 case PageScrollDirections.GoingBackward:
-                    if (ttMan.ttLogic.CanISwitchPages(whichWayToScroll))
+                    if (_ttLogic.CanISwitchPages(whichWayToScroll))
                     {
-                        StartCoroutine(ttMan.ttUi.PlayCardSelectionPageScrollAnimation(whichWayToScroll));
+                        StartCoroutine(_ttUi.PlayCardSelectionPageScrollAnimation(whichWayToScroll));
                         MoveCursorToNextPageInUiAndDb(whichWayToScroll);
                         SoundManager.instance.PlaySFX(6);
                     }
@@ -224,8 +211,8 @@ namespace ETF.TripleTriad
 
         private void MoveCursorUpDownInMenu(WhichUpDownDirection whichWayToScroll)
         {
-            if (!ttMan.ttLogic.CanIScrollOnCardSelect(whichWayToScroll)) return;
-            if (ttMan.ttLogic.AreYouGoingToLoopInCardSelection(whichWayToScroll))
+            if (!_ttLogic.CanIScrollOnCardSelect(whichWayToScroll)) return;
+            if (_ttLogic.AreYouGoingToLoopInCardSelection(whichWayToScroll))
             {
                 LoopInCurrentMenu(whichWayToScroll);
             }
@@ -235,39 +222,39 @@ namespace ETF.TripleTriad
             }
 
             SoundManager.instance.PlaySFX(0);
-            ttMan.ttUi.UpdateTheBigCardDisplayUi();
+            _ttUi.UpdateTheBigCardDisplayUi();
         }
 
         private void MoveCursorOneSpotInInventory(WhichUpDownDirection whichWayAreYouGoing)
         {
-            ttMan.ttDb.UpdateCardSelectionFingerPositionForScrollingInDb(whichWayAreYouGoing);
+            _ttDb.UpdateCardSelectionFingerPositionForScrollingInDb(whichWayAreYouGoing);
         }
 
         private void LoopInCurrentMenu(WhichUpDownDirection whichUpDown)
         {
-            ttMan.ttDb.UpdateCardSelectionFingerPositionForLoopingInDb(whichUpDown);
+            _ttDb.UpdateCardSelectionFingerPositionForLoopingInDb(whichUpDown);
         }
 
         private void MoveCursorToNextPageInUiAndDb(PageScrollDirections scrollDirection)
         {
-            ttMan.ttDb.UpdateCardSelectionFingerPositionForPageScrollingInDb(scrollDirection);
-            ttMan.ttUi.UpdatePageNum();
-            if (ttMan.ttLogic.DidYouGoPastTheCardSelectionList())
+            _ttDb.UpdateCardSelectionFingerPositionForPageScrollingInDb(scrollDirection);
+            _ttUi.UpdatePageNum();
+            if (_ttLogic.DidYouGoPastTheCardSelectionList())
             {
                 BounceCursorUpOnPageMove();
             }
             else
             {
 
-                ttMan.ttUi.UpdateTheBigCardDisplayUi();
+                _ttUi.UpdateTheBigCardDisplayUi();
 
             }
         }
 
         private void BounceCursorUpOnPageMove()
         {
-            ttMan.ttDb.UpdateCardSelectionInfoOnScrollingPastEndOfPage();
-            ttMan.ttUi.UpdateTheBigCardDisplayUi();
+            _ttDb.UpdateCardSelectionInfoOnScrollingPastEndOfPage();
+            _ttUi.UpdateTheBigCardDisplayUi();
         }
 
 
@@ -287,13 +274,13 @@ namespace ETF.TripleTriad
                         _regularAutoScrollSpeed = false;
                     }
 
-                    yield return new WaitForSeconds(ttMan.ttUi.RetrieveRegularAutoScrollSpeed());
+                    yield return new WaitForSeconds(_ttUi.RetrieveRegularAutoScrollSpeed());
 
                 }
                 else if (!_regularAutoScrollSpeed)
                 {
                     MoveCursorUpDownInMenu(scrollDirection);
-                    yield return new WaitForSeconds(ttMan.ttUi.RetrieveFastAutoScrollSpeed());
+                    yield return new WaitForSeconds(_ttUi.RetrieveFastAutoScrollSpeed());
 
                 }
             }
@@ -305,7 +292,7 @@ namespace ETF.TripleTriad
             while (true)
             {
                 ChangePage(whichWayToScroll);
-                yield return new WaitForSeconds(ttMan.ttUi.RetrieveRegularAutoScrollSpeed() * .75f);
+                yield return new WaitForSeconds(_ttUi.RetrieveRegularAutoScrollSpeed() * .75f);
 
             }
             // ReSharper disable once IteratorNeverReturns
@@ -313,20 +300,20 @@ namespace ETF.TripleTriad
 
         private void CardSelection()
         {
-            if (!ttMan.ttLogic.CanSelectCardInCardSelection(ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory()))
+            if (!_ttLogic.CanSelectCardInCardSelection(_ttDb.RetrieveCardSelectionCurrentSpotInInventory()))
             {
                 SoundManager.instance.PlaySFX(3);
                 return;
             }
             //ttMan.ttUi.TurnOnHandAnimator();
-            ttMan.ttUi.UpdateMyHandImage();
-            ttMan.ttUi.PlayMyHandAnimation(ttMan.ttDb.currentHandSelectionsList.Count);
+            _ttUi.UpdateMyHandImage();
+            _ttUi.PlayMyHandAnimation(_ttDb.currentHandSelectionsList.Count);
             AddChoiceToCardSelectionList();
             ModifyCardQuantity(ModifyingCardQuantity.IsAddingCard);
             SoundManager.instance.PlaySFX(6);
-            if (ttMan.ttDb.currentHandSelectionsList.Count == 5)
+            if (_ttDb.currentHandSelectionsList.Count == 5)
             {
-                ttMan.SendStateChange(ttMan.cardConfirmationState);
+                _ttMan.SendStateChange(_ttMan.cardConfirmationState);
             }
         }
 
@@ -336,27 +323,27 @@ namespace ETF.TripleTriad
             switch (whatToDoWithQuantity)
             {
                 case ModifyingCardQuantity.IsAddingCard:
-                    ttMan.ttDb.currentBattleQuantityForCards[
-                        ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory()]--;
-                    if (ttMan.ttDb.currentBattleQuantityForCards[
-                            ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory()] >
+                    _ttDb.currentBattleQuantityForCards[
+                        _ttDb.RetrieveCardSelectionCurrentSpotInInventory()]--;
+                    if (_ttDb.currentBattleQuantityForCards[
+                            _ttDb.RetrieveCardSelectionCurrentSpotInInventory()] >
                         0)
                     {
-                        ttMan.ttUi.UpdateQuantityAfterSelecting();
+                        _ttUi.UpdateQuantityAfterSelecting();
                     }
                     else
                     {
-                        ttMan.ttUi.UpdateColorOfCardSelectionText();
-                        ttMan.ttUi.UpdateQuantityAfterSelecting();
+                        _ttUi.UpdateColorOfCardSelectionText();
+                        _ttUi.UpdateQuantityAfterSelecting();
                     }
 
                     break;
                 case ModifyingCardQuantity.IsRemovingCard:
-                    var spotInSelectionsListToCheck = ttMan.ttDb.currentHandSelectionsList.Count - 1;
-                    ttMan.ttDb.currentBattleQuantityForCards[
-                        ttMan.ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotInCardInv]++;
-                    ttMan.ttUi.UpdateQuantityAfterRemovingFromSelection();
-                    ttMan.ttUi.UpdateColorOfCardSelectionWhenRemovedText();
+                    var spotInSelectionsListToCheck = _ttDb.currentHandSelectionsList.Count - 1;
+                    _ttDb.currentBattleQuantityForCards[
+                        _ttDb.currentHandSelectionsList[spotInSelectionsListToCheck].spotInCardInv]++;
+                    _ttUi.UpdateQuantityAfterRemovingFromSelection();
+                    _ttUi.UpdateColorOfCardSelectionWhenRemovedText();
                     break;
             }
         }
@@ -364,20 +351,20 @@ namespace ETF.TripleTriad
         private void AddChoiceToCardSelectionList()
         {
             //used when you press select
-            var cardChoice = new LastItemChosen(ttMan.ttDb.RetrieveCardSelectionCurrentPageNumber(),
-                ttMan.ttDb.RetrieveCardSelectionFingerLocationOnCurrentPage(),
-                ttMan.ttDb.RetrieveCardSelectionCurrentSpotInInventory());
-            ttMan.ttDb.currentHandSelectionsList.Add(cardChoice);
+            var cardChoice = new LastItemChosen(_ttDb.RetrieveCardSelectionCurrentPageNumber(),
+                _ttDb.RetrieveCardSelectionFingerLocationOnCurrentPage(),
+                _ttDb.RetrieveCardSelectionCurrentSpotInInventory());
+            _ttDb.currentHandSelectionsList.Add(cardChoice);
         }
 
         private void CancelLastSelection()
         {
             //used when you press cancel button
-            if (!ttMan.ttLogic.CanRemoveCardFromCardSelection()) return;
+            if (!_ttLogic.CanRemoveCardFromCardSelection()) return;
             ModifyCardQuantity(ModifyingCardQuantity.IsRemovingCard);
-            ttMan.ttUi.TurnOffHandAnimatorForCancel();
+            _ttUi.TurnOffHandAnimatorForCancel();
             //ttMan.ttUi.PlayRestAnimation(ttMan.ttDb.currentHandSelectionsList.Count - 1);
-            ttMan.ttDb.currentHandSelectionsList.RemoveAt(ttMan.ttDb.currentHandSelectionsList.Count - 1);
+            _ttDb.currentHandSelectionsList.RemoveAt(_ttDb.currentHandSelectionsList.Count - 1);
             SoundManager.instance.PlaySFX(1);
         }
 
@@ -401,20 +388,20 @@ namespace ETF.TripleTriad
 
         private void InitializeDbForCardSelection()
         {
-            ttMan.ttDb.ClearBattleSelectionsList();
-            ttMan.ttDb.BringInUsableBattleCards();
-            ttMan.ttDb.InitializeCardSelectionValuesInDB();
+            _ttDb.ClearBattleSelectionsList();
+            _ttDb.BringInUsableBattleCards();
+            _ttDb.InitializeCardSelectionValuesInDB();
         }
 
         private void InitializeUiForCardSelection()
         {
-            ttMan.ttUi.TurnOnCardSelectionScreenUiElements();
-            ttMan.ttUi.ResetScrollRectPosition();
-            ttMan.ttUi.GeneratePages();
-            ttMan.ttUi.InitializeUiFromTtBattleList();
-            ttMan.ttUi.UpdatePageNum();
-            ttMan.ttUi.UpdateTheBigCardDisplayUi();
-            ttMan.ttUi.isLoading = false;
+            _ttUi.TurnOnCardSelectionScreenUiElementsFromCancel();
+            _ttUi.ResetScrollRectPosition();
+            _ttUi.GeneratePages();
+            _ttUi.InitializeUiFromTtBattleList();
+            _ttUi.UpdatePageNum();
+            _ttUi.UpdateTheBigCardDisplayUi();
+            _ttUi.isLoading = false;
         }
 
         #endregion

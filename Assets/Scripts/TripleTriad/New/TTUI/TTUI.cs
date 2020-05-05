@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace ETF.TripleTriad
@@ -8,23 +6,24 @@ namespace ETF.TripleTriad
     public partial class TTUI : MonoBehaviour
     {
         //this is the master TTUI
-        
+
+        #region configuration
+
         [Header("Script Reference")] [SerializeField]
         TTDB ttdb;
 
         [SerializeField] TripleTriadManager ttMan;
-        // private static readonly int kProperty = Animator.StringToHash("default");
-        // private static readonly int kMoveToBase = Animator.StringToHash("moveToBase");
         [SerializeField] private Canvas fingerCanvas;
-
         [SerializeField] public Image _tripleTriadBoardImage;
+        private static readonly int kStartGame = Animator.StringToHash("startGame");
+
+        #endregion
+
 
         
         
         public void InitializeAndCacheAllUiElementsForGameStart(bool isGameEnded = false)
-        {
-            //print("donethis");
-            //start all Canvas's
+        { //start all Canvas's
             _titleScreenCanvas.enabled = true;
             _opponentSelectionCanvas.enabled = true;
             _showingRulesCanvas.enabled = true;
@@ -45,12 +44,9 @@ namespace ETF.TripleTriad
             {
                 boardCards[i].cardCanvas.enabled = true;
             }
-
             _scoreDisplayCanvas.enabled = true;
-
             _enemyDialogBoxCanvas.enabled = true;
             _endGameCanvas.enabled = true;
-            
             _cardRewardCanvas.enabled = true;
             _rewardConfirmCanvas.enabled = true;
             _cardWonCanvas.enabled = true;
@@ -66,7 +62,6 @@ namespace ETF.TripleTriad
 
                 }
             }
-
             showingRulesAnimator.Rebind();
             cardSelectionWindowAnimator.Rebind();
             cardConfirmAnimator.Rebind();
@@ -84,7 +79,6 @@ namespace ETF.TripleTriad
              {
                  boardCards[i].cardAnimator.Rebind();
              }
-            
              enemyHandDialogBoxAnimator.Rebind();
              _youWinAnimator.Rebind();
              _youLoseAnimator.Rebind();
@@ -95,7 +89,6 @@ namespace ETF.TripleTriad
              cardSelectionCardDisplayAnimator.Rebind();
                 
             //close all canvas'
-            
             _titleScreenCanvas.enabled = false;
             _opponentSelectionCanvas.enabled = false;
             _showingRulesCanvas.enabled = false;
@@ -113,21 +106,22 @@ namespace ETF.TripleTriad
             {
                 boardCards[i].cardCanvas.enabled = false;
             }
-
             _scoreDisplayCanvas.enabled = false;
-
             _enemyDialogBoxCanvas.enabled = false;
             _endGameCanvas.enabled = false;
-            
             _cardRewardCanvas.enabled = false;
             _rewardConfirmCanvas.enabled = false;
             _cardWonCanvas.enabled = false;
             _tripleTriadBoardImage.color = new Color(0.28f,0.19f,0.44f);
+            
+            locationSelectionFinger.SetActive(false);
+            playerSelectionFinger.SetActive(false);
+            turnIndicatorFingerAnimator.gameObject.SetActive(false);
         }
         
         public void StartGameFadeIn()
         {
-            _tripleTriadUiFade.animator.SetTrigger("startGame");
+            _tripleTriadUiFade.animator.SetTrigger(kStartGame);
         }
         
     }

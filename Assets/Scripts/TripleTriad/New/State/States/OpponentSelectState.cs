@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ETF.TripleTriad
 {
@@ -10,8 +8,8 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
-		[SerializeField] private TripleTriadManager _ttMan;
-		private TTDB.MovementDirections whichWayToMove;
+		//[SerializeField] private TripleTriadManager _ttMan;
+		private TTDB.MovementDirections _whichWayToMove;
 		private string[] _cheatCode;
 		private int _index;
 
@@ -25,21 +23,16 @@ namespace ETF.TripleTriad
 			_index = 0; 
 		}
 		
-
 		
-		
-
-
-
 		public override void Execute()
 		{
 			ListenForUserInput();
-			_ttMan.ttUi.KeepCursorOnProperSelectionOpponentSelect();
+			_ttUi.KeepCursorOnProperSelectionOpponentSelect();
 		}
 
 		public override void End()
 		{
-			_ttMan.ttUi.TurnOffOpponentSelectUi();
+			_ttUi.TurnOffOpponentSelectUi();
 		}
 
 
@@ -47,75 +40,66 @@ namespace ETF.TripleTriad
 
 		private void ListenForUserInput()
 		{
-			if (_ttMan.ttUi.isLoading) return;
+			if (_ttUi.isLoading) return;
 			if (Input.GetKeyDown(KeyCode.D) || (Input.GetButtonDown("right")))
 			{
-				whichWayToMove = TTDB.MovementDirections.Right;
-				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				_whichWayToMove = TTDB.MovementDirections.Right;
+				if (_ttLogic.CanIScrollInOpponentSelect(_whichWayToMove))
 				{
-					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					_ttDb.MoveOpponentSelectionInDb(_whichWayToMove);
 					TurnOnBoxImageAndAnimator();
 				}
 			}
 			else if (Input.GetKeyDown(KeyCode.A) || (Input.GetButtonDown("left")))
 			{
-				whichWayToMove = TTDB.MovementDirections.Left;
-
-				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				_whichWayToMove = TTDB.MovementDirections.Left;
+				if (_ttLogic.CanIScrollInOpponentSelect(_whichWayToMove))
 				{
-					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					_ttDb.MoveOpponentSelectionInDb(_whichWayToMove);
 					TurnOnBoxImageAndAnimator();
 				}
 			}
 			else if (Input.GetKeyDown(KeyCode.W) || (Input.GetButtonDown("up")))
 			{
-				whichWayToMove = TTDB.MovementDirections.Up;
-				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				_whichWayToMove = TTDB.MovementDirections.Up;
+				if (_ttLogic.CanIScrollInOpponentSelect(_whichWayToMove))
 				{
-					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					_ttDb.MoveOpponentSelectionInDb(_whichWayToMove);
 					TurnOnBoxImageAndAnimator();
 				}
 			}
 			else if (Input.GetKeyDown(KeyCode.S) || (Input.GetButtonDown("down")))
 			{
-				whichWayToMove = TTDB.MovementDirections.Down;
-				if (_ttMan.ttLogic.CanIScrollInOpponentSelect(whichWayToMove))
+				_whichWayToMove = TTDB.MovementDirections.Down;
+				if (_ttLogic.CanIScrollInOpponentSelect(_whichWayToMove))
 				{
-					_ttMan.ttDb.MoveOpponentSelectionInDb(whichWayToMove);
+					_ttDb.MoveOpponentSelectionInDb(_whichWayToMove);
 					TurnOnBoxImageAndAnimator();
 				}
 			}
 			else if (Input.GetKeyDown(KeyCode.Space) || (Input.GetButtonDown("Fire1")))
 			{
-				_ttMan.ttDb.SetCurrentOpponentYouArePlaying();
-				TurnOnSelectedAnimator();
-				_ttMan.ttDb.BringInCurrentSelectedEnemyInformationToDb();
 				if (_ttDb.RetrieveOpponentSelectionCurrentValue() == 7)
 				{
 					Application.Quit();
+					return;
 				}
+				_ttDb.SetCurrentOpponentYouArePlaying();
+				TurnOnSelectedAnimator();
+				_ttDb.BringInCurrentSelectedEnemyInformationToDb();
+
 			}
-			else if (Input.GetKeyDown(KeyCode.C) || (Input.GetButtonDown("Fire2")))
-			{
-			}
-			// Check if any key is pressed
 			if (Input.anyKeyDown)
 			{
-				// Check if the next key in the code is pressed
 				if (Input.GetKeyDown(_cheatCode[_index]))
 				{
-					// Add 1 to index to check the next key in the code
 					_index++;
 				}
-				// Wrong key entered, we reset code typing
 				else
 				{
 					_index = 0;
 				}
 			}
-
-			// If index reaches the length of the cheatCode string, 
-			// the entire code was correctly entered
 			if (_index == _cheatCode.Length)
 			{
 				SoundManager.instance.PlaySFX(21);
@@ -136,39 +120,30 @@ namespace ETF.TripleTriad
 				SoundManager.instance.PlayIntroLoop(10);
 				SoundManager.instance.CacheNextMusic(1);
 			}
-
-			//_ttMan.ttUi.isLoading = false;
-			_ttMan.ttDb.InitializeOpponentSelectionDb();
-			//TurnOnProperBoxImage();
-			_ttMan.ttUi.InitializeOpponentSelectionUi();
+			_ttDb.InitializeOpponentSelectionDb();
+			_ttUi.InitializeOpponentSelectionUi();
 		}
-
 		
-
-
 		private void TurnOnProperAnimator()
 		{
-			_ttMan.ttUi.TurnOnProperAnimatorOpponentSelection();
+			_ttUi.TurnOnProperAnimatorOpponentSelection();
 		}
 
 		private void UpdateOpponent()
 		{
-			_ttMan.ttUi.UpdateOpponentInfoOpponentSelection();
+			_ttUi.UpdateOpponentInfoOpponentSelection();
 			SoundManager.instance.PlaySFX(18);
-
 		}
 
 		private void TurnOnBoxImageAndAnimator()
 		{
-			//TurnOnProperBoxImage();
 			TurnOnProperAnimator();
 			UpdateOpponent();
-			
 		}
 
 		private void TurnOnSelectedAnimator()
 		{
-			_ttMan.ttUi.SelectedAnimatorOpponentSelection();
+			_ttUi.SelectedAnimatorOpponentSelection();
 		}
 
 		#endregion

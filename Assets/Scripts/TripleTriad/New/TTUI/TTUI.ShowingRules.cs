@@ -11,8 +11,9 @@ namespace ETF.TripleTriad
 
 		#region Configuration
 
-		[Header("Showing Rules Stuff")] [SerializeField]
-		private Canvas _tripleTriadFullCanvas;
+		[Header("Showing Rules Stuff")] 
+		// [SerializeField]
+		// private Canvas _tripleTriadFullCanvas;
 		[SerializeField]
 		private Canvas _showingRulesCanvas;
 		[SerializeField] private Transform[] _showingRulesFingerLocations;
@@ -25,7 +26,7 @@ namespace ETF.TripleTriad
 		[SerializeField] private Text _isRandomCardSelectionText;
 		[SerializeField] private Text _isPlusText;
 		[SerializeField] private Text _isSameText;
-
+		private static readonly int kOpening = Animator.StringToHash("opening");
 
 		#endregion
 
@@ -39,14 +40,8 @@ namespace ETF.TripleTriad
 		{
 			_tripleTriadBoardImage.enabled = true;
 			_showingRulesCanvas.enabled = true;
-			showingRulesAnimator.SetTrigger("opening");
-			
-			
-			//_showingRulesCanvas.gameObject.SetActive(true);
+			showingRulesAnimator.SetTrigger(kOpening);
 			_tripleTriadBoardImage.color = Color.white;
-			locationSelectionFinger.SetActive(false);
-			playerSelectionFinger.SetActive(false);
-			turnIndicatorFingerAnimator.gameObject.SetActive(false);
 			UpdateRulesText();
 		}
 

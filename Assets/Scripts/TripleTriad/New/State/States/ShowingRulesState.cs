@@ -7,10 +7,11 @@ namespace ETF.TripleTriad
 
 	public class ShowingRulesState: TtState
 	{
+		private static readonly int kClosing = Animator.StringToHash("closing");
 
 		#region Configuration
 
-		[SerializeField] private TripleTriadManager _ttMan;
+		//[SerializeField] private TripleTriadManager _ttMan;
 
 		#endregion
 
@@ -30,14 +31,12 @@ namespace ETF.TripleTriad
 
 			_ttMan.ttDb.InitializeShowingRulesDbValues();
 			_ttMan.ttUi.InitializeShowingRulesUi();
-			//SoundManager.instance.PlayIntroLoop(1);
-			
 		}
 
 		public override void Execute()
 		{
 			ListenForUserInputs();
-			_ttMan.ttUi.KeepFingerOnProperLocationInShowingRules();
+			_ttUi.KeepFingerOnProperLocationInShowingRules();
 		}
 
 		
@@ -53,19 +52,19 @@ namespace ETF.TripleTriad
 				SoundManager.instance.PlaySFX(0);
 			}
 			else if ((Input.GetKeyDown(KeyCode.A) || Input.GetButtonDown("left")) &&
-			         _ttMan.ttLogic.CanIScrollLeftOnRuleSelection())
+			         _ttLogic.CanIScrollLeftOnRuleSelection())
 			{
-				_ttMan.ttDb.ScrollLeftInShowingRulesDb();
+				_ttDb.ScrollLeftInShowingRulesDb();
 				SoundManager.instance.PlaySFX(0);
 
 			}
 			else if ((Input.GetKeyDown(KeyCode.C) || Input.GetButtonDown("Fire2")) &&
-			         _ttMan.ttLogic.CanIPressCancelOnRuleSelection())
+			         _ttLogic.CanIPressCancelOnRuleSelection())
 			{
 				CancelButtonInShowingRules();
 			}
 			else if ((Input.GetKeyDown(KeyCode.Space) || Input.GetButtonDown("Fire1")) &&
-			         _ttMan.ttDb.ReturnFingerPositionInShowingRules() == 0)
+			         _ttDb.ReturnFingerPositionInShowingRules() == 0)
 
 			{
 				StartCoroutine(ChangeToCardSelectionScreen());
@@ -80,8 +79,8 @@ namespace ETF.TripleTriad
 
 		private IEnumerator ChangeToCardSelectionScreen()
 		{
-			_ttMan.ttUi.isLoading = true;
-			_ttMan.ttUi.showingRulesAnimator.SetTrigger("closing");
+			_ttUi.isLoading = true;
+			_ttUi.showingRulesAnimator.SetTrigger(kClosing);
 			yield return new WaitForSeconds(0.5f);
 			if (_ttMan.ttDb.RetrieveIsRandomPlayerCards())
 			{

@@ -21,9 +21,6 @@ namespace ETF.TripleTriad
 		private int _opponentSelectionCurrentSelection;
 		private int _currentOpponentPlaying;
 
-		//[SerializeField] private EnemyCardHand[] _opponentEnemyCardHands;
-		
-		
 		#endregion
 
 
@@ -58,15 +55,13 @@ namespace ETF.TripleTriad
 		{
 			return _opponentSelectionCurrentSelection;
 		}
-
-
+		
 		public void BringInCurrentSelectedEnemyInformationToDb()
 		{
 			if (ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].canSelectOpponent)
 			{
 				ttMan.ttUi._opponentBoxes[_opponentSelectionCurrentSelection].opponentCardInfo.SendInfoToTtDb();
 				SoundManager.instance.PlaySFX(19);
-
 			}
 			else
 			{
