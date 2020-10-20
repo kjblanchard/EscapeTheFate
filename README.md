@@ -2,13 +2,13 @@
 
 This was my first ever Unity Project.  My code and style was a jumbled mess as I was learning things.
 
-Plugins: Introloop - Looping music, Cinemachine - A Unity staple, Dotween - for tweening, TileMapEditor - Importing Tiled TMX into unity
+Plugins: Introloop - Looping music, Cinemachine - A Unity staple, Dotween - for tweening, TileMapEditor - Importing Tiled TMX into unity, Virtual Plug/Play Joystick - for phone joystick overlay
 
 Most graphics are from http://timefantasy.net/
 Music is ripped from the internet or old video games.
 Some graphics were pulled from RPG maker (character portraits)
 
-Mostly a proof of concept and a reminder of where I started with Programming
+Mostly a proof of concept and a reminder of where I started with Programming.
 Triple Triad was pulled from this game and remade in another repo of mine.
 
 This repo includes:
