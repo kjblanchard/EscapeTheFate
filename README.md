@@ -1,6 +1,6 @@
-"Unity EscapeTheFate" 
+"Unity EscapeTheFate"
 
-![pic](https://github.com/kjblanchard/EscapeTheFate/blob/master/img/pic.jpg?raw=true)
+![pic](https://github.com/kjblanchard/EscapeTheFate/blob/master/img/pic.png?raw=true)
 
 
 This was my first ever Unity Project.  My code and style was a jumbled mess as I was learning things.  Video: https://youtu.be/8wS7r2rpJFo
