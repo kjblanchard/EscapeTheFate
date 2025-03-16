@@ -6,7 +6,8 @@ static void Update(void) {
 }
 
 int main(void) {
-	SetWindowOptions(640, 480, "Escape The Fate");
+	SetWindowOptions(1024, 576, "Escape The Fate");
+	SetScalingOptions(512, 288);
 	SetUpdateFunction(&Update);
 	Run();
 }
