@@ -1,0 +1,15 @@
+{ "columns":52,
+ "image":"..\/img\/outside-export.bmp",
+ "imageheight":384,
+ "imagewidth":832,
+ "margin":0,
+ "name":"outside",
+ "spacing":0,
+ "tilecount":1248,
+ "tiledversion":"1.8.6",
+ "tileheight":16,
+ "tilewidth":16,
+ "transparentcolor":"#ff00ff",
+ "type":"tileset",
+ "version":"1.8"
+}

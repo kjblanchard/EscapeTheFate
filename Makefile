@@ -18,6 +18,11 @@ UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTAB
 WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
 PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
 ADDITIONAL_OPTIONS ?=
+# Tiled Configuration
+TILED_PATH = /Applications/Tiled.app/Contents/MacOS/Tiled
+TILED_FOLDER_PATH = ./assets/tiled
+TILED_EXPORT_TILESETS = background terrain
+TILED_EXPORT_MAPS = level1
 # default, should be used after a rebuild of some sort.
 all: build run
 clean:
@@ -68,9 +73,11 @@ bloaty:
 	bloaty -d compileunits SupergoonClient --debug-file SupergoonClient.dSYM/Contents/Resources/DWARF/SupergoonClient
 valgrind:
 	valgrind --track-origins=yes --leak-check=yes --leak-resolution=low --show-leak-kinds=definite ./build/bin/$(EXECUTABLE_NAME) 2>&1 | tee memcheck.txt
-findReplace:
-	grep -rlI "Vector2.hpp" .  | xargs sed -i '' 's/Vector2\.hpp/Vector2\.h/g'
-viclean:
-	find . -name '*.swo' | xargs rm -rf
-	find . -name '*.swp' | xargs rm -rf
-	find . -name '*.swn' | xargs rm -rf
+# Exports the tilesets if we need to as lua files for tsx/tmx
+tiled:
+	@$(foreach file,$(TILED_EXPORT_TILESETS),\
+		$(TILED_PATH) --export-tileset lua $(TILED_FOLDER_PATH)/$(file).tsj $(TILED_FOLDER_PATH)/$(file).lua;\
+	)
+	@$(foreach file,$(TILED_EXPORT_MAPS),\
+		$(TILED_PATH) --export-map lua $(TILED_FOLDER_PATH)/$(file).tmj $(TILED_FOLDER_PATH)/$(file).lua;\
+	)

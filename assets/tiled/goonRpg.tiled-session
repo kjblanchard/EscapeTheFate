@@ -1,0 +1,188 @@
+{
+    "Map/SizeTest": {
+        "height": 4300,
+        "width": 2
+    },
+    "activeFile": "debugTown.tmj",
+    "expandedProjectPaths": [
+        "templates",
+        "."
+    ],
+    "exportAsImage.includeBackgroundColor": true,
+    "file.lastUsedOpenFilter": "All Files (*)",
+    "fileStates": {
+        "/Users/kevin/git/misc/etfSnes/assets/tiled/tiled.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 1.8312499999999998,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 112.76450511945393,
+                "y": 10.375426621160415
+            }
+        },
+        "/Users/kevin/git/misc/etfSnes/assets/tiled/tiled.tmx#tiles": {
+            "scaleInDock": 1,
+            "scaleInEditor": 4
+        },
+        "/Users/kevin/pvsneslib/snes-examples/objects/mapandobjects/tiledMario.tmx": {
+            "expandedObjectLayers": [
+                2
+            ],
+            "scale": 0.52587890625,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 1685.74930362117,
+                "y": 121.7010213556174
+            }
+        },
+        "/Users/kevin/pvsneslib/snes-examples/objects/mapandobjects/tiledMario.tmx#tiles": {
+            "scaleInDock": 1
+        },
+        "/Users/kevin/pvsneslib/snes-examples/objects/nogravityobject/mapzelda.tmx": {
+            "scale": 1.0873046874999999,
+            "selectedLayer": 1,
+            "viewCenter": {
+                "x": 539.4072211244837,
+                "y": 217.05047601940004
+            }
+        },
+        "/Users/kevin/pvsneslib/snes-examples/objects/nogravityobject/mapzelda.tmx#tiles": {
+            "dynamicWrapping": false,
+            "scaleInDock": 1,
+            "scaleInEditor": 5.5
+        },
+        "debugSouth.tmj": {
+            "expandedGroupLayers": [
+                3
+            ],
+            "expandedObjectLayers": [
+                5,
+                2
+            ],
+            "scale": 1.4199,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 234.87569547151207,
+                "y": 150.71483907317418
+            }
+        },
+        "debugTown.tmj": {
+            "expandedObjectLayers": [
+                5,
+                3
+            ],
+            "scale": 1.5,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 204.66666666666666,
+                "y": 177
+            }
+        },
+        "debugTownHome.tmj": {
+            "expandedGroupLayers": [
+                4
+            ],
+            "expandedObjectLayers": [
+                6,
+                5
+            ],
+            "scale": 3,
+            "selectedLayer": 4,
+            "viewCenter": {
+                "x": 127.83333333333331,
+                "y": 88.33333333333334
+            }
+        },
+        "forest1 6.10.31 PM.tmx": {
+            "scale": 2.6904296875,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 256.27876588021775,
+                "y": 144.21488203266787
+            }
+        },
+        "forest1..tmj": {
+            "scale": 2.6904296875,
+            "selectedLayer": 3,
+            "viewCenter": {
+                "x": 256.27876588021775,
+                "y": 144.21488203266787
+            }
+        },
+        "forest1.tmj": {
+            "expandedGroupLayers": [
+                2
+            ],
+            "expandedObjectLayers": [
+                3
+            ],
+            "scale": 1.363,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 256.4196625091709,
+                "y": 144.53411592076307
+            }
+        },
+        "forest1.tmx": {
+            "expandedGroupLayers": [
+                2
+            ],
+            "scale": 1.0533,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 256.8119244279883,
+                "y": 144.3083641887402
+            }
+        },
+        "house.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "inside.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        },
+        "outside.tsj": {
+            "scaleInDock": 1.5,
+            "scaleInEditor": 1
+        },
+        "terrain.tsj": {
+            "scaleInDock": 1,
+            "scaleInEditor": 1
+        }
+    },
+    "last.exportedFilePath": "/Users/kevin/git/c/etf/assets/tiled",
+    "last.imagePath": "/Users/kevin/git/c/etf/assets/img",
+    "last.objectTemplatePath": "/Users/kevin/git/c/sgEngine/assets/tiled/templates",
+    "lastUsedTilesetExportFilter": "Lua files (*.lua)",
+    "map.height": 18,
+    "map.lastUsedExportFilter": "Lua files (*.lua)",
+    "map.lastUsedFormat": "json",
+    "map.tileHeight": 16,
+    "map.tileWidth": 16,
+    "map.width": 32,
+    "openFiles": [
+        "debugTown.tmj",
+        "terrain.tsj",
+        "outside.tsj",
+        "house.tsj"
+    ],
+    "project": "goonRpg.tiled-project",
+    "property.type": "float",
+    "recentFiles": [
+        "house.tsj",
+        "outside.tsj",
+        "terrain.tsj",
+        "debugTown.tmj",
+        "/Users/kevin/pvsneslib/snes-examples/objects/mapandobjects/tiledMario.tmx",
+        "/Users/kevin/git/misc/etfSnes/assets/tiled/tiled.tmx",
+        "debugSouth.tmj",
+        "inside.tsj",
+        "debugTownHome.tmj",
+        "forest1.tmj",
+        "/Users/kevin/pvsneslib/snes-examples/objects/nogravityobject/mapzelda.tmx",
+        "forest1..tmj"
+    ]
+}
