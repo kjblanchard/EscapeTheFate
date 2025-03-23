@@ -60,6 +60,11 @@ if(APPLE)
     set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES
         MACOSX_PACKAGE_LOCATION Resources
     )
+    set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES
+        # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+        XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
+        # XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "YOUR_TEAM_ID"
+    )
 elseif(EMSCRIPTEN)
     set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS} " -O0 -g -s --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets")
 endif(APPLE)

@@ -5,6 +5,9 @@ if(CMAKE_GENERATOR STREQUAL "Xcode")
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" FORCE)
 endif(CMAKE_GENERATOR STREQUAL "Xcode")
 
+set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/entitlements.plist")
+set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/entitlements.plist")
+
 project(SupergoonEngine)
 
 # Engine is C
