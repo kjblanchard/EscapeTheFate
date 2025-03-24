@@ -14,6 +14,7 @@ project(SupergoonEngine)
 set(CMAKE_C_STANDARD 11)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
+
 # Should we include Imgui stuffs
 option(imgui "Include ImGui support" ON)
 option(SYSTEM_PACKAGES "Use system packages if available" ON)

@@ -6,9 +6,9 @@ static void Update(void) {
 }
 
 int main(void) {
-	// SetWindowOptions(1024, 576, "Escape The Fate");
-	SetWindowOptions(512, 288, "Escape The Fate");
-	SetScalingOptions(512, 288);
+	// SetWindowOptions(480, 270, "Escape The Fate");
+	SetWindowOptions(1920, 1080, "Escape The Fate");
+	SetScalingOptions(480, 270);
 	SetUpdateFunction(&Update);
 	Run();
 }
