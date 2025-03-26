@@ -59,7 +59,7 @@ irebuild:
 erun:
 	emrun ./build/bin/$(EXECUTABLE_NAME).html
 irun:
-	xcrun simctl install 083ACF27-C316-43AA-AC2D-2DF7F9C50DC1 build/bin/Debug/EscapeTheFate.app
+	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
 #Helpers
