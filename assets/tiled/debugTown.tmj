@@ -1,4 +1,12 @@
 { "compressionlevel":-1,
+ "editorsettings":
+    {
+     "export":
+        {
+         "format":"lua",
+         "target":"debugTown.lua"
+        }
+    },
  "height":18,
  "infinite":false,
  "layers":[
@@ -307,7 +315,7 @@
                          "value":"debugSouth"
                         }],
                  "rotation":0,
-                 "type":"Exit",
+                 "type":"2Exit",
                  "visible":true,
                  "width":41.4545454545454,
                  "x":50.7272727272727,
@@ -330,7 +338,7 @@
                          "value":0
                         }],
                  "rotation":0,
-                 "type":"Start",
+                 "type":"4Start",
                  "visible":true,
                  "width":16,
                  "x":112,
@@ -353,7 +361,7 @@
                          "value":1
                         }],
                  "rotation":0,
-                 "type":"Start",
+                 "type":"4Start",
                  "visible":true,
                  "width":16,
                  "x":64.1666666666667,
@@ -375,7 +383,7 @@
                          "value":"debugTownHome"
                         }],
                  "rotation":0,
-                 "type":"Exit",
+                 "type":"2Exit",
                  "visible":true,
                  "width":48,
                  "x":432,
@@ -398,7 +406,7 @@
                          "value":2
                         }],
                  "rotation":0,
-                 "type":"Start",
+                 "type":"4Start",
                  "visible":true,
                  "width":16,
                  "x":448.333333333333,
@@ -415,7 +423,7 @@
                          "value":"Welcome!  Check out Mishas cute house or head to the forest."
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":16,
                  "x":272,
@@ -432,7 +440,7 @@
                          "value":"Scary Forest ahead!\nRandom Battles there!!"
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":16,
                  "x":48,
@@ -449,7 +457,7 @@
                          "value":"Mishas Home"
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":16,
                  "x":400,
@@ -466,7 +474,7 @@
                          "value":"Place to cook, nothing is here."
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":43.3117440499415,
                  "x":48,
@@ -483,7 +491,7 @@
                          "value":"Mishas Cute flowers (not as cute as her)"
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":48,
                  "x":528,

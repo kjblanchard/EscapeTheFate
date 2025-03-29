@@ -170,7 +170,7 @@
         "house.tsj"
     ],
     "project": "goonRpg.tiled-project",
-    "property.type": "float",
+    "property.type": "string",
     "recentFiles": [
         "house.tsj",
         "outside.tsj",

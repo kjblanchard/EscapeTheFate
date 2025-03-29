@@ -462,7 +462,7 @@ return {
         {
           id = 6,
           name = "Exit0",
-          type = "Exit",
+          type = "2Exit",
           shape = "rectangle",
           x = 50.7273,
           y = 279,
@@ -478,7 +478,7 @@ return {
         {
           id = 7,
           name = "Start0",
-          type = "Start",
+          type = "4Start",
           shape = "rectangle",
           x = 112,
           y = 96,
@@ -494,7 +494,7 @@ return {
         {
           id = 10,
           name = "Start1",
-          type = "Start",
+          type = "4Start",
           shape = "rectangle",
           x = 64.1667,
           y = 242.333,
@@ -510,7 +510,7 @@ return {
         {
           id = 13,
           name = "House Exit",
-          type = "Exit",
+          type = "2Exit",
           shape = "rectangle",
           x = 432,
           y = 112,
@@ -526,7 +526,7 @@ return {
         {
           id = 14,
           name = "Start2",
-          type = "Start",
+          type = "4Start",
           shape = "rectangle",
           x = 448.333,
           y = 125.667,
@@ -542,7 +542,7 @@ return {
         {
           id = 30,
           name = "Sign",
-          type = "TextInteract",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 272,
           y = 144,
@@ -557,7 +557,7 @@ return {
         {
           id = 31,
           name = "ForestSign",
-          type = "TextInteract",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 48,
           y = 224,
@@ -572,7 +572,7 @@ return {
         {
           id = 32,
           name = "Sign",
-          type = "TextInteract",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 400,
           y = 112,
@@ -587,7 +587,7 @@ return {
         {
           id = 33,
           name = "Sign",
-          type = "TextInteract",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 48,
           y = 112,
@@ -602,7 +602,7 @@ return {
         {
           id = 37,
           name = "Sign",
-          type = "TextInteract",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 528,
           y = 96,
