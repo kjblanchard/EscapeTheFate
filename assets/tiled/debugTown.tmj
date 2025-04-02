@@ -496,6 +496,28 @@
                  "width":48,
                  "x":528,
                  "y":96
+                }, 
+                {
+                 "height":9,
+                 "id":45,
+                 "name":"Exit0",
+                 "properties":[
+                        {
+                         "name":"loadLocation",
+                         "type":"int",
+                         "value":1
+                        }, 
+                        {
+                         "name":"loadMap",
+                         "type":"string",
+                         "value":"debugSouth"
+                        }],
+                 "rotation":0,
+                 "type":"1BattleZone",
+                 "visible":true,
+                 "width":41.4545,
+                 "x":114.7273,
+                 "y":231
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -504,7 +526,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":45,
+ "nextobjectid":46,
  "orientation":"orthogonal",
  "properties":[
         {

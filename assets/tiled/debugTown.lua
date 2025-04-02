@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 7,
-  nextobjectid = 45,
+  nextobjectid = 46,
   properties = {
     ["bgm"] = "town2",
     ["display"] = "Debug Town"
@@ -612,6 +612,24 @@ return {
           visible = true,
           properties = {
             ["text"] = "Mishas Cute flowers (not as cute as her)"
+          }
+        },
+        {
+          id = 45,
+          name = "Exit0",
+          type = "1BattleZone",
+          shape = "rectangle",
+          x = 114.727,
+          y = 231,
+          width = 41.4545,
+          height = 9,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["battleId"] = "0",
+            ["encounterTime"] = 5,
+            ["loadLocation"] = 1,
+            ["loadMap"] = "debugSouth"
           }
         }
       }

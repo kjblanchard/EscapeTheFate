@@ -70,14 +70,14 @@
         },
         "debugTown.tmj": {
             "expandedObjectLayers": [
-                3,
-                5
+                5,
+                3
             ],
             "scale": 1.5,
-            "selectedLayer": 3,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 199.33333333333331,
-                "y": 172.33333333333334
+                "x": 480,
+                "y": 387.33333333333326
             }
         },
         "debugTownHome.tmj": {
