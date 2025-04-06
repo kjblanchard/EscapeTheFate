@@ -49,7 +49,8 @@ static void Start(void) {
 	testImage->Data = imageData;
 	UIObject* testText = SDL_calloc(1, sizeof(*testText));
 	testText->XOffset = testText->YOffset = 48;
-	testText->Location.w = 240;
+	// testText->Location.w = 240;
+	testText->Location.w = 260;
 	testText->Location.h = 120;
 	testText->Name = strdup("Test Text");
 	testText->Flags |= UIObjectFlagActive | UIObjectFlagVisible | UIObjectFlagDirty;
@@ -59,7 +60,7 @@ static void Start(void) {
 	testText->Data = textData;
 	textData->FontSize = 16;
 	textData->NumLettersToDraw = 500;
-	textData->Text = "Welcome to the game! Hello and hi";
+	textData->Text = "Welcome to the game! Hello above hi";
 	textData->WordWrap = true;
 	AddUIObject(testObj, NULL);
 	AddUIObject(testImage, testObj);
