@@ -1,9 +1,12 @@
 #include <SDL3/SDL_main.h>
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/UI/ui.h>
+#include <Supergoon/UI/uiimage.h>
 #include <Supergoon/UI/uiobject.h>
+#include <Supergoon/UI/uitext.h>
 #include <Supergoon/engine.h>
 #include <Supergoon/gameobject.h>
+#include <Supergoon/graphics.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 #include <Supergoon/window.h>
@@ -36,7 +39,31 @@ static void Start(void) {
 	testObj->XOffset = testObj->YOffset = testObj->Location.w = testObj->Location.h = 32;
 	testObj->Name = strdup("Test panel");
 	testObj->Flags |= UIObjectFlagActive | UIObjectFlagVisible | UIObjectFlagDirty;
+	UIObject* testImage = SDL_calloc(1, sizeof(*testObj));
+	testImage->XOffset = testImage->YOffset = testImage->Location.w = testImage->Location.h = 64;
+	testImage->Name = strdup("Test image");
+	testImage->Flags |= UIObjectFlagActive | UIObjectFlagVisible | UIObjectFlagDirty;
+	testImage->Type = UIObjectTypesImage;
+	UIImageData* imageData = SDL_calloc(1, sizeof(*imageData));
+	imageData->Texture = CreateTextureFromIndexedBMP("supergoonGamesLogo");
+	testImage->Data = imageData;
+	UIObject* testText = SDL_calloc(1, sizeof(*testText));
+	testText->XOffset = testText->YOffset = 48;
+	testText->Location.w = 240;
+	testText->Location.h = 120;
+	testText->Name = strdup("Test Text");
+	testText->Flags |= UIObjectFlagActive | UIObjectFlagVisible | UIObjectFlagDirty;
+	testText->Type = UIObjectTypesText;
+	SetFont("PressStart2P", 16);
+	UIText* textData = SDL_calloc(1, sizeof(*textData));
+	testText->Data = textData;
+	textData->FontSize = 16;
+	textData->NumLettersToDraw = 500;
+	textData->Text = "Welcome to the game! Hello and hi";
+	textData->WordWrap = true;
 	AddUIObject(testObj, NULL);
+	AddUIObject(testImage, testObj);
+	AddUIObject(testText, testObj);
 }
 
 static void Update(void) {

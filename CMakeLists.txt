@@ -11,9 +11,8 @@ set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/entitlemen
 project(SupergoonEngine)
 
 # Engine is C
-set(CMAKE_C_STANDARD 11)
+set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-
 
 # Should we include Imgui stuffs
 option(imgui "Include ImGui support" ON)
@@ -35,7 +34,7 @@ set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 if(imgui)
     add_definitions(-Dimgui)
-    set(CMAKE_CXX_STANDARD 17)
+    set(CMAKE_CXX_STANDARD 11)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif(imgui)
 
