@@ -24,7 +24,7 @@ TILED_FOLDER_PATH = ./assets/tiled
 TILED_EXPORT_TILESETS = background terrain
 TILED_EXPORT_MAPS = level1
 # default, should be used after a rebuild of some sort.
-all: build run
+all: build install run
 clean:
 	@rm -rf $(BUILD_DIR)
 configure:

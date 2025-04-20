@@ -3,42 +3,42 @@ return {
     name = "Test Panel",
     children = {
         {
-            name = "Test Image",
-            type = "image",
-            imageName = "uibase-export",
-            location = { 64, 64, 64, 64 }
+            name = "Title BG",
+            type = "rect",
+            location = { 125, 10, 278, 75 },
+            color = { 0, 0, 0, 132 }
         },
         {
-            name = "Test Text",
+            name = "Title",
             type = "text",
             font = "PressStart2P",
-            size = 16,
-            centeredX = true,
-            centeredY = true,
+            size = 32,
             wordWrap = true,
-            text = "Welcome to the game!  Hello world!",
-            location = { 48, 48, 260, 120 }
+            centeredX = true,
+            text = "Escape The Fate",
+            location = { 125, 10, 278, 75 }
         },
         {
-            name = "Test Rect",
+            name = "Selections BG",
             type = "rect",
-            location = { 48, 48, 260, 120 },
-            color = { 0, 0, 0, 0 }
+            location = { 48, 198, 156, 70 },
+            color = { 0, 0, 0, 132 }
         },
         {
-            name = "Test HLG",
-            type = "hlg",
-            location = { 48, 48, 260, 120 },
-            spacing = 5,
+            name = "Selections",
+            type = "vlg",
+            location = { 48, 198, 156, 70 },
+            spacing = 20,
             children = {
                 {
                     name = "New Game",
                     type = "text",
+                    size = 16,
                     centeredX = true,
                     centeredY = true,
                     wordWrap = true,
                     text = "New Game",
-                    location = { 0, 0, 128, 64 }
+                    location = { 0, 0, 156, 20 }
                 },
                 {
                     name = "Continue",
@@ -47,7 +47,7 @@ return {
                     centeredY = true,
                     wordWrap = true,
                     text = "Continue",
-                    location = { 0, 0, 128, 64 }
+                    location = { 0, 0, 156, 20 }
                 },
                 {
                     name = "Option",
@@ -56,7 +56,7 @@ return {
                     centeredY = true,
                     wordWrap = true,
                     text = "Option",
-                    location = { 0, 0, 128, 64 }
+                    location = { 0, 0, 156, 20 }
                 }
             }
         }

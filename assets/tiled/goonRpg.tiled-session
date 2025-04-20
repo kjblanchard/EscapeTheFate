@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "untitled.tmj",
+    "activeFile": "cloud.tsx",
     "expandedProjectPaths": [
-        ".",
-        "templates"
+        "templates",
+        "."
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -76,7 +76,7 @@
             "scale": 1.5,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 304,
+                "x": 304.33333333333326,
                 "y": 140.33333333333334
             }
         },
@@ -157,10 +157,10 @@
                 3
             ],
             "scale": 2,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 195,
-                "y": 160
+                "x": 191.5,
+                "y": 156.5
             }
         }
     },
@@ -191,8 +191,8 @@
         "terrain.tsj",
         "outside.tsj",
         "house.tsj",
-        "cloud.tsx",
         "untitled.tmj",
+        "cloud.tsx",
         "/Users/kevin/pvsneslib/snes-examples/objects/mapandobjects/tiledMario.tmx",
         "/Users/kevin/git/misc/etfSnes/assets/tiled/tiled.tmx",
         "debugSouth.tmj",
