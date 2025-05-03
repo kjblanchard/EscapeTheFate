@@ -5,25 +5,25 @@ return {
         {
             name = "Title BG",
             type = "rect",
-            location = { 68, 10, 394, 75 },
-            color = { 0, 0, 0, 132 }
+            location = { 40, 10, 430, 75 },
+            color = { 0, 0, 0, 190 }
         },
         {
             name = "Title",
             type = "text",
             font = "PressStart2P",
-            size = 32,
+            size = 28,
             wordWrap = true,
             centeredX = true,
             centeredY = true,
             text = "Escape The Fate",
-            location = { 69, 10, 394, 75 }
+            location = { 40, 10, 430, 75 }
         },
         {
             name = "Selections BG",
             type = "rect",
             location = { 48, 198, 156, 70 },
-            color = { 0, 0, 0, 132 }
+            color = { 0, 0, 0, 190 }
         },
         {
             name = "Selections",
