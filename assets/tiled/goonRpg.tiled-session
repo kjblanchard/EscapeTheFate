@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "cloud.tsx",
+    "activeFile": "untitled.tmj",
     "expandedProjectPaths": [
         "templates",
         "."
@@ -157,7 +157,7 @@
                 3
             ],
             "scale": 2,
-            "selectedLayer": 1,
+            "selectedLayer": 2,
             "viewCenter": {
                 "x": 191.5,
                 "y": 156.5
@@ -191,8 +191,8 @@
         "terrain.tsj",
         "outside.tsj",
         "house.tsj",
-        "untitled.tmj",
         "cloud.tsx",
+        "untitled.tmj",
         "/Users/kevin/pvsneslib/snes-examples/objects/mapandobjects/tiledMario.tmx",
         "/Users/kevin/git/misc/etfSnes/assets/tiled/tiled.tmx",
         "debugSouth.tmj",

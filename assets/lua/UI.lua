@@ -32,9 +32,10 @@ local function CreateImage(name, rect, parentPanel, filename, srcRect)
     return cUI.CreateImage(name, rect, parentPanel, filename, srcRect)
 end
 
-local function CreateText(name, rect, parentPanel, text, fontName, fontSize, centerX, centerY, wordwrap)
+local function CreateText(name, rect, parentPanel, text, fontName, fontSize, centerX, centerY, wordwrap, color)
     rect = normalizeRect(rect)
-    return cUI.CreateText(name, rect, parentPanel, text, fontName, fontSize, centerX, centerY, wordwrap)
+    color = normalizeColorRect(color)
+    return cUI.CreateText(name, rect, parentPanel, text, fontName, fontSize, centerX, centerY, wordwrap, color)
 end
 
 local function CreateRect(name, rect, parentPanel, color)
@@ -68,12 +69,13 @@ local function CreateUIObjectAndChildren(objTable, parent)
         if objTable.centeredX == nil then objTable.centeredX = false end
         if objTable.centeredY == nil then objTable.centeredY = false end
         if objTable.wordWrap == nil then objTable.wordWrap = false end
+        if objTable.color == nil then objTable.color = { 255, 255, 255, 255 } end
         if objTable.size ~= nil then
             thisSize = objTable.size
             fontSize = thisSize
         end
         obj = CreateText(objTable.name, objTable.location, parent, objTable.text, thisFont, thisSize,
-            objTable.centeredX, objTable.centeredY, objTable.wordWrap)
+            objTable.centeredX, objTable.centeredY, objTable.wordWrap, objTable.color)
     elseif objTable.type == "rect" then
         obj = CreateRect(objTable.name, objTable.location, parent, objTable.color)
     elseif objTable.type == "hlg" then

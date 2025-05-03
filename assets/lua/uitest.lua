@@ -5,7 +5,7 @@ return {
         {
             name = "Title BG",
             type = "rect",
-            location = { 125, 10, 278, 75 },
+            location = { 68, 10, 394, 75 },
             color = { 0, 0, 0, 132 }
         },
         {
@@ -15,8 +15,9 @@ return {
             size = 32,
             wordWrap = true,
             centeredX = true,
+            centeredY = true,
             text = "Escape The Fate",
-            location = { 125, 10, 278, 75 }
+            location = { 69, 10, 394, 75 }
         },
         {
             name = "Selections BG",
@@ -27,7 +28,7 @@ return {
         {
             name = "Selections",
             type = "vlg",
-            location = { 48, 198, 156, 70 },
+            location = { 48, 203, 156, 70 },
             spacing = 20,
             children = {
                 {
@@ -47,7 +48,8 @@ return {
                     centeredY = true,
                     wordWrap = true,
                     text = "Continue",
-                    location = { 0, 0, 156, 20 }
+                    location = { 0, 0, 156, 20 },
+                    color = { 150, 150, 150, 255 }
                 },
                 {
                     name = "Option",
@@ -56,7 +58,8 @@ return {
                     centeredY = true,
                     wordWrap = true,
                     text = "Option",
-                    location = { 0, 0, 156, 20 }
+                    location = { 0, 0, 156, 20 },
+                    color = { 150, 150, 150, 255 }
                 }
             }
         }
