@@ -125,6 +125,7 @@
                  "x":0,
                  "y":0
                 }],
+         "locked":true,
          "name":"bg1",
          "opacity":1,
          "type":"group",

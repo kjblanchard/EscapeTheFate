@@ -5,8 +5,8 @@
     },
     "activeFile": "untitled.tmj",
     "expandedProjectPaths": [
-        "templates",
-        "."
+        ".",
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -157,10 +157,10 @@
                 3
             ],
             "scale": 2,
-            "selectedLayer": 2,
+            "selectedLayer": 3,
             "viewCenter": {
-                "x": 191.5,
-                "y": 156.5
+                "x": 130.75,
+                "y": 173.5
             }
         }
     },
