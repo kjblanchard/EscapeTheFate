@@ -1,5 +1,7 @@
 #include <SDL3/SDL_main.h>
+#include <Supergoon/Audio/Audio.h>
 #include <Supergoon/Input/keyboard.h>
+#include <Supergoon/Input/mouse.h>
 #include <Supergoon/UI/ui.h>
 #include <Supergoon/UI/uiimage.h>
 #include <Supergoon/UI/uilayoutgroup.h>
@@ -42,8 +44,15 @@ static void Start(void) {
 	LuaRunFile("assets/lua/test.lua");
 }
 
+static bool lastFrameOverlap = false;
+
 static void Update(void) {
-	(void)"Hello";
+	bool thisFrameOverlap = IsMouseOverlap(48, 203, 156, 20);
+	if (thisFrameOverlap && !lastFrameOverlap) {
+		sgLogWarn("Just Overlap!");
+		PlaySfxOneShot("slash1", 1.0);
+	}
+	lastFrameOverlap = thisFrameOverlap;
 }
 
 int main(int argc, char* argv[]) {
