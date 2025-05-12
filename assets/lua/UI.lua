@@ -1,5 +1,6 @@
 -- UI.lua
 local UI = {}
+local UIInstance = {}
 local font = ""
 local fontSize = 0
 local function normalizeArrayTableWithKeys(rect, keys)
@@ -54,11 +55,16 @@ local function CreateVLG(name, rect, parentPanel, spacing)
     return cUI.CreateLayoutGroup(name, rect, parentPanel, spacing, false)
 end
 
-local function CreateUIObjectAndChildren(objTable, parent)
+local function CreateButton(name, rect, parentPanel, pressedFunc, hoverFunc)
+    rect = normalizeRect(rect)
+    return cUI.CreateButton(name, rect, parentPanel, { pressedFunc, hoverFunc })
+end
+
+local function CreateUIObjectAndChildren(objTable, parentPtr, parentTable)
     -- TODO we should validate these so it doesn't break
     local obj = nil
     if objTable.type == "image" then
-        obj = CreateImage(objTable.name, objTable.location, parent, objTable.imageName, objTable.srcRect)
+        obj = CreateImage(objTable.name, objTable.location, parentPtr, objTable.imageName, objTable.srcRect)
     elseif objTable.type == "text" then
         local thisFont = font
         local thisSize = fontSize
@@ -74,29 +80,37 @@ local function CreateUIObjectAndChildren(objTable, parent)
             thisSize = objTable.size
             fontSize = thisSize
         end
-        obj = CreateText(objTable.name, objTable.location, parent, objTable.text, thisFont, thisSize,
+        obj = CreateText(objTable.name, objTable.location, parentPtr, objTable.text, thisFont, thisSize,
             objTable.centeredX, objTable.centeredY, objTable.wordWrap, objTable.color)
     elseif objTable.type == "rect" then
-        obj = CreateRect(objTable.name, objTable.location, parent, objTable.color)
+        obj = CreateRect(objTable.name, objTable.location, parentPtr, objTable.color)
     elseif objTable.type == "hlg" then
-        obj = CreateHLG(objTable.name, objTable.location, parent, objTable.spacing)
+        obj = CreateHLG(objTable.name, objTable.location, parentPtr, objTable.spacing)
     elseif objTable.type == "vlg" then
-        obj = CreateVLG(objTable.name, objTable.location, parent, objTable.spacing)
+        obj = CreateVLG(objTable.name, objTable.location, parentPtr, objTable.spacing)
+    elseif objTable.type == "button" then
+        obj = CreateButton(objTable.name, objTable.location, parentPtr, { objTable.pressedFunc, objTable.hoverFunc })
     elseif objTable.type == "panel" then
     end
+    local node = { data = obj, children = {} }
+    parentTable[objTable.name] = node
     if objTable.children then
         for _, child in ipairs(objTable.children) do
-            CreateUIObjectAndChildren(child, obj)
+            CreateUIObjectAndChildren(child, obj, node.children)
         end
     end
+    return obj
 end
+
 
 function UI.CreatePanelFromTable(table)
     -- Top level is always a panel
-    local panel = CreatePanel(table.name, { 0, 0, 0, 0 }, nil)
+    local root = { data = CreatePanel(table.name, { 0, 0, 0, 0 }, nil), children = {} }
+    UIInstance[table.name] = root
     for _, child in ipairs(table.children) do
-        CreateUIObjectAndChildren(child, panel)
+        CreateUIObjectAndChildren(child, root.data, root.children)
     end
+    return UIInstance[table.name]
 end
 
 return UI

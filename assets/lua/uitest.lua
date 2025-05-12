@@ -1,5 +1,14 @@
+local engine = require("Engine")
 -- Top level is always a panel, it just needs a name and then you can put all your children inside of it
-return {
+local function buttonFunc()
+    engine.LogWarn("Button pressed!")
+end
+
+local function hoverFunc()
+    engine.LogWarn("Button hovered!")
+end
+
+table = {
     name = "Test Panel",
     children = {
         {
@@ -32,15 +41,34 @@ return {
             spacing = 20,
             children = {
                 {
-                    name = "New Game",
-                    type = "text",
-                    size = 16,
-                    centeredX = true,
-                    centeredY = true,
-                    wordWrap = true,
-                    text = "New Game",
-                    location = { 0, 0, 156, 20 }
+                    name = "New Game Button",
+                    type = "button",
+                    pressedFunc = buttonFunc,
+                    hoverFunc = hoverFunc,
+                    children = {
+                        name = "New Game",
+                        type = "text",
+                        size = 16,
+                        centeredX = true,
+                        centeredY = true,
+                        wordWrap = true,
+                        text = "New Game",
+                        location = { 0, 0, 156, 20 }
+                    }
+
+
                 },
+                -- {
+                --     name = "New Game",
+                --     type = "text",
+                --     size = 16,
+                --     centeredX = true,
+                --     centeredY = true,
+                --     wordWrap = true,
+                --     text = "New Game",
+                --     location = { 0, 0, 156, 20 }
+
+                -- },
                 {
                     name = "Continue",
                     type = "text",
@@ -65,3 +93,5 @@ return {
         }
     }
 }
+
+return table

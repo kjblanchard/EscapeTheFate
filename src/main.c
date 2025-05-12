@@ -49,8 +49,10 @@ static bool lastFrameOverlap = false;
 static void Update(void) {
 	bool thisFrameOverlap = IsMouseOverlapRect(48, 203, 156, 20);
 	if (thisFrameOverlap && !lastFrameOverlap) {
-		sgLogWarn("Just Overlap!");
 		PlaySfxOneShot("slash1", 1.0);
+	}
+	if (thisFrameOverlap && IsMouseButtonJustPressed(MouseButtonsLeftClick)) {
+		PlaySfxOneShot("enemyDead", 1.0);
 	}
 	lastFrameOverlap = thisFrameOverlap;
 }
