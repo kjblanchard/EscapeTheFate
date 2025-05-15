@@ -44,17 +44,7 @@ static void Start(void) {
 	LuaRunFile("assets/lua/test.lua");
 }
 
-static bool lastFrameOverlap = false;
-
 static void Update(void) {
-	bool thisFrameOverlap = IsMouseOverlapRect(48, 203, 156, 20);
-	if (thisFrameOverlap && !lastFrameOverlap) {
-		PlaySfxOneShot("slash1", 1.0);
-	}
-	if (thisFrameOverlap && IsMouseButtonJustPressed(MouseButtonsLeftClick)) {
-		PlaySfxOneShot("enemyDead", 1.0);
-	}
-	lastFrameOverlap = thisFrameOverlap;
 }
 
 int main(int argc, char* argv[]) {
