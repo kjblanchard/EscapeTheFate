@@ -17,30 +17,27 @@
 #include <Supergoon/window.h>
 #include <stdio.h>
 
-static void CreatePlayer(void* userdata, GameObject* go) {
-	TiledObject* mapData = (TiledObject*)userdata;
-	if (!mapData) {
-		return;
-	}
-	go->X = mapData->X;
-	go->Y = mapData->Y;
-	go->W = mapData->Width;
-	go->H = mapData->Height;
-}
-static void StartPlayer(GameObject* go) {
-	(void)go;
-}
-static void UpdatePlayer(GameObject* go) {
-	(void)go;
-	if (IsKeyboardKeyJustPressed(SDL_SCANCODE_W)) {
-		sgLogWarn("W key is just pressed!");
-	}
-}
+// static void CreatePlayer(void* userdata, GameObject* go) {
+// 	TiledObject* mapData = (TiledObject*)userdata;
+// 	if (!mapData) {
+// 		return;
+// 	}
+// 	go->X = mapData->X;
+// 	go->Y = mapData->Y;
+// 	go->W = mapData->Width;
+// 	go->H = mapData->Height;
+// }
+// static void StartPlayer(GameObject* go) {
+// 	(void)go;
+// }
+// static void UpdatePlayer(GameObject* go) {
+// 	(void)go;
+// 	if (IsKeyboardKeyJustPressed(SDL_SCANCODE_W)) {
+// 		sgLogWarn("W key is just pressed!");
+// 	}
+// }
 
 static void Start(void) {
-	// LoadMap("debugTown");
-	LoadMap("title");
-	LoadObjectsFromMap();
 	LuaRunFile("assets/lua/test.lua");
 }
 
@@ -48,11 +45,6 @@ static void Update(void) {
 }
 
 int main(int argc, char* argv[]) {
-	SetWindowOptions(1920, 1080, "Escape The Fate");
-	SetScalingOptions(480, 270);
-	ObjectSetCreateFunction(1, CreatePlayer);
-	ObjectSetStartFunction(1, StartPlayer);
-	ObjectSetUpdateFunction(1, UpdatePlayer);
 	SetStartFunction(Start);
 	SetUpdateFunction(Update);
 	Run();

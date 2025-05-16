@@ -30,4 +30,28 @@ function engine.RegisterGameObjectFunctions(typeNumber, funcTable)
     cGameObject.NewGameObjectType(typeNumber, funcTable)
 end
 
+function engine.LoadTilemap(mapname)
+    cScene.LoadMap(mapname)
+end
+
+function engine.LoadTilemapObjects()
+    cScene.LoadObjectsOnMap()
+end
+
+function engine.LoadScene(mapname, uiname)
+    engine.LoadTilemap(mapname)
+    engine.LoadTilemapObjects()
+    local testui = require(uiname)
+    local ui = require("UI")
+    ui.CreatePanelFromTable(testui)
+end
+
+function engine.SetWindowOptions(windowSize, windowHeight, windowName)
+    cEngine.SetWindowOptions(windowSize, windowHeight, windowName)
+end
+
+function engine.SetScalingOptions(worldWidth, WorldHeight)
+    cEngine.SetScalingOptions(worldWidth, WorldHeight)
+end
+
 return engine
