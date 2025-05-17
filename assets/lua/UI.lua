@@ -115,10 +115,19 @@ local function CreateUIObjectAndChildren(objTable, parentPtr, parentTable)
     return node.data
 end
 
+-- TODO Only destroys top level panels currently
+function UI.DestroyPanel(panelTable)
+    cUI.DestroyUIObject(panelTable.data)
+    for _, value in pairs(UI.UIInstance) do
+        if value == panelTable then
+            value = nil
+        end
+    end
+end
 
 function UI.CreatePanelFromTable(table)
     -- Top level is always a panel
-    local root = { data = CreatePanel(table.name, { 0, 0, 0, 0 }, nil), children = {} }
+    local root = { data = CreatePanel(table.name, { 0, 0, 0, 0 }, nil), children = {}, doNotDestroy = table.doNotDestroy }
     UI.UIInstance[table.name] = root
     for _, child in ipairs(table.children) do
         CreateUIObjectAndChildren(child, root.data, root.children)

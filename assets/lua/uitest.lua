@@ -5,6 +5,7 @@ local _fingerButtonPtr = nil
 
 local function newGameButtonClickFunc(uiObjPtr)
     engine.PlaySfxOneShot("menuSelect", 1.0)
+    engine.LoadScene("debugTown", nil, "town2", 1.0)
 end
 
 local function optionGameButtonClickFunc(uiObjPtr)
@@ -33,6 +34,7 @@ end
 local returnTable = {
     name = "Test Panel",
     startFunc = panelStartFunc,
+    doNotDestroy = false,
     children = {
         {
             name = "Title BG",
