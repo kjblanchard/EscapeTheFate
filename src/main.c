@@ -41,11 +41,11 @@ static void Start(void) {
 	LuaRunFile("assets/lua/test.lua");
 }
 
-static void Update(void) {
-}
+// static void Update(void) {
+// }
 
 int main(int argc, char* argv[]) {
 	SetStartFunction(Start);
-	SetUpdateFunction(Update);
+	// SetUpdateFunction(Update);
 	Run();
 }

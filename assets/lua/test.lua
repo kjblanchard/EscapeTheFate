@@ -1,7 +1,12 @@
 -- local ui = require("UI")
 local engine = require("Engine")
+local scheduler = require("Scheduler")
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
+end
+
+local function update()
+    scheduler:update(engine.DeltaTIme())
 end
 
 -- engine.RegisterGameObjectFunctions(1, {
@@ -13,5 +18,6 @@ end
 -- engine.SetWindowOptions(1920, 1080, "Escape The Fate")
 engine.SetWindowOptions(960, 540, "Escape The Fate")
 engine.SetScalingOptions(480, 270)
+engine.SetUpdateFunc(update)
 engine.LoadScene("title", "uitest", "town1", 0.5)
 -- ui.CreatePanelFromTable(testui)
