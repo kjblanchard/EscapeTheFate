@@ -60,10 +60,10 @@ function engine.DestroyGameObjects()
     cGameObject.DestroyGameObjects()
 end
 
-function LoadSceneCo(mapname, uiname, bgm, volume)
+function LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
     return coroutine.create(function()
-        engine.FadeoutScreen(5)
-        wait(5)
+        engine.FadeoutScreen(fadeInTimeSec)
+        wait(fadeInTimeSec)
         engine.LoadTilemap(mapname)
         engine.SetGameObjectsToBeDestroyed(false)
         engine.LoadTilemapObjects()
@@ -80,14 +80,14 @@ function LoadSceneCo(mapname, uiname, bgm, volume)
             local testui = require(uiname)
             ui.CreatePanelFromTable(testui)
         end
-        engine.FadeinScreen(0.5)
-        wait(0.5)
+        engine.FadeinScreen(fadeOutTimeSec)
+        wait(fadeOutTimeSec)
         if bgm ~= nil then engine.PlayBGM(bgm, volume) end
     end)
 end
 
-function engine.LoadScene(mapname, uiname, bgm, volume)
-    local co = LoadSceneCo(mapname, uiname, bgm, volume)
+function engine.LoadScene(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
+    local co = LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
     scheduler:run(co)
 end
 
