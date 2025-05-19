@@ -19,5 +19,6 @@ end
 engine.SetWindowOptions(960, 540, "Escape The Fate")
 engine.SetScalingOptions(480, 270)
 engine.SetUpdateFunc(update)
-engine.LoadScene("title", "uitest", "town1", 0, 0.1, 0.1)
+engine.LoadDefaultScene()
+-- engine.LoadSceneEx("title", "uitest", "town1", 0, 0.1, 0.1)
 -- ui.CreatePanelFromTable(testui)

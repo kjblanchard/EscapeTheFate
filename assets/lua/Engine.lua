@@ -3,26 +3,28 @@
 -- luacheck: undefined-global cAudio
 local engine = {}
 local scheduler = require("Scheduler")
+local scenes = require("scenes")
 engine.currentScene = {}
 engine.sceneChange = false
+engine.Log = {}
 
-function engine.LogDebug(message)
+function engine.Log.LogDebug(message)
     cLog.Log(message, 2)
 end
 
-function engine.LogInfo(message)
+function engine.Log.LogInfo(message)
     cLog.Log(message, 3)
 end
 
-function engine.LogWarn(message)
+function engine.Log.LogWarn(message)
     cLog.Log(message, 4)
 end
 
-function engine.LogError(message)
+function engine.LogLogError(message)
     cLog.Log(message, 5)
 end
 
-function engine.LogCritical(message)
+function engine.Log.LogCritical(message)
     cLog.Log(message, 6)
 end
 
@@ -86,8 +88,21 @@ function LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec
     end)
 end
 
-function engine.LoadScene(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
+function engine.LoadSceneEx(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
     local co = LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
+    scheduler:run(co)
+end
+
+function engine.LoadScene(mapKey)
+    local sceneTable = scenes.scenes[mapKey]
+    local co = LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5], sceneTable[6])
+    scheduler:run(co)
+end
+
+function engine.LoadDefaultScene()
+    local defaultScene = scenes["default"]
+    local sceneTable = scenes.scenes[defaultScene]
+    local co = LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5], sceneTable[6])
     scheduler:run(co)
 end
 

@@ -5,7 +5,7 @@ local _fingerButtonPtr = nil
 
 local function newGameButtonClickFunc(uiObjPtr)
     engine.PlaySfxOneShot("menuSelect", 1.0)
-    engine.LoadScene("debugTown", nil, "town2", 1.0, 1.0, 0.5)
+    engine.LoadScene("debugTown")
 end
 
 local function optionGameButtonClickFunc(uiObjPtr)
