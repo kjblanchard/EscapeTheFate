@@ -7,6 +7,7 @@ local scenes = require("scenes")
 engine.currentScene = {}
 engine.sceneChange = false
 engine.Log = {}
+engine.Input = {}
 
 function engine.Log.LogDebug(message)
     cLog.Log(message, 2)
@@ -72,9 +73,11 @@ function LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec
         engine.DestroyGameObjects()
         local ui = require("UI")
         -- Destroy all ui panels that are not donotdestroy.
-        for _, value in pairs(ui.UIInstance) do
+        for key, value in pairs(ui.UIInstance) do
             if value.data ~= nil and value.doNotDestroy == false then
                 ui.DestroyPanel(value)
+                ui.UIInstance[key] = nil
+                value = nil
             end
         end
         -- Load ui if needed
@@ -89,6 +92,7 @@ function LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec
 end
 
 function engine.LoadSceneEx(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
+    if uiname == "" then uiname = nil end
     local co = LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
     scheduler:run(co)
 end
@@ -134,6 +138,10 @@ end
 
 function engine.DeltaTIme()
     return cEngine.DeltaTime()
+end
+
+function engine.Input.IsButtonPressed(buttonInt)
+    return true
 end
 
 return engine

@@ -123,6 +123,7 @@ function UI.DestroyPanel(panelTable)
             value = nil
         end
     end
+    panelTable = nil
 end
 
 function UI.CreatePanelFromTable(table)
