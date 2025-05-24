@@ -3,7 +3,7 @@ local Scheduler = {
 }
 
 function wait(seconds)
-    coroutine.yield(seconds)
+    coroutine.yield(seconds + 0.01)
 end
 
 function Scheduler:update(dt)
