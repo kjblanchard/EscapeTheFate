@@ -42,6 +42,9 @@ static void Start(void) {
 }
 
 // static void Update(void) {
+// 	if (IsKeyboardKeyDown(SDL_SCANCODE_W)) {
+// 		sgLogWarn("W is down");
+// 	}
 // }
 
 int main(int argc, char* argv[]) {

@@ -1,32 +1,59 @@
 -- luacheck: globals cAudio cLog
 -- luacheck: undefined-global cLog
 -- luacheck: undefined-global cAudio
+local function normalizeArrayTableWithKeys(rect, keys)
+    if rect and #rect == #keys and rect[keys[1]] == nil then
+        local normalizedRect = {}
+        for i = 1, #keys, 1 do
+            normalizedRect[keys[i]] = rect[i]
+        end
+        return normalizedRect
+    end
+    return rect
+end
+
+local function normalizeRect(rect)
+    return normalizeArrayTableWithKeys(rect, { "x", "y", "w", "h" })
+end
 local engine = {}
 local scheduler = require("Scheduler")
 local scenes = require("scenes")
+engine.Buttons = {
+    UP = 26,
+    LEFT = 4,
+    DOWN = 22,
+    RIGHT = 7,
+}
 engine.currentScene = {}
 engine.sceneChange = false
 engine.Log = {}
 engine.Input = {}
+function engine.Input.KeyboardKeyJustPressed(key)
+    return cInput.IsKeyboardKeyPressed(key)
+end
+
+function engine.Input.KeyboardKeyDown(key)
+    return cInput.IsKeyboardKeyDown(key)
+end
 
 function engine.Log.LogDebug(message)
-    cLog.Log(message, 2)
+    cLog.Log(message, 1)
 end
 
 function engine.Log.LogInfo(message)
-    cLog.Log(message, 3)
+    cLog.Log(message, 2)
 end
 
 function engine.Log.LogWarn(message)
+    cLog.Log(message, 3)
+end
+
+function engine.Log.LogError(message)
     cLog.Log(message, 4)
 end
 
-function engine.LogLogError(message)
-    cLog.Log(message, 5)
-end
-
 function engine.Log.LogCritical(message)
-    cLog.Log(message, 6)
+    cLog.Log(message, 5)
 end
 
 function engine.PlaySfxOneShot(soundName, volume)
@@ -136,12 +163,22 @@ function engine.SetUpdateFunc(func)
     cEngine.SetUpdateFunc(func)
 end
 
-function engine.DeltaTIme()
-    return cEngine.DeltaTime()
+function engine.DeltaTimeInSeconds()
+    return cEngine.DeltaTimeSeconds
 end
 
-function engine.Input.IsButtonPressed(buttonInt)
-    return true
+function engine.DeltaTimeMS()
+    return cEngine.DeltaTimeMilliseconds
+end
+
+function engine.GameTicks()
+    return cEngine.Ticks
+end
+
+function engine.NewSprite(imageName, parentPtr, textureSrcRectTable, offsetSizeRectTable)
+    textureSrcRectTable = normalizeRect(textureSrcRectTable)
+    offsetSizeRectTable = normalizeRect(offsetSizeRectTable)
+    return cSprite.NewSprite(imageName, parentPtr, textureSrcRectTable, offsetSizeRectTable)
 end
 
 return engine
