@@ -20,10 +20,21 @@ option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(DEBUG_BUILD_TIME "Add in the pch that I think will be changing a bit" OFF)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
 
 if(DEBUG_BUILD_TIME)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 endif(DEBUG_BUILD_TIME)
+
+# Enable AddressSanitizer only in Debug builds
+if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    message(STATUS "Enabling AddressSanitizer in Debug mode")
+    set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
+
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
+endif(DEBUG_ASAN and CMAKE_BUILD_TYPE STREQUAL "Debug")
+
 
 include(FetchContent)
 

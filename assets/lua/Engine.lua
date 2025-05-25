@@ -181,4 +181,8 @@ function engine.NewSprite(imageName, parentPtr, textureSrcRectTable, offsetSizeR
     return cSprite.NewSprite(imageName, parentPtr, textureSrcRectTable, offsetSizeRectTable)
 end
 
+function engine.DestroySprite(spritePtr)
+    return cSprite.DestroySprite(spritePtr)
+end
+
 return engine
