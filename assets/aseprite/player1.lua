@@ -1,0 +1,319 @@
+return {
+	frames = {
+		{
+			filename = 'player1 0.aseprite',
+			frame = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 1.aseprite',
+			frame = {
+				x = 0,
+				y = 32,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 2.aseprite',
+			frame = {
+				x = 0,
+				y = 64,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 3.aseprite',
+			frame = {
+				x = 0,
+				y = 96,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 4.aseprite',
+			frame = {
+				x = 0,
+				y = 128,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 5.aseprite',
+			frame = {
+				x = 0,
+				y = 160,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 6.aseprite',
+			frame = {
+				x = 0,
+				y = 192,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 7.aseprite',
+			frame = {
+				x = 0,
+				y = 224,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 8.aseprite',
+			frame = {
+				x = 0,
+				y = 256,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 9.aseprite',
+			frame = {
+				x = 0,
+				y = 288,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 10.aseprite',
+			frame = {
+				x = 0,
+				y = 320,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1 11.aseprite',
+			frame = {
+				x = 0,
+				y = 352,
+				w = 32,
+				h = 32
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 32,
+				h = 32
+			},
+			sourceSize = {
+				w = 32,
+				h = 32
+			},
+			duration = 200
+		}
+	},
+	meta = {
+		app = 'https://www.aseprite.org/',
+		version = '1.3.2-dev',
+		image = 'player1.bmp',
+		format = 'I8',
+		size = {
+			w = 32,
+			h = 384
+		},
+		scale = '1',
+		frameTags = {
+			{
+				name = 'walkD',
+				from = 0,
+				to = 2,
+				direction = 'pingpong',
+				color = '#000000ff'
+			},
+			{
+				name = 'walkL',
+				from = 3,
+				to = 5,
+				direction = 'pingpong',
+				color = '#000000ff'
+			},
+			{
+				name = 'walkR',
+				from = 6,
+				to = 8,
+				direction = 'pingpong',
+				color = '#000000ff'
+			},
+			{
+				name = 'walkU',
+				from = 9,
+				to = 11,
+				direction = 'pingpong',
+				color = '#000000ff'
+			}
+		},
+		layers = {
+			{
+				name = 'Layer 1',
+				opacity = 255,
+				blendMode = 'normal'
+			}
+		},
+		slices = {
+
+		}
+	}
+}

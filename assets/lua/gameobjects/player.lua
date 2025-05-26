@@ -34,8 +34,8 @@ function PlayerUpdate(go)
         velocity.x = velocity.x - 1
     end
     local newPosX, newPosY = gameobject.Position(go)
-    -- velocity.x = velocity.x * player.moveSpeed * engine.DeltaTimeInSeconds()
-    -- velocity.y = velocity.y * player.moveSpeed * engine.DeltaTimeInSeconds()
+    velocity.x = velocity.x * player.moveSpeed * engine.DeltaTimeInSeconds()
+    velocity.y = velocity.y * player.moveSpeed * engine.DeltaTimeInSeconds()
     gameobject.SetPosition(go, newPosX + velocity.x, newPosY + velocity.y)
 end
 

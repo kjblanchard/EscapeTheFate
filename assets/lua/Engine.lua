@@ -16,6 +16,7 @@ local function normalizeRect(rect)
     return normalizeArrayTableWithKeys(rect, { "x", "y", "w", "h" })
 end
 local engine = {}
+engine.nextScene = nil
 local scheduler = require("Scheduler")
 local scenes = require("scenes")
 engine.Buttons = {
@@ -125,9 +126,10 @@ function engine.LoadSceneEx(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOut
 end
 
 function engine.LoadScene(mapKey)
-    local sceneTable = scenes.scenes[mapKey]
-    local co = LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5], sceneTable[6])
-    scheduler:run(co)
+    engine.nextScene = mapKey
+    -- local sceneTable = scenes.scenes[mapKey]
+    -- local co = LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5], sceneTable[6])
+    -- scheduler:run(co)
 end
 
 function engine.LoadDefaultScene()
