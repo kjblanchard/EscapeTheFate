@@ -3,6 +3,7 @@ local engine = require("Engine")
 local scheduler = require("Scheduler")
 local player = require("gameobjects.player")
 local scenes = require("scenes")
+local config = require("gameConfig")
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
 end
@@ -24,5 +25,7 @@ end
 engine.SetWindowOptions(960, 540, "Escape The Fate")
 engine.SetScalingOptions(480, 270)
 engine.SetUpdateFunc(update)
+engine.SetGlobalBGMVolume(config.audio.bgmVolume)
+engine.SetGlobalSFXVolume(config.audio.sfxVolume)
 player.RegisterPlayerFunctions()
 engine.LoadDefaultScene()

@@ -65,6 +65,14 @@ function engine.PlayBGM(soundName, volume)
     cAudio.PlayBgm(soundName, volume)
 end
 
+function engine.SetGlobalBGMVolume(volume)
+    cAudio.SetGlobalBgmVolume(volume)
+end
+
+function engine.SetGlobalSFXVolume(volume)
+    cAudio.SetGlobalSfxVolume(volume)
+end
+
 function engine.RegisterGameObjectFunctions(typeNumber, funcTable)
     cGameObject.NewGameObjectType(typeNumber, funcTable)
 end
