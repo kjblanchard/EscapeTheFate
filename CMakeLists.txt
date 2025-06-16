@@ -96,16 +96,18 @@ else()
     set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
 endif(MSVC)
 
+
 if(CONVERT_JSON_TO_LUA_IN_ASEPRITE)
     message(STATUS "JSON-to-Lua conversion is enabled.")
     set(JSON_TO_LUA_SCRIPT ${CMAKE_SOURCE_DIR}/tools/jsontolua.py)
     set(ASEPRITE_DIR ${CMAKE_SOURCE_DIR}/assets/aseprite)
+    file(GLOB JSON_FILES ${ASEPRITE_DIR}/*.json)
     add_custom_command(
         OUTPUT ${ASEPRITE_DIR}/converted.flag
         COMMAND ${CMAKE_COMMAND} -E echo "Running JSON to Lua conversion..."
         COMMAND ${Python3_EXECUTABLE} ${JSON_TO_LUA_SCRIPT} --dir ${ASEPRITE_DIR}
         COMMAND ${CMAKE_COMMAND} -E touch ${ASEPRITE_DIR}/converted.flag
-        DEPENDS ${JSON_TO_LUA_SCRIPT}
+        DEPENDS ${JSON_TO_LUA_SCRIPT} ${JSON_FILES}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Converting Aseprite JSON files to Lua"
         VERBATIM

@@ -195,4 +195,27 @@ function engine.DestroySprite(spritePtr)
     return cSprite.DestroySprite(spritePtr)
 end
 
+---comment
+---@param name string The name of the animator to load, without the fileextension
+---@return integer animator handle
+function engine.CreateAnimator(name, spritePtr)
+    return cAnimation.CreateAnimator(name, spritePtr)
+end
+
+function engine.PlayAnimation(animator, animationName)
+    return cAnimation.PlayAnimation(animator, animationName)
+end
+
+---comment
+---@param animator integer anim handle
+---@param animatorSpeed number the speed that this animator should play, 0.0 - 5.0
+---@return unknown
+function engine.SetAnimatorSpeed(animator, animatorSpeed)
+    return cAnimation.SetAnimatorSpeed(animator, animatorSpeed)
+end
+
+function engine.DestroyAnimator(animator)
+    return cAnimation.DestroyAnimator(animator)
+end
+
 return engine
