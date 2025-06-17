@@ -84,11 +84,14 @@ function PlayerDestroy(go)
         engine.Log.LogWarn("Trying to destroy a player that doesnt exist in lua")
         return
     end
-    engine.DestroySprite(player.players[go]["sprite"])
+    -- engine.DestroySprite(player.players[go]["sprite"])
     engine.DestroyAnimator(player.players[go]["animator"])
     player.players[go]["sprite"] = nil
     player.players[go]["animator"] = nil
     player.players[go] = nil
+    if 0 == 1 then
+
+    end
 end
 
 function player.RegisterPlayerFunctions()
