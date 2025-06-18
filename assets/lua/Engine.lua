@@ -173,6 +173,18 @@ function engine.SetUpdateFunc(func)
     cEngine.SetUpdateFunc(func)
 end
 
+function engine.SetDrawFunc(func)
+    cEngine.SetDrawFunc(func)
+end
+
+function engine.DrawRect(rect)
+    cEngine.DrawRect(rect.x, rect.y, rect.w, rect.h)
+end
+
+function engine.DrawRectCamOffset(rect)
+    cEngine.DrawRectCamOffset(rect.x, rect.y, rect.w, rect.h)
+end
+
 function engine.DeltaTimeInSeconds()
     return cEngine.DeltaTimeSeconds
 end
@@ -224,6 +236,11 @@ end
 
 function engine.CheckGameobjectForCollision(gameobject)
     return cGameObject.CheckSolids(gameobject)
+end
+
+function engine.CheckRectForCollision(rectTable)
+    local rect = normalizeRect(rectTable)
+    return cGameObject.CheckSolidsRect(rect)
 end
 
 return engine

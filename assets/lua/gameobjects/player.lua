@@ -1,11 +1,15 @@
 local engine = require("Engine")
 local gameobject = require("GameObject")
+local debugh = require("debugh")
+local tools = require("tools")
 local directions = {
     down = 0,
     right = 1,
     up = 2,
     left = 3
 }
+local playerCollisionOffsetAndSizeRect = { x = 8, y = 8, w = 16, h = 22 }
+
 local player = {}
 player.players = {}
 player.moveSpeed = 100
@@ -76,8 +80,18 @@ function PlayerUpdate(go)
     engine.SetAnimatorSpeed(playerData["animator"], 1.0)
     local posX, posY = gameobject.Position(go)
     local delta = engine.DeltaTimeInSeconds()
-    gameobject.SetPosition(go, posX + velocity.x * player.moveSpeed * delta, posY + velocity.y * player.moveSpeed * delta)
-    engine.CheckGameobjectForCollision(go)
+    -- gameobject.SetPosition(go, posX + velocity.x * player.moveSpeed * delta, posY + velocity.y * player.moveSpeed * delta)
+    local newX = posX + velocity.x * player.moveSpeed * delta
+    local newY = posY + velocity.y * player.moveSpeed * delta
+    local collisionRect = { newX + playerCollisionOffsetAndSizeRect.x, newY + playerCollisionOffsetAndSizeRect.y,
+        playerCollisionOffsetAndSizeRect.w, playerCollisionOffsetAndSizeRect.h }
+    collisionRect = engine.CheckRectForCollision(collisionRect)
+    if collisionRect ~= nil then
+        debugh.DrawRects[go] = collisionRect
+        gameobject.SetPosition(go,
+            tools.round(collisionRect.x - playerCollisionOffsetAndSizeRect.x, 1),
+            tools.round(collisionRect.y - playerCollisionOffsetAndSizeRect.y, 1))
+    end
 end
 
 function PlayerDestroy(go)
@@ -91,9 +105,6 @@ function PlayerDestroy(go)
     player.players[go]["sprite"] = nil
     player.players[go]["animator"] = nil
     player.players[go] = nil
-    if 0 == 1 then
-
-    end
 end
 
 function player.RegisterPlayerFunctions()
