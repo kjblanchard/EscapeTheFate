@@ -3,10 +3,10 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "untitled.tmj",
+    "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
-        ".",
-        "templates"
+        "templates",
+        "."
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -74,10 +74,10 @@
         },
         "debugTown.tmj": {
             "scale": 1.5,
-            "selectedLayer": 3,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 304.33333333333326,
-                "y": 140.33333333333334
+                "x": 303.6666666666667,
+                "y": 140.66666666666669
             }
         },
         "debugTownHome.tmj": {
@@ -159,8 +159,8 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 130.75,
-                "y": 173.5
+                "x": 127.25,
+                "y": 170
             }
         }
     },
@@ -187,12 +187,12 @@
     "project": "goonRpg.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "debugTown.tmj",
-        "terrain.tsj",
-        "outside.tsj",
-        "house.tsj",
         "cloud.tsx",
         "untitled.tmj",
+        "house.tsj",
+        "outside.tsj",
+        "terrain.tsj",
+        "debugTown.tmj",
         "/Users/kevin/pvsneslib/snes-examples/objects/mapandobjects/tiledMario.tmx",
         "/Users/kevin/git/misc/etfSnes/assets/tiled/tiled.tmx",
         "debugSouth.tmj",

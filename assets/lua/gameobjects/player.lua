@@ -77,6 +77,7 @@ function PlayerUpdate(go)
     local posX, posY = gameobject.Position(go)
     local delta = engine.DeltaTimeInSeconds()
     gameobject.SetPosition(go, posX + velocity.x * player.moveSpeed * delta, posY + velocity.y * player.moveSpeed * delta)
+    engine.CheckGameobjectForCollision(go)
 end
 
 function PlayerDestroy(go)

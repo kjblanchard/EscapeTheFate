@@ -222,4 +222,8 @@ function engine.SetCameraFollowTarget(gameobject)
     return cCamera.SetCameraFollowTarget(gameobject)
 end
 
+function engine.CheckGameobjectForCollision(gameobject)
+    return cGameObject.CheckSolids(gameobject)
+end
+
 return engine
