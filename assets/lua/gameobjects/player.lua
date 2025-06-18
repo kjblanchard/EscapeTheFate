@@ -17,8 +17,9 @@ function PlayerObjectCreate(userdata, go)
 end
 
 function PlayerStart(go)
-    engine.Log.LogWarn("Starting player")
+    engine.Log.LogInfo("Starting player")
     engine.PlayAnimation(player.players[go]["animator"], "walkD")
+    engine.SetCameraFollowTarget(go)
 end
 
 function PlayerUpdate(go)
@@ -79,7 +80,7 @@ function PlayerUpdate(go)
 end
 
 function PlayerDestroy(go)
-    engine.Log.LogWarn("Destroying player")
+    engine.Log.LogInfo("Destroying player")
     if player.players[go] == nil then
         engine.Log.LogWarn("Trying to destroy a player that doesnt exist in lua")
         return

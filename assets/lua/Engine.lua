@@ -218,4 +218,8 @@ function engine.DestroyAnimator(animator)
     return cAnimation.DestroyAnimator(animator)
 end
 
+function engine.SetCameraFollowTarget(gameobject)
+    return cCamera.SetCameraFollowTarget(gameobject)
+end
+
 return engine
