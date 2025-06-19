@@ -22,6 +22,9 @@ make rebuild
 Pull requests are welcome. For major changes, please open an issue first
 to discuss what you would like to change.
 
+## License
+- Non-Commercial use, see LICENSE file for details.
+
 Please make sure to update tests as appropriate.
 
 ## Credits
