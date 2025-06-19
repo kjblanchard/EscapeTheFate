@@ -1,6 +1,3 @@
--- luacheck: globals cAudio cLog
--- luacheck: undefined-global cLog
--- luacheck: undefined-global cAudio
 local function normalizeArrayTableWithKeys(rect, keys)
     if rect and #rect == #keys and rect[keys[1]] == nil then
         local normalizedRect = {}
@@ -73,7 +70,16 @@ function engine.SetGlobalSFXVolume(volume)
     cAudio.SetGlobalSfxVolume(volume)
 end
 
+---Registers functions that will run by the engine for different things.
+---@param typeNumber integer The actual type that corresponds to the first number of type in tiled
+---@param funcTable table array table with the functions | Create, Start, Update, Destroy
 function engine.RegisterGameObjectFunctions(typeNumber, funcTable)
+    if #funcTable ~= 4 then engine.Log.LogWarn("bad number of function args passed to go func register") end
+    for index, value in ipairs(funcTable) do
+        if type(value) ~= "nil" and type(value) ~= "function" then
+            engine.Log.LogWarn(("Invalid function at index %d for type %d"):format(index, typeNumber))
+        end
+    end
     cGameObject.NewGameObjectType(typeNumber, funcTable)
 end
 
@@ -102,7 +108,7 @@ end
 function LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec)
     return coroutine.create(function()
         engine.FadeoutScreen(fadeInTimeSec)
-        wait(fadeInTimeSec)
+        Wait(fadeInTimeSec)
         engine.LoadTilemap(mapname)
         engine.SetGameObjectsToBeDestroyed(false)
         engine.LoadTilemapObjects()
@@ -122,7 +128,7 @@ function LoadSceneCo(mapname, uiname, bgm, volume, fadeInTimeSec, fadeOutTimeSec
             ui.CreatePanelFromTable(testui)
         end
         engine.FadeinScreen(fadeOutTimeSec)
-        wait(fadeOutTimeSec)
+        Wait(fadeOutTimeSec)
         if bgm ~= nil then engine.PlayBGM(bgm, volume) end
     end)
 end
@@ -241,6 +247,10 @@ end
 function engine.CheckRectForCollision(rectTable)
     local rect = normalizeRect(rectTable)
     return cGameObject.CheckSolidsRect(rect)
+end
+
+function engine.MapName()
+    return cEngine.MapName()
 end
 
 return engine

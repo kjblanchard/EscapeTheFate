@@ -50,7 +50,6 @@ if(imgui)
     set(CMAKE_CXX_STANDARD_REQUIRED ON)
 endif(imgui)
 
-add_subdirectory(engine)
 
 # if(ENGINE_CACHED AND SYSTEM_PACKAGES)
 # add_subdirectory(engine)
@@ -66,7 +65,6 @@ add_subdirectory(engine)
 # )
 # FetchContent_MakeAvailable(engine)
 # endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
-add_subdirectory(src)
 
 if(DEBUG_CMAKE_VARIABLES)
     get_cmake_property(ALL_VARIABLES VARIABLES)
@@ -79,22 +77,26 @@ endif(DEBUG_CMAKE_VARIABLES)
 set(FOLDERS_TO_COPY assets)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
+# set(INSTALL_DIR ${INSTALL_DIR} CACHE INTERNAL "Install path for all subdirs")
+
 if(MSVC)
-    set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>)
+    # set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG> CACHE STRING "" FORCE)
+    set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG> CACHE INTERNAL "" )
 elseif(APPLE)
     if(CMAKE_GENERATOR STREQUAL "Xcode")
         if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
-            set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app)
+            set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app CACHE INTERNAL "" )
         else()
-            set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources)
+            set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources CACHE INTERNAL "" )
         endif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
     else()
-        set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources)
+        set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources CACHE INTERNAL "" )
     endif(CMAKE_GENERATOR STREQUAL "Xcode")
 
 else()
-    set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY})
+    set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} CACHE STRING "" FORCE)
 endif(MSVC)
+
 
 
 if(CONVERT_JSON_TO_LUA_IN_ASEPRITE)
@@ -116,6 +118,10 @@ if(CONVERT_JSON_TO_LUA_IN_ASEPRITE)
         DEPENDS ${ASEPRITE_DIR}/converted.flag
     )
 endif()
+
+
+add_subdirectory(engine)
+add_subdirectory(src)
 
 install(DIRECTORY ${FOLDERS_TO_COPY}
     DESTINATION ${INSTALL_DIR}

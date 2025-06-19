@@ -542,7 +542,7 @@ return {
         {
           id = 30,
           name = "Sign",
-          type = "5TextInteract",
+          type = "0BattleLocation",
           shape = "rectangle",
           x = 272,
           y = 144,
@@ -551,6 +551,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
+            ["id"] = 0,
             ["text"] = "Welcome!  Check out Mishas cute house or head to the forest."
           }
         },
@@ -566,13 +567,14 @@ return {
           rotation = 0,
           visible = true,
           properties = {
+            ["filename"] = "sign1",
             ["text"] = "Scary Forest ahead!\nRandom Battles there!!"
           }
         },
         {
           id = 32,
           name = "Sign",
-          type = "5TextInteract",
+          type = "0BattleLocation",
           shape = "rectangle",
           x = 400,
           y = 112,
@@ -581,13 +583,14 @@ return {
           rotation = 0,
           visible = true,
           properties = {
+            ["id"] = 0,
             ["text"] = "Mishas Home"
           }
         },
         {
           id = 33,
           name = "Sign",
-          type = "5TextInteract",
+          type = "0BattleLocation",
           shape = "rectangle",
           x = 48,
           y = 112,
@@ -596,13 +599,14 @@ return {
           rotation = 0,
           visible = true,
           properties = {
+            ["id"] = 0,
             ["text"] = "Place to cook, nothing is here."
           }
         },
         {
           id = 37,
           name = "Sign",
-          type = "5TextInteract",
+          type = "0BattleLocation",
           shape = "rectangle",
           x = 528,
           y = 96,
@@ -611,6 +615,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
+            ["id"] = 0,
             ["text"] = "Mishas Cute flowers (not as cute as her)"
           }
         },
@@ -619,8 +624,8 @@ return {
           name = "Exit0",
           type = "1BattleZone",
           shape = "rectangle",
-          x = 114.727,
-          y = 231,
+          x = 144,
+          y = 160,
           width = 41.4545,
           height = 9,
           rotation = 0,

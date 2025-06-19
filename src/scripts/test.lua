@@ -5,6 +5,7 @@ local player = require("gameobjects.player")
 local scenes = require("scenes")
 local config = require("gameConfig")
 local debugh = require("debugh")
+local dialog = require("gameobjects.dialogBox")
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
 end
@@ -36,4 +37,5 @@ engine.SetDrawFunc(draw)
 engine.SetGlobalBGMVolume(config.audio.bgmVolume)
 engine.SetGlobalSFXVolume(config.audio.sfxVolume)
 player.RegisterPlayerFunctions()
+dialog.RegisterDebugBoxFunctions()
 engine.LoadDefaultScene()

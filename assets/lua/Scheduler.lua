@@ -2,7 +2,7 @@ local Scheduler = {
     tasks = {}
 }
 
-function wait(seconds)
+function Wait(seconds)
     coroutine.yield(seconds + 0.01)
 end
 

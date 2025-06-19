@@ -423,7 +423,7 @@
                          "value":"Welcome!  Check out Mishas cute house or head to the forest."
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":16,
                  "x":272,
@@ -434,6 +434,11 @@
                  "id":31,
                  "name":"ForestSign",
                  "properties":[
+                        {
+                         "name":"filename",
+                         "type":"string",
+                         "value":"sign1"
+                        }, 
                         {
                          "name":"text",
                          "type":"string",
@@ -457,7 +462,7 @@
                          "value":"Mishas Home"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":16,
                  "x":400,
@@ -474,7 +479,7 @@
                          "value":"Place to cook, nothing is here."
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":43.3117440499415,
                  "x":48,
@@ -491,7 +496,7 @@
                          "value":"Mishas Cute flowers (not as cute as her)"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":48,
                  "x":528,
@@ -516,8 +521,8 @@
                  "type":"1BattleZone",
                  "visible":true,
                  "width":41.4545,
-                 "x":114.7273,
-                 "y":231
+                 "x":144,
+                 "y":160
                 }],
          "opacity":1,
          "type":"objectgroup",
