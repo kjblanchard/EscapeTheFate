@@ -1,6 +1,5 @@
 cmake_minimum_required(VERSION 3.16)
 message(STATUS "Starting ${EXECUTABLE_TARGET_NAME} game initialization")
-set(DEBUG_FILES)
 set(FOLDERS_TO_COPY scripts/ dialog/)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
@@ -45,10 +44,7 @@ target_include_directories(${EXECUTABLE_TARGET_NAME}
     ${CMAKE_SOURCE_DIR}/src/engine/include
     ${CMAKE_CURRENT_SOURCE_DIR}/include
     ${CMAKE_CURRENT_SOURCE_DIR}
-
-
 )
-
 install(DIRECTORY ${FOLDERS_TO_COPY}
     DESTINATION ${INSTALL_DIR}/assets/lua
     COMPONENT assets)
