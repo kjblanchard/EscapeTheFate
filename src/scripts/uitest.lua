@@ -38,9 +38,11 @@ local returnTable = {
     children = {
         {
             name = "Title BG",
-            type = "rect",
+            type = "9slice",
             location = { 40, 10, 430, 75 },
-            color = { 0, 0, 0, 190 }
+            color = { 80, 0, 120, 235 },
+            imageName = "uibase-export",
+            alpha = 190
         },
         {
             name = "Title",
@@ -58,11 +60,19 @@ local returnTable = {
             type = "panel",
             location = { 0, 0, 0, 0 },
             children = {
+                -- {
+                --     name = "Selections BG",
+                --     type = "rect",
+                --     location = { 48, 198, 156, 70 },
+                --     color = { 0, 0, 0, 190 }
+                -- },
                 {
                     name = "Selections BG",
-                    type = "rect",
+                    type = "9slice",
+                    color = { 80, 0, 120, 235 },
                     location = { 48, 198, 156, 70 },
-                    color = { 0, 0, 0, 190 }
+                    imageName = "uibase-export",
+                    alpha = 190
                 },
                 {
                     name = "SelectionsVLG",

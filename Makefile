@@ -1,4 +1,4 @@
-.PHONY: all configure build clean debug release
+.PHONY: all configure build clean debug release aseprite
 BUILD_DIR = build
 BINARY_FOLDER = bin
 EXECUTABLE_NAME = EscapeTheFate
@@ -23,6 +23,9 @@ TILED_PATH = /Applications/Tiled.app/Contents/MacOS/Tiled
 TILED_FOLDER_PATH = ./assets/tiled
 TILED_EXPORT_TILESETS = background terrain
 TILED_EXPORT_MAPS = level1
+# Aseprite
+ASEPRITE_DIR = assets/aseprite
+JSON_TO_LUA_SCRIPT = tools/jsontolua.py
 # default, should be used after a rebuild of some sort.
 all: build install run
 clean:
@@ -81,3 +84,7 @@ tiled:
 	@$(foreach file,$(TILED_EXPORT_MAPS),\
 		$(TILED_PATH) --export-map lua $(TILED_FOLDER_PATH)/$(file).tmj $(TILED_FOLDER_PATH)/$(file).lua;\
 	)
+aseprite:
+	@echo "Converting Aseprite JSON files to Lua..."
+	@python3 $(JSON_TO_LUA_SCRIPT) --dir $(ASEPRITE_DIR)
+	@echo "Conversion complete."
