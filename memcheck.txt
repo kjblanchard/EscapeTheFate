@@ -1,0 +1,231 @@
+==46639== Memcheck, a memory error detector
+==46639== Copyright (C) 2002-2024, and GNU GPL'd, by Julian Seward et al.
+==46639== Using Valgrind-3.25.0 and LibVEX; rerun with -h for copyright info
+==46639== Command: ./build/bin/EscapeTheFate
+==46639== 
+06-25-01:56-10: Opening log file at errors.log end
+06-25-01:56-10: There is a total of 0 controllers initializing end
+06-25-01:56-23: nil value in string, returning empty  end
+06-25-01:56-25: Deleting texture not in cache, render target?: 393922000 end
+06-25-01:56-25: Deleting texture not in cache, render target?: 433121248 end
+06-25-01:56-26: Deleting texture not in cache, render target?: 433157088 end
+06-25-01:56-29: This ascii character doesn't have a width or height, skipping! 0 end
+06-25-01:56-29: This ascii character doesn't have a width or height, skipping! 13 end
+06-25-01:56-29: This ascii character doesn't have a width or height, skipping! 32 end
+06-25-01:56-30: This ascii character doesn't have a width or height, skipping! 0 end
+06-25-01:56-30: This ascii character doesn't have a width or height, skipping! 13 end
+06-25-01:56-30: This ascii character doesn't have a width or height, skipping! 32 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-31: No kerning for font, returning 0 end
+06-25-01:56-43: Deleting texture not in cache, render target?: 433370752 end
+06-25-01:56-44: create gameobject function end
+06-25-01:56-44: Index is 1 and value is Scary Forest ahead!
+Random Battles there!! end
+06-25-01:56-44: create gameobject function end
+06-25-01:56-44: Deleting texture not in cache, render target?: 436572896 end
+06-25-01:56-44: Deleting texture not in cache, render target?: 458062320 end
+06-25-01:56-44: Starting gameobject function end
+06-25-01:56-44: Starting gameobject function end
+06-25-01:56-44: Starting player end
+06-25-01:57-04: Deleting texture not in cache, render target?: 137418880 end
+06-25-01:57-04: Deleting texture not in cache, render target?: 433717392 end
+06-25-01:57-04: Deleting texture not in cache, render target?: 433201152 end
+==46639== 
+==46639== HEAP SUMMARY:
+==46639==     in use at exit: 769,949 bytes in 3,736 blocks
+==46639==   total heap usage: 144,591 allocs, 140,855 frees, 51,156,460 bytes allocated
+==46639== 
+==46639== 8 bytes in 1 blocks are definitely lost in loss record 5 of 107
+==46639==    at 0x4FA32F0: realloc (vg_replace_malloc.c:1801)
+==46639==    by 0x403F3A2: AddUIObject (ui.c:152)
+==46639==    by 0x4049B6E: createPanel (lui.c:45)
+==46639==    by 0x457C038: precallC (ldo.c:529)
+==46639==    by 0x457C0E7: luaD_pretailcall (ldo.c:550)
+==46639==    by 0x45997D4: luaV_execute (lvm.c:1709)
+==46639==    by 0x457C85A: unroll (ldo.c:744)
+==46639==    by 0x457CA5C: resume (ldo.c:807)
+==46639==    by 0x457AF64: luaD_rawrunprotected (ldo.c:144)
+==46639==    by 0x457CC37: lua_resume (ldo.c:849)
+==46639==    by 0x45A55F0: auxresume (lcorolib.c:39)
+==46639==    by 0x45A56FB: luaB_coresume (lcorolib.c:59)
+==46639== 
+==46639== 28 bytes in 1 blocks are definitely lost in loss record 20 of 107
+==46639==    at 0x4F9B80F: malloc (vg_replace_malloc.c:446)
+==46639==    by 0x540C34E: strdup (strdup.c:42)
+==46639==    by 0x4046C9E: addTextureToCache (graphics.c:44)
+==46639==    by 0x40473D8: CreateTextureFromIndexedBMP (graphics.c:144)
+==46639==    by 0x4042BF2: loadTilesetTextures (map.c:148)
+==46639==    by 0x40436B6: createBackgroundsFromTilemap (map.c:303)
+==46639==    by 0x404429A: LoadMap (map.c:477)
+==46639==    by 0x404B29D: loadMap (lscene.c:18)
+==46639==    by 0x457C038: precallC (ldo.c:529)
+==46639==    by 0x457C363: luaD_precall (ldo.c:595)
+==46639==    by 0x45995F5: luaV_execute (lvm.c:1684)
+==46639==    by 0x457C85A: unroll (ldo.c:744)
+==46639== 
+==46639== 72 (24 direct, 48 indirect) bytes in 1 blocks are definitely lost in loss record 36 of 107
+==46639==    at 0x4F9B80F: malloc (vg_replace_malloc.c:446)
+==46639==    by 0x59A5D95: ???
+==46639==    by 0x5990A45: ???
+==46639==    by 0x5995D6E: ???
+==46639==    by 0x59831B2: ???
+==46639==    by 0x598343B: ???
+==46639==    by 0x5983707: ???
+==46639==    by 0x43174AA: SDL_DBus_Init (SDL_dbus.c:150)
+==46639==    by 0x4352BC6: SDL_InitSubSystem_REAL (SDL.c:317)
+==46639==    by 0x4352F29: SDL_Init_REAL (SDL.c:520)
+==46639==    by 0x41A46D0: SDL_Init_DEFAULT (SDL_dynapi_procs.h:638)
+==46639==    by 0x41B2887: SDL_Init (SDL_dynapi_procs.h:638)
+==46639== 
+==46639== 96 bytes in 3 blocks are definitely lost in loss record 41 of 107
+==46639==    at 0x4F9B80F: malloc (vg_replace_malloc.c:446)
+==46639==    by 0x599DF93: ???
+==46639==    by 0x59838D9: ???
+==46639==    by 0x43174AA: SDL_DBus_Init (SDL_dbus.c:150)
+==46639==    by 0x4352BC6: SDL_InitSubSystem_REAL (SDL.c:317)
+==46639==    by 0x4352F29: SDL_Init_REAL (SDL.c:520)
+==46639==    by 0x41A46D0: SDL_Init_DEFAULT (SDL_dynapi_procs.h:638)
+==46639==    by 0x41B2887: SDL_Init (SDL_dynapi_procs.h:638)
+==46639==    by 0x403C15A: Start (engine.c:50)
+==46639==    by 0x403C569: Run (engine.c:179)
+==46639==    by 0x4039F69: main (main.c:11)
+==46639== 
+==46639== 168 bytes in 3 blocks are definitely lost in loss record 50 of 107
+==46639==    at 0x4FA30DC: calloc (vg_replace_malloc.c:1675)
+==46639==    by 0x404510F: getFreeSprite (sprite.c:18)
+==46639==    by 0x40451E0: NewSprite (sprite.c:34)
+==46639==    by 0x404CA66: newSprite (lsprite.c:16)
+==46639==    by 0x457C038: precallC (ldo.c:529)
+==46639==    by 0x457C0E7: luaD_pretailcall (ldo.c:550)
+==46639==    by 0x45997D4: luaV_execute (lvm.c:1709)
+==46639==    by 0x457C5C7: ccall (ldo.c:637)
+==46639==    by 0x457C644: luaD_callnoyield (ldo.c:655)
+==46639==    by 0x457759E: f_call (lapi.c:1038)
+==46639==    by 0x457AF64: luaD_rawrunprotected (ldo.c:144)
+==46639==    by 0x457CF45: luaD_pcall (ldo.c:953)
+==46639== 
+==46639== 231 bytes in 9 blocks are definitely lost in loss record 58 of 107
+==46639==    at 0x4F9B80F: malloc (vg_replace_malloc.c:446)
+==46639==    by 0x540C34E: strdup (strdup.c:42)
+==46639==    by 0x403AE65: LuaAllocateStringStack (lua.c:289)
+==46639==    by 0x4042F4D: handleTiledObjectEntities (map.c:196)
+==46639==    by 0x404330B: handleTiledObjectGroup (map.c:236)
+==46639==    by 0x40426FA: createLayers (map.c:81)
+==46639==    by 0x4042882: parseTiledTilemap (map.c:102)
+==46639==    by 0x404427C: LoadMap (map.c:474)
+==46639==    by 0x404B29D: loadMap (lscene.c:18)
+==46639==    by 0x457C038: precallC (ldo.c:529)
+==46639==    by 0x457C363: luaD_precall (ldo.c:595)
+==46639==    by 0x45995F5: luaV_execute (lvm.c:1684)
+==46639== 
+==46639== 320 bytes in 1 blocks are definitely lost in loss record 65 of 107
+==46639==    at 0x4FA30DC: calloc (vg_replace_malloc.c:1675)
+==46639==    by 0x4043044: handleTiledSolidObjects (map.c:209)
+==46639==    by 0x4043333: handleTiledObjectGroup (map.c:238)
+==46639==    by 0x40426FA: createLayers (map.c:81)
+==46639==    by 0x4042882: parseTiledTilemap (map.c:102)
+==46639==    by 0x404427C: LoadMap (map.c:474)
+==46639==    by 0x404B29D: loadMap (lscene.c:18)
+==46639==    by 0x457C038: precallC (ldo.c:529)
+==46639==    by 0x457C363: luaD_precall (ldo.c:595)
+==46639==    by 0x45995F5: luaV_execute (lvm.c:1684)
+==46639==    by 0x457C85A: unroll (ldo.c:744)
+==46639==    by 0x457CA5C: resume (ldo.c:807)
+==46639== 
+==46639== 520 bytes in 13 blocks are definitely lost in loss record 70 of 107
+==46639==    at 0x4F9B80F: malloc (vg_replace_malloc.c:446)
+==46639==    by 0x59A1C8B: ???
+==46639==    by 0x5995934: ???
+==46639==    by 0x431747D: SDL_DBus_Init (SDL_dbus.c:142)
+==46639==    by 0x4352BC6: SDL_InitSubSystem_REAL (SDL.c:317)
+==46639==    by 0x4352F29: SDL_Init_REAL (SDL.c:520)
+==46639==    by 0x41A46D0: SDL_Init_DEFAULT (SDL_dynapi_procs.h:638)
+==46639==    by 0x41B2887: SDL_Init (SDL_dynapi_procs.h:638)
+==46639==    by 0x403C15A: Start (engine.c:50)
+==46639==    by 0x403C569: Run (engine.c:179)
+==46639==    by 0x4039F69: main (main.c:11)
+==46639== 
+==46639== 1,284 (160 direct, 1,124 indirect) bytes in 2 blocks are definitely lost in loss record 83 of 107
+==46639==    at 0x4FA30DC: calloc (vg_replace_malloc.c:1675)
+==46639==    by 0x423490E: real_calloc (SDL_malloc.c:6328)
+==46639==    by 0x4234BC1: SDL_calloc_REAL (SDL_malloc.c:6471)
+==46639==    by 0x41B71A7: SDL_calloc (SDL_dynapi_procs.h:1055)
+==46639==    by 0x40499C1: createUIObject (lui.c:23)
+==46639==    by 0x404A7DB: createText (lui.c:163)
+==46639==    by 0x457C038: precallC (ldo.c:529)
+==46639==    by 0x457C0E7: luaD_pretailcall (ldo.c:550)
+==46639==    by 0x45997D4: luaV_execute (lvm.c:1709)
+==46639==    by 0x457C85A: unroll (ldo.c:744)
+==46639==    by 0x457CA5C: resume (ldo.c:807)
+==46639==    by 0x457AF64: luaD_rawrunprotected (ldo.c:144)
+==46639== 
+==46639== 1,888 bytes in 2 blocks are definitely lost in loss record 88 of 107
+==46639==    at 0x4F9B80F: malloc (vg_replace_malloc.c:446)
+==46639==    by 0x42348E5: real_malloc (SDL_malloc.c:6327)
+==46639==    by 0x4234B62: SDL_malloc_REAL (SDL_malloc.c:6452)
+==46639==    by 0x41B7CDA: SDL_malloc (SDL_dynapi_procs.h:1126)
+==46639==    by 0x4048239: bgmNew (Bgm.c:123)
+==46639==    by 0x403C9DB: loadBgmInternal (Audio.c:121)
+==46639==    by 0x403C88E: audioEventHandler (Audio.c:97)
+==46639==    by 0x4047AF1: HandleEvents (events.c:37)
+==46639==    by 0x403C258: sdlEventLoop (engine.c:86)
+==46639==    by 0x403C415: Update (engine.c:120)
+==46639==    by 0x403C5A5: Run (engine.c:184)
+==46639==    by 0x4039F69: main (main.c:11)
+==46639== 
+==46639== 3,029 (920 direct, 2,109 indirect) bytes in 5 blocks are definitely lost in loss record 94 of 107
+==46639==    at 0x4FA30DC: calloc (vg_replace_malloc.c:1675)
+==46639==    by 0x598FDDF: ???
+==46639==    by 0x5990BF4: ???
+==46639==    by 0x598341C: ???
+==46639==    by 0x5983707: ???
+==46639==    by 0x43174AA: SDL_DBus_Init (SDL_dbus.c:150)
+==46639==    by 0x4352BC6: SDL_InitSubSystem_REAL (SDL.c:317)
+==46639==    by 0x4352F29: SDL_Init_REAL (SDL.c:520)
+==46639==    by 0x41A46D0: SDL_Init_DEFAULT (SDL_dynapi_procs.h:638)
+==46639==    by 0x41B2887: SDL_Init (SDL_dynapi_procs.h:638)
+==46639==    by 0x403C15A: Start (engine.c:50)
+==46639==    by 0x403C569: Run (engine.c:179)
+==46639== 
+==46639== LEAK SUMMARY:
+==46639==    definitely lost: 4,363 bytes in 41 blocks
+==46639==    indirectly lost: 3,281 bytes in 42 blocks
+==46639==      possibly lost: 0 bytes in 0 blocks
+==46639==    still reachable: 762,305 bytes in 3,653 blocks
+==46639==         suppressed: 0 bytes in 0 blocks
+==46639== Reachable blocks (those to which a pointer was found) are not shown.
+==46639== To see them, rerun with: --leak-check=full --show-leak-kinds=all
+==46639== 
+==46639== For lists of detected and suppressed errors, rerun with: -s
+==46639== ERROR SUMMARY: 11 errors from 11 contexts (suppressed: 0 from 0)
