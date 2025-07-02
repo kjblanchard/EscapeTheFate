@@ -1,6 +1,5 @@
 local engine = require("Engine")
 local ui = require("UI")
-local player = require("player")
 local buttons = {
     Up = 1,
     Right = 2,
@@ -37,12 +36,6 @@ local function displayButtonPressed(button)
 end
 local function buttonPressed(uiobjPtr)
     engine.Log.LogWarn("Button " .. displayButtonPressed(buttonAssignments[uiobjPtr]) .. " pressd")
-    local playerFoundPtr = nil
-    local playerFoundData = nil
-    for key, value in pairs(player.players) do
-        playerFoundPtr = key
-        playerFoundData = value
-    end
 end
 
 local function buttonHovered(uiobjPtr)
