@@ -17,6 +17,8 @@ BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
 UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
 WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
 PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
+# TODO Needed on the build step for ios, so that it can allow provisioning updates, need to put this in correctly
+IOS_BUILD_COMMANDS ?= -- -allowProvisioningUpdates
 ADDITIONAL_OPTIONS ?=
 # Tiled Configuration
 TILED_PATH = /Applications/Tiled.app/Contents/MacOS/Tiled
@@ -58,6 +60,8 @@ erebuild:
 # Haven't tested this locally with systempackages off, added this after removing engine.
 irebuild:
 	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF DEFAULT_IMGUI=OFF ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" clean configure build install package
+iosrebuild:
+	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF DEFAULT_IMGUI=OFF ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" clean configure build install package
 # Custom run commands
 erun:
 	emrun ./build/bin/$(EXECUTABLE_NAME).html
@@ -88,3 +92,6 @@ aseprite:
 	@echo "Converting Aseprite JSON files to Lua..."
 	@python3 $(JSON_TO_LUA_SCRIPT) --dir $(ASEPRITE_DIR)
 	@echo "Conversion complete."
+teamid:
+	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
+

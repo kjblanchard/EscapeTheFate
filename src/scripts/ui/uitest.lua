@@ -4,15 +4,18 @@ local _currentButtonHovered = 0
 local _fingerButtonPtr = nil
 
 local function newGameButtonClickFunc(uiObjPtr)
+    if engine.sceneChange == true then return end
     engine.PlaySfxOneShot("menuSelect", 1.0)
     engine.LoadScene("debugTown")
 end
 
 local function optionGameButtonClickFunc(uiObjPtr)
+    if engine.sceneChange == true then return end
     engine.PlaySfxOneShot("error1", 1.0)
 end
 
 local function continueGameButtonClickFunc(uiObjPtr)
+    if engine.sceneChange == true then return end
     engine.PlaySfxOneShot("error2", 1.0)
 end
 
@@ -22,6 +25,7 @@ local function panelStartFunc()
 end
 
 local function buttonHoverFunc(uiObjPtr, isJustHovered)
+    if engine.sceneChange == true then return end
     if _currentButtonHovered == uiObjPtr or isJustHovered == false then return end
     local hoverdLocationX, hoveredLocationY = ui.GetObjectLocation(uiObjPtr)
     hoverdLocationX                         = hoverdLocationX - 8 --offset from words
@@ -48,7 +52,7 @@ local returnTable = {
             name = "Title",
             type = "text",
             font = "PressStart2P",
-            size = 28,
+            size = 24,
             wordWrap = true,
             centeredX = true,
             centeredY = true,
@@ -60,12 +64,6 @@ local returnTable = {
             type = "panel",
             location = { 0, 0, 0, 0 },
             children = {
-                -- {
-                --     name = "Selections BG",
-                --     type = "rect",
-                --     location = { 48, 198, 156, 70 },
-                --     color = { 0, 0, 0, 190 }
-                -- },
                 {
                     name = "Selections BG",
                     type = "9slice",
@@ -86,7 +84,6 @@ local returnTable = {
                             location = { 0, 0, 156, 20 },
                             pressedFunc = newGameButtonClickFunc,
                             hoverFunc = buttonHoverFunc,
-                            -- userdata = { pressed = newGameButtonClickFunc },
                             children = {
                                 {
                                     name = "New Game",
@@ -106,7 +103,6 @@ local returnTable = {
                             location = { 0, 0, 156, 20 },
                             pressedFunc = continueGameButtonClickFunc,
                             hoverFunc = buttonHoverFunc,
-                            -- userdata = { pressed = newGameButtonClickFunc },
                             children = {
                                 {
                                     name = "Continue",

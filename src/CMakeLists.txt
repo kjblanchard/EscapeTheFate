@@ -29,6 +29,12 @@ if(APPLE)
         # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
         XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
         # XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "YOUR_TEAM_ID"
+        # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
+        # XCODE_ATTRIBUTE_PROVISIONING_PROFILE_SPECIFIER "match Development com.example.myapp"
+        XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+        XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
+        XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+
     )
 elseif(EMSCRIPTEN)
     set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS ${LINK_FLAGS} " -O0 -g -s --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets")

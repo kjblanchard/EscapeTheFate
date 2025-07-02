@@ -9,4 +9,5 @@ static void Start(void) {
 int main(int argc, char* argv[]) {
 	SetStartFunction(Start);
 	Run();
+	return true;
 }

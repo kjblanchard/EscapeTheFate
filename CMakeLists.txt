@@ -15,7 +15,7 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # Should we include Imgui stuffs
-option(imgui "Include ImGui support" ON)
+option(imgui "Include ImGui support" OFF)
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" ON)
@@ -51,20 +51,6 @@ if(imgui)
 endif(imgui)
 
 
-# if(ENGINE_CACHED AND SYSTEM_PACKAGES)
-# add_subdirectory(engine)
-# else()
-# message(STATUS "Fetching supergoon engine from git..")
-# FetchContent_Declare(
-# engine
-# GIT_REPOSITORY https://github.com/kjblanchard/sgEngine
-
-# # Use master for development, otherwise make sure to pin to proper engine tag for releases
-# GIT_TAG c55aa25
-# # GIT_TAG master
-# )
-# FetchContent_MakeAvailable(engine)
-# endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
 
 if(DEBUG_CMAKE_VARIABLES)
     get_cmake_property(ALL_VARIABLES VARIABLES)
@@ -98,29 +84,20 @@ else()
 endif(MSVC)
 
 
-
-# if(CONVERT_JSON_TO_LUA_IN_ASEPRITE)
-#     message(STATUS "JSON-to-Lua conversion is enabled.")
-#     set(JSON_TO_LUA_SCRIPT ${CMAKE_SOURCE_DIR}/tools/jsontolua.py)
-#     set(ASEPRITE_DIR ${CMAKE_SOURCE_DIR}/assets/aseprite)
-#     file(GLOB JSON_FILES ${ASEPRITE_DIR}/*.json)
-#     add_custom_command(
-#         OUTPUT ${ASEPRITE_DIR}/converted.flag
-#         COMMAND ${CMAKE_COMMAND} -E echo "Running JSON to Lua conversion..."
-#         COMMAND ${Python3_EXECUTABLE} ${JSON_TO_LUA_SCRIPT} --dir ${ASEPRITE_DIR}
-#         COMMAND ${CMAKE_COMMAND} -E touch ${ASEPRITE_DIR}/converted.flag
-#         DEPENDS ${JSON_TO_LUA_SCRIPT} ${JSON_FILES}
-#         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-#         COMMENT "Converting Aseprite JSON files to Lua"
-#         VERBATIM
-#     )
-#     add_custom_target(convert_assets ALL
-#         DEPENDS ${ASEPRITE_DIR}/converted.flag
-#     )
-# endif()
-
-
+if(ENGINE_CACHED AND SYSTEM_PACKAGES)
 add_subdirectory(engine)
+# else()
+# message(STATUS "Fetching supergoon engine from git..")
+# FetchContent_Declare(
+# engine
+# GIT_REPOSITORY https://github.com/kjblanchard/sgEngine
+
+# # Use master for development, otherwise make sure to pin to proper engine tag for releases
+# GIT_TAG c55aa25
+# # GIT_TAG master
+# )
+# FetchContent_MakeAvailable(engine)
+endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
 add_subdirectory(src)
 
 install(DIRECTORY ${FOLDERS_TO_COPY}

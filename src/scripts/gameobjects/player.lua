@@ -15,13 +15,14 @@ player.players = {}
 player.moveSpeed = 100
 function PlayerObjectCreate(userdata, go)
     player.players[go] = {}
+    engine.Log.LogWarn("Player spawning")
     player.players[go]["sprite"] = engine.NewSprite("player1", go, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
     player.players[go]["animator"] = engine.CreateAnimator("player1", player.players[go]["sprite"])
     player.players[go]["direction"] = directions.down
 end
 
 function PlayerStart(go)
-    engine.Log.LogInfo("Starting player")
+    engine.Log.LogWarn("Starting player")
     engine.PlayAnimation(player.players[go]["animator"], "walkD")
     engine.SetCameraFollowTarget(go)
 end

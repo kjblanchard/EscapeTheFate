@@ -16,12 +16,17 @@ local function handleNextScene()
         local co = LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5], sceneTable[6])
         scheduler:run(co)
         engine.nextScene = nil
+        engine.sceneChange = true
     end
 end
 
+local function handleInput()
+    engine.Input.Update()
+end
+
 local function update()
-    scheduler:update(engine.DeltaTimeInSeconds())
     handleNextScene()
+    scheduler:update(engine.DeltaTimeInSeconds())
 end
 
 local function draw()
