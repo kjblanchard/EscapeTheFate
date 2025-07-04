@@ -1,4 +1,5 @@
 -- local ui = require("UI")
+print("Even do here is what no u")
 local engine = require("Engine")
 local scheduler = require("Scheduler")
 local player = require("gameobjects.player")
@@ -36,6 +37,9 @@ local function draw()
     end
 end
 
+print("Even do here is what no u")
+engine.Log.LogWarn("What even")
+
 engine.SetWindowOptions(960, 540, "Escape The Fate")
 engine.SetScalingOptions(480, 270)
 engine.SetUpdateFunc(update)
@@ -45,3 +49,4 @@ engine.SetGlobalSFXVolume(config.audio.sfxVolume)
 player.RegisterPlayerFunctions()
 dialog.RegisterDebugBoxFunctions()
 engine.LoadDefaultScene()
+print("FInished file")
