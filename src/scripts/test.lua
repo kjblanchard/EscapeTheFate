@@ -13,7 +13,8 @@ end
 local function handleNextScene()
     if engine.nextScene ~= nil then
         local sceneTable = scenes.scenes[engine.nextScene]
-        local co = LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5], sceneTable[6])
+        local co = engine.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5],
+            sceneTable[6])
         scheduler:run(co)
         engine.nextScene = nil
         engine.sceneChange = true

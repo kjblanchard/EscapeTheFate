@@ -15,7 +15,7 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
 # Should we include Imgui stuffs
-option(imgui "Include ImGui support" OFF)
+option(imgui "Include ImGui support" ON)
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" ON)
@@ -27,14 +27,25 @@ if(DEBUG_BUILD_TIME)
     set_property(GLOBAL PROPERTY RULE_LAUNCH_COMPILE "${CMAKE_COMMAND} -E time")
 endif(DEBUG_BUILD_TIME)
 
-# Enable AddressSanitizer only in Debug builds
-if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    message(STATUS "Enabling AddressSanitizer in Debug mode")
-    set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
+# # Enable AddressSanitizer only in Debug builds
+# if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug" AND NOT (APPLE and CMAKE_SYSTEM_NAME STREQUAL "iOS" or (CMAKE_SYSTEM_NAME STREQUAL "iossimulator") ))
+#     message(STATUS "Enabling AddressSanitizer in Debug mode")
+#     set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
 
-    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
-endif(DEBUG_ASAN and CMAKE_BUILD_TYPE STREQUAL "Debug")
+#     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
+#     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
+# endif(DEBUG_ASAN and CMAKE_BUILD_TYPE STREQUAL "Debug")
+
+# Enable AddressSanitizer only in Debug builds (excluding iOS and iOS Simulator)
+if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")))
+        message(STATUS "Enabling AddressSanitizer in Debug mode")
+        set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
+    endif()
+endif()
+
 
 
 include(FetchContent)
@@ -84,7 +95,7 @@ else()
 endif(MSVC)
 
 
-if(ENGINE_CACHED AND SYSTEM_PACKAGES)
+# if(ENGINE_CACHED AND SYSTEM_PACKAGES)
 add_subdirectory(engine)
 # else()
 # message(STATUS "Fetching supergoon engine from git..")
@@ -97,7 +108,7 @@ add_subdirectory(engine)
 # # GIT_TAG master
 # )
 # FetchContent_MakeAvailable(engine)
-endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
+# endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
 add_subdirectory(src)
 
 install(DIRECTORY ${FOLDERS_TO_COPY}

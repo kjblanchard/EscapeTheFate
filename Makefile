@@ -18,8 +18,10 @@ UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTAB
 WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
 PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
 # TODO Needed on the build step for ios, so that it can allow provisioning updates, need to put this in correctly
-IOS_BUILD_COMMANDS ?= -- -allowProvisioningUpdates
 ADDITIONAL_OPTIONS ?=
+ADDITIONAL_BUILD_COMMANDS ?=
+# IOS_BUILD_COMMANDS ?= -- -allowProvisioningUpdates
+IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
 # Tiled Configuration
 TILED_PATH = /Applications/Tiled.app/Contents/MacOS/Tiled
 TILED_FOLDER_PATH = ./assets/tiled
@@ -35,7 +37,7 @@ clean:
 configure:
 	$(CONFIGURE_COMMAND) -G "$(CMAKE_GENERATOR)" . -B $(BUILD_DIR) -Dimgui=$(DEFAULT_IMGUI) -DENGINE_CACHED=$(ENGINE_CACHED) -DSYSTEM_PACKAGES=$(SYSTEM_PACKAGES) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(ADDITIONAL_OPTIONS)
 build:
-	@$(BUILD_COMMAND)
+	@$(BUILD_COMMAND) $(ADDITIONAL_BUILD_COMMANDS)
 install:
 	@cmake --install $(BUILD_DIR) --config $(BUILD_TYPE)
 run:
@@ -48,7 +50,7 @@ package:
 
 # Custom build commands that set variables accordingly based on platform.. rebuild is macos, brebuild is backup, wrebuild is windows, erebuild is emscripten, irebuild is ios simulator
 rebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build install
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) SYSTEM_PACKAGES=OFF clean configure build install
 xrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF clean configure build install package
 brebuild:
@@ -60,8 +62,16 @@ erebuild:
 # Haven't tested this locally with systempackages off, added this after removing engine.
 irebuild:
 	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF DEFAULT_IMGUI=OFF ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" clean configure build install package
+# iosrebuild:
+# 	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF DEFAULT_IMGUI=OFF ADDITIONAL_BUILD_COMMANDS=$(IOS_BUILD_COMMANDS) ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" clean configure build install package
 iosrebuild:
-	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF DEFAULT_IMGUI=OFF ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" clean configure build install package
+	$(MAKE) \
+		CMAKE_GENERATOR=$(APPLE_GENERATOR) \
+		SYSTEM_PACKAGES=OFF \
+		DEFAULT_IMGUI=OFF \
+		ADDITIONAL_BUILD_COMMANDS=$(IOS_BUILD_COMMANDS) \
+		ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" \
+		clean configure build install package
 # Custom run commands
 erun:
 	emrun ./build/bin/$(EXECUTABLE_NAME).html
