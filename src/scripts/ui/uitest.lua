@@ -9,13 +9,13 @@ local function newGameButtonClickFunc(uiObjPtr)
     engine.LoadScene("debugTown")
 end
 
-local function optionGameButtonClickFunc(uiObjPtr)
-    if engine.sceneChange == true then return end
+local function optionGameButtonClickFunc(uiObjPtr, justClicked)
+    if engine.sceneChange == true or not justClicked then return end
     engine.PlaySfxOneShot("error1", 1.0)
 end
 
-local function continueGameButtonClickFunc(uiObjPtr)
-    if engine.sceneChange == true then return end
+local function continueGameButtonClickFunc(uiObjPtr, justClicked)
+    if engine.sceneChange == true or not justClicked then return end
     engine.PlaySfxOneShot("error2", 1.0)
 end
 
@@ -84,6 +84,7 @@ local returnTable = {
                             location = { 0, 0, 156, 20 },
                             pressedFunc = newGameButtonClickFunc,
                             hoverFunc = buttonHoverFunc,
+                            pressOnRelease = true,
                             children = {
                                 {
                                     name = "New Game",
@@ -103,6 +104,7 @@ local returnTable = {
                             location = { 0, 0, 156, 20 },
                             pressedFunc = continueGameButtonClickFunc,
                             hoverFunc = buttonHoverFunc,
+                            pressOnRelease = true,
                             children = {
                                 {
                                     name = "Continue",
@@ -123,6 +125,7 @@ local returnTable = {
                             location = { 0, 0, 156, 20 },
                             pressedFunc = optionGameButtonClickFunc,
                             hoverFunc = buttonHoverFunc,
+                            pressOnRelease = true,
                             children = {
                                 {
                                     name = "Option",
