@@ -542,7 +542,7 @@ return {
         {
           id = 30,
           name = "Sign",
-          type = "0BattleLocation",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 272,
           y = 144,
@@ -551,8 +551,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["id"] = 0,
-            ["text"] = "Welcome!  Check out Mishas cute house or head to the forest."
+            ["filename"] = "treesign"
           }
         },
         {
@@ -567,14 +566,13 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["filename"] = "sign1",
-            ["text"] = "Scary Forest ahead!\nRandom Battles there!!"
+            ["filename"] = "sign1"
           }
         },
         {
           id = 32,
           name = "Sign",
-          type = "0BattleLocation",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 400,
           y = 112,
@@ -583,14 +581,13 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["id"] = 0,
-            ["text"] = "Mishas Home"
+            ["filename"] = "home"
           }
         },
         {
           id = 33,
           name = "Sign",
-          type = "0BattleLocation",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 48,
           y = 112,
@@ -599,14 +596,13 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["id"] = 0,
-            ["text"] = "Place to cook, nothing is here."
+            ["filename"] = "fire"
           }
         },
         {
           id = 37,
           name = "Sign",
-          type = "0BattleLocation",
+          type = "5TextInteract",
           shape = "rectangle",
           x = 528,
           y = 96,
@@ -615,8 +611,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["id"] = 0,
-            ["text"] = "Mishas Cute flowers (not as cute as her)"
+            ["filename"] = "flowersign"
           }
         },
         {

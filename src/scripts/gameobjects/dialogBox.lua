@@ -1,4 +1,5 @@
 local engine = require("Engine")
+local gameobject = require("GameObject")
 
 local debugBox = {}
 debugBox.boxes = {}
@@ -14,9 +15,12 @@ function debugBox.DebugBoxCreate(userdata, go)
     if name == "" then goto fin end
     local fileName = engine.MapName() .. "." .. name
     debugBox.boxes[go].dialog = require(fileName)
-    for index, value in ipairs(debugBox.boxes[go].dialog) do
-        engine.Log.LogWarn("Index is " .. index .. " and value is " .. value)
-    end
+    local x, y = gameobject.Position(go)
+    local w, h = gameobject.Size(go)
+    debugBox.boxes[go]["rect"] = { x = x, y = y, w = w, h = h }
+    -- for index, value in ipairs(debugBox.boxes[go].dialog) do
+    --     engine.Log.LogWarn("Index is " .. index .. " and value is " .. value)
+    -- end
     ::fin::
 end
 

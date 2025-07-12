@@ -418,12 +418,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"filename",
                          "type":"string",
-                         "value":"Welcome!  Check out Mishas cute house or head to the forest."
+                         "value":"treesign"
                         }],
                  "rotation":0,
-                 "type":"0BattleLocation",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":16,
                  "x":272,
@@ -438,11 +438,6 @@
                          "name":"filename",
                          "type":"string",
                          "value":"sign1"
-                        }, 
-                        {
-                         "name":"text",
-                         "type":"string",
-                         "value":"Scary Forest ahead!\nRandom Battles there!!"
                         }],
                  "rotation":0,
                  "type":"5TextInteract",
@@ -457,12 +452,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"filename",
                          "type":"string",
-                         "value":"Mishas Home"
+                         "value":"home"
                         }],
                  "rotation":0,
-                 "type":"0BattleLocation",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":16,
                  "x":400,
@@ -474,12 +469,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"filename",
                          "type":"string",
-                         "value":"Place to cook, nothing is here."
+                         "value":"fire"
                         }],
                  "rotation":0,
-                 "type":"0BattleLocation",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":43.3117440499415,
                  "x":48,
@@ -491,12 +486,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"text",
+                         "name":"filename",
                          "type":"string",
-                         "value":"Mishas Cute flowers (not as cute as her)"
+                         "value":"flowersign"
                         }],
                  "rotation":0,
-                 "type":"0BattleLocation",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":48,
                  "x":528,

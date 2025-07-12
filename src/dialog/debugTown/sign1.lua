@@ -1,1 +1,1 @@
-return { "Scary Forest ahead!\nRandom Battles there!!" }
+return "Scary Forest ahead!\nRandom Battles there!!"
