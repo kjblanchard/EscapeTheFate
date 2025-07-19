@@ -1,22 +1,26 @@
 local engine = require("Engine")
 local ui = require("UI")
+local dialog = require("dialog")
 local buttonAssignments = {}
 
 local function panelStartFunc()
-    if not engine.IsMobile() then return end
-    local upData = ui.UIInstance["TownUI"].children["ControllerUI"].children["UpButton"].data
-    buttonAssignments[upData] = engine.Buttons.UP
-    local rightData = ui.UIInstance["TownUI"].children["ControllerUI"].children["RightButton"].data
-    buttonAssignments[rightData] = engine.Buttons.RIGHT
-    local downData = ui.UIInstance["TownUI"].children["ControllerUI"].children["DownButton"].data
-    buttonAssignments[downData] = engine.Buttons.DOWN
-    local leftData = ui.UIInstance["TownUI"].children["ControllerUI"].children["LeftButton"].data
-    buttonAssignments[leftData] = engine.Buttons.LEFT
-    local aData = ui.UIInstance["TownUI"].children["ControllerUI"].children["AButton"].data
-    buttonAssignments[aData] = engine.Buttons.A
-    local bData = ui.UIInstance["TownUI"].children["ControllerUI"].children["BButton"].data
-    buttonAssignments[bData] = engine.Buttons.B
+    if engine.IsMobile() then
+        local upData = ui.UIInstance["TownUI"].children["ControllerUI"].children["UpButton"].data
+        buttonAssignments[upData] = engine.Buttons.UP
+        local rightData = ui.UIInstance["TownUI"].children["ControllerUI"].children["RightButton"].data
+        buttonAssignments[rightData] = engine.Buttons.RIGHT
+        local downData = ui.UIInstance["TownUI"].children["ControllerUI"].children["DownButton"].data
+        buttonAssignments[downData] = engine.Buttons.DOWN
+        local leftData = ui.UIInstance["TownUI"].children["ControllerUI"].children["LeftButton"].data
+        buttonAssignments[leftData] = engine.Buttons.LEFT
+        local aData = ui.UIInstance["TownUI"].children["ControllerUI"].children["AButton"].data
+        buttonAssignments[aData] = engine.Buttons.A
+        local bData = ui.UIInstance["TownUI"].children["ControllerUI"].children["BButton"].data
+        buttonAssignments[bData] = engine.Buttons.B
+    end
+    table.insert(dialog.DialogBoxes, ui.UIInstance["TownUI"].children["TextBoxBox"].children["TextBoxText"].data)
 end
+
 
 local function buttonPressed(uiobjPtr)
     if not engine.IsMobile() then return end
@@ -25,6 +29,7 @@ end
 
 local function buttonHovered(uiobjPtr)
 end
+
 
 local returnTable = {
     name = "TownUI",
@@ -148,13 +153,28 @@ local returnTable = {
                 },
             }
         },
-        -- {
-        --     name = "interactionRect",
-        --     type = "image",
-        --     imageName = "ui-input-export",
-        --     location = { 0, 0, 16, 16 },
-        --     srcRect = { 0, 0, 16, 16 }
-        -- }
+        {
+            name = "TextBoxBox",
+            type = "9slice",
+            location = { 20, 185, 185, 75 },
+            color = { 80, 0, 120, 235 },
+            imageName = "uibase-export",
+            alpha = 190,
+            children = {
+                {
+                    name = "TextBoxText",
+                    type = "text",
+                    font = "PressStart2P",
+                    size = 8,
+                    wordWrap = true,
+                    centeredX = true,
+                    centeredY = true,
+                    text = "Default Text",
+                    location = { 8, 8, 169, 59 }
+                },
+
+            }
+        },
     }
 }
 

@@ -3,6 +3,7 @@ local gameobject = require("GameObject")
 local dialog = require("gameobjects.dialogBox")
 local debugh = require("debugh")
 local tools = require("Tools")
+local dialogSystem = require("dialog")
 local directions = {
     down = 0,
     right = 1,
@@ -21,6 +22,7 @@ function PlayerObjectCreate(userdata, go)
     player.players[go]["animator"] = engine.CreateAnimator("player1", player.players[go]["sprite"])
     player.players[go]["direction"] = directions.down
     player.players[go]["interactionRect"] = { x = 0, y = 0, w = 0, h = 0 }
+    player.players[go]["textInteracting"] = false
 end
 
 function PlayerStart(go)
@@ -129,9 +131,14 @@ function PlayerUpdate(go)
         debugh.DrawRects[tostring(go) .. "interaction"] = playerData["interactionRect"]
     end
     if engine.Input.KeyboardKeyJustPressed(engine.Buttons.A) then
+        -- If we are already interacting, then we should progress the text if needed
+        if playerData["textInteracting"] then
+        else
+        end
         -- Check for overlap with dialog boxes
         for key, value in pairs(dialog.boxes) do
             if engine.CheckForCollision(value["rect"], playerData["interactionRect"]) then
+                dialogSystem.DialogInteraction(1, tostring(value["dialog"]))
                 engine.Log.LogError("Interaction and " .. tostring(value["dialog"]))
             end
         end
