@@ -8,7 +8,7 @@ return {
   spacing = 0,
   margin = 0,
   columns = 39,
-  image = "../../../../c/etf/assets/img/terrain-export.bmp",
+  image = "../img/terrain-export.bmp",
   imagewidth = 624,
   imageheight = 608,
   transparentcolor = "#ff00ff",
@@ -25,5 +25,23 @@ return {
   properties = {},
   wangsets = {},
   tilecount = 1482,
-  tiles = {}
+  tiles = {
+    {
+      id = 165,
+      animation = {
+        {
+          tileid = 165,
+          duration = 200
+        },
+        {
+          tileid = 166,
+          duration = 200
+        },
+        {
+          tileid = 167,
+          duration = 200
+        }
+      }
+    }
+  }
 }
