@@ -59,14 +59,13 @@ local function updateInteractionRect(playerTable, collisionRect)
     end
 end
 
+local function canPlayerMove(playerData)
+    return not playerData["textInteracting"]
+end
 
-function PlayerUpdate(go)
-    local playerData = player.players[go]
-    if playerData == nil then
-        engine.Log.LogWarn("Trying to update player with no userdata")
-        return
-    end
+local function handlePlayerMovement(playerData)
     local velocity = { x = 0, y = 0 }
+    if not canPlayerMove(playerData) then goto ret end
     if engine.Input.KeyboardKeyDown(engine.Buttons.UP) then
         velocity.y = velocity.y - 1
     end
@@ -79,6 +78,17 @@ function PlayerUpdate(go)
     if engine.Input.KeyboardKeyDown(engine.Buttons.LEFT) then
         velocity.x = velocity.x - 1
     end
+    ::ret::
+    return velocity
+end
+
+function PlayerUpdate(go)
+    local playerData = player.players[go]
+    if playerData == nil then
+        engine.Log.LogWarn("Trying to update player with no userdata")
+        return
+    end
+    local velocity = handlePlayerMovement(playerData)
     local isMoving = velocity.x ~= 0 or velocity.y ~= 0
     if not isMoving then
         engine.SetAnimatorSpeed(playerData["animator"], 0.0)
@@ -131,15 +141,18 @@ function PlayerUpdate(go)
         debugh.DrawRects[tostring(go) .. "interaction"] = playerData["interactionRect"]
     end
     if engine.Input.KeyboardKeyJustPressed(engine.Buttons.A) then
-        -- If we are already interacting, then we should progress the text if needed
+        -- If we are already interacting, then we should progress the text if needed, or end
         if playerData["textInteracting"] then
+            if dialogSystem.DialogInteractionUpdate(1) then
+                playerData["textInteracting"] = false
+            end
         else
-        end
-        -- Check for overlap with dialog boxes
-        for key, value in pairs(dialog.boxes) do
-            if engine.CheckForCollision(value["rect"], playerData["interactionRect"]) then
-                dialogSystem.DialogInteraction(1, tostring(value["dialog"]))
-                engine.Log.LogError("Interaction and " .. tostring(value["dialog"]))
+            -- Check for overlap with dialog boxes and start interacting.
+            for _, value in pairs(dialog.boxes) do
+                if engine.CheckForCollision(value["rect"], playerData["interactionRect"]) then
+                    dialogSystem.DialogInteractionStart(1, tostring(value["dialog"]))
+                    playerData["textInteracting"] = true
+                end
             end
         end
     end
