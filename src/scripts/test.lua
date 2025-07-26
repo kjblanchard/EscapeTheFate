@@ -7,6 +7,7 @@ local scenes = require("scenes")
 local config = require("gameConfig")
 local debugh = require("debugh")
 local dialog = require("gameobjects.dialogBox")
+local dialogSystem = require("dialog")
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
 end
@@ -29,6 +30,7 @@ end
 local function update()
     handleNextScene()
     scheduler:update(engine.DeltaTimeInSeconds())
+    dialogSystem.UpdateDialogBoxes(engine.DeltaTimeInSeconds())
 end
 
 local function draw()
