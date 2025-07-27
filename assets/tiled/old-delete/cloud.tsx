@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <tileset version="1.8" tiledversion="1.8.6" name="cloud" tilewidth="16" tileheight="16" tilecount="1260" columns="45">
- <image source="../img/cloud_tileset-export.bmp" trans="ff00ff" width="720" height="448"/>
+ <image source="../../img/cloud_tileset-export.bmp" trans="ff00ff" width="720" height="448"/>
  <tile id="87">
   <animation>
    <frame tileid="132" duration="150"/>

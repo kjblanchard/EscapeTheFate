@@ -5,9 +5,11 @@
 -- On the default scene, if you try and use some low values like 0.1 and 0.1 when loading the screen on first load, it can cause problems, so try larger numbers or make them different
 return {
     -- default = "title",
-    default = "debugTown",
+    -- default = "debugTown",
+    default = "debugSouth",
     scenes = {
-        title = { "title", "uitest", "town1", 1.0, 0.0, 1.0 },
-        debugTown = { "debugTown", "town", "town2", 1.0, 1.0, 0.5 }
+        title = { "cloud", "uitest", "town1", 1.0, 0.0, 1.0 },
+        debugTown = { "debugTown", "town", "town2", 1.0, 1.0, 0.5 },
+        debugSouth = { "debugSouth", "town", "forest1", 1.0, 1.0, 0.5 }
     }
 }

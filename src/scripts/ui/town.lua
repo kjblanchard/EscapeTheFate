@@ -163,6 +163,7 @@ local returnTable = {
             color = { 80, 0, 120, 235 },
             imageName = "uibase-export",
             alpha = 190,
+            visible = false,
             children = {
                 {
                     name = "TextBoxText",

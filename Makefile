@@ -92,11 +92,8 @@ valgrind:
 	valgrind --track-origins=yes --leak-check=yes --leak-resolution=low --show-leak-kinds=definite ./build/bin/$(EXECUTABLE_NAME) 2>&1 | tee memcheck.txt
 # Exports the tilesets if we need to as lua files for tsx/tmx
 tiled:
-	@$(foreach file,$(TILED_EXPORT_TILESETS),\
-		$(TILED_PATH) --export-tileset lua $(TILED_FOLDER_PATH)/$(file).tsj $(TILED_FOLDER_PATH)/$(file).lua;\
-	)
 	@$(foreach file,$(TILED_EXPORT_MAPS),\
-		$(TILED_PATH) --export-map lua $(TILED_FOLDER_PATH)/$(file).tmj $(TILED_FOLDER_PATH)/$(file).lua;\
+		$(TILED_PATH) --export-map --detach-templates --embed-tilesets --resolve-types-and-properties lua $(TILED_FOLDER_PATH)/$(file).tmj $(TILED_FOLDER_PATH)/$(file).lua; \
 	)
 aseprite:
 	@echo "Converting Aseprite JSON files to Lua..."

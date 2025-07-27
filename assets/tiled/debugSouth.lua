@@ -18,19 +18,81 @@ return {
     {
       name = "terrain",
       firstgid = 1,
-      filename = "terrain.tsj"
+      tilewidth = 16,
+      tileheight = 16,
+      spacing = 0,
+      margin = 0,
+      columns = 39,
+      image = "../img/terrain-export.bmp",
+      imagewidth = 624,
+      imageheight = 608,
+      transparentcolor = "#ff00ff",
+      objectalignment = "unspecified",
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 16,
+        height = 16
+      },
+      properties = {},
+      wangsets = {},
+      tilecount = 1482,
+      tiles = {
+        {
+          id = 165,
+          animation = {
+            {
+              tileid = 165,
+              duration = 200
+            },
+            {
+              tileid = 166,
+              duration = 200
+            },
+            {
+              tileid = 167,
+              duration = 200
+            }
+          }
+        }
+      }
     },
     {
       name = "outside",
       firstgid = 1483,
-      filename = "outside.tsj"
+      tilewidth = 16,
+      tileheight = 16,
+      spacing = 0,
+      margin = 0,
+      columns = 52,
+      image = "../img/outside-export.bmp",
+      imagewidth = 832,
+      imageheight = 384,
+      transparentcolor = "#ff00ff",
+      objectalignment = "unspecified",
+      tileoffset = {
+        x = 0,
+        y = 0
+      },
+      grid = {
+        orientation = "orthogonal",
+        width = 16,
+        height = 16
+      },
+      properties = {},
+      wangsets = {},
+      tilecount = 1248,
+      tiles = {}
     }
   },
   layers = {
     {
       type = "group",
       id = 3,
-      name = "background",
+      name = "bg1",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -215,10 +277,10 @@ return {
         {
           id = 3,
           name = "Start1",
-          type = "Start",
+          type = "4Start",
           shape = "rectangle",
-          x = 80.5,
-          y = 8,
+          x = 80,
+          y = 48,
           width = 16,
           height = 16,
           rotation = 0,
@@ -231,7 +293,7 @@ return {
         {
           id = 4,
           name = "Exit0",
-          type = "Exit",
+          type = "2Exit",
           shape = "rectangle",
           x = 64.5,
           y = 1,
@@ -245,30 +307,14 @@ return {
           }
         },
         {
-          id = 17,
-          name = "Start0",
-          type = "Start",
-          shape = "rectangle",
-          x = 352,
-          y = 208,
-          width = 16,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["direction"] = 2,
-            ["loadLocation"] = 0
-          }
-        },
-        {
           id = 21,
           name = "BattleZone",
-          type = "BattleZone",
+          type = "1BattleZone",
           shape = "rectangle",
-          x = 48,
-          y = 16,
-          width = 384,
-          height = 240,
+          x = 272,
+          y = 128,
+          width = 64,
+          height = 32,
           rotation = 0,
           visible = true,
           properties = {

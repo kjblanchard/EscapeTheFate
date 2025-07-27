@@ -8,7 +8,7 @@ return {
   spacing = 0,
   margin = 0,
   columns = 39,
-  image = "../img/terrain-export.bmp",
+  image = "assets/img/terrain-export.bmp",
   imagewidth = 624,
   imageheight = 608,
   transparentcolor = "#ff00ff",
