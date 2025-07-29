@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 7,
-  nextobjectid = 46,
+  nextobjectid = 48,
   properties = {
     ["bgm"] = "town2",
     ["display"] = "Debug Town"
@@ -505,7 +505,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["direction"] = 2,
+            ["direction"] = 1,
             ["loadLocation"] = 0
           }
         },
@@ -633,21 +633,19 @@ return {
           }
         },
         {
-          id = 45,
-          name = "Exit0",
+          id = 46,
+          name = "player?",
           type = "1BattleZone",
           shape = "rectangle",
-          x = 144,
-          y = 160,
-          width = 41.4545,
-          height = 9,
+          x = 352,
+          y = 208,
+          width = 32,
+          height = 32,
           rotation = 0,
           visible = true,
           properties = {
             ["battleId"] = "0",
-            ["encounterTime"] = 5,
-            ["loadLocation"] = 1,
-            ["loadMap"] = "debugSouth"
+            ["encounterTime"] = 5
           }
         }
       }

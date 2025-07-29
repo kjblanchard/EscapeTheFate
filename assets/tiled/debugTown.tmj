@@ -330,7 +330,7 @@
                          "name":"direction",
                          "propertytype":"Direction",
                          "type":"int",
-                         "value":2
+                         "value":1
                         }, 
                         {
                          "name":"loadLocation",
@@ -498,26 +498,15 @@
                  "y":96
                 }, 
                 {
-                 "height":9,
-                 "id":45,
-                 "name":"Exit0",
-                 "properties":[
-                        {
-                         "name":"loadLocation",
-                         "type":"int",
-                         "value":1
-                        }, 
-                        {
-                         "name":"loadMap",
-                         "type":"string",
-                         "value":"debugSouth"
-                        }],
+                 "height":32,
+                 "id":46,
+                 "name":"player?",
                  "rotation":0,
                  "type":"1BattleZone",
                  "visible":true,
-                 "width":41.4545,
-                 "x":144,
-                 "y":160
+                 "width":32,
+                 "x":352,
+                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -526,7 +515,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":46,
+ "nextobjectid":48,
  "orientation":"orthogonal",
  "properties":[
         {

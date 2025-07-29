@@ -1,15 +1,13 @@
 local engine = require("Engine")
 local gameobject = require("GameObject")
-local dialog = require("gameobjects.dialogBox")
 local debugh = require("debugh")
 local tools = require("Tools")
 local dialogSystem = require("dialog")
-local directions = {
-    down = 0,
-    right = 1,
-    up = 2,
-    left = 3
-}
+local directions = require("directions")
+local gameState = require("gameState")
+local startBox = require("gameobjects.startBox")
+local exitBox = require("gameobjects.exitBox")
+local dialog = require("gameobjects.dialogBox")
 local playerCollisionOffsetAndSizeRect = { x = 8, y = 8, w = 16, h = 22 }
 
 local player = {}
@@ -17,18 +15,27 @@ player.players = {}
 player.moveSpeed = 100
 function PlayerObjectCreate(userdata, go)
     player.players[go] = {}
-    engine.Log.LogWarn("Player spawning")
     player.players[go]["sprite"] = engine.NewSprite("player1", go, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
     player.players[go]["animator"] = engine.CreateAnimator("player1", player.players[go]["sprite"])
-    player.players[go]["direction"] = directions.down
+    player.players[go]["direction"] = Directions.down
     player.players[go]["interactionRect"] = { x = 0, y = 0, w = 0, h = 0 }
     player.players[go]["textInteracting"] = false
 end
 
 function PlayerStart(go)
-    engine.Log.LogWarn("Starting player")
+    -- Move player to correct location
+    local loaded = false
+    for _, value in pairs(startBox.boxes) do
+        if value.loadLocation == gameState.loadLocation then
+            -- we should load here
+            gameobject.SetPosition(go, value.rect.x, value.rect.y)
+            player.players[go].direction = value.direction
+            break
+        end
+    end
     engine.PlayAnimation(player.players[go]["animator"], "walkD")
     engine.SetCameraFollowTarget(go)
+    gameState.transitioningScreens = false
 end
 
 local function updateInteractionRect(playerTable, collisionRect)
@@ -36,22 +43,22 @@ local function updateInteractionRect(playerTable, collisionRect)
     local nsWH = { x = 8, y = 26 }
     local interactionRect = playerTable["interactionRect"]
 
-    if playerTable.direction == directions.right then
+    if playerTable.direction == Directions.right then
         interactionRect.x = collisionRect.x + collisionRect.w
         interactionRect.y = collisionRect.y + (collisionRect.h / 2) - (ewWH.y / 2)
         interactionRect.w = ewWH.x
         interactionRect.h = ewWH.y
-    elseif playerTable.direction == directions.left then
+    elseif playerTable.direction == Directions.left then
         interactionRect.x = collisionRect.x - ewWH.x
         interactionRect.y = collisionRect.y + (collisionRect.h / 2) - (ewWH.y / 2)
         interactionRect.w = ewWH.x
         interactionRect.h = ewWH.y
-    elseif playerTable.direction == directions.up then
+    elseif playerTable.direction == Directions.up then
         interactionRect.x = collisionRect.x + (collisionRect.w / 2) - (nsWH.x / 2)
         interactionRect.y = collisionRect.y - nsWH.y
         interactionRect.w = nsWH.x
         interactionRect.h = nsWH.y
-    elseif playerTable.direction == directions.down then
+    elseif playerTable.direction == Directions.down then
         interactionRect.x = collisionRect.x + (collisionRect.w / 2) - (nsWH.x / 2)
         interactionRect.y = collisionRect.y + collisionRect.h
         interactionRect.w = nsWH.x
@@ -83,6 +90,7 @@ local function handlePlayerMovement(playerData)
 end
 
 function PlayerUpdate(go)
+    if gameState.transitioningScreens then goto fin end
     local playerData = player.players[go]
     if playerData == nil then
         engine.Log.LogWarn("Trying to update player with no userdata")
@@ -101,24 +109,24 @@ function PlayerUpdate(go)
         local direction = playerData["direction"]
         -- Determine animation based on direction priority: Y axis first
         if velocity.y > 0 then
-            if direction ~= directions.down then
+            if direction ~= Directions.down then
                 engine.PlayAnimation(playerData["animator"], "walkD")
-                playerData["direction"] = directions.down
+                playerData["direction"] = Directions.down
             end
         elseif velocity.y < 0 then
-            if direction ~= directions.up then
+            if direction ~= Directions.up then
                 engine.PlayAnimation(playerData["animator"], "walkU")
-                playerData["direction"] = directions.up
+                playerData["direction"] = Directions.up
             end
         elseif velocity.x > 0 then
-            if direction ~= directions.right then
+            if direction ~= Directions.right then
                 engine.PlayAnimation(playerData["animator"], "walkR")
-                playerData["direction"] = directions.right
+                playerData["direction"] = Directions.right
             end
         elseif velocity.x < 0 then
-            if direction ~= directions.left then
+            if direction ~= Directions.left then
                 engine.PlayAnimation(playerData["animator"], "walkL")
-                playerData["direction"] = directions.left
+                playerData["direction"] = Directions.left
             end
         end
         engine.SetAnimatorSpeed(playerData["animator"], 1.0)
@@ -139,7 +147,19 @@ function PlayerUpdate(go)
         posX, posY = gameobject.Position(go)
         updateInteractionRect(playerData, collisionRect)
         debugh.DrawRects[tostring(go) .. "interaction"] = playerData["interactionRect"]
+
+        -- Handle overlap with an exit
+        for _, value in pairs(exitBox.boxes) do
+            if engine.CheckForCollision(value["rect"], collisionRect) then
+                gameState.transitioningScreens = true
+                engine.LoadScene(value.loadMap)
+                goto fin
+            end
+        end
     end
+
+
+    -- Handle A button pressed.
     if engine.Input.KeyboardKeyJustPressed(engine.Buttons.A) then
         -- If we are already interacting, then we should progress the text if needed, or end
         if playerData["textInteracting"] then
@@ -156,6 +176,7 @@ function PlayerUpdate(go)
             end
         end
     end
+    ::fin::
 end
 
 function PlayerDestroy(go)
