@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 6,
-  nextobjectid = 22,
+  nextobjectid = 23,
   properties = {
     ["bgm"] = "forest1",
     ["display"] = "Shotka Trail"
@@ -279,14 +279,14 @@ return {
           name = "Start1",
           type = "4Start",
           shape = "rectangle",
-          x = 80,
-          y = 48,
+          x = 82.8171,
+          y = 17.7162,
           width = 16,
           height = 16,
           rotation = 0,
           visible = true,
           properties = {
-            ["direction"] = 2,
+            ["direction"] = 0,
             ["loadLocation"] = 1
           }
         },
@@ -307,19 +307,18 @@ return {
           }
         },
         {
-          id = 21,
-          name = "BattleZone",
+          id = 22,
+          name = "Battle Zone 0",
           type = "1BattleZone",
           shape = "rectangle",
-          x = 272,
-          y = 128,
-          width = 64,
-          height = 32,
+          x = 0,
+          y = 64,
+          width = 480,
+          height = 256,
           rotation = 0,
           visible = true,
           properties = {
-            ["battleId"] = "1",
-            ["encounterTime"] = 2
+            ["battleId"] = "1"
           }
         }
       }

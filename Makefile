@@ -26,7 +26,7 @@ IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
 TILED_PATH = /Applications/Tiled.app/Contents/MacOS/Tiled
 TILED_FOLDER_PATH = ./assets/tiled
 TILED_EXPORT_TILESETS = background terrain house inside
-TILED_EXPORT_MAPS = debugTown debugSouth cloud
+TILED_EXPORT_MAPS = debugTown debugSouth cloud debugTownHome forest1
 # Aseprite
 ASEPRITE_DIR = assets/aseprite
 JSON_TO_LUA_SCRIPT = tools/jsontolua.py

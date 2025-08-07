@@ -14,9 +14,9 @@
             "storageType": "int",
             "type": "enum",
             "values": [
-                "North",
-                "East",
                 "South",
+                "East",
+                "North",
                 "West"
             ],
             "valuesAsFlags": false

@@ -71,7 +71,7 @@
                  "x":0,
                  "y":0
                 }],
-         "name":"background",
+         "name":"bg1",
          "opacity":1,
          "type":"group",
          "visible":true,
@@ -238,29 +238,6 @@
          "name":"entities",
          "objects":[
                 {
-                 "height":16,
-                 "id":16,
-                 "name":"Start0",
-                 "properties":[
-                        {
-                         "name":"direction",
-                         "propertytype":"Direction",
-                         "type":"int",
-                         "value":2
-                        }, 
-                        {
-                         "name":"loadLocation",
-                         "type":"int",
-                         "value":0
-                        }],
-                 "rotation":0,
-                 "type":"Start",
-                 "visible":true,
-                 "width":16,
-                 "x":96,
-                 "y":64
-                }, 
-                {
                  "height":11.8979415752496,
                  "id":17,
                  "name":"Exit0",
@@ -276,7 +253,7 @@
                          "value":"debugTown"
                         }],
                  "rotation":0,
-                 "type":"Exit",
+                 "type":"2Exit",
                  "visible":true,
                  "width":47.1460618760015,
                  "x":103.164797238999,
@@ -288,12 +265,17 @@
                  "name":"Sign",
                  "properties":[
                         {
+                         "name":"filename",
+                         "type":"string",
+                         "value":"pots"
+                        }, 
+                        {
                          "name":"text",
                          "type":"string",
-                         "value":"Pots and pans"
+                         "value":""
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":64,
                  "x":0,
@@ -305,12 +287,17 @@
                  "name":"Sign",
                  "properties":[
                         {
+                         "name":"filename",
+                         "type":"string",
+                         "value":"bed"
+                        }, 
+                        {
                          "name":"text",
                          "type":"string",
                          "value":"Comfy bed"
                         }],
                  "rotation":0,
-                 "type":"TextInteract",
+                 "type":"5TextInteract",
                  "visible":true,
                  "width":32,
                  "x":224,
@@ -325,7 +312,7 @@
                          "name":"direction",
                          "propertytype":"Direction",
                          "type":"int",
-                         "value":0
+                         "value":2
                         }, 
                         {
                          "name":"loadLocation",
@@ -333,7 +320,7 @@
                          "value":1
                         }],
                  "rotation":0,
-                 "type":"Start",
+                 "type":"4Start",
                  "visible":true,
                  "width":16,
                  "x":118.310859115001,

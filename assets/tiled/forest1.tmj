@@ -92,7 +92,7 @@
                  "x":0,
                  "y":0
                 }],
-         "name":"background",
+         "name":"bg1",
          "opacity":1,
          "type":"group",
          "visible":true,
@@ -116,7 +116,7 @@
                          "value":6
                         }],
                  "rotation":0,
-                 "type":"BattleLocation",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":0,
                  "x":32,
@@ -134,7 +134,7 @@
                          "value":7
                         }],
                  "rotation":0,
-                 "type":"BattleLocation",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":0,
                  "x":32,
@@ -152,7 +152,7 @@
                          "value":3
                         }],
                  "rotation":0,
-                 "type":"BattleLocation",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":0,
                  "x":96,
@@ -170,7 +170,7 @@
                          "value":4
                         }],
                  "rotation":0,
-                 "type":"BattleLocation",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":0,
                  "x":96,
@@ -188,7 +188,7 @@
                          "value":5
                         }],
                  "rotation":0,
-                 "type":"BattleLocation",
+                 "type":"0BattleLocation",
                  "visible":true,
                  "width":0,
                  "x":96,

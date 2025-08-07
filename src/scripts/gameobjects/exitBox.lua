@@ -27,7 +27,7 @@ function exitBox.DebugBoxDestroy(go)
 end
 
 function exitBox.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(2, {
+    engine.RegisterGameObjectFunctions(GameObjectTypes.MapExit, {
         exitBox.DebugBoxCreate,
         nil, nil,
         exitBox.DebugBoxDestroy,

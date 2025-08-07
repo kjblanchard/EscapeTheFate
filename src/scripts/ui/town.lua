@@ -27,7 +27,10 @@ end
 
 local function buttonPressed(uiobjPtr)
     if not engine.IsMobile() then return end
-    engine.Input.UIButtonPresses.Down[buttonAssignments[uiobjPtr]] = true
+    local key = buttonAssignments[uiobjPtr]
+    engine.Input.UIButtonPresses.Down[key] = true
+    engine.Input.UIButtonThisFrame = engine.Input.UIButtonThisFrame or {}
+    engine.Input.UIButtonThisFrame[key] = true
 end
 
 local function buttonHovered(uiobjPtr)
@@ -47,7 +50,7 @@ local returnTable = {
                 {
                     name = "UpButton",
                     type = "button",
-                    location = { 40, 205, 16, 16 },
+                    location = { 56, 190, 32, 32 },
                     pressedFunc = buttonPressed,
                     pressOnRelease = false,
                     hoverFunc = buttonHovered,
@@ -56,7 +59,7 @@ local returnTable = {
                             name = "UpButtonImage",
                             type = "image",
                             imageName = "ui-input-export",
-                            location = { 0, 0, 16, 16 },
+                            location = { 0, 0, 32, 32 },
                             srcRect = { 144, 352, 16, 16 }
 
                         }
@@ -65,7 +68,7 @@ local returnTable = {
                 {
                     name = "RightButton",
                     type = "button",
-                    location = { 60, 220, 16, 16 },
+                    location = { 86, 217, 32, 32 },
                     pressedFunc = buttonPressed,
                     hoverFunc = buttonHovered,
                     pressOnRelease = false,
@@ -74,7 +77,7 @@ local returnTable = {
                             name = "RightButtonImage",
                             type = "image",
                             imageName = "ui-input-export",
-                            location = { 0, 0, 16, 16 },
+                            location = { 0, 0, 32, 32 },
                             srcRect = { 160, 352, 16, 16 }
 
                         }
@@ -83,7 +86,7 @@ local returnTable = {
                 {
                     name = "DownButton",
                     type = "button",
-                    location = { 40, 235, 16, 16 },
+                    location = { 56, 240, 32, 32 },
                     pressedFunc = buttonPressed,
                     pressOnRelease = false,
                     hoverFunc = buttonHovered,
@@ -92,7 +95,7 @@ local returnTable = {
                             name = "downButtonImage",
                             type = "image",
                             imageName = "ui-input-export",
-                            location = { 0, 0, 16, 16 },
+                            location = { 0, 0, 32, 32 },
                             srcRect = { 176, 352, 16, 16 }
 
                         }
@@ -101,7 +104,7 @@ local returnTable = {
                 {
                     name = "LeftButton",
                     type = "button",
-                    location = { 20, 220, 16, 16 },
+                    location = { 26, 217, 32, 32 },
                     pressedFunc = buttonPressed,
                     pressOnRelease = false,
                     hoverFunc = buttonHovered,
@@ -110,7 +113,7 @@ local returnTable = {
                             name = "leftButtonImage",
                             type = "image",
                             imageName = "ui-input-export",
-                            location = { 0, 0, 16, 16 },
+                            location = { 0, 0, 32, 32 },
                             srcRect = { 192, 352, 16, 16 }
 
                         }
@@ -119,7 +122,7 @@ local returnTable = {
                 {
                     name = "AButton",
                     type = "button",
-                    location = { 375, 220, 16, 16 },
+                    location = { 375, 220, 42, 42 },
                     pressedFunc = buttonPressed,
                     pressOnRelease = false,
                     hoverFunc = buttonHovered,
@@ -159,7 +162,7 @@ local returnTable = {
         {
             name = "TextBoxBox",
             type = "9slice",
-            location = { 20, 185, 185, 75 },
+            location = { 20, 35, 185, 75 },
             color = { 80, 0, 120, 235 },
             imageName = "uibase-export",
             alpha = 190,

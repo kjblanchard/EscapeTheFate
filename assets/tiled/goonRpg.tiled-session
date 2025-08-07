@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "debugTown.tmj",
+    "activeFile": "forest1.tmj",
     "expandedProjectPaths": [
+        ".",
         "templates",
-        "old-delete",
-        "."
+        "old-delete"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -78,14 +78,14 @@
                 3
             ],
             "expandedObjectLayers": [
-                2,
-                5
+                5,
+                2
             ],
             "scale": 1.4199,
-            "selectedLayer": 2,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 240.15775758856262,
-                "y": 160.2225508838651
+                "x": 235.57997042045213,
+                "y": 157.05331361363477
             }
         },
         "debugTown.tmj": {
@@ -96,7 +96,7 @@
                 5
             ],
             "scale": 1.5,
-            "selectedLayer": 1,
+            "selectedLayer": 5,
             "viewCenter": {
                 "x": 304,
                 "y": 140.33333333333331
@@ -111,7 +111,7 @@
                 6
             ],
             "scale": 3,
-            "selectedLayer": 4,
+            "selectedLayer": 5,
             "viewCenter": {
                 "x": 128,
                 "y": 88.16666666666666
@@ -141,10 +141,10 @@
                 3
             ],
             "scale": 1.363,
-            "selectedLayer": 0,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 256.05282465150407,
-                "y": 144.16727806309615
+                "x": 256.419662509171,
+                "y": 144.53411592076304
             }
         },
         "forest1.tmx": {
@@ -164,11 +164,11 @@
         },
         "inside.tsj": {
             "scaleInDock": 1,
-            "scaleInEditor": 1
+            "scaleInEditor": 2
         },
         "old-delete/cloud.tsx": {
             "scaleInDock": 1,
-            "scaleInEditor": 1
+            "scaleInEditor": 2
         },
         "old-delete/untitled.tmj": {
             "scale": 1.6862499999999998,
@@ -227,18 +227,18 @@
     "project": "goonRpg.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "debugTown.tmj",
+        "outside.tsj",
+        "terrain.tsj",
+        "inside.tsj",
+        "house.tsj",
         "old-delete/untitled.tmj",
         "old-delete/cloud.tsx",
         "cloud.tmj",
         "cloud.tsj",
         "debugSouth.tmj",
         "debugTownHome.tmj",
-        "forest1.tmj",
-        "house.tsj",
-        "inside.tsj",
-        "terrain.tsj",
-        "outside.tsj",
-        "debugTown.tmj"
+        "forest1.tmj"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "json",

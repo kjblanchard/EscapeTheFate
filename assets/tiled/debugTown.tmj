@@ -330,7 +330,7 @@
                          "name":"direction",
                          "propertytype":"Direction",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"loadLocation",
@@ -353,7 +353,7 @@
                          "name":"direction",
                          "propertytype":"Direction",
                          "type":"int",
-                         "value":0
+                         "value":2
                         }, 
                         {
                          "name":"loadLocation",
@@ -364,8 +364,8 @@
                  "type":"4Start",
                  "visible":true,
                  "width":16,
-                 "x":64.1666666666667,
-                 "y":242.333333333333
+                 "x":64,
+                 "y":240
                 }, 
                 {
                  "height":9,
@@ -398,7 +398,7 @@
                          "name":"direction",
                          "propertytype":"Direction",
                          "type":"int",
-                         "value":2
+                         "value":0
                         }, 
                         {
                          "name":"loadLocation",
@@ -496,17 +496,6 @@
                  "width":48,
                  "x":528,
                  "y":96
-                }, 
-                {
-                 "height":32,
-                 "id":46,
-                 "name":"player?",
-                 "rotation":0,
-                 "type":"1BattleZone",
-                 "visible":true,
-                 "width":32,
-                 "x":352,
-                 "y":208
                 }],
          "opacity":1,
          "type":"objectgroup",

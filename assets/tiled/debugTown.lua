@@ -505,7 +505,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["direction"] = 1,
+            ["direction"] = 0,
             ["loadLocation"] = 0
           }
         },
@@ -514,14 +514,14 @@ return {
           name = "Start1",
           type = "4Start",
           shape = "rectangle",
-          x = 64.1667,
-          y = 242.333,
+          x = 64,
+          y = 240,
           width = 16,
           height = 16,
           rotation = 0,
           visible = true,
           properties = {
-            ["direction"] = 0,
+            ["direction"] = 2,
             ["loadLocation"] = 1
           }
         },
@@ -553,7 +553,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["direction"] = 2,
+            ["direction"] = 0,
             ["loadLocation"] = 2
           }
         },
@@ -630,22 +630,6 @@ return {
           visible = true,
           properties = {
             ["filename"] = "flowersign"
-          }
-        },
-        {
-          id = 46,
-          name = "player?",
-          type = "1BattleZone",
-          shape = "rectangle",
-          x = 352,
-          y = 208,
-          width = 32,
-          height = 32,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["battleId"] = "0",
-            ["encounterTime"] = 5
           }
         }
       }

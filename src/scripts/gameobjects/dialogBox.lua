@@ -18,9 +18,6 @@ function debugBox.DebugBoxCreate(userdata, go)
     local x, y = gameobject.Position(go)
     local w, h = gameobject.Size(go)
     debugBox.boxes[go]["rect"] = { x = x, y = y, w = w, h = h }
-    -- for index, value in ipairs(debugBox.boxes[go].dialog) do
-    --     engine.Log.LogWarn("Index is " .. index .. " and value is " .. value)
-    -- end
     ::fin::
 end
 
@@ -29,7 +26,7 @@ function debugBox.DebugBoxDestroy(go)
 end
 
 function debugBox.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(5, {
+    engine.RegisterGameObjectFunctions(GameObjectTypes.TextInteract, {
         debugBox.DebugBoxCreate,
         nil, nil,
         debugBox.DebugBoxDestroy,

@@ -1,5 +1,7 @@
 local engine = require("Engine")
+local gameState = require("gameState")
 local gameobject = require("GameObject")
+local player = require("gameobjects.player")
 
 local startBox = {}
 startBox.boxes = {}
@@ -19,6 +21,15 @@ function startBox.DebugBoxCreate(userdata, go)
     local x, y = gameobject.Position(go)
     local w, h = gameobject.Size(go)
     startBox.boxes[go]["rect"] = { x = x, y = y, w = w, h = h }
+
+    if loadLocation == gameState.loadLocation then
+        -- Create player.
+        local playerGOPtr = gameobject.CreateGameObjectInCurrentMap()
+        PlayerObjectCreate(nil, playerGOPtr, direction)
+        engine.Log.LogError("Loaded the thing")
+        local rect = startBox.boxes[go]["rect"]
+        gameobject.SetPosition(playerGOPtr, rect.x, rect.y)
+    end
 end
 
 function startBox.DebugBoxDestroy(go)
@@ -26,7 +37,7 @@ function startBox.DebugBoxDestroy(go)
 end
 
 function startBox.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(4, {
+    engine.RegisterGameObjectFunctions(GameObjectTypes.MapStart, {
         startBox.DebugBoxCreate,
         nil, nil,
         startBox.DebugBoxDestroy,

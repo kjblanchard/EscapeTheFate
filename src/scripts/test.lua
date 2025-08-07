@@ -1,5 +1,4 @@
 -- local ui = require("UI")
-print("Even do here is what no u")
 local engine = require("Engine")
 local scheduler = require("Scheduler")
 local scenes = require("scenes")
@@ -9,6 +8,7 @@ local dialog = require("gameobjects.dialogBox")
 local player = require("gameobjects.player")
 local startBox = require("gameobjects.startBox")
 local exitBox = require("gameobjects.exitBox")
+local battleZone = require("gameobjects.battleZone")
 local dialogSystem = require("dialog")
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
@@ -17,9 +17,11 @@ end
 local function handleNextScene()
     if engine.nextScene ~= nil then
         local sceneTable = scenes.scenes[engine.nextScene]
-        local co = engine.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5],
-            sceneTable[6])
-        scheduler:run(co)
+        if sceneTable ~= nil then
+            local co = engine.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5],
+                sceneTable[6])
+            scheduler:run(co)
+        end
         engine.nextScene = nil
         engine.sceneChange = true
     end
@@ -36,9 +38,9 @@ local function update()
 end
 
 local function draw()
-    for _, value in pairs(debugh.DrawRects) do
-        engine.DrawRectCamOffset(value)
-    end
+    -- for _, value in pairs(debugh.DrawRects) do
+    --     engine.DrawRectCamOffset(value)
+    -- end
 end
 
 print("Even do here is what no u")
@@ -55,5 +57,6 @@ player.RegisterPlayerFunctions()
 dialog.RegisterDebugBoxFunctions()
 exitBox.RegisterDebugBoxFunctions()
 startBox.RegisterDebugBoxFunctions()
+battleZone.RegisterDebugBoxFunctions()
 engine.LoadDefaultScene()
 print("FInished file")

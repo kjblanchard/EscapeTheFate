@@ -5,35 +5,61 @@ local tools = require("Tools")
 local dialogSystem = require("dialog")
 local directions = require("directions")
 local gameState = require("gameState")
-local startBox = require("gameobjects.startBox")
+require("gameobjects.gameobjectTypes")
+-- local startBox = require("gameobjects.startBox")
 local exitBox = require("gameobjects.exitBox")
 local dialog = require("gameobjects.dialogBox")
 local playerCollisionOffsetAndSizeRect = { x = 8, y = 8, w = 16, h = 22 }
 
+function GetPlayerCollisionBox(ptr)
+    local x, y = gameobject.Position(ptr)
+    local collisionRect = {
+        x = x + playerCollisionOffsetAndSizeRect.x,
+        y = y + playerCollisionOffsetAndSizeRect.y,
+        w = playerCollisionOffsetAndSizeRect.w,
+        h = playerCollisionOffsetAndSizeRect.h
+    }
+    return collisionRect
+end
+
 local player = {}
 player.players = {}
 player.moveSpeed = 100
-function PlayerObjectCreate(userdata, go)
+function PlayerObjectCreate(userdata, go, direction)
     player.players[go] = {}
     player.players[go]["sprite"] = engine.NewSprite("player1", go, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
     player.players[go]["animator"] = engine.CreateAnimator("player1", player.players[go]["sprite"])
-    player.players[go]["direction"] = Directions.down
+    player.players[go].direction = direction
+    player.players[go].isMoving = false
     player.players[go]["interactionRect"] = { x = 0, y = 0, w = 0, h = 0 }
     player.players[go]["textInteracting"] = false
+    gameobject.SetType(go, GameObjectTypes.Player)
+end
+
+local function functionSetPlayerDirection(playerData)
+    local animation = "walkD"
+    if playerData.direction == Directions.up then
+        animation = "walkU"
+    elseif playerData.direction == Directions.right then
+        animation = "walkR"
+    elseif playerData.direction == Directions.left then
+        animation = "walkL"
+    end
+    engine.PlayAnimation(playerData.animator, animation)
 end
 
 function PlayerStart(go)
     -- Move player to correct location
-    local loaded = false
-    for _, value in pairs(startBox.boxes) do
-        if value.loadLocation == gameState.loadLocation then
-            -- we should load here
-            gameobject.SetPosition(go, value.rect.x, value.rect.y)
-            player.players[go].direction = value.direction
-            break
-        end
-    end
-    engine.PlayAnimation(player.players[go]["animator"], "walkD")
+    -- for _, value in pairs(startBox.boxes) do
+    --     if value.loadLocation == gameState.loadLocation then
+    --         -- we should load here
+    --         engine.Log.LogError("Loaded the thing")
+    --         gameobject.SetPosition(go, value.rect.x, value.rect.y)
+    --         player.players[go].direction = value.direction
+    --         break
+    --     end
+    -- end
+    functionSetPlayerDirection(player.players[go])
     engine.SetCameraFollowTarget(go)
     gameState.transitioningScreens = false
 end
@@ -98,6 +124,7 @@ function PlayerUpdate(go)
     end
     local velocity = handlePlayerMovement(playerData)
     local isMoving = velocity.x ~= 0 or velocity.y ~= 0
+    playerData.isMoving = isMoving
     if not isMoving then
         engine.SetAnimatorSpeed(playerData["animator"], 0.0)
     end
@@ -151,6 +178,7 @@ function PlayerUpdate(go)
         -- Handle overlap with an exit
         for _, value in pairs(exitBox.boxes) do
             if engine.CheckForCollision(value["rect"], collisionRect) then
+                gameState.loadLocation = value.loadLocation
                 gameState.transitioningScreens = true
                 engine.LoadScene(value.loadMap)
                 goto fin
@@ -193,10 +221,10 @@ function PlayerDestroy(go)
 end
 
 function player.RegisterPlayerFunctions()
-    engine.RegisterGameObjectFunctions(1, {
-        PlayerObjectCreate, -- index 1 = create
+    engine.RegisterGameObjectFunctions(GameObjectTypes.Player, {
+        nil,          -- index 1 = create
         PlayerStart,
-        PlayerUpdate,       -- index 2 = start
+        PlayerUpdate, -- index 2 = start
         PlayerDestroy,
     })
 end
