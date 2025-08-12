@@ -18,7 +18,7 @@ local function panelStartFunc()
         local bData = ui.UIInstance["TownUI"].children["ControllerUI"].children["BButton"].data
         buttonAssignments[bData] = engine.Buttons.B
     end
-    table.insert(dialog.DialogBoxes, {
+    table.insert(dialog.DialogBoxes, 1, {
         ptr = ui.UIInstance["TownUI"].children["TextBoxBox"].children["TextBoxText"].data,
         boxptr = ui.UIInstance["TownUI"].children["TextBoxBox"].data
     })
@@ -40,11 +40,12 @@ end
 local returnTable = {
     name = "TownUI",
     startFunc = panelStartFunc,
+    doNotDestroy = true,
     children = {
         {
             name = "ControllerUI",
             type = "Panel",
-            doNotDestroy = true,
+            -- doNotDestroy = true,
             isMobile = true,
             children = {
                 {

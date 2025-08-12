@@ -9,7 +9,7 @@ return {
   tilewidth = 16,
   tileheight = 16,
   nextlayerid = 6,
-  nextobjectid = 12,
+  nextobjectid = 14,
   properties = {},
   tilesets = {
     {
@@ -226,26 +226,11 @@ return {
       objects = {
         {
           id = 4,
-          name = "6",
-          type = "0BattleLocation",
+          name = "7",
+          type = "6BattleLocation",
           shape = "point",
           x = 32,
           y = 112,
-          width = 0,
-          height = 0,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["id"] = 6
-          }
-        },
-        {
-          id = 5,
-          name = "7",
-          type = "0BattleLocation",
-          shape = "point",
-          x = 32,
-          y = 176,
           width = 0,
           height = 0,
           rotation = 0,
@@ -255,27 +240,27 @@ return {
           }
         },
         {
-          id = 6,
-          name = "3",
-          type = "0BattleLocation",
+          id = 5,
+          name = "8",
+          type = "6BattleLocation",
           shape = "point",
-          x = 96,
-          y = 96,
+          x = 32,
+          y = 176,
           width = 0,
           height = 0,
           rotation = 0,
           visible = true,
           properties = {
-            ["id"] = 3
+            ["id"] = 8
           }
         },
         {
-          id = 7,
+          id = 6,
           name = "4",
-          type = "0BattleLocation",
+          type = "6BattleLocation",
           shape = "point",
           x = 96,
-          y = 144,
+          y = 96,
           width = 0,
           height = 0,
           rotation = 0,
@@ -285,12 +270,12 @@ return {
           }
         },
         {
-          id = 8,
+          id = 7,
           name = "5",
-          type = "0BattleLocation",
+          type = "6BattleLocation",
           shape = "point",
           x = 96,
-          y = 192,
+          y = 144,
           width = 0,
           height = 0,
           rotation = 0,
@@ -300,27 +285,27 @@ return {
           }
         },
         {
-          id = 9,
-          name = "0",
-          type = "BattleLocation",
+          id = 8,
+          name = "6",
+          type = "6BattleLocation",
           shape = "point",
-          x = 432,
-          y = 96,
+          x = 96,
+          y = 192,
           width = 0,
           height = 0,
           rotation = 0,
           visible = true,
           properties = {
-            ["id"] = 0
+            ["id"] = 6
           }
         },
         {
-          id = 10,
+          id = 9,
           name = "1",
-          type = "BattleLocation",
+          type = "6BattleLocation",
           shape = "point",
-          x = 432,
-          y = 144,
+          x = 416,
+          y = 80,
           width = 0,
           height = 0,
           rotation = 0,
@@ -330,12 +315,12 @@ return {
           }
         },
         {
-          id = 11,
+          id = 10,
           name = "2",
-          type = "BattleLocation",
+          type = "6BattleLocation",
           shape = "point",
-          x = 432,
-          y = 192,
+          x = 429.206,
+          y = 127.266,
           width = 0,
           height = 0,
           rotation = 0,
@@ -343,6 +328,34 @@ return {
           properties = {
             ["id"] = 2
           }
+        },
+        {
+          id = 11,
+          name = "3",
+          type = "6BattleLocation",
+          shape = "point",
+          x = 416,
+          y = 176,
+          width = 0,
+          height = 0,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["id"] = 3
+          }
+        },
+        {
+          id = 12,
+          name = "BattleManager",
+          type = "7Battle",
+          shape = "rectangle",
+          x = 240,
+          y = 128,
+          width = 48,
+          height = 48,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     }

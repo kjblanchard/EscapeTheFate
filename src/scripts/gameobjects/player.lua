@@ -98,7 +98,7 @@ end
 
 local function handlePlayerMovement(playerData)
     local velocity = { x = 0, y = 0 }
-    if not canPlayerMove(playerData) then goto ret end
+    if not canPlayerMove(playerData) then return velocity end
     if engine.Input.KeyboardKeyDown(engine.Buttons.UP) then
         velocity.y = velocity.y - 1
     end
@@ -111,7 +111,6 @@ local function handlePlayerMovement(playerData)
     if engine.Input.KeyboardKeyDown(engine.Buttons.LEFT) then
         velocity.x = velocity.x - 1
     end
-    ::ret::
     return velocity
 end
 
@@ -127,6 +126,7 @@ function PlayerUpdate(go)
     playerData.isMoving = isMoving
     if not isMoving then
         engine.SetAnimatorSpeed(playerData["animator"], 0.0)
+        -- engine.Log.LogWarn("Animator speed is 0")
     end
     if isMoving then
         -- Normalize diagonal speed
@@ -157,6 +157,7 @@ function PlayerUpdate(go)
             end
         end
         engine.SetAnimatorSpeed(playerData["animator"], 1.0)
+        -- engine.Log.LogWarn("Animator speed is 1")
         local posX, posY = gameobject.Position(go)
         local delta = engine.DeltaTimeInSeconds()
         -- gameobject.SetPosition(go, posX + velocity.x * player.moveSpeed * delta, posY + velocity.y * player.moveSpeed * delta)

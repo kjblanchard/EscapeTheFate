@@ -1,6 +1,6 @@
 local function doThingLocal()
-
 end
+
 local returnTable = {
     name = "BattleUI",
     startFunc = doThingLocal,
@@ -21,8 +21,8 @@ local returnTable = {
                     wordWrap = true,
                     centeredX = true,
                     centeredY = true,
-                    text = "Hello world",
-                    location = { 8, 8, 169, 59 }
+                    text = "Hello Battle World",
+                    location = { 8, 8, 244, 44 }
                 },
 
             }

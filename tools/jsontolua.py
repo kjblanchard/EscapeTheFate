@@ -6,8 +6,20 @@ import sys
 import argparse
 import os
 
+LUA_KEYWORDS = {
+    "and", "break", "do", "else", "elseif", "end", "false", "for",
+    "function", "goto", "if", "in", "local", "nil", "not", "or",
+    "repeat", "return", "then", "true", "until", "while"
+}
+
 def is_identifier(s):
-    return isinstance(s, str) and s.isidentifier()
+    """Return True if s is a valid Lua identifier and not a reserved keyword."""
+    return (
+        isinstance(s, str)
+        and s.isidentifier()
+        and not s.isnumeric()
+        and s not in LUA_KEYWORDS
+    )
 
 def space_str(layer):
     return '\t' * layer

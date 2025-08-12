@@ -1,0 +1,100 @@
+return {
+	frames = {
+		{
+			filename = 'player1BattlerNew 0.aseprite',
+			frame = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 1.aseprite',
+			frame = {
+				x = 48,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 2.aseprite',
+			frame = {
+				x = 96,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		}
+	},
+	meta = {
+		app = 'https://www.aseprite.org/',
+		version = '1.3.2-dev',
+		image = 'player1BattlerNew.bmp',
+		format = 'I8',
+		size = {
+			w = 144,
+			h = 48
+		},
+		scale = '1',
+		frameTags = {
+			{
+				name = 'idleR',
+				from = 0,
+				to = 2,
+				direction = 'forward',
+				color = '#000000ff'
+			}
+		},
+		layers = {
+			{
+				name = 'Layer 1',
+				opacity = 255,
+				blendMode = 'normal'
+			}
+		},
+		slices = {
+
+		}
+	}
+}
