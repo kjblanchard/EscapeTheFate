@@ -268,7 +268,7 @@ return {
 	meta = {
 		app = 'https://www.aseprite.org/',
 		version = '1.3.2-dev',
-		image = 'bBlackBird.png',
+		image = 'bBlackBird.bmp',
 		format = 'I8',
 		size = {
 			w = 732,

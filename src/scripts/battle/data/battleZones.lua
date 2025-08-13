@@ -4,6 +4,40 @@
 ---@field bgNum number            -- Background number
 ---@field stepCount number            -- Background number
 
+local function normalizeWeights(weights)
+    local total = 0
+    for _, w in ipairs(weights) do
+        total = total + w
+    end
+    local normalized = {}
+    if total == 0 then
+        -- Avoid division by zero, give equal weights
+        local equalWeight = 1 / #weights
+        for i = 1, #weights do
+            normalized[i] = equalWeight
+        end
+    else
+        for i, w in ipairs(weights) do
+            normalized[i] = w / total
+        end
+    end
+    return normalized
+end
+
+local function chooseWeightedRandom(items, weights)
+    local normalized = normalizeWeights(weights)
+    local r = math.random()
+    local cumulative = 0
+    for i, w in ipairs(normalized) do
+        cumulative = cumulative + w
+        if r <= cumulative then
+            return items[i]
+        end
+    end
+    -- Fallback (in case of floating point issues)
+    return items[#items]
+end
+
 ---@type  BattleZone[]
 local battlezones = {
     {
@@ -26,3 +60,11 @@ local battlezones = {
 function GetBattleZone(battleZoneNum)
     return battlezones[battleZoneNum]
 end
+
+function GetEnemyGroupRandom(battleZoneNum)
+    local bg = GetBattleZone(battleZoneNum)
+    if not bg then return nil end
+    return chooseWeightedRandom(bg.enemyGroups, bg.groupPercents)
+end
+
+math.randomseed(os.time())

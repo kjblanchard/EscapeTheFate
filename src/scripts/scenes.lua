@@ -16,8 +16,8 @@
 return {
     ---@type string
     -- default = "title",
-    default = "debugTown",
-    -- default = "forest",
+    -- default = "debugTown",
+    default = "forest",
     -- default = "debugSouth",
     ---@type  Scene[]
     scenes = {
