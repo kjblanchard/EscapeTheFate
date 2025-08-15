@@ -19,7 +19,7 @@ local players = {
         Def = 1,
         Spd = 1,
         Image = "player1BattlerNew",
-        OffsetAndSize = { x = -5, y = -18, w = 48, h = 48 },
+        OffsetAndSize = { x = -8, y = -18, w = 48, h = 48 },
         -- Moves = {}
     }
 }

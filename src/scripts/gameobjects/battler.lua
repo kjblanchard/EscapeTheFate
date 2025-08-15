@@ -28,6 +28,8 @@ function BattlerStart(go)
     if not battlerData.isPlayer then
         animation = "moveR"
     end
+    -- TODO probably not needed
+    engine.SetAnimatorSpeed(battlerData.animator, 1.0)
     engine.PlayAnimation(battlerData.animator, animation)
 end
 

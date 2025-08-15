@@ -5,9 +5,9 @@
     },
     "activeFile": "forest1.tmj",
     "expandedProjectPaths": [
-        ".",
         "templates",
-        "old-delete"
+        "old-delete",
+        "."
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -61,8 +61,8 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 240,
-                "y": 136.25
+                "x": 239.75,
+                "y": 136
             }
         },
         "cloud.tsj": {
@@ -84,8 +84,8 @@
             "scale": 1.4199,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 240.15775758856262,
-                "y": 160.2225508838651
+                "x": 239.80562011409253,
+                "y": 160.57468835833512
             }
         },
         "debugTown.tmj": {
@@ -98,8 +98,8 @@
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 304,
-                "y": 140.33333333333331
+                "x": 303.66666666666663,
+                "y": 140
             }
         },
         "debugTownHome.tmj": {
@@ -107,14 +107,14 @@
                 4
             ],
             "expandedObjectLayers": [
-                6,
-                5
+                5,
+                6
             ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 128,
-                "y": 88.16666666666666
+                "x": 127.83333333333334,
+                "y": 88
             }
         },
         "forest1 6.10.31 PM.tmx": {
@@ -141,10 +141,10 @@
                 3
             ],
             "scale": 1.363,
-            "selectedLayer": 4,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 256.05282465150407,
-                "y": 144.16727806309615
+                "x": 255.68598679383715,
+                "y": 144.53411592076304
             }
         },
         "forest1.tmx": {
@@ -174,8 +174,8 @@
             "scale": 1.6862499999999998,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 240.17790956263903,
-                "y": 136.10081541882877
+                "x": 239.88139362490736,
+                "y": 136.39733135656044
             }
         },
         "outside.tsj": {
