@@ -8,6 +8,7 @@ local enemyData = require("battle.data.enemies")
 local gamestate = require("gameState")
 local battleLocations = require("gameobjects.battleLocation")
 local battleStart = {}
+local gameState = require("gameState")
 
 local MaxNumPlayerBattlers = 3
 

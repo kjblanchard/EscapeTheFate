@@ -5,9 +5,9 @@
     },
     "activeFile": "forest1.tmj",
     "expandedProjectPaths": [
-        "templates",
+        ".",
         "old-delete",
-        "."
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -61,7 +61,7 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 239.75,
+                "x": 240,
                 "y": 136
             }
         },
@@ -84,8 +84,8 @@
             "scale": 1.4199,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 239.80562011409253,
-                "y": 160.57468835833512
+                "x": 239.4534826396225,
+                "y": 159.87041340939504
             }
         },
         "debugTown.tmj": {
@@ -98,8 +98,8 @@
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 303.66666666666663,
-                "y": 140
+                "x": 167.33333333333331,
+                "y": 15.999999999999986
             }
         },
         "debugTownHome.tmj": {
@@ -107,13 +107,13 @@
                 4
             ],
             "expandedObjectLayers": [
-                5,
-                6
+                6,
+                5
             ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 127.83333333333334,
+                "x": 128,
                 "y": 88
             }
         },
@@ -141,10 +141,10 @@
                 3
             ],
             "scale": 1.363,
-            "selectedLayer": 0,
+            "selectedLayer": 4,
             "viewCenter": {
-                "x": 255.68598679383715,
-                "y": 144.53411592076304
+                "x": 912.3257520176082,
+                "y": 580.3374908290535
             }
         },
         "forest1.tmx": {
@@ -174,8 +174,8 @@
             "scale": 1.6862499999999998,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 239.88139362490736,
-                "y": 136.39733135656044
+                "x": 239.58487768717572,
+                "y": 135.80429948109713
             }
         },
         "outside.tsj": {

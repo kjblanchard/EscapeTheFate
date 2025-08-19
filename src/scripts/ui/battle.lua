@@ -1,7 +1,13 @@
 local ui = require("UI")
+local battle = require("gameobjects.battle")
 local function doThingLocal()
-    local animTestPtr = ui.UIInstance["BattleUI"].children["Animation Test"].data
-    ui.PlayAnimation(animTestPtr, "walkD")
+    -- The C progressBar ptr that you can call functions against.
+    local atbBars = {}
+    battle.battleUI.ATBBars = atbBars
+    atbBars.player1 = {}
+    atbBars.player1.progressBar = ui.lookup
+        ["MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage.ProgressBar"].data
+    atbBars.player1.progressBarAnim = ui.lookup["MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage"].data
 end
 
 local returnTable = {
@@ -111,6 +117,23 @@ local returnTable = {
                                                 },
                                             }
                                         },
+                                        {
+                                            name = "ATBBarAnimImage",
+                                            type = "imageAnimator",
+                                            location = { 25, -11, 32, 32 },
+                                            imageName = "atbBar",
+                                            srcRect = { 0, 0, 16, 16 },
+                                            defaultAnimation = "idle",
+                                            children = {
+                                                {
+
+                                                    name = "ProgressBar",
+                                                    type = "progressBar",
+                                                    location = { 4, 12, 24, 6 },
+                                                    color = { 0, 255, 0, 255 },
+                                                }
+                                            }
+                                        },
                                     }
                                 }
                             }
@@ -140,6 +163,7 @@ local returnTable = {
                     type = "text",
                     size = 8,
                     text = "Magic",
+                    color = { 110, 110, 110, 255 },
                     location = { 66, 10, 430, 75 }
                 },
                 {
@@ -147,6 +171,7 @@ local returnTable = {
                     type = "text",
                     size = 8,
                     text = "Skills",
+                    color = { 110, 110, 110, 255 },
                     location = { 8, 28, 430, 75 }
                 },
                 {
@@ -154,6 +179,7 @@ local returnTable = {
                     type = "text",
                     size = 8,
                     text = "Items",
+                    color = { 110, 110, 110, 255 },
                     location = { 66, 28, 430, 75 }
                 },
 
@@ -168,16 +194,6 @@ local returnTable = {
             srcRect = { 48, 32, 16, 16 }
 
         },
-        {
-            name = "Animation Test",
-            type = "imageAnimator",
-            location = { 0, 0, 32, 32 },
-            -- location = { 0, 0, 64, 64 },
-            imageName = "player1",
-            -- imageName = "bBlackBird",
-            srcRect = { 0, 0, 32, 32 }
-            -- srcRect = { 0, 0, 64, 64 }
-        }
     }
 }
 return returnTable
