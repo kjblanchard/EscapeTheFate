@@ -5,7 +5,8 @@ battler.battlers = {}
 
 local function battlerCreateBase(go, stats)
     battler.battlers[go] = {}
-    battler.battlers[go].sprite = engine.NewSprite(stats.Image, go,
+    -- battler.battlers[go].sprite = engine.NewSprite(stats.Image, go,
+    battler.battlers[go].sprite = engine.Sprite.NewSprite(stats.Image, go,
         { 0, 0, stats.OffsetAndSize.w, stats.OffsetAndSize.h }, stats.OffsetAndSize)
     battler.battlers[go].animator = engine.CreateAnimator(stats.Image, battler.battlers[go].sprite)
     gameobject.SetType(go, GameObjectTypes.Battler)

@@ -22,11 +22,11 @@ function battleZone.BattleZoneCreate(userdata, go)
 end
 
 function battleZone.BattleZoneUpdate(go)
-    if gamestate.InBattle or gamestate.transitioningScreens then goto continue end
+    if gamestate.battle.InBattle or gamestate.transitioningScreens then goto continue end
     local zone = battleZone.zones[go]
     for key, value in pairs(player.players) do
         if not value.isMoving then goto continue end
-        local playerRect = GetPlayerCollisionBox(key)
+        local playerRect = player.GetPlayerCollisionBox(key)
         if engine.CheckForCollision(playerRect, zone.rect) then
             gamestate.battle.CurrentStepTime = gamestate.battle.CurrentStepTime + engine.DeltaTimeInSeconds()
             -- TODO should check if this exists.
