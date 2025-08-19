@@ -16,7 +16,7 @@ function dialog.DialogInteractionStart(playerNum, text)
     box[numLettersStr] = 0
     box[currentTimeOnLetterStr] = 0.0
     box[maxLettersStr] = #text
-    engine.PlayBGMBackground("typing", 1)
+    engine.Audio.PlayBGMBackground("typing", 1)
     box.isTyping = true
     ui.SetObjectVisible(box.boxptr, true)
 end
@@ -46,7 +46,7 @@ function dialog.UpdateDialogBoxes(timeSeconds)
             box[numLettersStr] = math.min(box[numLettersStr] + 1, box[maxLettersStr])
             ui.UpdateNumLettersForText(box.ptr, box[numLettersStr])
             if box[numLettersStr] == box[maxLettersStr] then
-                engine.StopBGMBackground()
+                engine.Audio.StopBGMBackground()
                 box.isTyping = false
             end
         end
