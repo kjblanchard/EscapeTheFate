@@ -1,21 +1,22 @@
 local engine = require("Engine")
 local ui = require("UI")
+local gamestate = require("gameState")
 local _currentButtonHovered = 0
 local _fingerButtonPtr = nil
 
 local function newGameButtonClickFunc(uiObjPtr)
-    if engine.sceneChange == true then return end
+    if gamestate.sceneChange == true then return end
     engine.Audio.PlaySfxOneShot("menuSelect", 1.0)
     engine.Scene.LoadScene("debugTown")
 end
 
 local function optionGameButtonClickFunc(uiObjPtr, justClicked)
-    if engine.sceneChange == true or not justClicked then return end
+    if gamestate.sceneChange == true or not justClicked then return end
     engine.Audio.PlaySfxOneShot("error1", 1.0)
 end
 
 local function continueGameButtonClickFunc(uiObjPtr, justClicked)
-    if engine.sceneChange == true or not justClicked then return end
+    if gamestate.sceneChange == true or not justClicked then return end
     engine.Audio.PlaySfxOneShot("error2", 1.0)
 end
 
@@ -25,7 +26,7 @@ local function panelStartFunc()
 end
 
 local function buttonHoverFunc(uiObjPtr, isJustHovered)
-    if engine.sceneChange == true then return end
+    if gamestate.sceneChange == true then return end
     if _currentButtonHovered == uiObjPtr or isJustHovered == false then return end
     local hoverdLocationX, hoveredLocationY = ui.GetObjectLocation(uiObjPtr)
     hoverdLocationX                         = hoverdLocationX - 8 --offset from words

@@ -27,7 +27,7 @@ function battleZone.BattleZoneUpdate(go)
         if not value.isMoving then goto continue end
         local playerRect = player.GetPlayerCollisionBox(key)
         if engine.Collision.CheckForCollision(playerRect, zone.rect) then
-            gamestate.battle.CurrentStepTime = gamestate.battle.CurrentStepTime + engine.DeltaTimeInSeconds()
+            gamestate.battle.CurrentStepTime = gamestate.battle.CurrentStepTime + gamestate.DeltaTimeSeconds
             -- TODO should check if this exists.
             local battleZoneData = GetBattleZone(zone.battleId)
             if battleZoneData and gamestate.battle.CurrentStepTime >= battleZoneData.stepCount then

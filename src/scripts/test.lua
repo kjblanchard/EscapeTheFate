@@ -13,21 +13,22 @@ local battleLocation = require("gameobjects.battleLocation")
 local battle = require("gameobjects.battle")
 local battler = require("gameobjects.battler")
 local dialogSystem = require("dialog")
+local gamestate = require("gameState")
 if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
     require("lldebugger").start()
 end
 
 local function handleNextScene()
-    if engine.nextScene ~= nil then
-        local sceneTable = scenes.scenes[engine.nextScene]
+    if gamestate.nextScene ~= nil then
+        local sceneTable = scenes.scenes[gamestate.nextScene]
         if sceneTable ~= nil then
             local co = engine.Scene.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable
                 [5],
                 sceneTable[6])
             scheduler:run(co)
         end
-        engine.nextScene = nil
-        engine.sceneChange = true
+        gamestate.nextScene = nil
+        gamestate.sceneChange = true
     end
 end
 
@@ -36,9 +37,11 @@ local function handleInput()
 end
 
 local function update()
+    gamestate.DeltaTimeSeconds = engine.Time.DeltaTimeInSeconds()
+    gamestate.DeltaTimeMS = engine.Time.DeltaTimeMS()
     handleNextScene()
-    scheduler:update(engine.DeltaTimeInSeconds())
-    dialogSystem.UpdateDialogBoxes(engine.DeltaTimeInSeconds())
+    scheduler:update(gamestate.DeltaTimeSeconds)
+    dialogSystem.UpdateDialogBoxes(gamestate.DeltaTimeSeconds)
 end
 
 local function draw()

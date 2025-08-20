@@ -165,7 +165,7 @@ local function PlayerUpdate(go)
         engine.Animation.SetAnimatorSpeed(playerData["animator"], 1.0)
         -- engine.Log.LogWarn("Animator speed is 1")
         local posX, posY = engine.Gameobject.Position(go)
-        local delta = engine.DeltaTimeInSeconds()
+        local delta = gameState.DeltaTimeSeconds
         -- gameobject.SetPosition(go, posX + velocity.x * player.moveSpeed * delta, posY + velocity.y * player.moveSpeed * delta)
         local newX = posX + velocity.x * player.moveSpeed * delta
         local newY = posY + velocity.y * player.moveSpeed * delta
@@ -193,7 +193,7 @@ local function PlayerUpdate(go)
         end
     end
     -- Handle A button pressed.
-    if engine.Input.KeyboardKeyJustPressed(engine.Buttons.A) then
+    if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) then
         -- If we are already interacting, then we should progress the text if needed, or end
         if playerData["textInteracting"] then
             if dialogSystem.DialogInteractionUpdate(1) then

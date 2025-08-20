@@ -4,6 +4,10 @@ require("directions")
 ---@field Level   integer -- The level of the player
 local gamestate = {}
 
+gamestate.DeltaTimeSeconds = 0
+gamestate.DeltaTimeMS = 0
+gamestate.sceneChange = false
+gamestate.nextScene = nil
 gamestate.transitioningScreens = false
 gamestate.loadLocation = 0
 gamestate.direction = Directions.down
