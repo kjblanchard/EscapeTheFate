@@ -1,5 +1,4 @@
 local engine = require("Engine")
-local gameobject = require("GameObject")
 local debugh = require("debugh")
 local dialogSystem = require("dialog")
 local gameState = require("gameState")
@@ -31,7 +30,7 @@ local function setPlayerDirection(playerData)
     elseif playerData.direction == Directions.left then
         animation = "walkL"
     end
-    engine.PlayAnimation(playerData.animator, animation)
+    engine.Animation.PlayAnimation(playerData.animator, animation)
 end
 
 
@@ -74,16 +73,16 @@ end
 local function handlePlayerMovement(playerData)
     local velocity = { x = 0, y = 0 }
     if not canPlayerMove(playerData) then return velocity end
-    if engine.Input.KeyboardKeyDown(engine.Buttons.UP) then
+    if engine.Input.KeyboardKeyDown(engine.Input.Buttons.UP) then
         velocity.y = velocity.y - 1
     end
-    if engine.Input.KeyboardKeyDown(engine.Buttons.DOWN) then
+    if engine.Input.KeyboardKeyDown(engine.Input.Buttons.DOWN) then
         velocity.y = velocity.y + 1
     end
-    if engine.Input.KeyboardKeyDown(engine.Buttons.RIGHT) then
+    if engine.Input.KeyboardKeyDown(engine.Input.Buttons.RIGHT) then
         velocity.x = velocity.x + 1
     end
-    if engine.Input.KeyboardKeyDown(engine.Buttons.LEFT) then
+    if engine.Input.KeyboardKeyDown(engine.Input.Buttons.LEFT) then
         velocity.x = velocity.x - 1
     end
     return velocity
@@ -91,7 +90,7 @@ end
 
 
 function player.GetPlayerCollisionBox(ptr)
-    local x, y = gameobject.Position(ptr)
+    local x, y = engine.Gameobject.Position(ptr)
     local collisionRect = {
         x = x + playerCollisionOffsetAndSizeRect.x,
         y = y + playerCollisionOffsetAndSizeRect.y,
@@ -103,11 +102,11 @@ end
 
 --#region Public
 function PlayerObjectCreate(_, go, direction)
-    gameobject.SetType(go, GameObjectTypes.Player)
+    engine.Gameobject.SetType(go, GameObjectTypes.Player)
     player.players[go] = {}
     local playerObj = player.players[go]
     playerObj.sprite = engine.Sprite.NewSprite("player1", go, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
-    playerObj.animator = engine.CreateAnimator("player1", player.players[go]["sprite"])
+    playerObj.animator = engine.Animation.CreateAnimator("player1", player.players[go]["sprite"])
     playerObj.direction = direction
     playerObj.isMoving = false
     playerObj.interactionRect = { x = 0, y = 0, w = 0, h = 0 }
@@ -117,7 +116,7 @@ end
 local function PlayerStart(go)
     setPlayerDirection(player.players[go])
     -- TODO set the follow target to the only player, should handle multiple players better.
-    engine.SetCameraFollowTarget(go)
+    engine.Camera.SetCameraFollowTarget(go)
     gameState.transitioningScreens = false
 end
 
@@ -132,7 +131,7 @@ local function PlayerUpdate(go)
     local isMoving = velocity.x ~= 0 or velocity.y ~= 0
     playerData.isMoving = isMoving
     if not isMoving then
-        engine.SetAnimatorSpeed(playerData["animator"], 0.0)
+        engine.Animation.SetAnimatorSpeed(playerData["animator"], 0.0)
         -- engine.Log.LogWarn("Animator speed is 0")
     end
     if isMoving then
@@ -144,51 +143,51 @@ local function PlayerUpdate(go)
         -- Determine animation based on direction priority: Y axis first
         if velocity.y > 0 then
             if direction ~= Directions.down then
-                engine.PlayAnimation(playerData["animator"], "walkD")
+                engine.Animation.PlayAnimation(playerData["animator"], "walkD")
                 playerData["direction"] = Directions.down
             end
         elseif velocity.y < 0 then
             if direction ~= Directions.up then
-                engine.PlayAnimation(playerData["animator"], "walkU")
+                engine.Animation.PlayAnimation(playerData["animator"], "walkU")
                 playerData["direction"] = Directions.up
             end
         elseif velocity.x > 0 then
             if direction ~= Directions.right then
-                engine.PlayAnimation(playerData["animator"], "walkR")
+                engine.Animation.PlayAnimation(playerData["animator"], "walkR")
                 playerData["direction"] = Directions.right
             end
         elseif velocity.x < 0 then
             if direction ~= Directions.left then
-                engine.PlayAnimation(playerData["animator"], "walkL")
+                engine.Animation.PlayAnimation(playerData["animator"], "walkL")
                 playerData["direction"] = Directions.left
             end
         end
-        engine.SetAnimatorSpeed(playerData["animator"], 1.0)
+        engine.Animation.SetAnimatorSpeed(playerData["animator"], 1.0)
         -- engine.Log.LogWarn("Animator speed is 1")
-        local posX, posY = gameobject.Position(go)
+        local posX, posY = engine.Gameobject.Position(go)
         local delta = engine.DeltaTimeInSeconds()
         -- gameobject.SetPosition(go, posX + velocity.x * player.moveSpeed * delta, posY + velocity.y * player.moveSpeed * delta)
         local newX = posX + velocity.x * player.moveSpeed * delta
         local newY = posY + velocity.y * player.moveSpeed * delta
         local collisionRect = { newX + playerCollisionOffsetAndSizeRect.x, newY + playerCollisionOffsetAndSizeRect.y,
             playerCollisionOffsetAndSizeRect.w, playerCollisionOffsetAndSizeRect.h }
-        collisionRect = engine.CheckRectForCollision(collisionRect)
+        collisionRect = engine.Collision.CheckRectForCollision(collisionRect)
         if collisionRect ~= nil then
             debugh.DrawRects[go] = collisionRect
-            gameobject.SetPosition(go,
+            engine.Gameobject.SetPosition(go,
                 engine.Tools.Round(collisionRect.x - playerCollisionOffsetAndSizeRect.x, 1),
                 engine.Tools.Round(collisionRect.y - playerCollisionOffsetAndSizeRect.y, 1))
         end
-        posX, posY = gameobject.Position(go)
+        posX, posY = engine.Gameobject.Position(go)
         updateInteractionRect(playerData, collisionRect)
         debugh.DrawRects[tostring(go) .. "interaction"] = playerData["interactionRect"]
 
         -- Handle overlap with an exit
         for _, value in pairs(exitBox.boxes) do
-            if engine.CheckForCollision(value["rect"], collisionRect) then
+            if engine.Collision.CheckForCollision(value["rect"], collisionRect) then
                 gameState.loadLocation = value.loadLocation
                 gameState.transitioningScreens = true
-                engine.LoadScene(value.loadMap)
+                engine.Scene.LoadScene(value.loadMap)
                 goto fin
             end
         end
@@ -203,7 +202,7 @@ local function PlayerUpdate(go)
         else
             -- Check for overlap with dialog boxes and start interacting.
             for _, value in pairs(dialog.boxes) do
-                if engine.CheckForCollision(value["rect"], playerData["interactionRect"]) then
+                if engine.Collision.CheckForCollision(value["rect"], playerData["interactionRect"]) then
                     dialogSystem.DialogInteractionStart(1, tostring(value["dialog"]))
                     playerData["textInteracting"] = true
                 end
@@ -220,14 +219,14 @@ local function PlayerDestroy(go)
         return
     end
     -- engine.DestroySprite(player.players[go]["sprite"])
-    engine.DestroyAnimator(player.players[go]["animator"])
+    engine.Animation.DestroyAnimator(player.players[go]["animator"])
     player.players[go]["sprite"] = nil
     player.players[go]["animator"] = nil
     player.players[go] = nil
 end
 
 function player.RegisterPlayerFunctions()
-    engine.RegisterGameObjectFunctions(GameObjectTypes.Player, {
+    engine.Gameobject.RegisterGameObjectFunctions(GameObjectTypes.Player, {
         nil,
         PlayerStart,
         PlayerUpdate,

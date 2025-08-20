@@ -5,18 +5,18 @@ local _fingerButtonPtr = nil
 
 local function newGameButtonClickFunc(uiObjPtr)
     if engine.sceneChange == true then return end
-    engine.PlaySfxOneShot("menuSelect", 1.0)
-    engine.LoadScene("debugTown")
+    engine.Audio.PlaySfxOneShot("menuSelect", 1.0)
+    engine.Scene.LoadScene("debugTown")
 end
 
 local function optionGameButtonClickFunc(uiObjPtr, justClicked)
     if engine.sceneChange == true or not justClicked then return end
-    engine.PlaySfxOneShot("error1", 1.0)
+    engine.Audio.PlaySfxOneShot("error1", 1.0)
 end
 
 local function continueGameButtonClickFunc(uiObjPtr, justClicked)
     if engine.sceneChange == true or not justClicked then return end
-    engine.PlaySfxOneShot("error2", 1.0)
+    engine.Audio.PlaySfxOneShot("error2", 1.0)
 end
 
 -- called after all the ui objects are loaded in, so you can get things by data
@@ -30,7 +30,7 @@ local function buttonHoverFunc(uiObjPtr, isJustHovered)
     local hoverdLocationX, hoveredLocationY = ui.GetObjectLocation(uiObjPtr)
     hoverdLocationX                         = hoverdLocationX - 8 --offset from words
     ui.SetObjectLocation(_fingerButtonPtr, hoverdLocationX, hoveredLocationY)
-    engine.PlaySfxOneShot("menuMove", 1.0)
+    engine.Audio.PlaySfxOneShot("menuMove", 1.0)
     _currentButtonHovered = uiObjPtr
 end
 

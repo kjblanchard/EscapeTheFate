@@ -1,6 +1,5 @@
 require("gameobjects.battler")
 local engine = require("Engine")
-local gameobject = require("GameObject")
 local playerData = require("battle.data.players")
 local battleZoneData = require("battle.data.battleZones")
 local enemyGroupData = require("battle.data.enemyGroups")
@@ -24,9 +23,9 @@ function battleStart.LoadAllBattlers()
         -- Load the player onto the field
         local loadLocation = battleLocations.locations[index]
         if loadLocation == nil then goto continue end
-        local battlerGOPtr = gameobject.CreateGameObjectInCurrentMap()
+        local battlerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
         BattlerObjectCreate(battlerGOPtr, currentPlayerData)
-        gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
+        engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
         ::continue::
     end
     -- local battleZoneData = GetBattleZone(gamestate.battle.BattleId)
@@ -44,9 +43,9 @@ function battleStart.LoadAllBattlers()
         -- Add for the player offset.
         local loadLocation = battleLocations.locations[index + MaxNumPlayerBattlers]
         if loadLocation == nil then goto continue end
-        local battlerGOPtr = gameobject.CreateGameObjectInCurrentMap()
+        local battlerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
         BattlerEnemyCreate(battlerGOPtr, enemy)
-        gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
+        engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
         ::continue::
     end
 end

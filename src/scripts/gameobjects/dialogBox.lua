@@ -1,5 +1,4 @@
 local engine = require("Engine")
-local gameobject = require("GameObject")
 
 local debugBox = {}
 debugBox.boxes = {}
@@ -15,8 +14,8 @@ function debugBox.DebugBoxCreate(userdata, go)
     if name == "" then goto fin end
     local fileName = engine.MapName() .. "." .. name
     debugBox.boxes[go].dialog = require(fileName)
-    local x, y = gameobject.Position(go)
-    local w, h = gameobject.Size(go)
+    local x, y = engine.Gameobject.Position(go)
+    local w, h = engine.Gameobject.Size(go)
     debugBox.boxes[go]["rect"] = { x = x, y = y, w = w, h = h }
     ::fin::
 end
@@ -26,7 +25,7 @@ function debugBox.DebugBoxDestroy(go)
 end
 
 function debugBox.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(GameObjectTypes.TextInteract, {
+    engine.Gameobject.RegisterGameObjectFunctions(GameObjectTypes.TextInteract, {
         debugBox.DebugBoxCreate,
         nil, nil,
         debugBox.DebugBoxDestroy,

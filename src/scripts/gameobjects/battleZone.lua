@@ -1,6 +1,5 @@
 require("battle.data.battleZones")
 local engine = require("Engine")
-local gameobject = require("GameObject")
 local player = require("gameobjects.player")
 local gamestate = require("gameState")
 
@@ -15,8 +14,8 @@ function battleZone.BattleZoneCreate(userdata, go)
             break
         end
     end
-    local x, y = gameobject.Position(go)
-    local w, h = gameobject.Size(go)
+    local x, y = engine.Gameobject.Position(go)
+    local w, h = engine.Gameobject.Size(go)
     zone.rect = { x = x, y = y, w = w, h = h }
     -- ::fin::
 end
@@ -27,7 +26,7 @@ function battleZone.BattleZoneUpdate(go)
     for key, value in pairs(player.players) do
         if not value.isMoving then goto continue end
         local playerRect = player.GetPlayerCollisionBox(key)
-        if engine.CheckForCollision(playerRect, zone.rect) then
+        if engine.Collision.CheckForCollision(playerRect, zone.rect) then
             gamestate.battle.CurrentStepTime = gamestate.battle.CurrentStepTime + engine.DeltaTimeInSeconds()
             -- TODO should check if this exists.
             local battleZoneData = GetBattleZone(zone.battleId)
@@ -36,7 +35,7 @@ function battleZone.BattleZoneUpdate(go)
                 gamestate.battle.InBattle = true
                 gamestate.transitioningScreens = true
                 gamestate.battle.CurrentStepTime = 0.0
-                engine.LoadScene("forest")
+                engine.Scene.LoadScene("forest")
             end
         end
     end
@@ -48,7 +47,7 @@ function battleZone.BattleZoneDestroy(go)
 end
 
 function battleZone.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(1, {
+    engine.Gameobject.RegisterGameObjectFunctions(1, {
         battleZone.BattleZoneCreate,
         nil, battleZone.BattleZoneUpdate,
         battleZone.BattleZoneDestroy,

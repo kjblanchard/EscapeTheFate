@@ -1,5 +1,4 @@
 local engine = require("Engine")
-local gameobject = require("GameObject")
 
 local battleLocation = {}
 battleLocation.locations = {}
@@ -11,7 +10,7 @@ function battleLocation.BattleLocationCreate(userdata, go)
             break
         end
     end
-    local x, y = gameobject.Position(go)
+    local x, y = engine.Gameobject.Position(go)
     location.pos = { x = x, y = y }
     battleLocation.locations[location.battleId] = location
 end
@@ -25,7 +24,7 @@ function battleLocation.BattleZoneDestroy(go)
 end
 
 function battleLocation.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(GameObjectTypes.BattleLocation, {
+    engine.Gameobject.RegisterGameObjectFunctions(GameObjectTypes.BattleLocation, {
         battleLocation.BattleLocationCreate,
         nil, nil,
         battleLocation.BattleZoneDestroy,

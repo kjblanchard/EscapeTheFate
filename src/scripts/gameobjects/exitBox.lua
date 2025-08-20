@@ -1,5 +1,4 @@
 local engine = require("Engine")
-local gameobject = require("GameObject")
 local defaultMap = "debugTown"
 
 local exitBox = {}
@@ -17,8 +16,8 @@ function exitBox.DebugBoxCreate(userdata, go)
     end
     exitBox.boxes[go].loadLocation = loadLocation
     exitBox.boxes[go].loadMap = loadMap
-    local x, y = gameobject.Position(go)
-    local w, h = gameobject.Size(go)
+    local x, y = engine.Gameobject.Position(go)
+    local w, h = engine.Gameobject.Size(go)
     exitBox.boxes[go]["rect"] = { x = x, y = y, w = w, h = h }
 end
 
@@ -27,7 +26,7 @@ function exitBox.DebugBoxDestroy(go)
 end
 
 function exitBox.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(GameObjectTypes.MapExit, {
+    engine.Gameobject.RegisterGameObjectFunctions(GameObjectTypes.MapExit, {
         exitBox.DebugBoxCreate,
         nil, nil,
         exitBox.DebugBoxDestroy,

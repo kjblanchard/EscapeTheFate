@@ -35,7 +35,7 @@ function battle.BattleZoneDestroy(go)
 end
 
 function battle.RegisterDebugBoxFunctions()
-    engine.RegisterGameObjectFunctions(GameObjectTypes.Battle, {
+    engine.Gameobject.RegisterGameObjectFunctions(GameObjectTypes.Battle, {
         battle.BattleCreate,
         battle.BattleStart,
         battle.BattleUpdate,

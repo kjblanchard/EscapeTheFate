@@ -21,7 +21,8 @@ local function handleNextScene()
     if engine.nextScene ~= nil then
         local sceneTable = scenes.scenes[engine.nextScene]
         if sceneTable ~= nil then
-            local co = engine.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable[5],
+            local co = engine.Scene.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable
+                [5],
                 sceneTable[6])
             scheduler:run(co)
         end
@@ -42,15 +43,15 @@ end
 
 local function draw()
     -- for _, value in pairs(debugh.DrawRects) do
-    --     engine.DrawRectCamOffset(value)
+    --     engine.Draw.DrawRectCamOffset(value)
     -- end
 end
 
 print("Even do here is what no u")
 engine.Log.LogWarn("What even")
 
-engine.SetWindowOptions(960, 540, "Escape The Fate")
-engine.SetScalingOptions(480, 270)
+engine.Window.SetWindowOptions(960, 540, "Escape The Fate")
+engine.Window.SetScalingOptions(480, 270)
 engine.SetUpdateFunc(update)
 engine.SetInputFunc(handleInput)
 engine.SetDrawFunc(draw)
@@ -63,6 +64,6 @@ startBox.RegisterDebugBoxFunctions()
 battleZone.RegisterDebugBoxFunctions()
 battleLocation.RegisterDebugBoxFunctions()
 battle.RegisterDebugBoxFunctions()
-engine.LoadDefaultScene()
+engine.Scene.LoadDefaultScene()
 battler.RegisterBattlerFunctions()
 print("FInished file")
