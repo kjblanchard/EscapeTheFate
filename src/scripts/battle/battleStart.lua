@@ -26,6 +26,8 @@ function battleStart.LoadAllBattlers()
         local battlerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
         BattlerObjectCreate(battlerGOPtr, currentPlayerData)
         engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
+        engine.Gameobject.SetSize(battlerGOPtr, currentPlayerData.OffsetAndSize.w, currentPlayerData.OffsetAndSize.h)
+        engine.Gameobject.SetName(battlerGOPtr, currentPlayerData.Name)
         ::continue::
     end
     -- local battleZoneData = GetBattleZone(gamestate.battle.BattleId)
@@ -46,6 +48,8 @@ function battleStart.LoadAllBattlers()
         local battlerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
         BattlerEnemyCreate(battlerGOPtr, enemy)
         engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
+        engine.Gameobject.SetSize(battlerGOPtr, enemy.OffsetAndSize.w, enemy.OffsetAndSize.h)
+        engine.Gameobject.SetName(battlerGOPtr, enemy.Name)
         ::continue::
     end
 end

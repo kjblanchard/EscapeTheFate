@@ -103,6 +103,8 @@ end
 --#region Public
 function PlayerObjectCreate(_, go, direction)
     engine.Gameobject.SetType(go, GameObjectTypes.Player)
+    engine.Gameobject.SetName(go, "Player")
+    engine.Gameobject.SetSize(go, 32, 32)
     player.players[go] = {}
     local playerObj = player.players[go]
     playerObj.sprite = engine.Sprite.NewSprite("player1", go, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })

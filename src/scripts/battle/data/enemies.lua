@@ -6,6 +6,7 @@
 ---@field Def number            -- Background number
 ---@field Spd number            -- Background number
 ---@field Image string            -- Background number
+---@field OffsetAndSize table{x,y,w,h}            -- Background number
 -- -@field Moves table{integer}            -- Background number
 
 local enemies = {}
@@ -20,7 +21,7 @@ enemies.enemies = {
         Def = 1,
         Spd = 1,
         Image = "bBlackBird",
-        OffsetAndSize = { x = -10, y = 10, w = 61, h = 57 },
+        OffsetAndSize = { x = -12, y = -36, w = 61, h = 57 },
         -- Moves = {}
     },
     {
