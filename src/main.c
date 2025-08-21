@@ -4,7 +4,6 @@
 #include <Supergoon/lua.h>
 
 static void Start(void) {
-	sgLogWarn("Running the lua file!");
 	LuaRunFile("assets/lua/test.lua");
 }
 

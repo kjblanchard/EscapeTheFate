@@ -1,6 +1,4 @@
--- local ui = require("UI")
 local engine = require("Engine")
-local scheduler = require("Scheduler")
 local scenes = require("scenes")
 local config = require("gameConfig")
 local debugh = require("debugh")
@@ -25,7 +23,8 @@ local function handleNextScene()
             local co = engine.Scene.LoadSceneCo(sceneTable[1], sceneTable[2], sceneTable[3], sceneTable[4], sceneTable
                 [5],
                 sceneTable[6])
-            scheduler:run(co)
+            engine.Coroutine.run(co)
+            -- scheduler:run(co)
         end
         gamestate.nextScene = nil
         gamestate.sceneChange = true
@@ -37,10 +36,8 @@ local function handleInput()
 end
 
 local function update()
-    gamestate.DeltaTimeSeconds = engine.Time.DeltaTimeInSeconds()
-    gamestate.DeltaTimeMS = engine.Time.DeltaTimeMS()
+    engine.EngineUpdate()
     handleNextScene()
-    scheduler:update(gamestate.DeltaTimeSeconds)
     dialogSystem.UpdateDialogBoxes(gamestate.DeltaTimeSeconds)
 end
 
@@ -49,9 +46,6 @@ local function draw()
     --     engine.Draw.DrawRectCamOffset(value)
     -- end
 end
-
-print("Even do here is what no u")
-engine.Log.LogWarn("What even")
 
 engine.Window.SetWindowOptions(960, 540, "Escape The Fate")
 engine.Window.SetScalingOptions(480, 270)
@@ -69,4 +63,3 @@ battleLocation.RegisterDebugBoxFunctions()
 battle.RegisterDebugBoxFunctions()
 engine.Scene.LoadDefaultScene()
 battler.RegisterBattlerFunctions()
-print("FInished file")
