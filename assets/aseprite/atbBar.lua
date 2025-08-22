@@ -92,7 +92,7 @@ return {
 	meta = {
 		app = 'https://www.aseprite.org/',
 		version = '1.3.2-dev',
-		image = 'atbBar.png',
+		image = 'atbBar.bmp',
 		format = 'I8',
 		size = {
 			w = 64,

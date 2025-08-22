@@ -65,6 +65,160 @@ return {
 				h = 48
 			},
 			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 3.aseprite',
+			frame = {
+				x = 144,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 4.aseprite',
+			frame = {
+				x = 192,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 5.aseprite',
+			frame = {
+				x = 240,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 6.aseprite',
+			frame = {
+				x = 288,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 400
+		},
+		{
+			filename = 'player1BattlerNew 7.aseprite',
+			frame = {
+				x = 336,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 8.aseprite',
+			frame = {
+				x = 384,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 200
+		},
+		{
+			filename = 'player1BattlerNew 9.aseprite',
+			frame = {
+				x = 432,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			rotated = false,
+			trimmed = false,
+			spriteSourceSize = {
+				x = 0,
+				y = 0,
+				w = 48,
+				h = 48
+			},
+			sourceSize = {
+				w = 48,
+				h = 48
+			},
+			duration = 400
 		}
 	},
 	meta = {
@@ -73,7 +227,7 @@ return {
 		image = 'player1BattlerNew.bmp',
 		format = 'I8',
 		size = {
-			w = 144,
+			w = 480,
 			h = 48
 		},
 		scale = '1',
@@ -82,6 +236,28 @@ return {
 				name = 'idleR',
 				from = 0,
 				to = 2,
+				direction = 'forward',
+				color = '#000000ff'
+			},
+			{
+				name = 'cheer',
+				from = 3,
+				to = 5,
+				direction = 'pingpong',
+				['repeat'] = '2',
+				color = '#000000ff'
+			},
+			{
+				name = 'item',
+				from = 6,
+				to = 8,
+				direction = 'forward',
+				color = '#000000ff'
+			},
+			{
+				name = 'clap',
+				from = 7,
+				to = 8,
 				direction = 'forward',
 				color = '#000000ff'
 			}
