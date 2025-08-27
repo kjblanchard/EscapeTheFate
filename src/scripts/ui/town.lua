@@ -19,8 +19,10 @@ local function panelStartFunc()
         buttonAssignments[bData] = engine.Buttons.B
     end
     table.insert(dialog.DialogBoxes, 1, {
-        ptr = ui.UIInstance["TownUI"].children["TextBoxBox"].children["TextBoxText"].data,
-        boxptr = ui.UIInstance["TownUI"].children["TextBoxBox"].data
+        -- ptr = ui.UIInstance["TownUI"].children["TextBoxBox"].children["TextBoxText"].data,
+        -- boxptr = ui.UIInstance["TownUI"].children["TextBoxBox"].data
+        ptr = ui.lookup["TownUI.TextBoxBox.TextBoxText"].data,
+        boxptr = ui.lookup["TownUI.TextBoxBox"].data
     })
 end
 

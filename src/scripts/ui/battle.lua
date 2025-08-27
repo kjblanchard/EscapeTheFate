@@ -1,13 +1,53 @@
 local ui = require("UI")
+local engine = require("Engine")
 local battle = require("gameobjects.battle")
+local battleFingerPtr = nil
+local attackButtonPtr = nil
+local _currentButtonHovered = 0
 local function doThingLocal()
     -- The C progressBar ptr that you can call functions against.
     local atbBars = {}
     battle.battleUI.ATBBars = atbBars
     atbBars.player1 = {}
     atbBars.player1.progressBar = ui.lookup
-        ["MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage.ProgressBar"].data
-    atbBars.player1.progressBarAnim = ui.lookup["MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage"].data
+        ["BattleUI.MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage.ProgressBar"].data
+    atbBars.player1.progressBarAnim = ui.lookup
+        ["BattleUI.MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage"].data
+    battleFingerPtr = ui.lookup["BattleUI.Selections Finger"].data
+    attackButtonPtr = ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data
+end
+
+local function attackButtonPressed(uiObjPtr, justClicked)
+    if not justClicked then return end
+    battle.PlayerAttackButtonPressed()
+end
+
+local function skillsButtonPressed(_, justClicked)
+    if not justClicked then return end
+    battle.PlayerSkillsButtonPressed()
+end
+
+local function itemsButtonPressed(_, justClicked)
+    if not justClicked then return end
+    battle.PlayerItemsButtonPressed()
+end
+
+local function magicButtonPressed(_, justClicked)
+    if not justClicked then return end
+    battle.PlayerMagicButtonPressed()
+end
+
+local function buttonNotImplemented(uiObjPtr, justClicked)
+end
+
+local function buttonHoveredFunc(uiObjPtr, isJustHovered)
+    if _currentButtonHovered == uiObjPtr or isJustHovered == false then return end
+    local hoverdLocationX, hoveredLocationY = ui.GetObjectLocation(uiObjPtr)
+    hoverdLocationX                         = hoverdLocationX + 5   --offset from words
+    hoveredLocationY                        = hoveredLocationY - 20 --offset from words
+    ui.SetObjectLocation(battleFingerPtr, hoverdLocationX, hoveredLocationY)
+    engine.Audio.PlaySfxOneShot("menuMove", 1.0)
+    _currentButtonHovered = uiObjPtr
 end
 
 local returnTable = {
@@ -152,39 +192,84 @@ local returnTable = {
             alpha = 190,
             children = {
                 {
-                    name = "AttackText",
-                    type = "text",
-                    size = 8,
-                    text = "Attack",
-                    location = { 8, 10, 430, 75 }
+                    name = "AttackButton",
+                    type = "button",
+                    pressOnRelease = true,
+                    pressedFunc = attackButtonPressed,
+                    hoverFunc = buttonHoveredFunc,
+                    location = { 5, 10, 52, 10 },
+                    children = {
+                        {
+                            name = "AttackText",
+                            type = "text",
+                            size = 8,
+                            text = "Attack",
+                            location = { 3, 0, 52, 10 }
+                        },
+
+                    }
                 },
                 {
-                    name = "MagicText",
-                    type = "text",
+                    name = "MagicButton",
+                    type = "button",
                     size = 8,
-                    text = "Magic",
-                    color = { 110, 110, 110, 255 },
-                    location = { 66, 10, 430, 75 }
+                    pressOnRelease = true,
+                    pressedFunc = magicButtonPressed,
+                    hoverFunc = buttonHoveredFunc,
+                    location = { 66, 10, 45, 10 },
+                    children = {
+                        {
+                            name = "MagicText",
+                            type = "text",
+                            size = 8,
+                            text = "Magic",
+                            color = { 110, 110, 110, 255 },
+                            location = { 0, 0, 45, 10 }
+                        },
+
+                    }
                 },
                 {
-                    name = "SkillText",
-                    type = "text",
-                    size = 8,
-                    text = "Skills",
-                    color = { 110, 110, 110, 255 },
-                    location = { 8, 28, 430, 75 }
+                    name = "SkillButton",
+                    type = "button",
+                    pressOnRelease = true,
+                    pressedFunc = skillsButtonPressed,
+                    hoverFunc = buttonHoveredFunc,
+                    location = { 8, 28, 45, 10 },
+                    children = {
+                        {
+                            name = "SkillText",
+                            type = "text",
+                            size = 8,
+                            text = "Skills",
+                            color = { 110, 110, 110, 255 },
+                            location = { 0, 0, 45, 10 }
+
+                        }
+
+                    }
                 },
                 {
-                    name = "ItemText",
-                    type = "text",
-                    size = 8,
-                    text = "Items",
-                    color = { 110, 110, 110, 255 },
-                    location = { 66, 28, 430, 75 }
-                },
+                    name = "ItemButton",
+                    type = "button",
+                    pressOnRelease = true,
+                    pressedFunc = itemsButtonPressed,
+                    hoverFunc = buttonHoveredFunc,
+                    location = { 66, 28, 50, 10 },
+                    children = {
+                        {
+                            name = "ItemText",
+                            type = "text",
+                            size = 8,
+                            text = "Items",
+                            color = { 110, 110, 110, 255 },
+                            location = { 0, 0, 50, 10 }
+                        },
+                    }
+
+                }
 
             }
-
         },
         {
             name = "Selections Finger",
@@ -192,6 +277,22 @@ local returnTable = {
             location = { 435, 130, 16, 16 },
             imageName = "fingers-export",
             srcRect = { 48, 32, 16, 16 }
+
+        },
+        {
+            name = "EnemySelectFinger",
+            type = "image",
+            visible = false,
+            location = { 0, 0, 16, 16 },
+            imageName = "fingers-export",
+            srcRect = { 48, 32, 16, 16 }
+
+        },
+        {
+            name = "EnemyBattlerButtons",
+            type = "panel",
+            location = { 0, 0, 16, 16 },
+            children = {}
 
         },
     }

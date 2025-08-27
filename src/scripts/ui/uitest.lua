@@ -22,7 +22,8 @@ end
 
 -- called after all the ui objects are loaded in, so you can get things by data
 local function panelStartFunc()
-    _fingerButtonPtr = ui.UIInstance["Test Panel"].children["SelectionsPanel"].children["Selections Finger"].data
+    -- _fingerButtonPtr = ui.UIInstance["Test Panel"].children["SelectionsPanel"].children["Selections Finger"].data
+    _fingerButtonPtr = ui.lookup["Test Panel.SelectionsPanel.Selections Finger"].data
 end
 
 local function buttonHoverFunc(uiObjPtr, isJustHovered)

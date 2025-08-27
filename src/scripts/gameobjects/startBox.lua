@@ -24,7 +24,6 @@ function startBox.DebugBoxCreate(userdata, go)
         -- Create player.
         local playerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
         PlayerObjectCreate(nil, playerGOPtr, direction)
-        engine.Log.LogError("Loaded the thing")
         local rect = startBox.boxes[go]["rect"]
         engine.Gameobject.SetPosition(playerGOPtr, rect.x, rect.y)
     end
