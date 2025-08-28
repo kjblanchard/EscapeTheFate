@@ -7,7 +7,8 @@ local battle = {}
 battle.battleUI = {}
 battle.ticks = 0
 battle.currentPercent = 0
---
+-- TODO maybe we use a state machine for this.. but for now keep it simple.
+battle.targetSelection = false
 battle.playingVictory = false
 battle.exitingBattle = false
 --
@@ -18,12 +19,15 @@ end
 function battle.BattleStart(go)
     battleStert.LoadAllBattlers()
     -- All battlers should now be on the field with proper stats in place, inside of battlers.
+    ui.SetObjectVisible(ui.lookup["BattleUI.P1CommandsBox"].data, false)
+    ui.SetObjectVisible(ui.lookup["BattleUI.Selections Finger"].data, false)
+    ui.SetObjectActive(ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data, false)
 end
 
 local function victoryUI()
-    ui.SetObjectVisible(ui.lookup["MainUIBox"].data, false)
-    ui.SetObjectVisible(ui.lookup["P1CommandsBox"].data, false)
-    ui.SetObjectVisible(ui.lookup["Selections Finger"].data, false)
+    ui.SetObjectVisible(ui.lookup["BattleUI.MainUIBox"].data, false)
+    ui.SetObjectVisible(ui.lookup["BattleUI.P1CommandsBox"].data, false)
+    ui.SetObjectVisible(ui.lookup["BattleUI.Selections Finger"].data, false)
 end
 
 function battle.BattleUpdate(go)
@@ -33,6 +37,9 @@ function battle.BattleUpdate(go)
         ui.UpdateProgressBarPercent(battle.battleUI.ATBBars.player1.progressBar, battle.currentPercent)
         if battle.currentPercent == 100 then
             ui.PlayAnimation(battle.battleUI.ATBBars.player1.progressBarAnim, "turn")
+            ui.SetObjectVisible(ui.lookup["BattleUI.P1CommandsBox"].data, true)
+            ui.SetObjectVisible(ui.lookup["BattleUI.Selections Finger"].data, true)
+            ui.SetObjectActive(ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data, true)
         end
     end
     if not battle.playingVictory and engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.B) then

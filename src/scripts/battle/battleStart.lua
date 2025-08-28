@@ -24,10 +24,10 @@ function battleStart.LoadAllBattlers()
         local loadLocation = battleLocations.locations[index]
         if loadLocation == nil then goto continue end
         local battlerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
-        BattlerObjectCreate(battlerGOPtr, currentPlayerData)
         engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
         engine.Gameobject.SetSize(battlerGOPtr, currentPlayerData.OffsetAndSize.w, currentPlayerData.OffsetAndSize.h)
         engine.Gameobject.SetName(battlerGOPtr, currentPlayerData.Name)
+        BattlerObjectCreate(battlerGOPtr, currentPlayerData)
         ::continue::
     end
     -- local battleZoneData = GetBattleZone(gamestate.battle.BattleId)
@@ -46,12 +46,16 @@ function battleStart.LoadAllBattlers()
         local loadLocation = battleLocations.locations[index + MaxNumPlayerBattlers]
         if loadLocation == nil then goto continue end
         local battlerGOPtr = engine.Gameobject.CreateGameObjectInCurrentMap()
-        BattlerEnemyCreate(battlerGOPtr, enemy)
         engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
         engine.Gameobject.SetSize(battlerGOPtr, enemy.OffsetAndSize.w, enemy.OffsetAndSize.h)
         engine.Gameobject.SetName(battlerGOPtr, enemy.Name)
+        BattlerEnemyCreate(battlerGOPtr, enemy)
         ::continue::
     end
+end
+
+function battleStart.CreateBattlerUIButtons()
+
 end
 
 return battleStart

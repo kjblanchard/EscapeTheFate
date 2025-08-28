@@ -2,7 +2,7 @@ local ui = require("UI")
 local engine = require("Engine")
 local battle = require("gameobjects.battle")
 local battleFingerPtr = nil
-local attackButtonPtr = nil
+-- local attackButtonPtr = nil
 local _currentButtonHovered = 0
 local function doThingLocal()
     -- The C progressBar ptr that you can call functions against.
@@ -14,7 +14,7 @@ local function doThingLocal()
     atbBars.player1.progressBarAnim = ui.lookup
         ["BattleUI.MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage"].data
     battleFingerPtr = ui.lookup["BattleUI.Selections Finger"].data
-    attackButtonPtr = ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data
+    -- attackButtonPtr = ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data
 end
 
 local function attackButtonPressed(uiObjPtr, justClicked)
