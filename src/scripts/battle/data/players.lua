@@ -1,4 +1,4 @@
----@class Player
+---@class Stats
 ---@field Name string     -- Name to be displayed in various UI elements
 ---@field HP   number
 ---@field MP number            -- Background number
@@ -6,10 +6,10 @@
 ---@field Def number            -- Background number
 ---@field Spd number            -- Background number
 ---@field Image string            -- Background number
--- -@field Moves table{integer}            -- Background number
+---@field OffsetAndSize table{x,y,w,h}            -- Background number
 
 
----@type  Player[]
+---@type  Stats[]
 local players = {
     {
         Name = "Kevin",

@@ -6,13 +6,6 @@ local battleFingerPtr = nil
 local _currentButtonHovered = 0
 local function doThingLocal()
     -- The C progressBar ptr that you can call functions against.
-    local atbBars = {}
-    battle.battleUI.ATBBars = atbBars
-    atbBars.player1 = {}
-    atbBars.player1.progressBar = ui.lookup
-        ["BattleUI.MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage.ProgressBar"].data
-    atbBars.player1.progressBarAnim = ui.lookup
-        ["BattleUI.MainUIBox.SelectionsVLG.Player1Panel.Player1HLG.ATBBarAnimImage"].data
     battleFingerPtr = ui.lookup["BattleUI.Selections Finger"].data
     -- attackButtonPtr = ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data
 end
@@ -295,6 +288,27 @@ local returnTable = {
             children = {}
 
         },
-    }
+        {
+            name = "MainInfoBox",
+            type = "9slice",
+            location = { 120, 8, 265, 45 },
+            color = { 80, 0, 120, 235 },
+            imageName = "uibase-export",
+            alpha = 190,
+            visible = false,
+            children = {
+                {
+                    name = "InformationText",
+                    type = "text",
+                    font = "PressStart2P",
+                    centeredY = true,
+                    centeredX = true,
+                    size = 8,
+                    text = "This is the original text, why do you do this.",
+                    location = { 8, 4, 250, 36 }
+                },
+            }
+        }
+    },
 }
 return returnTable

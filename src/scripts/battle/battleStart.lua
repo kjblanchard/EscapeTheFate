@@ -27,7 +27,7 @@ function battleStart.LoadAllBattlers()
         engine.Gameobject.SetPosition(battlerGOPtr, loadLocation.pos.x, loadLocation.pos.y)
         engine.Gameobject.SetSize(battlerGOPtr, currentPlayerData.OffsetAndSize.w, currentPlayerData.OffsetAndSize.h)
         engine.Gameobject.SetName(battlerGOPtr, currentPlayerData.Name)
-        BattlerObjectCreate(battlerGOPtr, currentPlayerData)
+        BattlerPlayerCreate(battlerGOPtr, currentPlayerData)
         ::continue::
     end
     -- local battleZoneData = GetBattleZone(gamestate.battle.BattleId)

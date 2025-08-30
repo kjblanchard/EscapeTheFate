@@ -2,11 +2,9 @@ local battleStert = require("battle.battleStart")
 local engine = require("Engine")
 local ui = require("UI")
 local battlers = require("gameobjects.battler")
+local gameState = require("gameState")
 
 local battle = {}
-battle.battleUI = {}
-battle.ticks = 0
-battle.currentPercent = 0
 -- TODO maybe we use a state machine for this.. but for now keep it simple.
 battle.targetSelection = false
 battle.playingVictory = false
@@ -31,19 +29,8 @@ local function victoryUI()
 end
 
 function battle.BattleUpdate(go)
-    battle.ticks = battle.ticks + 1
-    if battle.currentPercent < 100 and battle.ticks % 14 == 0 then
-        battle.currentPercent = battle.currentPercent + 1
-        ui.UpdateProgressBarPercent(battle.battleUI.ATBBars.player1.progressBar, battle.currentPercent)
-        if battle.currentPercent == 100 then
-            ui.PlayAnimation(battle.battleUI.ATBBars.player1.progressBarAnim, "turn")
-            ui.SetObjectVisible(ui.lookup["BattleUI.P1CommandsBox"].data, true)
-            ui.SetObjectVisible(ui.lookup["BattleUI.Selections Finger"].data, true)
-            ui.SetObjectActive(ui.lookup["BattleUI.P1CommandsBox.AttackButton"].data, true)
-        end
-    end
     if not battle.playingVictory and engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.B) then
-        for goPtr, battlerTable in pairs(battlers.battlers) do
+        for goPtr, battlerTable in pairs(gameState.battle.currentBattlers) do
             if not battlerTable.isPlayer then
                 goto continue
             end
