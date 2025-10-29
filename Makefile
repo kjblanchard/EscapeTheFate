@@ -44,7 +44,7 @@ run:
 	./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 
 debug: build
-	@lldb -s breakpoints.lldb ./build/bin/$(EXECUTABLE_NAME)
+	@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
 
 package:
 	$(PACKAGE_COMMAND)

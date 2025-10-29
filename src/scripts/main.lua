@@ -22,6 +22,12 @@ local player = {
     moveSpeed = 100,
     direction = Directions.down
 }
+local tester = {
+    testGo = nil,
+    renderTargetTexture = nil,
+    sprite = nil,
+    shader = nil
+}
 
 local function handleInput()
 end
@@ -84,6 +90,9 @@ local function update()
 end
 
 local function draw()
+        if tester.renderTargetTexture ~= nil then
+        engine.DrawTexture(tester.renderTargetTexture, tester.shader, {0,0,24,24}, {0,0,24,24})
+    end
 end
 
 engine.Window.SetWindowOptions(480, 270, "Escape The Fate")
@@ -94,7 +103,10 @@ engine.Audio.SetGlobalBGMVolume(config.audio.bgmVolume)
 engine.Audio.SetGlobalSFXVolume(config.audio.sfxVolume)
 engine.Audio.PlayBGM("town2")
 player.playerGO = engine.Gameobject.CreateGameObject()
-engine.Gameobject.SetPosition(player.playerGO, 40, 40)
+engine.Gameobject.SetPosition(player.playerGO, 0, 0)
 player.playerSprite = engine.Sprite.NewSprite("player1", player.playerGO, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
 player.playerAnimator = engine.Animation.CreateAnimator("player1", player.playerSprite)
 engine.Sprite.SetScale(player.playerSprite, 2.0)
+tester.renderTargetTexture = engine.CreateRenderTargetTexture(24,24)
+engine.ClearRenderTarget(tester.renderTargetTexture, 1.0, 0, 0, 1.0)
+tester.shader = engine.CreateShader("2dSpriteVertex", "2dSpriteFragment")
