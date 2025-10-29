@@ -25,7 +25,7 @@ local player = {
 local tester = {
     testGo = nil,
     renderTargetTexture = nil,
-    sprite = nil,
+    spriteTexture = nil,
     shader = nil
 }
 
@@ -108,7 +108,9 @@ player.playerSprite = engine.Sprite.NewSprite("player1", player.playerGO, { 0, 0
 player.playerAnimator = engine.Animation.CreateAnimator("player1", player.playerSprite)
 engine.Sprite.SetScale(player.playerSprite, 2.0)
 tester.renderTargetTexture = engine.CreateRenderTargetTexture(48,48)
-engine.SetRenderTarget(tester.renderTargetTexture)
-engine.ClearRenderTarget(tester.renderTargetTexture, 1.0, 0, 0, 1.0)
-engine.SetRenderTarget()
 tester.shader = engine.CreateShader("2dSpriteVertex", "2dSpriteFragment")
+tester.spriteTexture = engine.CreateTexture("test")
+engine.SetRenderTarget(tester.renderTargetTexture)
+engine.ClearRenderTarget(tester.renderTargetTexture, 1.0, 0, 0, 0.0)
+engine.DrawTextureToTexture(tester.renderTargetTexture, tester.spriteTexture, tester.shader, {0,0,48,48}, {0,0,48,48})
+engine.SetRenderTarget()

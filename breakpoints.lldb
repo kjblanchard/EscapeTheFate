@@ -7,7 +7,7 @@ settings set stop-line-count-before 5
 settings set stop-line-count-after 5
 
 # Set breakpoints
-breakpoint set --file lgraphics.c --line 51
+breakpoint set --file lgraphics.c --line 68
 #breakpoint set --name Update
 #breakpoint set --name Render
 
