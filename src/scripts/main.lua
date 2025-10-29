@@ -91,7 +91,7 @@ end
 
 local function draw()
         if tester.renderTargetTexture ~= nil then
-        engine.DrawTexture(tester.renderTargetTexture, tester.shader, {0,0,24,24}, {0,0,24,24})
+        engine.DrawTexture(tester.renderTargetTexture, tester.shader, {0,0,48,48}, {0,0,48,48})
     end
 end
 
@@ -107,6 +107,8 @@ engine.Gameobject.SetPosition(player.playerGO, 0, 0)
 player.playerSprite = engine.Sprite.NewSprite("player1", player.playerGO, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
 player.playerAnimator = engine.Animation.CreateAnimator("player1", player.playerSprite)
 engine.Sprite.SetScale(player.playerSprite, 2.0)
-tester.renderTargetTexture = engine.CreateRenderTargetTexture(24,24)
+tester.renderTargetTexture = engine.CreateRenderTargetTexture(48,48)
+engine.SetRenderTarget(tester.renderTargetTexture)
 engine.ClearRenderTarget(tester.renderTargetTexture, 1.0, 0, 0, 1.0)
+engine.SetRenderTarget()
 tester.shader = engine.CreateShader("2dSpriteVertex", "2dSpriteFragment")
