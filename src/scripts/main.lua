@@ -88,8 +88,8 @@ end
 
 -- engine.Window.SetScalingOptions(480, 270)
 -- engine.Window.SetWindowOptions(960, 540, "Escape The Fate")
- engine.Window.SetScalingOptions(480, 270)
-engine.Window.SetWindowOptions(480, 270, "Escape The Fate")
+engine.Window.SetScalingOptions(480, 270)
+engine.Window.SetWindowOptions(960, 540, "Escape The Fate")
 engine.SetUpdateFunc(update)
 engine.SetInputFunc(handleInput)
 engine.SetDrawFunc(draw)
