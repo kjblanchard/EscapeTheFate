@@ -22,12 +22,6 @@ local player = {
     moveSpeed = 100,
     direction = Directions.down
 }
-local tester = {
-    testGo = nil,
-    renderTargetTexture = nil,
-    spriteTexture = nil,
-    shader = nil
-}
 
 local function handleInput()
 end
@@ -90,9 +84,6 @@ local function update()
 end
 
 local function draw()
-        if tester.renderTargetTexture ~= nil then
-        engine.DrawTexture(tester.renderTargetTexture, tester.shader, {0,0,48,48}, {0,0,48,48})
-    end
 end
 
 engine.Window.SetWindowOptions(480, 270, "Escape The Fate")
@@ -106,11 +97,5 @@ player.playerGO = engine.Gameobject.CreateGameObject()
 engine.Gameobject.SetPosition(player.playerGO, 0, 0)
 player.playerSprite = engine.Sprite.NewSprite("player1", player.playerGO, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
 player.playerAnimator = engine.Animation.CreateAnimator("player1", player.playerSprite)
-engine.Sprite.SetScale(player.playerSprite, 2.0)
-tester.renderTargetTexture = engine.CreateRenderTargetTexture(48,48)
-tester.shader = engine.CreateShader("2dSpriteVertex", "2dSpriteFragment")
-tester.spriteTexture = engine.CreateTexture("test")
-engine.SetRenderTarget(tester.renderTargetTexture)
-engine.ClearRenderTarget(tester.renderTargetTexture, 1.0, 0, 0, 0.0)
-engine.DrawTextureToTexture(tester.renderTargetTexture, tester.spriteTexture, tester.shader, {0,0,48,48}, {0,0,48,48})
-engine.SetRenderTarget()
+engine.Map.LoadTilemap("debugTown")
+engine.Camera.SetCameraFollowTarget(player.playerGO)

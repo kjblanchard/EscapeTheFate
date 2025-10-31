@@ -1,0 +1,15 @@
+{ "columns":69,
+ "image":"..\/img\/house-export.bmp",
+ "imageheight":608,
+ "imagewidth":1104,
+ "margin":0,
+ "name":"house",
+ "spacing":0,
+ "tilecount":2622,
+ "tiledversion":"1.8.6",
+ "tileheight":16,
+ "tilewidth":16,
+ "transparentcolor":"#ff00ff",
+ "type":"tileset",
+ "version":"1.8"
+}

@@ -19,9 +19,6 @@ void main()
     // When using uv rect from CPU, don't use the other
     // TexCoords = mix(uvRect.xy, uvRect.zw, vertex.zw);
 
-
-
-
     // Regular transform
     gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
 }
