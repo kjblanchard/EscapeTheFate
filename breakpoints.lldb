@@ -8,7 +8,8 @@ settings set stop-line-count-after 5
 
 # Set breakpoints
 #breakpoint set --file map.c --line 515
-breakpoint set --file openglGraphics.c --line 93
+breakpoint set --file openglGraphics.c --line 95
+breakpoint set --file openglTexture.c --line 120
 #breakpoint set --name Update
 #breakpoint set --name Render
 
