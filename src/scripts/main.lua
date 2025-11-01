@@ -9,10 +9,6 @@ local Directions = {
     left = 3
 }
 
-if os.getenv("LOCAL_LUA_DEBUGGER_VSCODE") == "1" then
-    require("lldebugger").start()
-end
-
 local player = {
     playerGO = nil,
     playerAnimator = nil,
@@ -79,6 +75,7 @@ local function playerInput()
 end
 
 local function update()
+    engine.Debug.StartDebugger()
     engine.EngineUpdate()
     playerInput()
 end

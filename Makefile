@@ -40,11 +40,13 @@ build:
 install:
 	@cmake --install $(BUILD_DIR) --config $(BUILD_TYPE)
 run:
-# 	@open ./build/bin/$(EXECUTABLE_NAME).app || ./build/bin/$(EXECUTABLE_NAME)
+	# 	@open ./build/bin/$(EXECUTABLE_NAME).app || ./build/bin/$(EXECUTABLE_NAME)
 	./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 
 debug: build
 	@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
+debugl:
+	@LUA_DEBUGGING=1 $(MAKE) run
 
 package:
 	$(PACKAGE_COMMAND)
@@ -60,7 +62,7 @@ wrebuild:
 	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) PACKAGE_COMMAND=$(WINDOWS_PACKAGE_COMMAND) SYSTEM_PACKAGES=OFF configure build install package
 erebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) CONFIGURE_COMMAND=$(EMSCRIPTEN_CONFIGURE_COMMAND) BUILD_COMMAND='sudo $(BUILD_COMMAND)' SYSTEM_PACKAGES=OFF clean configure build
-# Haven't tested this locally with systempackages off, added this after removing engine.
+	# Haven't tested this locally with systempackages off, added this after removing engine.
 irebuild:
 	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF  ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" clean configure build install package
 iosrebuild:
@@ -70,29 +72,29 @@ iosrebuild:
 		ADDITIONAL_BUILD_COMMANDS=$(IOS_BUILD_COMMANDS) \
 		ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" \
 		clean configure build install package
-# Custom run commands
+	# Custom run commands
 erun:
 	emrun ./build/bin/$(EXECUTABLE_NAME).html
 irun:
 	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
-#Helpers
+	#Helpers
 buildtime:
 	./tools/quick_build_times.py -C build
 trace:
 	./tools/ninja_trace.py build/.ninja_log > trace.json
-# Upload trace to about:trace in chrome, or https://ui.perfetto.dev/
+	# Upload trace to about:trace in chrome, or https://ui.perfetto.dev/
 bloaty:
 	dsymutil ./$(EXECUTABLE_NAME) -o SupergoonClient.dSYM
 	bloaty -d compileunits SupergoonClient --debug-file SupergoonClient.dSYM/Contents/Resources/DWARF/SupergoonClient
 valgrind:
 	valgrind --track-origins=yes --leak-check=yes --leak-resolution=low --show-leak-kinds=definite ./build/bin/$(EXECUTABLE_NAME) 2>&1 | tee memcheck.txt
-# Exports the tilesets if we need to as lua files for tsx/tmx
+	# Exports the tilesets if we need to as lua files for tsx/tmx
 tiled:
 	@$(foreach file,$(TILED_EXPORT_MAPS),\
 		$(TILED_PATH) --export-map --detach-templates --embed-tilesets --resolve-types-and-properties lua $(TILED_FOLDER_PATH)/$(file).tmj $(TILED_FOLDER_PATH)/$(file).lua; \
-	)
+		)
 
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
