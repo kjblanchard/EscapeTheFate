@@ -1,17 +1,8 @@
 # breakpoints.lldb
-# A simple LLDB command script
-
-# Optional: show each command as it runs
-settings set auto-confirm true
-settings set stop-line-count-before 5
-settings set stop-line-count-after 5
-
 # Set breakpoints
 #breakpoint set --file map.c --line 515
-breakpoint set --file openglGraphics.c --line 95
-breakpoint set --file openglTexture.c --line 120
+breakpoint set --file openglGraphics.c --line 92
 #breakpoint set --name Update
-#breakpoint set --name Render
 
 # Run the program automatically
 run

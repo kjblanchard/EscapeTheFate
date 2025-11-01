@@ -86,12 +86,10 @@ end
 local function draw()
 end
 
--- engine.Window.SetScalingOptions(480, 270)
--- engine.Window.SetWindowOptions(960, 540, "Escape The Fate")
---engine.Window.SetScalingOptions(480, 270)
-engine.Window.SetWindowOptions(960, 540, "Escape The Fate")
+engine.Window.SetScalingOptions(480, 270)
+engine.Window.SetWindowOptions(1920, 1080, "Escape The Fate")
 engine.SetUpdateFunc(update)
-engine.SetInputFunc(handleInput)
+--engine.SetInputFunc(handleInput)
 engine.SetDrawFunc(draw)
 engine.Audio.SetGlobalBGMVolume(config.audio.bgmVolume)
 engine.Audio.SetGlobalSFXVolume(config.audio.sfxVolume)
