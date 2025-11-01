@@ -75,7 +75,7 @@ local function playerInput()
 end
 
 local function update()
-    engine.Debug.StartDebugger()
+    engine.StartDebugger()
     engine.EngineUpdate()
     playerInput()
 end
