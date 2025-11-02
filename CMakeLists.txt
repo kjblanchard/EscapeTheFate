@@ -4,8 +4,8 @@ project("Escape The Fate")
 if(CMAKE_GENERATOR STREQUAL "Xcode")
   message(STATUS "Setting Build to Universal Binary")
   set(CMAKE_OSX_ARCHITECTURES
-      "x86_64;arm64"
-      CACHE STRING "" FORCE)
+    "x86_64;arm64"
+    CACHE STRING "" FORCE)
 endif(CMAKE_GENERATOR STREQUAL "Xcode")
 
 # set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/entitlements.plist")
@@ -16,7 +16,7 @@ set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
-option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" ON)
+option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(DEBUG_BUILD_TIME "Add in the pch that I think will be changing a bit" OFF)
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
@@ -30,7 +30,7 @@ endif(DEBUG_BUILD_TIME)
 # Enable AddressSanitizer only in Debug builds (excluding iOS and iOS Simulator)
 if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator"))
-     AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
+    AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
     message(STATUS "Enabling AddressSanitizer in Debug mode")
     set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
@@ -61,30 +61,20 @@ set(FOLDERS_TO_COPY assets)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
 if(MSVC)
-  set(INSTALL_DIR
-      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>
-      CACHE INTERNAL "")
+  set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG> CACHE INTERNAL "")
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
       add_definitions(-DIS_MOBILE)
-      set(INSTALL_DIR
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app
-          CACHE INTERNAL "")
+      set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app CACHE INTERNAL "")
     else()
-      set(INSTALL_DIR
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
-          CACHE INTERNAL "")
+      set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources CACHE INTERNAL "")
     endif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   else()
-    set(INSTALL_DIR
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
-        CACHE INTERNAL "")
+    set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources CACHE INTERNAL "")
   endif(CMAKE_GENERATOR STREQUAL "Xcode")
 else()
-  set(INSTALL_DIR
-      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-      CACHE STRING "" FORCE)
+  set(INSTALL_DIR ${CMAKE_RUNTIME_OUTPUT_DIRECTORY} CACHE STRING "" FORCE)
 endif(MSVC)
 
 add_subdirectory(engine)

@@ -1,7 +1,7 @@
 # breakpoints.lldb
 # Set breakpoints
 #breakpoint set --file map.c --line 515
-breakpoint set --file openglGraphics.c --line 92
+breakpoint set --file ltext.c --line 18
 #breakpoint set --name Update
 
 # Run the program automatically
