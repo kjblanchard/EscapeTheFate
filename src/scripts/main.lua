@@ -86,7 +86,7 @@ local function draw()
     if textPtr then
         engine.Text.DrawText(textPtr)
     end
-    engine.DrawRect({1,1,64,64}, true)
+    -- engine.DrawRect({1,1,64,64}, true)
 
 end
 
