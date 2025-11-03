@@ -102,4 +102,4 @@ player.playerSprite = engine.Sprite.NewSprite("player1", player.playerGO, { 0, 0
 player.playerAnimator = engine.Animation.CreateAnimator("player1", player.playerSprite)
 engine.Map.LoadTilemap("debugTown")
 engine.Camera.SetCameraFollowTarget(player.playerGO)
-textPtr = engine.Text.CreateText("PressStart2P", 24)
+textPtr = engine.Text.CreateText("PressStart2P", 24, {0,0,500,500}, "Hello world!")
