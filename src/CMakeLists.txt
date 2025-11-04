@@ -41,16 +41,32 @@ if(APPLE)
                XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
                # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
   )
+
 elseif(EMSCRIPTEN)
+  # figure out where the engine lives
+  if(EXISTS "${CMAKE_SOURCE_DIR}/SupergoonEngine/scripting")
+    set(ENGINE_SCRIPT_PATH "${CMAKE_SOURCE_DIR}/SupergoonEngine/scripting")
+  elseif(EXISTS "${CMAKE_BINARY_DIR}/_deps/supergoonengine-src/scripting")
+    set(ENGINE_SCRIPT_PATH "${CMAKE_BINARY_DIR}/_deps/supergoonengine-src/scripting")
+  else()
+    message(WARNING "SupergoonEngine scripting folder not found, skipping preload.")
+    set(ENGINE_SCRIPT_PATH "")
+  endif()
+
   set_target_properties(
     ${EXECUTABLE_TARGET_NAME}
     PROPERTIES
       LINK_FLAGS
       "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
-    --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets \
-    --preload-file ${CMAKE_SOURCE_DIR}/src/scripts@/assets/lua/\
-    --preload-file ${CMAKE_SOURCE_DIR}/SupergoonEngine/scripting@/assets/lua/")
-endif(APPLE)
+      --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets \
+      --preload-file ${CMAKE_SOURCE_DIR}/src/scripts@/assets/lua/ \
+      $<$<BOOL:${ENGINE_SCRIPT_PATH}>:--preload-file ${ENGINE_SCRIPT_PATH}@/assets/lua/>")
+endif()
+
+# elseif(EMSCRIPTEN) set_target_properties( ${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS "${LINK_FLAGS} -O0 -s
+# SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \ --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets \ --preload-file
+# ${CMAKE_SOURCE_DIR}/src/scripts@/assets/lua/\ --preload-file
+# ${CMAKE_SOURCE_DIR}/SupergoonEngine/scripting@/assets/lua/") endif(APPLE)
 
 target_compile_options(${EXECUTABLE_TARGET_NAME} PRIVATE ${FULL_COMPILE_OPTIONS})
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
