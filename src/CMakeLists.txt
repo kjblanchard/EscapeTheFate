@@ -39,7 +39,8 @@ if(APPLE)
     PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
                XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
                XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
-               XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development")
+               # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+  )
 elseif(EMSCRIPTEN)
   set_target_properties(
     ${EXECUTABLE_TARGET_NAME}
