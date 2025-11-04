@@ -45,7 +45,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Configure CMake
-        run: make BUILD_TYPE=Release DEFAULT_IMGUI=OFF ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
+        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF DEFAULT_IMGUI=OFF ${{ matrix.make_cmd}}
       - name: Save packaged artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -55,8 +55,7 @@ jobs:
     runs-on: ubuntu-latest
     environment: prod
     container:
-      # image: emscripten/emsdk:3.1.70
-      image: emscripten/emsdk:4.0.18
+      image: emscripten/emsdk:3.1.70
       env:
         THING_ADD: <div><br>Use WASD to move<br>Built with github actions!<br>Press SPACE to interact.<br><a href="https://github.com/kjblanchard/etf">Source Code on Github!</a></div>
       credentials:
@@ -81,38 +80,38 @@ jobs:
         with:
           name: s3Artifact
           path: repo/build/bin
-          # Push-Files-To-S3:
-          #   uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
-          #   needs: Build-Emscripten
-          #   secrets:
-          #     IAM_SECRET: ${{ secrets.IAM_SECRET }}
-          #   with:
-          #     IAM_USER: ${{ vars.IAM_USER }}
-          #     bucket_region: "us-east-1"
-          #     bucket_name: "etf-external-site"
-        Create-Release:
-          strategy:
-            matrix:
-              include:
-                - os: win
+  # Push-Files-To-S3:
+  #   uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
+  #   needs: Build-Emscripten
+  #   secrets:
+  #     IAM_SECRET: ${{ secrets.IAM_SECRET }}
+  #   with:
+  #     IAM_USER: ${{ vars.IAM_USER }}
+  #     bucket_region: "us-east-1"
+  #     bucket_name: "etf-external-site"
+  Create-Release:
+    strategy:
+      matrix:
+        include:
+          - os: win
             artifact_name: EscapeTheFate.zip
             asset_name: supergoon_win.zip
-      - os: mac
-        artifact_name: EscapeTheFate.tgz
-        asset_name: supergoon_mac.tgz
-      - os: ios-simulator
-        artifact_name: EscapeTheFate.tgz
-        asset_name: supergoon_ios_sim.tgz
-      - os: linux
-        artifact_name: EscapeTheFate.tgz
-        asset_name: supergoon_ubuntu.tgz
-        if: startsWith(github.event.ref, 'refs/tags/v')
-        runs-on: ubuntu-latest
-        environment: prod
-        needs:
-          - Build-Desktop
-        steps:
-          - name: Checkout code
+          - os: mac
+            artifact_name: EscapeTheFate.tgz
+            asset_name: supergoon_mac.tgz
+          - os: ios-simulator
+            artifact_name: EscapeTheFate.tgz
+            asset_name: supergoon_ios_sim.tgz
+          - os: linux
+            artifact_name: EscapeTheFate.tgz
+            asset_name: supergoon_ubuntu.tgz
+    if: startsWith(github.event.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    environment: prod
+    needs:
+      - Build-Desktop
+    steps:
+      - name: Checkout code
         uses: actions/checkout@v4
       - name: Fetch tags
         run: git fetch --tags --force
@@ -120,6 +119,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: ${{ matrix.os }}-artifacts
+
       - name: Get current tag annotation
         id: tag-data
         run: |
