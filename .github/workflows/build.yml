@@ -77,6 +77,9 @@ jobs:
         run: |
           apt update -y && apt upgrade -y
           apt install cmake pkg-config  -y
+      - name: Build dependencies
+        run: |
+          embuilder build sdl3 freetype ogg libpng vorbis
       - name: Actual build
         run: cd repo && make CMAKE_BUILD_TYPE=Release DEFAULT_IMGUI=OFF erebuild
       - name: Update html build
