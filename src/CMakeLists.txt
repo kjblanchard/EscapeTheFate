@@ -49,7 +49,7 @@ elseif(EMSCRIPTEN)
       "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
     --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets \
     --preload-file ${CMAKE_SOURCE_DIR}/src/scripts@/assets/lua/\
-    --preload-file ${CMAKE_SOURCE_DIR}/engine/scripting@/assets/lua/")
+    --preload-file ${CMAKE_SOURCE_DIR}/SupergoonEngine/scripting@/assets/lua/")
 endif(APPLE)
 
 target_compile_options(${EXECUTABLE_TARGET_NAME} PRIVATE ${FULL_COMPILE_OPTIONS})
