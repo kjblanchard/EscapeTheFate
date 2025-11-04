@@ -101,7 +101,6 @@ else()
   FetchContent_MakeAvailable(engine)
 endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
 
-add_subdirectory(engine)
 add_subdirectory(src)
 
 install(
