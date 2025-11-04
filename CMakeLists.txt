@@ -89,16 +89,16 @@ else()
 endif(MSVC)
 
 if(ENGINE_CACHED AND SYSTEM_PACKAGES)
-  add_subdirectory(engine)
+  add_subdirectory(SupergoonEngine)
 else()
   message(STATUS "Fetching supergoon engine from git..")
   FetchContent_Declare(
-    engine
+    SupergoonEngine
     GIT_REPOSITORY https://github.com/kjblanchard/SupergoonEngine
     # Use master for development, otherwise make sure to pin to proper engine tag for releases GIT_TAG c55aa25 GIT_TAG
     # master
     GIT_TAG master)
-  FetchContent_MakeAvailable(engine)
+  FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
 
 add_subdirectory(src)
