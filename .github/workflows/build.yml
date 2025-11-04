@@ -35,6 +35,10 @@ jobs:
     runs-on: ${{ matrix.os }}
     environment: prod
     steps:
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.28.3'
       - name: Install dependencies (Ubuntu only)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
@@ -60,6 +64,10 @@ jobs:
         username: ${{ vars.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
     steps:
+      - name: Set up CMake
+        uses: jwlawson/actions-setup-cmake@v2
+        with:
+          cmake-version: '3.28.3'
       - name: Check out repository code
         uses: actions/checkout@v4
         with:
