@@ -5,6 +5,7 @@ build/
 .terraform/
 terraform.tfvars
 engine/
+SupergoonEngine/
 .cache/
 *.swp
 *.swn
