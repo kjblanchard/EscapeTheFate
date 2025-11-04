@@ -97,7 +97,7 @@ else()
     GIT_REPOSITORY https://github.com/kjblanchard/SupergoonEngine
     # Use master for development, otherwise make sure to pin to proper engine tag for releases GIT_TAG c55aa25 GIT_TAG
     # master
-    GIT_TAG 7416b6e4a9af761ad803e496fcc680988c40cca8)
+    GIT_TAG master)
   FetchContent_MakeAvailable(engine)
 endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
 
