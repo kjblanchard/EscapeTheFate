@@ -22,4 +22,3 @@ void main()
     // Regular transform
     gl_Position = projection * view * model * vec4(vertex.xy, 0.0, 1.0);
 }
-

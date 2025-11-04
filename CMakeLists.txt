@@ -1,4 +1,5 @@
-cmake_minimum_required(VERSION 3.22)
+# 3.26 is needed for building al on static
+cmake_minimum_required(VERSION 3.26)
 project("Escape The Fate")
 
 if(CMAKE_GENERATOR STREQUAL "Xcode")
