@@ -40,6 +40,9 @@ if(APPLE)
                # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
                XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
                XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
+               # when building on github, we don't want to sign anything cause there is no cert
+               XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
+               XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
                # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
   )
 

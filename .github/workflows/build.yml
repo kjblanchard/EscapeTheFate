@@ -97,7 +97,7 @@ jobs:
     with:
       IAM_USER: ${{ vars.IAM_USER }}
       bucket_region: "us-east-1"
-      bucket_name: "etf-external-site-dev"
+      bucket_name: "etf-dev-external-site"
   Create-Release:
     strategy:
       matrix:
