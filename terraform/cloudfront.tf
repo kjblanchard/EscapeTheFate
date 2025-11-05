@@ -86,7 +86,7 @@ resource "aws_s3_bucket_policy" "cloudfront_access_policy" {
 # Create a CloudFront distribution pointing to the S3 bucket
 resource "aws_cloudfront_distribution" "escape_the_fate_dev_distribution" {
   origin {
-    domain_name              = aws_s3_bucket.supergoon_world_bucket.bucket_regional_domain_name
+    domain_name              = aws_s3_bucket.supergoon_world_bucket_dev.bucket_regional_domain_name
     origin_access_control_id = aws_cloudfront_origin_access_control.access_control.id
     origin_id                = local.s3_origin
   }

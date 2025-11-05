@@ -1,14 +1,19 @@
 # Escape The Fate
 
-
 - Cross Platform 2d deckbuilder roguelike RPG demo
 - Custom engine written in C.
 - Lua scripting.
 - Opengl 3.3 and OpenglES 3.0
+- [![Build All Platforms](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
+- Play the game here, or likely watch its "progress" [Play!](https://escapethefate.supergoon.com)
+- Debug build [Play!](https://escapethefate-dev.supergoon.com)
+- Project board [Board](https://github.com/users/kjblanchard/projects/11)
+- ![Status Picture](https://github.com/kjblanchard/etf/blob/master/img/state.gif?raw=true)
 
 ## Details
 
 - BGMs created by me in Garageband
+- Wrote entirely in vim, to get better at raw vim.  Used COC for IDE like
 
 ## Goals
 
@@ -45,9 +50,4 @@ to discuss what you would like to change.
     newagesoup
 - [LearnOpenGL](https://learnopengl.com) -
     OpenGL learning
- 
- 
- 
- 
- 
- 
+

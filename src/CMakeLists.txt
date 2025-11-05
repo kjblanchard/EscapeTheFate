@@ -63,7 +63,7 @@ elseif(EMSCRIPTEN)
       "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
       --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets \
       --preload-file ${CMAKE_SOURCE_DIR}/src/scripts@/assets/lua/ \
-      --preload-file ${ENGINE_SCRIPT_PATH}@/assets/lua/>")
+      --preload-file ${ENGINE_SCRIPT_PATH}@/assets/lua/")
 endif()
 
 # elseif(EMSCRIPTEN) set_target_properties( ${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS "${LINK_FLAGS} -O0 -s
