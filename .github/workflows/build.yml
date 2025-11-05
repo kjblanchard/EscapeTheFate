@@ -89,15 +89,15 @@ jobs:
         with:
           name: s3Artifact
           path: repo/build/bin
-  # Push-Files-To-S3:
-  #   uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
-  #   needs: Build-Emscripten
-  #   secrets:
-  #     IAM_SECRET: ${{ secrets.IAM_SECRET }}
-  #   with:
-  #     IAM_USER: ${{ vars.IAM_USER }}
-  #     bucket_region: "us-east-1"
-  #     bucket_name: "etf-external-site"
+  Push-Files-To-S3:
+    uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
+    needs: Build-Emscripten
+    secrets:
+      IAM_SECRET: ${{ secrets.IAM_SECRET }}
+    with:
+      IAM_USER: ${{ vars.IAM_USER }}
+      bucket_region: "us-east-1"
+      bucket_name: "etf-external-site-dev"
   Create-Release:
     strategy:
       matrix:
