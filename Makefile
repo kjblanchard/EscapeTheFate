@@ -45,6 +45,7 @@ run:
 
 debug: build
 	@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
+
 debugl:
 	@LUA_DEBUGGING=1 $(MAKE) run
 

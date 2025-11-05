@@ -1,6 +1,7 @@
 local engine = require("Engine")
 local config = require("gameConfig")
 local gameState = require("gameState")
+local ui = require("UI")
 
 local Directions = {
     down = 0,
@@ -19,8 +20,7 @@ local player = {
     direction = Directions.down
 }
 
-local textPtr = nil
-
+-- local textPtr = nil
 -- local function handleInput()
 -- end
 
@@ -77,17 +77,12 @@ local function playerInput()
 end
 
 local function update()
-    engine.StartDebugger()
     engine.EngineUpdate()
     playerInput()
 end
 
 local function draw()
-    if textPtr then
-        engine.Text.DrawText(textPtr)
-    end
-    -- engine.DrawRect({1,1,64,64}, true)
-
+    ui.DrawUI()
 end
 
 engine.Window.SetScalingOptions(480, 270)
@@ -104,4 +99,5 @@ player.playerSprite = engine.Sprite.NewSprite("player1", player.playerGO, { 0, 0
 player.playerAnimator = engine.Animation.CreateAnimator("player1", player.playerSprite)
 engine.Map.LoadTilemap("debugTown")
 engine.Camera.SetCameraFollowTarget(player.playerGO)
-textPtr = engine.Text.CreateText("PressStart2P", 8, {0,0,500,500}, "Hello world!")
+ui.CreateUIPanelFromScriptFile("ui.uitest")
+-- textPtr = engine.Text.CreateText("PressStart2P", 8, {0,0,500,500}, "Hello world!")
