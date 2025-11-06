@@ -9,7 +9,7 @@ WINDOWS_GENERATOR ?= "Visual Studio 17 2022"
 APPLE_GENERATOR ?= Xcode
 CONFIGURE_COMMAND ?= "cmake"
 EMSCRIPTEN_CONFIGURE_COMMAND = "emcmake cmake"
-BUILD_TYPE ?= Release
+BUILD_TYPE ?= Debug
 SYSTEM_PACKAGES ?= ON
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
@@ -47,7 +47,7 @@ debug: build
 	@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
 
 debugl:
-	@LUA_DEBUGGING=1 $(MAKE) run
+	@LUA_DEBUGGING=1 $(MAKE) debug
 
 package:
 	$(PACKAGE_COMMAND)
