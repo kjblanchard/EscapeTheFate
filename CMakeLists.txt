@@ -88,7 +88,7 @@ else()
       CACHE STRING "" FORCE)
 endif(MSVC)
 
-if(ENGINE_CACHED AND SYSTEM_PACKAGES)
+if(ENGINE_CACHED)
   add_subdirectory(SupergoonEngine)
 else()
   message(STATUS "Fetching supergoon engine from git..")
@@ -99,7 +99,7 @@ else()
     # master
     GIT_TAG master)
   FetchContent_MakeAvailable(SupergoonEngine)
-endif(ENGINE_CACHED AND SYSTEM_PACKAGES)
+endif(ENGINE_CACHED)
 
 add_subdirectory(src)
 
