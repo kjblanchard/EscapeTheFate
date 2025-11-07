@@ -99,7 +99,7 @@ else()
 endif(ENGINE_CACHED)
 
 install(
-  DIRECTORY src/scripts/
+  DIRECTORY src/
   DESTINATION ${INSTALL_DIR}/assets/lua
   COMPONENT assets)
 
