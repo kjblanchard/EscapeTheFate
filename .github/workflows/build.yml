@@ -43,7 +43,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v4
       - name: Configure CMake
-        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF DEFAULT_IMGUI=OFF ${{ matrix.make_cmd}}
+        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
       - name: Save packaged artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -77,7 +77,7 @@ jobs:
         run: |
           embuilder build sdl3 freetype ogg libpng vorbis
       - name: Actual build
-        run: cd repo && make CMAKE_BUILD_TYPE=Release DEFAULT_IMGUI=OFF erebuild
+        run: cd repo && make CMAKE_BUILD_TYPE=Release ENGINE_CACHED=OFF erebuild
       - name: Update html build
         run: cd repo/build/bin && awk '/<textarea id="output" rows="8"><\/textarea>/ {print; print ENVIRON["THING_ADD"]; next} 1' EscapeTheFate.html > temp.html && mv temp.html EscapeTheFate.html
       - uses: actions/upload-artifact@v4
