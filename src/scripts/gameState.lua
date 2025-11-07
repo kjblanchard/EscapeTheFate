@@ -6,4 +6,5 @@
 local gamestate = {}
 gamestate.DeltaTimeSeconds = 0
 gamestate.DeltaTimeMS = 0
+gamestate.LoadLocation = 0
 return gamestate

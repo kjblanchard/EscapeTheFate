@@ -30,11 +30,13 @@ TILED_EXPORT_MAPS = debugTown debugSouth cloud debugTownHome forest1
 ASEPRITE_DIR = assets/aseprite
 JSON_TO_LUA_SCRIPT = tools/jsontolua.py
 # default, should be used after a rebuild of some sort.
+# -DCMAKE_POLICY_VERSION_MINIMUM=3.5 use this if we are using past version 4.0
+#
 all: build install run
 clean:
 	@rm -rf $(BUILD_DIR)
 configure:
-	$(CONFIGURE_COMMAND) -DCMAKE_POLICY_VERSION_MINIMUM=3.5 -G "$(CMAKE_GENERATOR)" . -B $(BUILD_DIR) -DENGINE_CACHED=$(ENGINE_CACHED) -DSYSTEM_PACKAGES=$(SYSTEM_PACKAGES) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(ADDITIONAL_OPTIONS)
+	$(CONFIGURE_COMMAND)  -G "$(CMAKE_GENERATOR)" . -B $(BUILD_DIR) -DENGINE_CACHED=$(ENGINE_CACHED) -DSYSTEM_PACKAGES=$(SYSTEM_PACKAGES) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(ADDITIONAL_OPTIONS)
 build:
 	@$(BUILD_COMMAND) $(ADDITIONAL_BUILD_COMMANDS)
 install:
@@ -43,7 +45,7 @@ run:
 	# 	@open ./build/bin/$(EXECUTABLE_NAME).app || ./build/bin/$(EXECUTABLE_NAME)
 	./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 
-debug: build
+debug: build install
 	@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
 
 debugl:

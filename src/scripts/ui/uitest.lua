@@ -2,6 +2,7 @@ local uitest = {
     children = {
         niner = {
             class = "nineSlice",
+            visible = false,
             color = { 80, 0, 120, 235 },
             rect = { 60, 60, 156, 70 },
             xSize = 8,
@@ -12,8 +13,10 @@ local uitest = {
                     class = "text",
                     font = "PressStart2P",
                     fontSize = 8,
-                    rect = {5,5,500,500},
+                    rect = {8,8,140,54},
                     text = "Hello World!",
+                    centerX = true,
+                    centerY = true,
                 }
             }
         },
