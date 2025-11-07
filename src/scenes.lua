@@ -1,5 +1,3 @@
-
-
 return {
     ---@type string
     -- default = "title",

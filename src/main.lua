@@ -11,6 +11,7 @@ end
 
 local function draw()
     ui.DrawUI()
+    engine.DrawAllDebugBoxes()
 end
 engine.Window.SetScalingOptions(config.window.x, config.window.y)
 engine.Window.SetWindowOptions(config.window.xWin, config.window.yWin,config.window.title)
