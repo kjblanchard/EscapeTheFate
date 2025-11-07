@@ -9,8 +9,6 @@ if(CMAKE_GENERATOR STREQUAL "Xcode")
       CACHE STRING "" FORCE)
 endif(CMAKE_GENERATOR STREQUAL "Xcode")
 
-# set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/entitlements.plist")
-# set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/entitlements.plist")
 set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 set(CMAKE_C_STANDARD 99)
@@ -58,7 +56,6 @@ if(DEBUG_CMAKE_VARIABLES)
   endforeach()
 endif(DEBUG_CMAKE_VARIABLES)
 
-set(FOLDERS_TO_COPY assets)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
 if(MSVC)
@@ -101,9 +98,12 @@ else()
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED)
 
-add_subdirectory(src)
+install(
+  DIRECTORY src/scripts/
+  DESTINATION ${INSTALL_DIR}/assets/lua
+  COMPONENT assets)
 
 install(
-  DIRECTORY ${FOLDERS_TO_COPY}
+  DIRECTORY assets
   DESTINATION ${INSTALL_DIR}
   COMPONENT assets)
