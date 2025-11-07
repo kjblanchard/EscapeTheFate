@@ -1,26 +1,25 @@
 # Escape The Fate
 
-- Cross Platform 2d deckbuilder roguelike RPG demo
-- Custom engine written in C.
-- Lua scripting.
-- Opengl 3.3 and OpenglES 3.0
-- [![Build All Platforms](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
-- Play the game here, or likely watch its "progress" [Play!](https://escapethefate.supergoon.com)
-- Debug build [Play!](https://escapethefate-dev.supergoon.com)
+## Cross Platform 2d deckbuilder roguelike RPG demo
+
+- Custom C engine [Here](https://github.com/kjblanchard/SupergoonEngine)
+- Build Status[![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
+- Play the game here, or likely watch its "progress" [Play!](https://escapethefate.supergoon.com) [Debug/Dev build](https://escapethefate-dev.supergoon.com)
 - Project board [Board](https://github.com/users/kjblanchard/projects/11)
 - ![Status Picture](https://github.com/kjblanchard/etf/blob/master/img/state.gif?raw=true)
 
 ## Details
 
 - BGMs created by me in Garageband
-- Wrote entirely in vim, to get better at raw vim.  Used COC for IDE like
+- Wrote entirely in vim, to get better at raw vim, debugged with lldb or remdebug.
 
 ## Goals
 
-- Cross Platform CMAKE
-- Package with CMAKE for installing on desktops
+- Cross Platform cmake
+- Package with cmake for installing on desktops
 - C/Lua practice
 - Learn OpenGL
+- Better with vim
 
 ## Installation
 
