@@ -17,13 +17,16 @@ function textInteraction.Start(data)
     table.insert(textInteractions, newInteraction)
 end
 
+---@param rect table
 function textInteraction.CheckForTextInteractions(rect)
     for i = 1, #textInteractions, 1 do
         local currentInteraction = textInteractions[i]
         if engine.Collision.CheckForCollision(rect, currentInteraction.rect) then
             dialogSystem.LoadTextToDialogBox(currentInteraction.text)
+            return true
         end
     end
+    return false
 end
 
 

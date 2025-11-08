@@ -1,6 +1,6 @@
 # .cmake-format.yaml
 format:
-  line_width: 120
+  line_width: 160
   tab_size: 2
   max_pargs_hwrap: 8
   max_subargs_per_line: 8

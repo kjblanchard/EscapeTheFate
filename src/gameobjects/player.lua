@@ -2,6 +2,7 @@ local engine = require("Engine")
 local gamestate = require("gameState")
 local player = {}
 local interaction = require("gameobjects.textInteraction")
+local dialogSystem = require("dialogSystem")
 player.moveSpeed = 100
 player.players = {}
 player.player1Name = "player1"
@@ -103,7 +104,12 @@ local function playerInput(playerMan)
     -- end
     -- posX, posY = engine.Gameobject.Position(go)
     updateInteractionRect(playerMan, collisionRect)
-    interaction.CheckForTextInteractions(playerMan.interactionRect)
+    if interaction.CheckForTextInteractions(playerMan.interactionRect) then
+
+    else
+        dialogSystem.DisableDialogBox()
+
+    end
 
     engine.DrawRect(playerMan.interactionRect, false, true)
 end

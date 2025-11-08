@@ -5,8 +5,8 @@
     },
     "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
-        ".",
         "templates",
+        ".",
         "old-delete"
     ],
     "exportAsImage.includeBackgroundColor": true,
@@ -98,7 +98,7 @@
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 167.66666666666663,
+                "x": 161,
                 "y": 16.333333333333314
             }
         },
@@ -220,15 +220,11 @@
         "debugTownHome.tmj",
         "debugSouth.tmj",
         "cloud.tsj",
-        "cloud.tmj",
-        "old-delete/cloud.tsx",
-        "old-delete/untitled.tmj"
+        "cloud.tmj"
     ],
     "project": "goonRpg.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "old-delete/untitled.tmj",
-        "old-delete/cloud.tsx",
         "cloud.tmj",
         "cloud.tsj",
         "debugSouth.tmj",
@@ -238,7 +234,9 @@
         "inside.tsj",
         "terrain.tsj",
         "outside.tsj",
-        "debugTown.tmj"
+        "debugTown.tmj",
+        "old-delete/untitled.tmj",
+        "old-delete/cloud.tsx"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "json",
