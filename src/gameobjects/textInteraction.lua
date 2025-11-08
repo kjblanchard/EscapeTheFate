@@ -1,5 +1,4 @@
 local engine = require("Engine")
-local dialogSystem = require("dialogSystem")
 local textInteraction ={}
 
 local textInteractions = {}
@@ -22,11 +21,10 @@ function textInteraction.CheckForTextInteractions(rect)
     for i = 1, #textInteractions, 1 do
         local currentInteraction = textInteractions[i]
         if engine.Collision.CheckForCollision(rect, currentInteraction.rect) then
-            dialogSystem.LoadTextToDialogBox(currentInteraction.text)
-            return true
+            return currentInteraction.text
         end
     end
-    return false
+    return nil
 end
 
 

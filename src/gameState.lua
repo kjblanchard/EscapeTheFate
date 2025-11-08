@@ -7,4 +7,7 @@ local gamestate = {}
 gamestate.DeltaTimeSeconds = 0
 gamestate.DeltaTimeMS = 0
 gamestate.LoadLocation = 0
+---@type table
+---Stores info about the interaction table, from the UI
+gamestate.interactionImageTable = nil
 return gamestate

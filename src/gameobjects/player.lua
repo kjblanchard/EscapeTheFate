@@ -1,7 +1,6 @@
 local engine = require("Engine")
 local gamestate = require("gameState")
 local player = {}
-local interaction = require("gameobjects.textInteraction")
 local dialogSystem = require("dialogSystem")
 player.moveSpeed = 100
 player.players = {}
@@ -56,7 +55,8 @@ local function setPlayerDirection(playerData)
     engine.Animation.PlayAnimation(playerData.playerAnimator, animation)
 end
 
-local function playerInput(playerMan)
+local function playerHandleMovement(playerMan)
+    if playerMan.interacting then return end
     local moved = false
     local velocityX = 0
     local velocityY = 0
@@ -94,7 +94,7 @@ local function playerInput(playerMan)
         animatorSpeed = 1.0
     end
     engine.Animation.SetAnimatorSpeed(playerMan.playerAnimator, animatorSpeed)
-    local collisionRect = {x =  playerMan.x + playerCollisionOffsetAndSizeRect.x, y = playerMan.y + playerCollisionOffsetAndSizeRect.y, w =    playerCollisionOffsetAndSizeRect.w,h = playerCollisionOffsetAndSizeRect.h }
+    -- local collisionRect = {x =  playerMan.x + playerCollisionOffsetAndSizeRect.x, y = playerMan.y + playerCollisionOffsetAndSizeRect.y, w =    playerCollisionOffsetAndSizeRect.w,h = playerCollisionOffsetAndSizeRect.h }
     -- collisionRect = engine.Collision.CheckRectForCollision(collisionRect)
     -- if collisionRect ~= nil then
     --     debugh.DrawRects[go] = collisionRect
@@ -103,15 +103,41 @@ local function playerInput(playerMan)
     --         engine.Tools.Round(collisionRect.y - playerCollisionOffsetAndSizeRect.y, 1))
     -- end
     -- posX, posY = engine.Gameobject.Position(go)
-    updateInteractionRect(playerMan, collisionRect)
-    if interaction.CheckForTextInteractions(playerMan.interactionRect) then
+    -- if we are not interacting, check for interactions and potentially start one
+end
 
+local function handleInteractions(playerMan)
+    if not playerMan.interacting then
+        local collisionRect = {x =  playerMan.x + playerCollisionOffsetAndSizeRect.x, y = playerMan.y + playerCollisionOffsetAndSizeRect.y, w =    playerCollisionOffsetAndSizeRect.w,h = playerCollisionOffsetAndSizeRect.h }
+        -- collisionRect = engine.Collision.CheckRectForCollision(collisionRect)
+        updateInteractionRect(playerMan, collisionRect)
+        if dialogSystem.CheckForTextInteractions(playerMan.interactionRect) then
+            if gamestate.interactionImageTable then
+                gamestate.interactionImageTable.visible = true
+                gamestate.interactionImageTable.rect.x = playerMan.x + 20
+                gamestate.interactionImageTable.rect.y = playerMan.y - 5
+                if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) then
+                    playerMan.interacting = true
+                    engine.Animation.SetAnimatorSpeed(playerMan.playerAnimator, 0.0)
+                    dialogSystem.Start()
+                    gamestate.interactionImageTable.visible = false
+                end
+            end
+        else
+            dialogSystem.DisableDialogBox()
+            gamestate.interactionImageTable.visible = false
+        end
     else
-        dialogSystem.DisableDialogBox()
-
+        if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) then
+            playerMan.interacting = false
+            dialogSystem.DisableDialogBox()
+        end
     end
+end
 
-    engine.DrawRect(playerMan.interactionRect, false, true)
+local function playerInput(playerMan)
+    playerHandleMovement(playerMan)
+    handleInteractions(playerMan)
 end
 
 function player.Start(playerData)
