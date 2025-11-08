@@ -1,6 +1,6 @@
 # 3.26 is needed for building al on static
 cmake_minimum_required(VERSION 3.5)
-project("Escape The Fate" LANGUAGES C VERSION 0.1)
+project("Escape The Fate" LANGUAGES C CXX VERSION 0.1)
 set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
