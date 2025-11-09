@@ -106,32 +106,39 @@ local function playerHandleMovement(playerMan)
     -- if we are not interacting, check for interactions and potentially start one
 end
 
+local function setPlayerInteractionIndicatorLocation(playerMan)
+    if gamestate.interactionImageTable then
+        gamestate.interactionImageTable.visible = true
+        gamestate.interactionImageTable.rect.x = playerMan.x + 20
+        gamestate.interactionImageTable.rect.y = playerMan.y - 5
+    end
+end
+
 local function handleInteractions(playerMan)
-    if not playerMan.interacting then
-        local collisionRect = {x =  playerMan.x + playerCollisionOffsetAndSizeRect.x, y = playerMan.y + playerCollisionOffsetAndSizeRect.y, w =    playerCollisionOffsetAndSizeRect.w,h = playerCollisionOffsetAndSizeRect.h }
-        -- collisionRect = engine.Collision.CheckRectForCollision(collisionRect)
-        updateInteractionRect(playerMan, collisionRect)
-        if dialogSystem.CheckForTextInteractions(playerMan.interactionRect) then
-            if gamestate.interactionImageTable then
-                gamestate.interactionImageTable.visible = true
-                gamestate.interactionImageTable.rect.x = playerMan.x + 20
-                gamestate.interactionImageTable.rect.y = playerMan.y - 5
-                if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) then
-                    playerMan.interacting = true
-                    engine.Animation.SetAnimatorSpeed(playerMan.playerAnimator, 0.0)
-                    dialogSystem.Start()
-                    gamestate.interactionImageTable.visible = false
-                end
-            end
-        else
-            dialogSystem.DisableDialogBox()
+    if playerMan.interacting then
+        if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) and dialogSystem.ProgressDialog() then
+            playerMan.interacting = false
+        end
+        return
+    end
+    local collisionRect = {
+        x = playerMan.x + playerCollisionOffsetAndSizeRect.x,
+        y = playerMan.y + playerCollisionOffsetAndSizeRect.y,
+        w = playerCollisionOffsetAndSizeRect.w,
+        h = playerCollisionOffsetAndSizeRect.h
+    }
+    -- collisionRect = engine.Collision.CheckRectForCollision(collisionRect)
+    updateInteractionRect(playerMan, collisionRect)
+    if dialogSystem.CheckForTextInteractions(playerMan.interactionRect) then
+        setPlayerInteractionIndicatorLocation(playerMan)
+        if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) then
+            playerMan.interacting = true
+            engine.Animation.SetAnimatorSpeed(playerMan.playerAnimator, 0.0)
+            dialogSystem.Start()
             gamestate.interactionImageTable.visible = false
         end
     else
-        if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.A) then
-            playerMan.interacting = false
-            dialogSystem.DisableDialogBox()
-        end
+        gamestate.interactionImageTable.visible = false
     end
 end
 
@@ -155,11 +162,11 @@ function player.Start(playerData)
     }
     table.insert(player.players, newPlayer)
     newPlayer.playerGO = engine.Gameobject.CreateGameObject()
-    engine.Gameobject.SetPosition(newPlayer.playerGO,newPlayer.x, newPlayer.y)
-    newPlayer.playerSprite = engine.Sprite.NewSprite(player.player1Name, newPlayer.playerGO, { 0, 0, 32, 32 }, { 0, 0, 32, 32 })
+    engine.Gameobject.SetPosition(newPlayer.playerGO, newPlayer.x, newPlayer.y)
+    newPlayer.playerSprite = engine.Sprite.NewSprite(player.player1Name, newPlayer.playerGO, { 0, 0, 32, 32 },
+        { 0, 0, 32, 32 })
     newPlayer.playerAnimator = engine.Animation.CreateAnimator(player.player1Name, newPlayer.playerSprite)
     engine.Camera.SetCameraFollowTarget(newPlayer.playerGO)
-
 end
 
 function player.Update()

@@ -3,6 +3,7 @@ local config = require("gameConfig")
 local loader = require("gameobjects.gameobjects")
 local ui = require("UI")
 local scenes = require("scenes")
+local dialogSystem = require("dialogSystem")
 
 local function update()
     engine.EngineUpdate()
