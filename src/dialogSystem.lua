@@ -23,12 +23,14 @@ local function createDialogCorouting()
             coroutine.yield()
         end
 
+        engine.Audio.PlayBGMBackground("typing")
         while displayingText and not textDisplayEnded and currentTextInteractionText and currentDisplayedLetters < #currentTextInteractionText do
             engine.Coroutine.Wait(displayTimePerLetter)
             currentDisplayedLetters = currentDisplayedLetters + 1
             engine.Text.SetTextNumLetters(loadedTextPtr, currentDisplayedLetters)
             if currentDisplayedLetters == #currentTextInteractionText then textDisplayEnded = true end
         end
+        engine.Audio.StopBGMBackground()
         currentDisplayingCo = nil
     end)
 end
