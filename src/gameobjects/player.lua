@@ -15,6 +15,7 @@ local Directions = {
 }
 
 local playerCollisionOffsetAndSizeRect <const> = { x = 8, y = 8, w = 16, h = 22 }
+local collisionRect = {}
 
 local function updateInteractionRect(playerTable, collisionRect)
     local ewWH = { x = 26, y = 8 }
@@ -94,16 +95,7 @@ local function playerHandleMovement(playerMan)
         animatorSpeed = 1.0
     end
     engine.Animation.SetAnimatorSpeed(playerMan.playerAnimator, animatorSpeed)
-    -- local collisionRect = {x =  playerMan.x + playerCollisionOffsetAndSizeRect.x, y = playerMan.y + playerCollisionOffsetAndSizeRect.y, w =    playerCollisionOffsetAndSizeRect.w,h = playerCollisionOffsetAndSizeRect.h }
-    -- collisionRect = engine.Collision.CheckRectForCollision(collisionRect)
-    -- if collisionRect ~= nil then
-    --     debugh.DrawRects[go] = collisionRect
-    --     engine.Gameobject.SetPosition(go,
-    --         engine.Tools.Round(collisionRect.x - playerCollisionOffsetAndSizeRect.x, 1),
-    --         engine.Tools.Round(collisionRect.y - playerCollisionOffsetAndSizeRect.y, 1))
-    -- end
-    -- posX, posY = engine.Gameobject.Position(go)
-    -- if we are not interacting, check for interactions and potentially start one
+    return moved
 end
 
 local function setPlayerInteractionIndicatorLocation(playerMan)
@@ -142,8 +134,30 @@ local function handleInteractions(playerMan)
     end
 end
 
+local function handleCollisions(playerMan)
+    collisionRect = {
+        x = playerMan.x + playerCollisionOffsetAndSizeRect.x,
+        y = playerMan.y + playerCollisionOffsetAndSizeRect.y,
+        w = playerCollisionOffsetAndSizeRect.w,
+        h = playerCollisionOffsetAndSizeRect.h
+    }
+    local x, y = engine.Map.ResolveCollisionWithSolids(collisionRect)
+    if not x == nil or y == nil then return end
+    if collisionRect.x ~= x or collisionRect.y ~= y then
+        playerMan.x = x - playerCollisionOffsetAndSizeRect.x
+        playerMan.y = y - playerCollisionOffsetAndSizeRect.y
+        collisionRect.x = x
+        collisionRect.y = y
+        engine.Gameobject.SetPosition(playerMan.playerGO,
+            engine.Tools.Round(playerMan.x, 1),
+            engine.Tools.Round(playerMan.y, 1))
+    end
+end
+
 local function playerInput(playerMan)
-    playerHandleMovement(playerMan)
+    if playerHandleMovement(playerMan) then
+        handleCollisions(playerMan)
+    end
     handleInteractions(playerMan)
 end
 
