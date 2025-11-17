@@ -261,50 +261,6 @@
                 }, 
                 {
                  "height":16,
-                 "id":25,
-                 "name":"Sign",
-                 "properties":[
-                        {
-                         "name":"filename",
-                         "type":"string",
-                         "value":"pots"
-                        }, 
-                        {
-                         "name":"text",
-                         "type":"string",
-                         "value":""
-                        }],
-                 "rotation":0,
-                 "type":"5TextInteract",
-                 "visible":true,
-                 "width":64,
-                 "x":0,
-                 "y":96
-                }, 
-                {
-                 "height":40.8092421534822,
-                 "id":29,
-                 "name":"Sign",
-                 "properties":[
-                        {
-                         "name":"filename",
-                         "type":"string",
-                         "value":"bed"
-                        }, 
-                        {
-                         "name":"text",
-                         "type":"string",
-                         "value":"Comfy bed"
-                        }],
-                 "rotation":0,
-                 "type":"5TextInteract",
-                 "visible":true,
-                 "width":32,
-                 "x":224,
-                 "y":112
-                }, 
-                {
-                 "height":16,
                  "id":43,
                  "name":"Start1",
                  "properties":[

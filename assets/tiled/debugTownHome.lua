@@ -360,38 +360,6 @@ return {
           }
         },
         {
-          id = 25,
-          name = "Sign",
-          type = "5TextInteract",
-          shape = "rectangle",
-          x = 0,
-          y = 96,
-          width = 64,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["filename"] = "pots",
-            ["text"] = ""
-          }
-        },
-        {
-          id = 29,
-          name = "Sign",
-          type = "5TextInteract",
-          shape = "rectangle",
-          x = 224,
-          y = 112,
-          width = 32,
-          height = 40.8092,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["filename"] = "bed",
-            ["text"] = "Comfy bed"
-          }
-        },
-        {
           id = 43,
           name = "Start1",
           type = "4Start",

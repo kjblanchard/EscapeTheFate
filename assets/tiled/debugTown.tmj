@@ -307,7 +307,7 @@
                         {
                          "name":"loadLocation",
                          "type":"int",
-                         "value":1
+                         "value":0
                         }, 
                         {
                          "name":"loadMap",

@@ -489,7 +489,7 @@ return {
           rotation = 0,
           visible = true,
           properties = {
-            ["loadLocation"] = 1,
+            ["loadLocation"] = 0,
             ["loadMap"] = "debugSouth"
           }
         },

@@ -1,5 +1,5 @@
 local engine = require("Engine")
-local textInteraction ={}
+local textInteraction = {}
 
 local textInteractions = {}
 
@@ -11,7 +11,7 @@ function textInteraction.Start(data)
             w = data.width,
             h = data.height,
         },
-        text = require(string.format("data.dialog.%s",engine.MapName()))[data.properties.filename]
+        text = require(string.format("data.dialog.%s", engine.MapName()))[data.properties.filename]
     }
     table.insert(textInteractions, newInteraction)
 end
@@ -27,5 +27,8 @@ function textInteraction.CheckForTextInteractions(rect)
     return nil
 end
 
+function textInteraction.End(force)
+    textInteractions = {}
+end
 
 return textInteraction

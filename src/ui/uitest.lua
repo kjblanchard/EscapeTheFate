@@ -1,11 +1,10 @@
-local function startFunction ()
+local function startFunction()
     local dialogSystem = require("dialogSystem")
     local gamestate = require("gameState")
     local ui = require("UI")
     local textPtr = ui.UITree["ui.uitest"].children.textBox
     dialogSystem.InitializeDialogSystem(textPtr)
     gamestate.interactionImageTable = ui.UITree["ui.uitest"].children.interactionImage
-
 end
 
 local uitest = {
@@ -24,7 +23,7 @@ local uitest = {
                     class = "text",
                     font = "PressStart2P",
                     fontSize = 8,
-                    rect = {8,8,140,54},
+                    rect = { 8, 8, 140, 54 },
                     text = "Hello World!",
                     centerX = true,
                     centerY = true,
@@ -32,11 +31,11 @@ local uitest = {
             }
         },
         interactionImage = {
-            visible = true,
+            visible = false,
             class = "image",
-            color = {255,255,255,255},
-            rect = {0,0,16,16},
-            srcRect = {0,0,16,16},
+            color = { 255, 255, 255, 255 },
+            rect = { 0, 0, 16, 16 },
+            srcRect = { 0, 0, 16, 16 },
             scale = 2.0,
             filename = "interaction"
         }

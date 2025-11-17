@@ -276,18 +276,18 @@ return {
       objects = {
         {
           id = 3,
-          name = "Start1",
+          name = "Start0",
           type = "4Start",
           shape = "rectangle",
-          x = 82.8171,
-          y = 17.7162,
+          x = 80,
+          y = 32,
           width = 16,
           height = 16,
           rotation = 0,
           visible = true,
           properties = {
             ["direction"] = 0,
-            ["loadLocation"] = 1
+            ["loadLocation"] = 0
           }
         },
         {
