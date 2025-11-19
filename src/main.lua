@@ -14,10 +14,6 @@ local function update()
         gamestate.nextMap = false
     end
     loader.UpdateAllGameObjects()
-
-    if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.B) then
-        engine.Audio.PlaySfxOneShot("enemyDead", 1.0)
-    end
 end
 
 local function draw()

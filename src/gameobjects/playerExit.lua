@@ -26,6 +26,7 @@ function playerExit.CheckForExits(rect)
         if engine.Collision.CheckForCollision(rect, currentExit.rect) then
             gamestate.nextLocation = currentExit.nextLocation
             gamestate.nextMap = currentExit.nextMap
+            engine.Audio.PlaySfxOneShot("transition2", 0.5)
             return true
         end
     end
