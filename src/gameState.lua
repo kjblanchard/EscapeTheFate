@@ -14,4 +14,9 @@ gamestate.nextMap = nil
 ---type int
 gamestate.nextLocation = 0
 gamestate.loadingMap = false
+
+--Contains information about all things battle related
+gamestate.battle = {}
+gamestate.battle.enemies = { "birb" }
+gamestate.battle.players = { nil, "player1Battler" }
 return gamestate

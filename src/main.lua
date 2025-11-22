@@ -13,6 +13,9 @@ local function update()
         gamestate.loadingMap = true
         gamestate.nextMap = false
     end
+    if engine.Input.KeyboardKeyJustPressed(engine.Input.Buttons.B) then
+        gamestate.nextMap = "bforest"
+    end
     loader.UpdateAllGameObjects()
 end
 

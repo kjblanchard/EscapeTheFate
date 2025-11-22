@@ -3,7 +3,7 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "debugTownHome.tmj",
+    "activeFile": "forest1.tmj",
     "expandedProjectPaths": [
         "templates",
         "old-delete",
@@ -84,8 +84,8 @@
             "scale": 1.4199,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 240.5098950630326,
-                "y": 160.22255088386504
+                "x": 239.4534826396225,
+                "y": 159.87041340939504
             }
         },
         "debugTown.tmj": {
@@ -98,8 +98,8 @@
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 156.33333333333331,
-                "y": 11.666666666666629
+                "x": 186,
+                "y": 27.33333333333333
             }
         },
         "debugTownHome.tmj": {
@@ -107,14 +107,14 @@
                 4
             ],
             "expandedObjectLayers": [
-                6,
-                5
+                5,
+                6
             ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 128.16666666666666,
-                "y": 88.16666666666666
+                "x": 128,
+                "y": 88
             }
         },
         "forest1 6.10.31 PM.tmx": {
@@ -143,8 +143,8 @@
             "scale": 1.363,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 256.05282465150407,
-                "y": 144.53411592076304
+                "x": 314.7468818782098,
+                "y": 245.41452677916362
             }
         },
         "forest1.tmx": {
@@ -230,11 +230,11 @@
         "terrain.tsj",
         "inside.tsj",
         "house.tsj",
-        "forest1.tmj",
         "cloud.tmj",
         "cloud.tsj",
         "debugSouth.tmj",
         "debugTownHome.tmj",
+        "forest1.tmj",
         "old-delete/untitled.tmj",
         "old-delete/cloud.tsx"
     ],
