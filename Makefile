@@ -30,6 +30,22 @@ TILED_EXPORT_MAPS = debugTown debugSouth cloud debugTownHome forest1
 ASEPRITE_DIR = assets/aseprite
 JSON_TO_LUA_SCRIPT = tools/jsontolua.py
 # default, should be used after a rebuild of some sort.
+UNAME_S := $(shell uname -s 2>/dev/null)
+ifeq ($(UNAME_S),Darwin)
+REBUILD := mrebuild
+RUN_CMD := ./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+else ifeq ($(UNAME_S),Linux)
+REBUILD := lrebuild
+RUN_CMD := ./build/bin/$(EXECUTABLE_NAME)
+else
+REBUILD := lrebuild
+endif
+
+.PHONY: all
+all:
+    @echo "OS: $(UNAME_S) -> using $(REBUILD)"
+
+
 # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 use this if we are using past version 4.0
 #
 all: build install run
@@ -42,8 +58,7 @@ build:
 install:
 	@cmake --install $(BUILD_DIR) --config $(BUILD_TYPE)
 run:
-	# 	@open ./build/bin/$(EXECUTABLE_NAME).app || ./build/bin/$(EXECUTABLE_NAME)
-	./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+	@$(RUN_CMD)
 
 debug: build install
 	#@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
@@ -57,9 +72,11 @@ package:
 
 # Custom build commands that set variables accordingly based on platform.. rebuild is macos, brebuild is backup, wrebuild is windows, erebuild is emscripten, irebuild is ios simulator
 rebuild:
+	@$(MAKE) $(REBUILD) 
+mrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build install
 lrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) SYSTEM_PACKAGES=ON clean configure build install package
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) SYSTEM_PACKAGES=ON clean configure build install
 xrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF clean configure build install package
 brebuild:
