@@ -19,4 +19,5 @@ gamestate.loadingMap = false
 gamestate.battle = {}
 gamestate.battle.enemies = { "birb" }
 gamestate.battle.players = { nil, "player1Battler" }
+gamestate.battle.battlerLocations = nil
 return gamestate
