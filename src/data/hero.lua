@@ -1,4 +1,5 @@
 return {
+    Name = "Kevin",
     HP = 50,
     Strength = 5,
     Magic = 5,

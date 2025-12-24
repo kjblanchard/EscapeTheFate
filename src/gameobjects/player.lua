@@ -205,18 +205,12 @@ function player.Start(playerData)
     }
 
     table.insert(player.players, newPlayer)
-
     newPlayer.playerGO = engine.Gameobject.CreateGameObject()
     engine.Gameobject.SetPosition(newPlayer.playerGO, newPlayer.x, newPlayer.y)
-
     newPlayer.playerSprite = engine.Sprite.NewSprite(player.player1Name, newPlayer.playerGO, { 0, 0, 32, 32 },
         { 0, 0, 32, 32 })
-
     newPlayer.playerAnimator = engine.Animation.CreateAnimator(player.player1Name, newPlayer.playerSprite)
-
-    -- set initial animation direction
     setPlayerDirection(newPlayer)
-
     engine.Camera.SetCameraFollowTarget(newPlayer.playerGO)
 end
 

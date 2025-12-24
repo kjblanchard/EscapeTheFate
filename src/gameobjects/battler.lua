@@ -20,7 +20,8 @@ local battlers = {}
 
 ---@param battler Battler
 local function updateATB(battler)
-    battler.ATBCurrent = battler.ATBCurrent + 1 + battler.Stats.Speed
+    -- battler.ATBCurrent = battler.ATBCurrent + 1 + battler.Stats.Speed
+    battler.ATBCurrent = battler.ATBCurrent + 1 + 1
 end
 
 ---@param battler Battler
@@ -46,12 +47,24 @@ function battlerClass.New(x, y, stats)
     local newBattler = {
         X = x,
         Y = y,
-        CurrentHP = stats.HP,
+        CurrentHP = stats and stats.HP or 0,
         Stats = stats,
         ATBMax = 100,
-        ATBCurrent = 0
+        ATBCurrent = 0,
+        Gameobject = nil,
+        Sprite = nil,
+        Animator = nil
     }
     table.insert(battlers, newBattler)
+    -- We need to load the actual image here.
+    newBattler.Gameobject = engine.Gameobject.CreateGameObject()
+    engine.Gameobject.SetPosition(newBattler.Gameobject, x, y)
+    -- We need to lookup the sprite info in the data somewhere.
+    newBattler.Sprite = engine.Sprite.NewSprite("player1Battler", newBattler.Gameobject, { 0, 0, 48, 48 },
+        { 0, 0, 48, 48 })
+    newBattler.Animator = engine.Animation.CreateAnimator("player1Battler", newBattler.Sprite)
+    engine.Animation.SetAnimatorSpeed(newBattler.Animator, 1.0)
+    engine.Animation.PlayAnimation(newBattler.Animator, "idle1")
 end
 
 function battlerClass.Update()

@@ -13,6 +13,7 @@ gameobjects["7Battle"] = battle.Start
 
 function gameobjects.UpdateAllGameObjects()
     player.Update()
+    battle.Update()
 end
 
 function gameobjects.EndAllGameObjects(force)

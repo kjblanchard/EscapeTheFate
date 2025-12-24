@@ -1,5 +1,6 @@
 local battle = {}
 local battleSystem = require("battleSystem")
+local engine = require("Engine")
 local battleGO = nil
 
 function battle.Start()

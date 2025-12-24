@@ -5,9 +5,9 @@
     },
     "activeFile": "forest1.tmj",
     "expandedProjectPaths": [
-        "templates",
+        ".",
         "old-delete",
-        "."
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -61,7 +61,7 @@
             "scale": 2,
             "selectedLayer": 3,
             "viewCenter": {
-                "x": 240,
+                "x": 225,
                 "y": 136
             }
         },
@@ -84,8 +84,8 @@
             "scale": 1.4199,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 239.4534826396225,
-                "y": 159.87041340939504
+                "x": 239.80562011409253,
+                "y": 159.87041340939507
             }
         },
         "debugTown.tmj": {
@@ -98,8 +98,8 @@
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 186,
-                "y": 27.33333333333333
+                "x": 332.33333333333326,
+                "y": 143.33333333333331
             }
         },
         "debugTownHome.tmj": {
@@ -113,7 +113,7 @@
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 128,
+                "x": 127.83333333333331,
                 "y": 88
             }
         },
@@ -144,7 +144,7 @@
             "selectedLayer": 4,
             "viewCenter": {
                 "x": 314.7468818782098,
-                "y": 245.41452677916362
+                "y": 245.0476889214967
             }
         },
         "forest1.tmx": {

@@ -5,7 +5,7 @@ function battlerLocation.Start(data)
     local newlocation = {
         x = data.x,
         y = data.y,
-        id = data.id
+        id = data.properties.id
     }
     gamestate.battle.battlerLocations = gamestate.battle.battlerLocations or {}
     table.insert(gamestate.battle.battlerLocations, newlocation)

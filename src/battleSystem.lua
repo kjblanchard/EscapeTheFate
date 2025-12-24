@@ -1,21 +1,23 @@
-local battlerSystem = require("gameobjects.battler")
+local battler = require("gameobjects.battler")
 local gamestate = require("gameState")
-local battleLocations = require("gameobjects.battlerLocation")
+local stats = require("data.hero")
 local battleSystem = {}
 local initialized = false
+local engine = require("Engine")
 
 local function loadAllBattlers()
     ---Players are id 1-3
-    for i = 1, #gamestate.battle.players, 1 do
+    -- for i = 1, #gamestate.battle.players, 1 do
+    for i = 1, 1, 1 do
         local x, y = battleSystem.GetBattlerLocation(i)
-        battlerSystem.New(x, y, nil)
+        battler.New(x, y, stats)
     end
     ---Enemies are id 4-10
 end
 
 local function initialize()
-    loadAllBattlers()
     initialized = true
+    loadAllBattlers()
 end
 
 function battleSystem.Start()
@@ -24,7 +26,7 @@ end
 
 function battleSystem.Update()
     if not initialized then initialize() end
-    battlerSystem.Update()
+    battler.Update()
 end
 
 function battleSystem.End()
