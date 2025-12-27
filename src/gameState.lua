@@ -17,7 +17,7 @@ gamestate.loadingMap = false
 
 --Contains information about all things battle related
 gamestate.battle = {}
-gamestate.battle.enemies = { "birb" }
-gamestate.battle.players = { nil, "player1Battler" }
+gamestate.battle.players = {1, 1, 1}
+gamestate.battle.enemies = {2, 2, 2, 2, 2}
 gamestate.battle.battlerLocations = nil
 return gamestate

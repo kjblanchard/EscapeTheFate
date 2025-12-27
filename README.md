@@ -12,7 +12,8 @@
 ## Details
 
 - BGMs created by me in Garageband
-- Wrote entirely in vim, to get better at raw vim, debugged with lldb or remdebug.
+- Wrote entirely in vim, to get better at raw vim, debugged with gdb or remdebug.
+- Debian + KDE ftw
 
 ## Goals
 
@@ -21,6 +22,7 @@
 - C/Lua practice
 - Learn OpenGL
 - Better with vim
+- Debian Daily Driver testing
 
 ## Installation
 

@@ -26,7 +26,6 @@ end
 
 ---@param battler Battler
 local function handleTurn(battler)
-    engine.Log.LogWarn("Should do turn, just going back to 0 for now for " .. battler.Stats.Name)
     battler.ATBCurrent = 0
 end
 
@@ -42,7 +41,10 @@ end
 -- end
 
 ---@param stats Stats
-function battlerClass.New(x, y, stats)
+---@param offsetRect table offset rect
+---@param animSheet string name of file to load
+---@param idleAnimation string name of idle anim override
+function battlerClass.New(x, y, stats, offsetRect, animSheet, idleAnimation)
     ---@type Battler
     local newBattler = {
         X = x,
@@ -53,18 +55,19 @@ function battlerClass.New(x, y, stats)
         ATBCurrent = 0,
         Gameobject = nil,
         Sprite = nil,
-        Animator = nil
+        Animator = nil,
+        IdleAnim = idleAnimation or "moveR"
     }
     table.insert(battlers, newBattler)
     -- We need to load the actual image here.
     newBattler.Gameobject = engine.Gameobject.CreateGameObject()
     engine.Gameobject.SetPosition(newBattler.Gameobject, x, y)
     -- We need to lookup the sprite info in the data somewhere.
-    newBattler.Sprite = engine.Sprite.NewSprite("player1Battler", newBattler.Gameobject, { 0, 0, 48, 48 },
-        { 0, 0, 48, 48 })
-    newBattler.Animator = engine.Animation.CreateAnimator("player1Battler", newBattler.Sprite)
+    newBattler.Sprite = engine.Sprite.NewSprite(animSheet, newBattler.Gameobject, { 0, 0, offsetRect[3], offsetRect[4] },
+        offsetRect)
+    newBattler.Animator = engine.Animation.CreateAnimator(animSheet, newBattler.Sprite)
     engine.Animation.SetAnimatorSpeed(newBattler.Animator, 1.0)
-    engine.Animation.PlayAnimation(newBattler.Animator, "idle1")
+    engine.Animation.PlayAnimation(newBattler.Animator,newBattler.IdleAnim)
 end
 
 function battlerClass.Update()
