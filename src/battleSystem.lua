@@ -39,6 +39,7 @@ local function initialize()
     loadAllBattlers()
 end
 
+
 function battleSystem.Start()
     initialized = false
 end
@@ -65,6 +66,9 @@ function battleSystem.GetBattlerLocation(id)
         end
     end
     return nil
+end
+function battleSystem.InitializeUIVariables()
+    engine.Log.LogWarn("Initializing the variables")
 end
 
 return battleSystem

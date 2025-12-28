@@ -1,15 +1,16 @@
 local function startFunction()
-    -- local dialogSystem = require("dialogSystem")
-    -- local gamestate = require("gameState")
-    -- local ui = require("UI")
+    local gamestate = require("gameState")
+    local battleSystem = require("battleSystem")
+    local ui = require("UI")
     -- local textPtr = ui.UITree["ui.uitest"].children.textBox
     -- dialogSystem.InitializeDialogSystem(textPtr)
     -- gamestate.interactionImageTable = ui.UITree["ui.uitest"].children.interactionImage
+     battleSystem.InitializeUIVariables()
 end
 
 local commandItemSpacing = 14
 
-local uitest = {
+local battleUI = {
     startFunc = startFunction,
     children = {
         textBox = {
@@ -75,4 +76,4 @@ local uitest = {
         }
     },
 }
-return uitest
+return battleUI
