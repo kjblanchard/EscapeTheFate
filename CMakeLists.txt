@@ -7,6 +7,7 @@ option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(DEBUG_BUILD_TIME "Add in the pch that I think will be changing a bit" OFF)
+option(LINK_M "Should we link against the M, only useful on linux builds locally")
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
 option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
