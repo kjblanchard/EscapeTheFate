@@ -1,14 +1,24 @@
+local textBoxRect = { x = 330, y = 40, w = 72, h = 72 }
+local commandsOffsetFromBox = { x = 8, y = 10, w = 56, h = 12 }
+local commandItemSpacing = 14
+
 local function startFunction()
-    local gamestate = require("gameState")
+    -- local gamestate = require("gameState")
     local battleSystem = require("battleSystem")
     local ui = require("UI")
-    -- local textPtr = ui.UITree["ui.uitest"].children.textBox
+    local engine = require("Engine")
+    local fingerUIObject = ui.UITree["ui.battleUI"].children.finger
+    local magicTextUIObject = ui.UITree["ui.battleUI"].children["textBox"].children["holder"].children["skillText"]
+    engine.Log.LogWarn(magicTextUIObject.rect.x)
+    engine.Log.LogWarn(magicTextUIObject.rect.y)
+    -- magicTextUIObject = ui.UITree["ui.battleUI"].children["textBox"].children["holder"].children["attackText"]
+    -- engine.Log.LogWarn(magicTextUIObject.rect.x)
+    -- engine.Log.LogWarn(magicTextUIObject.rect.y)
     -- dialogSystem.InitializeDialogSystem(textPtr)
     -- gamestate.interactionImageTable = ui.UITree["ui.uitest"].children.interactionImage
-     battleSystem.InitializeUIVariables()
+    battleSystem.InitializeUIVariables(fingerUIObject, magicTextUIObject)
 end
 
-local commandItemSpacing = 14
 
 local battleUI = {
     startFunc = startFunction,
@@ -17,13 +27,13 @@ local battleUI = {
             visible = true,
             class = "nineSlice",
             color = { 80, 0, 120, 245 },
-            rect = { 330, 40, 72, 72 },
+            rect = textBoxRect,
             xSize = 8,
             ySize = 9,
             filename = "uibase-export",
             children = {
                 holder = {
-                    rect = { 8, 10, 56, 12 },
+                    rect = commandsOffsetFromBox,
                     children = {
                         attackText = {
                             class = "text",
@@ -65,14 +75,15 @@ local battleUI = {
                 }
             }
         },
-        interactionImage = {
+        finger = {
             visible = true,
             class = "image",
             color = { 255, 255, 255, 255 },
             rect = { 350, 48, 16, 16 },
             srcRect = { 16, 32, 16, 16 },
             scale = 2.0,
-            filename = "fingers"
+            priority = 1,
+            filename = "fingers",
         }
     },
 }

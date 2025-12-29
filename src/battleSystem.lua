@@ -2,17 +2,14 @@ local battler = require("gameobjects.battler")
 local gamestate = require("gameState")
 local battleData = require("data.battleData")
 local engine = require("Engine")
+local ui = require("UI")
 local battleSystem = {}
 local initialized = false
 
 local function loadBattlerById(id, locationId)
     local x, y = battleSystem.GetBattlerLocation(locationId)
     if x == nil or y == nil then return end
-    engine.Log.LogWarn("Looking up id " .. id .. " for location " .. locationId)
-
     local data = battleData[id]
-    local debugData = string.format("The battler data is: Name: %s, id %d", data.stats.Name, id)
-    engine.Log.LogWarn(debugData)
     battler.New(x, y, data.stats, data.offsetRect, data.sprite, data.idle)
 end
 
@@ -67,8 +64,12 @@ function battleSystem.GetBattlerLocation(id)
     end
     return nil
 end
-function battleSystem.InitializeUIVariables()
-    engine.Log.LogWarn("Initializing the variables")
+
+function battleSystem.InitializeUIVariables(fingerPtr, magicTextUIObject)
+    local newX, newY = ui.GetWorldXYForObject(magicTextUIObject)
+    local fingerXOffset = -15
+    fingerPtr.rect.x = newX + fingerXOffset
+    fingerPtr.rect.y = newY
 end
 
 return battleSystem
