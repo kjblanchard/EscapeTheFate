@@ -37,6 +37,7 @@ local uitest = {
             rect = { 0, 0, 16, 16 },
             srcRect = { 0, 0, 16, 16 },
             scale = 2.0,
+            camera = true,
             filename = "interaction"
         }
     },
