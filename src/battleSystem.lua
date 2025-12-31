@@ -1,10 +1,12 @@
 local battler = require("gameobjects.battler")
 local gamestate = require("gameState")
 local battleData = require("data.battleData")
-local engine = require("Engine")
 local ui = require("UI")
+local commandMenu = require("battle.commandMenu")
 local battleSystem = {}
 local initialized = false
+
+
 
 local function loadBattlerById(id, locationId)
     local x, y = battleSystem.GetBattlerLocation(locationId)
@@ -36,7 +38,6 @@ local function initialize()
     loadAllBattlers()
 end
 
-
 function battleSystem.Start()
     initialized = false
 end
@@ -44,6 +45,7 @@ end
 function battleSystem.Update()
     if not initialized then initialize() end
     battler.Update()
+    commandMenu.Update()
 end
 
 function battleSystem.End()
@@ -65,11 +67,5 @@ function battleSystem.GetBattlerLocation(id)
     return nil
 end
 
-function battleSystem.InitializeUIVariables(fingerPtr, magicTextUIObject)
-    local newX, newY = ui.GetWorldXYForObject(magicTextUIObject)
-    local fingerXOffset = -15
-    fingerPtr.rect.x = newX + fingerXOffset
-    fingerPtr.rect.y = newY
-end
 
 return battleSystem

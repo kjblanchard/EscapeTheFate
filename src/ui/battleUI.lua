@@ -3,20 +3,17 @@ local commandsOffsetFromBox = { x = 8, y = 10, w = 56, h = 12 }
 local commandItemSpacing = 14
 
 local function startFunction()
-    -- local gamestate = require("gameState")
-    local battleSystem = require("battleSystem")
+    local commandMenu = require("battle.commandMenu")
     local ui = require("UI")
-    local engine = require("Engine")
     local fingerUIObject = ui.UITree["ui.battleUI"].children.finger
-    local magicTextUIObject = ui.UITree["ui.battleUI"].children["textBox"].children["holder"].children["skillText"]
-    engine.Log.LogWarn(magicTextUIObject.rect.x)
-    engine.Log.LogWarn(magicTextUIObject.rect.y)
-    -- magicTextUIObject = ui.UITree["ui.battleUI"].children["textBox"].children["holder"].children["attackText"]
-    -- engine.Log.LogWarn(magicTextUIObject.rect.x)
-    -- engine.Log.LogWarn(magicTextUIObject.rect.y)
-    -- dialogSystem.InitializeDialogSystem(textPtr)
-    -- gamestate.interactionImageTable = ui.UITree["ui.uitest"].children.interactionImage
-    battleSystem.InitializeUIVariables(fingerUIObject, magicTextUIObject)
+    local commands = {}
+    local commandMenuUIObject = ui.UITree["ui.battleUI"].children["textBox"]
+    local holder = ui.UITree["ui.battleUI"].children["textBox"].children["holder"]
+    table.insert(commands, holder.children["attackText"])
+    table.insert(commands, holder.children["magicText"])
+    table.insert(commands, holder.children["skillText"])
+    table.insert(commands, holder.children["itemsText"])
+    commandMenu.Initialize(commandMenuUIObject, fingerUIObject, commands)
 end
 
 
