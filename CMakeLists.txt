@@ -30,11 +30,12 @@ set(CMAKE_INSTALL_MESSAGE LAZY)
 
 # Add defines for specific builds
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
-
-
   src/main.cpp 
+  src/gameConfig.cpp 
+  src/gameState.cpp 
+  src/gameobject/GameObject.cpp
+  src/gameobject/gameobjects/Player.cpp
   src/bindings/engine.cpp
-
   ${ICON_PATH})
 
 if(MSVC)
@@ -88,16 +89,22 @@ set(GLZ_ENABLE_BINARY 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_YAML 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_TOML 0 CACHE BOOL "" FORCE)
 
+find_package(glaze REQUIRED )
+  if(GLAZE_FOUND)
+    target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
+  endif(GLAZE_FOUND)
+
 
 # Json lib, need to do this when building in github only
-FetchContent_Declare(
-  glaze
-  GIT_REPOSITORY https://github.com/stephenberry/glaze.git
-  GIT_TAG main
-  GIT_SHALLOW TRUE
-  EXCLUDE_FROM_ALL
-)
-FetchContent_MakeAvailable(glaze)
+# FetchContent_Declare(
+#   glaze
+#   GIT_REPOSITORY https://github.com/stephenberry/glaze.git
+#   GIT_TAG main
+#   GIT_SHALLOW TRUE
+#   EXCLUDE_FROM_ALL
+# )
+# FetchContent_MakeAvailable(glaze)
+
 target_precompile_headers(${EXECUTABLE_TARGET_NAME} PRIVATE src/pch.hpp)
 target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)

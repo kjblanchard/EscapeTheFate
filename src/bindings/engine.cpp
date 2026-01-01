@@ -4,11 +4,11 @@
 
 #include <algorithm>
 #include <bindings/engine.hpp>
+#include <gameConfig.hpp>
+#include <gameobject/GameObject.hpp>
 
 using namespace Etf;
 using namespace std;
-
-gameConfig Engine::Config;
 
 void Engine::LoadAndPlayBGM(const std::string& name, float volume) {
 	SetBgmTrack(0);
@@ -17,21 +17,19 @@ void Engine::LoadAndPlayBGM(const std::string& name, float volume) {
 }
 void Engine::LoadScene(const string& name) {
 	auto newName = name;
+	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName == "") {
-		newName = Config.scene.defaultScene;
+		newName = gameSceneConfig.defaultScene;
 	}
-	const auto it = std::find_if(Config.scene.scenes.begin(), Config.scene.scenes.end(), [&newName](Scene& scene) {
+	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [&newName](Scene& scene) {
 		return scene.MapName == newName;
 	});
-	if (it == Config.scene.scenes.end()) {
+	if (it == gameSceneConfig.scenes.end()) {
 		sgLogWarn("Could not find scene with name %s, not loading", name.c_str());
 		return;
 	}
 	auto& sceneToLoad = *it;
-	// Load the Tiled map
 	LoadMap(newName.c_str());
-	// Load the Objects
-	//
-	// Load the Music
+	GameObject::LoadAllGameObjects();
 	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
 }

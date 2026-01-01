@@ -4,32 +4,22 @@
 #include <Supergoon/log.h>
 #include <Supergoon/window.h>
 
+#include <bindings/engine.hpp>
+#include <gameConfig.hpp>
 #include <glaze/glaze.hpp>
-#include <string>
-
-#include "bindings/engine.hpp"
 
 namespace Etf {
 
-void loadGameConfig() {
-	auto& _gameConfig = Engine::Config;
-	auto ec = glz::read_file_json(_gameConfig, "./assets/config/gameConfig.jsonc", std::string{});
-	if (ec) {
-		sgLogError("Error reading config file, please make sure it is in assets folder/gameConfig.jsonc!");
-		return;
-	}
-}
-
 void initialize() {
-	loadGameConfig();
-	auto& _gameConfig = Engine::Config;
+	GameConfig::LoadGameConfig("./assets/config/gameConfig.jsonc");
+	auto& _gameConfig = GameConfig::GetGameConfig();
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
 	SetGlobalSfxVolume(_gameConfig.audio.sfxVolume);
 }
 
 void start() {
-	auto& _gameConfig = Engine::Config;
+	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
 	Engine::LoadScene();
 }
