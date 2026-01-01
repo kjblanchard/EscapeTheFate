@@ -1,5 +1,7 @@
 # 3.26 is needed for building al on static
 cmake_minimum_required(VERSION 3.5)
+set(CMAKE_CXX_STANDARD 23)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 project("Escape The Fate" LANGUAGES C CXX VERSION 0.1)
 set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
@@ -21,33 +23,45 @@ set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(EXECUTABLE_TARGET_NAME EscapeTheFate)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INSTALL_MESSAGE LAZY)
+
+#glaze speed
+# set(CMAKE_UNITY_BUILD ON)
+# set(CMAKE_UNITY_BUILD_BATCH_SIZE 8)  # optional
+
 # Add defines for specific builds
+add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
+
+
+  src/main.cpp 
+  src/bindings/engine.cpp
+
+  ${ICON_PATH})
 
 if(MSVC)
   set(INSTALL_DIR
-      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>
-      CACHE INTERNAL "")
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>
+    CACHE INTERNAL "")
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
       add_definitions(-DIS_MOBILE)
       set(INSTALL_DIR
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app
-          CACHE INTERNAL "")
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app
+        CACHE INTERNAL "")
     else()
       set(INSTALL_DIR
-          ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
-          CACHE INTERNAL "")
+        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
+        CACHE INTERNAL "")
     endif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   else()
     set(INSTALL_DIR
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
-        CACHE INTERNAL "")
+      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
+      CACHE INTERNAL "")
   endif(CMAKE_GENERATOR STREQUAL "Xcode")
 else()
   set(INSTALL_DIR
-      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-      CACHE STRING "" FORCE)
+    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
+    CACHE STRING "" FORCE)
 endif(MSVC)
 
 if(ENGINE_CACHED STREQUAL "ON")
@@ -62,6 +76,33 @@ else()
     GIT_TAG master)
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED STREQUAL "ON")
+
+include(FetchContent)
+
+set(GLZ_USE_FAST_FLOAT 0 CACHE BOOL "" FORCE)
+set(GLZ_USE_CONCEPTS 0 CACHE BOOL "" FORCE)
+set(GLZ_ENABLE_EXCEPTIONS 1 CACHE BOOL "" FORCE)
+set(GLZ_ENABLE_RTTI 1 CACHE BOOL "" FORCE)
+set(GLZ_ENABLE_JSON 1 CACHE BOOL "" FORCE)
+set(GLZ_ENABLE_BINARY 0 CACHE BOOL "" FORCE)
+set(GLZ_ENABLE_YAML 0 CACHE BOOL "" FORCE)
+set(GLZ_ENABLE_TOML 0 CACHE BOOL "" FORCE)
+
+
+# Json lib, need to do this when building in github only
+FetchContent_Declare(
+  glaze
+  GIT_REPOSITORY https://github.com/stephenberry/glaze.git
+  GIT_TAG main
+  GIT_SHALLOW TRUE
+  EXCLUDE_FROM_ALL
+)
+FetchContent_MakeAvailable(glaze)
+target_precompile_headers(${EXECUTABLE_TARGET_NAME} PRIVATE src/pch.hpp)
+target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
+
+target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
 
 install(
   DIRECTORY src/
