@@ -25,6 +25,12 @@ float& GameObject::Y() {
 	return GO->Y;
 }
 
+void GameObject::UpdateAllGameObjects() {
+	for (auto& gameobject : _gameObjects) {
+		gameobject->Update();
+	}
+}
+
 void GameObject::LoadAllGameObjects() {
 	for (auto i = 0; i < _currentMap->NumObjects; ++i) {
 		auto currentObject = &_currentMap->Objects[i];

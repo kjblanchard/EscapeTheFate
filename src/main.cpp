@@ -2,11 +2,14 @@
 #include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/engine.h>
 #include <Supergoon/log.h>
+#include <Supergoon/state.h>
 #include <Supergoon/window.h>
 
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
+#include <gameState.hpp>
 #include <glaze/glaze.hpp>
+#include <gameobject/GameObject.hpp>
 
 namespace Etf {
 
@@ -25,6 +28,10 @@ void start() {
 }
 
 void update() {
+	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
+	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
+	GameState::Ticks = Ticks;
+	GameObject::UpdateAllGameObjects();
 }
 }  // namespace Etf
 

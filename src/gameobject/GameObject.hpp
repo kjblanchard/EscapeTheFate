@@ -11,6 +11,7 @@ class GameObject {
    protected:
 	float& X();
 	float& Y();
+	inline sgGameObject* internalGO() {return GO;}
 	static std::vector<std::unique_ptr<GameObject>> _gameObjects;
 	GameObject(int x, int y);
 	bool DoNotDestroy = false;
@@ -20,6 +21,7 @@ class GameObject {
 	sgGameObject* GO;
 
    public:
+	static void UpdateAllGameObjects();
 	static void LoadAllGameObjects();
 	virtual ~GameObject() = default;
 
