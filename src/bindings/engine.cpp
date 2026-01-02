@@ -1,5 +1,6 @@
 #include <Supergoon/Animation/animator.h>
 #include <Supergoon/Audio/Audio.h>
+#include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/log.h>
@@ -63,4 +64,15 @@ void Engine::StartAnimatorAnimation(unsigned int animator, const char* animName,
 
 void Engine::UpdateAnimatorAnimationSpeed(unsigned int animator, float animSpeed) {
 	SetAnimatorAnimationSpeed(animator, animSpeed);
+}
+
+void Engine::DrawRectPrimitive(RectangleF& rect, Color color, bool filled, bool cameraOffset) {
+	DrawRect(&rect, &color, filled, cameraOffset);
+}
+
+void Engine::SetSpriteVisible(Sprite* sprite, bool visible) {
+	if (visible)
+		sprite->Flags |= SpriteFlagVisible;	 // set bit
+	else
+		sprite->Flags &= ~SpriteFlagVisible;  // clear bit
 }

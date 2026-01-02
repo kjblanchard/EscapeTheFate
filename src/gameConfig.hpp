@@ -19,6 +19,9 @@ struct gameConfig {
 		std::string defaultScene;
 		std::vector<Scene> scenes;
 	} scene;
+	struct debug {
+		bool interactions;
+	} debug;
 };
 
 struct GameConfig {

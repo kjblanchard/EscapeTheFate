@@ -7,12 +7,15 @@ struct sgGameObject;
 class TiledObject;
 namespace Etf {
 
+class IInteractable;
+
 class GameObject {
    protected:
 	float& X();
 	float& Y();
-	inline sgGameObject* internalGO() {return GO;}
+	inline sgGameObject* internalGO() { return GO; }
 	static std::vector<std::unique_ptr<GameObject>> _gameObjects;
+	static std::vector<IInteractable*> _interactables;
 	GameObject(int x, int y);
 	bool DoNotDestroy = false;
 
@@ -21,7 +24,8 @@ class GameObject {
 	sgGameObject* GO;
 
    public:
-	static void UpdateAllGameObjects();
+	static void UpdateGameObjects();
+	static void DrawGameObjects();
 	static void LoadAllGameObjects();
 	virtual ~GameObject() = default;
 

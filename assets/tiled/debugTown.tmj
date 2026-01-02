@@ -252,8 +252,8 @@
                  "type":"",
                  "visible":true,
                  "width":40.5,
-                 "x":341.25,
-                 "y":261.5
+                 "x":341,
+                 "y":261
                 }, 
                 {
                  "height":112,
@@ -290,7 +290,7 @@
                 }],
          "opacity":1,
          "type":"objectgroup",
-         "visible":false,
+         "visible":true,
          "x":0,
          "y":0
         }, 
@@ -518,7 +518,7 @@
          "value":"Debug Town"
         }],
  "renderorder":"right-down",
- "tiledversion":"1.8.6",
+ "tiledversion":"1.11.2",
  "tileheight":16,
  "tilesets":[
         {
@@ -535,6 +535,6 @@
         }],
  "tilewidth":16,
  "type":"map",
- "version":"1.8",
+ "version":"1.11",
  "width":38
 }

@@ -31,14 +31,18 @@ void update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	GameState::Ticks = Ticks;
-	GameObject::UpdateAllGameObjects();
+	GameObject::UpdateGameObjects();
+}
+
+void draw() {
+	GameObject::DrawGameObjects();
 }
 }  // namespace Etf
 
 void (*_initializeFunc)(void) = Etf::initialize;
 void (*_startFunc)(void) = Etf::start;
 void (*_updateFunc)(void) = Etf::update;
-void (*_drawFunc)(void) = nullptr;
+void (*_drawFunc)(void) = Etf::draw;
 void (*_quitFunc)(void) = nullptr;
 void (*_inputFunc)(void) = nullptr;
 int (*_handleEventFunc)(void*) = nullptr;

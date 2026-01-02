@@ -1,6 +1,6 @@
 {
     "audio": {
-        "bgmVolume": 1.0,
+        "bgmVolume": 0.0,
         "sfxVolume": 1.0
     },
     "window": {
@@ -20,5 +20,8 @@
                 "BGMVolume": 1.0
             }
         ]
+    },
+    "debug": {
+        "interactions": false
     }
 }

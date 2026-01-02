@@ -1,15 +1,17 @@
 #include <Supergoon/Input/keyboard.h>
-#include <Supergoon/Primitives/rectangle.h>
+#include <Supergoon/Primitives/Point.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 
 #include <bindings/engine.hpp>
+#include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Player.hpp>
 #include <memory>
 
 #include "gameobject/GameObject.hpp"
+#include "interfaces/IInteractable.hpp"
 using namespace std;
 using namespace Etf;
 
@@ -20,7 +22,9 @@ static const int DOWN = 22;
 static const int RIGHT = 7;
 // static const int A = 44;
 // static const int B = 27;
-static RectangleF _collisionOffsetAndSizeRect = {8, 8, 16, 22};
+static const RectangleF _collisionOffsetAndSizeRect = {8, 8, 16, 22};
+static const Point _interactionEastWestWidthHeight = {26, 8};
+static const Point _interactionNorthSouthWidthHeight = {8, 26};
 
 void Player::Create(TiledObject* objData) {
 	for (auto i = 0; i < objData->NumProperties; ++i) {
@@ -38,6 +42,8 @@ void Player::Create(TiledObject* objData) {
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	sgLogWarn("Player created at x: %f y: %f", X(), Y());
 	_sprite = Engine::CreateSpriteFull("player1", internalGO(), {0, 0, 32, 32}, {0, 0, 32, 32});
+	_InteractionSprite = Engine::CreateSpriteFull("interaction", internalGO(), {0, 0, 16, 16}, {20, -5, 16, 16});
+	Engine::SetSpriteVisible(_InteractionSprite, false);
 	_animator = Engine::CreateAnimatorFull("player1", _sprite);
 }
 Player::~Player() {
@@ -47,7 +53,58 @@ Player::~Player() {
 void Player::Start() {}
 void Player::Update() {
 	handlePlayerMovement();
+	handleInteractions();
 }
+
+void Player::updateInteractionRect() {
+	switch (_direction) {
+		case Direction::East:
+			_interactionRect.x = _collisionRect.x + _collisionRect.w;
+			_interactionRect.y = _collisionRect.y + (_collisionRect.h / 2) - (_interactionEastWestWidthHeight.Y / 2.0);
+			_interactionRect.w = _interactionEastWestWidthHeight.X;
+			_interactionRect.h = _interactionEastWestWidthHeight.Y;
+			break;
+		case Direction::West:
+			_interactionRect.x = _collisionRect.x - _interactionEastWestWidthHeight.X;
+			_interactionRect.y = _collisionRect.y + (_collisionRect.h / 2) - (_interactionEastWestWidthHeight.Y / 2.0);
+			_interactionRect.w = _interactionEastWestWidthHeight.X;
+			_interactionRect.h = _interactionEastWestWidthHeight.Y;
+			break;
+		case Direction::North:
+			_interactionRect.x = _collisionRect.x + (_collisionRect.w / 2.0) - (_interactionNorthSouthWidthHeight.X / 2.0);
+			_interactionRect.y = _collisionRect.y - _interactionNorthSouthWidthHeight.Y;
+			_interactionRect.w = _interactionNorthSouthWidthHeight.X;
+			_interactionRect.h = _interactionNorthSouthWidthHeight.Y;
+			break;
+		case Direction::South:
+			_interactionRect.x = _collisionRect.x + (_collisionRect.w / 2.0) - (_interactionNorthSouthWidthHeight.X / 2.0);
+			_interactionRect.y = _collisionRect.y + _collisionRect.h;
+			_interactionRect.w = _interactionNorthSouthWidthHeight.X;
+			_interactionRect.h = _interactionNorthSouthWidthHeight.Y;
+			break;
+		default:
+			return;
+	}
+}
+
+void Player::handleInteractions() {
+	updateInteractionRect();
+	IInteractable* interactable = nullptr;
+	for (auto interact : GameObject::_interactables) {
+		if (Engine::CheckForRectCollision(_interactionRect, interact->InteractionRect)) {
+			interactable = interact;
+			break;
+		}
+	}
+
+	if (interactable && !_currentInteractable) {
+		Engine::SetSpriteVisible(_InteractionSprite, true);
+	} else if (!interactable && _currentInteractable) {
+		Engine::SetSpriteVisible(_InteractionSprite, false);
+	}
+	_currentInteractable = interactable;
+}
+
 bool Player::handlePlayerMovement() {
 	auto moved = false;
 	auto previousDirection = _direction;
@@ -80,13 +137,12 @@ bool Player::handlePlayerMovement() {
 	if (moved) {
 		float desiredX = (X() + velocityX * _moveSpeed * GameState::DeltaTimeSeconds);
 		float desiredY = (Y() + velocityY * _moveSpeed * GameState::DeltaTimeSeconds);
-		RectangleF collisionRect = {desiredX + _collisionOffsetAndSizeRect.x, desiredY + _collisionOffsetAndSizeRect.y, _collisionOffsetAndSizeRect.w, _collisionOffsetAndSizeRect.h};
-		CheckRectForCollisionWithSolids(&collisionRect);
-		auto actualX = (collisionRect.x - _collisionOffsetAndSizeRect.x);
-		auto actualY = (collisionRect.y - _collisionOffsetAndSizeRect.y);
-
-		X() = roundCollisionResolve(actualX);
-		Y() = roundCollisionResolve(actualY);
+		_collisionRect = {desiredX + _collisionOffsetAndSizeRect.x, desiredY + _collisionOffsetAndSizeRect.y, _collisionOffsetAndSizeRect.w, _collisionOffsetAndSizeRect.h};
+		CheckRectForCollisionWithSolids(&_collisionRect);
+		auto actualX = (_collisionRect.x - _collisionOffsetAndSizeRect.x);
+		auto actualY = (_collisionRect.y - _collisionOffsetAndSizeRect.y);
+		X() = actualX;
+		Y() = actualY;
 		if (_direction != previousDirection) {
 			Engine::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
 		}
@@ -110,4 +166,7 @@ constexpr const char* Player::getAnimNameFromDirection() {
 	}
 	return "walkD";	 // or assert
 }
-void Player::Draw() {}
+
+void Player::Draw() {
+	if (GameConfig::GetGameConfig().debug.interactions) Engine::DrawRectPrimitive(_interactionRect);
+}

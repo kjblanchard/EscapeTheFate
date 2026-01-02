@@ -1,7 +1,8 @@
 return {
-  version = "1.5",
+  version = "1.10",
   luaversion = "5.1",
-  tiledversion = "1.8.6",
+  tiledversion = "1.11.2",
+  class = "",
   orientation = "orthogonal",
   renderorder = "right-down",
   width = 38,
@@ -18,6 +19,7 @@ return {
     {
       name = "terrain",
       firstgid = 1,
+      class = "",
       tilewidth = 16,
       tileheight = 16,
       spacing = 0,
@@ -28,6 +30,8 @@ return {
       imageheight = 608,
       transparentcolor = "#ff00ff",
       objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
       tileoffset = {
         x = 0,
         y = 0
@@ -63,6 +67,7 @@ return {
     {
       name = "outside",
       firstgid = 1483,
+      class = "",
       tilewidth = 16,
       tileheight = 16,
       spacing = 0,
@@ -73,6 +78,8 @@ return {
       imageheight = 384,
       transparentcolor = "#ff00ff",
       objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
       tileoffset = {
         x = 0,
         y = 0
@@ -90,6 +97,7 @@ return {
     {
       name = "house",
       firstgid = 2731,
+      class = "",
       tilewidth = 16,
       tileheight = 16,
       spacing = 0,
@@ -100,6 +108,8 @@ return {
       imageheight = 608,
       transparentcolor = "#ff00ff",
       objectalignment = "unspecified",
+      tilerendersize = "tile",
+      fillmode = "stretch",
       tileoffset = {
         x = 0,
         y = 0
@@ -120,6 +130,7 @@ return {
       type = "group",
       id = 6,
       name = "bg1",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -136,6 +147,7 @@ return {
           height = 18,
           id = 1,
           name = "Tile Layer 1",
+          class = "",
           visible = true,
           opacity = 1,
           offsetx = 0,
@@ -173,6 +185,7 @@ return {
           height = 18,
           id = 2,
           name = "Tile Layer 2",
+          class = "",
           visible = true,
           opacity = 1,
           offsetx = 0,
@@ -210,6 +223,7 @@ return {
           height = 18,
           id = 4,
           name = "Tile Layer 3",
+          class = "",
           visible = true,
           opacity = 1,
           offsetx = 0,
@@ -246,7 +260,8 @@ return {
       draworder = "topdown",
       id = 3,
       name = "solid",
-      visible = false,
+      class = "",
+      visible = true,
       opacity = 1,
       offsetx = 0,
       offsety = 0,
@@ -415,8 +430,8 @@ return {
           name = "",
           type = "",
           shape = "rectangle",
-          x = 341.25,
-          y = 261.5,
+          x = 341,
+          y = 261,
           width = 40.5,
           height = 19.25,
           rotation = 0,
@@ -469,6 +484,7 @@ return {
       draworder = "topdown",
       id = 5,
       name = "entities",
+      class = "",
       visible = true,
       opacity = 1,
       offsetx = 0,

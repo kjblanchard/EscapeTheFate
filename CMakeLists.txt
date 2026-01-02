@@ -35,6 +35,7 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/gameState.cpp 
   src/gameobject/GameObject.cpp
   src/gameobject/gameobjects/Player.cpp
+  src/gameobject/gameobjects/Textbox.cpp
   src/bindings/engine.cpp
   ${ICON_PATH})
 
@@ -107,6 +108,19 @@ find_package(glaze REQUIRED )
 
 target_precompile_headers(${EXECUTABLE_TARGET_NAME} PRIVATE src/pch.hpp)
 target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+
+if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
+    if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
+        message(STATUS "Enabling AddressSanitizer in Debug mode")
+        set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
+        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
+        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ASAN_FLAGS}")
+        set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ASAN_FLAGS}")
+
+    endif()
+endif()
+
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
 
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)

@@ -3,12 +3,16 @@
 
 #include <gameobject/GameObject.hpp>
 #include <gameobject/gameobjects/Player.hpp>
+#include <gameobject/gameobjects/Textbox.hpp>
+#include <interfaces/IInteractable.hpp>
 using namespace Etf;
 using namespace std;
 
 std::vector<std::unique_ptr<GameObject>> GameObject::_gameObjects;
+std::vector<IInteractable*> GameObject::_interactables;
 std::unordered_map<int, std::function<void(TiledObject* objData)>> GameObject::_loaderMap = {
 	{4, Player::Create},
+	{5, Textbox::Create},
 };
 
 GameObject::GameObject(int x, int y) {
@@ -25,9 +29,15 @@ float& GameObject::Y() {
 	return GO->Y;
 }
 
-void GameObject::UpdateAllGameObjects() {
+void GameObject::UpdateGameObjects() {
 	for (auto& gameobject : _gameObjects) {
 		gameobject->Update();
+	}
+}
+
+void GameObject::DrawGameObjects() {
+	for (auto& gameobject : _gameObjects) {
+		gameobject->Draw();
 	}
 }
 
