@@ -36,6 +36,9 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/gameobject/GameObject.cpp
   src/gameobject/gameobjects/Player.cpp
   src/gameobject/gameobjects/Textbox.cpp
+  src/ui/uiObject.cpp
+  src/ui/uiImage.cpp
+  src/systems/dialogSystem.cpp
   src/bindings/engine.cpp
   ${ICON_PATH})
 
@@ -91,9 +94,9 @@ set(GLZ_ENABLE_YAML 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_TOML 0 CACHE BOOL "" FORCE)
 
 find_package(glaze REQUIRED )
-  if(GLAZE_FOUND)
-    target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
-  endif(GLAZE_FOUND)
+if(GLAZE_FOUND)
+  target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
+endif(GLAZE_FOUND)
 
 
 # Json lib, need to do this when building in github only
@@ -110,15 +113,15 @@ target_precompile_headers(${EXECUTABLE_TARGET_NAME} PRIVATE src/pch.hpp)
 target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-    if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
-        message(STATUS "Enabling AddressSanitizer in Debug mode")
-        set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
-        set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
-        set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ASAN_FLAGS}")
-        set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ASAN_FLAGS}")
+  if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
+    message(STATUS "Enabling AddressSanitizer in Debug mode")
+    set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
+    set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
+    set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ASAN_FLAGS}")
+    set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ASAN_FLAGS}")
 
-    endif()
+  endif()
 endif()
 
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)

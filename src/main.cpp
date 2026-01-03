@@ -10,6 +10,7 @@
 #include <gameState.hpp>
 #include <glaze/glaze.hpp>
 #include <gameobject/GameObject.hpp>
+#include <ui/uiObject.hpp>
 
 namespace Etf {
 
@@ -36,6 +37,7 @@ void update() {
 
 void draw() {
 	GameObject::DrawGameObjects();
+	UIObject::DrawUI();
 }
 }  // namespace Etf
 
