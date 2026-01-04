@@ -6,21 +6,24 @@
 #include <ui/uiObject.hpp>
 class Texture;
 namespace Etf {
-struct UIImageArgs {
+struct UINineSliceArgs {
 	std::string Filename;
 	RectangleF Rect;
 	RectangleF SourceRect;
+	// Offset to use when making the nine slice, else it will be considered the center.
+float Xoffset, Yoffset;
 	float Scale;
 	Color DrawColor;
 	bool Visible;
 };
-class UIImage : public UIObject {
+class UINineSlice : public UIObject {
    public:
-	UIImage(UIImageArgs& args);
+	UINineSlice(UINineSliceArgs& args);
 	void OnDraw() override final;
 
    private:
 	Texture* _texture;
+	Texture* _renderTargetTexture;
 	RectangleF _sourceRect;
 	float _scale;
 	std::string _filename;

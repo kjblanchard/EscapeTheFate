@@ -38,5 +38,6 @@ class UIObject {
 	UIObject* _parent = nullptr;
 	// local location; Offset to parent and size
 	RectangleF _location = {0, 0, 0, 0};
+	bool _debugBox = false;
 };
 }  // namespace Etf
