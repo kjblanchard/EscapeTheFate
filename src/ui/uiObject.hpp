@@ -8,6 +8,7 @@ namespace Etf {
 class UIObject {
    public:
 	static void DrawUI();
+	static void DestroyUI();
 	static std::unique_ptr<UIObject> RootUIObject;
 
    public:

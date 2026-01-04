@@ -12,9 +12,9 @@ using namespace Etf;
 using namespace std;
 
 void Textbox::Create(TiledObject* objData) {
-	auto textbox = new Textbox(objData);
-	_gameObjects.push_back(unique_ptr<GameObject>(textbox));
-	_interactables.push_back(textbox);
+	auto textbox = make_shared<Textbox>(objData);
+	_gameObjects.push_back(textbox);
+	_interactables.push_back(textbox);	// implicit upcast works
 }
 
 Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
@@ -22,13 +22,6 @@ Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	InteractionRect.y = Y();
 	InteractionRect.w = objData->Width;
 	InteractionRect.h = objData->Height;
-}
-
-// TODO probably switch to using shared ptrs in gameobjects, and then weak ptrs inside of the interactables.. so that they will expire when dead.
-Textbox::~Textbox() {
-	auto it = std::find(_interactables.begin(), _interactables.end(), this);
-	if (it != _interactables.end())
-		_interactables.erase(it);
 }
 
 void Textbox::Interact() {

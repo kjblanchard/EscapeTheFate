@@ -18,6 +18,7 @@ struct UITextArgs {
 class UIText : public UIObject {
    public:
 	UIText(UITextArgs& args);
+	~UIText();
 	void OnDraw(float offsetX, float offsetY) override final;
 
    private:

@@ -40,6 +40,7 @@ void Player::Create(TiledObject* objData) {
 }
 
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
+	// auto thing = new string("Hello");
 	sgLogWarn("Player created at x: %f y: %f", X(), Y());
 	_sprite = Engine::CreateSpriteFull("player1", internalGO(), {0, 0, 32, 32}, {0, 0, 32, 32});
 	_InteractionSprite = Engine::CreateSpriteFull("interaction", internalGO(), {0, 0, 16, 16}, {20, -5, 16, 16});
@@ -91,8 +92,10 @@ void Player::handleInteractions() {
 	updateInteractionRect();
 	IInteractable* interactable = nullptr;
 	for (auto interact : GameObject::_interactables) {
-		if (Engine::CheckForRectCollision(_interactionRect, interact->InteractionRect)) {
-			interactable = interact;
+		if (interact.expired()) continue;
+		auto interactPtr = interact.lock().get();
+		if (Engine::CheckForRectCollision(_interactionRect, interactPtr->InteractionRect)) {
+			interactable = interactPtr;
 			break;
 		}
 	}

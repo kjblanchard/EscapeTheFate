@@ -94,3 +94,7 @@ void UIObject::DrawUI() {
 	}
 	RootUIObject->Draw(0, 0);
 }
+
+void UIObject::DestroyUI() {
+	RootUIObject.reset();
+}

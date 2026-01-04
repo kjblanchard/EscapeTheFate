@@ -17,6 +17,7 @@ struct UIImageArgs {
 class UIImage : public UIObject {
    public:
 	UIImage(UIImageArgs& args);
+	~UIImage();
 	void OnDraw(float offsetX, float offsetY) override final;
 
    private:

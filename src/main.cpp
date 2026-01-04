@@ -48,12 +48,17 @@ void handleInput() {
 		Engine::LoadScene();
 	}
 }
+
+void quit() {
+	GameObject::DestroyAllGameObjects();
+	UIObject::DestroyUI();
+}
 }  // namespace Etf
 
 void (*_initializeFunc)(void) = Etf::initialize;
 void (*_startFunc)(void) = Etf::start;
 void (*_updateFunc)(void) = Etf::update;
 void (*_drawFunc)(void) = Etf::draw;
-void (*_quitFunc)(void) = nullptr;
+void (*_quitFunc)(void) = Etf::quit;
 void (*_inputFunc)(void) = Etf::handleInput;
 int (*_handleEventFunc)(void*) = nullptr;

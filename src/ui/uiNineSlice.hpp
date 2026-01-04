@@ -19,6 +19,7 @@ float Xoffset, Yoffset;
 class UINineSlice : public UIObject {
    public:
 	UINineSlice(UINineSliceArgs& args);
+	~UINineSlice();
 	void OnDraw(float offsetX, float offsetY) override final;
 
    private:

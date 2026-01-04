@@ -6,11 +6,12 @@
 #include <gameobject/gameobjects/Player.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
 #include <interfaces/IInteractable.hpp>
+#include <memory>
 using namespace Etf;
 using namespace std;
 
-std::vector<std::unique_ptr<GameObject>> GameObject::_gameObjects;
-std::vector<IInteractable*> GameObject::_interactables;
+std::vector<shared_ptr<GameObject>> GameObject::_gameObjects;
+std::vector<weak_ptr<IInteractable>> GameObject::_interactables;
 std::unordered_map<int, std::function<void(TiledObject* objData)>> GameObject::_loaderMap = {
 	{4, Player::Create},
 	{5, Textbox::Create},
@@ -69,4 +70,9 @@ void GameObject::LoadAllGameObjects() {
 				return go->ShouldBeDestroyed;
 			}),
 		_gameObjects.end());
+}
+
+void GameObject::DestroyAllGameObjects() {
+	_gameObjects.clear();
+	_interactables.clear();
 }

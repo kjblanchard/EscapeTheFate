@@ -68,6 +68,12 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	}
 	_sourceRect = {0, 0, _location.w, _location.h};
 }
+
+UINineSlice::~UINineSlice() {
+	TextureDestroy(_texture);
+	TextureDestroy(_renderTargetTexture);
+}
+
 void UINineSlice::OnDraw(float offsetX, float offsetY) {
 	Color color = {255, 255, 255, 255};
 	DrawTexture(_renderTargetTexture, GetDefaultShader(), &_location, &_sourceRect, false, _scale, false, &color);
