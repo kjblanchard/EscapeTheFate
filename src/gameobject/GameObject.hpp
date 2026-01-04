@@ -18,6 +18,7 @@ class GameObject {
 	static std::vector<IInteractable*> _interactables;
 	GameObject(int x, int y);
 	bool DoNotDestroy = false;
+	bool ShouldBeDestroyed = false;
 
    private:
 	static std::unordered_map<int, std::function<void(TiledObject* objData)>> _loaderMap;
@@ -26,8 +27,9 @@ class GameObject {
    public:
 	static void UpdateGameObjects();
 	static void DrawGameObjects();
+	// Loads all gameobjects in the current map, then destroys all the old unless they have donotdestroy
 	static void LoadAllGameObjects();
-	virtual ~GameObject() = default;
+	virtual ~GameObject();
 
    protected:
 	virtual void Start() {};

@@ -17,7 +17,7 @@ struct UIImageArgs {
 class UIImage : public UIObject {
    public:
 	UIImage(UIImageArgs& args);
-	void OnDraw() override final;
+	void OnDraw(float offsetX, float offsetY) override final;
 
    private:
 	Texture* _texture;

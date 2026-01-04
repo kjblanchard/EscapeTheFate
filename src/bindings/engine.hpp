@@ -4,6 +4,7 @@
 
 #include <string>
 class Sprite;
+class Text;
 
 class sgGameObject;
 
@@ -14,10 +15,21 @@ struct Engine {
 	static void LoadScene(const std::string& name = "");
 	static Sprite* CreateSpriteFull(const std::string& name, sgGameObject* parent, RectangleF sourceRect, RectangleF offsetSizeRect);
 	static void SetSpriteVisible(Sprite* sprite, bool visible);
-	static unsigned int CreateAnimatorFull(const std::string& name, Sprite* sprite);
-	static void StartAnimatorAnimation(unsigned int animator, const char*, float animSpeed = 1.0);
-	static void UpdateAnimatorAnimationSpeed(unsigned int animator, float animSpeed);
 	static void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
+	static void HandleMapLoad();
+
+	struct Animation {
+		static unsigned int CreateAnimatorFull(const std::string& name, Sprite* sprite);
+		static void StartAnimatorAnimation(unsigned int animator, const char*, float animSpeed = 1.0);
+		static void UpdateAnimatorAnimationSpeed(unsigned int animator, float animSpeed);
+		static void DestroyAnimatorFull(unsigned int animator);
+
+	} Animation;
+
+	struct TextBoi {
+		static Text* CreateText(const std::string& fontName, unsigned int fontSize, RectangleF location, const std::string& text, unsigned int numChars, bool centeredX, bool centeredY);
+		static void DrawText(Text* text, float xOffset, float yOffset);
+	} Textboi;
 
 	// function engine.Collision.CheckForCollision(a, b)
 	// return a.x < b.x + b.w and
@@ -31,6 +43,8 @@ struct Engine {
 	}
 
    private:
+	static std::string _nextScene;
 	static void LoadAndPlayBGM(const std::string& name, float volume);
+	static void loadSceneInternal();
 };
 }  // namespace Etf

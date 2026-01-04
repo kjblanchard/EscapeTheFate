@@ -12,7 +12,7 @@ option(DEBUG_BUILD_TIME "Add in the pch that I think will be changing a bit" OFF
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
-option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
 option(CONVERT_JSON_TO_LUA_IN_ASEPRITE "Convert all json files in aseprite folder for use during install step" OFF)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
@@ -39,6 +39,7 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/ui/uiObject.cpp
   src/ui/uiNineSlice.cpp
   src/ui/uiImage.cpp
+  src/ui/uiText.cpp
   src/systems/dialogSystem.cpp
   src/bindings/engine.cpp
   ${ICON_PATH})

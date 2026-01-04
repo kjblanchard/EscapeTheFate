@@ -1,4 +1,5 @@
 #include <Supergoon/Primitives/rectangle.h>
+
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <memory>
@@ -6,6 +7,8 @@
 
 #include "ui/uiImage.hpp"
 #include "ui/uiNineSlice.hpp"
+#include "ui/uiText.hpp"
+
 using namespace std;
 using namespace Etf;
 
@@ -45,13 +48,15 @@ void UIObject::Dirty() {
 	_dirty = false;
 }
 
-void UIObject::Draw() {
-	OnDraw();
+void UIObject::Draw(float offsetX, float offsetY) {
+	OnDraw(offsetX, offsetY);
 	for (auto& child : _children) {
-		child->Draw();
+		child->Draw(offsetX + _location.x, offsetY + _location.y);
 	}
 	if (_debugBox) {
-		Engine::DrawRectPrimitive(_location);
+		RectangleF debugRect = {offsetX + _location.x, offsetY + _location.y, _location.w, _location.h};
+		Engine::DrawRectPrimitive(debugRect, {255, 255, 0, 255}, false, false);
+		// Engine::DrawRectPrimitive(_location, {255, 255, 0, 255}, false, false);
 	}
 }
 
@@ -62,13 +67,13 @@ void UIObject::AddChild(UIObject* newChild) {
 	});
 }
 
-// visible = false,
-// class = "nineSlice",
-// color = { 80, 0, 120, 235 },
-// rect = { 60, 60, 156, 70 },
-// xSize = 8,
-// ySize = 9,
-// filename = "uibase-export",
+// class = "text",
+// font = "PressStart2P",
+// fontSize = 8,
+// rect = { 8, 8, 140, 54 },
+// text = "Hello World!",
+// centerX = true,
+// centerY = true,
 
 void UIObject::DrawUI() {
 	if (!RootUIObject) {
@@ -77,10 +82,15 @@ void UIObject::DrawUI() {
 		auto image = new UIImage(args);
 		UINineSliceArgs nineArgs = {"uibase-export", {60, 60, 156, 70}, {0, 0, 64, 64}, 8, 9, 1.0, {80, 0, 120, 235}, true};
 		auto niner = new UINineSlice(nineArgs);
+		UITextArgs textArgs = {"PressStart2P", 8, {8, 8, 140, 54}, "Hello world!!", 100, true, true, true};
+		auto text = new UIText(textArgs);
 		image->_debugBox = true;
 		niner->_debugBox = true;
+		text->_debugBox = true;
 		RootUIObject->AddChild(image);
 		RootUIObject->AddChild(niner);
+		niner->AddChild(text);
+		// RootUIObject->AddChild(text);
 	}
-	RootUIObject->Draw();
+	RootUIObject->Draw(0, 0);
 }

@@ -44,11 +44,11 @@ Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	_sprite = Engine::CreateSpriteFull("player1", internalGO(), {0, 0, 32, 32}, {0, 0, 32, 32});
 	_InteractionSprite = Engine::CreateSpriteFull("interaction", internalGO(), {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
-	_animator = Engine::CreateAnimatorFull("player1", _sprite);
+	_animator = Engine::Animation::CreateAnimatorFull("player1", _sprite);
 }
 Player::~Player() {
-	// DestroyAnimator(Animator);
 	sgLogWarn("Destroying Player!");
+	Engine::Animation::DestroyAnimatorFull(_animator);
 }
 void Player::Start() {}
 void Player::Update() {
@@ -144,11 +144,11 @@ bool Player::handlePlayerMovement() {
 		X() = actualX;
 		Y() = actualY;
 		if (_direction != previousDirection) {
-			Engine::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
+			Engine::Animation::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
 		}
 
 	} else {
-		Engine::UpdateAnimatorAnimationSpeed(_animator, 0.0);
+		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
 	}
 	return moved;
 }

@@ -24,6 +24,13 @@ Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	InteractionRect.h = objData->Height;
 }
 
+// TODO probably switch to using shared ptrs in gameobjects, and then weak ptrs inside of the interactables.. so that they will expire when dead.
+Textbox::~Textbox() {
+	auto it = std::find(_interactables.begin(), _interactables.end(), this);
+	if (it != _interactables.end())
+		_interactables.erase(it);
+}
+
 void Textbox::Interact() {
 }
 

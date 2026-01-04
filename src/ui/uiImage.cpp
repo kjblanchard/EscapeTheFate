@@ -15,6 +15,6 @@ UIImage::UIImage(UIImageArgs& args) {
 	TextureLoadFromBmp(_texture, _filename.c_str());
 }
 
-void UIImage::OnDraw() {
+void UIImage::OnDraw(float offsetX, float offsetY) {
 	DrawTexture(_texture, GetDefaultShader(), &_location, &_sourceRect, false, _scale, false, &_color);
 }

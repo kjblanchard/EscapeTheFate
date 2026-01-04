@@ -1,4 +1,5 @@
 #include <Supergoon/gameobject.h>
+#include <Supergoon/log.h>
 #include <Supergoon/map.h>
 
 #include <gameobject/GameObject.hpp>
@@ -19,6 +20,11 @@ GameObject::GameObject(int x, int y) {
 	GO = GameObjectCreate();
 	GO->X = x;
 	GO->Y = y;
+}
+
+GameObject::~GameObject() {
+	GameObjectDestroy(GO);
+	sgLogWarn("Destroying gameobject, not player though!");
 }
 
 float& GameObject::X() {
@@ -42,10 +48,25 @@ void GameObject::DrawGameObjects() {
 }
 
 void GameObject::LoadAllGameObjects() {
+	for (auto& currentGo : _gameObjects) {
+		if (currentGo->DoNotDestroy) continue;
+		currentGo->ShouldBeDestroyed = true;
+	}
+	// Load new gameobjects
 	for (auto i = 0; i < _currentMap->NumObjects; ++i) {
 		auto currentObject = &_currentMap->Objects[i];
 		auto it = _loaderMap.find(currentObject->ObjectType);
 		if (it == _loaderMap.end()) continue;
 		it->second(currentObject);
 	}
+	// Sweep pass: remove all objects marked for destruction
+	// Remove_if basically moves the items to the end of the vector and moves around things, but does not actually erase them, which is needed to destroy the players properly
+	_gameObjects.erase(
+		std::remove_if(
+			_gameObjects.begin(),
+			_gameObjects.end(),
+			[](auto& go) {
+				return go->ShouldBeDestroyed;
+			}),
+		_gameObjects.end());
 }

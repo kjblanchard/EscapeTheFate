@@ -18,9 +18,9 @@ class UIObject {
 	// Calls dirty on all children.
 	void Dirty();
 	// How this Object draws itself
-	virtual void OnDraw() {}
+	virtual void OnDraw(float offsetX, float offsetY) {}
 	// Calls ondraw and then draws all children, left virtual for hlg/vlg
-	virtual void Draw();
+	void Draw(float offsetX, float offsetY);
 	virtual ~UIObject() = default;
 	// Recursive search, can be expensive if you search high
 	UIObject* GetChildByName(const std::string& name);

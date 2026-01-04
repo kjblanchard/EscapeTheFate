@@ -1,5 +1,6 @@
 #include <Supergoon/Audio/Audio.h>
 #include <Supergoon/Graphics/graphics.h>
+#include <Supergoon/Input/keyboard.h>
 #include <Supergoon/engine.h>
 #include <Supergoon/log.h>
 #include <Supergoon/state.h>
@@ -8,11 +9,12 @@
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
-#include <glaze/glaze.hpp>
 #include <gameobject/GameObject.hpp>
+#include <glaze/glaze.hpp>
 #include <ui/uiObject.hpp>
 
 namespace Etf {
+static const int B = 27;
 
 void initialize() {
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.jsonc");
@@ -32,12 +34,19 @@ void update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	GameState::Ticks = Ticks;
+	Engine::HandleMapLoad();
 	GameObject::UpdateGameObjects();
 }
 
 void draw() {
 	GameObject::DrawGameObjects();
 	UIObject::DrawUI();
+}
+
+void handleInput() {
+	if (IsKeyboardKeyJustPressed(B)) {
+		Engine::LoadScene();
+	}
 }
 }  // namespace Etf
 
@@ -46,5 +55,5 @@ void (*_startFunc)(void) = Etf::start;
 void (*_updateFunc)(void) = Etf::update;
 void (*_drawFunc)(void) = Etf::draw;
 void (*_quitFunc)(void) = nullptr;
-void (*_inputFunc)(void) = nullptr;
+void (*_inputFunc)(void) = Etf::handleInput;
 int (*_handleEventFunc)(void*) = nullptr;
