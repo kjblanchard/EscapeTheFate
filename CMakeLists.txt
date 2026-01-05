@@ -7,7 +7,7 @@ set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/Esca
 set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
-option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
+option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" ON)
 option(DEBUG_BUILD_TIME "Add in the pch that I think will be changing a bit" OFF)
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
@@ -96,10 +96,20 @@ set(GLZ_ENABLE_BINARY 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_YAML 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_TOML 0 CACHE BOOL "" FORCE)
 
-find_package(glaze REQUIRED )
-if(GLAZE_FOUND)
-  target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
-endif(GLAZE_FOUND)
+if(SYSTEM_PACKAGES)
+  find_package(glaze)
+endif(SYSTEM_PACKAGES)
+if(NOT glaze_FOUND)
+  message(STATUS "Glaze not found. Fetching Glaze...")
+  FetchContent_Declare(
+    LIB_GLAZE
+    GIT_REPOSITORY https://github.com/stephenberry/glaze.git
+    GIT_TAG main
+    GIT_SHALLOW TRUE
+  )
+  FetchContent_MakeAvailable(LIB_GLAZE)
+endif(NOT glaze_FOUND)
+target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
 
 
 # Json lib, need to do this when building in github only
@@ -131,12 +141,43 @@ target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
 
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
 
-install(
-  DIRECTORY src/
-  DESTINATION ${INSTALL_DIR}/assets/lua
-  COMPONENT assets)
+# Platform specific executable flags
+if(EMSCRIPTEN)
+  message(STATUS "Enabling Emscripten flags for supergoon engine ")
+  set(CMAKE_EXECUTABLE_SUFFIX
+    ".html"
+    CACHE STRING "Use html" FORCE)
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set(LINK_FLAGS
+    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=3 -s USE_VORBIS=1 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
+  )
+  set_target_properties(
+    ${EXECUTABLE_TARGET_NAME}
+    PROPERTIES
+    LINK_FLAGS
+    "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
+    --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets")
+    # --preload-file ${CMAKE_SOURCE_DIR}/src@/assets/lua/ \
+    # --preload-file ${ENGINE_SCRIPT_PATH}@/assets/lua/ ")
+  elseif(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET
+      "10.14"
+      CACHE STRING "Minimum OS X deployment version")
+    set(IS_BUNDLE
+      "MACOSX_BUNDLE"
+      CACHE STRING "Is this a bundle")
+    set(ICON_PATH
+      ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
+      CACHE STRING "Icon path")
+endif(EMSCRIPTEN)
 
-install(
-  DIRECTORY assets
-  DESTINATION ${INSTALL_DIR}
-  COMPONENT assets)
+  install(
+    DIRECTORY src/
+    DESTINATION ${INSTALL_DIR}/assets/lua
+    COMPONENT assets)
+
+  install(
+    DIRECTORY assets
+    DESTINATION ${INSTALL_DIR}
+    COMPONENT assets)

@@ -5,9 +5,9 @@
     },
     "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
-        "templates",
         ".",
-        "old-delete"
+        "old-delete",
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -98,8 +98,8 @@
             "scale": 1.5,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 304,
-                "y": 143.33333333333331
+                "x": 247.66666666666666,
+                "y": 138
             }
         },
         "debugTownHome.tmj": {
