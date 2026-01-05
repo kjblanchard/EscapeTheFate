@@ -41,8 +41,6 @@ void Player::Create(TiledObject* objData) {
 }
 
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
-	// auto thing = new string("Hello");
-	sgLogWarn("Player created at x: %f y: %f", X(), Y());
 	_sprite = Engine::CreateSpriteFull("player1", internalGO(), {0, 0, 32, 32}, {0, 0, 32, 32});
 	_InteractionSprite = Engine::CreateSpriteFull("interaction", internalGO(), {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
@@ -64,24 +62,24 @@ void Player::updateInteractionRect() {
 	switch (_direction) {
 		case Direction::East:
 			_interactionRect.x = _collisionRect.x + _collisionRect.w;
-			_interactionRect.y = _collisionRect.y + (_collisionRect.h / 2) - (_interactionEastWestWidthHeight.Y / 2.0);
+			_interactionRect.y = _collisionRect.y + (_collisionRect.h / 2.0f) - (_interactionEastWestWidthHeight.Y / 2.0f);
 			_interactionRect.w = _interactionEastWestWidthHeight.X;
 			_interactionRect.h = _interactionEastWestWidthHeight.Y;
 			break;
 		case Direction::West:
 			_interactionRect.x = _collisionRect.x - _interactionEastWestWidthHeight.X;
-			_interactionRect.y = _collisionRect.y + (_collisionRect.h / 2) - (_interactionEastWestWidthHeight.Y / 2.0);
+			_interactionRect.y = _collisionRect.y + (_collisionRect.h / 2.0f) - (_interactionEastWestWidthHeight.Y / 2.0f);
 			_interactionRect.w = _interactionEastWestWidthHeight.X;
 			_interactionRect.h = _interactionEastWestWidthHeight.Y;
 			break;
 		case Direction::North:
-			_interactionRect.x = _collisionRect.x + (_collisionRect.w / 2.0) - (_interactionNorthSouthWidthHeight.X / 2.0);
+			_interactionRect.x = _collisionRect.x + (_collisionRect.w / 2.0f) - (_interactionNorthSouthWidthHeight.X / 2.0f);
 			_interactionRect.y = _collisionRect.y - _interactionNorthSouthWidthHeight.Y;
 			_interactionRect.w = _interactionNorthSouthWidthHeight.X;
 			_interactionRect.h = _interactionNorthSouthWidthHeight.Y;
 			break;
 		case Direction::South:
-			_interactionRect.x = _collisionRect.x + (_collisionRect.w / 2.0) - (_interactionNorthSouthWidthHeight.X / 2.0);
+			_interactionRect.x = _collisionRect.x + (_collisionRect.w / 2.0f) - (_interactionNorthSouthWidthHeight.X / 2.0f);
 			_interactionRect.y = _collisionRect.y + _collisionRect.h;
 			_interactionRect.w = _interactionNorthSouthWidthHeight.X;
 			_interactionRect.h = _interactionNorthSouthWidthHeight.Y;

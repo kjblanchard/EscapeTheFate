@@ -4,7 +4,7 @@
 
 #include <string>
 #include <ui/uiObject.hpp>
-class Text;
+struct Text;
 namespace Etf {
 struct UITextArgs {
 	std::string FontName;

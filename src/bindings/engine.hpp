@@ -3,10 +3,9 @@
 #include <Supergoon/Primitives/rectangle.h>
 
 #include <string>
-class Sprite;
-class Text;
-
-class sgGameObject;
+struct Sprite;
+struct Text;
+struct sgGameObject;
 
 namespace Etf {
 

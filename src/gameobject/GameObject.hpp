@@ -3,8 +3,7 @@
 #include <memory>
 #include <unordered_map>
 struct sgGameObject;
-
-class TiledObject;
+struct TiledObject;
 namespace Etf {
 
 class IInteractable;

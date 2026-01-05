@@ -4,7 +4,7 @@
 
 #include <string>
 #include <ui/uiObject.hpp>
-class Texture;
+struct Texture;
 namespace Etf {
 struct UIImageArgs {
 	std::string Filename;
