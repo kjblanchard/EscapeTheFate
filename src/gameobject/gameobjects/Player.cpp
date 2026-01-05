@@ -7,6 +7,7 @@
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
+#include <gameobject/gameobjects/MapExit.hpp>
 #include <gameobject/gameobjects/Player.hpp>
 #include <memory>
 
@@ -48,13 +49,15 @@ Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	_animator = Engine::Animation::CreateAnimatorFull("player1", _sprite);
 }
 Player::~Player() {
-	sgLogWarn("Destroying Player!");
 	Engine::Animation::DestroyAnimatorFull(_animator);
 }
 void Player::Start() {}
 void Player::Update() {
 	handlePlayerMovement();
 	handleInteractions();
+	if (handleMapExits()) {
+		return;
+	}
 }
 
 void Player::updateInteractionRect() {
@@ -154,6 +157,10 @@ bool Player::handlePlayerMovement() {
 		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
 	}
 	return moved;
+}
+
+bool Player::handleMapExits() {
+	return MapExit::CheckAndHandleMapExitOverlaps(_collisionRect);
 }
 
 constexpr const char* Player::getAnimNameFromDirection() {

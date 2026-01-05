@@ -3,6 +3,7 @@
 #include <Supergoon/map.h>
 
 #include <gameobject/GameObject.hpp>
+#include <gameobject/gameobjects/MapExit.hpp>
 #include <gameobject/gameobjects/Player.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
 #include <interfaces/IInteractable.hpp>
@@ -15,6 +16,7 @@ std::vector<weak_ptr<IInteractable>> GameObject::_interactables;
 std::unordered_map<int, std::function<void(TiledObject* objData)>> GameObject::_loaderMap = {
 	{4, Player::Create},
 	{5, Textbox::Create},
+	{2, MapExit::Create},
 };
 
 GameObject::GameObject(int x, int y) {
@@ -25,7 +27,6 @@ GameObject::GameObject(int x, int y) {
 
 GameObject::~GameObject() {
 	GameObjectDestroy(GO);
-	sgLogWarn("Destroying gameobject, not player though!");
 }
 
 float& GameObject::X() {

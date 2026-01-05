@@ -18,10 +18,23 @@
                 "UIName": "",
                 "BGMName": "town2",
                 "BGMVolume": 1.0
+            },
+            {
+                "MapName": "debugSouth",
+                "UIName": "",
+                "BGMName": "forest1",
+                "BGMVolume": 1.0
+            },
+            {
+                "MapName": "debugTownHome",
+                "UIName": "",
+                "BGMName": "town2",
+                "BGMVolume": 1.0
             }
         ]
     },
     "debug": {
-        "interactions": false
+        "interactions": false,
+        "mapExits": true
     }
 }

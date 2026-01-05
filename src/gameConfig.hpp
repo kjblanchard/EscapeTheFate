@@ -21,6 +21,7 @@ struct gameConfig {
 	} scene;
 	struct debug {
 		bool interactions;
+		bool mapExits;
 	} debug;
 };
 

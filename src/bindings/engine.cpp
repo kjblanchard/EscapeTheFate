@@ -41,7 +41,7 @@ void Engine::loadSceneInternal() {
 }
 
 void Engine::LoadScene(const string& name) {
-	auto newName = _nextScene;
+	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName == "") {
 		newName = gameSceneConfig.defaultScene;
