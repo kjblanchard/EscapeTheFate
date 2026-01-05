@@ -29,41 +29,41 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	RectangleF dstRect = {0, 0, sizeX, sizeY};
 	DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	// tr
-	srcRect = (RectangleF){nineSliceImageW - sizeX, 0, sizeX, sizeY};
-	dstRect = (RectangleF){_location.w - sizeX, 0, sizeX, sizeY};
+	srcRect = {nineSliceImageW - sizeX, 0, sizeX, sizeY};
+	dstRect = {_location.w - sizeX, 0, sizeX, sizeY};
 	// dstRect = {sizeX * 2, 0, sizeX, sizeY};
 	DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	// // // bl
-	srcRect = (RectangleF){0, nineSliceImageH - sizeY, sizeX, sizeY};
-	dstRect = (RectangleF){0, _location.h - sizeY, sizeX, sizeY};
+	srcRect = {0, nineSliceImageH - sizeY, sizeX, sizeY};
+	dstRect = {0, _location.h - sizeY, sizeX, sizeY};
 	DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	// // br
-	srcRect = (RectangleF){nineSliceImageW - sizeX, nineSliceImageH - sizeY, sizeX, sizeY};
-	dstRect = (RectangleF){_location.w - sizeX, _location.h - sizeY, sizeX, sizeY};
+	srcRect = {nineSliceImageW - sizeX, nineSliceImageH - sizeY, sizeX, sizeY};
+	dstRect = {_location.w - sizeX, _location.h - sizeY, sizeX, sizeY};
 	DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	// // draw the bars
 	int length = _location.w - (sizeX);
 	int height = _location.h - (sizeY);
 	// // top
-	srcRect = (RectangleF){1 + sizeX, 0, 1, sizeY};
+	srcRect = {1 + sizeX, 0, 1, sizeY};
 	for (size_t i = sizeX; i < length; i++) {
-		dstRect = (RectangleF){(float)i, 0, 1, sizeY};
+		dstRect = {(float)i, 0, 1, sizeY};
 		DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	}
 	// // bottom
 	for (size_t i = sizeX; i < length; i++) {
-		dstRect = (RectangleF){(float)i, _location.h - sizeY + 4, 1, sizeY};
+		dstRect = {(float)i, _location.h - sizeY + 4, 1, sizeY};
 		DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	}
 	// // left
-	srcRect = (RectangleF){0, sizeY + 1, sizeX, 1};
+	srcRect = {0, sizeY + 1, sizeX, 1};
 	for (size_t i = sizeY; i < height; i++) {
-		dstRect = (RectangleF){0, (float)i, sizeX, 1};
+		dstRect = {0, (float)i, sizeX, 1};
 		DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	}
 	// // right
 	for (size_t i = sizeY; i < height; i++) {
-		dstRect = (RectangleF){_location.w - sizeX + 3, (float)i, sizeX, 1};
+		dstRect = {_location.w - sizeX + 3, (float)i, sizeX, 1};
 		DrawTextureToTexture(_renderTargetTexture, _texture, GetDefaultShader(), &dstRect, &srcRect, 1.0);
 	}
 	_sourceRect = {0, 0, _location.w, _location.h};
