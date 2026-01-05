@@ -7,7 +7,7 @@ set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/Esca
 set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
-option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" ON)
+option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(DEBUG_BUILD_TIME "Add in the pch that I think will be changing a bit" OFF)
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
@@ -106,6 +106,7 @@ if(NOT glaze_FOUND)
     GIT_REPOSITORY https://github.com/stephenberry/glaze.git
     GIT_TAG main
     GIT_SHALLOW TRUE
+    EXCLUDE_FROM_ALL
   )
   FetchContent_MakeAvailable(LIB_GLAZE)
 endif(NOT glaze_FOUND)
@@ -170,7 +171,7 @@ if(EMSCRIPTEN)
     set(ICON_PATH
       ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
       CACHE STRING "Icon path")
-endif(EMSCRIPTEN)
+  endif(EMSCRIPTEN)
 
   install(
     DIRECTORY src/

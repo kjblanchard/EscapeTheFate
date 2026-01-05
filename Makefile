@@ -78,7 +78,7 @@ rebuild:
 mrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build install
 lrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) SYSTEM_PACKAGES=ON LINK_M=ON clean configure build install 
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build install 
 xrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) SYSTEM_PACKAGES=OFF clean configure build install package
 brebuild:
