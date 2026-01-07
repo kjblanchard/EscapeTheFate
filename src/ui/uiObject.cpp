@@ -5,14 +5,11 @@
 #include <memory>
 #include <ui/uiObject.hpp>
 
-#include "ui/uiImage.hpp"
-#include "ui/uiNineSlice.hpp"
-#include "ui/uiText.hpp"
-
 using namespace std;
 using namespace Etf;
 
-std::unique_ptr<UIObject> UIObject::RootUIObject;
+UIObject::UIObject(UIObjectArgs args) : _visible(args.Visible), _priority(args.Priority), _name(args.Name), _location(args.Rect) {
+}
 
 RectangleF UIObject::GetAbsolutePosition() {
 	auto parent = _parent;
@@ -65,36 +62,4 @@ void UIObject::AddChild(UIObject* newChild) {
 	sort(_children.begin(), _children.end(), [](const auto& lhs, const auto& rhs) {
 		return lhs->_priority < rhs->_priority;
 	});
-}
-
-// class = "text",
-// font = "PressStart2P",
-// fontSize = 8,
-// rect = { 8, 8, 140, 54 },
-// text = "Hello World!",
-// centerX = true,
-// centerY = true,
-
-void UIObject::DrawUI() {
-	if (!RootUIObject) {
-		RootUIObject = make_unique<UIObject>();
-		UIImageArgs args = {"interaction", {24, 0, 16, 16}, {0, 0, 16, 16}, 3.0, {255, 255, 255, 255}, true};
-		auto image = new UIImage(args);
-		UINineSliceArgs nineArgs = {"uibase-export", {60, 60, 156, 70}, {0, 0, 64, 64}, 8, 9, 1.0, {80, 0, 120, 235}, true};
-		auto niner = new UINineSlice(nineArgs);
-		UITextArgs textArgs = {"PressStart2P", 8, {8, 8, 140, 54}, "Hello world!!", 100, true, true, true};
-		auto text = new UIText(textArgs);
-		image->_debugBox = true;
-		niner->_debugBox = true;
-		text->_debugBox = true;
-		RootUIObject->AddChild(image);
-		RootUIObject->AddChild(niner);
-		niner->AddChild(text);
-		// RootUIObject->AddChild(text);
-	}
-	RootUIObject->Draw(0, 0);
-}
-
-void UIObject::DestroyUI() {
-	RootUIObject.reset();
 }

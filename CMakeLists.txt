@@ -37,6 +37,7 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/gameobject/gameobjects/Player.cpp
   src/gameobject/gameobjects/Textbox.cpp
   src/gameobject/gameobjects/MapExit.cpp
+  src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiNineSlice.cpp
   src/ui/uiImage.cpp

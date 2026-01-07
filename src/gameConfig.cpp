@@ -1,5 +1,4 @@
 #include <Supergoon/log.h>
-
 #include <bindings/engine.hpp>
 #include <cstdio>
 #include <gameConfig.hpp>

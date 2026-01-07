@@ -11,7 +11,7 @@
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
 #include <glaze/glaze.hpp>
-#include <ui/uiObject.hpp>
+#include <ui/ui.hpp>
 
 namespace Etf {
 static const int B = 27;
@@ -40,7 +40,7 @@ void update() {
 
 void draw() {
 	GameObject::DrawGameObjects();
-	UIObject::DrawUI();
+	UI::DrawUI();
 }
 
 void handleInput() {
@@ -51,7 +51,7 @@ void handleInput() {
 
 void quit() {
 	GameObject::DestroyAllGameObjects();
-	UIObject::DestroyUI();
+	UI::DestroyUI();
 }
 }  // namespace Etf
 

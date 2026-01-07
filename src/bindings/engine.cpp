@@ -8,6 +8,7 @@
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
 
+#include <ui/ui.hpp>
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
@@ -37,6 +38,7 @@ void Engine::loadSceneInternal() {
 	LoadMap(_nextScene.c_str());
 	GameObject::LoadAllGameObjects();
 	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
+	UI::LoadUIFromFile("assets/ui/debugTown.jsonc");
 	_nextScene = "";
 }
 

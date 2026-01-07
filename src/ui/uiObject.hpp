@@ -5,13 +5,17 @@
 #include <string>
 #include <vector>
 namespace Etf {
+struct UIObjectArgs {
+	RectangleF Rect;
+	bool Visible = false;
+	std::string Name;
+	int Priority = 0;
+};
+
 class UIObject {
    public:
-	static void DrawUI();
-	static void DestroyUI();
-	static std::unique_ptr<UIObject> RootUIObject;
-
-   public:
+	   UIObject(UIObjectArgs args);
+	   UIObject() = default;
 	// Gets the position on the screen currently, currently recursive call to root so can be expensive.
 	RectangleF GetAbsolutePosition();
 	// What to do when this is dirty, called before
