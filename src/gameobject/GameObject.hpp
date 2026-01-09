@@ -2,6 +2,7 @@
 #include <functional>
 #include <memory>
 #include <unordered_map>
+#include "ui/uiObject.hpp"
 struct sgGameObject;
 struct TiledObject;
 namespace Etf {
@@ -30,6 +31,8 @@ class GameObject {
 	static void DrawGameObjects();
 	// Destroys all gameobjects and interactables
 	static void DestroyAllGameObjects();
+
+   public:
 	virtual ~GameObject();
 
    protected:

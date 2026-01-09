@@ -9,9 +9,12 @@
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiObject.hpp>
 #include <ui/uiText.hpp>
+#include <unordered_map>
 
 using namespace Etf;
 using namespace std;
+
+unordered_map<string, glz::generic> _cachedUIFiles;
 
 template <typename T>
 static void getObjectFromField(T& rect, const string& field, const glz::generic& data) {
@@ -32,6 +35,7 @@ static UIText* createText(const glz::generic& data) {
 	args.CenteredY = data.at("centeredY").get_boolean();
 	args.WordWrap = data.at("wordWrap").get_boolean();
 	args.NumCharsToDraw = data.at("numCharsToDraw").get_number();
+	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
 	return new UIText(args);
 }
 
@@ -44,6 +48,7 @@ static UIObject* createUIObject(const std::string& name, const glz::generic& dat
 	objectArgs.Name = name;
 	objectArgs.Priority = data.contains("priority") ? data.at("priority").get_number() : 0;
 	objectArgs.Visible = data.contains("visible") ? data.at("priority").get_boolean() : true;
+	objectArgs.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
 	return new UIObject(objectArgs);
 }
 static UIImage* createImage(const string& name, const glz::generic& data) {
@@ -53,6 +58,7 @@ static UIImage* createImage(const string& name, const glz::generic& data) {
 	getObjectFromField(args.DrawColor, "color", data);
 	args.Filename = data.at("file").get_string();
 	args.Scale = data.at("scale").get_number();
+	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
 	return new UIImage(args);
 }
 
@@ -65,6 +71,7 @@ static UINineSlice* createNineSliceObject(const string& name, const glz::generic
 	args.Scale = data.at("scale").get_number();
 	args.Xoffset = data.at("xOffset").get_number();
 	args.Yoffset = data.at("yOffset").get_number();
+	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
 	return new UINineSlice(args);
 }
 
@@ -105,18 +112,33 @@ static UIObject* handleUIArgs(const string& name, const glz::generic& data) {
 
 std::unique_ptr<UIObject> UI::RootUIObject;
 
-void UI::LoadUIFromFile(std::string filename) {
-	if (!RootUIObject) {
-		RootUIObject = make_unique<UIObject>();
-	}
-	glz::generic fullUIFileGeneric;
-	auto fullFileErrorContext = glz::read_file_json(fullUIFileGeneric, filename, std::string{});
+static bool loadJsonFromFile(const string& filename) {
+	sgLogDebug("Loading file %s to be cached", filename.c_str());
+	auto& entry = _cachedUIFiles[filename];
+	auto fullFileErrorContext = glz::read_file_json(entry, filename, std::string{});
 	if (fullFileErrorContext) {
 		string buffer;
 		sgLogError("Error %d  parsing UI file %s, %s", fullFileErrorContext.ec, filename.c_str(), glz::format_error(fullFileErrorContext, buffer).c_str());
-		return;
+		_cachedUIFiles.erase(filename);
+		return false;
 	}
-	for (auto& [panelName, panelObj] : fullUIFileGeneric.get_object()) {
+	return true;
+}
+
+void UI::LoadUIFromFile(const string& filename) {
+	// Initialize the root object if needed
+	if (!RootUIObject) RootUIObject = make_unique<UIObject>();
+	glz::generic* fullUIFileGeneric;
+	// Check the cached files to avoid filesystem reads, and return if there is an error loading
+	if (!_cachedUIFiles.contains(filename)) {
+		if (!loadJsonFromFile(filename)) return;
+	}
+	fullUIFileGeneric = &_cachedUIFiles[filename];
+	for (auto& [panelName, panelObj] : fullUIFileGeneric->get_object()) {
+		if (RootUIObject->HasChildOfName(panelName)) {
+			sgLogDebug("Not creating panel, it already exists %s", panelName.c_str());
+			continue;
+		}
 		if (panelObj.contains("children")) {
 			auto topPanel = handleUIArgs(panelName, panelObj);
 			if (!topPanel) continue;
@@ -125,16 +147,10 @@ void UI::LoadUIFromFile(std::string filename) {
 	}
 }
 void UI::DrawUI() {
-	// auto text = new UIText(textArgs);
-	// image->_debugBox = true;
-	// niner->_debugBox = true;
-	// text->_debugBox = true;
-	// RootUIObject->AddChild(image);
-	// RootUIObject->AddChild(niner);
-	// niner->AddChild(text);
 	RootUIObject->Draw(0, 0);
 }
 
 void UI::DestroyUI() {
+	_cachedUIFiles.clear();
 	RootUIObject.reset();
 }

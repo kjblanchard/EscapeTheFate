@@ -8,11 +8,12 @@
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
 
-#include <ui/ui.hpp>
 #include <algorithm>
 #include <bindings/engine.hpp>
+#include <format>
 #include <gameConfig.hpp>
 #include <gameobject/GameObject.hpp>
+#include <ui/ui.hpp>
 
 using namespace Etf;
 using namespace std;
@@ -38,7 +39,9 @@ void Engine::loadSceneInternal() {
 	LoadMap(_nextScene.c_str());
 	GameObject::LoadAllGameObjects();
 	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
-	UI::LoadUIFromFile("assets/ui/debugTown.jsonc");
+	if (!sceneToLoad.UIName.empty()) {
+		UI::LoadUIFromFile(format("assets/ui/{}.jsonc", sceneToLoad.UIName));
+	}
 	_nextScene = "";
 }
 

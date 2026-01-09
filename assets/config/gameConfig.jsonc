@@ -15,7 +15,7 @@
         "scenes": [
             {
                 "MapName": "debugTown",
-                "UIName": "",
+                "UIName": "debugTown",
                 "BGMName": "town2",
                 "BGMVolume": 1.0
             },

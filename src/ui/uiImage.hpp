@@ -12,7 +12,7 @@ struct UIImageArgs {
 	RectangleF SourceRect;
 	float Scale;
 	Color DrawColor;
-	bool Visible;
+	bool Visible, DebugBox = false;
 };
 class UIImage : public UIObject {
    public:

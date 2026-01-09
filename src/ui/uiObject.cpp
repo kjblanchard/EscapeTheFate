@@ -8,7 +8,7 @@
 using namespace std;
 using namespace Etf;
 
-UIObject::UIObject(UIObjectArgs args) : _visible(args.Visible), _priority(args.Priority), _name(args.Name), _location(args.Rect) {
+UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visible(args.Visible), _priority(args.Priority), _name(args.Name), _location(args.Rect), _debugBox(args.DebugBox) {
 }
 
 RectangleF UIObject::GetAbsolutePosition() {
@@ -25,9 +25,7 @@ RectangleF UIObject::GetAbsolutePosition() {
 UIObject* UIObject::GetChildByName(const std::string& name) {
 	// Check current children before checking all children.
 	auto it = find_if(_children.begin(), _children.end(), [name](const auto& child) {
-		if (true) {
-			return true;
-		}
+		return child->_name == name;
 	});
 	if (it != _children.end()) return it->get();
 	for (const auto& child : _children) {
@@ -35,6 +33,18 @@ UIObject* UIObject::GetChildByName(const std::string& name) {
 		if (found) return found;
 	}
 	return nullptr;
+}
+
+bool UIObject::HasChildOfName(const std::string& name) {
+	return find_if(_children.begin(), _children.end(), [&name](auto& child) { return child->_name == name; }) != _children.end();
+}
+
+bool UIObject::HasChildOfNameInAllChildren(const std::string& name) {
+	if (HasChildOfName(name)) return true;
+	for (auto& child : _children) {
+		if (child->HasChildOfNameInAllChildren(name)) return true;
+	}
+	return false;
 }
 
 void UIObject::Dirty() {
@@ -53,7 +63,6 @@ void UIObject::Draw(float offsetX, float offsetY) {
 	if (_debugBox) {
 		RectangleF debugRect = {offsetX + _location.x, offsetY + _location.y, _location.w, _location.h};
 		Engine::DrawRectPrimitive(debugRect, {255, 255, 0, 255}, false, false);
-		// Engine::DrawRectPrimitive(_location, {255, 255, 0, 255}, false, false);
 	}
 }
 

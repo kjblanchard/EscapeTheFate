@@ -192,10 +192,10 @@ if(EMSCRIPTEN)
       CACHE STRING "Icon path")
   endif(EMSCRIPTEN)
 
-  install(
-    DIRECTORY src/
-    DESTINATION ${INSTALL_DIR}/assets/lua
-    COMPONENT assets)
+  # install(
+  #   DIRECTORY src/
+  #   DESTINATION ${INSTALL_DIR}/assets/lua
+  #   COMPONENT assets)
 
   install(
     DIRECTORY assets

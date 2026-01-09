@@ -14,7 +14,7 @@ struct UINineSliceArgs {
 float Xoffset, Yoffset;
 	float Scale;
 	Color DrawColor;
-	bool Visible;
+	bool Visible, DebugBox = false;
 };
 class UINineSlice : public UIObject {
    public:

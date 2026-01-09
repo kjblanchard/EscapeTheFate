@@ -1,5 +1,6 @@
 {
 	"DebugTownPanel": {
+		"doNotDestroy": true,
 		"children": {
 			"ImageTest": {
 				"type": "image",

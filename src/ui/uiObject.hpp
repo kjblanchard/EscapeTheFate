@@ -8,14 +8,16 @@ namespace Etf {
 struct UIObjectArgs {
 	RectangleF Rect;
 	bool Visible = false;
+	bool DoNotDestroy = false;
+	bool DebugBox = false;
 	std::string Name;
 	int Priority = 0;
 };
 
 class UIObject {
    public:
-	   UIObject(UIObjectArgs args);
-	   UIObject() = default;
+	UIObject(UIObjectArgs args);
+	UIObject() = default;
 	// Gets the position on the screen currently, currently recursive call to root so can be expensive.
 	RectangleF GetAbsolutePosition();
 	// What to do when this is dirty, called before
@@ -30,10 +32,15 @@ class UIObject {
 	// Recursive search, can be expensive if you search high
 	UIObject* GetChildByName(const std::string& name);
 	void AddChild(UIObject* newChild);
+	// Do we have a child object with this name
+	bool HasChildOfName(const std::string& name);
+	// Do we have a child object with this name, or do we have a child that has it
+	bool HasChildOfNameInAllChildren(const std::string& name);
 
    protected:
 	// Will call OnDirty when dirty.
 	bool _dirty = true;
+	bool _doNotDestroy = false;
 	// will not draw self or children if not visible;
 	bool _visible = true;
 	// Used when drawing, higher priority is drawn on top of lower

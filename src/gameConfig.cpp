@@ -1,6 +1,6 @@
 #include <Supergoon/log.h>
+
 #include <bindings/engine.hpp>
-#include <cstdio>
 #include <gameConfig.hpp>
 #include <string>
 
@@ -15,5 +15,4 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 		sgLogError("Error reading config file, please make sure it is in assets folder/gameConfig.jsonc!");
 		return;
 	}
-	printf("Hello world");
 }

@@ -4,7 +4,7 @@
 namespace Etf {
 class UI {
    public:
-	static void LoadUIFromFile(std::string filename);
+	static void LoadUIFromFile(const std::string& filename);
 	static void DrawUI();
 	static void DestroyUI();
 	static std::unique_ptr<UIObject> RootUIObject;
