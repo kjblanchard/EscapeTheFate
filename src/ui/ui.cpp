@@ -1,9 +1,8 @@
 #include <Supergoon/Primitives/rectangle.h>
+#include <Supergoon/json.h>
 #include <Supergoon/log.h>
 
-#include <glaze/core/context.hpp>
-#include <glaze/core/reflect.hpp>
-#include <glaze/json/generic.hpp>
+#include <complex>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -14,73 +13,100 @@
 using namespace Etf;
 using namespace std;
 
-unordered_map<string, glz::generic> _cachedUIFiles;
+unordered_map<string, json_object*> _cachedUIFiles;
 
-template <typename T>
-static void getObjectFromField(T& rect, const string& field, const glz::generic& data) {
-	auto error = glz::read_json(rect, data.at(field).get_object());
-	if (error) {
-		string buffer;
-		sgLogError("Error parsing rect:%d, %s", error.ec, glz::format_error(error, buffer).c_str());
-	}
+template <typename Lambda>
+void jforeach_lambda(void* obj, Lambda&& lambda) {
+	struct Wrapper {
+		Lambda* fn;
+	};
+	Wrapper wrapper{&lambda};
+
+	jforeach_obj(
+		obj,
+		[](const char* key, void* value, void* userData) {
+			auto* w = static_cast<Wrapper*>(userData);
+			(*w->fn)(key, value);
+		},
+		&wrapper);
 }
 
-static UIText* createText(const glz::generic& data) {
+static RectangleF getRectFromField(json_object* obj, const char* key) {
+	auto rectJson = jobj(obj, key);
+	if (!rectJson) return {0, 0, 0, 0};
+	return {
+		jfloat(rectJson, "x"),
+		jfloat(rectJson, "y"),
+		jfloat(rectJson, "w"),
+		jfloat(rectJson, "h"),
+	};
+}
+
+static Color getColorFromField(json_object* obj, const char* key) {
+	auto rectJson = jobj(obj, key);
+	if (!rectJson) return {0, 0, 0, 0};
+	return {
+		(uint8_t)jint(rectJson, "R"),
+		(uint8_t)jint(rectJson, "G"),
+		(uint8_t)jint(rectJson, "B"),
+		(uint8_t)jint(rectJson, "A"),
+	};
+}
+
+static UIText* createText(const string& name, json_object* data) {
 	UITextArgs args;
-	args.FontName = data.at("font").get_string();
-	args.FontSize = data.at("fontSize").get_number();
-	getObjectFromField(args.Rect, "rect", data);
-	args.TextToDraw = data.at("text").get_string();
-	args.CenteredX = data.at("centeredX").get_boolean();
-	args.CenteredY = data.at("centeredY").get_boolean();
-	args.WordWrap = data.at("wordWrap").get_boolean();
-	args.NumCharsToDraw = data.at("numCharsToDraw").get_number();
-	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
+	args.FontName = jstr(data, "font");
+	args.FontSize = jint(data, "fontSize");
+	args.Rect = getRectFromField(data, "rect");
+	args.TextToDraw = jstr(data, "text");
+	args.CenteredX = jbool(data, "centeredX");
+	args.CenteredY = jbool(data, "centeredY");
+	args.WordWrap = jbool(data, "wordWrap");
+	args.NumCharsToDraw = jint(data, "numCharsToDraw");
+	args.DebugBox = jbool(data, "debug");
 	return new UIText(args);
 }
 
-static UIObject* createUIObject(const std::string& name, const glz::generic& data) {
+static UIObject* createUIObject(const std::string& name, json_object* data) {
 	UIObjectArgs objectArgs;
-	objectArgs.Rect = {0, 0, 0, 0};
-	if (data.contains("rect")) {
-		getObjectFromField(objectArgs.Rect, "rect", data);
-	}
+	objectArgs.Rect = getRectFromField(data, "rect");
 	objectArgs.Name = name;
-	objectArgs.Priority = data.contains("priority") ? data.at("priority").get_number() : 0;
-	objectArgs.Visible = data.contains("visible") ? data.at("priority").get_boolean() : true;
-	objectArgs.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
-	objectArgs.DoNotDestroy = data.contains("doNotDestroy") ? data.at("doNotDestroy").get_boolean() : false;
+	objectArgs.Priority = jint(data, "priority");
+	objectArgs.Visible = jbool(data, "visible");
+	objectArgs.DebugBox = jbool(data, "debug");
+	objectArgs.DoNotDestroy = jbool(data, "doNotDestroy");
 	return new UIObject(objectArgs);
 }
-static UIImage* createImage(const string& name, const glz::generic& data) {
+
+static UIImage* createImage(const string& name, json_object* data) {
 	UIImageArgs args;
-	getObjectFromField(args.Rect, "rect", data);
-	getObjectFromField(args.SourceRect, "srcRect", data);
-	getObjectFromField(args.DrawColor, "color", data);
-	args.Filename = data.at("file").get_string();
-	args.Scale = data.at("scale").get_number();
-	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
-	args.Visible = data.contains("visible") ? data.at("visible").get_boolean() : true;
+	args.Rect = getRectFromField(data, "rect");
+	args.SourceRect = getRectFromField(data, "srcRect");
+	args.DrawColor = getColorFromField(data, "color");
+	args.Filename = jstr(data, "file");
+	args.Scale = jfloat(data, "scale");
+	args.DebugBox = jbool(data, "debug");
+	args.Visible = jbool(data, "visible");
 	return new UIImage(args);
 }
 
-static UINineSlice* createNineSliceObject(const string& name, const glz::generic& data) {
+static UINineSlice* createNineSliceObject(const string& name, json_object* data) {
 	UINineSliceArgs args;
-	getObjectFromField(args.Rect, "rect", data);
-	getObjectFromField(args.SourceRect, "srcRect", data);
-	getObjectFromField(args.DrawColor, "color", data);
-	args.Filename = data.at("file").get_string();
-	args.Scale = data.at("scale").get_number();
-	args.Xoffset = data.at("xOffset").get_number();
-	args.Yoffset = data.at("yOffset").get_number();
-	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
+	args.Rect = getRectFromField(data, "rect");
+	args.SourceRect = getRectFromField(data, "srcRect");
+	args.DrawColor = getColorFromField(data, "color");
+	args.Filename = jstr(data, "file");
+	args.Scale = jint(data, "scale");
+	args.Xoffset = jint(data, "xOffset");
+	args.Yoffset = jint(data, "xOffset");
+	args.DebugBox = jbool(data, "debug");
 	return new UINineSlice(args);
 }
 
-static UIObject* handleTypeCreation(const string& name, const string& type, const glz::generic& data) {
+static UIObject* handleTypeCreation(const string& name, const string& type, json_object* data) {
 	sgLogDebug("Creating UI object of type %s", type.empty() ? "panel" : type.c_str());
 	if (type == "text") {
-		return createText(data);
+		return createText(name, data);
 	} else if (type == "nineSlice") {
 		return createNineSliceObject(name, data);
 	} else if (type == "image") {
@@ -92,25 +118,23 @@ static UIObject* handleTypeCreation(const string& name, const string& type, cons
 	return nullptr;
 }
 
-static UIObject* handleUIArgs(const string& name, const glz::generic& data) {
+static UIObject* handleUIArgs(const string& name, json_object* data) {
 	string spawnType = "";
-	if (data.contains("type")) {
-		spawnType = data.at("type").get_string();
-	}
-
+	const char* trySpawnType = jstr(data, "type");
+	if (trySpawnType) spawnType = trySpawnType;
 	auto newGuy = handleTypeCreation(name, spawnType, data);
 	if (!newGuy) {
 		sgLogError("Could not load ui object properly for %s", name.c_str());
 		return newGuy;
 	}
-	if (data.contains("children")) {
-		auto& children = data.at("children").get_object();
-		for (auto& [childName, childObj] : children) {
-			auto newChild = handleUIArgs(childName, childObj);
-			if (!newChild) continue;
-			newGuy->AddChild(newChild);
-		}
-	}
+	auto children = jobj(data, "children");
+	if (!children) return newGuy;
+	jforeach_lambda(children, [&](const char* key, void* value) {
+		json_object* child = (json_object*)value;
+		auto newChild = handleUIArgs(key, child);
+		if (!newChild) return;
+		newGuy->AddChild(newChild);
+	});
 	return newGuy;
 }
 
@@ -118,14 +142,12 @@ std::unique_ptr<UIObject> UI::RootUIObject;
 
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
-	auto& entry = _cachedUIFiles[filename];
-	auto fullFileErrorContext = glz::read_file_jsonc(entry, filename, std::string{});
-	if (fullFileErrorContext) {
-		string buffer;
-		sgLogError("Error %d  parsing UI file %s, %s", fullFileErrorContext.ec, filename.c_str(), glz::format_error(fullFileErrorContext, buffer).c_str());
-		_cachedUIFiles.erase(filename);
+	auto obj = jGetObjectFromFile(filename.c_str());
+	if (!obj) {
+		sgLogError("Error parsing UI file %s ", filename.c_str());
 		return false;
 	}
+	_cachedUIFiles[filename] = obj;
 	return true;
 }
 
@@ -135,25 +157,24 @@ void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
 void UI::LoadUIFromFile(const string& filename) {
 	// Initialize the root object if needed
 	if (!RootUIObject) RootUIObject = make_unique<UIObject>();
-	glz::generic* fullUIFileGeneric;
 	// Check the cached files to avoid filesystem reads, and return if there is an error loading
 	if (!_cachedUIFiles.contains(filename)) {
 		if (!loadJsonFromFile(filename)) return;
 	}
-	fullUIFileGeneric = &_cachedUIFiles[filename];
+	auto fullUIFileGeneric = _cachedUIFiles[filename];
 	// Store list so we can remove everything else afterwards
 	vector<string> newPanelNames;
-	// Loop through the json object and load each panel in it.
-	for (auto& [panelName, panelObj] : fullUIFileGeneric->get_object()) {
-		newPanelNames.push_back(panelName);
-		if (RootUIObject->HasChildOfName(panelName)) {
-			sgLogDebug("Not creating panel, it already exists %s", panelName.c_str());
-			continue;
+	jforeach_lambda(fullUIFileGeneric, [&](const char* key, void* value) {
+		json_object* child = (json_object*)value;
+		newPanelNames.push_back(key);
+		if (RootUIObject->HasChildOfName(key)) {
+			sgLogDebug("Not creating panel, it already exists %s", key);
+			return;
 		}
-		auto topPanel = handleUIArgs(panelName, panelObj);
-		if (!topPanel) continue;
+		auto topPanel = handleUIArgs(key, child);
+		if (!topPanel) return;
 		RootUIObject->AddChild(topPanel);
-	}
+	});
 	RootUIObject->DestroyChildIfNotName(newPanelNames);
 }
 void UI::DrawUI() {

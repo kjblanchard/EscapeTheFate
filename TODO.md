@@ -6,8 +6,6 @@ Cpp game?
 
 ## Todos
 
-- Move to jsonc instead of what we use now. .. Lua and glaze.
-
 ### UI
 
 ### Bugs
@@ -32,4 +30,4 @@ Cpp game?
 - Add in a way for donotdestroy on uiobjects so they can persist
     : it's a var, no way to do it yet but not needed atm
     : but we probably should, cause the dialog box should be stored always?
-
+- Move to jsonc instead of what we use now. .. Lua and glaze.

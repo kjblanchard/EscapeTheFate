@@ -10,7 +10,6 @@
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
-#include <glaze/glaze.hpp>
 #include <ui/ui.hpp>
 
 namespace Etf {
