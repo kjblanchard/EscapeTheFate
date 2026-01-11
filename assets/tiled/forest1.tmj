@@ -269,19 +269,54 @@
  "nextobjectid":14,
  "orientation":"orthogonal",
  "renderorder":"right-down",
- "tiledversion":"1.8.6",
+ "tiledversion":"1.11.2",
  "tileheight":16,
  "tilesets":[
         {
+         "columns":39,
          "firstgid":1,
-         "source":"terrain.tsj"
+         "image":"..\/img\/terrain.png",
+         "imageheight":608,
+         "imagewidth":624,
+         "margin":0,
+         "name":"terrain",
+         "spacing":0,
+         "tilecount":1482,
+         "tileheight":16,
+         "tiles":[
+                {
+                 "animation":[
+                        {
+                         "duration":200,
+                         "tileid":165
+                        }, 
+                        {
+                         "duration":200,
+                         "tileid":166
+                        }, 
+                        {
+                         "duration":200,
+                         "tileid":167
+                        }],
+                 "id":165
+                }],
+         "tilewidth":16
         }, 
         {
+         "columns":52,
          "firstgid":1483,
-         "source":"outside.tsj"
+         "image":"..\/img\/outside.png",
+         "imageheight":384,
+         "imagewidth":832,
+         "margin":0,
+         "name":"outside",
+         "spacing":0,
+         "tilecount":1248,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
- "version":"1.8",
+ "version":"1.11",
  "width":32
 }

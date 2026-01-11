@@ -15,7 +15,7 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	_filename = args.Filename;
 	_color = args.DrawColor;
 	_texture = TextureCreate(_filename.c_str());
-	TextureLoadFromBmp(_texture, _filename.c_str());
+	TextureLoadFromPng(_texture, _filename.c_str());
 	_renderTargetTexture = TextureCreateRenderTarget(_location.w, _location.h);
 	int nineSliceImageW = TextureGetWidth(_texture);
 	int nineSliceImageH = TextureGetHeight(_texture);

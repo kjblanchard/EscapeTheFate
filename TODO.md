@@ -6,6 +6,8 @@ Cpp game?
 
 ## Todos
 
+- load png instead of bmp please.
+
 ### UI
 
 ### Bugs

@@ -234,7 +234,7 @@
         {
          "columns":39,
          "firstgid":1,
-         "image":"..\/img\/terrain-export.bmp",
+         "image":"..\/img\/terrain.png",
          "imageheight":608,
          "imagewidth":624,
          "margin":0,
@@ -259,13 +259,12 @@
                         }],
                  "id":165
                 }],
-         "tilewidth":16,
-         "transparentcolor":"#ff00ff"
+         "tilewidth":16
         }, 
         {
          "columns":52,
          "firstgid":1483,
-         "image":"..\/img\/outside-export.bmp",
+         "image":"..\/img\/outside.png",
          "imageheight":384,
          "imagewidth":832,
          "margin":0,
@@ -273,8 +272,7 @@
          "spacing":0,
          "tilecount":1248,
          "tileheight":16,
-         "tilewidth":16,
-         "transparentcolor":"#ff00ff"
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",

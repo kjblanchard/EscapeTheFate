@@ -13,7 +13,7 @@ UIImage::UIImage(UIImageArgs& args) {
 	_visible = args.Visible;
 	_color = args.DrawColor;
 	_texture = TextureCreate(_filename.c_str());
-	TextureLoadFromBmp(_texture, _filename.c_str());
+	TextureLoadFromPng(_texture, _filename.c_str());
 }
 
 UIImage::~UIImage() {

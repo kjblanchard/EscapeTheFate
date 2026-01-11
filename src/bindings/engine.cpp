@@ -66,7 +66,7 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, sgGameObject* parent, 
 	sprite->Parent = parent;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
-	TextureLoadFromBmp(sprite->Texture, name.c_str());
+	TextureLoadFromPng(sprite->Texture, name.c_str());
 	sprite->Shader = GetDefaultShader();
 	sprite->TextureSourceRect = sourceRect;
 	sprite->OffsetAndSizeRectF = offsetSizeRect;
