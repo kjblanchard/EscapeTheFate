@@ -40,7 +40,7 @@ void Engine::loadSceneInternal() {
 	GameObject::LoadAllGameObjects();
 	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
 	if (!sceneToLoad.UIName.empty()) {
-		UI::LoadUIFromFile(format("assets/ui/{}.jsonc", sceneToLoad.UIName));
+		UI::LoadUIFromFile(format("assets/ui/{}.json", sceneToLoad.UIName));
 	} else {
 		UI::RootUIObject->DestroyChildIfNotName("");
 	}

@@ -17,7 +17,7 @@ namespace Etf {
 static const int B = 27;
 
 void initialize() {
-	GameConfig::LoadGameConfig("./assets/config/gameConfig.jsonc");
+	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
