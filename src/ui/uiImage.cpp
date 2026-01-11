@@ -10,6 +10,7 @@ UIImage::UIImage(UIImageArgs& args) {
 	_sourceRect = args.SourceRect;
 	_scale = args.Scale;
 	_filename = args.Filename;
+	_visible = args.Visible;
 	_color = args.DrawColor;
 	_texture = TextureCreate(_filename.c_str());
 	TextureLoadFromBmp(_texture, _filename.c_str());

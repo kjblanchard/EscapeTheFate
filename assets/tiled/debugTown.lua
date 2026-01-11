@@ -1,5 +1,5 @@
 return {
-  version = "1.10",
+  version = "1.11",
   luaversion = "5.1",
   tiledversion = "1.11.2",
   class = "",
@@ -19,110 +19,17 @@ return {
     {
       name = "terrain",
       firstgid = 1,
-      class = "",
-      tilewidth = 16,
-      tileheight = 16,
-      spacing = 0,
-      margin = 0,
-      columns = 39,
-      image = "../img/terrain-export.bmp",
-      imagewidth = 624,
-      imageheight = 608,
-      transparentcolor = "#ff00ff",
-      objectalignment = "unspecified",
-      tilerendersize = "tile",
-      fillmode = "stretch",
-      tileoffset = {
-        x = 0,
-        y = 0
-      },
-      grid = {
-        orientation = "orthogonal",
-        width = 16,
-        height = 16
-      },
-      properties = {},
-      wangsets = {},
-      tilecount = 1482,
-      tiles = {
-        {
-          id = 165,
-          animation = {
-            {
-              tileid = 165,
-              duration = 200
-            },
-            {
-              tileid = 166,
-              duration = 200
-            },
-            {
-              tileid = 167,
-              duration = 200
-            }
-          }
-        }
-      }
+      filename = "terrain.tsj"
     },
     {
       name = "outside",
       firstgid = 1483,
-      class = "",
-      tilewidth = 16,
-      tileheight = 16,
-      spacing = 0,
-      margin = 0,
-      columns = 52,
-      image = "../img/outside-export.bmp",
-      imagewidth = 832,
-      imageheight = 384,
-      transparentcolor = "#ff00ff",
-      objectalignment = "unspecified",
-      tilerendersize = "tile",
-      fillmode = "stretch",
-      tileoffset = {
-        x = 0,
-        y = 0
-      },
-      grid = {
-        orientation = "orthogonal",
-        width = 16,
-        height = 16
-      },
-      properties = {},
-      wangsets = {},
-      tilecount = 1248,
-      tiles = {}
+      filename = "outside.tsj"
     },
     {
       name = "house",
       firstgid = 2731,
-      class = "",
-      tilewidth = 16,
-      tileheight = 16,
-      spacing = 0,
-      margin = 0,
-      columns = 69,
-      image = "../img/house-export.bmp",
-      imagewidth = 1104,
-      imageheight = 608,
-      transparentcolor = "#ff00ff",
-      objectalignment = "unspecified",
-      tilerendersize = "tile",
-      fillmode = "stretch",
-      tileoffset = {
-        x = 0,
-        y = 0
-      },
-      grid = {
-        orientation = "orthogonal",
-        width = 16,
-        height = 16
-      },
-      properties = {},
-      wangsets = {},
-      tilecount = 2622,
-      tiles = {}
+      filename = "house.tsj"
     }
   },
   layers = {
@@ -261,7 +168,7 @@ return {
       id = 3,
       name = "solid",
       class = "",
-      visible = true,
+      visible = false,
       opacity = 1,
       offsetx = 0,
       offsety = 0,

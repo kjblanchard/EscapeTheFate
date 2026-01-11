@@ -36,6 +36,10 @@ class UIObject {
 	bool HasChildOfName(const std::string& name);
 	// Do we have a child object with this name, or do we have a child that has it
 	bool HasChildOfNameInAllChildren(const std::string& name);
+	void DestroyChildByName(const std::string& name, bool force = false);
+	void DestroyChildByName(const std::vector<std::string> names, bool force = false);
+	void DestroyChildIfNotName(const std::string& name, bool force = false);
+	void DestroyChildIfNotName(const std::vector<std::string> names, bool force = false);
 
    protected:
 	// Will call OnDirty when dirty.

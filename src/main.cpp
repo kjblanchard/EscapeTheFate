@@ -21,7 +21,6 @@ void initialize() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
-	SetGlobalSfxVolume(_gameConfig.audio.sfxVolume);
 }
 
 void start() {

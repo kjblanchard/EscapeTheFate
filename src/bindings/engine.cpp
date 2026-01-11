@@ -41,6 +41,8 @@ void Engine::loadSceneInternal() {
 	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
 	if (!sceneToLoad.UIName.empty()) {
 		UI::LoadUIFromFile(format("assets/ui/{}.jsonc", sceneToLoad.UIName));
+	} else {
+		UI::RootUIObject->DestroyChildIfNotName("");
 	}
 	_nextScene = "";
 }

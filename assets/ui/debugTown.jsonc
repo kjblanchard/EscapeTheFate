@@ -5,6 +5,7 @@
 			"ImageTest": {
 				"type": "image",
 				"file": "interaction",
+				"visible": false,
 				"scale": 3.0,
 				"color": {"R": 255,"G": 255,"B": 255,"A":255},
 				"rect": {"x": 24, "y": 0, "w": 16, "h": 16},

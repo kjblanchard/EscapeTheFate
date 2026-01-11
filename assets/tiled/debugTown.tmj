@@ -1,12 +1,4 @@
 { "compressionlevel":-1,
- "editorsettings":
-    {
-     "export":
-        {
-         "format":"lua",
-         "target":"debugTown.lua"
-        }
-    },
  "height":18,
  "infinite":false,
  "layers":[
@@ -522,16 +514,63 @@
  "tileheight":16,
  "tilesets":[
         {
+         "columns":39,
          "firstgid":1,
-         "source":"terrain.tsj"
+         "image":"..\/img\/terrain-export.bmp",
+         "imageheight":608,
+         "imagewidth":624,
+         "margin":0,
+         "name":"terrain",
+         "spacing":0,
+         "tilecount":1482,
+         "tileheight":16,
+         "tiles":[
+                {
+                 "animation":[
+                        {
+                         "duration":200,
+                         "tileid":165
+                        }, 
+                        {
+                         "duration":200,
+                         "tileid":166
+                        }, 
+                        {
+                         "duration":200,
+                         "tileid":167
+                        }],
+                 "id":165
+                }],
+         "tilewidth":16,
+         "transparentcolor":"#ff00ff"
         }, 
         {
+         "columns":52,
          "firstgid":1483,
-         "source":"outside.tsj"
+         "image":"..\/img\/outside-export.bmp",
+         "imageheight":384,
+         "imagewidth":832,
+         "margin":0,
+         "name":"outside",
+         "spacing":0,
+         "tilecount":1248,
+         "tileheight":16,
+         "tilewidth":16,
+         "transparentcolor":"#ff00ff"
         }, 
         {
+         "columns":69,
          "firstgid":2731,
-         "source":"house.tsj"
+         "image":"..\/img\/house-export.bmp",
+         "imageheight":608,
+         "imagewidth":1104,
+         "margin":0,
+         "name":"house",
+         "spacing":0,
+         "tilecount":2622,
+         "tileheight":16,
+         "tilewidth":16,
+         "transparentcolor":"#ff00ff"
         }],
  "tilewidth":16,
  "type":"map",

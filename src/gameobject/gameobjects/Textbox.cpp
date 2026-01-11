@@ -14,7 +14,7 @@ using namespace std;
 void Textbox::Create(TiledObject* objData) {
 	auto textbox = make_shared<Textbox>(objData);
 	_gameObjects.push_back(textbox);
-	_interactables.push_back(textbox);	// implicit upcast works
+	_interactables.push_back(textbox);
 }
 
 Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {

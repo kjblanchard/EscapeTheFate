@@ -49,6 +49,7 @@ static UIObject* createUIObject(const std::string& name, const glz::generic& dat
 	objectArgs.Priority = data.contains("priority") ? data.at("priority").get_number() : 0;
 	objectArgs.Visible = data.contains("visible") ? data.at("priority").get_boolean() : true;
 	objectArgs.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
+	objectArgs.DoNotDestroy = data.contains("doNotDestroy") ? data.at("doNotDestroy").get_boolean() : false;
 	return new UIObject(objectArgs);
 }
 static UIImage* createImage(const string& name, const glz::generic& data) {
@@ -59,6 +60,7 @@ static UIImage* createImage(const string& name, const glz::generic& data) {
 	args.Filename = data.at("file").get_string();
 	args.Scale = data.at("scale").get_number();
 	args.DebugBox = data.contains("debug") ? data.at("debug").get_boolean() : false;
+	args.Visible = data.contains("visible") ? data.at("visible").get_boolean() : true;
 	return new UIImage(args);
 }
 
@@ -76,6 +78,7 @@ static UINineSlice* createNineSliceObject(const string& name, const glz::generic
 }
 
 static UIObject* handleTypeCreation(const string& name, const string& type, const glz::generic& data) {
+	sgLogDebug("Creating UI object of type %s", type.empty() ? "panel" : type.c_str());
 	if (type == "text") {
 		return createText(data);
 	} else if (type == "nineSlice") {
@@ -85,6 +88,7 @@ static UIObject* handleTypeCreation(const string& name, const string& type, cons
 	} else {
 		return createUIObject(name, data);
 	}
+	sgLogWarn("Could not create ui object %s, did not match anything", name.c_str());
 	return nullptr;
 }
 
@@ -93,7 +97,7 @@ static UIObject* handleUIArgs(const string& name, const glz::generic& data) {
 	if (data.contains("type")) {
 		spawnType = data.at("type").get_string();
 	}
-	sgLogDebug("Should create UI of type %s", spawnType.c_str());
+
 	auto newGuy = handleTypeCreation(name, spawnType, data);
 	if (!newGuy) {
 		sgLogError("Could not load ui object properly for %s", name.c_str());
@@ -115,7 +119,7 @@ std::unique_ptr<UIObject> UI::RootUIObject;
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
 	auto& entry = _cachedUIFiles[filename];
-	auto fullFileErrorContext = glz::read_file_json(entry, filename, std::string{});
+	auto fullFileErrorContext = glz::read_file_jsonc(entry, filename, std::string{});
 	if (fullFileErrorContext) {
 		string buffer;
 		sgLogError("Error %d  parsing UI file %s, %s", fullFileErrorContext.ec, filename.c_str(), glz::format_error(fullFileErrorContext, buffer).c_str());
@@ -123,6 +127,9 @@ static bool loadJsonFromFile(const string& filename) {
 		return false;
 	}
 	return true;
+}
+
+void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
 }
 
 void UI::LoadUIFromFile(const string& filename) {
@@ -134,17 +141,20 @@ void UI::LoadUIFromFile(const string& filename) {
 		if (!loadJsonFromFile(filename)) return;
 	}
 	fullUIFileGeneric = &_cachedUIFiles[filename];
+	// Store list so we can remove everything else afterwards
+	vector<string> newPanelNames;
+	// Loop through the json object and load each panel in it.
 	for (auto& [panelName, panelObj] : fullUIFileGeneric->get_object()) {
+		newPanelNames.push_back(panelName);
 		if (RootUIObject->HasChildOfName(panelName)) {
 			sgLogDebug("Not creating panel, it already exists %s", panelName.c_str());
 			continue;
 		}
-		if (panelObj.contains("children")) {
-			auto topPanel = handleUIArgs(panelName, panelObj);
-			if (!topPanel) continue;
-			RootUIObject->AddChild(topPanel);
-		}
+		auto topPanel = handleUIArgs(panelName, panelObj);
+		if (!topPanel) continue;
+		RootUIObject->AddChild(topPanel);
 	}
+	RootUIObject->DestroyChildIfNotName(newPanelNames);
 }
 void UI::DrawUI() {
 	RootUIObject->Draw(0, 0);

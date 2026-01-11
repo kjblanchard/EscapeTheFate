@@ -8,5 +8,8 @@ class UI {
 	static void DrawUI();
 	static void DestroyUI();
 	static std::unique_ptr<UIObject> RootUIObject;
+
+   private:
+	static void destroyOldUIPanelsIfNeeded(const std::string& newFile);
 };
 }  // namespace Etf

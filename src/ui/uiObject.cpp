@@ -1,4 +1,5 @@
 #include <Supergoon/Primitives/rectangle.h>
+#include <Supergoon/log.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -56,7 +57,9 @@ void UIObject::Dirty() {
 }
 
 void UIObject::Draw(float offsetX, float offsetY) {
-	OnDraw(offsetX, offsetY);
+	if (_visible) {
+		OnDraw(offsetX, offsetY);
+	}
 	for (auto& child : _children) {
 		child->Draw(offsetX + _location.x, offsetY + _location.y);
 	}
@@ -71,4 +74,27 @@ void UIObject::AddChild(UIObject* newChild) {
 	sort(_children.begin(), _children.end(), [](const auto& lhs, const auto& rhs) {
 		return lhs->_priority < rhs->_priority;
 	});
+}
+
+void UIObject::DestroyChildByName(const std::string& name, bool force) {
+	erase_if(_children, [&name, force](const auto& child) {
+		return force ? child->_name == name : child->_name == name && !child->_doNotDestroy;
+	});
+}
+
+void UIObject::DestroyChildByName(const std::vector<std::string> names, bool force) {
+	for (auto& name : names) {
+		DestroyChildByName(name, force);
+	}
+}
+void UIObject::DestroyChildIfNotName(const std::string& name, bool force) {
+	sgLogDebug("Trying to destsroy everything but %s", name.c_str());
+	erase_if(_children, [&name, force](const auto& child) {
+		return force ? child->_name != name : child->_name != name && !child->_doNotDestroy;
+	});
+}
+void UIObject::DestroyChildIfNotName(const std::vector<std::string> names, bool force) {
+	for (auto& name : names) {
+		DestroyChildIfNotName(name, force);
+	}
 }

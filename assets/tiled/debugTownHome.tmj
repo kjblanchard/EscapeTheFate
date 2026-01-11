@@ -298,15 +298,24 @@
          "value":"town2"
         }],
  "renderorder":"right-down",
- "tiledversion":"1.8.6",
+ "tiledversion":"1.11.2",
  "tileheight":16,
  "tilesets":[
         {
+         "columns":48,
          "firstgid":1,
-         "source":"inside.tsj"
+         "image":"..\/img\/inside-export.bmp",
+         "imageheight":560,
+         "imagewidth":768,
+         "margin":0,
+         "name":"inside",
+         "spacing":0,
+         "tilecount":1680,
+         "tileheight":16,
+         "tilewidth":16
         }],
  "tilewidth":16,
  "type":"map",
- "version":"1.8",
+ "version":"1.11",
  "width":16
 }
