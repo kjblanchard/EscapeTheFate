@@ -1,6 +1,7 @@
 #include <Supergoon/gameobject.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
+#include <algorithm>
 
 #include <gameobject/GameObject.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>

@@ -115,21 +115,21 @@ set(GLZ_ENABLE_BINARY 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_YAML 0 CACHE BOOL "" FORCE)
 set(GLZ_ENABLE_TOML 0 CACHE BOOL "" FORCE)
 
-if(SYSTEM_PACKAGES)
-  find_package(glaze)
-endif(SYSTEM_PACKAGES)
-if(NOT glaze_FOUND)
-  message(STATUS "Glaze not found. Fetching Glaze...")
-  FetchContent_Declare(
-    LIB_GLAZE
-    GIT_REPOSITORY https://github.com/stephenberry/glaze.git
-    GIT_TAG main
-    GIT_SHALLOW TRUE
-    EXCLUDE_FROM_ALL
-  )
-  FetchContent_MakeAvailable(LIB_GLAZE)
-endif(NOT glaze_FOUND)
-target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
+# if(SYSTEM_PACKAGES)
+#   find_package(glaze)
+# endif(SYSTEM_PACKAGES)
+# if(NOT glaze_FOUND)
+#   message(STATUS "Glaze not found. Fetching Glaze...")
+#   FetchContent_Declare(
+#     LIB_GLAZE
+#     GIT_REPOSITORY https://github.com/stephenberry/glaze.git
+#     GIT_TAG main
+#     GIT_SHALLOW TRUE
+#     EXCLUDE_FROM_ALL
+#   )
+#   FetchContent_MakeAvailable(LIB_GLAZE)
+# endif(NOT glaze_FOUND)
+# target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
 
 
 # Json lib, need to do this when building in github only
@@ -142,7 +142,6 @@ target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
 # )
 # FetchContent_MakeAvailable(glaze)
 
-target_precompile_headers(${EXECUTABLE_TARGET_NAME} PRIVATE src/pch.hpp)
 target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
 
 if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
@@ -157,7 +156,7 @@ if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   endif()
 endif()
 
-target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
+# target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE glaze::glaze)
 
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
 

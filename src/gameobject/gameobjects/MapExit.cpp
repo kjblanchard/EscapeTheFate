@@ -6,6 +6,7 @@
 #include <gameState.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
 #include <memory>
+#include <algorithm>
 
 #include "gameobject/GameObject.hpp"
 using namespace Etf;
@@ -18,7 +19,7 @@ void MapExit::Create(TiledObject* objData) {
 	_gameObjects.push_back(newMap);
 	_mapExits.push_back(newMap);
 	if (_mapExits.size() > 20) {
-		_mapExits.erase(std::remove_if(_mapExits.begin(), _mapExits.end(), [](auto const& w) {
+		_mapExits.erase(remove_if(_mapExits.begin(), _mapExits.end(), [](auto const& w) {
 							return w.expired();
 						}),
 						_mapExits.end());

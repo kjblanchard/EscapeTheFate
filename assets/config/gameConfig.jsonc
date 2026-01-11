@@ -35,6 +35,6 @@
     },
     "debug": {
         "interactions": false,
-        "mapExits": true
+        "mapExits": false
     }
 }
