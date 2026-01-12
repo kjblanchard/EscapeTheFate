@@ -5,7 +5,7 @@
 - Custom C engine [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
 - Play the game here, or likely watch its "progress"
-    [Play!](https://escapethefate.supergoon.com) 
+    [Play!](https://escapethefate.supergoon.com)
     ||  [Debug/Dev build](https://escapethefate-dev.supergoon.com)
 - ![Status Picture](https://github.com/kjblanchard/etf/blob/master/img/state.gif?raw=true)
 
@@ -18,7 +18,7 @@
 
 - Cross platform cmake
 - Package with cmake for installing on desktops
-- C/Cpp/Lua practice
+- C/Cpppractice
 - Learn OpenGL
 - Better with vim
 - Arch daily driver testing
