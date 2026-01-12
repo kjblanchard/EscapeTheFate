@@ -7,7 +7,7 @@
 struct Texture;
 namespace Etf {
 struct UIImageArgs {
-	std::string Filename;
+	std::string Filename, Name;
 	RectangleF Rect;
 	RectangleF SourceRect;
 	float Scale;

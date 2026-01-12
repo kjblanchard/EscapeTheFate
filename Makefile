@@ -1,4 +1,4 @@
-.PHONY: all configure build clean debug release aseprite
+.PHONY: all configure build clean debug release
 BUILD_DIR = build
 BINARY_FOLDER = bin
 EXECUTABLE_NAME = EscapeTheFate
@@ -19,17 +19,7 @@ PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
 # TODO Needed on the build step for ios, so that it can allow provisioning updates, need to put this in correctly
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
-# IOS_BUILD_COMMANDS ?= -- -allowProvisioningUpdates
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
-# Tiled Configuration
-# TILED_PATH = /Applications/Tiled.app/Contents/MacOS/Tiled
-TILED_PATH = tiled
-TILED_FOLDER_PATH = ./assets/tiled
-TILED_EXPORT_TILESETS = background terrain house inside
-TILED_EXPORT_MAPS = debugTown debugSouth cloud debugTownHome forest1
-# Aseprite
-ASEPRITE_DIR = assets/aseprite
-JSON_TO_LUA_SCRIPT = tools/jsontolua.py
 # default, should be used after a rebuild of some sort.
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
@@ -62,12 +52,7 @@ run:
 	@$(RUN_CMD)
 
 debug: build install
-	#@lldb -s breakpoints.lldb ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
-	# @lldb  ./build/bin/EscapeTheFate.app/Contents/MacOS/$(EXECUTABLE_NAME)
 	@gdb  $(RUN_CMD)
-
-debugl:
-	@LUA_DEBUGGING=1 $(MAKE) debug
 
 package:
 	$(PACKAGE_COMMAND)
@@ -103,31 +88,10 @@ irun:
 	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
-	#Helpers
-buildtime:
-	./tools/quick_build_times.py -C build
-trace:
-	./tools/ninja_trace.py build/.ninja_log > trace.json
-	# Upload trace to about:trace in chrome, or https://ui.perfetto.dev/
-bloaty:
-	dsymutil ./$(EXECUTABLE_NAME) -o SupergoonClient.dSYM
-	bloaty -d compileunits SupergoonClient --debug-file SupergoonClient.dSYM/Contents/Resources/DWARF/SupergoonClient
-valgrind:
-	valgrind --track-origins=yes --leak-check=yes --leak-resolution=low --show-leak-kinds=definite ./build/bin/$(EXECUTABLE_NAME) 2>&1 | tee memcheck.txt
-	# Exports the tilesets if we need to as lua files for tsx/tmx
-tiled:
-	@$(foreach file,$(TILED_EXPORT_MAPS),\
-		$(TILED_PATH) --export-map --detach-templates --embed-tilesets --resolve-types-and-properties lua $(TILED_FOLDER_PATH)/$(file).tmj $(TILED_FOLDER_PATH)/$(file).lua; \
-		)
-
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
 
-aseprite:
-	@echo "Converting Aseprite JSON files to Lua..."
-	@python3 $(JSON_TO_LUA_SCRIPT) --dir $(ASEPRITE_DIR)
-	@echo "Conversion complete."
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
 

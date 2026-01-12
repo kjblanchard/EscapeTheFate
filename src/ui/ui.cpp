@@ -63,6 +63,7 @@ static UIText* createText(const string& name, json_object* data) {
 	args.WordWrap = jbool(data, "wordWrap");
 	args.NumCharsToDraw = jint(data, "numCharsToDraw");
 	args.DebugBox = jbool(data, "debug");
+	args.Name = name;
 	return new UIText(args);
 }
 
@@ -86,6 +87,7 @@ static UIImage* createImage(const string& name, json_object* data) {
 	args.Scale = jfloat(data, "scale");
 	args.DebugBox = jbool(data, "debug");
 	args.Visible = jbool(data, "visible");
+	args.Name = name;
 	return new UIImage(args);
 }
 
@@ -99,6 +101,7 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	args.Xoffset = jint(data, "xOffset");
 	args.Yoffset = jint(data, "xOffset");
 	args.DebugBox = jbool(data, "debug");
+	args.Name = name;
 	return new UINineSlice(args);
 }
 

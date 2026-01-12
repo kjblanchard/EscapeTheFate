@@ -13,6 +13,7 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	_sourceRect = args.SourceRect;
 	_scale = args.Scale;
 	_filename = args.Filename;
+	_name = args.Name;
 	_color = args.DrawColor;
 	_texture = TextureCreate(_filename.c_str());
 	TextureLoadFromPng(_texture, _filename.c_str());

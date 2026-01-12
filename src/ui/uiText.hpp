@@ -10,7 +10,7 @@ struct UITextArgs {
 	std::string FontName;
 	unsigned int FontSize;
 	RectangleF Rect;
-	std::string TextToDraw;
+	std::string TextToDraw, Name;
 	int NumCharsToDraw;
 	bool CenteredX, CenteredY, WordWrap, Visible, DebugBox = false;
 };
@@ -19,6 +19,8 @@ class UIText : public UIObject {
 	UIText(UITextArgs& args);
 	~UIText();
 	void OnDraw(float offsetX, float offsetY) override final;
+	void UpdateText(const std::string& newText);
+	void UpdateTextNumLetters(unsigned int numLetters);
 
    private:
 	Text* _text;

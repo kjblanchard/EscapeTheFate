@@ -6,6 +6,7 @@
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
 
+#include <systems/dialogSystem.hpp>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
@@ -43,7 +44,8 @@ void draw() {
 
 void handleInput() {
 	if (IsKeyboardKeyJustPressed(B)) {
-		Engine::LoadScene();
+		// Engine::LoadScene();
+		DialogSystem::UpdateDialogText("Hi Misha");
 	}
 }
 

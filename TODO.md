@@ -6,8 +6,6 @@ Cpp game?
 
 ## Todos
 
-- load png instead of bmp please.
-
 ### UI
 
 ### Bugs
@@ -22,6 +20,7 @@ Cpp game?
 
 ## Completed
 
+- load png instead of bmp please.
 - Always creates the ui, need to actually load based on the scene loader
 - Do not create the UI if it already exists
 - Should we cache or always read the file?

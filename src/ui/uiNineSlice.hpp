@@ -7,7 +7,7 @@
 class Texture;
 namespace Etf {
 struct UINineSliceArgs {
-	std::string Filename;
+	std::string Filename, Name;
 	RectangleF Rect;
 	RectangleF SourceRect;
 	// Offset to use when making the nine slice, else it will be considered the center.
