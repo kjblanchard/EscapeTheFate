@@ -9,9 +9,13 @@ UIImage::UIImage(UIImageArgs& args) {
 	_location = args.Rect;
 	_sourceRect = args.SourceRect;
 	_scale = args.Scale;
-	_filename = args.Filename;
+	_filename = args.Filename + ".png";
 	_visible = args.Visible;
 	_color = args.DrawColor;
+	//Remove suffix if it ends with png already
+	// if (_filename.ends_with(".png")) {
+	// 	_filename.erase(_filename.size() - 4);
+	// }
 	_texture = TextureCreate(_filename.c_str());
 	TextureLoadFromPng(_texture, _filename.c_str());
 }

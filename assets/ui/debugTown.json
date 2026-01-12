@@ -15,7 +15,7 @@
 			},
 			"DialogBox": {
 				"type": "nineSlice",
-				"file": "uibase-export",
+				"file": "uibase",
 				"scale": 1.0,
 				"color": {"R": 80,"G": 0,"B": 120,"A":235},
 				"rect": {"x": 60, "y": 60, "w": 156, "h": 70},

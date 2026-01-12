@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "debugTown.tmj",
+    "activeFile": "debugSouth.tmj",
     "expandedProjectPaths": [
+        ".",
         "old-delete",
-        "templates",
-        "."
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -228,29 +228,22 @@
     "map.width": 30,
     "openFiles": [
         "debugTown.tmj",
-        "outside.tsj",
-        "terrain.tsj",
-        "inside.tsj",
-        "house.tsj",
-        "forest1.tmj",
-        "debugTownHome.tmj",
         "debugSouth.tmj",
-        "cloud.tsj",
-        "cloud.tmj"
+        "debugTownHome.tmj"
     ],
     "project": "goonRpg.tiled-project",
     "property.type": "string",
     "recentFiles": [
+        "debugTown.tmj",
+        "debugTownHome.tmj",
+        "debugSouth.tmj",
         "cloud.tmj",
         "cloud.tsj",
-        "debugSouth.tmj",
-        "debugTownHome.tmj",
         "forest1.tmj",
         "house.tsj",
         "inside.tsj",
         "terrain.tsj",
         "outside.tsj",
-        "debugTown.tmj",
         "old-delete/untitled.tmj",
         "old-delete/cloud.tsx"
     ],
