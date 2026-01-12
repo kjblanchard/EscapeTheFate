@@ -18,7 +18,7 @@
 
 - Cross platform cmake
 - Package with cmake for installing on desktops
-- C/Cpppractice
+- C/Cpp practice
 - Learn OpenGL
 - Better with vim
 - Arch daily driver testing
