@@ -5,6 +5,7 @@ struct GameState {
 	static float DeltaTimeSeconds;
 	static float DeltaTimeMilliseconds;
 	static unsigned int Ticks;
+	static bool InDialog;
 };
 
 }  // namespace Etf

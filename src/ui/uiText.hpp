@@ -19,7 +19,8 @@ class UIText : public UIObject {
 	UIText(UITextArgs& args);
 	~UIText();
 	void OnDraw(float offsetX, float offsetY) override final;
-	void UpdateText(const std::string& newText);
+	//If you leave numlettersTOdraw as default, it will draw the full thing
+	void UpdateText(const std::string& newText, int numLettersToDraw = -1);
 	void UpdateTextNumLetters(unsigned int numLetters);
 
    private:

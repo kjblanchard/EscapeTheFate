@@ -109,10 +109,12 @@ void Player::handleInteractions() {
 	_currentInteractable = interactable;
 	if (_currentInteractable && IsKeyboardKeyJustPressed(A)) {
 		_currentInteractable->Interact();
+		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
 	}
 }
 
 bool Player::handlePlayerMovement() {
+	if(GameState::InDialog) return false;
 	auto moved = false;
 	auto previousDirection = _direction;
 	auto velocityX = 0;

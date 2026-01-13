@@ -1,7 +1,7 @@
 #include <Supergoon/text.h>
 
-#include <cstring>
 #include <bindings/engine.hpp>
+#include <cstring>
 #include <ui/uiText.hpp>
 
 using namespace Etf;
@@ -21,12 +21,12 @@ void UIText::OnDraw(float offsetX, float offsetY) {
 	Engine::TextBoi::DrawText(_text, offsetY, offsetY);
 }
 
-void UIText::UpdateText(const string& newText) {
+void UIText::UpdateText(const string& newText, int numLettersToDraw) {
 	if (!_text || newText == string(_text->Text)) return;
 	if (_text->Texture) TextureDestroy(_text->Texture);
 	_text->Texture = NULL;
 	_text->Text = strdup(newText.c_str());
-	_text->NumLettersToDraw = newText.size();
+	_text->NumLettersToDraw = numLettersToDraw == -1 ? newText.size() : numLettersToDraw;
 	TextOnDirty(_text);
 }
 

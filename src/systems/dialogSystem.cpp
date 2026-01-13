@@ -3,6 +3,7 @@
 #include <Supergoon/log.h>
 
 #include <format>
+#include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
@@ -11,6 +12,8 @@
 
 using namespace Etf;
 using namespace std;
+
+static const float displayTimePerLetter = 0.05;
 
 enum class DialogBoxStates {
 	Unloaded,
@@ -22,12 +25,13 @@ enum class DialogBoxStates {
 };
 
 static DialogBoxStates _currentState = DialogBoxStates::Unloaded;
-// static unsigned int _currentDisplayedNumChars = 0;
 static string _currentText;
 static string _currentMap;
 static UIObject* _dialogBoxObject;
 static UIText* _dialogBoxTextObject;
 static Textbox* _currentTextbox = nullptr;
+static float _currentTimeOnLetter = 0;
+static unsigned int _currentDisplayedNumChars = 0;
 
 static unordered_map<string, json_object*> _loadedDialog;
 
@@ -36,7 +40,16 @@ static void updateDialogText(const std::string& newText, int lettersToDisplay) {
 		sgLogWarn("Could not update text properly, no textObject");
 		return;
 	}
-	_dialogBoxTextObject->UpdateText(newText);
+	sgLogWarn("Letters to display are %d", lettersToDisplay);
+	_dialogBoxTextObject->UpdateText(newText, lettersToDisplay);
+}
+
+static void updateDialogTextLetters(int lettersToDisplay) {
+	if (!_dialogBoxTextObject) {
+		sgLogWarn("Could not update text properly, no textObject");
+		return;
+	}
+	_dialogBoxTextObject->UpdateTextNumLetters(lettersToDisplay);
 }
 
 static void initializeDialogBox() {
@@ -66,17 +79,32 @@ static void startNewDialogInteraction(Textbox* textbox, const std::string& newTe
 	_currentText = string(jstrIndex(textArrayJson, 0));
 	_currentTextbox = textbox;
 	sgLogDebug("Updating dialog box: %s", newText.c_str());
-	updateDialogText(_currentText, _currentText.size());
+	updateDialogText(_currentText, 0);
 	_dialogBoxObject->SetVisible(true);
-	_currentState = DialogBoxStates::DisplayingFinished;
+	_currentDisplayedNumChars = 0;
+	GameState::InDialog = true;
+	_currentState = DialogBoxStates::DisplayingText;
 }
 
 static void finishCurrentInteraction() {
+	updateDialogTextLetters(_currentText.size());
+	_currentState = DialogBoxStates::DisplayingFinished;
 }
 
 static void closeCurrentInteraction() {
 	_dialogBoxObject->SetVisible(false);
 	_currentState = DialogBoxStates::Closed;
+	GameState::InDialog = false;
+}
+
+static void updateDisplayingTextCharacters() {
+	_currentTimeOnLetter += GameState::DeltaTimeSeconds;
+	while (_currentTimeOnLetter >= displayTimePerLetter) {
+		++_currentDisplayedNumChars;
+		_currentTimeOnLetter -= displayTimePerLetter;
+	}
+	updateDialogTextLetters(_currentDisplayedNumChars);
+	if (_currentDisplayedNumChars >= _currentText.size()) _currentState = DialogBoxStates::DisplayingFinished;
 }
 
 void DialogSystem::TextBoxInteractionUpdate(Textbox* textbox, const std::string& newText) {
@@ -114,11 +142,13 @@ void DialogSystem::UpdateDialogSystem() {
 		case DialogBoxStates::Unloaded:
 			initializeDialogBox();
 			return;
+		case DialogBoxStates::DisplayingText:
+			updateDisplayingTextCharacters();
+			break;
 		case DialogBoxStates::Closed:
-			return;
-
+			break;
 		default:
-			return;
+			break;
 	}
 }
 
