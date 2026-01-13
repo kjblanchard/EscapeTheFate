@@ -1,3 +1,4 @@
+#include <Supergoon/Tweening/easing.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
@@ -10,10 +11,17 @@
 #include <ui/uiText.hpp>
 #include <unordered_map>
 
+#include "bindings/engine.hpp"
+
 using namespace Etf;
 using namespace std;
 
+// Time in seconds each letter is displayed
 static const float displayTimePerLetter = 0.05;
+// Distance to move the dialog box when opening
+static const float animationOffset = 30.0f;
+static const float animationOpenTime = 1.0f;
+static const float animationCloseTime = 0.5f;
 
 enum class DialogBoxStates {
 	Unloaded,
@@ -32,6 +40,8 @@ static UIText* _dialogBoxTextObject;
 static Textbox* _currentTextbox = nullptr;
 static float _currentTimeOnLetter = 0;
 static unsigned int _currentDisplayedNumChars = 0;
+static float _currentAnimationTime = 0;
+static float _dialogBoxStartX, _dialogBoxStartY;
 
 static unordered_map<string, json_object*> _loadedDialog;
 
@@ -65,6 +75,8 @@ static void initializeDialogBox() {
 	}
 	_dialogBoxObject->SetVisible(false);
 	_currentState = DialogBoxStates::Closed;
+	_dialogBoxStartX = _dialogBoxObject->X();
+	_dialogBoxStartY = _dialogBoxObject->Y();
 }
 
 static void startNewDialogInteraction(Textbox* textbox, const std::string& newText) {
@@ -83,10 +95,12 @@ static void startNewDialogInteraction(Textbox* textbox, const std::string& newTe
 	_dialogBoxObject->SetVisible(true);
 	_currentDisplayedNumChars = 0;
 	GameState::InDialog = true;
-	_currentState = DialogBoxStates::DisplayingText;
+	_dialogBoxObject->SetX(_dialogBoxStartX - animationOffset);
+	_currentState = DialogBoxStates::AnimatingOpen;
 }
 
 static void finishCurrentInteraction() {
+	_dialogBoxObject->SetX(_dialogBoxStartX);
 	updateDialogTextLetters(_currentText.size());
 	_currentState = DialogBoxStates::DisplayingFinished;
 }
@@ -105,6 +119,16 @@ static void updateDisplayingTextCharacters() {
 	}
 	updateDialogTextLetters(_currentDisplayedNumChars);
 	if (_currentDisplayedNumChars >= _currentText.size()) _currentState = DialogBoxStates::DisplayingFinished;
+}
+
+static void openDialogBoxAnimation() {
+	_currentAnimationTime += GameState::DeltaTimeSeconds;
+	if (_currentAnimationTime > animationOpenTime) {
+		_dialogBoxObject->SetX(_dialogBoxStartX);
+		_currentState = DialogBoxStates::DisplayingText;
+	}
+	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX - animationOffset, _dialogBoxStartX, _currentAnimationTime, animationOpenTime);
+	_dialogBoxObject->SetX(newX);
 }
 
 void DialogSystem::TextBoxInteractionUpdate(Textbox* textbox, const std::string& newText) {
@@ -142,6 +166,8 @@ void DialogSystem::UpdateDialogSystem() {
 		case DialogBoxStates::Unloaded:
 			initializeDialogBox();
 			return;
+		case DialogBoxStates::AnimatingOpen:
+			openDialogBoxAnimation();
 		case DialogBoxStates::DisplayingText:
 			updateDisplayingTextCharacters();
 			break;

@@ -25,6 +25,10 @@ struct Engine {
 
 	} Animation;
 
+	struct Tweening {
+		static float GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds);
+	} Tweening;
+
 	struct TextBoi {
 		static Text* CreateText(const std::string& fontName, unsigned int fontSize, RectangleF location, const std::string& text, unsigned int numChars, bool centeredX, bool centeredY);
 		static void DrawText(Text* text, float xOffset, float yOffset);

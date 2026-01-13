@@ -5,8 +5,8 @@ Cpp game?
 ## In Progress
 
 - Dialog system needs to be completed
-    : Dialog should open when interacted, and progress properly.
-    : Handle multiple strings in a dialog
+    : Animation
+    : Handle multiple strings in a dialog, and use objects instead of the json
 - Better error handling / loading from json of these things
 
 ## Todos
@@ -14,6 +14,7 @@ Cpp game?
 ### UI
 
 - When do we clear dialog box cache?
+- Use gameconfig to handle the dialog box variables, instead of const
 
 ### Bugs
 
@@ -33,6 +34,7 @@ Cpp game?
     : Dialog Objects need to reference the strings somehow
     : When interacting, we should update the text properly
     : Dialog box doesn't clear properly sometimes
+    : Dialog should open when interacted, and progress properly.
 - load png instead of bmp please.
 - Always creates the ui, need to actually load based on the scene loader
 - Do not create the UI if it already exists

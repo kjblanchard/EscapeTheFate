@@ -7,13 +7,14 @@
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
-#include <systems/dialogSystem.hpp>
+#include <Supergoon/Tweening/easing.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <format>
 #include <gameConfig.hpp>
 #include <gameobject/GameObject.hpp>
+#include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
 using namespace Etf;
@@ -119,4 +120,13 @@ Text* Engine::TextBoi::CreateText(const std::string& fontName, unsigned int font
 
 void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset) {
 	TextDraw(text, xOffset, yOffset);
+}
+
+float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds) {
+	// float currentTimeSeconds = LuaGetFloati(L, 3);
+	// float totalTimeSeconds = LuaGetFloati(L, 4);
+	float progressPercent = geLinearInterpolation(timeSeconds / totalSeconds);
+	float progressValue = start + ((end - start) * progressPercent);
+	progressValue = progressValue > end ? end : progressValue;
+	return progressValue;
 }

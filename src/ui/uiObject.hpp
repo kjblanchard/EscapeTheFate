@@ -18,6 +18,10 @@ class UIObject {
    public:
 	UIObject(UIObjectArgs args);
 	UIObject() = default;
+	inline float X() {return _location.x;}
+	inline float Y() {return _location.y;}
+	inline void SetX(float x){_location.x = x;}
+	inline void SetY(float y){_location.y = y;}
 	// Gets the position on the screen currently, currently recursive call to root so can be expensive.
 	RectangleF GetAbsolutePosition();
 	// What to do when this is dirty, called before
