@@ -1,7 +1,7 @@
 {
-    "home": ["Mishas house, a cute girl lives here.", "Maybe you should check if she is home?"],
-    "flowersign": ["Check out all of Mishers flowers, they party!"],
-    "treesign": ["Welcome to the game.  This is the Debug Town.", "Various Tools are here to test things out."],
-    "fire": ["Cooking not implemented.... Will it ever be?"],
-    "sign1": ["Scary forest ahead, but you can't go there yet."]
+    "homeSign": ["Mishas house, a cute girl lives here.", "Maybe you should check if she is home?"],
+    "flowerSign": ["Check out all of Mishers flowers, they party!"],
+    "treeSign": ["Welcome to the game.  This is the Debug Town.", "Various Tools are here to test things out."],
+    "cooking": ["Cooking not implemented.... Will it ever be?"],
+    "forestSign": ["Scary forest ahead, but you can't go there yet."]
 }

@@ -1,15 +1,17 @@
 #pragma once
 #include <gameobject/GameObject.hpp>
 #include <interfaces/IInteractable.hpp>
-class TiledObject;
+struct TiledObject;
 namespace Etf {
-class Textbox: public GameObject, public IInteractable {
+class Textbox : public GameObject, public IInteractable {
    public:
 	static void Create(TiledObject* objData);
 	Textbox(TiledObject* objData);
-	// ~Textbox();
-    void Draw() override;
-    void Interact() override;
+	void Draw() override;
+	void Interact() override;
+
+   private:
+	std::string _textToWrite;
 };
 
 }  // namespace Etf

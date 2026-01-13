@@ -21,7 +21,7 @@ static const int UP = 26;
 static const int LEFT = 4;
 static const int DOWN = 22;
 static const int RIGHT = 7;
-// static const int A = 44;
+static const int A = 44;
 // static const int B = 27;
 static const RectangleF _collisionOffsetAndSizeRect = {8, 8, 16, 22};
 static const Point _interactionEastWestWidthHeight = {26, 8};
@@ -100,13 +100,16 @@ void Player::handleInteractions() {
 			break;
 		}
 	}
-
+	// Hide or show the interaction rect based off state
 	if (interactable && !_currentInteractable) {
 		Engine::SetSpriteVisible(_InteractionSprite, true);
 	} else if (!interactable && _currentInteractable) {
 		Engine::SetSpriteVisible(_InteractionSprite, false);
 	}
 	_currentInteractable = interactable;
+	if (_currentInteractable && IsKeyboardKeyJustPressed(A)) {
+		_currentInteractable->Interact();
+	}
 }
 
 bool Player::handlePlayerMovement() {

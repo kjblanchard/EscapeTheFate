@@ -7,6 +7,7 @@
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
+#include <systems/dialogSystem.hpp>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -44,6 +45,7 @@ void Engine::loadSceneInternal() {
 	} else {
 		UI::RootUIObject->DestroyChildIfNotName("");
 	}
+	DialogSystem::LoadDialogFromJsonFile(sceneToLoad.MapName);
 	_nextScene = "";
 }
 

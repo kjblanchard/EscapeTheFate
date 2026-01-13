@@ -2,11 +2,23 @@
 
 Cpp game?
 
+## Version Roadmap
+
+- 0.1.0: basic dialog with interactions, enter battle, can kill enemy, battle ended.
+
 ## In Progress
+
+- Dialog system needs to be completed
+    : Dialog should open when interacted, and progress properly.
+    : Handle multiple strings in a dialog
+- Dialog box doesn't clear properly sometimes
+- Better error handling / loading from json of these things
 
 ## Todos
 
 ### UI
+
+- When do we clear dialog box cache?
 
 ### Bugs
 
@@ -17,9 +29,14 @@ Cpp game?
 
 - More fields that can be optional to make it easier to write the jsonc file
     : not really needed right now
+- Animation system should use regular pointers and needs an overhaul, why use handles
+    : not needed right now, and works fine.
 
 ## Completed
 
+- Dialog system needs to be completed
+    : Dialog Objects need to reference the strings somehow
+    : When interacting, we should update the text properly
 - load png instead of bmp please.
 - Always creates the ui, need to actually load based on the scene loader
 - Do not create the UI if it already exists

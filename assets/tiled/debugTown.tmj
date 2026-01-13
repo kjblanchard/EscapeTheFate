@@ -410,12 +410,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"filename",
+                         "name":"name",
                          "type":"string",
-                         "value":"treesign"
+                         "value":"treeSign"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"5TextInteraction",
                  "visible":true,
                  "width":16,
                  "x":272,
@@ -427,12 +427,12 @@
                  "name":"ForestSign",
                  "properties":[
                         {
-                         "name":"filename",
+                         "name":"name",
                          "type":"string",
-                         "value":"sign1"
+                         "value":"forestSign"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"5TextInteraction",
                  "visible":true,
                  "width":16,
                  "x":48,
@@ -444,12 +444,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"filename",
+                         "name":"name",
                          "type":"string",
-                         "value":"home"
+                         "value":"homeSign"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"5TextInteraction",
                  "visible":true,
                  "width":16,
                  "x":400,
@@ -461,12 +461,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"filename",
+                         "name":"name",
                          "type":"string",
-                         "value":"fire"
+                         "value":"cooking"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"5TextInteraction",
                  "visible":true,
                  "width":43.3117440499415,
                  "x":48,
@@ -478,12 +478,12 @@
                  "name":"Sign",
                  "properties":[
                         {
-                         "name":"filename",
+                         "name":"name",
                          "type":"string",
-                         "value":"flowersign"
+                         "value":"flowerSign"
                         }],
                  "rotation":0,
-                 "type":"5TextInteract",
+                 "type":"5TextInteraction",
                  "visible":true,
                  "width":48,
                  "x":528,
