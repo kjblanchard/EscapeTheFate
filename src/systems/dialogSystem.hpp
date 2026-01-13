@@ -7,16 +7,14 @@ namespace Etf {
 	class Textbox;
 class DialogSystem {
 	public:
+		//If a interaction is started that needs dialog box, please send it here
 		static void TextBoxInteractionUpdate(Textbox* textbox, const std::string& newText);
-		static void UpdateDialogText(const std::string& newText, int lettersToDisplay = 0);
+		//Loads all the dialog from a file, so it can be referenced.  Caches it
 		static void LoadDialogFromJsonFile(const std::string& filename);
-
-	private:
-		static std::string _currentText;
-		static std::string _currentMap;
-		static Textbox* _currentTextbox;
-		static UIObject* _dialogBoxObject;
-		static UIText* _dialogBoxTextObject;
+		//Updates the dialog system so it animates and draws the characters properly
+		static void UpdateDialogSystem();
+		//Clears up everything.
+		static void ShutdownDialogSystem();
 };
 
 

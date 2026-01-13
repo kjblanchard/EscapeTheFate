@@ -12,15 +12,34 @@
 using namespace Etf;
 using namespace std;
 
-string DialogSystem::_currentText;
-std::string DialogSystem::_currentMap;
-UIObject* DialogSystem::_dialogBoxObject;
-UIText* DialogSystem::_dialogBoxTextObject;
-Textbox* DialogSystem::_currentTextbox = nullptr;
+enum class DialogBoxStates {
+	Unloaded,
+	Closed,
+	AnimatingOpen,
+	DisplayingText,
+	DisplayingFinished,
+	AnimatingClosed,
+};
+
+static DialogBoxStates _currentState = DialogBoxStates::Unloaded;
+// static unsigned int _currentDisplayedNumChars = 0;
+static string _currentText;
+static string _currentMap;
+static UIObject* _dialogBoxObject;
+static UIText* _dialogBoxTextObject;
+static Textbox* _currentTextbox = nullptr;
 
 static unordered_map<string, json_object*> _loadedDialog;
 
-void DialogSystem::UpdateDialogText(const std::string& newText, int lettersToDisplay) {
+static void updateDialogText(const std::string& newText, int lettersToDisplay) {
+	if (!_dialogBoxTextObject) {
+		sgLogWarn("Could not update text properly, no textObject");
+		return;
+	}
+	_dialogBoxTextObject->UpdateText(newText);
+}
+
+static void initializeDialogBox() {
 	if (!_dialogBoxObject) {
 		_dialogBoxObject = UI::RootUIObject->GetChildByName("DialogBox");
 	}
@@ -28,27 +47,53 @@ void DialogSystem::UpdateDialogText(const std::string& newText, int lettersToDis
 		_dialogBoxTextObject = (UIText*)_dialogBoxObject->GetChildByName("DialogBoxText");
 	}
 	if (!_dialogBoxObject || !_dialogBoxTextObject) {
-		sgLogWarn("Not updating dialog box, could not find dialog box or text");
+		sgLogWarn("Could not initialize dialog box, no ui object found properly");
 		return;
 	}
-	_dialogBoxTextObject->UpdateText(newText);
+	_dialogBoxObject->SetVisible(false);
+	_currentState = DialogBoxStates::Closed;
 }
 
-void DialogSystem::TextBoxInteractionUpdate(Textbox* textbox, const std::string& newText) {
+static void startNewDialogInteraction(Textbox* textbox, const std::string& newText) {
 	if (_loadedDialog.find(_currentMap) == _loadedDialog.end()) {
 		sgLogError("Map dialog not loaded for some reason");
 		return;
 	}
 	auto textJson = _loadedDialog[_currentMap];
-	if(!textJson) return;
-	sgLogWarn("Trying to get json object with %s", newText.c_str());
-
+	if (!textJson) return;
 	auto textArrayJson = jobj(textJson, newText.c_str());
-	if(!textArrayJson) sgLogCritical("Bad thing2");
+	if (!textArrayJson) sgLogCritical("Bad thing2");
 	_currentText = string(jstrIndex(textArrayJson, 0));
 	_currentTextbox = textbox;
-	sgLogDebug("Updating dialog box text to be %s", _currentText.c_str());
-	UpdateDialogText(_currentText, _currentText.size());
+	sgLogDebug("Updating dialog box: %s", newText.c_str());
+	updateDialogText(_currentText, _currentText.size());
+	_dialogBoxObject->SetVisible(true);
+	_currentState = DialogBoxStates::DisplayingFinished;
+}
+
+static void finishCurrentInteraction() {
+}
+
+static void closeCurrentInteraction() {
+	_dialogBoxObject->SetVisible(false);
+	_currentState = DialogBoxStates::Closed;
+}
+
+void DialogSystem::TextBoxInteractionUpdate(Textbox* textbox, const std::string& newText) {
+	switch (_currentState) {
+		case DialogBoxStates::Closed:
+			startNewDialogInteraction(textbox, newText);
+			break;
+		case DialogBoxStates::AnimatingOpen:
+		case DialogBoxStates::DisplayingText:
+			finishCurrentInteraction();
+			break;
+		case DialogBoxStates::DisplayingFinished:
+			closeCurrentInteraction();
+		default:
+			break;
+	}
+	return;
 }
 
 void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
@@ -62,4 +107,24 @@ void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 		return;
 	}
 	_loadedDialog[filename] = newDialog;
+}
+
+void DialogSystem::UpdateDialogSystem() {
+	switch (_currentState) {
+		case DialogBoxStates::Unloaded:
+			initializeDialogBox();
+			return;
+		case DialogBoxStates::Closed:
+			return;
+
+		default:
+			return;
+	}
+}
+
+void DialogSystem::ShutdownDialogSystem() {
+	for (auto& [key, value] : _loadedDialog) {
+		jReleaseObjectFromFile(value);
+	}
+	_loadedDialog.clear();
 }

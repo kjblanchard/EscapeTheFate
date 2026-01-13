@@ -72,7 +72,7 @@ static UIObject* createUIObject(const std::string& name, json_object* data) {
 	objectArgs.Rect = getRectFromField(data, "rect");
 	objectArgs.Name = name;
 	objectArgs.Priority = jint(data, "priority");
-	objectArgs.Visible = jbool(data, "visible");
+	objectArgs.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
 	objectArgs.DebugBox = jbool(data, "debug");
 	objectArgs.DoNotDestroy = jbool(data, "doNotDestroy");
 	return new UIObject(objectArgs);

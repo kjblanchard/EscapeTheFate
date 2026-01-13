@@ -6,15 +6,15 @@
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
 
-#include <systems/dialogSystem.hpp>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
 namespace Etf {
-static const int B = 27;
+// static const int B = 27;
 
 void initialize() {
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
@@ -35,6 +35,7 @@ void update() {
 	GameState::Ticks = Ticks;
 	Engine::HandleMapLoad();
 	GameObject::UpdateGameObjects();
+	DialogSystem::UpdateDialogSystem();
 }
 
 void draw() {
@@ -43,15 +44,16 @@ void draw() {
 }
 
 void handleInput() {
-	if (IsKeyboardKeyJustPressed(B)) {
-		// Engine::LoadScene();
-		DialogSystem::UpdateDialogText("Hi Misha");
-	}
+	// if (IsKeyboardKeyJustPressed(B)) {
+	// Engine::LoadScene();
+	// DialogSystem::UpdateDialogText("Hi Misha");
+	// }
 }
 
 void quit() {
 	GameObject::DestroyAllGameObjects();
 	UI::DestroyUI();
+	DialogSystem::ShutdownDialogSystem();
 }
 }  // namespace Etf
 

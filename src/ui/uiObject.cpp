@@ -57,9 +57,11 @@ void UIObject::Dirty() {
 }
 
 void UIObject::Draw(float offsetX, float offsetY) {
-	if (_visible) {
-		OnDraw(offsetX, offsetY);
+	if (!_visible) {
+		return;
 	}
+
+	OnDraw(offsetX, offsetY);
 	for (auto& child : _children) {
 		child->Draw(offsetX + _location.x, offsetY + _location.y);
 	}
