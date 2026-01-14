@@ -12,6 +12,7 @@ struct UITextArgs {
 	RectangleF Rect;
 	std::string TextToDraw, Name;
 	int NumCharsToDraw;
+	int Priority;
 	bool CenteredX, CenteredY, WordWrap, Visible, DebugBox = false;
 };
 class UIText : public UIObject {

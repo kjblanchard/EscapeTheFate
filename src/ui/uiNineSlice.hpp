@@ -11,9 +11,10 @@ struct UINineSliceArgs {
 	RectangleF Rect;
 	RectangleF SourceRect;
 	// Offset to use when making the nine slice, else it will be considered the center.
-float Xoffset, Yoffset;
+	float Xoffset, Yoffset;
 	float Scale;
 	Color DrawColor;
+	int Priority;
 	bool Visible, DebugBox = false;
 };
 class UINineSlice : public UIObject {

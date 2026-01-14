@@ -12,6 +12,8 @@ struct UIImageArgs {
 	RectangleF SourceRect;
 	float Scale;
 	Color DrawColor;
+	int Priority;
+
 	bool Visible, DebugBox = false;
 };
 class UIImage : public UIObject {

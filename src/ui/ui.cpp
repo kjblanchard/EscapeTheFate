@@ -43,6 +43,7 @@ static UIText* createText(const string& name, json_object* data) {
 	args.FontSize = jint(data, "fontSize");
 	args.Rect = getRectFromField(data, "rect");
 	args.TextToDraw = jstr(data, "text");
+	args.Priority = jint(data, "priority");
 	args.CenteredX = jbool(data, "centeredX");
 	args.CenteredY = jbool(data, "centeredY");
 	args.WordWrap = jbool(data, "wordWrap");
@@ -68,6 +69,7 @@ static UIImage* createImage(const string& name, json_object* data) {
 	args.Rect = getRectFromField(data, "rect");
 	args.SourceRect = getRectFromField(data, "srcRect");
 	args.DrawColor = getColorFromField(data, "color");
+	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
 	args.Scale = jfloat(data, "scale");
 	args.DebugBox = jbool(data, "debug");
@@ -81,6 +83,7 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	args.Rect = getRectFromField(data, "rect");
 	args.SourceRect = getRectFromField(data, "srcRect");
 	args.DrawColor = getColorFromField(data, "color");
+	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
 	args.Scale = jint(data, "scale");
 	args.Xoffset = jint(data, "xOffset");

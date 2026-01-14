@@ -4,13 +4,12 @@ Cpp game?
 
 ## In Progress
 
-- enter battle
+- battle UI
 
 ## Todos
 
 ### Battle
 
-- battle UI
 - load battlers
 - move selection and fingers around
 
@@ -33,6 +32,7 @@ Cpp game?
 
 ## Completed
 
+- enter battle
 - Handle different tweening types in engine.cpp
     : right now hardcoded to quint
 - When do we clear dialog box cache?

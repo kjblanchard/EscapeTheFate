@@ -1,3 +1,4 @@
+#include <Supergoon/log.h>
 #include <Supergoon/text.h>
 
 #include <bindings/engine.hpp>
@@ -11,6 +12,7 @@ UIText::UIText(UITextArgs& args) {
 	_location = args.Rect;
 	_debugBox = args.DebugBox;
 	_name = args.Name;
+	_priority = args.Priority;
 	_text = Engine::TextBoi::CreateText(args.FontName, args.FontSize, args.Rect, args.TextToDraw, args.NumCharsToDraw, args.CenteredX, args.CenteredY);
 }
 
@@ -19,7 +21,7 @@ UIText::~UIText() {
 }
 
 void UIText::OnDraw(float offsetX, float offsetY) {
-	Engine::TextBoi::DrawText(_text, offsetY, offsetY);
+	Engine::TextBoi::DrawText(_text, offsetX, offsetY);
 }
 
 void UIText::UpdateText(const string& newText, int numLettersToDraw) {

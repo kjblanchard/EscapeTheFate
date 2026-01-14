@@ -2,47 +2,146 @@
     "BattlePanel": {
         "doNotDestroy": true,
         "children": {
-			"Finger": {
-				"type": "image",
-				"file": "fingers",
-				"visible": true,
-				"scale": 2.0,
-				"color": {"R": 255,"G": 255,"B": 255,"A":255},
-				"rect": {"x": 350, "y": 48, "w": 16, "h": 16},
-				"srcRect": {"x": 16, "y": 32, "w": 16, "h": 16},
-				"camera": false,
-				"priority": 1
-			},
-            "CommandsNineSlice": {
-				"type": "nineSlice",
-				"file": "uibase",
-				"scale": 1.0,
-				"color": {"R": 80,"G": 0,"B": 120,"A":235},
-				"rect": {"x": 330, "y": 40, "w": 72, "h": 72},
-				"srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
-				"camera": false,
-				"priority": 1,
-				"xOffset": 8,
-				"yOffset": 9,
-				"children": {
-                    "CommandsOffsetBox": {
-                        "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+            "Player1CommandsUI": {
+				"rect": {"x": 365, "y": 30, "w": 72, "h": 72},
+                "children":{
+                    "Finger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": true,
+                        "scale": 1.0,
+                        "color": {"R": 255,"G": 255,"B": 255,"A":255},
+                        "rect": {"x": -8, "y": 8, "w": 16, "h": 16},
+                        "srcRect": {"x": 16, "y": 48, "w": 16, "h": 16},
+                        "camera": false,
+                        "priority": 3
+                    },
+                    "CommandsNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "scale": 1.0,
+                        "color": {"R": 80,"G": 0,"B": 120,"A":235},
+                        "rect": {"x": 0, "y": 0, "w": 72, "h": 72},
+                        "srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+                        "camera": false,
+                        "priority": 2,
+                        "xOffset": 8,
+                        "yOffset": 9,
                         "children": {
-                            "AttackText":{
-                                "debug": true,
-                                "type": "text",
-                                "font": "PressStart2P",
-                                "fontSize": 8,
-                                "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
-                                "text": "Attack",
-                                "centeredX": true,
-                                "centeredY": true,
-                                "numCharsToDraw": 100
+                            "CommandsOffsetBox": {
+                                "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+                                "children": {
+                                    "AttackText":{
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "text": "Attack",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Player2CommandsUI": {
+                "visible": false,
+				"rect": {"x": 365, "y": 112, "w": 72, "h": 72},
+                "debug": true,
+                "children":{
+                    "Finger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": true,
+                        "scale": 1.0,
+                        "color": {"R": 255,"G": 255,"B": 255,"A":255},
+                        "rect": {"x": -8, "y": 8, "w": 16, "h": 16},
+                        "srcRect": {"x": 16, "y": 48, "w": 16, "h": 16},
+                        "camera": false,
+                        "priority": 3
+                    },
+                    "CommandsNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "scale": 1.0,
+                        "color": {"R": 80,"G": 0,"B": 120,"A":235},
+                        "rect": {"x": 0, "y": 0, "w": 72, "h": 72},
+                        "srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+                        "camera": false,
+                        "priority": 2,
+                        "xOffset": 8,
+                        "yOffset": 9,
+                        "children": {
+                            "CommandsOffsetBox": {
+                                "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+                                "children": {
+                                    "AttackText":{
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "text": "Attack",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Player3CommandsUI":{
+                "visible": false,
+				"rect": {"x": 365, "y": 194, "w": 72, "h": 72},
+                "debug": true,
+                "children":{
+                    "Finger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": true,
+                        "scale": 1.0,
+                        "color": {"R": 255,"G": 255,"B": 255,"A":255},
+                        "rect": {"x": -8, "y": 8, "w": 16, "h": 16},
+                        "srcRect": {"x": 16, "y": 48, "w": 16, "h": 16},
+                        "camera": false,
+                        "priority": 3
+                    },
+                    "CommandsNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "scale": 1.0,
+                        "color": {"R": 80,"G": 0,"B": 120,"A":235},
+                        "rect": {"x": 0, "y": 0, "w": 72, "h": 72},
+                        "srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+                        "camera": false,
+                        "priority": 2,
+                        "xOffset": 8,
+                        "yOffset": 9,
+                        "children": {
+                            "CommandsOffsetBox": {
+                                "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+                                "children": {
+                                    "AttackText":{
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "text": "Attack",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
+
         }
     }
 }

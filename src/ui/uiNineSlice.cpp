@@ -13,6 +13,7 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	_sourceRect = args.SourceRect;
 	_scale = args.Scale;
 	_filename = args.Filename;
+	_priority = args.Priority;
 	_name = args.Name;
 	_debugBox = args.DebugBox;
 	_color = args.DrawColor;
@@ -78,5 +79,6 @@ UINineSlice::~UINineSlice() {
 
 void UINineSlice::OnDraw(float offsetX, float offsetY) {
 	Color color = {255, 255, 255, 255};
-	DrawTexture(_renderTargetTexture, GetDefaultShader(), &_location, &_sourceRect, false, _scale, false, &color);
+	RectangleF dst = {_location.x + offsetX, _location.y + offsetY, _location.w, _location.h};
+	DrawTexture(_renderTargetTexture, GetDefaultShader(), &dst, &_sourceRect, false, _scale, false, &color);
 }

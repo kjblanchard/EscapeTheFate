@@ -12,6 +12,7 @@ UIImage::UIImage(UIImageArgs& args) {
 	_name = args.Name;
 	_filename = args.Filename; 
 	_visible = args.Visible;
+	_priority = args.Priority;
 	_color = args.DrawColor;
 	_debugBox = args.DebugBox;
 	_texture = TextureCreate(_filename.c_str());
@@ -23,5 +24,6 @@ UIImage::~UIImage() {
 }
 
 void UIImage::OnDraw(float offsetX, float offsetY) {
-	DrawTexture(_texture, GetDefaultShader(), &_location, &_sourceRect, false, _scale, false, &_color);
+	RectangleF dst = {_location.x + offsetX, _location.y + offsetY, _location.w, _location.h};
+	DrawTexture(_texture, GetDefaultShader(), &dst, &_sourceRect, false, _scale, false, &_color);
 }
