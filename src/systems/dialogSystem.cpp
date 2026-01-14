@@ -19,9 +19,9 @@ using namespace std;
 // Time in seconds each letter is displayed
 static const float displayTimePerLetter = 0.05;
 // Distance to move the dialog box when opening
-static const float animationOffset = 30.0f;
-static const float animationOpenTime = 1.0f;
-static const float animationCloseTime = 0.5f;
+static const float animationOffset = 240.0f;
+static const float animationOpenTime = 0.45f;
+static const float animationCloseTime = 0.45;
 
 enum class DialogBoxStates {
 	Unloaded,
@@ -50,8 +50,8 @@ static void updateDialogText(const std::string& newText, int lettersToDisplay) {
 		sgLogWarn("Could not update text properly, no textObject");
 		return;
 	}
-	sgLogWarn("Letters to display are %d", lettersToDisplay);
 	_dialogBoxTextObject->UpdateText(newText, lettersToDisplay);
+	_dialogBoxTextObject->UpdateTextNumLetters(lettersToDisplay);
 }
 
 static void updateDialogTextLetters(int lettersToDisplay) {
@@ -92,22 +92,27 @@ static void startNewDialogInteraction(Textbox* textbox, const std::string& newTe
 	_currentTextbox = textbox;
 	sgLogDebug("Updating dialog box: %s", newText.c_str());
 	updateDialogText(_currentText, 0);
+	_dialogBoxTextObject->SetVisible(false);
 	_dialogBoxObject->SetVisible(true);
 	_currentDisplayedNumChars = 0;
+	_currentAnimationTime = 0;
 	GameState::InDialog = true;
 	_dialogBoxObject->SetX(_dialogBoxStartX - animationOffset);
 	_currentState = DialogBoxStates::AnimatingOpen;
+	_currentTimeOnLetter = 0;
 }
 
 static void finishCurrentInteraction() {
+	_dialogBoxTextObject->SetVisible(true);
+	_currentAnimationTime = 0;
 	_dialogBoxObject->SetX(_dialogBoxStartX);
 	updateDialogTextLetters(_currentText.size());
 	_currentState = DialogBoxStates::DisplayingFinished;
 }
 
 static void closeCurrentInteraction() {
-	_dialogBoxObject->SetVisible(false);
-	_currentState = DialogBoxStates::Closed;
+	_dialogBoxTextObject->SetVisible(false);
+	_currentState = DialogBoxStates::AnimatingClosed;
 	GameState::InDialog = false;
 }
 
@@ -121,27 +126,45 @@ static void updateDisplayingTextCharacters() {
 	if (_currentDisplayedNumChars >= _currentText.size()) _currentState = DialogBoxStates::DisplayingFinished;
 }
 
-static void openDialogBoxAnimation() {
+static void updateOpenDialogBoxAnimation() {
 	_currentAnimationTime += GameState::DeltaTimeSeconds;
 	if (_currentAnimationTime > animationOpenTime) {
 		_dialogBoxObject->SetX(_dialogBoxStartX);
+		_dialogBoxTextObject->SetVisible(true);
+		_currentAnimationTime = 0.0f;
 		_currentState = DialogBoxStates::DisplayingText;
+		return;
 	}
 	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX - animationOffset, _dialogBoxStartX, _currentAnimationTime, animationOpenTime);
 	_dialogBoxObject->SetX(newX);
 }
 
+static void updateCloseDialogBoxAnimation() {
+	_currentAnimationTime += GameState::DeltaTimeSeconds;
+	if (_currentAnimationTime > animationCloseTime) {
+		_dialogBoxObject->SetX(_dialogBoxStartX - animationOffset);
+		_dialogBoxObject->SetVisible(false);
+		_currentState = DialogBoxStates::Closed;
+		return;
+	}
+	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX, _dialogBoxStartX - animationOffset, _currentAnimationTime, animationCloseTime);
+	_dialogBoxObject->SetX(newX);
+}
+
 void DialogSystem::TextBoxInteractionUpdate(Textbox* textbox, const std::string& newText) {
 	switch (_currentState) {
+		// Initialize the text if the dialog box is fully closed
 		case DialogBoxStates::Closed:
 			startNewDialogInteraction(textbox, newText);
 			break;
+		// If player interacts when it is opening or displaying, finish animation and also update the text
 		case DialogBoxStates::AnimatingOpen:
 		case DialogBoxStates::DisplayingText:
 			finishCurrentInteraction();
 			break;
 		case DialogBoxStates::DisplayingFinished:
 			closeCurrentInteraction();
+		case DialogBoxStates::AnimatingClosed:
 		default:
 			break;
 	}
@@ -167,10 +190,13 @@ void DialogSystem::UpdateDialogSystem() {
 			initializeDialogBox();
 			return;
 		case DialogBoxStates::AnimatingOpen:
-			openDialogBoxAnimation();
+			updateOpenDialogBoxAnimation();
+			break;
 		case DialogBoxStates::DisplayingText:
 			updateDisplayingTextCharacters();
 			break;
+		case DialogBoxStates::AnimatingClosed:
+			updateCloseDialogBoxAnimation();
 		case DialogBoxStates::Closed:
 			break;
 		default:

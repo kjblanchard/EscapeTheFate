@@ -125,8 +125,11 @@ void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset) {
 float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds) {
 	// float currentTimeSeconds = LuaGetFloati(L, 3);
 	// float totalTimeSeconds = LuaGetFloati(L, 4);
-	float progressPercent = geLinearInterpolation(timeSeconds / totalSeconds);
+	// float progressPercent = geLinearInterpolation(timeSeconds / totalSeconds);
+	float progressPercent = geQuinticEaseOut(timeSeconds / totalSeconds);
+	// float progressPercent = geQuinticEaseOut(timeSeconds / totalSeconds);
 	float progressValue = start + ((end - start) * progressPercent);
-	progressValue = progressValue > end ? end : progressValue;
+	//clamp to edges
+	if (start < end) progressValue = std::min(progressValue, end); else progressValue = std::max(progressValue, end);
 	return progressValue;
 }
