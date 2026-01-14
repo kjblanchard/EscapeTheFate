@@ -17,6 +17,13 @@ struct Engine {
 	static void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
 	static void HandleMapLoad();
 
+	struct Audio {
+
+		static void PlayBGMBackground(const std::string& name, float volume = 1.0f);
+		static void StopBGMBackground();
+
+	} Audio;
+
 	struct Animation {
 		static unsigned int CreateAnimatorFull(const std::string& name, Sprite* sprite);
 		static void StartAnimatorAnimation(unsigned int animator, const char*, float animSpeed = 1.0);
@@ -34,6 +41,24 @@ struct Engine {
 		static void DrawText(Text* text, float xOffset, float yOffset);
 	} Textboi;
 
+	struct Json {
+		template <typename Lambda>
+		static void jforeach_lambda(void* obj, Lambda&& lambda) {
+			struct Wrapper {
+				Lambda* fn;
+			};
+			Wrapper wrapper{&lambda};
+
+			jforeach_obj(
+				obj,
+				[](const char* key, void* value, void* userData) {
+					auto* w = static_cast<Wrapper*>(userData);
+					(*w->fn)(key, value);
+				},
+				&wrapper);
+		}
+	};
+
 	// function engine.Collision.CheckForCollision(a, b)
 	// return a.x < b.x + b.w and
 	// a.x + a.w > b.x and
@@ -50,4 +75,5 @@ struct Engine {
 	static void LoadAndPlayBGM(const std::string& name, float volume);
 	static void loadSceneInternal();
 };
+
 }  // namespace Etf

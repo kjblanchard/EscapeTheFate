@@ -3,11 +3,11 @@
 #include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
+#include <Supergoon/Tweening/easing.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
-#include <Supergoon/Tweening/easing.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -123,13 +123,23 @@ void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset) {
 }
 
 float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds) {
-	// float currentTimeSeconds = LuaGetFloati(L, 3);
-	// float totalTimeSeconds = LuaGetFloati(L, 4);
-	// float progressPercent = geLinearInterpolation(timeSeconds / totalSeconds);
 	float progressPercent = geQuinticEaseOut(timeSeconds / totalSeconds);
-	// float progressPercent = geQuinticEaseOut(timeSeconds / totalSeconds);
 	float progressValue = start + ((end - start) * progressPercent);
-	//clamp to edges
-	if (start < end) progressValue = std::min(progressValue, end); else progressValue = std::max(progressValue, end);
+	// clamp to edges
+	if (start < end)
+		progressValue = std::min(progressValue, end);
+	else
+		progressValue = std::max(progressValue, end);
 	return progressValue;
+}
+
+void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
+	SetBgmTrack(1);
+	LoadBgm(name.c_str(), volume, -1);
+	PlayBgm();
+}
+
+void Engine::Audio::StopBGMBackground() {
+	SetBgmTrack(1);
+	StopBgm();
 }

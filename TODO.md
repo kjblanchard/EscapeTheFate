@@ -4,18 +4,13 @@ Cpp game?
 
 ## In Progress
 
-- Dialog system needs to be completed
-    : Handle multiple strings in a dialog, and use objects instead of the json
-- Better error handling / loading from json of these things
-
-## Todos
-
 - Handle different tweening types in engine.cpp
     : right now hardcoded to quint
 
+## Todos
+
 ### UI
 
-- When do we clear dialog box cache?
 - Use gameconfig to handle the dialog box variables, instead of const
 
 ### Bugs
@@ -30,10 +25,16 @@ Cpp game?
 - Animation system should use regular pointers and needs an overhaul, why use handles
     : not needed right now, and works fine.
 - Dialog system slidefade .. would be cool if we could handle tweening the opacity
+- Better error handling / loading from json
 
 ## Completed
 
+- When do we clear dialog box cache?
+    : never
 - Dialog system needs to be completed
+    : Handle multiple strings in a dialog
+    : typing sound for background
+    : Use objects instead of the json
     : Dialog Objects need to reference the strings somehow
     : When interacting, we should update the text properly
     : Dialog box doesn't clear properly sometimes

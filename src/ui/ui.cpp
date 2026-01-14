@@ -1,6 +1,7 @@
 #include <Supergoon/Primitives/rectangle.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
+#include <bindings/engine.hpp>
 
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
@@ -13,22 +14,6 @@ using namespace Etf;
 using namespace std;
 
 unordered_map<string, json_object*> _cachedUIFiles;
-
-template <typename Lambda>
-void jforeach_lambda(void* obj, Lambda&& lambda) {
-	struct Wrapper {
-		Lambda* fn;
-	};
-	Wrapper wrapper{&lambda};
-
-	jforeach_obj(
-		obj,
-		[](const char* key, void* value, void* userData) {
-			auto* w = static_cast<Wrapper*>(userData);
-			(*w->fn)(key, value);
-		},
-		&wrapper);
-}
 
 static RectangleF getRectFromField(json_object* obj, const char* key) {
 	auto rectJson = jobj(obj, key);
@@ -131,7 +116,7 @@ static UIObject* handleUIArgs(const string& name, json_object* data) {
 	}
 	auto children = jobj(data, "children");
 	if (!children) return newGuy;
-	jforeach_lambda(children, [&](const char* key, void* value) {
+	Engine::Json::jforeach_lambda(children, [&](const char* key, void* value) {
 		json_object* child = (json_object*)value;
 		auto newChild = handleUIArgs(key, child);
 		if (!newChild) return;
@@ -166,7 +151,7 @@ void UI::LoadUIFromFile(const string& filename) {
 	auto fullUIFileGeneric = _cachedUIFiles[filename];
 	// Store list so we can remove everything else afterwards
 	vector<string> newPanelNames;
-	jforeach_lambda(fullUIFileGeneric, [&](const char* key, void* value) {
+	Engine::Json::jforeach_lambda(fullUIFileGeneric, [&](const char* key, void* value) {
 		json_object* child = (json_object*)value;
 		newPanelNames.push_back(key);
 		if (RootUIObject->HasChildOfName(key)) {
