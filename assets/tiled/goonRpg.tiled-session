@@ -5,8 +5,8 @@
     },
     "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
-        "old-delete",
         "templates",
+        "old-delete",
         "."
     ],
     "exportAsImage.includeBackgroundColor": true,
@@ -99,10 +99,10 @@
                 6
             ],
             "scale": 1.5,
-            "selectedLayer": 5,
+            "selectedLayer": 0,
             "viewCenter": {
-                "x": 304,
-                "y": 188.66666666666669
+                "x": 257.3333333333333,
+                "y": 220.66666666666669
             }
         },
         "debugTown.tmj#house": {

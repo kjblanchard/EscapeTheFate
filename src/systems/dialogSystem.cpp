@@ -165,7 +165,7 @@ static void updateOpenDialogBoxAnimation() {
 		Engine::Audio::PlayBGMBackground("typing");
 		return;
 	}
-	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX - Animation_Offset, _dialogBoxStartX, _currentAnimationTime, Animation_Open_Time);
+	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX - Animation_Offset, _dialogBoxStartX, _currentAnimationTime, Animation_Open_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
 	_dialogBoxObject->SetX(newX);
 }
 
@@ -177,7 +177,7 @@ static void updateCloseDialogBoxAnimation() {
 		_currentState = DialogBoxStates::Closed;
 		return;
 	}
-	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX, _dialogBoxStartX - Animation_Offset, _currentAnimationTime, Animation_Close_Time);
+	auto newX = Engine::Tweening::GetTweenedValue(_dialogBoxStartX, _dialogBoxStartX - Animation_Offset, _currentAnimationTime, Animation_Close_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
 	_dialogBoxObject->SetX(newX);
 }
 

@@ -33,7 +33,11 @@ struct Engine {
 	} Animation;
 
 	struct Tweening {
-		static float GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds);
+		enum class TweenEaseTypes {
+			Linear,
+			QuintOut
+		};
+		static float GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds, TweenEaseTypes ease = TweenEaseTypes::Linear);
 	} Tweening;
 
 	struct TextBoi {

@@ -4,14 +4,17 @@ Cpp game?
 
 ## In Progress
 
-- Handle different tweening types in engine.cpp
-    : right now hardcoded to quint
+- enter battle
 
 ## Todos
 
-### UI
+### Battle
 
-- Use gameconfig to handle the dialog box variables, instead of const
+- battle UI
+- load battlers
+- move selection and fingers around
+
+### UI
 
 ### Bugs
 
@@ -24,11 +27,14 @@ Cpp game?
     : not really needed right now
 - Animation system should use regular pointers and needs an overhaul, why use handles
     : not needed right now, and works fine.
-- Dialog system slidefade .. would be cool if we could handle tweening the opacity
+- Dialog system slidefade anim .. would be cool if we could handle tweening the opacity
 - Better error handling / loading from json
+- Use gameconfig to handle the dialog box variables, instead of const
 
 ## Completed
 
+- Handle different tweening types in engine.cpp
+    : right now hardcoded to quint
 - When do we clear dialog box cache?
     : never
 - Dialog system needs to be completed

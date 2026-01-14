@@ -30,6 +30,12 @@
                 "UIName": "",
                 "BGMName": "town2",
                 "BGMVolume": 1.0
+            },
+            {
+                "MapName": "forest1",
+                "UIName": "battle",
+                "BGMName": "battle1",
+                "BGMVolume": 1.0
             }
         ]
     },

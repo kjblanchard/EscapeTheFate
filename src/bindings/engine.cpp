@@ -122,8 +122,15 @@ void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset) {
 	TextDraw(text, xOffset, yOffset);
 }
 
-float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds) {
-	float progressPercent = geQuinticEaseOut(timeSeconds / totalSeconds);
+float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds, TweenEaseTypes ease) {
+	auto func = geLinearInterpolation;
+	switch (ease) {
+		case TweenEaseTypes::QuintOut:
+			func = geQuinticEaseOut;
+		default:
+			break;
+	}
+	float progressPercent = func(timeSeconds / totalSeconds);
 	float progressValue = start + ((end - start) * progressPercent);
 	// clamp to edges
 	if (start < end)

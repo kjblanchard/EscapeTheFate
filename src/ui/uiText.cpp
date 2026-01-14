@@ -9,6 +9,7 @@ using namespace std;
 
 UIText::UIText(UITextArgs& args) {
 	_location = args.Rect;
+	_debugBox = args.DebugBox;
 	_name = args.Name;
 	_text = Engine::TextBoi::CreateText(args.FontName, args.FontSize, args.Rect, args.TextToDraw, args.NumCharsToDraw, args.CenteredX, args.CenteredY);
 }

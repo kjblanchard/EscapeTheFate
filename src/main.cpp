@@ -14,7 +14,7 @@
 #include <ui/ui.hpp>
 
 namespace Etf {
-// static const int B = 27;
+static const int B = 27;
 
 void initialize() {
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
@@ -44,10 +44,9 @@ void draw() {
 }
 
 void handleInput() {
-	// if (IsKeyboardKeyJustPressed(B)) {
-	// Engine::LoadScene();
-	// DialogSystem::UpdateDialogText("Hi Misha");
-	// }
+	if (IsKeyboardKeyJustPressed(B)) {
+		Engine::LoadScene("forest1");
+	}
 }
 
 void quit() {
