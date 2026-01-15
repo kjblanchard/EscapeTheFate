@@ -16,7 +16,6 @@ option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug 
 option(CONVERT_JSON_TO_LUA_IN_ASEPRITE "Convert all json files in aseprite folder for use during install step" OFF)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
-# Enable AddressSanitizer only in Debug builds (excluding iOS and iOS Simulator)
 include(FetchContent)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
@@ -24,25 +23,23 @@ set(EXECUTABLE_TARGET_NAME EscapeTheFate)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
-#glaze speed
-# set(CMAKE_UNITY_BUILD ON)
-# set(CMAKE_UNITY_BUILD_BATCH_SIZE 8)  # optional
-
-# Add defines for specific builds
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
   src/main.cpp 
   src/gameConfig.cpp 
   src/gameState.cpp 
   src/gameobject/GameObject.cpp
   src/gameobject/gameobjects/Player.cpp
+  src/gameobject/gameobjects/Battler.cpp
   src/gameobject/gameobjects/Textbox.cpp
   src/gameobject/gameobjects/MapExit.cpp
+  src/gameobject/gameobjects/BattleLocation.cpp
   src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiNineSlice.cpp
   src/ui/uiImage.cpp
   src/ui/uiText.cpp
   src/systems/dialogSystem.cpp
+  src/systems/battleSystem.cpp
   src/bindings/engine.cpp
   ${ICON_PATH})
 

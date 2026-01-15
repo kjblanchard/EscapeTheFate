@@ -2,7 +2,6 @@
 #include <functional>
 #include <memory>
 #include <unordered_map>
-#include "ui/uiObject.hpp"
 struct sgGameObject;
 struct TiledObject;
 namespace Etf {
@@ -10,9 +9,11 @@ namespace Etf {
 class IInteractable;
 
 class GameObject {
-   protected:
+   public:
 	float& X();
 	float& Y();
+
+   protected:
 	inline sgGameObject* internalGO() { return GO; }
 	static std::vector<std::shared_ptr<GameObject>> _gameObjects;
 	static std::vector<std::weak_ptr<IInteractable>> _interactables;

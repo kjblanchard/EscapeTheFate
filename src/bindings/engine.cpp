@@ -4,6 +4,8 @@
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Tweening/easing.h>
+#include <Supergoon/filesystem.h>
+#include <Supergoon/json.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
@@ -42,7 +44,7 @@ void Engine::loadSceneInternal() {
 	GameObject::LoadAllGameObjects();
 	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
 	if (!sceneToLoad.UIName.empty()) {
-		UI::LoadUIFromFile(format("assets/ui/{}.json", sceneToLoad.UIName));
+		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), sceneToLoad.UIName));
 	} else {
 		UI::RootUIObject->DestroyChildIfNotName("");
 	}
@@ -149,4 +151,16 @@ void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
 void Engine::Audio::StopBGMBackground() {
 	SetBgmTrack(1);
 	StopBgm();
+}
+
+RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key) {
+	auto obj = static_cast<json_object*>(object);
+	auto rectJson = jobj(obj, key.c_str());
+	if (!rectJson) return {0, 0, 0, 0};
+	return {
+		jfloat(rectJson, "x"),
+		jfloat(rectJson, "y"),
+		jfloat(rectJson, "w"),
+		jfloat(rectJson, "h"),
+	};
 }

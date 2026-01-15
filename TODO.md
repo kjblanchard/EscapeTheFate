@@ -4,14 +4,12 @@ Cpp game?
 
 ## In Progress
 
-- battle UI
+- vlg is needed to help organize.
+- move selection and fingers around
 
 ## Todos
 
 ### Battle
-
-- load battlers
-- move selection and fingers around
 
 ### UI
 
@@ -22,6 +20,7 @@ Cpp game?
 
 ## Backlogged
 
+- remove gameobject system from the C engine, only makes it annoying to work with
 - More fields that can be optional to make it easier to write the jsonc file
     : not really needed right now
 - Animation system should use regular pointers and needs an overhaul, why use handles
@@ -32,6 +31,8 @@ Cpp game?
 
 ## Completed
 
+- load battlers
+- battle UI
 - enter battle
 - Handle different tweening types in engine.cpp
     : right now hardcoded to quint

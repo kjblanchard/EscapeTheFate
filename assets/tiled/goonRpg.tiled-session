@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "debugTown.tmj",
+    "activeFile": "forest1.tmj",
     "expandedProjectPaths": [
-        "templates",
         "old-delete",
-        "."
+        ".",
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -84,8 +84,8 @@
             "scale": 1.4199,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 240.1577575885626,
-                "y": 159.870413409395
+                "x": 240.15775758856262,
+                "y": 159.87041340939507
             }
         },
         "debugSouth.tmj#outside": {
@@ -101,8 +101,8 @@
             "scale": 1.5,
             "selectedLayer": 0,
             "viewCenter": {
-                "x": 257.3333333333333,
-                "y": 220.66666666666669
+                "x": 589.9999999999999,
+                "y": 202
             }
         },
         "debugTown.tmj#house": {
@@ -124,7 +124,7 @@
             "selectedLayer": 5,
             "viewCenter": {
                 "x": 127.99999999999999,
-                "y": 87.99999999999999
+                "y": 88
             }
         },
         "debugTownHome.tmj#inside": {
@@ -153,8 +153,8 @@
             "scale": 1.363,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 256.41966250917096,
-                "y": 143.8004402054292
+                "x": 278.7967718268526,
+                "y": 280.26412325752017
             }
         },
         "forest1.tmj#outside": {
@@ -229,17 +229,18 @@
     "openFiles": [
         "debugTown.tmj",
         "debugSouth.tmj",
-        "debugTownHome.tmj"
+        "debugTownHome.tmj",
+        "forest1.tmj"
     ],
     "project": "goonRpg.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "debugTownHome.tmj",
-        "debugSouth.tmj",
         "debugTown.tmj",
+        "debugSouth.tmj",
+        "debugTownHome.tmj",
+        "forest1.tmj",
         "cloud.tmj",
         "cloud.tsj",
-        "forest1.tmj",
         "house.tsj",
         "inside.tsj",
         "terrain.tsj",

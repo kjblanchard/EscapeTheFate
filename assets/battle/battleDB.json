@@ -1,0 +1,27 @@
+[
+    {
+        "name": "Kevin",
+        "hp": 50,
+        "str": 5,
+        "mag": 5,
+        "def": 5,
+        "mdef": 3,
+        "spd": 3,
+        "pow": 100,
+        "sprite": "player1Battler", "rect": {"x":-5, "y": -10,"w": 48,"h": 48},
+        "idle": "idle1"
+    },
+    {
+        "name": "Black Bird",
+        "hp": 50,
+        "str": 5,
+        "mag": 5,
+        "def": 5,
+        "mdef": 3,
+        "spd": 3,
+        "pow": 100,
+        "sprite": "player1Battler",
+        "rect": {"x":-15, "y": -25,"w": 61,"h": 57},
+        "idle": "idle1"
+    }
+]

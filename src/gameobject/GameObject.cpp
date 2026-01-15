@@ -7,6 +7,7 @@
 #include <gameobject/gameobjects/MapExit.hpp>
 #include <gameobject/gameobjects/Player.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
+#include <gameobject/gameobjects/BattleLocation.hpp>
 #include <interfaces/IInteractable.hpp>
 #include <memory>
 using namespace Etf;
@@ -18,6 +19,7 @@ std::unordered_map<int, std::function<void(TiledObject* objData)>> GameObject::_
 	{4, Player::Create},
 	{5, Textbox::Create},
 	{2, MapExit::Create},
+	{6, BattleLocation::Create},
 };
 
 GameObject::GameObject(int x, int y) {

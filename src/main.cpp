@@ -10,6 +10,7 @@
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
@@ -36,6 +37,9 @@ void update() {
 	Engine::HandleMapLoad();
 	GameObject::UpdateGameObjects();
 	DialogSystem::UpdateDialogSystem();
+	if (GameState::Battle::InBattle) {
+		BattleSystem::BattleSystemUpdate();
+	}
 }
 
 void draw() {

@@ -116,7 +116,7 @@
                          "value":7
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":64,
@@ -134,7 +134,7 @@
                          "value":8
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":64,
@@ -152,7 +152,7 @@
                          "value":4
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":128,
@@ -170,7 +170,7 @@
                          "value":5
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":128,
@@ -188,7 +188,7 @@
                          "value":6
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":128,
@@ -206,7 +206,7 @@
                          "value":1
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":320,
@@ -224,7 +224,7 @@
                          "value":2
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":320,
@@ -242,22 +242,11 @@
                          "value":3
                         }],
                  "rotation":0,
-                 "type":"6BattleLocation",
+                 "type":"6BattlerLocation",
                  "visible":true,
                  "width":0,
                  "x":320,
                  "y":192
-                }, 
-                {
-                 "height":48,
-                 "id":12,
-                 "name":"BattleManager",
-                 "rotation":0,
-                 "type":"7Battle",
-                 "visible":true,
-                 "width":48,
-                 "x":240,
-                 "y":128
                 }],
          "opacity":1,
          "type":"objectgroup",

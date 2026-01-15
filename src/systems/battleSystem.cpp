@@ -1,0 +1,103 @@
+#include <Supergoon/filesystem.h>
+#include <Supergoon/json.h>
+#include <Supergoon/log.h>
+
+#include <battle/battlerData.hpp>
+#include <format>
+#include <gameState.hpp>
+#include <gameobject/gameobjects/BattleLocation.hpp>
+#include <gameobject/gameobjects/Battler.hpp>
+#include <systems/battleSystem.hpp>
+#include <vector>
+#include "bindings/engine.hpp"
+#include "gameobject/GameObject.hpp"
+
+using namespace Etf;
+using namespace std;
+
+enum class BattleStates {
+	NotInBattle,
+	BattleStartTriggered,
+	BattleEnd,
+};
+using enum BattleStates;
+
+static BattleStates _currentBattleState = NotInBattle;
+static BattleStates _nextBattleState = NotInBattle;
+static vector<BattlerData> _battlerData;
+static vector<Battler*> _battlers;
+
+static void battleEnd() {
+	BattleLocation::ClearAllBattleLocations();
+	_battlers.clear();
+}
+
+static void loadBattleDB() {
+	if (!_battlerData.empty()) return;
+	auto loadPath = format("{}assets/battle/battleDB.json", GetBasePath());
+	auto dataRootJsonArray = jGetObjectFromFile(loadPath.c_str());
+	if (!dataRootJsonArray) sgLogCritical("No battler Database found at %s, exiting", loadPath.c_str());
+	auto numData = jGetObjectArrayLength(dataRootJsonArray);
+	if (!numData) sgLogCritical("No battlers found in db, exiting!");
+	for (auto i = 0; i < numData; ++i) {
+		auto currentJsonObject = jGetObjectInObjectWithIndex(dataRootJsonArray, i);
+		if (!currentJsonObject) continue;
+		_battlerData.emplace_back();
+		_battlerData.back().Name = jstr(currentJsonObject, "name");
+		_battlerData.back().HP = jint(currentJsonObject, "hp");
+		_battlerData.back().Str = jint(currentJsonObject, "str");
+		_battlerData.back().Mag = jint(currentJsonObject, "mag");
+		_battlerData.back().Def = jint(currentJsonObject, "def");
+		_battlerData.back().MDef = jint(currentJsonObject, "mdef");
+		_battlerData.back().Spd = jint(currentJsonObject, "spd");
+		_battlerData.back().Pow = jint(currentJsonObject, "pow");
+		_battlerData.back().Sprite = jstr(currentJsonObject, "sprite");
+		_battlerData.back().IdleAnimation = jstr(currentJsonObject, "idle");
+		_battlerData.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
+	}
+}
+
+static void loadBattlers() {
+	auto& p1BattlerData = _battlerData.at(0);
+	auto spawnLocation = BattleLocation::GetBattleLocation(1);
+	auto battler = new Battler(&p1BattlerData, spawnLocation->X(), spawnLocation->Y());
+	_battlers.push_back(battler);
+}
+
+static void loadBattle() {
+	loadBattleDB();
+	loadBattlers();
+}
+
+// Used to reduce the boilerplate if we change states in multiple places
+static void triggerStateChange() {
+	switch (_nextBattleState) {
+		case BattleStartTriggered:
+			loadBattle();
+			break;
+		case BattleEnd:
+			battleEnd();
+		default:
+			break;
+	}
+	_currentBattleState = _nextBattleState;
+}
+
+void BattleSystem::TriggerBattleStart() {
+	if (_currentBattleState == NotInBattle && _nextBattleState != BattleStartTriggered) {
+		_nextBattleState = BattleStates::BattleStartTriggered;
+		GameState::Battle::InBattle = true;
+	}
+}
+
+void BattleSystem::BattleSystemUpdate() {
+	if (_nextBattleState != _currentBattleState) triggerStateChange();
+	switch (_currentBattleState) {
+		case NotInBattle:
+			break;
+		case BattleStartTriggered:
+			break;
+		default:
+			break;
+	}
+}

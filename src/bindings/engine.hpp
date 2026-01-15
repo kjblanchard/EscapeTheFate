@@ -18,7 +18,6 @@ struct Engine {
 	static void HandleMapLoad();
 
 	struct Audio {
-
 		static void PlayBGMBackground(const std::string& name, float volume = 1.0f);
 		static void StopBGMBackground();
 
@@ -46,6 +45,7 @@ struct Engine {
 	} Textboi;
 
 	struct Json {
+		static RectangleF GetRectFromObject(void* object, const std::string& key);
 		template <typename Lambda>
 		static void jforeach_lambda(void* obj, Lambda&& lambda) {
 			struct Wrapper {

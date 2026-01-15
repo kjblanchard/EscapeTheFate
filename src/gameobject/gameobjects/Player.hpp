@@ -4,7 +4,7 @@
 #include <gameobject/GameObject.hpp>
 #include <memory>
 #include <vector>
-class TiledObject;
+struct TiledObject;
 class Sprite;
 namespace Etf {
 

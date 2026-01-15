@@ -15,17 +15,6 @@ using namespace std;
 
 unordered_map<string, json_object*> _cachedUIFiles;
 
-static RectangleF getRectFromField(json_object* obj, const char* key) {
-	auto rectJson = jobj(obj, key);
-	if (!rectJson) return {0, 0, 0, 0};
-	return {
-		jfloat(rectJson, "x"),
-		jfloat(rectJson, "y"),
-		jfloat(rectJson, "w"),
-		jfloat(rectJson, "h"),
-	};
-}
-
 static Color getColorFromField(json_object* obj, const char* key) {
 	auto rectJson = jobj(obj, key);
 	if (!rectJson) return {0, 0, 0, 0};
@@ -41,7 +30,7 @@ static UIText* createText(const string& name, json_object* data) {
 	UITextArgs args;
 	args.FontName = jstr(data, "font");
 	args.FontSize = jint(data, "fontSize");
-	args.Rect = getRectFromField(data, "rect");
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
 	args.TextToDraw = jstr(data, "text");
 	args.Priority = jint(data, "priority");
 	args.CenteredX = jbool(data, "centeredX");
@@ -55,7 +44,7 @@ static UIText* createText(const string& name, json_object* data) {
 
 static UIObject* createUIObject(const std::string& name, json_object* data) {
 	UIObjectArgs objectArgs;
-	objectArgs.Rect = getRectFromField(data, "rect");
+	objectArgs.Rect = Engine::Json::GetRectFromObject(data, "rect");
 	objectArgs.Name = name;
 	objectArgs.Priority = jint(data, "priority");
 	objectArgs.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
@@ -66,8 +55,8 @@ static UIObject* createUIObject(const std::string& name, json_object* data) {
 
 static UIImage* createImage(const string& name, json_object* data) {
 	UIImageArgs args;
-	args.Rect = getRectFromField(data, "rect");
-	args.SourceRect = getRectFromField(data, "srcRect");
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	args.SourceRect = Engine::Json::GetRectFromObject(data, "srcRect");
 	args.DrawColor = getColorFromField(data, "color");
 	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
@@ -80,8 +69,8 @@ static UIImage* createImage(const string& name, json_object* data) {
 
 static UINineSlice* createNineSliceObject(const string& name, json_object* data) {
 	UINineSliceArgs args;
-	args.Rect = getRectFromField(data, "rect");
-	args.SourceRect = getRectFromField(data, "srcRect");
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	args.SourceRect = Engine::Json::GetRectFromObject(data, "srcRect");
 	args.DrawColor = getColorFromField(data, "color");
 	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
