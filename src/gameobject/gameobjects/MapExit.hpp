@@ -3,7 +3,9 @@
 
 #include <gameobject/GameObject.hpp>
 #include <memory>
-class TiledObject;
+#include <vector>
+#include <string>
+struct TiledObject;
 namespace Etf {
 class MapExit : public GameObject {
    public:
