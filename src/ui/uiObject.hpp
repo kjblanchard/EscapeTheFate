@@ -31,7 +31,7 @@ class UIObject {
 	// How this Object draws itself
 	virtual void OnDraw(float offsetX, float offsetY) {}
 	// Calls ondraw and then draws all children, left virtual for hlg/vlg
-	void Draw(float offsetX, float offsetY);
+	virtual void Draw(float offsetX, float offsetY);
 	virtual ~UIObject() = default;
 	// Recursive search, can be expensive if you search high
 	UIObject* GetChildByName(const std::string& name);

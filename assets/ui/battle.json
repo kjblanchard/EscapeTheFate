@@ -28,8 +28,11 @@
                         "xOffset": 8,
                         "yOffset": 9,
                         "children": {
-                            "CommandsOffsetBox": {
-                                "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+                            "CommandsVLG": {
+                                "rect": {"x": 8, "y": 8, "w": 56, "h": 12},
+                                "type": "vlg",
+                                "spacing": "15",
+                                "visible": true,
                                 "children": {
                                     "AttackText":{
                                         "type": "text",
@@ -37,6 +40,36 @@
                                         "fontSize": 8,
                                         "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
                                         "text": "Attack",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    },
+                                    "MagicText":{
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "text": "Magic",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    },
+                                    "SkillsText":{
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "text": "Skills",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    },
+                                    "ItemsText":{
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "text": "Items",
                                         "centeredX": true,
                                         "centeredY": true,
                                         "numCharsToDraw": 100

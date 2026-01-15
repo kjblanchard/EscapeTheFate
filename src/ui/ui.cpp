@@ -1,13 +1,14 @@
 #include <Supergoon/Primitives/rectangle.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
-#include <bindings/engine.hpp>
 
+#include <bindings/engine.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiObject.hpp>
 #include <ui/uiText.hpp>
+#include <ui/uiVLG.hpp>
 #include <unordered_map>
 
 using namespace Etf;
@@ -82,6 +83,17 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	return new UINineSlice(args);
 }
 
+static UIVLG* createVLGObject(const string& name, json_object* data) {
+	UIVLGArgs args;
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	args.Priority = jint(data, "priority");
+	args.DebugBox = jbool(data, "debug");
+	args.Visible = jbool(data, "visible");
+	args.Spacing = jint(data, "spacing");
+	args.Name = name;
+	return new UIVLG(args);
+}
+
 static UIObject* handleTypeCreation(const string& name, const string& type, json_object* data) {
 	sgLogDebug("Creating UI object of type %s", type.empty() ? "panel" : type.c_str());
 	if (type == "text") {
@@ -90,6 +102,8 @@ static UIObject* handleTypeCreation(const string& name, const string& type, json
 		return createNineSliceObject(name, data);
 	} else if (type == "image") {
 		return createImage(name, data);
+	} else if (type == "vlg") {
+		return createVLGObject(name, data);
 	} else {
 		return createUIObject(name, data);
 	}

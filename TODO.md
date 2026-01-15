@@ -4,12 +4,16 @@ Cpp game?
 
 ## In Progress
 
-- vlg is needed to help organize.
 - move selection and fingers around
 
 ## Todos
 
 ### Battle
+
+- spawn enemies
+- player speed
+- ui progress bar
+- ui animation for player speed
 
 ### UI
 
@@ -31,6 +35,7 @@ Cpp game?
 
 ## Completed
 
+- vlg is needed to help organize.
 - load battlers
 - battle UI
 - enter battle
