@@ -22,7 +22,8 @@
 using namespace Etf;
 using namespace std;
 
-std::string Engine::_nextScene = "";
+string Engine::_nextScene = "";
+static string _currentBGM = "";
 void Engine::LoadAndPlayBGM(const std::string& name, float volume) {
 	SetBgmTrack(0);
 	LoadBgm(name.c_str(), volume, -1);
@@ -42,7 +43,10 @@ void Engine::loadSceneInternal() {
 	// We should destroy all of the old gameobjects, and also load the ui if needed.
 	LoadMap(_nextScene.c_str());
 	GameObject::LoadAllGameObjects();
-	LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
+	if (_currentBGM != sceneToLoad.BGMName) {
+		LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
+		_currentBGM = sceneToLoad.BGMName;
+	}
 	if (!sceneToLoad.UIName.empty()) {
 		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), sceneToLoad.UIName));
 	} else {
