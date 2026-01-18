@@ -171,6 +171,7 @@ void UI::LoadUIFromFile(const string& filename) {
 	RootUIObject->DestroyChildIfNotName(newPanelNames);
 }
 void UI::DrawUI() {
+	if (!RootUIObject) return;
 	RootUIObject->Draw(0, 0);
 }
 
