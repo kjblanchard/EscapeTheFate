@@ -1,6 +1,6 @@
 #pragma once
-#include <vector>
 #include <string>
+#include <vector>
 
 namespace Etf {
 struct Scene {
@@ -24,6 +24,14 @@ struct gameConfig {
 		bool interactions;
 		bool mapExits;
 	} debug;
+	struct controls {
+		static const int UP = 26;
+		static const int LEFT = 4;
+		static const int DOWN = 22;
+		static const int RIGHT = 7;
+		static const int A = 44;
+		static const int B = 27;
+	} Controls;
 };
 
 struct GameConfig {

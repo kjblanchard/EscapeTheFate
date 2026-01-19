@@ -99,3 +99,25 @@ void UIObject::DestroyChildIfNotName(const std::vector<std::string> names, bool 
 		DestroyChildIfNotName(name, force);
 	}
 }
+
+// void UIObject::SetAbsolutePosition(int x, int y) {
+// 	auto currentPos = GetAbsolutePosition();
+// 	_location.x =  x - currentPos.x;
+// 	_location.y = y - currentPos.y;
+// }
+
+void UIObject::SetAbsolutePosition(int x, int y) {
+    int parentAbsX = 0;
+    int parentAbsY = 0;
+
+    if (_parent) {
+        auto p = _parent->GetAbsolutePosition();
+        parentAbsX = p.x;
+        parentAbsY = p.y;
+    }
+
+    _location.x = x - parentAbsX;
+    _location.y = y - parentAbsY;
+}
+
+

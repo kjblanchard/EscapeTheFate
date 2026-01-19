@@ -17,12 +17,6 @@ using namespace std;
 using namespace Etf;
 
 static const int _moveSpeed = 100;
-static const int UP = 26;
-static const int LEFT = 4;
-static const int DOWN = 22;
-static const int RIGHT = 7;
-static const int A = 44;
-// static const int B = 27;
 static const RectangleF _collisionOffsetAndSizeRect = {8, 8, 16, 22};
 static const Point _interactionEastWestWidthHeight = {26, 8};
 static const Point _interactionNorthSouthWidthHeight = {8, 26};
@@ -107,7 +101,7 @@ void Player::handleInteractions() {
 		Engine::SetSpriteVisible(_InteractionSprite, false);
 	}
 	_currentInteractable = interactable;
-	if (_currentInteractable && IsKeyboardKeyJustPressed(A)) {
+	if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
 		_currentInteractable->Interact();
 		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
 	}
@@ -119,25 +113,25 @@ bool Player::handlePlayerMovement() {
 	auto previousDirection = _direction;
 	auto velocityX = 0;
 	auto velocityY = 0;
-	if (IsKeyboardKeyDown(UP)) {
+	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.UP)) {
 		moved = true;
 		velocityY -= 1;
 		_direction = Direction::North;
 	}
 
-	if (IsKeyboardKeyDown(DOWN)) {
+	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.DOWN)) {
 		moved = true;
 		velocityY += 1;
 		_direction = Direction::South;
 	}
 
-	if (IsKeyboardKeyDown(LEFT)) {
+	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.LEFT)) {
 		moved = true;
 		velocityX -= 1;
 		_direction = Direction::West;
 	}
 
-	if (IsKeyboardKeyDown(RIGHT)) {
+	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.RIGHT)) {
 		moved = true;
 		velocityX += 1;
 		_direction = Direction::East;

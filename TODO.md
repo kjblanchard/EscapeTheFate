@@ -4,8 +4,6 @@ Cpp game?
 
 ## In Progress
 
-- move selection and fingers around
-
 ## Todos
 
 ### Battle
@@ -24,17 +22,21 @@ Cpp game?
 
 ## Backlogged
 
-- remove gameobject system from the C engine, only makes it annoying to work with
 - More fields that can be optional to make it easier to write the jsonc file
     : not really needed right now
-- Animation system should use regular pointers and needs an overhaul, why use handles
-    : not needed right now, and works fine.
 - Dialog system slidefade anim .. would be cool if we could handle tweening the opacity
 - Better error handling / loading from json
 - Use gameconfig to handle the dialog box variables, instead of const
 
+## Refactors
+
+- Animation system should use regular pointers and needs an overhaul, why use handles
+    : not needed right now, and works fine.
+- remove gameobject system from the C engine, only makes it annoying to work with
+
 ## Completed
 
+- move selection and fingers around
 - vlg is needed to help organize.
 - load battlers
 - battle UI

@@ -1,16 +1,23 @@
+#include <Supergoon/Input/keyboard.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
 
 #include <battle/battlerData.hpp>
+#include <clocale>
+#include <cstddef>
 #include <format>
+#include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/BattleLocation.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <systems/battleSystem.hpp>
+#include <ui/ui.hpp>
 #include <vector>
+
 #include "bindings/engine.hpp"
 #include "gameobject/GameObject.hpp"
+#include "ui/uiObject.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -18,6 +25,7 @@ using namespace std;
 enum class BattleStates {
 	NotInBattle,
 	BattleStartTriggered,
+	Battle,
 	BattleEnd,
 };
 using enum BattleStates;
@@ -31,6 +39,10 @@ static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 }
+
+static unsigned int _currentMenuLocation = 0;
+static UIObject* menuItems[] = {nullptr, nullptr, nullptr, nullptr};
+static UIObject* finger = nullptr;
 
 static void loadBattleDB() {
 	if (!_battlerData.empty()) return;
@@ -64,9 +76,51 @@ static void loadBattlers() {
 	_battlers.push_back(battler);
 }
 
+static void loadBattleUIData() {
+	auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
+	if (!vlg) {
+		sgLogCritical("Could not fild child commandsvlg, exiting");
+	}
+	menuItems[0] = vlg->GetChildByName("AttackText");
+	menuItems[1] = vlg->GetChildByName("MagicText");
+	menuItems[2] = vlg->GetChildByName("SkillsText");
+	menuItems[3] = vlg->GetChildByName("ItemsText");
+	for (auto menuItem : menuItems) {
+		if (!menuItem)
+			sgLogCritical("Could not fild child thing, exiting");
+	}
+	finger = UI::RootUIObject->GetChildByName("Finger");
+}
+
 static void loadBattle() {
 	loadBattleDB();
 	loadBattlers();
+	loadBattleUIData();
+}
+
+static void moveCursorInMenu(int menuLocation) {
+	auto uiobject = menuItems[menuLocation];
+	if (!uiobject) sgLogCritical("No menu item to switch to");
+	auto thing = uiobject->GetAbsolutePosition();
+	auto x = thing.x - 8;
+	auto y = thing.y + (15 * menuLocation) + 8;
+	sgLogDebug("Moving to %d, Setting finger to position %f, %f from: %f %f", menuLocation, (double)x, (double)y, (double)finger->X(), (double)finger->Y());
+	finger->SetAbsolutePosition(x, y);
+}
+
+static void BattleUpdate() {
+	auto newLocation = _currentMenuLocation;
+	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
+		--newLocation;
+	}
+
+	else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
+		++newLocation;
+	}
+	if (newLocation != _currentMenuLocation) {
+		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
+		moveCursorInMenu(_currentMenuLocation);
+	}
 }
 
 // Used to reduce the boilerplate if we change states in multiple places
@@ -96,6 +150,10 @@ void BattleSystem::BattleSystemUpdate() {
 		case NotInBattle:
 			break;
 		case BattleStartTriggered:
+			_nextBattleState = Battle;
+			break;
+		case Battle:
+			BattleUpdate();
 			break;
 		default:
 			break;
