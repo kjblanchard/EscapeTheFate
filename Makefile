@@ -10,7 +10,7 @@ APPLE_GENERATOR ?= Xcode
 CONFIGURE_COMMAND ?= "cmake"
 EMSCRIPTEN_CONFIGURE_COMMAND = "emcmake cmake"
 BUILD_TYPE ?= Debug
-SYSTEM_PACKAGES ?= ON
+SYSTEM_PACKAGES ?= OFF
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
 UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
@@ -24,7 +24,7 @@ IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
-RUN_CMD := ./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+RUN_CMD := open ./build/bin/EscapeTheFate.app
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
 RUN_CMD := ./build/bin/$(EXECUTABLE_NAME)

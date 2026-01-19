@@ -53,6 +53,7 @@ void GameObject::DrawGameObjects() {
 }
 
 void GameObject::LoadAllGameObjects() {
+	if(!_currentMap) return;
 	for (auto& currentGo : _gameObjects) {
 		if (currentGo->DoNotDestroy) continue;
 		currentGo->ShouldBeDestroyed = true;
