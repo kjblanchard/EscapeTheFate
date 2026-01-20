@@ -8,6 +8,7 @@ struct GameState {
 	static bool InDialog;
 	struct Battle {
 		static bool InBattle;
+		static int NextBattleGroup;
 	} Battle;
 };
 

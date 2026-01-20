@@ -4,8 +4,6 @@
 #include <Supergoon/log.h>
 
 #include <battle/battlerData.hpp>
-#include <clocale>
-#include <cstddef>
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
@@ -34,6 +32,7 @@ static BattleStates _currentBattleState = NotInBattle;
 static BattleStates _nextBattleState = NotInBattle;
 static vector<BattlerData> _battlerData;
 static vector<Battler*> _battlers;
+static vector<vector<int>> _battleGroups;
 
 static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
@@ -43,6 +42,29 @@ static void battleEnd() {
 static unsigned int _currentMenuLocation = 0;
 static UIObject* menuItems[] = {nullptr, nullptr, nullptr, nullptr};
 static UIObject* finger = nullptr;
+
+static void loadBattleGroups() {
+	if (!_battleGroups.empty()) return;
+	auto loadPath = format("{}assets/battle/battleGroups.json", GetBasePath());
+	auto dataRootJsonArray = jGetObjectFromFile(loadPath.c_str());
+	if (!dataRootJsonArray) sgLogCritical("No battle groups found at %s, exiting", loadPath.c_str());
+	auto numData = jGetObjectArrayLength(dataRootJsonArray);
+	_battleGroups.reserve(numData);
+	if (!numData) sgLogCritical("No battle groups found in db, exiting!");
+	for (auto i = 0; i < numData; ++i) {
+		auto currentBattleGroupJsonObject = jGetObjectInObjectWithIndex(dataRootJsonArray, i);
+		if (!currentBattleGroupJsonObject) continue;
+		auto currentJsonObjectLength = jGetObjectArrayLength(currentBattleGroupJsonObject);
+		if (!currentJsonObjectLength) continue;
+		vector<int> newBattleGroup;
+		newBattleGroup.reserve(currentJsonObjectLength);
+		for (auto j = 0; j < currentJsonObjectLength; ++j) {
+			auto battlerID = jintIndex(currentBattleGroupJsonObject, j);
+			newBattleGroup.push_back(battlerID);
+		}
+		_battleGroups.push_back(std::move(newBattleGroup));
+	}
+}
 
 static void loadBattleDB() {
 	if (!_battlerData.empty()) return;
@@ -76,6 +98,22 @@ static void loadBattlers() {
 	_battlers.push_back(battler);
 }
 
+static void loadEnemies() {
+	auto& currentBattleGroup = _battleGroups.at(GameState::Battle::NextBattleGroup);
+	int i = 0;
+	for (auto battlerID : currentBattleGroup) {
+		if (battlerID == 0) {
+			++i;
+			continue;
+		}
+		auto spawnLocation = BattleLocation::GetBattleLocation(i + 4);
+		auto& battlerData = _battlerData.at(battlerID);
+		auto battler = new Battler(&battlerData, spawnLocation->X(), spawnLocation->Y());
+		_battlers.push_back(battler);
+		++i;
+	}
+}
+
 static void loadBattleUIData() {
 	auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
 	if (!vlg) {
@@ -94,7 +132,9 @@ static void loadBattleUIData() {
 
 static void loadBattle() {
 	loadBattleDB();
+	loadBattleGroups();
 	loadBattlers();
+	loadEnemies();
 	loadBattleUIData();
 }
 

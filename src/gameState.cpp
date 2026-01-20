@@ -1,7 +1,9 @@
 #include <gameState.hpp>
-int Etf::GameState::NextLoadScreen = 0;
-float Etf::GameState::DeltaTimeSeconds;
-float Etf::GameState::DeltaTimeMilliseconds;
-unsigned int Etf::GameState::Ticks;
-bool Etf::GameState::InDialog = false;
-bool Etf::GameState::Battle::InBattle = false;
+using namespace Etf;
+int GameState::NextLoadScreen = 0;
+float GameState::DeltaTimeSeconds;
+float GameState::DeltaTimeMilliseconds;
+unsigned int GameState::Ticks;
+bool GameState::InDialog = false;
+bool GameState::Battle::InBattle = false;
+int GameState::Battle::NextBattleGroup = 4;
