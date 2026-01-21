@@ -1,7 +1,9 @@
 #include <Supergoon/json.h>
+#include <Supergoon/filesystem.h>
 #include <Supergoon/log.h>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
+#include <format>
 #include <string>
 
 using namespace std;
@@ -72,7 +74,8 @@ static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObjec
 }
 
 void GameConfig::LoadGameConfig(const std::string& configFileName) {
-	auto root = jGetObjectFromFile(configFileName.c_str());
+	auto loadString = format("{}{}", GetBasePath(), configFileName);
+	auto root = jGetObjectFromFile(loadString.c_str());
 	if (!root) {
 		sgLogCritical("Error reading config file, please make sure it is in assets folder/gameConfig.jsonc!");
 	}
