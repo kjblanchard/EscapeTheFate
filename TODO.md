@@ -6,10 +6,10 @@ Cpp game?
 
 ## Todos
 
-- battler offset in battlerData
-
 ### Battle
 
+- display health / simple ui
+- display enemy health
 - player speed
 - ui progress bar
 - ui animation for player speed
@@ -37,6 +37,7 @@ Cpp game?
 
 ## Completed
 
+- battler offset in battlerData
 - spawn enemies
 - move selection and fingers around
 - vlg is needed to help organize.

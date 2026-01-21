@@ -108,7 +108,7 @@ static void loadEnemies() {
 		}
 		auto spawnLocation = BattleLocation::GetBattleLocation(i + 4);
 		auto& battlerData = _battlerData.at(battlerID);
-		auto battler = new Battler(&battlerData, spawnLocation->X(), spawnLocation->Y());
+		auto battler = new Battler(&battlerData, spawnLocation->X() + battlerData.Location.x, spawnLocation->Y() + battlerData.Location.y);
 		_battlers.push_back(battler);
 		++i;
 	}
