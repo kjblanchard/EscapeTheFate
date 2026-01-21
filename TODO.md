@@ -8,11 +8,13 @@ Cpp game?
 
 ### Battle
 
-- display health / simple ui
-- display enemy health
+- display enemy health number
+- update player and enemy real health from data
 - player speed
 - ui progress bar
+- update progress bar with data
 - ui animation for player speed
+- add enemy health bar and player health bar
 
 ### UI
 

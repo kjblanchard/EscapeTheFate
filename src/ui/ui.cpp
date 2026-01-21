@@ -5,10 +5,10 @@
 #include <bindings/engine.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
+#include <ui/uiLayoutGroup.hpp>
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiObject.hpp>
 #include <ui/uiText.hpp>
-#include <ui/uiVLG.hpp>
 #include <unordered_map>
 
 using namespace Etf;
@@ -83,15 +83,28 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	return new UINineSlice(args);
 }
 
-static UIVLG* createVLGObject(const string& name, json_object* data) {
-	UIVLGArgs args;
+static UILayoutGroup* createVLGObject(const string& name, json_object* data) {
+	UILayoutGroupArgs args;
 	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
 	args.Priority = jint(data, "priority");
 	args.DebugBox = jbool(data, "debug");
 	args.Visible = jbool(data, "visible");
 	args.Spacing = jint(data, "spacing");
 	args.Name = name;
-	return new UIVLG(args);
+	args.Horizontal = false;
+	return new UILayoutGroup(args);
+}
+
+static UILayoutGroup* createHLGObject(const string& name, json_object* data) {
+	UILayoutGroupArgs args;
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	args.Priority = jint(data, "priority");
+	args.DebugBox = jbool(data, "debug");
+	args.Visible = jbool(data, "visible");
+	args.Spacing = jint(data, "spacing");
+	args.Name = name;
+	args.Horizontal = true;
+	return new UILayoutGroup(args);
 }
 
 static UIObject* handleTypeCreation(const string& name, const string& type, json_object* data) {
@@ -104,6 +117,8 @@ static UIObject* handleTypeCreation(const string& name, const string& type, json
 		return createImage(name, data);
 	} else if (type == "vlg") {
 		return createVLGObject(name, data);
+	} else if (type == "hlg") {
+		return createHLGObject(name, data);
 	} else {
 		return createUIObject(name, data);
 	}

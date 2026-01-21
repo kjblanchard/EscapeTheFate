@@ -3,16 +3,16 @@
         "doNotDestroy": true,
         "children": {
             "Player1CommandsUI": {
-				"rect": {"x": 365, "y": 30, "w": 72, "h": 72},
-                "children":{
+                "rect": { "x": 365, "y": 30, "w": 72, "h": 72 },
+                "children": {
                     "Finger": {
                         "type": "image",
                         "file": "fingers",
                         "visible": true,
                         "scale": 1.0,
-                        "color": {"R": 255,"G": 255,"B": 255,"A":255},
-                        "rect": {"x": -8, "y": 8, "w": 16, "h": 16},
-                        "srcRect": {"x": 16, "y": 48, "w": 16, "h": 16},
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -8, "y": 8, "w": 16, "h": 16 },
+                        "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
                         "camera": false,
                         "priority": 3
                     },
@@ -20,55 +20,55 @@
                         "type": "nineSlice",
                         "file": "uibase",
                         "scale": 1.0,
-                        "color": {"R": 80,"G": 0,"B": 120,"A":235},
-                        "rect": {"x": 0, "y": 0, "w": 72, "h": 72},
-                        "srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": 0, "y": 0, "w": 72, "h": 72 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
                         "camera": false,
                         "priority": 2,
                         "xOffset": 8,
                         "yOffset": 9,
                         "children": {
                             "CommandsVLG": {
-                                "rect": {"x": 8, "y": 8, "w": 56, "h": 12},
+                                "rect": { "x": 8, "y": 8, "w": 56, "h": 12 },
                                 "type": "vlg",
                                 "spacing": "15",
                                 "visible": true,
                                 "children": {
-                                    "AttackText":{
+                                    "AttackText": {
                                         "type": "text",
                                         "font": "PressStart2P",
                                         "fontSize": 8,
-                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Attack",
                                         "centeredX": true,
                                         "centeredY": true,
                                         "numCharsToDraw": 100
                                     },
-                                    "MagicText":{
+                                    "MagicText": {
                                         "type": "text",
                                         "font": "PressStart2P",
                                         "fontSize": 8,
-                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Magic",
                                         "centeredX": true,
                                         "centeredY": true,
                                         "numCharsToDraw": 100
                                     },
-                                    "SkillsText":{
+                                    "SkillsText": {
                                         "type": "text",
                                         "font": "PressStart2P",
                                         "fontSize": 8,
-                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Skills",
                                         "centeredX": true,
                                         "centeredY": true,
                                         "numCharsToDraw": 100
                                     },
-                                    "ItemsText":{
+                                    "ItemsText": {
                                         "type": "text",
                                         "font": "PressStart2P",
                                         "fontSize": 8,
-                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Items",
                                         "centeredX": true,
                                         "centeredY": true,
@@ -82,17 +82,16 @@
             },
             "Player2CommandsUI": {
                 "visible": false,
-				"rect": {"x": 365, "y": 112, "w": 72, "h": 72},
-                "debug": true,
-                "children":{
+                "rect": { "x": 365, "y": 112, "w": 72, "h": 72 },
+                "children": {
                     "Finger": {
                         "type": "image",
                         "file": "fingers",
                         "visible": true,
                         "scale": 1.0,
-                        "color": {"R": 255,"G": 255,"B": 255,"A":255},
-                        "rect": {"x": -8, "y": 8, "w": 16, "h": 16},
-                        "srcRect": {"x": 16, "y": 48, "w": 16, "h": 16},
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -8, "y": 8, "w": 16, "h": 16 },
+                        "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
                         "camera": false,
                         "priority": 3
                     },
@@ -100,22 +99,22 @@
                         "type": "nineSlice",
                         "file": "uibase",
                         "scale": 1.0,
-                        "color": {"R": 80,"G": 0,"B": 120,"A":235},
-                        "rect": {"x": 0, "y": 0, "w": 72, "h": 72},
-                        "srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": 0, "y": 0, "w": 72, "h": 72 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
                         "camera": false,
                         "priority": 2,
                         "xOffset": 8,
                         "yOffset": 9,
                         "children": {
                             "CommandsOffsetBox": {
-                                "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+                                "rect": { "x": 8, "y": 10, "w": 56, "h": 12 },
                                 "children": {
-                                    "AttackText":{
+                                    "AttackText": {
                                         "type": "text",
                                         "font": "PressStart2P",
                                         "fontSize": 8,
-                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Attack",
                                         "centeredX": true,
                                         "centeredY": true,
@@ -127,19 +126,18 @@
                     }
                 }
             },
-            "Player3CommandsUI":{
+            "Player3CommandsUI": {
                 "visible": false,
-				"rect": {"x": 365, "y": 194, "w": 72, "h": 72},
-                "debug": true,
-                "children":{
+                "rect": { "x": 365, "y": 194, "w": 72, "h": 72 },
+                "children": {
                     "Finger": {
                         "type": "image",
                         "file": "fingers",
                         "visible": true,
                         "scale": 1.0,
-                        "color": {"R": 255,"G": 255,"B": 255,"A":255},
-                        "rect": {"x": -8, "y": 8, "w": 16, "h": 16},
-                        "srcRect": {"x": 16, "y": 48, "w": 16, "h": 16},
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -8, "y": 8, "w": 16, "h": 16 },
+                        "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
                         "camera": false,
                         "priority": 3
                     },
@@ -147,22 +145,22 @@
                         "type": "nineSlice",
                         "file": "uibase",
                         "scale": 1.0,
-                        "color": {"R": 80,"G": 0,"B": 120,"A":235},
-                        "rect": {"x": 0, "y": 0, "w": 72, "h": 72},
-                        "srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": 0, "y": 0, "w": 72, "h": 72 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
                         "camera": false,
                         "priority": 2,
                         "xOffset": 8,
                         "yOffset": 9,
                         "children": {
                             "CommandsOffsetBox": {
-                                "rect": {"x": 8, "y": 10, "w": 56, "h": 12},
+                                "rect": { "x": 8, "y": 10, "w": 56, "h": 12 },
                                 "children": {
-                                    "AttackText":{
+                                    "AttackText": {
                                         "type": "text",
                                         "font": "PressStart2P",
                                         "fontSize": 8,
-                                        "rect": {"x": 0, "y": 0, "w": 56, "h": 12},
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Attack",
                                         "centeredX": true,
                                         "centeredY": true,
@@ -173,8 +171,106 @@
                         }
                     }
                 }
+            },
+            "PlayerStatusHUD": {
+                "visible": true,
+                "rect": { "x": 160, "y": 220, "w": 160, "h": 50 },
+                "children": {
+                    "HUDNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "scale": 1.0,
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": 0, "y": 0, "w": 160, "h": 50 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+                        "camera": false,
+                        "priority": 0,
+                        "xOffset": 8,
+                        "yOffset": 9,
+                        "children": {
+                            "PlayerStatusHUDOffsetBox": {
+                                "rect": { "x": 6, "y": 6, "w": 148, "h": 40 },
+                                "children": {
+                                    "PlayerStatusHUDPlayerVLG": {
+                                        "rect": { "x": 0, "y": 0, "w": 148, "h": 40 },
+                                        "type": "vlg",
+                                        "spacing": "14",
+                                        "visible": true,
+                                        "children": {
+                                            "Player1StatusHUD": {
+                                                "rect": { "x": 0, "y": 0, "w": 148, "h": 13 },
+                                                "children": {
+                                                    "P1NameText": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 0, "y": 0, "w": 32, "h": 12 },
+                                                        "text": "KJB",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P1HealthText": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 32, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "H:",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P1Health": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 50, "y": 0, "w": 30, "h": 12 },
+                                                        "text": "999",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P1MagicText": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 80, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "M:",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P1Magic": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "debug": true,
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 96, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "99",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P1ATB": {
+                                                        "type": "image",
+                                                        "debug": true,
+                                                        "visible": true,
+                                                        "rect": { "x": 116, "y": -4, "w": 32, "h": 16 },
+                                                        "srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                                                        "file": "atbBar",
+                                                        "scale": 1.0,
+                                                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
             }
-
         }
     }
 }

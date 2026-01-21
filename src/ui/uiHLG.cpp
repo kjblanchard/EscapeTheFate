@@ -1,8 +1,8 @@
 #include <bindings/engine.hpp>
-#include <ui/uiVLG.hpp>
+#include <ui/uiHLG.hpp>
 using namespace Etf;
 
-UIVLG::UIVLG(UIVLGArgs& args) {
+UIHLG::UIHLG(UIHLGArgs& args) {
 	_location = args.Rect;
 	_name = args.Name;
 	_visible = args.Visible;
@@ -11,14 +11,13 @@ UIVLG::UIVLG(UIVLGArgs& args) {
 	_spacing = args.Spacing;
 }
 
-void UIVLG::Draw(float offsetX, float offsetY) {
+void UIHLG::Draw(float offsetX, float offsetY) {
 	if (!_visible) {
 		return;
 	}
-	// OnDraw(offsetX, offsetY);
 	int iters = 0;
 	for (auto& child : _children) {
-		child->Draw(offsetX + _location.x, offsetY + _location.y + (_spacing * iters));
+		child->Draw(offsetX + _location.x + (_spacing * iters), offsetY + _location.y + (_spacing * iters));
 		++iters;
 	}
 	if (_debugBox) {
