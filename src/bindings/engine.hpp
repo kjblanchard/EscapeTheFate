@@ -73,6 +73,7 @@ struct Engine {
 	static inline bool CheckForRectCollision(RectangleF& lhs, RectangleF& rhs) {
 		return lhs.x < rhs.x + rhs.w && lhs.x + lhs.w > rhs.x && lhs.y < rhs.y + rhs.h && lhs.y + lhs.h > rhs.y;
 	}
+	static void PlaySFX(const std::string& name, float volume);
 
    private:
 	static std::string _nextScene;

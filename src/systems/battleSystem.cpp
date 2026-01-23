@@ -16,6 +16,7 @@
 #include "bindings/engine.hpp"
 #include "gameobject/GameObject.hpp"
 #include "ui/uiObject.hpp"
+#include "ui/uiText.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -42,6 +43,8 @@ static void battleEnd() {
 static unsigned int _currentMenuLocation = 0;
 static UIObject* menuItems[] = {nullptr, nullptr, nullptr, nullptr};
 static UIObject* finger = nullptr;
+static UIObject* player1HPObject = nullptr;
+static UIObject* enemyHPObject = nullptr;
 
 static void loadBattleGroups() {
 	if (!_battleGroups.empty()) return;
@@ -128,6 +131,15 @@ static void loadBattleUIData() {
 			sgLogCritical("Could not fild child thing, exiting");
 	}
 	finger = UI::RootUIObject->GetChildByName("Finger");
+	player1HPObject = UI::RootUIObject->GetChildByName("P1Health");
+	enemyHPObject = UI::RootUIObject->GetChildByName("EnemyHP");
+}
+
+static void loadDataIntoUI() {
+	auto hp = static_cast<UIText*>(player1HPObject);
+	hp->UpdateText(to_string(_battlers[0]->CurrentHP()));
+	auto ehp = static_cast<UIText*>(enemyHPObject);
+	ehp->UpdateText(to_string(_battlers[1]->CurrentHP()));
 }
 
 static void loadBattle() {
@@ -136,6 +148,7 @@ static void loadBattle() {
 	loadBattlers();
 	loadEnemies();
 	loadBattleUIData();
+	loadDataIntoUI();
 }
 
 static void moveCursorInMenu(int menuLocation) {
@@ -148,7 +161,12 @@ static void moveCursorInMenu(int menuLocation) {
 	finger->SetAbsolutePosition(x, y);
 }
 
-static void BattleUpdate() {
+static void handleClickAction() {
+	sgLogWarn("Just pressed button num %d", _currentMenuLocation);
+	Engine::PlaySFX("menuSelect", 1.0f);
+}
+
+static void handleInput() {
 	auto newLocation = _currentMenuLocation;
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
 		--newLocation;
@@ -160,7 +178,16 @@ static void BattleUpdate() {
 	if (newLocation != _currentMenuLocation) {
 		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
 		moveCursorInMenu(_currentMenuLocation);
+		Engine::PlaySFX("menuMove", 1.0f);
 	}
+
+	else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+		handleClickAction();
+	}
+}
+
+static void BattleUpdate() {
+	handleInput();
 }
 
 // Used to reduce the boilerplate if we change states in multiple places

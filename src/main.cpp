@@ -17,11 +17,6 @@
 
 namespace Etf {
 static const int B = 27;
-static const int UP = 26;
-static const int LEFT = 4;
-static const int DOWN = 22;
-static const int RIGHT = 7;
-static const int A = 44;
 
 void initialize() {
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");

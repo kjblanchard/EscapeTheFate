@@ -2,7 +2,7 @@
     {
         "id": 0,
         "name": "Kevin",
-        "hp": 50,
+        "hp": 10,
         "str": 5,
         "mag": 5,
         "def": 5,
@@ -16,7 +16,7 @@
     {
         "id": 1,
         "name": "Black Bird",
-        "hp": 50,
+        "hp": 3,
         "str": 5,
         "mag": 5,
         "def": 5,

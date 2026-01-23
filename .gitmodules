@@ -1,0 +1,4 @@
+[submodule "SupergoonEngine"]
+	path = SupergoonEngine
+	url = https://github.com/kjblanchard/SupergoonEngine.git
+	branch = cppv2

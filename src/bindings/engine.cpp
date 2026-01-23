@@ -30,6 +30,10 @@ void Engine::LoadAndPlayBGM(const std::string& name, float volume) {
 	PlayBgm();
 }
 
+void Engine::PlaySFX(const std::string& name, float volume) {
+	PlaySfxOneShot(name.c_str(), volume);
+}
+
 void Engine::loadSceneInternal() {
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {

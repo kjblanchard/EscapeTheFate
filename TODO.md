@@ -4,13 +4,13 @@ Cpp game?
 
 ## In Progress
 
+- player speed
+
 ## Todos
 
 ### Battle
 
-- display enemy health number
-- update player and enemy real health from data
-- player speed
+- python script for changing color schemes based on time of day
 - ui progress bar
 - update progress bar with data
 - ui animation for player speed
@@ -39,6 +39,8 @@ Cpp game?
 
 ## Completed
 
+- update player and enemy real health from data
+- display enemy health number
 - battler offset in battlerData
 - spawn enemies
 - move selection and fingers around

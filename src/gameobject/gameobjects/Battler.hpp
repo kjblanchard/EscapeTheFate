@@ -9,6 +9,7 @@ class Battler : public GameObject {
 	~Battler();
 	void Draw() override;
 	void StartAnimation(const std::string& name);
+	inline unsigned int CurrentHP() { return _battlerData->HP; }
 
    private:
 	Sprite* _sprite;
