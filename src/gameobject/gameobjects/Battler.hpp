@@ -16,7 +16,11 @@ class Battler : public GameObject {
 	Battler(const BattlerArgs& args);
 	virtual ~Battler();
 	void Draw() override;
-	virtual void Update() override = 0;
+	// Updates the speed, and also calls updateimpl
+	inline void Update() override final {
+		updateATBGauge();
+		updateImpl();
+	}
 	void StartAnimation(const std::string& name, bool backToIdle = true);
 
    public:
@@ -26,19 +30,26 @@ class Battler : public GameObject {
 	void TakeDamage(int damage);
 
    protected:
-    //fully updates the ui
+	// called by update each frame
+	virtual void updateImpl() {}
+	// fully updates the ui
 	virtual void updateUI() {}
-    // what should happen when you take damage
+	// what should happen when you take damage
 	virtual void takeDamageImpl(int damage) = 0;
 
    protected:
 	BattlerData* _battlerData;
 	int _currentHP;
+	float _currentATBCharge;
+	int _maxATBCharge;
 
    protected:
 	Sprite* _sprite;
 	unsigned int _animator;
 	int _locationX, _locationY;
+
+   private:
+	void updateATBGauge();
 };
 
 }  // namespace Etf

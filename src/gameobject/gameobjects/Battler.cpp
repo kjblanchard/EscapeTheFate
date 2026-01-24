@@ -1,4 +1,6 @@
 #include <Supergoon/Animation/animator.h>
+#include <Supergoon/log.h>
+#include <Supergoon/state.h>
 
 #include <bindings/engine.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
@@ -15,7 +17,9 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	StartAnimation(args.BattleData->IdleAnimation, false);
 	_gameObjects.push_back(shared_ptr<GameObject>(this));
 	_currentHP = _battlerData->HP;
-    updateUI();
+	_currentATBCharge = 0;
+	_maxATBCharge = 100;
+	updateUI();
 }
 
 void Battler::TakeDamage(int damage) {
@@ -36,5 +40,13 @@ void Battler::StartAnimation(const std::string& name, bool backToIdle) {
 	}
 }
 
-void Battler ::Draw() {
+void Battler::updateATBGauge() {
+	if (_currentATBCharge >= _maxATBCharge) return;
+	auto delta = DeltaTimeSeconds * 20;
+	auto gaguePower = delta * _battlerData->Spd;
+	_currentATBCharge += gaguePower;
+	_currentATBCharge = _currentATBCharge > _maxATBCharge ? _maxATBCharge : _currentATBCharge;
 }
+
+// Right now this is taken care of by the sprite and animation system from the engine
+void Battler ::Draw() {}

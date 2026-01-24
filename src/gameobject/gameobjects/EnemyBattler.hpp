@@ -5,7 +5,7 @@ namespace Etf {
 class EnemyBattler : public Battler {
    public:
 	EnemyBattler(const BattlerArgs& args);
-	void Update() override;
+	void updateImpl() override;
 
    protected:
 	void updateUI() override;

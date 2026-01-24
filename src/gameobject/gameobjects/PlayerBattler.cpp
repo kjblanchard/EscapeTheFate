@@ -12,7 +12,7 @@ using namespace std;
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
-void PlayerBattler::Update() {
+void PlayerBattler::updateImpl() {
 	handleInput();
 }
 void PlayerBattler::updateUI() {

@@ -7,7 +7,7 @@ namespace Etf {
 class PlayerBattler : public Battler {
    public:
 	PlayerBattler(const BattlerArgs& args);
-	void Update() override;
+	void updateImpl() override;
 
    protected:
 	void updateUI() override;
@@ -19,7 +19,7 @@ class PlayerBattler : public Battler {
    private:
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
-    void handleClickAction();
+	void handleClickAction();
 };
 
 }  // namespace Etf

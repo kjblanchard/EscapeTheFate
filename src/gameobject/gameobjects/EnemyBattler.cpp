@@ -10,7 +10,7 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	updateUI();
 }
 
-void EnemyBattler::Update() {}
+void EnemyBattler::updateImpl() {}
 void EnemyBattler::updateUI() {
 	_hpObject->UpdateText(to_string(_currentHP));
 }
