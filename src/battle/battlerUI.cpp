@@ -45,6 +45,7 @@ void BattlerUI::UpdateHP(const string& hp) {
 	if (!_hpObject) return;
 	_hpObject->UpdateText(hp);
 }
+
 void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 	if (!_player) return;
 	auto uiobject = _menuItems[newLocation];

@@ -7,7 +7,6 @@ Cpp game?
 
 ## Todos
 
-- redo some of the UI update stuff, need to draw this out.
 - player speed
 
 ### Battle
@@ -41,6 +40,7 @@ Cpp game?
 
 ## Completed
 
+- redo some of the UI update stuff, need to draw this out.
 - Make battlerUI, so that battler can updateUI easily
 - update player and enemy real health from data
 - display enemy health number

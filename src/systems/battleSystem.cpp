@@ -8,14 +8,13 @@
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/BattleLocation.hpp>
-#include <gameobject/gameobjects/Battler.hpp>
+#include <gameobject/gameobjects/EnemyBattler.hpp>
+#include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
 #include <vector>
 
 #include "bindings/engine.hpp"
-#include "ui/uiObject.hpp"
-#include "ui/uiText.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -31,17 +30,15 @@ using enum BattleStates;
 static BattleStates _currentBattleState = NotInBattle;
 static BattleStates _nextBattleState = NotInBattle;
 static vector<BattlerData> _battlerData;
-static vector<Battler*> _battlers;
+// Loaded battle groups from the database, used when loading battle and stays loaded
 static vector<vector<int>> _battleGroups;
-static vector<BattlerUI*> _battlerUIs;
+// Current battlers spawned in, always the size of all positions.
+static vector<Battler*> _battlers;
 
 static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 }
-
-static unsigned int _currentMenuLocation = 0;
-static UIObject* enemyHPObject = nullptr;
 
 static void loadBattleGroups() {
 	if (!_battleGroups.empty()) return;
@@ -92,18 +89,17 @@ static void loadBattleDB() {
 }
 
 static void loadPlayers() {
-	auto& p1BattlerData = _battlerData.at(0);
-	auto spawnLocation = BattleLocation::GetBattleLocation(1);
-	auto battlerUI = new BattlerUI(0);
+	const int playerData = 0;
+	const int playerSpawnLocation = 1;
+	auto& p1BattlerData = _battlerData.at(playerData);
+	auto spawnLocation = BattleLocation::GetBattleLocation(playerSpawnLocation);
 	BattlerArgs args;
 	args.BattlerNum = 0;
 	args.BattleData = &p1BattlerData;
 	args.X = spawnLocation->X();
 	args.Y = spawnLocation->Y();
-	args.BattleUI = battlerUI;
-	auto battler = new Battler(args);
-	_battlers.push_back(battler);
-	_battlerUIs.push_back(battlerUI);
+	auto battler = new PlayerBattler(args);
+	_battlers.at(playerSpawnLocation) = battler;
 }
 
 static void loadEnemies() {
@@ -116,64 +112,25 @@ static void loadEnemies() {
 		}
 		BattlerArgs args;
 		auto spawnLocation = BattleLocation::GetBattleLocation(i + 4);
-		auto battlerUI = new BattlerUI(i + 4);
 		args.BattlerNum = 0;
 		args.X = spawnLocation->X();
 		args.Y = spawnLocation->Y();
-		args.BattleUI = battlerUI;
 		args.BattleData = &_battlerData.at(battlerID);
-		auto battler = new Battler(args);
-		_battlers.push_back(battler);
+		auto battler = new EnemyBattler(args);
+		_battlers.at(i + 4) = battler;
 		++i;
 	}
 }
 
 static void loadBattle() {
+	_battlers.resize(8);
 	loadBattleDB();
 	loadBattleGroups();
 	loadPlayers();
 	loadEnemies();
 }
 
-static void handleClickAction() {
-	sgLogDebug("Just pressed button num %d", _currentMenuLocation);
-	switch (_currentMenuLocation) {
-		case 0:
-			Engine::PlaySFX("menuSelect", 1.0f);
-            _battlers[0]->StartAnimation("slash2", 1);
-			_battlers[1]->TakeDamage(1);
-			break;
-
-		default:
-			sgLogDebug("Button not implemented", _currentMenuLocation);
-			Engine::PlaySFX("error1", 1.0f);
-			break;
-	}
-}
-
-static void handleInput() {
-	auto newLocation = _currentMenuLocation;
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
-		--newLocation;
-	}
-
-	else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
-		++newLocation;
-	}
-	if (newLocation != _currentMenuLocation) {
-		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
-		_battlerUIs[0]->MoveCursorInMenu(_currentMenuLocation);
-		Engine::PlaySFX("menuMove", 1.0f);
-	}
-
-	else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
-		handleClickAction();
-	}
-}
-
-static void BattleUpdate() {
-	handleInput();
-}
+static void BattleUpdate() {}
 
 // Used to reduce the boilerplate if we change states in multiple places
 static void triggerStateChange() {
@@ -210,4 +167,8 @@ void BattleSystem::BattleSystemUpdate() {
 		default:
 			break;
 	}
+}
+
+void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
+    _battlers.at(battlerNum)->TakeDamage(damage);
 }

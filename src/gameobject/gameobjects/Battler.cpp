@@ -15,13 +15,12 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	StartAnimation(args.BattleData->IdleAnimation, false);
 	_gameObjects.push_back(shared_ptr<GameObject>(this));
 	_currentHP = _battlerData->HP;
-	_battlerUI = args.BattleUI;
-	_battlerUI->UpdateHP(to_string(_currentHP));
+    updateUI();
 }
 
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
-	_battlerUI->UpdateHP(to_string(_currentHP));
+	takeDamageImpl(damage);
 }
 
 Battler::~Battler() {
