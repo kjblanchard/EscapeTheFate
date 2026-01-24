@@ -14,7 +14,6 @@
 #include <vector>
 
 #include "bindings/engine.hpp"
-#include "gameobject/GameObject.hpp"
 #include "ui/uiObject.hpp"
 #include "ui/uiText.hpp"
 
@@ -34,6 +33,7 @@ static BattleStates _nextBattleState = NotInBattle;
 static vector<BattlerData> _battlerData;
 static vector<Battler*> _battlers;
 static vector<vector<int>> _battleGroups;
+static vector<BattlerUI*> _battlerUIs;
 
 static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
@@ -41,9 +41,6 @@ static void battleEnd() {
 }
 
 static unsigned int _currentMenuLocation = 0;
-static UIObject* menuItems[] = {nullptr, nullptr, nullptr, nullptr};
-static UIObject* finger = nullptr;
-static UIObject* player1HPObject = nullptr;
 static UIObject* enemyHPObject = nullptr;
 
 static void loadBattleGroups() {
@@ -94,11 +91,19 @@ static void loadBattleDB() {
 	}
 }
 
-static void loadBattlers() {
+static void loadPlayers() {
 	auto& p1BattlerData = _battlerData.at(0);
 	auto spawnLocation = BattleLocation::GetBattleLocation(1);
-	auto battler = new Battler(&p1BattlerData, spawnLocation->X(), spawnLocation->Y());
+	auto battlerUI = new BattlerUI(0);
+	BattlerArgs args;
+	args.BattlerNum = 0;
+	args.BattleData = &p1BattlerData;
+	args.X = spawnLocation->X();
+	args.Y = spawnLocation->Y();
+	args.BattleUI = battlerUI;
+	auto battler = new Battler(args);
 	_battlers.push_back(battler);
+	_battlerUIs.push_back(battlerUI);
 }
 
 static void loadEnemies() {
@@ -109,61 +114,41 @@ static void loadEnemies() {
 			++i;
 			continue;
 		}
+		BattlerArgs args;
 		auto spawnLocation = BattleLocation::GetBattleLocation(i + 4);
-		auto& battlerData = _battlerData.at(battlerID);
-		auto battler = new Battler(&battlerData, spawnLocation->X() + battlerData.Location.x, spawnLocation->Y() + battlerData.Location.y);
+		auto battlerUI = new BattlerUI(i + 4);
+		args.BattlerNum = 0;
+		args.X = spawnLocation->X();
+		args.Y = spawnLocation->Y();
+		args.BattleUI = battlerUI;
+		args.BattleData = &_battlerData.at(battlerID);
+		auto battler = new Battler(args);
 		_battlers.push_back(battler);
 		++i;
 	}
 }
 
-static void loadBattleUIData() {
-	auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
-	if (!vlg) {
-		sgLogCritical("Could not fild child commandsvlg, exiting");
-	}
-	menuItems[0] = vlg->GetChildByName("AttackText");
-	menuItems[1] = vlg->GetChildByName("MagicText");
-	menuItems[2] = vlg->GetChildByName("SkillsText");
-	menuItems[3] = vlg->GetChildByName("ItemsText");
-	for (auto menuItem : menuItems) {
-		if (!menuItem)
-			sgLogCritical("Could not fild child thing, exiting");
-	}
-	finger = UI::RootUIObject->GetChildByName("Finger");
-	player1HPObject = UI::RootUIObject->GetChildByName("P1Health");
-	enemyHPObject = UI::RootUIObject->GetChildByName("EnemyHP");
-}
-
-static void loadDataIntoUI() {
-	auto hp = static_cast<UIText*>(player1HPObject);
-	hp->UpdateText(to_string(_battlers[0]->CurrentHP()));
-	auto ehp = static_cast<UIText*>(enemyHPObject);
-	ehp->UpdateText(to_string(_battlers[1]->CurrentHP()));
-}
-
 static void loadBattle() {
 	loadBattleDB();
 	loadBattleGroups();
-	loadBattlers();
+	loadPlayers();
 	loadEnemies();
-	loadBattleUIData();
-	loadDataIntoUI();
-}
-
-static void moveCursorInMenu(int menuLocation) {
-	auto uiobject = menuItems[menuLocation];
-	if (!uiobject) sgLogCritical("No menu item to switch to");
-	auto thing = uiobject->GetAbsolutePosition();
-	auto x = thing.x - 8;
-	auto y = thing.y + (15 * menuLocation) + 8;
-	sgLogDebug("Moving to %d, Setting finger to position %f, %f from: %f %f", menuLocation, (double)x, (double)y, (double)finger->X(), (double)finger->Y());
-	finger->SetAbsolutePosition(x, y);
 }
 
 static void handleClickAction() {
-	sgLogWarn("Just pressed button num %d", _currentMenuLocation);
-	Engine::PlaySFX("menuSelect", 1.0f);
+	sgLogDebug("Just pressed button num %d", _currentMenuLocation);
+	switch (_currentMenuLocation) {
+		case 0:
+			Engine::PlaySFX("menuSelect", 1.0f);
+            _battlers[0]->StartAnimation("slash2", 1);
+			_battlers[1]->TakeDamage(1);
+			break;
+
+		default:
+			sgLogDebug("Button not implemented", _currentMenuLocation);
+			Engine::PlaySFX("error1", 1.0f);
+			break;
+	}
 }
 
 static void handleInput() {
@@ -177,7 +162,7 @@ static void handleInput() {
 	}
 	if (newLocation != _currentMenuLocation) {
 		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
-		moveCursorInMenu(_currentMenuLocation);
+		_battlerUIs[0]->MoveCursorInMenu(_currentMenuLocation);
 		Engine::PlaySFX("menuMove", 1.0f);
 	}
 

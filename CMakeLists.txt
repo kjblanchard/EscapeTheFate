@@ -33,6 +33,7 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/gameobject/gameobjects/Textbox.cpp
   src/gameobject/gameobjects/MapExit.cpp
   src/gameobject/gameobjects/BattleLocation.cpp
+  ./src/battle/battlerUI.cpp
   src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiLayoutGroup.cpp

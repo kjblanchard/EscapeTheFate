@@ -4,15 +4,17 @@ Cpp game?
 
 ## In Progress
 
-- player speed
 
 ## Todos
 
+- redo some of the UI update stuff, need to draw this out.
+- player speed
+
 ### Battle
 
-- python script for changing color schemes based on time of day
 - ui progress bar
 - update progress bar with data
+- python script for changing color schemes based on time of day
 - ui animation for player speed
 - add enemy health bar and player health bar
 
@@ -39,6 +41,7 @@ Cpp game?
 
 ## Completed
 
+- Make battlerUI, so that battler can updateUI easily
 - update player and enemy real health from data
 - display enemy health number
 - battler offset in battlerData

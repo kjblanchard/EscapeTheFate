@@ -21,7 +21,7 @@ UIText::~UIText() {
 }
 
 void UIText::OnDraw(float offsetX, float offsetY) {
-	Engine::TextBoi::DrawText(_text, offsetX, offsetY);
+	Engine::TextBoi::DrawText(_text, offsetX, offsetY, _drawColor);
 }
 
 void UIText::UpdateText(const string& newText, int numLettersToDraw) {

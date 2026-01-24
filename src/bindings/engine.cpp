@@ -128,8 +128,8 @@ Text* Engine::TextBoi::CreateText(const std::string& fontName, unsigned int font
 	return textPtr;
 }
 
-void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset) {
-	TextDraw(text, xOffset, yOffset);
+void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset, Color& color) {
+	TextDraw(text, xOffset, yOffset, &color);
 }
 
 float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds, TweenEaseTypes ease) {

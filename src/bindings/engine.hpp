@@ -41,7 +41,7 @@ struct Engine {
 
 	struct TextBoi {
 		static Text* CreateText(const std::string& fontName, unsigned int fontSize, RectangleF location, const std::string& text, unsigned int numChars, bool centeredX, bool centeredY);
-		static void DrawText(Text* text, float xOffset, float yOffset);
+		static void DrawText(Text* text, float xOffset, float yOffset, Color& color);
 	} Textboi;
 
 	struct Json {
