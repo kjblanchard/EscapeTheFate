@@ -20,6 +20,7 @@ class PlayerBattler : public Battler {
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
 	void handleClickAction();
+	bool _turnStarted = false;
 };
 
 }  // namespace Etf

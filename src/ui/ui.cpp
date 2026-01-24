@@ -8,6 +8,7 @@
 #include <ui/uiLayoutGroup.hpp>
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiObject.hpp>
+#include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 #include <unordered_map>
 
@@ -41,6 +42,18 @@ static UIText* createText(const string& name, json_object* data) {
 	args.DebugBox = jbool(data, "debug");
 	args.Name = name;
 	return new UIText(args);
+}
+static UIProgressBar* createUIProgressBar(const std::string& name, json_object* data) {
+	UIProgressBarArgs objectArgs;
+	objectArgs.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	objectArgs.Name = name;
+	objectArgs.Priority = jint(data, "priority");
+	objectArgs.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
+	objectArgs.DebugBox = jbool(data, "debug");
+	objectArgs.DoNotDestroy = jbool(data, "doNotDestroy");
+	objectArgs.BarRect = Engine::Json::GetRectFromObject(data, "barRect");
+	objectArgs.BarColor = getColorFromField(data, "barColor");
+	return new UIProgressBar(objectArgs);
 }
 
 static UIObject* createUIObject(const std::string& name, json_object* data) {
@@ -119,6 +132,8 @@ static UIObject* handleTypeCreation(const string& name, const string& type, json
 		return createVLGObject(name, data);
 	} else if (type == "hlg") {
 		return createHLGObject(name, data);
+	} else if (type == "progressBar") {
+		return createUIProgressBar(name, data);
 	} else {
 		return createUIObject(name, data);
 	}

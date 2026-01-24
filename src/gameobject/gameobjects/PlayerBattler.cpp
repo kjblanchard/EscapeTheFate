@@ -13,12 +13,24 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerU
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
 void PlayerBattler::updateImpl() {
+	_battlerUI->UpdateAnimations();
+	if (_currentATBCharge < _maxATBCharge) {
+		auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
+		_battlerUI->UpdateProgressBar(progress);
+		return;
+	}
+	if (!_turnStarted && _currentATBCharge >= _maxATBCharge) {
+		sgLogWarn("Starting player turn!");
+		_turnStarted = true;
+		_battlerUI->OpenCommandsMenu();
+	}
 	handleInput();
 }
 void PlayerBattler::updateUI() {
 }
 void PlayerBattler::takeDamageImpl(int damage) {}
 void PlayerBattler::handleInput() {
+	if (_currentATBCharge < _maxATBCharge) return;
 	auto newLocation = _currentMenuLocation;
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
 		--newLocation;
@@ -45,7 +57,9 @@ void PlayerBattler::handleClickAction() {
 			Engine::PlaySFX("menuSelect", 1.0f);
 			StartAnimation("slash2", 1);
 			BattleSystem::SendBattleDamage(4, 1);
-			// _battlers[1]->TakeDamage(1);
+			_currentATBCharge = 0;
+			_battlerUI->CloseCommandsMenu();
+			_turnStarted = false;
 			break;
 		default:
 			sgLogDebug("Button not implemented", _currentMenuLocation);

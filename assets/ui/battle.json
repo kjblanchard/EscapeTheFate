@@ -482,6 +482,30 @@
                                                             "G": 255,
                                                             "B": 255,
                                                             "A": 255
+                                                        },
+                                                        "children": {
+                                                            "P1ATBProgressBar": {
+                                                                "type": "progressBar",
+                                                                "visible": true,
+                                                                "rect": {
+                                                                    "x": 0,
+                                                                    "y": 0,
+                                                                    "w": 32,
+                                                                    "h": 16
+                                                                },
+                                                                "barRect": {
+                                                                    "x": 4,
+                                                                    "y": 6,
+                                                                    "w": 24,
+                                                                    "h": 3
+                                                                },
+                                                                "barColor": {
+                                                                    "R": 255,
+                                                                    "G": 0,
+                                                                    "B": 0,
+                                                                    "A": 255
+                                                                }
+                                                            }
                                                         }
                                                     }
                                                 }

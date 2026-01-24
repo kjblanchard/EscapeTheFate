@@ -1,13 +1,27 @@
 #include <Supergoon/log.h>
+#include <Supergoon/state.h>
 
 #include <battle/battlerUI.hpp>
+#include <bindings/engine.hpp>
 #include <ui/ui.hpp>
 using namespace Etf;
 using namespace std;
+using enum PlayerUIAnimationStates;
+
+static const float Animation_Offset = 120.0f;
+static const float Animation_Open_Time = 0.15f;
+static const float Animation_Close_Time = 0.10;
 
 BattlerUI::BattlerUI(unsigned int battlerNum) {
 	_player = battlerNum < 3;
 	if (_player) {
+		_commandMenu = UI::RootUIObject->GetChildByName("CommandsNineSlice");
+		if (!_commandMenu) {
+			sgLogCritical("Could not fild child CommandsNineSlice, exiting");
+		}
+		_menuBoxStartX = _commandMenu->X();
+		_menuBoxStartY = _commandMenu->Y();
+		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
 		auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
 		if (!vlg) {
 			sgLogCritical("Could not fild child commandsvlg, exiting");
@@ -33,12 +47,20 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		if (finger) {
 			_finger = static_cast<UIImage*>(finger);
 		}
+		finger->SetVisible(false);
 		auto hpObject = UI::RootUIObject->GetChildByName("P1Health");
 		_hpObject = static_cast<UIText*>(hpObject);
+		auto progressBarObject = UI::RootUIObject->GetChildByName("P1ATBProgressBar");
+		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
+		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
 	} else {
 		auto hpObject = UI::RootUIObject->GetChildByName("EnemyHP");
 		_hpObject = static_cast<UIText*>(hpObject);
 	}
+}
+
+void BattlerUI::UpdateProgressBar(float percent) {
+	_progressBar->SetBarPercent(percent);
 }
 
 void BattlerUI::UpdateHP(const string& hp) {
@@ -46,13 +68,45 @@ void BattlerUI::UpdateHP(const string& hp) {
 	_hpObject->UpdateText(hp);
 }
 
+void BattlerUI::UpdateAnimations() {
+	switch (_currentState) {
+		case Closed:
+			break;
+		case Opened:
+			break;
+		case Opening: {
+			_currentAnimationTime += DeltaTimeSeconds;
+			if (_currentAnimationTime > Animation_Open_Time) {
+				_currentState = Opened;
+				_finger->SetVisible(true);
+				break;
+			}
+			auto newX = Engine::Tweening::GetTweenedValue(_menuBoxStartX + Animation_Offset, _menuBoxStartX, _currentAnimationTime, Animation_Open_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+			_commandMenu->SetX(newX);
+			break;
+		}
+		case Closing: {
+			_currentAnimationTime += DeltaTimeSeconds;
+			if (_currentAnimationTime > Animation_Open_Time) {
+				_currentState = Closed;
+				break;
+			}
+			auto newX = Engine::Tweening::GetTweenedValue(_menuBoxStartX, _menuBoxStartX + Animation_Offset, _currentAnimationTime, Animation_Close_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+			_commandMenu->SetX(newX);
+			break;
+		}
+		default:
+			break;
+	}
+}
+
 void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
-	if (!_player) return;
+	if (!_player || _currentState != Opened) return;
 	auto uiobject = _menuItems[newLocation];
 	if (!uiobject) sgLogCritical("No menu item to switch to");
 	auto thing = uiobject->GetAbsolutePosition();
 	auto x = thing.x - 8;
 	auto y = thing.y + (15 * newLocation) + 8;
-	sgLogDebug("Moving to %d, Setting _finger to position %f, %f from: %f %f", newLocation, (double)x, (double)y, (double)_finger->X(), (double)_finger->Y());
+	// sgLogDebug("Moving to %d, Setting _finger to position %f, %f from: %f %f", newLocation, (double)x, (double)y, (double)_finger->X(), (double)_finger->Y());
 	_finger->SetAbsolutePosition(x, y);
 }
