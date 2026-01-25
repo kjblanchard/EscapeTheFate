@@ -32,8 +32,6 @@ class Battler : public GameObject {
    protected:
 	// called by update each frame
 	virtual void updateImpl() {}
-	// fully updates the ui
-	virtual void updateUI() {}
 	// what should happen when you take damage
 	virtual void takeDamageImpl(int damage) = 0;
 

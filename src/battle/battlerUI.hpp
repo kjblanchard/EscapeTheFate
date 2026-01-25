@@ -35,6 +35,7 @@ class BattlerUI {
 	UIObject* _menuItems[4];
 	UIText* _hpObject;
 	UIImage* _finger;
+	UIImage* _targetSelectionFinger;
 	UIProgressBar* _progressBar;
 	unsigned int _battlerNum;
 	bool _player;

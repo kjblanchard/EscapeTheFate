@@ -19,7 +19,6 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
-	updateUI();
 }
 
 void Battler::TakeDamage(int damage) {

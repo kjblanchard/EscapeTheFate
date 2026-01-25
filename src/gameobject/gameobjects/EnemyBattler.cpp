@@ -7,13 +7,10 @@ using namespace std;
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	auto hpObject = UI::RootUIObject->GetChildByName("EnemyHP");
 	_hpObject = static_cast<UIText*>(hpObject);
-	updateUI();
+	_hpObject->UpdateText(to_string(_currentHP));
 }
 
 void EnemyBattler::updateImpl() {}
-void EnemyBattler::updateUI() {
-	_hpObject->UpdateText(to_string(_currentHP));
-}
 void EnemyBattler::takeDamageImpl(int damage) {
-	updateUI();
+	_hpObject->UpdateText(to_string(_currentHP));
 }

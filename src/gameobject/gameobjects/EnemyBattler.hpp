@@ -8,7 +8,6 @@ class EnemyBattler : public Battler {
 	void updateImpl() override;
 
    protected:
-	void updateUI() override;
 	void takeDamageImpl(int damage) override;
 
    private:

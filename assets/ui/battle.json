@@ -36,6 +36,32 @@
                         "camera": false,
                         "priority": 3
                     },
+                    "BattleSelectionFinger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": true,
+                        "scale": 1.0,
+                        "color": {
+                            "R": 255,
+                            "G": 255,
+                            "B": 255,
+                            "A": 255
+                        },
+                        "rect": {
+                            "x": -100,
+                            "y": 8,
+                            "w": 16,
+                            "h": 16
+                        },
+                        "srcRect": {
+                            "x": 48,
+                            "y": 48,
+                            "w": 16,
+                            "h": 16
+                        },
+                        "camera": false,
+                        "priority": 3
+                    },
                     "CommandsNineSlice": {
                         "type": "nineSlice",
                         "file": "uibase",

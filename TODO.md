@@ -4,16 +4,16 @@ Cpp game?
 
 ## In Progress
 
+- draw out target selection
 
 ## Todos
 
-- player speed
+- target selection player battler
 
 ### Battle
 
-- ui progress bar
-- update progress bar with data
 - python script for changing color schemes based on time of day
+- check on discord bot updates.
 - ui animation for player speed
 - add enemy health bar and player health bar
 
@@ -40,6 +40,9 @@ Cpp game?
 
 ## Completed
 
+- player speed
+- ui progress bar
+- update progress bar with data
 - redo some of the UI update stuff, need to draw this out.
 - Make battlerUI, so that battler can updateUI easily
 - update player and enemy real health from data

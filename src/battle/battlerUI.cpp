@@ -48,6 +48,12 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 			_finger = static_cast<UIImage*>(finger);
 		}
 		finger->SetVisible(false);
+		auto ui = UI::RootUIObject->GetChildByName("Player1CommandsUI");
+		auto tsFinger = ui->GetChildByName("BattleSelectionFinger");
+		if (tsFinger) {
+			_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
+		}
+		_targetSelectionFinger->SetVisible(false);
 		auto hpObject = UI::RootUIObject->GetChildByName("P1Health");
 		_hpObject = static_cast<UIText*>(hpObject);
 		auto progressBarObject = UI::RootUIObject->GetChildByName("P1ATBProgressBar");
