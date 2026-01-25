@@ -3,6 +3,7 @@
 
 #include <battle/battlerUI.hpp>
 #include <bindings/engine.hpp>
+#include <gameobject/gameobjects/Battler.hpp>
 #include <ui/ui.hpp>
 using namespace Etf;
 using namespace std;
@@ -69,6 +70,14 @@ void BattlerUI::UpdateProgressBar(float percent) {
 	_progressBar->SetBarPercent(percent);
 }
 
+void BattlerUI::StartTargetSelection() {
+	_targetSelectionFinger->SetVisible(true);
+}
+
+void BattlerUI::CloseTargetSelection() {
+	_targetSelectionFinger->SetVisible(false);
+}
+
 void BattlerUI::UpdateHP(const string& hp) {
 	if (!_hpObject) return;
 	_hpObject->UpdateText(hp);
@@ -115,4 +124,13 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 	auto y = thing.y + (15 * newLocation) + 8;
 	// sgLogDebug("Moving to %d, Setting _finger to position %f, %f from: %f %f", newLocation, (double)x, (double)y, (double)_finger->X(), (double)_finger->Y());
 	_finger->SetAbsolutePosition(x, y);
+}
+
+void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
+	sgLogDebug("Moving finger to %f, %f", battler->SpriteX(), battler->SpriteY());
+	sgLogDebug("Finger is now %f %f", _targetSelectionFinger->X(), _targetSelectionFinger->Y());
+	_targetSelectionFinger->SetAbsolutePosition(battler->X(), battler->Y());
+	sgLogDebug("Finger is now become %f %f", _targetSelectionFinger->X(), _targetSelectionFinger->Y());
+
+	// _targetSelectionFinger->SetAbsolutePosition(0, 0);
 }

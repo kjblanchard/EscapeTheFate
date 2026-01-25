@@ -15,6 +15,8 @@ class Battler : public GameObject {
    public:
 	Battler(const BattlerArgs& args);
 	virtual ~Battler();
+	inline float SpriteX() { return X() + _battlerData->Location.x; }
+	inline float SpriteY() { return Y() + _battlerData->Location.y; }
 	void Draw() override;
 	// Updates the speed, and also calls updateimpl
 	inline void Update() override final {
@@ -25,6 +27,7 @@ class Battler : public GameObject {
 
    public:
 	inline unsigned int CurrentHP() { return _battlerData->HP; }
+	virtual bool IsPlayer() = 0;
 
    public:
 	void TakeDamage(int damage);

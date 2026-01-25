@@ -15,13 +15,14 @@ enum class BattlerStates {
 class PlayerBattler : public Battler {
    public:
 	PlayerBattler(const BattlerArgs& args);
+	inline bool IsPlayer() override final { return true; };
 
    private:
 	void updateImpl() override;
 	void takeDamageImpl(int damage) override;
 	void handleInputCommandsMenu();
 	void handleInputTargetSelection();
-    //Handles input based on current state.
+	// Handles input based on current state.
 	void handleInput();
 	// Handles the state changes of a battler
 	void handleStateChange(BattlerStates newState);

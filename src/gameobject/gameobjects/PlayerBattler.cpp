@@ -1,9 +1,11 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/log.h>
 
+#include <algorithm>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
+#include <iterator>
 #include <systems/battleSystem.hpp>
 
 using namespace Etf;
@@ -17,10 +19,14 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerU
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	switch (newState) {
 		case BattlerStates::ATBCharging:
+			_battlerUI->CloseTargetSelection();
 			break;
 		case BattlerStates::ATBFullyCharged:
 			_battlerUI->OpenCommandsMenu();
 			Engine::PlaySFX("playerTurn", 5.0f);
+			break;
+		case BattlerStates::TargetSelection:
+			_battlerUI->StartTargetSelection();
 			break;
 		default:
 			break;
@@ -46,6 +52,8 @@ void PlayerBattler::updateImpl() {
 			handleStateChange(CommandSelection);
 			break;
 		}
+		case TargetSelection:
+			break;
 		default:
 			break;
 	}
@@ -81,16 +89,26 @@ void PlayerBattler::handleInputCommandsMenu() {
 	}
 }
 void PlayerBattler::handleInputTargetSelection() {
+	static int _currentTarget = 0;
+	auto battlers = BattleSystem::GetEnemyBattlers();
+	std::vector<Battler*> enemyBattlers;
+	copy_if(battlers.begin(), battlers.end(), back_inserter(enemyBattlers), [](Battler* battler) {
+		return battler && !battler->IsPlayer();
+	});
+
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
-		sgLogDebug("Move up one target");
+		_currentTarget = _currentTarget - 1 >= 0 ? _currentTarget - 1 : enemyBattlers.size() - 1;
+		const auto battler = enemyBattlers.at(_currentTarget);
+		if (battler) {
+			_battlerUI->MoveFingerToBattlerLocation(battler);
+		}
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
-		sgLogDebug("Move down one target");
+		_currentTarget = _currentTarget + 1 > enemyBattlers.size() - 1 ? 0 : _currentTarget + 1;
+		const auto battler = enemyBattlers.at(_currentTarget);
+		if (battler) {
+			_battlerUI->MoveFingerToBattlerLocation(battler);
+		}
 	}
-	// StartAnimation("slash2", 1);
-	// BattleSystem::SendBattleDamage(4, 1);
-	// _currentATBCharge = 0;
-	// _battlerUI->CloseCommandsMenu();
-	// handleStateChange(ATBCharging);
 }
 
 void PlayerBattler::handleInput() {

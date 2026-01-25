@@ -170,5 +170,9 @@ void BattleSystem::BattleSystemUpdate() {
 }
 
 void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
-    _battlers.at(battlerNum)->TakeDamage(damage);
+	_battlers.at(battlerNum)->TakeDamage(damage);
+}
+
+const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {
+    return _battlers;
 }

@@ -4,6 +4,7 @@
 #include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 namespace Etf {
+class Battler;
 
 enum class PlayerUIAnimationStates {
 	Closed,
@@ -26,6 +27,9 @@ class BattlerUI {
 		_currentAnimationTime = 0;
 		_finger->SetVisible(false);
 	}
+	void StartTargetSelection();
+	void MoveFingerToBattlerLocation(Battler* battler);
+	void CloseTargetSelection();
 	void MoveCursorInMenu(unsigned int newLocation);
 	void UpdateAnimations();
 

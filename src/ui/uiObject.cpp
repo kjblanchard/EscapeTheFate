@@ -71,6 +71,7 @@ void UIObject::Draw(float offsetX, float offsetY) {
 }
 
 void UIObject::AddChild(UIObject* newChild) {
+	newChild->_parent = this;
 	_children.push_back(unique_ptr<UIObject>(newChild));
 	sort(_children.begin(), _children.end(), [](const auto& lhs, const auto& rhs) {
 		return lhs->_priority < rhs->_priority;
@@ -106,18 +107,40 @@ void UIObject::DestroyChildIfNotName(const std::vector<std::string> names, bool 
 // 	_location.y = y - currentPos.y;
 // }
 
+// void UIObject::SetAbsolutePosition(int x, int y) {
+// 	int parentAbsX = 0;
+// 	int parentAbsY = 0;
+
+// 	if (_parent) {
+// 		auto p = _parent->GetAbsolutePosition();
+// 		parentAbsX = p.x;
+// 		parentAbsY = p.y;
+// 	}
+
+// 	sgLogDebug("SetAbsolutePosition: absolute(%d,%d), parentAbs(%d,%d), setting local(%d,%d)",
+// 			   x, y, parentAbsX, parentAbsY, localX, localY);
+
+// 	_location.x = x - parentAbsX;
+// 	_location.y = y - parentAbsY;
+// }
+
 void UIObject::SetAbsolutePosition(int x, int y) {
-    int parentAbsX = 0;
-    int parentAbsY = 0;
+	int parentAbsX = 0;
+	int parentAbsY = 0;
+	sgLogWarn("Parent is  %d", _parent);
 
-    if (_parent) {
-        auto p = _parent->GetAbsolutePosition();
-        parentAbsX = p.x;
-        parentAbsY = p.y;
-    }
+	if (_parent) {
+		auto p = _parent->GetAbsolutePosition();
+		parentAbsX = p.x;
+		parentAbsY = p.y;
+	}
 
-    _location.x = x - parentAbsX;
-    _location.y = y - parentAbsY;
+	int localX = x - parentAbsX;
+	int localY = y - parentAbsY;
+
+	sgLogDebug("SetAbsolutePosition: absolute(%d,%d), parentAbs(%d,%d), setting local(%d,%d)",
+			   x, y, parentAbsX, parentAbsY, localX, localY);
+
+	_location.x = localX;
+	_location.y = localY;
 }
-
-

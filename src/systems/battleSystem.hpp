@@ -1,4 +1,6 @@
 #pragma once
+#include <gameobject/gameobjects/Battler.hpp>
+#include <vector>
 
 namespace Etf {
 
@@ -8,5 +10,7 @@ class BattleSystem {
 	static void TriggerBattleStart();
 	static void BattleSystemUpdate();
 	static void SendBattleDamage(int battlerNum, int damage);
+
+	static const std::vector<Battler*>& GetEnemyBattlers();
 };
 }  // namespace Etf

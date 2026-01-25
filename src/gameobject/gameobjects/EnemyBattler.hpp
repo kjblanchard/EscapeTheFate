@@ -6,6 +6,7 @@ class EnemyBattler : public Battler {
    public:
 	EnemyBattler(const BattlerArgs& args);
 	void updateImpl() override;
+	inline bool IsPlayer() override final { return false; };
 
    protected:
 	void takeDamageImpl(int damage) override;
