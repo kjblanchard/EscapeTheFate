@@ -19,6 +19,7 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerU
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	switch (newState) {
 		case BattlerStates::ATBCharging:
+			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			break;
 		case BattlerStates::ATBFullyCharged:
@@ -26,6 +27,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			Engine::PlaySFX("playerTurn", 5.0f);
 			break;
 		case BattlerStates::TargetSelection:
+			_currentTargetBattler = 0;
 			_battlerUI->StartTargetSelection();
 			break;
 		default:
@@ -88,6 +90,7 @@ void PlayerBattler::handleInputCommandsMenu() {
 		Engine::PlaySFX("menuMove", 1.0f);
 	}
 }
+
 void PlayerBattler::handleInputTargetSelection() {
 	static int _currentTarget = 0;
 	auto battlers = BattleSystem::GetEnemyBattlers();
@@ -97,17 +100,28 @@ void PlayerBattler::handleInputTargetSelection() {
 	});
 
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
+		Engine::PlaySFX("menuMove", 1.0f);
 		_currentTarget = _currentTarget - 1 >= 0 ? _currentTarget - 1 : enemyBattlers.size() - 1;
 		const auto battler = enemyBattlers.at(_currentTarget);
 		if (battler) {
 			_battlerUI->MoveFingerToBattlerLocation(battler);
 		}
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
+		Engine::PlaySFX("menuMove", 1.0f);
 		_currentTarget = _currentTarget + 1 > enemyBattlers.size() - 1 ? 0 : _currentTarget + 1;
 		const auto battler = enemyBattlers.at(_currentTarget);
 		if (battler) {
 			_battlerUI->MoveFingerToBattlerLocation(battler);
 		}
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+		Engine::PlaySFX("menuSelect", 1.0f);
+		const auto battler = enemyBattlers.at(_currentTarget);
+		StartAnimation("slash2");
+		if (battler) {
+			battler->TakeDamage(1);
+		}
+		_currentATBCharge = 0;
+		handleStateChange(ATBCharging);
 	}
 }
 

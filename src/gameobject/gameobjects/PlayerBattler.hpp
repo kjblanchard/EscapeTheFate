@@ -32,7 +32,7 @@ class PlayerBattler : public Battler {
    private:
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
-	unsigned int _currentTargetBattler;
+	unsigned int _currentTargetBattler = 0;
 	BattlerStates _currentBattlerState = BattlerStates::Default;
 };
 

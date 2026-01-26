@@ -120,17 +120,11 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 	auto uiobject = _menuItems[newLocation];
 	if (!uiobject) sgLogCritical("No menu item to switch to");
 	auto thing = uiobject->GetAbsolutePosition();
-	auto x = thing.x - 8;
-	auto y = thing.y + (15 * newLocation) + 8;
-	// sgLogDebug("Moving to %d, Setting _finger to position %f, %f from: %f %f", newLocation, (double)x, (double)y, (double)_finger->X(), (double)_finger->Y());
+	auto x = thing.x - 15;
+	auto y = thing.y + (15 * newLocation);
 	_finger->SetAbsolutePosition(x, y);
 }
 
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
-	sgLogDebug("Moving finger to %f, %f", battler->SpriteX(), battler->SpriteY());
-	sgLogDebug("Finger is now %f %f", _targetSelectionFinger->X(), _targetSelectionFinger->Y());
 	_targetSelectionFinger->SetAbsolutePosition(battler->X(), battler->Y());
-	sgLogDebug("Finger is now become %f %f", _targetSelectionFinger->X(), _targetSelectionFinger->Y());
-
-	// _targetSelectionFinger->SetAbsolutePosition(0, 0);
 }
