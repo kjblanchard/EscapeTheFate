@@ -8,14 +8,12 @@ Cpp game?
 
 ## Todos
 
-- target selection player battler
+- Target selection starts on enemy properly.
+- Enemy dies
+- Win screen
+- go back to world map
 
 ### Battle
-
-- python script for changing color schemes based on time of day
-- check on discord bot updates.
-- ui animation for player speed
-- add enemy health bar and player health bar
 
 ### UI
 
@@ -26,6 +24,10 @@ Cpp game?
 
 ## Backlogged
 
+- add enemy health bar and player health bar
+- check on discord bot updates.
+- ui animation for player speed
+    : not really needed right now, will just make it look better.
 - More fields that can be optional to make it easier to write the jsonc file
     : not really needed right now
 - Dialog system slidefade anim .. would be cool if we could handle tweening the opacity
@@ -83,8 +85,8 @@ Cpp game?
 ## Version Roadmap
 
 - 0.1.0: basic dialog with interactions, enter battle, can kill enemy, battle ended.
-    : dialog
-    : battle enter
+    : dialog - done
+    : battle enter - done
     : battle finish
     : battle end
     : fix all leaks
