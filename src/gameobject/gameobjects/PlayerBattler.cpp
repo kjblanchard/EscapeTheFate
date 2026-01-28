@@ -29,11 +29,29 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 		case BattlerStates::TargetSelection:
 			_currentTargetBattler = 0;
 			_battlerUI->StartTargetSelection();
+			moveFingerToEnemyNum(0);
 			break;
 		default:
 			break;
 	}
 	_currentBattlerState = newState;
+}
+void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
+	sgLogWarn("Trying to move to location %d", enemyNum);
+	std::vector<Battler*> enemyBattlers;
+	getEnemyBattlers(enemyBattlers);
+
+	if (enemyNum > (int)enemyBattlers.size() - 1) {
+		enemyNum = 0;
+	} else if (enemyNum < 0) {
+		enemyNum = (int)enemyBattlers.size() - 1;
+	}
+	sgLogWarn("Trying to move to location bounds %d", enemyNum);
+	const auto battler = enemyBattlers.at(enemyNum);
+	if (battler) {
+		_battlerUI->MoveFingerToBattlerLocation(battler);
+	}
+	_currentTargetBattler = enemyNum;
 }
 
 void PlayerBattler::updateImpl() {
@@ -90,38 +108,36 @@ void PlayerBattler::handleInputCommandsMenu() {
 		Engine::PlaySFX("menuMove", 1.0f);
 	}
 }
-
-void PlayerBattler::handleInputTargetSelection() {
-	static int _currentTarget = 0;
+void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
 	auto battlers = BattleSystem::GetEnemyBattlers();
-	std::vector<Battler*> enemyBattlers;
-	copy_if(battlers.begin(), battlers.end(), back_inserter(enemyBattlers), [](Battler* battler) {
+	copy_if(battlers.begin(), battlers.end(), back_inserter(battlerVector), [](Battler* battler) {
 		return battler && !battler->IsPlayer();
 	});
+}
+
+void PlayerBattler::handleInputTargetSelection() {
+	int newTarget = _currentTargetBattler;
 
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
 		Engine::PlaySFX("menuMove", 1.0f);
-		_currentTarget = _currentTarget - 1 >= 0 ? _currentTarget - 1 : enemyBattlers.size() - 1;
-		const auto battler = enemyBattlers.at(_currentTarget);
-		if (battler) {
-			_battlerUI->MoveFingerToBattlerLocation(battler);
-		}
+		--newTarget;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
 		Engine::PlaySFX("menuMove", 1.0f);
-		_currentTarget = _currentTarget + 1 > enemyBattlers.size() - 1 ? 0 : _currentTarget + 1;
-		const auto battler = enemyBattlers.at(_currentTarget);
-		if (battler) {
-			_battlerUI->MoveFingerToBattlerLocation(battler);
-		}
+		++newTarget;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
 		Engine::PlaySFX("menuSelect", 1.0f);
-		const auto battler = enemyBattlers.at(_currentTarget);
+		vector<Battler*> battlers;
+		getEnemyBattlers(battlers);
+		const auto battler = battlers.at(newTarget);
 		StartAnimation("slash2");
 		if (battler) {
 			battler->TakeDamage(1);
 		}
 		_currentATBCharge = 0;
 		handleStateChange(ATBCharging);
+	}
+	if (newTarget != _currentTargetBattler) {
+		moveFingerToEnemyNum(newTarget);
 	}
 }
 

@@ -28,11 +28,13 @@ class PlayerBattler : public Battler {
 	void handleStateChange(BattlerStates newState);
 	// What happens when something is clicked
 	void handleClickAction();
+	void getEnemyBattlers(std::vector<Battler*>& battlerVector);
+	void moveFingerToEnemyNum(int enemyNum);
 
    private:
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
-	unsigned int _currentTargetBattler = 0;
+	int _currentTargetBattler = 0;
 	BattlerStates _currentBattlerState = BattlerStates::Default;
 };
 
