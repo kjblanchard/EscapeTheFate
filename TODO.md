@@ -8,7 +8,6 @@ Cpp game?
 
 ## Todos
 
-- Target selection starts on enemy properly.
 - Enemy dies
 - Win screen
 - go back to world map
@@ -42,6 +41,7 @@ Cpp game?
 
 ## Completed
 
+- Target selection starts on enemy properly.
 - player speed
 - ui progress bar
 - update progress bar with data
