@@ -17,6 +17,11 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerU
 }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
+	std::vector<Battler*> enemyBattlers;
+	getEnemyBattlers(enemyBattlers);
+	if(enemyBattlers.size() < 1) {
+		newState = BattleEndStart;
+	}
 	switch (newState) {
 		case BattlerStates::ATBCharging:
 			_battlerUI->CloseCommandsMenu();
@@ -31,6 +36,9 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->StartTargetSelection();
 			moveFingerToEnemyNum(0);
 			break;
+		case BattlerStates::BattleEndStart:
+			Engine::Audio::PlayBGM("victory");
+			break;
 		default:
 			break;
 	}
@@ -40,6 +48,9 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 	sgLogWarn("Trying to move to location %d", enemyNum);
 	std::vector<Battler*> enemyBattlers;
 	getEnemyBattlers(enemyBattlers);
+	if (enemyBattlers.empty()) {
+		return;
+	}
 
 	if (enemyNum > (int)enemyBattlers.size() - 1) {
 		enemyNum = 0;
@@ -111,7 +122,7 @@ void PlayerBattler::handleInputCommandsMenu() {
 void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
 	auto battlers = BattleSystem::GetEnemyBattlers();
 	copy_if(battlers.begin(), battlers.end(), back_inserter(battlerVector), [](Battler* battler) {
-		return battler && !battler->IsPlayer();
+		return battler && !battler->IsPlayer() && battler->CurrentHP() > 0;
 	});
 }
 
@@ -136,6 +147,7 @@ void PlayerBattler::handleInputTargetSelection() {
 		_currentATBCharge = 0;
 		handleStateChange(ATBCharging);
 	}
+
 	if (newTarget != _currentTargetBattler) {
 		moveFingerToEnemyNum(newTarget);
 	}

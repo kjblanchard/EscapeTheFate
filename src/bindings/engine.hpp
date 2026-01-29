@@ -18,6 +18,7 @@ struct Engine {
 	static void HandleMapLoad();
 
 	struct Audio {
+		static void PlayBGM(const std::string& name, float volume = 1.0f);
 		static void PlayBGMBackground(const std::string& name, float volume = 1.0f);
 		static void StopBGMBackground();
 
@@ -77,7 +78,6 @@ struct Engine {
 
    private:
 	static std::string _nextScene;
-	static void LoadAndPlayBGM(const std::string& name, float volume);
 	static void loadSceneInternal();
 };
 

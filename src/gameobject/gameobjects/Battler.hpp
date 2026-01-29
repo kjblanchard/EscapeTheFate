@@ -26,7 +26,7 @@ class Battler : public GameObject {
 	void StartAnimation(const std::string& name, bool backToIdle = true);
 
    public:
-	inline unsigned int CurrentHP() { return _battlerData->HP; }
+	inline unsigned int CurrentHP() { return _currentHP; }
 	virtual bool IsPlayer() = 0;
 
    public:

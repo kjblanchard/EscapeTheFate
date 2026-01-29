@@ -10,6 +10,7 @@ enum class BattlerStates {
 	ATBFullyCharged,
 	CommandSelection,
 	TargetSelection,
+	BattleEndStart,
 };
 
 class PlayerBattler : public Battler {

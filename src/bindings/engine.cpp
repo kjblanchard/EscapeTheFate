@@ -24,11 +24,6 @@ using namespace std;
 
 string Engine::_nextScene = "";
 static string _currentBGM = "";
-void Engine::LoadAndPlayBGM(const std::string& name, float volume) {
-	SetBgmTrack(0);
-	LoadBgm(name.c_str(), volume, -1);
-	PlayBgm();
-}
 
 void Engine::PlaySFX(const std::string& name, float volume) {
 	PlaySfxOneShot(name.c_str(), volume);
@@ -48,7 +43,7 @@ void Engine::loadSceneInternal() {
 	LoadMap(_nextScene.c_str());
 	GameObject::LoadAllGameObjects();
 	if (_currentBGM != sceneToLoad.BGMName) {
-		LoadAndPlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
+		Engine::Audio::PlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
 		_currentBGM = sceneToLoad.BGMName;
 	}
 	if (!sceneToLoad.UIName.empty()) {
@@ -148,6 +143,12 @@ float Engine::Tweening::GetTweenedValue(float start, float end, float timeSecond
 	else
 		progressValue = std::max(progressValue, end);
 	return progressValue;
+}
+
+void Engine::Audio::PlayBGM(const std::string& name, float volume) {
+	SetBgmTrack(0);
+	LoadBgm(name.c_str(), volume, -1);
+	PlayBgm();
 }
 
 void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
