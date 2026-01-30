@@ -6,11 +6,14 @@ namespace Etf {
 
 enum class BattlerStates {
 	Default,
+	Initialized,
 	ATBCharging,
 	ATBFullyCharged,
 	CommandSelection,
 	TargetSelection,
 	BattleEndStart,
+	BattleEndIdle,
+	BattleEnd,
 };
 
 class PlayerBattler : public Battler {

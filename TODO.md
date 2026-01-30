@@ -4,12 +4,19 @@ Cpp game?
 
 ## In Progress
 
+- go back to world
+    : need to track what screen we were on - done
+    : need to track where we were when we entered the battle - done
+    : need to track what direction - done
+    : cleanup properly
+    : we should have battle system enable and disable the ui as needed
+
 - draw out target selection
 
 ## Todos
 
+- Battle needs to set camera to 0
 - Win screen
-- go back to world map
 
 ### Battle
 
@@ -40,6 +47,9 @@ Cpp game?
 
 ## Completed
 
+- currently crashes when gameobjects keep spawning, either it is getting deleted for some reason, or it isn't being allocated correctly in gameobject
+    : somehow numGameobjects is higher than sizegameobjects
+    : removing the counting system
 - Enemy dies
 - Target selection starts on enemy properly.
 - player speed
@@ -82,12 +92,12 @@ Cpp game?
     : but we probably should, cause the dialog box should be stored always?
 - Move to jsonc instead of what we use now. .. Lua and glaze.
 
-## Version Roadmap
+## Version / Release Roadmap
 
 - 0.1.0: basic dialog with interactions, enter battle, can kill enemy, battle ended.
     : dialog - done
     : battle enter - done
-    : battle finish
+    : battle finish - done
     : battle end
     : fix all leaks
     : go through all todos and update
@@ -99,10 +109,10 @@ Cpp game?
     : second battler
 
 - 0.3.0: Main menu and splash screens
-    : add in splash screens when loading the game
-    : add in a welcome menu, where you can new game, options, etc
     : open a menu when exploring, should be small enough for both
     : simple viewing of stats
+    : add in splash screens when loading the game
+    : add in a welcome menu, where you can new game, options, etc
 
 - 0.4.0: Battle enhancements
     : inventory that you can have (shared)

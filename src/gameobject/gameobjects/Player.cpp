@@ -29,6 +29,13 @@ void Player::Create(TiledObject* objData) {
 		if (loadLocation != GameState::NextLoadScreen) continue;
 		sgLogDebug("Making player start at pos %d!!", loadLocation);
 		auto player = new Player(objData);
+		// We should override this if we are exiting from a battle.
+		if (GameState::NextLoadLocation.X != 0 && GameState::NextLoadLocation.Y != 0) {
+			player->X() = GameState::NextLoadLocation.X;
+			player->Y() = GameState::NextLoadLocation.Y;
+			player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
+			GameState::NextLoadLocation = {0, 0};
+		}
 		SetCameraFollowTarget(&player->X(), &player->Y());
 		_gameObjects.push_back(unique_ptr<GameObject>(player));
 	}
@@ -108,7 +115,7 @@ void Player::handleInteractions() {
 }
 
 bool Player::handlePlayerMovement() {
-	if(GameState::InDialog) return false;
+	if (GameState::InDialog) return false;
 	auto moved = false;
 	auto previousDirection = _direction;
 	auto velocityX = 0;
@@ -149,6 +156,10 @@ bool Player::handlePlayerMovement() {
 		if (_direction != previousDirection) {
 			Engine::Animation::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
 		}
+		// Update gamestate with players location.
+		GameState::NextLoadLocation.X = X();
+		GameState::NextLoadLocation.Y = Y();
+		GameState::NextLoadDirection = static_cast<int>(_direction);
 
 	} else {
 		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);

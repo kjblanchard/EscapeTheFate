@@ -16,7 +16,7 @@
     {
         "id": 1,
         "name": "Black Bird",
-        "hp": 3,
+        "hp": 1,
         "str": 5,
         "mag": 5,
         "def": 5,

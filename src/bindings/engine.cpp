@@ -22,6 +22,7 @@
 using namespace Etf;
 using namespace std;
 
+string Engine::_currentScene = "";
 string Engine::_nextScene = "";
 static string _currentBGM = "";
 
@@ -52,20 +53,21 @@ void Engine::loadSceneInternal() {
 		UI::RootUIObject->DestroyChildIfNotName("");
 	}
 	DialogSystem::LoadDialogFromJsonFile(sceneToLoad.MapName);
+	_currentScene = _nextScene;
 	_nextScene = "";
 }
 
 void Engine::LoadScene(const string& name) {
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
-	if (newName == "") {
+	if (newName.empty()) {
 		newName = gameSceneConfig.defaultScene;
 	}
 	_nextScene = newName;
 }
 
 void Engine::HandleMapLoad() {
-	if (_nextScene == "") return;
+	if (_nextScene.empty()) return;
 	loadSceneInternal();
 }
 

@@ -11,6 +11,7 @@ namespace Etf {
 
 struct Engine {
    public:
+	inline static const std::string& CurrentScene() { return _currentScene; }
 	static void LoadScene(const std::string& name = "");
 	static Sprite* CreateSpriteFull(const std::string& name, sgGameObject* parent, RectangleF sourceRect, RectangleF offsetSizeRect);
 	static void SetSpriteVisible(Sprite* sprite, bool visible);
@@ -77,6 +78,7 @@ struct Engine {
 	static void PlaySFX(const std::string& name, float volume);
 
    private:
+	static std::string _currentScene;
 	static std::string _nextScene;
 	static void loadSceneInternal();
 };

@@ -1,5 +1,6 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/log.h>
+#include <gameState.hpp>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -17,10 +18,12 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerU
 }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
-	std::vector<Battler*> enemyBattlers;
-	getEnemyBattlers(enemyBattlers);
-	if(enemyBattlers.size() < 1) {
-		newState = BattleEndStart;
+	if (newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) {
+		std::vector<Battler*> enemyBattlers;
+		getEnemyBattlers(enemyBattlers);
+		if (enemyBattlers.size() < 1) {
+			newState = BattleEndStart;
+		}
 	}
 	switch (newState) {
 		case BattlerStates::ATBCharging:
@@ -38,6 +41,13 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			break;
 		case BattlerStates::BattleEndStart:
 			Engine::Audio::PlayBGM("victory");
+			_battlerUI->CloseCommandsMenu();
+			_battlerUI->CloseTargetSelection();
+			_battlerUI->ClosePlayerInfoBox();
+			StartAnimation("cheer1", false);
+			break;
+		case BattlerStates::BattleEnd:
+			BattleSystem::TriggerBattleEnd();
 			break;
 		default:
 			break;
@@ -45,7 +55,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 	_currentBattlerState = newState;
 }
 void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
-	sgLogWarn("Trying to move to location %d", enemyNum);
+	sgLogDebug("Trying to move to location %d", enemyNum);
 	std::vector<Battler*> enemyBattlers;
 	getEnemyBattlers(enemyBattlers);
 	if (enemyBattlers.empty()) {
@@ -84,6 +94,9 @@ void PlayerBattler::updateImpl() {
 			break;
 		}
 		case TargetSelection:
+			break;
+		case BattleEndStart:
+			handleStateChange(BattleEndIdle);
 			break;
 		default:
 			break;
@@ -166,6 +179,11 @@ void PlayerBattler::handleInput() {
 			break;
 		case BattlerStates::TargetSelection:
 			handleInputTargetSelection();
+			break;
+		case BattlerStates::BattleEndIdle:
+			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+				handleStateChange(BattleEnd);
+			}
 			break;
 	}
 }

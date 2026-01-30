@@ -63,6 +63,13 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 	} else {
 		auto hpObject = UI::RootUIObject->GetChildByName("EnemyHP");
 		_hpObject = static_cast<UIText*>(hpObject);
+		if(_hpObject) _hpObject->SetVisible(true);
+	}
+}
+
+BattlerUI::~BattlerUI() {
+	if (!_player && _hpObject) {
+		_hpObject->SetVisible(false);
 	}
 }
 
@@ -126,5 +133,15 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 }
 
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
-	_targetSelectionFinger->SetAbsolutePosition(battler->X(), battler->Y());
+	// TODO this should use the battlers width and center it, and then move a little above it
+	auto x = battler->X() + 20;
+	auto y = battler->Y() - 10;
+	_targetSelectionFinger->SetAbsolutePosition(x, y);
+}
+
+void BattlerUI::ClosePlayerInfoBox() {
+	auto menu = UI::RootUIObject->GetChildByName("PlayerStatusHUD");
+	if (menu) {
+		menu->SetVisible(false);
+	}
 }

@@ -41,19 +41,6 @@ void update() {
 	if (GameState::Battle::InBattle) {
 		BattleSystem::BattleSystemUpdate();
 	}
-	// if (IsKeyboardKeyDown(RIGHT)) {
-	// 	// cameraPos[0] = cameraPos[0] + 0.63421325;
-	// 	cameraPos[0] = cameraPos[0] + 0.63421325;
-	// }
-	// if (IsKeyboardKeyDown(LEFT)) {
-	// 	cameraPos[0] = cameraPos[0] - 0.6421498053;
-	// }
-	// if (IsKeyboardKeyDown(UP)) {
-	// 	cameraPos[1] = cameraPos[1] + 0.63421325;
-	// }
-	// if (IsKeyboardKeyDown(DOWN)) {
-	// 	cameraPos[1] = cameraPos[1] - 0.6421498053;
-	// }
 }
 
 void draw() {
@@ -61,9 +48,14 @@ void draw() {
 	UI::DrawUI();
 }
 
+static void enterBattle() {
+	GameState::NextLoadMapName = Engine::CurrentScene();
+	Engine::LoadScene("forest1");
+}
+
 void handleInput() {
 	if (IsKeyboardKeyJustPressed(B)) {
-		Engine::LoadScene("forest1");
+		enterBattle();
 	}
 }
 

@@ -16,6 +16,7 @@ enum class PlayerUIAnimationStates {
 class BattlerUI {
    public:
 	BattlerUI(unsigned int battlerNum);
+	~BattlerUI();
 	void UpdateHP(const std::string& hp);
 	void UpdateProgressBar(float percent);
 	inline void OpenCommandsMenu() {
@@ -32,8 +33,9 @@ class BattlerUI {
 	void CloseTargetSelection();
 	void MoveCursorInMenu(unsigned int newLocation);
 	void UpdateAnimations();
+	//Used when battle is over currently
+	static void ClosePlayerInfoBox();
 
-   private:
    private:
 	UIObject* _commandMenu;
 	UIObject* _menuItems[4];

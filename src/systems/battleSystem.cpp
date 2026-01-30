@@ -20,6 +20,7 @@ using namespace Etf;
 using namespace std;
 
 enum class BattleStates {
+	NotInitialized,
 	NotInBattle,
 	BattleStartTriggered,
 	Battle,
@@ -27,8 +28,8 @@ enum class BattleStates {
 };
 using enum BattleStates;
 
-static BattleStates _currentBattleState = NotInBattle;
-static BattleStates _nextBattleState = NotInBattle;
+static BattleStates _currentBattleState = NotInitialized;
+static BattleStates _nextBattleState = NotInitialized;
 static vector<BattlerData> _battlerData;
 // Loaded battle groups from the database, used when loading battle and stays loaded
 static vector<vector<int>> _battleGroups;
@@ -38,10 +39,11 @@ static vector<Battler*> _battlers;
 static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
+	Engine::LoadScene(GameState::NextLoadMapName);
+	_nextBattleState = NotInBattle;
 }
 
 static void loadBattleGroups() {
-	if (!_battleGroups.empty()) return;
 	auto loadPath = format("{}assets/battle/battleGroups.json", GetBasePath());
 	auto dataRootJsonArray = jGetObjectFromFile(loadPath.c_str());
 	if (!dataRootJsonArray) sgLogCritical("No battle groups found at %s, exiting", loadPath.c_str());
@@ -64,7 +66,6 @@ static void loadBattleGroups() {
 }
 
 static void loadBattleDB() {
-	if (!_battlerData.empty()) return;
 	auto loadPath = format("{}assets/battle/battleDB.json", GetBasePath());
 	auto dataRootJsonArray = jGetObjectFromFile(loadPath.c_str());
 	if (!dataRootJsonArray) sgLogCritical("No battler Database found at %s, exiting", loadPath.c_str());
@@ -122,10 +123,15 @@ static void loadEnemies() {
 	}
 }
 
-static void loadBattle() {
-	_battlers.resize(8);
+static void initializeBattleSystem() {
+	sgLogWarn("Initializing battle");
 	loadBattleDB();
 	loadBattleGroups();
+}
+
+static void loadBattle() {
+	_battlers.resize(8);
+	sgLogWarn("loading battle");
 	loadPlayers();
 	loadEnemies();
 }
@@ -136,6 +142,7 @@ static void BattleUpdate() {}
 static void triggerStateChange() {
 	switch (_nextBattleState) {
 		case BattleStartTriggered:
+			if (_currentBattleState == NotInitialized) initializeBattleSystem();
 			loadBattle();
 			break;
 		case BattleEnd:
@@ -147,10 +154,14 @@ static void triggerStateChange() {
 }
 
 void BattleSystem::TriggerBattleStart() {
-	if (_currentBattleState == NotInBattle && _nextBattleState != BattleStartTriggered) {
+	if ((_currentBattleState == NotInBattle || _currentBattleState == NotInitialized) && _nextBattleState != BattleStartTriggered) {
 		_nextBattleState = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
 	}
+}
+void BattleSystem::TriggerBattleEnd() {
+	_nextBattleState = BattleEnd;
+	triggerStateChange();
 }
 
 void BattleSystem::BattleSystemUpdate() {
@@ -174,5 +185,5 @@ void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
 }
 
 const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {
-    return _battlers;
+	return _battlers;
 }
