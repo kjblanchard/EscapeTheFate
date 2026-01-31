@@ -9,7 +9,7 @@
 using namespace std;
 using namespace Etf;
 
-UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visible(args.Visible), _priority(args.Priority), _name(args.Name), _location(args.Rect), _debugBox(args.DebugBox) {
+UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visible(args.Visible), _priority(args.Priority), _name(args.Name), _location(args.Rect), _originalLocation(args.Rect), _debugBox(args.DebugBox) {
 }
 
 RectangleF UIObject::GetAbsolutePosition() {

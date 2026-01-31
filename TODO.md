@@ -4,18 +4,8 @@ Cpp game?
 
 ## In Progress
 
-- go back to world
-    : need to track what screen we were on - done
-    : need to track where we were when we entered the battle - done
-    : need to track what direction - done
-    : cleanup properly
-    : we should have battle system enable and disable the ui as needed
-
-- draw out target selection
-
 ## Todos
 
-- Battle needs to set camera to 0
 - Win screen
 
 ### Battle
@@ -47,6 +37,13 @@ Cpp game?
 
 ## Completed
 
+- Battle needs to set camera to 0
+- go back to world
+    : need to track what screen we were on - done
+    : need to track where we were when we entered the battle - done
+    : need to track what direction - done
+    : cleanup properly
+    : we should have battle system enable and disable the ui as needed
 - currently crashes when gameobjects keep spawning, either it is getting deleted for some reason, or it isn't being allocated correctly in gameobject
     : somehow numGameobjects is higher than sizegameobjects
     : removing the counting system

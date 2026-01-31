@@ -20,8 +20,8 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		if (!_commandMenu) {
 			sgLogCritical("Could not fild child CommandsNineSlice, exiting");
 		}
-		_menuBoxStartX = _commandMenu->X();
-		_menuBoxStartY = _commandMenu->Y();
+		_menuBoxStartX = _commandMenu->OriginalX();
+		_menuBoxStartY = _commandMenu->OriginalY();
 		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
 		auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
 		if (!vlg) {

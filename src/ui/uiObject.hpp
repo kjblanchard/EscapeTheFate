@@ -20,6 +20,8 @@ class UIObject {
 	UIObject() = default;
 	inline float X() {return _location.x;}
 	inline float Y() {return _location.y;}
+	inline float OriginalX() {return _originalLocation.x;}
+	inline float OriginalY() {return _originalLocation.y;}
 	inline void SetX(float x){_location.x = x;}
 	inline void SetY(float y){_location.y = y;}
 	// Gets the position on the screen currently, currently recursive call to root so can be expensive.
@@ -61,6 +63,7 @@ class UIObject {
 	UIObject* _parent = nullptr;
 	// local location; Offset to parent and size
 	RectangleF _location = {0, 0, 0, 0};
+	const RectangleF _originalLocation = {0,0,0,0};
 	bool _debugBox = false;
 };
 }  // namespace Etf

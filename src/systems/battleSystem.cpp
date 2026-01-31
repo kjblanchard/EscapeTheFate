@@ -1,7 +1,9 @@
 #include <Supergoon/Input/keyboard.h>
+#include <Supergoon/camera.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
+#include <assert.h>
 
 #include <battle/battlerData.hpp>
 #include <format>
@@ -36,9 +38,20 @@ static vector<vector<int>> _battleGroups;
 // Current battlers spawned in, always the size of all positions.
 static vector<Battler*> _battlers;
 
+//Holds all of the UI objects in a (organized?) place.
+struct BattleUI {
+	//Top level, hide or show the whole thing
+	UIObject* RootPanel = nullptr;
+	//Player hud
+	UIObject* PlayerHUD = nullptr;
+	//All the player commands menus, usually controlled by the battler.
+	UIObject* PlayerCommandsObjects[3] = {nullptr, nullptr, nullptr};
+} static _battleUI;
+
 static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
+	ResetCameraFollow();
 	Engine::LoadScene(GameState::NextLoadMapName);
 	_nextBattleState = NotInBattle;
 }
@@ -129,11 +142,29 @@ static void initializeBattleSystem() {
 	loadBattleGroups();
 }
 
+static void cacheBattleUIElements() {
+	// Need to find the command menu, HUD, etc.
+	_battleUI.RootPanel = UI::RootUIObject->GetChildByName("BattlePanel");
+	assert(_battleUI.RootPanel && "No root object found");
+	_battleUI.PlayerHUD = UI::RootUIObject->GetChildByName("PlayerStatusHUD");
+	assert(_battleUI.PlayerHUD && "No hud object found");
+	int battlerNum = 1;
+	for (auto& obj : _battleUI.PlayerCommandsObjects) {
+		auto nameLookup = format("Player{}CommandsUI", to_string(battlerNum));
+		obj = _battleUI.RootPanel->GetChildByName(nameLookup);
+		++battlerNum;
+		assert(obj && "No command object found");
+	}
+}
+
 static void loadBattle() {
 	_battlers.resize(8);
 	sgLogWarn("loading battle");
+	cacheBattleUIElements();
 	loadPlayers();
 	loadEnemies();
+	_battleUI.RootPanel->SetVisible(true);
+	_battleUI.PlayerHUD->SetVisible(true);
 }
 
 static void BattleUpdate() {}
