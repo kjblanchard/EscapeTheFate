@@ -150,6 +150,7 @@ bool Player::handlePlayerMovement() {
 		float desiredY = (Y() + velocityY * _moveSpeed * GameState::DeltaTimeSeconds);
 		_collisionRect = {desiredX + _collisionOffsetAndSizeRect.x, desiredY + _collisionOffsetAndSizeRect.y, _collisionOffsetAndSizeRect.w, _collisionOffsetAndSizeRect.h};
 		CheckRectForCollisionWithSolids(&_collisionRect);
+		_collisionRect.x = roundCollisionResolve(_collisionRect.x);
 		auto actualX = (_collisionRect.x - _collisionOffsetAndSizeRect.x);
 		auto actualY = (_collisionRect.y - _collisionOffsetAndSizeRect.y);
 		X() = actualX;
