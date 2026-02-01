@@ -12,6 +12,8 @@ Cpp game?
 - Direction not correct when loaded from map exit.
 - Battle finger should only pop up after the animation
 - Battle finger should disappear after selection before close anim
+- Sometimes player does not animate and just slides.
+- Jitter when walking into walls and when at map center.
 - Leaks
     : Destroy all animators
     : destroy all maps

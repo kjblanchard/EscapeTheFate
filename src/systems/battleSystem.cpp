@@ -38,6 +38,7 @@ static vector<BattlerData> _battlerData;
 static vector<vector<int>> _battleGroups;
 // Current battlers spawned in, always the size of all positions.
 static vector<Battler*> _battlers;
+static string _loadMap = "";
 
 // Holds all of the UI objects in a (organized?) place.
 struct BattleUI {
@@ -55,8 +56,10 @@ static void battleEnd() {
 	_battlers.clear();
 	_battleUI.VictoryPanel->SetVisible(false);
 	ResetCameraFollow();
-	Engine::LoadScene(GameState::NextLoadMapName);
+	Engine::LoadScene(_loadMap);
 	_nextBattleState = NotInBattle;
+	GameState::Battle::InBattle = false;
+	GameState::Battle::ExitingFromBattle = true;
 }
 
 static void loadBattleGroups() {
@@ -200,6 +203,7 @@ static void triggerStateChange() {
 
 void BattleSystem::TriggerBattleStart() {
 	if ((_currentBattleState == NotInBattle || _currentBattleState == NotInitialized) && _nextBattleState != BattleStartTriggered) {
+		_loadMap = Engine::CurrentScene();
 		_nextBattleState = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
 	}

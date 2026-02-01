@@ -12,6 +12,7 @@
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
 
+#include <gameState.hpp>
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <format>
@@ -57,6 +58,8 @@ void Engine::loadSceneInternal() {
 	DialogSystem::LoadDialogFromJsonFile(sceneToLoad.MapName);
 	_currentScene = _nextScene;
 	_nextScene = "";
+	GameState::NextLoadMapName = "";
+	GameState::Battle::ExitingFromBattle = false;
 }
 
 void Engine::LoadScene(const string& name) {
@@ -66,6 +69,7 @@ void Engine::LoadScene(const string& name) {
 		newName = gameSceneConfig.defaultScene;
 	}
 	_nextScene = newName;
+	// Reset the battle, this is used when loading player battlers
 }
 
 void Engine::HandleMapLoad() {

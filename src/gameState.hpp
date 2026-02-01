@@ -17,6 +17,7 @@ struct GameState {
 	static unsigned int Ticks;
 	static bool InDialog;
 	struct Battle {
+		static bool ExitingFromBattle;
 		static bool InBattle;
 		static int NextBattleGroup;
 	} Battle;

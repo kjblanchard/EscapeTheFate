@@ -8,5 +8,6 @@ unsigned int GameState::Ticks;
 bool GameState::InDialog = false;
 bool GameState::Battle::InBattle = false;
 int GameState::Battle::NextBattleGroup = 1;
+bool GameState::Battle::ExitingFromBattle = false;
 std::string GameState::NextLoadMapName = "";
-	int GameState:: NextLoadDirection = 0;
+int GameState::NextLoadDirection = 0;

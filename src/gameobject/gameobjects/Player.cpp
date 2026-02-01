@@ -30,7 +30,7 @@ void Player::Create(TiledObject* objData) {
 		sgLogDebug("Making player start at pos %d!!", loadLocation);
 		auto player = new Player(objData);
 		// We should override this if we are exiting from a battle.
-		if (GameState::NextLoadLocation.X != 0 && GameState::NextLoadLocation.Y != 0) {
+		if (GameState::Battle::ExitingFromBattle) {
 			player->X() = GameState::NextLoadLocation.X;
 			player->Y() = GameState::NextLoadLocation.Y;
 			player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
