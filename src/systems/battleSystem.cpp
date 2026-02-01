@@ -52,9 +52,9 @@ struct BattleUI {
 } static _battleUI;
 
 static void battleEnd() {
+	_battleUI.VictoryPanel->SetVisible(false);
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
-	_battleUI.VictoryPanel->SetVisible(false);
 	ResetCameraFollow();
 	Engine::LoadScene(_loadMap);
 	_nextBattleState = NotInBattle;

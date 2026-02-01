@@ -1,10 +1,7 @@
 # Escape The Fate
 
-Cpp game?
-
 ## In Progress
 
-- refactor battle exit
 - clean any todos
 
 ## Todos
@@ -38,6 +35,7 @@ Cpp game?
 
 ## Completed
 
+- refactor battle exit
 - remove gameobject system from the C engine, only makes it annoying to work with
 - Animation system should use regular pointers and needs an overhaul, why use handles
     : not needed right now, and works fine.

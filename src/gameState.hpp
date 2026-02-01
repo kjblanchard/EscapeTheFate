@@ -17,7 +17,9 @@ struct GameState {
 	static unsigned int Ticks;
 	static bool InDialog;
 	struct Battle {
+		//If this is set to true, players will load at the last load location
 		static bool ExitingFromBattle;
+		//If this is set to true, the battle system will uddate each frame.
 		static bool InBattle;
 		static int NextBattleGroup;
 	} Battle;
