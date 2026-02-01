@@ -145,23 +145,26 @@ bool Player::handlePlayerMovement() {
 		_direction = Direction::East;
 	}
 
+	if (_direction != previousDirection) {
+		Engine::Animation::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
+		GameState::NextLoadDirection = static_cast<int>(_direction);
+	}
+
 	if (moved) {
 		float desiredX = (X() + velocityX * _moveSpeed * GameState::DeltaTimeSeconds);
 		float desiredY = (Y() + velocityY * _moveSpeed * GameState::DeltaTimeSeconds);
 		_collisionRect = {desiredX + _collisionOffsetAndSizeRect.x, desiredY + _collisionOffsetAndSizeRect.y, _collisionOffsetAndSizeRect.w, _collisionOffsetAndSizeRect.h};
 		CheckRectForCollisionWithSolids(&_collisionRect);
 		_collisionRect.x = roundCollisionResolve(_collisionRect.x);
+		_collisionRect.y = roundCollisionResolve(_collisionRect.y);
 		auto actualX = (_collisionRect.x - _collisionOffsetAndSizeRect.x);
 		auto actualY = (_collisionRect.y - _collisionOffsetAndSizeRect.y);
 		X() = actualX;
 		Y() = actualY;
-		if (_direction != previousDirection) {
-			Engine::Animation::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
-		}
 		// Update gamestate with players location.
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
-		GameState::NextLoadDirection = static_cast<int>(_direction);
+		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 1.0);
 
 	} else {
 		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);

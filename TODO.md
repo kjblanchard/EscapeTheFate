@@ -4,7 +4,6 @@ Cpp game?
 
 ## In Progress
 
-- Sometimes player does not animate and just slides.
 
 ## Todos
 
@@ -46,6 +45,7 @@ Cpp game?
 
 ## Completed
 
+- Sometimes player does not animate and just slides.
 - Jitter when walking into walls and when at map center.
 - Battle finger should only pop up after the animation
 - Battle finger should disappear after selection before close anim
