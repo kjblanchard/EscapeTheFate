@@ -15,7 +15,7 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), &_x, &_y, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	// _animator = Engine::Animation::CreateAnimatorFull(args.BattleData->Sprite.c_str(), _sprite);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
-	StartAnimation(args.BattleData->IdleAnimation, false);
+	_animator->StartAnimation(args.BattleData->IdleAnimation);
 	_gameObjects.push_back(shared_ptr<GameObject>(this));
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
@@ -25,14 +25,6 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
 	takeDamageImpl(damage);
-}
-
-void Battler::StartAnimation(const std::string& name, bool backToIdle) {
-	if (backToIdle) {
-		_animator->PlayAnimationThenLoopSecond(name.c_str(), _battlerData->IdleAnimation.c_str());
-	} else {
-		_animator->StartAnimation(name.c_str());
-	}
 }
 
 void Battler::updateATBGauge() {

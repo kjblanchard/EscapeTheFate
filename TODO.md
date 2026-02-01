@@ -9,7 +9,13 @@ Cpp game?
 
 ## Todos
 
+- transition screen for switching between maps
+- ui animation for player atb in battle.
+    : not really needed right now, will just make it look better.
+
 ### Battle
+
+- when you start battle the anim is moving back
 
 ### UI
 
@@ -24,15 +30,11 @@ Cpp game?
 - Jitter on middle of screen too
 - add enemy health bar and player health bar
 - check on discord bot updates.
-- ui animation for player atb in battle.
-    : not really needed right now, will just make it look better.
 - More fields that can be optional to make it easier to write the jsonc file
     : not really needed right now
 - Dialog system slidefade anim .. would be cool if we could handle tweening the opacity
 - Better error handling / loading from json
 - Use gameconfig to handle the dialog box variables, instead of const
-
-## Refactors
 
 ## Completed
 

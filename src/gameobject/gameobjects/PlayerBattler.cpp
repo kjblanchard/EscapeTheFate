@@ -9,9 +9,12 @@
 #include <iterator>
 #include <systems/battleSystem.hpp>
 
+
 using namespace Etf;
 using namespace std;
 using enum BattlerStates;
+
+const string VICTORY_STR = "cheer1";
 
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
@@ -44,7 +47,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
-			StartAnimation("cheer1", false);
+			_animator->StartAnimation(VICTORY_STR);
 			BattleSystem::TriggerBattleVictoryStart();
 			break;
 		case BattlerStates::BattleEnd:
@@ -154,7 +157,7 @@ void PlayerBattler::handleInputTargetSelection() {
 		vector<Battler*> battlers;
 		getEnemyBattlers(battlers);
 		const auto battler = battlers.at(newTarget);
-		StartAnimation("slash2");
+		_animator->PlayAnimationThenLoopSecond("slash2", _battlerData->IdleAnimation);
 		if (battler) {
 			battler->TakeDamage(1);
 		}
@@ -185,6 +188,8 @@ void PlayerBattler::handleInput() {
 			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
 				handleStateChange(BattleEnd);
 			}
+			break;
+		default:
 			break;
 	}
 }

@@ -25,7 +25,6 @@ class Battler : public GameObject {
 		updateATBGauge();
 		updateImpl();
 	}
-	void StartAnimation(const std::string& name, bool backToIdle = true);
 
    public:
 	inline unsigned int CurrentHP() { return _currentHP; }
