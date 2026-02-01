@@ -289,6 +289,31 @@
                     }
                 }
             },
+            "VictoryPanel": {
+                "type": "nineSlice",
+                "visible": false,
+                "file": "uibase",
+                "scale": 1.0,
+                "color": { "R": 80, "G": 0, "B": 120, "A": 255 },
+                "rect": { "x": 128, "y": 20, "w": 224, "h": 48 },
+                "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+                "camera": false,
+                "priority": 2,
+                "xOffset": 8,
+                "yOffset": 9,
+                "children": {
+                    "VictoryText": {
+                        "type": "text",
+                        "font": "PressStart2P",
+                        "fontSize": 8,
+                        "rect": { "x": 0, "y": 0, "w": 224, "h": 48 },
+                        "text": "You are the win!",
+                        "centeredX": true,
+                        "centeredY": true,
+                        "numCharsToDraw": 100
+                    }
+                }
+            },
             "EnemyHP": {
                 "type": "text",
                 "font": "PressStart2P",

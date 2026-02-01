@@ -1,10 +1,10 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/log.h>
-#include <gameState.hpp>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
+#include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <iterator>
 #include <systems/battleSystem.hpp>
@@ -45,6 +45,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
 			StartAnimation("cheer1", false);
+			BattleSystem::TriggerBattleVictoryStart();
 			break;
 		case BattlerStates::BattleEnd:
 			BattleSystem::TriggerBattleEnd();

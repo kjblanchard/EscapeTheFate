@@ -4,9 +4,22 @@ Cpp game?
 
 ## In Progress
 
+- When switching screens, player doesn't load properly
+    : prolly from battle exit
+
 ## Todos
 
-- Win screen
+- Direction not correct when loaded from map exit.
+- Battle finger should only pop up after the animation
+- Battle finger should disappear after selection before close anim
+- Leaks
+    : Destroy all animators
+    : destroy all maps
+    : destroy all loaded UI/json
+    : destroy gameconfig
+    : destroy battleDB, etc
+- Check perf
+    : [link](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
 
 ### Battle
 
@@ -37,6 +50,7 @@ Cpp game?
 
 ## Completed
 
+- Win screen
 - Battle needs to set camera to 0
 - go back to world
     : need to track what screen we were on - done

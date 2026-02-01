@@ -4,6 +4,7 @@
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Tweening/easing.h>
+#include <Supergoon/camera.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
@@ -41,6 +42,7 @@ void Engine::loadSceneInternal() {
 	}
 	auto& sceneToLoad = *it;
 	// We should destroy all of the old gameobjects, and also load the ui if needed.
+	ResetCameraFollow();
 	LoadMap(_nextScene.c_str());
 	GameObject::LoadAllGameObjects();
 	if (_currentBGM != sceneToLoad.BGMName) {

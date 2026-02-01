@@ -26,6 +26,7 @@ enum class BattleStates {
 	NotInBattle,
 	BattleStartTriggered,
 	Battle,
+	BattleVictory,
 	BattleEnd,
 };
 using enum BattleStates;
@@ -38,19 +39,21 @@ static vector<vector<int>> _battleGroups;
 // Current battlers spawned in, always the size of all positions.
 static vector<Battler*> _battlers;
 
-//Holds all of the UI objects in a (organized?) place.
+// Holds all of the UI objects in a (organized?) place.
 struct BattleUI {
-	//Top level, hide or show the whole thing
+	// Top level, hide or show the whole thing
 	UIObject* RootPanel = nullptr;
-	//Player hud
+	// Player hud
 	UIObject* PlayerHUD = nullptr;
-	//All the player commands menus, usually controlled by the battler.
+	// All the player commands menus, usually controlled by the battler.
 	UIObject* PlayerCommandsObjects[3] = {nullptr, nullptr, nullptr};
+	UIObject* VictoryPanel = nullptr;
 } static _battleUI;
 
 static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
+	_battleUI.VictoryPanel->SetVisible(false);
 	ResetCameraFollow();
 	Engine::LoadScene(GameState::NextLoadMapName);
 	_nextBattleState = NotInBattle;
@@ -155,6 +158,8 @@ static void cacheBattleUIElements() {
 		++battlerNum;
 		assert(obj && "No command object found");
 	}
+	_battleUI.VictoryPanel = _battleUI.RootPanel->GetChildByName("VictoryPanel");
+	assert(_battleUI.VictoryPanel && "No victory panel found");
 }
 
 static void loadBattle() {
@@ -165,6 +170,11 @@ static void loadBattle() {
 	loadEnemies();
 	_battleUI.RootPanel->SetVisible(true);
 	_battleUI.PlayerHUD->SetVisible(true);
+	_battleUI.VictoryPanel->SetVisible(false);
+}
+
+static void battleVictory() {
+	_battleUI.VictoryPanel->SetVisible(true);
 }
 
 static void BattleUpdate() {}
@@ -176,8 +186,12 @@ static void triggerStateChange() {
 			if (_currentBattleState == NotInitialized) initializeBattleSystem();
 			loadBattle();
 			break;
+		case BattleVictory:
+			battleVictory();
+			break;
 		case BattleEnd:
 			battleEnd();
+			break;
 		default:
 			break;
 	}
@@ -192,6 +206,10 @@ void BattleSystem::TriggerBattleStart() {
 }
 void BattleSystem::TriggerBattleEnd() {
 	_nextBattleState = BattleEnd;
+	triggerStateChange();
+}
+void BattleSystem::TriggerBattleVictoryStart() {
+	_nextBattleState = BattleVictory;
 	triggerStateChange();
 }
 
