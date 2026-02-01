@@ -206,6 +206,9 @@ void UI::DrawUI() {
 }
 
 void UI::DestroyUI() {
+	for (auto& [key, value] : _cachedUIFiles) {
+		jReleaseObjectFromFile(value);
+	}
 	_cachedUIFiles.clear();
 	RootUIObject.reset();
 }

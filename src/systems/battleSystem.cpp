@@ -82,6 +82,7 @@ static void loadBattleGroups() {
 		}
 		_battleGroups.push_back(std::move(newBattleGroup));
 	}
+	jReleaseObjectFromFile(dataRootJsonArray);
 }
 
 static void loadBattleDB() {
@@ -106,6 +107,7 @@ static void loadBattleDB() {
 		_battlerData.back().IdleAnimation = jstr(currentJsonObject, "idle");
 		_battlerData.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 	}
+	jReleaseObjectFromFile(dataRootJsonArray);
 }
 
 static void loadPlayers() {

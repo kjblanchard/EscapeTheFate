@@ -4,15 +4,12 @@ Cpp game?
 
 ## In Progress
 
+- Animation system should use regular pointers and needs an overhaul, why use handles
+    : not needed right now, and works fine.
+    : just don't try and cache the things, no need
 
 ## Todos
 
-- Leaks
-    : Destroy all animators
-    : destroy all maps
-    : destroy all loaded UI/json
-    : destroy gameconfig
-    : destroy battleDB, etc
 - Check perf
     : [link](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
 
@@ -39,8 +36,6 @@ Cpp game?
 
 ## Refactors
 
-- Animation system should use regular pointers and needs an overhaul, why use handles
-    : not needed right now, and works fine.
 - remove gameobject system from the C engine, only makes it annoying to work with
 
 ## Completed

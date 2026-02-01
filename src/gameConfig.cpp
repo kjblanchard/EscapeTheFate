@@ -83,4 +83,5 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	loadWindowSettingsToConfig(&_config, root);
 	loadDebugSettingsToConfig(&_config, root);
 	loadSceneSettingsToConfig(&_config, root);
+	jReleaseObjectFromFile(root);
 }
