@@ -90,25 +90,6 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	return sprite;
 }
 
-unsigned int Engine::Animation::CreateAnimatorFull(const std::string& name, Sprite* sprite) {
-	auto animator = CreateAnimator(name.c_str());
-	_animators.Animators[animator].Sprite = sprite;
-	return animator;
-}
-
-void Engine::Animation::StartAnimatorAnimation(unsigned int animator, const char* animName, float animSpeed) {
-	SetAnimatorAnimationSpeed(animator, animSpeed);
-	PlayAnimation(animator, animName, -1);
-}
-
-void Engine::Animation::UpdateAnimatorAnimationSpeed(unsigned int animator, float animSpeed) {
-	SetAnimatorAnimationSpeed(animator, animSpeed);
-}
-
-void Engine::Animation::DestroyAnimatorFull(unsigned int animator) {
-	DestroyAnimator(animator);
-}
-
 void Engine::DrawRectPrimitive(RectangleF& rect, Color color, bool filled, bool cameraOffset) {
 	DrawRect(&rect, &color, filled, cameraOffset);
 }

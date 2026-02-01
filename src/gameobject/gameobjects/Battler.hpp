@@ -1,7 +1,9 @@
 #pragma once
 #include <battle/battlerData.hpp>
 #include <battle/battlerUI.hpp>
+#include <bindings/SpriteAnimator.hpp>
 #include <gameobject/GameObject.hpp>
+#include <memory>
 struct Sprite;
 namespace Etf {
 class UIText;
@@ -14,7 +16,7 @@ struct BattlerArgs {
 class Battler : public GameObject {
    public:
 	Battler(const BattlerArgs& args);
-	virtual ~Battler();
+	virtual ~Battler() = default;
 	inline float SpriteX() { return X() + _battlerData->Location.x; }
 	inline float SpriteY() { return Y() + _battlerData->Location.y; }
 	void Draw() override;
@@ -46,8 +48,8 @@ class Battler : public GameObject {
 
    protected:
 	Sprite* _sprite;
-	unsigned int _animator;
 	int _locationX, _locationY;
+	std::unique_ptr<SpriteAnimator> _animator;
 
    private:
 	void updateATBGauge();

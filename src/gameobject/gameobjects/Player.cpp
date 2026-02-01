@@ -34,7 +34,7 @@ void Player::Create(TiledObject* objData) {
 			player->X() = GameState::NextLoadLocation.X;
 			player->Y() = GameState::NextLoadLocation.Y;
 			player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
-			Engine::Animation::StartAnimatorAnimation(player->_animator, player->getAnimNameFromDirection());
+			player->_animator->StartAnimation(player->getAnimNameFromDirection());
 			GameState::NextLoadLocation = {0, 0};
 		}
 		SetCameraFollowTarget(&player->X(), &player->Y());
@@ -46,11 +46,9 @@ Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	_sprite = Engine::CreateSpriteFull("player1", &_x, &_y, {0, 0, 32, 32}, {0, 0, 32, 32});
 	_InteractionSprite = Engine::CreateSpriteFull("interaction", &_x, &_y, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
-	_animator = Engine::Animation::CreateAnimatorFull("player1", _sprite);
+	_animator = make_unique<SpriteAnimator>("player1", _sprite);
 }
-Player::~Player() {
-	Engine::Animation::DestroyAnimatorFull(_animator);
-}
+
 void Player::Start() {}
 void Player::Update() {
 	handlePlayerMovement();
@@ -111,7 +109,7 @@ void Player::handleInteractions() {
 	_currentInteractable = interactable;
 	if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
 		_currentInteractable->Interact();
-		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
+		_animator->UpdateAnimatorSpeed(0.0);
 	}
 }
 
@@ -146,7 +144,7 @@ bool Player::handlePlayerMovement() {
 	}
 
 	if (_direction != previousDirection) {
-		Engine::Animation::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
+		_animator->StartAnimation(getAnimNameFromDirection());
 		GameState::NextLoadDirection = static_cast<int>(_direction);
 	}
 
@@ -164,10 +162,10 @@ bool Player::handlePlayerMovement() {
 		// Update gamestate with players location.
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
-		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 1.0);
+		_animator->UpdateAnimatorSpeed(1.0f);
 
 	} else {
-		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
+		_animator->UpdateAnimatorSpeed(0.0f);
 	}
 	return moved;
 }

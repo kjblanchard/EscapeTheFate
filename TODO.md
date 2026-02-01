@@ -34,10 +34,9 @@ Cpp game?
 
 ## Refactors
 
-- remove gameobject system from the C engine, only makes it annoying to work with
-
 ## Completed
 
+- remove gameobject system from the C engine, only makes it annoying to work with
 - Animation system should use regular pointers and needs an overhaul, why use handles
     : not needed right now, and works fine.
     : just don't try and cache the things, no need

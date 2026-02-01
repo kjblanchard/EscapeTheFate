@@ -25,14 +25,6 @@ struct Engine {
 
 	} Audio;
 
-	struct Animation {
-		static unsigned int CreateAnimatorFull(const std::string& name, Sprite* sprite);
-		static void StartAnimatorAnimation(unsigned int animator, const char*, float animSpeed = 1.0);
-		static void UpdateAnimatorAnimationSpeed(unsigned int animator, float animSpeed);
-		static void DestroyAnimatorFull(unsigned int animator);
-
-	} Animation;
-
 	struct Tweening {
 		enum class TweenEaseTypes {
 			Linear,

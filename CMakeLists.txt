@@ -43,6 +43,7 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
   src/bindings/engine.cpp
+  src/bindings/SpriteAnimator.cpp
   ${ICON_PATH})
 
 if(MSVC)
