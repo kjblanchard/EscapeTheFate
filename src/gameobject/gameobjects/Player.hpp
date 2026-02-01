@@ -1,6 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/rectangle.h>
 
+#include <cmath>
 #include <gameobject/GameObject.hpp>
 #include <memory>
 #include <vector>
@@ -31,7 +32,7 @@ class Player : public GameObject {
 	bool handleMapExits();
 	constexpr const char* getAnimNameFromDirection();
 	// Used to fix small movements in float issues, fix for this is to just make solids not be a float, they should all be rounded to 0
-	 inline float roundCollisionResolve(float x, float grid = 0.01) { return std::round(x / grid) * grid; }
+	inline float roundCollisionResolve(float x, float grid = 0.01) { return std::round(x / grid) * grid; }
 
    private:
 	static std::vector<std::unique_ptr<Player>> _players;
