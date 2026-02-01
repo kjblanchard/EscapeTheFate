@@ -1,0 +1,46 @@
+{
+    "audio": {
+        "bgmVolume": 1.0,
+        "sfxVolume": 1.0
+    },
+    "window": {
+        "x": 480,
+        "y": 270,
+        "xWin": 1920,
+        "yWin": 1080,
+        "title": "Escape The Fate"
+    },
+    "scene": {
+        "defaultScene": "debugTown",
+        "scenes": [
+            {
+                "MapName": "debugTown",
+                "UIName": "debugTown",
+                "BGMName": "town2",
+                "BGMVolume": 1.0
+            },
+            {
+                "MapName": "debugSouth",
+                "UIName": "",
+                "BGMName": "forest1",
+                "BGMVolume": 1.0
+            },
+            {
+                "MapName": "debugTownHome",
+                "UIName": "",
+                "BGMName": "town2",
+                "BGMVolume": 1.0
+            },
+            {
+                "MapName": "forest1",
+                "UIName": "battle",
+                "BGMName": "battle1",
+                "BGMVolume": 1.0
+            }
+        ]
+    },
+    "debug": {
+        "interactions": false,
+        "mapExits": false
+    }
+}

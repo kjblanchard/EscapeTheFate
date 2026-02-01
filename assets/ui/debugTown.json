@@ -1,0 +1,43 @@
+{
+	"DebugTownPanel": {
+		"doNotDestroy": true,
+		"children": {
+			"ImageTest": {
+				"type": "image",
+				"file": "interaction",
+				"visible": false,
+				"scale": 3.0,
+				"color": {"R": 255,"G": 255,"B": 255,"A":255},
+				"rect": {"x": 24, "y": 0, "w": 16, "h": 16},
+				"srcRect": {"x": 0, "y": 0, "w": 16, "h": 16},
+				"camera": true,
+				"priority": 1
+			},
+			"DialogBox": {
+				"type": "nineSlice",
+				"file": "uibase",
+				"scale": 1.0,
+				"color": {"R": 80,"G": 0,"B": 120,"A":235},
+				"rect": {"x": 60, "y": 60, "w": 156, "h": 70},
+				"srcRect": {"x": 0, "y": 0, "w": 64, "h": 64},
+				"camera": true,
+				"priority": 1,
+				"xOffset": 8,
+				"yOffset": 9,
+				"children": {
+					"DialogBoxText":{
+						"type": "text",
+						"font": "PressStart2P",
+						"fontSize": 8,
+						"rect": {"x": 8, "y": 8, "w": 140, "h": 54},
+						"text": "HelloWorld!",
+						"centeredX": true,
+						"centeredY": true,
+						"wordWrap": true,
+						"numCharsToDraw": 100
+					}
+				}
+			}
+		}
+	}
+}

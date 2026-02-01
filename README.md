@@ -1,28 +1,27 @@
 # Escape The Fate
 
-## Cross Platform 2d deckbuilder roguelike RPG demo
+## Cross Platform 2d JRPG demo
 
 - Custom C engine [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
 - Play the game here, or likely watch its "progress"
-    [Play!](https://escapethefate.supergoon.com) 
+    [Play!](https://escapethefate.supergoon.com)
     ||  [Debug/Dev build](https://escapethefate-dev.supergoon.com)
 - ![Status Picture](https://github.com/kjblanchard/etf/blob/master/img/state.gif?raw=true)
 
 ## Details
 
 - BGMs created by me in Garageband
-- Wrote entirely in vim, to get better at raw vim, debugged with gdb or remdebug.
-- Debian + KDE ftw
+- Arch + Hyprland + Vim + gdb ftw
 
 ## Goals
 
-- Cross Platform cmake
+- Cross platform cmake
 - Package with cmake for installing on desktops
-- C/Lua practice
+- C/Cpp practice
 - Learn OpenGL
 - Better with vim
-- Debian Daily Driver testing
+- Arch daily driver testing
 
 ## Installation
 
@@ -46,7 +45,7 @@ to discuss what you would like to change.
 
 - [Typing Text sound](https://freesound.org/people/Sky_Motion/sounds/416777/) -
     Creative Commons
-- [Screen Transition Sound](https://freesound.org/people/distillerystudio/sounds/327754/) -
+- [Screen Transition Sound]("https://freesound.org/people/distillerystudio/sounds/327754/) -
     distillerystudio
 - [Transition 2](https://freesound.org/people/newagesoup/sounds/462089/) -
     newagesoup

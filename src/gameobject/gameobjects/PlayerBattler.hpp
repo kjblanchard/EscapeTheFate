@@ -1,0 +1,45 @@
+#pragma once
+#include <battle/battlerUI.hpp>
+#include <gameobject/gameobjects/Battler.hpp>
+#include <memory>
+namespace Etf {
+
+enum class BattlerStates {
+	Default,
+	Initialized,
+	ATBCharging,
+	ATBFullyCharged,
+	CommandSelection,
+	TargetSelection,
+	BattleEndStart,
+	BattleEndIdle,
+	BattleEnd,
+};
+
+class PlayerBattler : public Battler {
+   public:
+	PlayerBattler(const BattlerArgs& args);
+	inline bool IsPlayer() override final { return true; };
+
+   private:
+	void updateImpl() override;
+	void takeDamageImpl(int damage) override;
+	void handleInputCommandsMenu();
+	void handleInputTargetSelection();
+	// Handles input based on current state.
+	void handleInput();
+	// Handles the state changes of a battler
+	void handleStateChange(BattlerStates newState);
+	// What happens when something is clicked
+	void handleClickAction();
+	void getEnemyBattlers(std::vector<Battler*>& battlerVector);
+	void moveFingerToEnemyNum(int enemyNum);
+
+   private:
+	std::unique_ptr<BattlerUI> _battlerUI;
+	unsigned int _currentMenuLocation = 0;
+	int _currentTargetBattler = 0;
+	BattlerStates _currentBattlerState = BattlerStates::Default;
+};
+
+}  // namespace Etf

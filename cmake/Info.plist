@@ -20,7 +20,5 @@
         <string>10.14</string>
         <key>CFBundleIconFile</key>
         <string>AppIcon.icns</string>
-        <key>UIApplicationSupportsIndirectInputEvents</key>
-        <string>TRUE</string>
     </dict>
 </plist>
