@@ -98,7 +98,7 @@ void BattlerUI::UpdateAnimations() {
 			break;
 		case Opening: {
 			_currentAnimationTime += DeltaTimeSeconds;
-			if (_currentAnimationTime > Animation_Open_Time) {
+			if (_currentAnimationTime >= Animation_Open_Time) {
 				_currentState = Opened;
 				_finger->SetVisible(true);
 				break;

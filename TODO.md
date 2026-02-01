@@ -4,16 +4,11 @@ Cpp game?
 
 ## In Progress
 
-- When switching screens, player doesn't load properly
-    : prolly from battle exit
+- Sometimes player does not animate and just slides.
+- Jitter when walking into walls and when at map center.
 
 ## Todos
 
-- Direction not correct when loaded from map exit.
-- Battle finger should only pop up after the animation
-- Battle finger should disappear after selection before close anim
-- Sometimes player does not animate and just slides.
-- Jitter when walking into walls and when at map center.
 - Leaks
     : Destroy all animators
     : destroy all maps
@@ -52,6 +47,11 @@ Cpp game?
 
 ## Completed
 
+- Battle finger should only pop up after the animation
+- Battle finger should disappear after selection before close anim
+- Direction not correct when loaded from map exit.
+- When switching screens, player doesn't load properly
+    : prolly from battle exit
 - Win screen
 - Battle needs to set camera to 0
 - go back to world

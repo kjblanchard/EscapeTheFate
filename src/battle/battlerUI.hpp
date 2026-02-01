@@ -22,7 +22,6 @@ class BattlerUI {
 	inline void OpenCommandsMenu() {
 		_currentState = PlayerUIAnimationStates::Opening;
 		_currentAnimationTime = 0;
-		_finger->SetVisible(true);
 	}
 	inline void CloseCommandsMenu() {
 		_currentState = PlayerUIAnimationStates::Closing;
