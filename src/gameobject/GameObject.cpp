@@ -1,17 +1,18 @@
-#include <Supergoon/gameobject.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
-#include <algorithm>
 
+#include <algorithm>
 #include <gameobject/GameObject.hpp>
+#include <gameobject/gameobjects/BattleLocation.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
 #include <gameobject/gameobjects/Player.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
-#include <gameobject/gameobjects/BattleLocation.hpp>
 #include <interfaces/IInteractable.hpp>
 #include <memory>
 using namespace Etf;
 using namespace std;
+
+unsigned int GameObject::_currentID = 0;
 
 std::vector<shared_ptr<GameObject>> GameObject::_gameObjects;
 std::vector<weak_ptr<IInteractable>> GameObject::_interactables;
@@ -22,22 +23,16 @@ std::unordered_map<int, std::function<void(TiledObject* objData)>> GameObject::_
 	{6, BattleLocation::Create},
 };
 
-GameObject::GameObject(int x, int y) {
-	GO = GameObjectCreate();
-	GO->X = x;
-	GO->Y = y;
-}
+GameObject::GameObject(int x, int y) : _x(x), _y(y), _id(_currentID++) {}
 
-GameObject::~GameObject() {
-	GameObjectDestroy(GO);
-}
+GameObject::~GameObject() {}
 
 float& GameObject::X() {
-	return GO->X;
+	return _x;
 }
 
 float& GameObject::Y() {
-	return GO->Y;
+	return _y;
 }
 
 void GameObject::UpdateGameObjects() {
@@ -53,7 +48,7 @@ void GameObject::DrawGameObjects() {
 }
 
 void GameObject::LoadAllGameObjects() {
-	if(!_currentMap) return;
+	if (!_currentMap) return;
 	for (auto& currentGo : _gameObjects) {
 		if (currentGo->DoNotDestroy) continue;
 		currentGo->ShouldBeDestroyed = true;

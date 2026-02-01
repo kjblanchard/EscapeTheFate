@@ -91,6 +91,9 @@ idevices:
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
+# This will error if you are using asan if you have leaks, so maybe disable that.
+perf:
+	@perf record -F 99 -g -- $(RUN_CMD) && perf script > out.perf && stackcollapse-perf.pl out.perf > out.folded && flamegraph.pl out.folded > test.svg && firefox test.svg
 
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject

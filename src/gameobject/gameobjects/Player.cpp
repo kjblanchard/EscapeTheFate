@@ -43,8 +43,8 @@ void Player::Create(TiledObject* objData) {
 }
 
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
-	_sprite = Engine::CreateSpriteFull("player1", internalGO(), {0, 0, 32, 32}, {0, 0, 32, 32});
-	_InteractionSprite = Engine::CreateSpriteFull("interaction", internalGO(), {0, 0, 16, 16}, {20, -5, 16, 16});
+	_sprite = Engine::CreateSpriteFull("player1", &_x, &_y, {0, 0, 32, 32}, {0, 0, 32, 32});
+	_InteractionSprite = Engine::CreateSpriteFull("interaction", &_x, &_y, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
 	_animator = Engine::Animation::CreateAnimatorFull("player1", _sprite);
 }

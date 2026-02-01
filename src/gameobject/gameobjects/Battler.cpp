@@ -12,7 +12,7 @@ using namespace std;
 using namespace Etf;
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), _battlerData(args.BattleData) {
-	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), internalGO(), {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
+	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), &_x, &_y, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = Engine::Animation::CreateAnimatorFull(args.BattleData->Sprite.c_str(), _sprite);
 	StartAnimation(args.BattleData->IdleAnimation, false);
 	_gameObjects.push_back(shared_ptr<GameObject>(this));

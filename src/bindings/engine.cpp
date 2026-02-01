@@ -12,11 +12,11 @@
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
 
-#include <gameState.hpp>
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <format>
 #include <gameConfig.hpp>
+#include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
@@ -77,9 +77,10 @@ void Engine::HandleMapLoad() {
 	loadSceneInternal();
 }
 
-Sprite* Engine::CreateSpriteFull(const std::string& name, sgGameObject* parent, RectangleF sourceRect, RectangleF offsetSizeRect) {
+Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
 	auto sprite = NewSprite();
-	sprite->Parent = parent;
+	sprite->parentX = followX;
+	sprite->parentY = followY;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
 	TextureLoadFromPng(sprite->Texture, name.c_str());

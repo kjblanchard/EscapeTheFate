@@ -1,4 +1,3 @@
-#include <Supergoon/gameobject.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 
