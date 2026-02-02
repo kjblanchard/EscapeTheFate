@@ -35,7 +35,10 @@ void update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	GameState::Ticks = Ticks;
-	Engine::HandleMapLoad();
+	// If we are currently loading, do not update things.
+	if (!Engine::HandleMapLoad()) {
+		return;
+	}
 	GameObject::UpdateGameObjects();
 	DialogSystem::UpdateDialogSystem();
 	if (GameState::Battle::InBattle) {

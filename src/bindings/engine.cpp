@@ -27,6 +27,15 @@ using namespace std;
 string Engine::_currentScene = "";
 string Engine::_nextScene = "";
 static string _currentBGM = "";
+static struct FadeData {
+	Color LastFadeColor = {255, 255, 255, 255};
+	Color CurrentFadeColor = {255, 255, 255, 255};
+	unsigned int EndFadeAlpha = 255;
+	float FadeTime = 1.0f;
+	float CurrentFadeTime = 0;
+	ScreenFadeTypes CurrentFadeStatus = ScreenFadeTypes::NotFading;
+} _fadeData;
+static CurrentSceneLoadingState _currentLoadingState = CurrentSceneLoadingState::NotLoading;
 
 void Engine::PlaySFX(const std::string& name, float volume) {
 	PlaySfxOneShot(name.c_str(), volume);
@@ -69,14 +78,67 @@ void Engine::LoadScene(const string& name) {
 		newName = gameSceneConfig.defaultScene;
 	}
 	_nextScene = newName;
-	// Reset the battle, this is used when loading player battlers
 }
 
-void Engine::HandleMapLoad() {
-	if (_nextScene.empty()) return;
-	loadSceneInternal();
+bool Engine::HandleMapLoad() {
+	// Handle screen fading as needed.
+	Engine::UpdateScreenFade();
+	switch (_currentLoadingState) {
+		// If we are not loading, check to see if we should trigger it
+		case CurrentSceneLoadingState::NotLoading:
+			if (_nextScene.empty()) return true;
+			StartFullScreenFade(1.0f, ScreenFadeTypes::FadeOut);
+			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
+			return false;
+			// While fading out, we should not allow others to update, and when finished we should load the scene properly and then fade in
+		case CurrentSceneLoadingState::WaitingForFadeOut:
+			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
+			loadSceneInternal();
+			StartFullScreenFade(0.25f, ScreenFadeTypes::FadeIn);
+			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
+			return false;
+		// After 50% of current time is done, we should allow updates from the gameobjects.
+		case CurrentSceneLoadingState::FadingIn:
+			// Check to see if we are finished fading from some kind of lag
+			if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) {
+				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
+				return true;
+			}
+			if (_fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.5) {
+				_currentLoadingState = CurrentSceneLoadingState::FadingInAllowUpdate;
+			}
+			return false;
+		case CurrentSceneLoadingState::FadingInAllowUpdate:
+			return true;
+	}
+	return false;
 }
 
+void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
+	if (fadeType == ScreenFadeTypes::NotFading || _fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) {
+		sgLogWarn("Cannot fade: request: %d, status: %d", fadeType, _fadeData.CurrentFadeStatus);
+		return;
+	}
+	_fadeData.LastFadeColor = GraphicsGetFBOColor();
+	_fadeData.CurrentFadeTime = 0;
+	_fadeData.FadeTime = time;
+	_fadeData.CurrentFadeColor = _fadeData.LastFadeColor;
+	_fadeData.CurrentFadeStatus = fadeType;
+	_fadeData.EndFadeAlpha = fadeType == ScreenFadeTypes::FadeIn ? 255 : 0;
+	GameState::CurrentFadeState = (int)fadeType;
+}
+
+void Engine::UpdateScreenFade() {
+	if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) return;
+	_fadeData.CurrentFadeTime += GameState::DeltaTimeSeconds;
+	if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
+		_fadeData.CurrentFadeStatus = ScreenFadeTypes::NotFading;
+		GameState::CurrentFadeState = (int)_fadeData.CurrentFadeStatus;
+		return;
+	}
+	_fadeData.CurrentFadeColor.A = Tweening::GetTweenedValue(_fadeData.LastFadeColor.A, _fadeData.EndFadeAlpha, _fadeData.CurrentFadeTime, _fadeData.FadeTime);
+	GraphicsUpdateFBOColor(&_fadeData.CurrentFadeColor);
+}
 
 Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
 	auto sprite = NewSprite();
@@ -91,7 +153,7 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	return sprite;
 }
 
-//TODO this should be refactored instead of copy/paste from createspritefull
+// TODO this should be refactored instead of copy/paste from createspritefull
 Sprite* Engine::CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
 	auto sprite = NewSpriteManual();
 	sprite->parentX = followX;
