@@ -262,7 +262,7 @@
                                                         "numCharsToDraw": 100
                                                     },
                                                     "P1ATB": {
-                                                        "type": "image",
+                                                        "type": "animation",
                                                         "visible": true,
                                                         "rect": { "x": 116, "y": -4, "w": 32, "h": 16 },
                                                         "srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },

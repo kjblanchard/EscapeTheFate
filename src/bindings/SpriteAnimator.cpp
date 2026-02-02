@@ -38,12 +38,12 @@ SpriteAnimator::~SpriteAnimator() {
 	DestroyAnimator(_animator);
 }
 
-void SpriteAnimator::PlayAnimationThenLoopSecond(const std::string& first, const std::string& second) {
+void SpriteAnimator::PlayAnimationThenLoopSecond(const std::string& first, const std::string& second) const {
 	PlayAnimation(_animator, first.c_str(), 1);
 	AddAnimationToAnimatorQueue(_animator, second.c_str(), -1);
 }
 
-void SpriteAnimator::StartAnimation(const std::string& animName, int loops, float speed) {
+void SpriteAnimator::StartAnimation(const std::string& animName, int loops, float speed) const {
 	_animator->AnimationSpeed = speed;
 	PlayAnimation(_animator, animName.c_str(), loops);
 }

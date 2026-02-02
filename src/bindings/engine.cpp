@@ -17,7 +17,7 @@
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
-#include <gameobject/GameObject.hpp>;
+#include <gameobject/GameObject.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
@@ -77,8 +77,23 @@ void Engine::HandleMapLoad() {
 	loadSceneInternal();
 }
 
+
 Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
 	auto sprite = NewSprite();
+	sprite->parentX = followX;
+	sprite->parentY = followY;
+	sprite->Flags |= SpriteFlagVisible;
+	sprite->Texture = TextureCreate(name.c_str());
+	TextureLoadFromPng(sprite->Texture, name.c_str());
+	sprite->Shader = GetDefaultShader();
+	sprite->TextureSourceRect = sourceRect;
+	sprite->OffsetAndSizeRectF = offsetSizeRect;
+	return sprite;
+}
+
+//TODO this should be refactored instead of copy/paste from createspritefull
+Sprite* Engine::CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
+	auto sprite = NewSpriteManual();
 	sprite->parentX = followX;
 	sprite->parentY = followY;
 	sprite->Flags |= SpriteFlagVisible;

@@ -11,6 +11,7 @@
 #include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 #include <unordered_map>
+#include "ui/uiAnimation.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -81,6 +82,20 @@ static UIImage* createImage(const string& name, json_object* data) {
 	return new UIImage(args);
 }
 
+static UIAnimation* createAnimation(const string& name, json_object* data) {
+	UIAnimationArgs args;
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	args.SourceRect = Engine::Json::GetRectFromObject(data, "srcRect");
+	args.DrawColor = getColorFromField(data, "color");
+	args.Priority = jint(data, "priority");
+	args.Filename = jstr(data, "file");
+	args.Scale = jfloat(data, "scale");
+	args.DebugBox = jbool(data, "debug");
+	args.Visible = jbool(data, "visible");
+	args.Name = name;
+	return new UIAnimation(args);
+}
+
 static UINineSlice* createNineSliceObject(const string& name, json_object* data) {
 	UINineSliceArgs args;
 	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
@@ -128,6 +143,8 @@ static UIObject* handleTypeCreation(const string& name, const string& type, json
 		return createNineSliceObject(name, data);
 	} else if (type == "image") {
 		return createImage(name, data);
+	} else if (type == "animation") {
+		return createAnimation(name, data);
 	} else if (type == "vlg") {
 		return createVLGObject(name, data);
 	} else if (type == "hlg") {

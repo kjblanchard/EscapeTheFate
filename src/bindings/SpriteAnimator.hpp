@@ -15,10 +15,10 @@ class SpriteAnimator {
    public:
 	SpriteAnimator(const std::string& filename, Sprite* sprite);
 	~SpriteAnimator();
-	//Plays the first animation once, then loops on the second
-	void PlayAnimationThenLoopSecond(const std::string& first, const std::string& second);
+	// Plays the first animation once, then loops on the second
+	void PlayAnimationThenLoopSecond(const std::string& first, const std::string& second) const;
 	//-1 loops is forever, 1.0 speed is regular.
-	void StartAnimation(const std::string& animName, int loops = -1, float speed = 1.0f);
+	void StartAnimation(const std::string& animName, int loops = -1, float speed = 1.0f) const;
 	// 1.0 is regular
 	void UpdateAnimatorSpeed(float speed);
 	// Adds to the playing queue

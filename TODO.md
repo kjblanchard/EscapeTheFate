@@ -5,11 +5,8 @@
 ## Todos
 
 - transition screen for switching between maps
-- ui animation for player atb in battle.
-    : not really needed right now, will just make it look better.
 
 ### Battle
-
 
 ### UI
 
@@ -32,6 +29,8 @@
 
 ## Completed
 
+- ui animation for player atb in battle.
+    : not really needed right now, will just make it look better.
 - when you start battle the anim is moving back
 - refactor battle exit
 - remove gameobject system from the C engine, only makes it annoying to work with

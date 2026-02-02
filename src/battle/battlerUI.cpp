@@ -58,6 +58,10 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		_targetSelectionFinger->SetVisible(false);
 		auto hpObject = UI::RootUIObject->GetChildByName("P1Health");
 		_hpObject = static_cast<UIText*>(hpObject);
+		auto progressBarAnim = UI::RootUIObject->GetChildByName("P1ATB");
+		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
+		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
+		StartATBIdleAnim();
 		auto progressBarObject = UI::RootUIObject->GetChildByName("P1ATBProgressBar");
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);

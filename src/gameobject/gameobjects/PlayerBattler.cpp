@@ -30,10 +30,12 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 	}
 	switch (newState) {
 		case BattlerStates::ATBCharging:
+			_battlerUI->StartATBIdleAnim();
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			break;
 		case BattlerStates::ATBFullyCharged:
+			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
 			Engine::PlaySFX("playerTurn", 5.0f);
 			break;

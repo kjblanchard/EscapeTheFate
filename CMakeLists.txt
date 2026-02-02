@@ -38,6 +38,7 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/ui/uiLayoutGroup.cpp
   src/ui/uiNineSlice.cpp
   src/ui/uiImage.cpp
+  src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
   ./src/ui/uiProgressBar.cpp
   src/systems/dialogSystem.cpp

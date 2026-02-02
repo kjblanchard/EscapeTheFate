@@ -14,6 +14,7 @@ struct Engine {
 	inline static const std::string& CurrentScene() { return _currentScene; }
 	static void LoadScene(const std::string& name = "");
 	static Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
+	static Sprite* CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 	static void SetSpriteVisible(Sprite* sprite, bool visible);
 	static void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
 	static void HandleMapLoad();
