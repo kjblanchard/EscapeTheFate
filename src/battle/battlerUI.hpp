@@ -20,6 +20,7 @@ class BattlerUI {
 	void UpdateHP(const std::string& hp);
 	void UpdateProgressBar(float percent);
 	inline void OpenCommandsMenu() {
+		_commandMenu->SetVisible(true);
 		_currentState = PlayerUIAnimationStates::Opening;
 		_currentAnimationTime = 0;
 	}
@@ -33,7 +34,7 @@ class BattlerUI {
 	void CloseTargetSelection();
 	void MoveCursorInMenu(unsigned int newLocation);
 	void UpdateAnimations();
-	//Used when battle is over currently
+	// Used when battle is over currently
 	static void ClosePlayerInfoBox();
 
    private:

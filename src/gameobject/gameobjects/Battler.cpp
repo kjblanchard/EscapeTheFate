@@ -22,6 +22,14 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_maxATBCharge = 100;
 }
 
+float Battler::SpriteWidth() {
+	return _sprite->TextureSourceRect.w;
+}
+
+float Battler::SpriteHeight() {
+	return _sprite->TextureSourceRect.h;
+}
+
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
 	takeDamageImpl(damage);

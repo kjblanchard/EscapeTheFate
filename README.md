@@ -2,7 +2,7 @@
 
 ## Cross Platform 2d JRPG demo
 
-- Custom C engine [Here](https://github.com/kjblanchard/SupergoonEngine)
+- Custom c engine library [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
 - Play the game here, or likely watch its "progress"
     [Play!](https://escapethefate.supergoon.com)
@@ -45,7 +45,7 @@ to discuss what you would like to change.
 
 - [Typing Text sound](https://freesound.org/people/Sky_Motion/sounds/416777/) -
     Creative Commons
-- [Screen Transition Sound]("https://freesound.org/people/distillerystudio/sounds/327754/) -
+- [Screen Transition Sound] ("https://freesound.org/people/distillerystudio/sounds/327754/) -
     distillerystudio
 - [Transition 2](https://freesound.org/people/newagesoup/sounds/462089/) -
     newagesoup

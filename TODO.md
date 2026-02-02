@@ -2,8 +2,6 @@
 
 ## In Progress
 
-- clean any todos
-
 ## Todos
 
 - transition screen for switching between maps
@@ -12,7 +10,6 @@
 
 ### Battle
 
-- when you start battle the anim is moving back
 
 ### UI
 
@@ -35,6 +32,7 @@
 
 ## Completed
 
+- when you start battle the anim is moving back
 - refactor battle exit
 - remove gameobject system from the C engine, only makes it annoying to work with
 - Animation system should use regular pointers and needs an overhaul, why use handles

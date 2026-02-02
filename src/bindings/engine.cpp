@@ -17,7 +17,7 @@
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
-#include <gameobject/GameObject.hpp>
+#include <gameobject/GameObject.hpp>;
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 

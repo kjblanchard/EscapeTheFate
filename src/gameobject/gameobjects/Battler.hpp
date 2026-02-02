@@ -18,6 +18,8 @@ class Battler : public GameObject {
 	Battler(const BattlerArgs& args);
 	virtual ~Battler() = default;
 	inline float SpriteX() { return X() + _battlerData->Location.x; }
+	float SpriteWidth();
+	float SpriteHeight();
 	inline float SpriteY() { return Y() + _battlerData->Location.y; }
 	void Draw() override;
 	// Updates the speed, and also calls updateimpl

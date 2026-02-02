@@ -63,13 +63,11 @@ static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObjec
 			sgLogWarn("Could not get array obj in scene??");
 			continue;
 		}
-		// TODO probably make this not be a copy, but not a big deal.
-		Scene newScene;
-		newScene.BGMName = jstr(currentSceneObj, "BGMName");
-		newScene.MapName = jstr(currentSceneObj, "MapName");
-		newScene.UIName = jstr(currentSceneObj, "UIName");
-		newScene.BGMVolume = jfloat(currentSceneObj, "BGMVolume");
-		config->scene.scenes.push_back(newScene);
+		config->scene.scenes.emplace_back();
+		config->scene.scenes.back().BGMName = jstr(currentSceneObj, "BGMName");
+		config->scene.scenes.back().MapName = jstr(currentSceneObj, "MapName");
+		config->scene.scenes.back().UIName = jstr(currentSceneObj, "UIName");
+		config->scene.scenes.back().BGMVolume = jfloat(currentSceneObj, "BGMVolume");
 	}
 }
 
