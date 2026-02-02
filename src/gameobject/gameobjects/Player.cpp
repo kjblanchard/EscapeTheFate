@@ -34,9 +34,9 @@ void Player::Create(TiledObject* objData) {
 			player->X() = GameState::NextLoadLocation.X;
 			player->Y() = GameState::NextLoadLocation.Y;
 			player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
-			player->_animator->StartAnimation(player->getAnimNameFromDirection());
 			GameState::NextLoadLocation = {0, 0};
 		}
+		player->_animator->StartAnimation(player->getAnimNameFromDirection());
 		SetCameraFollowTarget(&player->X(), &player->Y());
 		_gameObjects.push_back(unique_ptr<GameObject>(player));
 	}

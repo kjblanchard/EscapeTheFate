@@ -31,6 +31,7 @@ SpriteAnimator::SpriteAnimator(const string& filename, Sprite* sprite) {
 	}
 	_animator = CreateAnimator(filename.c_str(), _animationData.get());
 	_animator->Sprite = sprite;
+	_animator->AnimationSpeed = 1.0f;
 }
 
 SpriteAnimator::~SpriteAnimator() {
