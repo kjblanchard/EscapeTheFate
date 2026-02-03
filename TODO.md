@@ -4,7 +4,8 @@
 
 ## Todos
 
-- leaks
+- leaks rel1.x
+- warnings rel 1.x
 
 ### Battle
 

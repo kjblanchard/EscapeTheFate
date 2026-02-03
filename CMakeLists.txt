@@ -9,7 +9,7 @@ option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configur
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
-option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)

@@ -28,6 +28,7 @@ void UIText::UpdateText(const string& newText, int numLettersToDraw) {
 	if (!_text || newText == string(_text->Text)) return;
 	if (_text->Texture) TextureDestroy(_text->Texture);
 	_text->Texture = NULL;
+	if(_text->Text) free(_text->Text);
 	_text->Text = strdup(newText.c_str());
 	_text->NumLettersToDraw = numLettersToDraw == -1 ? newText.size() : numLettersToDraw;
 	TextOnDirty(_text);

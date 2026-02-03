@@ -13,11 +13,10 @@ unordered_map<string, weak_ptr<AnimationData>> _loadedAnimationData;
 
 static shared_ptr<AnimationData> createAnimationDataFromFile(const string& filename) {
 	auto raw = CreateAnimationData();
-
 	auto fullFilename = format("{}assets/aseprite/{}.json",
 							   GetBasePath(), filename);
 	CreateAnimationDataFromAsepriteFile(raw, fullFilename.c_str());
-	return shared_ptr<AnimationData>(raw);
+	return shared_ptr<AnimationData>(raw, DestroyAnimationData);
 }
 
 SpriteAnimator::SpriteAnimator(const string& filename, Sprite* sprite) {
