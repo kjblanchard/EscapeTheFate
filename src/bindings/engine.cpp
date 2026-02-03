@@ -118,7 +118,7 @@ bool Engine::HandleMapLoad() {
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
 				return true;
 			}
-			if (_fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.5) {
+			if (_fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.5f) {
 				_currentLoadingState = CurrentSceneLoadingState::FadingInAllowUpdate;
 			}
 			return false;

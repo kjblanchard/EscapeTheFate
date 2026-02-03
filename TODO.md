@@ -4,8 +4,6 @@
 
 ## Todos
 
-- leaks rel1.x
-- warnings rel 1.x
 
 ### Battle
 
@@ -31,6 +29,8 @@
 
 ## Completed
 
+- warnings rel 1.x
+- leaks rel1.x
 - transition screen for switching between maps
 - ui animation for player atb in battle.
   - not really needed right now, will just make it look better.
