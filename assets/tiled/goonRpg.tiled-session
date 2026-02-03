@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "forest1.tmj",
+    "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
-        ".",
+        "old-delete",
         "templates",
-        "old-delete"
+        "."
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -85,7 +85,7 @@
             "selectedLayer": 4,
             "viewCenter": {
                 "x": 240.15775758856262,
-                "y": 159.87041340939504
+                "y": 159.87041340939498
             }
         },
         "debugSouth.tmj#outside": {
@@ -99,9 +99,9 @@
                 6
             ],
             "scale": 1.5,
-            "selectedLayer": 0,
+            "selectedLayer": 5,
             "viewCenter": {
-                "x": 304,
+                "x": 258.3333333333333,
                 "y": 143.33333333333331
             }
         },
@@ -124,7 +124,7 @@
             "selectedLayer": 5,
             "viewCenter": {
                 "x": 128,
-                "y": 88
+                "y": 87.99999999999997
             }
         },
         "debugTownHome.tmj#inside": {
@@ -153,8 +153,8 @@
             "scale": 0.75,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 477.99999999999994,
-                "y": 197.33333333333337
+                "x": -175.33333333333337,
+                "y": 406.66666666666663
             }
         },
         "forest1.tmj#outside": {
@@ -235,10 +235,10 @@
     "project": "goonRpg.tiled-project",
     "property.type": "string",
     "recentFiles": [
-        "debugTown.tmj",
-        "debugSouth.tmj",
-        "debugTownHome.tmj",
         "forest1.tmj",
+        "debugTownHome.tmj",
+        "debugSouth.tmj",
+        "debugTown.tmj",
         "cloud.tmj",
         "cloud.tsj",
         "house.tsj",

@@ -4,6 +4,7 @@
 
 - Custom c engine library [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
+- [Progress Board and release milestones]("https://github.com/kjblanchard/EscapeTheFate/blob/master/TODO.md")
 - Play the game here, or likely watch its "progress"
     [Play!](https://escapethefate.supergoon.com)
     ||  [Debug/Dev build](https://escapethefate-dev.supergoon.com)
@@ -12,7 +13,7 @@
 ## Details
 
 - BGMs created by me in Garageband
-- Arch + Hyprland + Vim + gdb ftw
+- Arch Linux + Hyprland + Vim + gdb + Thinkpad T480 ftw
 
 ## Goals
 
@@ -22,6 +23,7 @@
 - Learn OpenGL
 - Better with vim
 - Arch daily driver testing
+- Release a game on steam
 
 ## Installation
 

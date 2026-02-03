@@ -28,7 +28,8 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-	Engine::LoadScene();
+	//Initial load screen.
+	Engine::LoadScene("", 0.1f, 0.75);
 }
 
 void update() {
@@ -53,7 +54,7 @@ void draw() {
 
 static void enterBattle() {
 	GameState::NextLoadMapName = Engine::CurrentScene();
-	Engine::LoadScene("forest1");
+	Engine::LoadScene("forest1", 0.15f, 1.0f);
 }
 
 void handleInput() {

@@ -4,7 +4,7 @@
 
 ## Todos
 
-- transition screen for switching between maps
+- leaks
 
 ### Battle
 
@@ -12,6 +12,7 @@
 
 ### Bugs
 
+- When fadetime is 0, it skips both.
 - When loading map doesn't exist, gets a segfault
 - ASAN issue when trying to load a bgm that doesn't exist on scene change
 
@@ -22,15 +23,16 @@
 - add enemy health bar and player health bar
 - check on discord bot updates.
 - More fields that can be optional to make it easier to write the jsonc file
-    : not really needed right now
+  - not really needed right now
 - Dialog system slidefade anim .. would be cool if we could handle tweening the opacity
 - Better error handling / loading from json
 - Use gameconfig to handle the dialog box variables, instead of const
 
 ## Completed
 
+- transition screen for switching between maps
 - ui animation for player atb in battle.
-    : not really needed right now, will just make it look better.
+  - not really needed right now, will just make it look better.
 - when you start battle the anim is moving back
 - refactor battle exit
 - remove gameobject system from the C engine, only makes it annoying to work with
@@ -107,8 +109,8 @@
     : battle enter - done
     : battle finish - done
     : battle end - done
+    : go through all todos and update - done
     : fix all leaks
-    : go through all todos and update
 
 - 0.2.x: local multiplayer
     : second player can spawn

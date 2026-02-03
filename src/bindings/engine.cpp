@@ -24,9 +24,16 @@
 using namespace Etf;
 using namespace std;
 
-string Engine::_currentScene = "";
-string Engine::_nextScene = "";
 static string _currentBGM = "";
+
+static struct SceneData {
+	string CurrentScene = "";
+	string NextScene = "";
+	float FadeOutTime = 0;
+	float FadeInTime = 0;
+
+} _sceneData;
+
 static struct FadeData {
 	Color LastFadeColor = {255, 255, 255, 255};
 	Color CurrentFadeColor = {255, 255, 255, 255};
@@ -35,25 +42,30 @@ static struct FadeData {
 	float CurrentFadeTime = 0;
 	ScreenFadeTypes CurrentFadeStatus = ScreenFadeTypes::NotFading;
 } _fadeData;
+
 static CurrentSceneLoadingState _currentLoadingState = CurrentSceneLoadingState::NotLoading;
 
 void Engine::PlaySFX(const std::string& name, float volume) {
 	PlaySfxOneShot(name.c_str(), volume);
 }
 
+const std::string& Engine::CurrentScene() {
+	return _sceneData.CurrentScene;
+}
+
 void Engine::loadSceneInternal() {
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {
-		return scene.MapName == _nextScene;
+		return scene.MapName == _sceneData.NextScene;
 	});
 	if (it == gameSceneConfig.scenes.end()) {
-		sgLogWarn("Could not find scene with name %s, not loading", _nextScene.c_str());
+		sgLogWarn("Could not find scene with name %s, not loading", _sceneData.NextScene.c_str());
 		return;
 	}
 	auto& sceneToLoad = *it;
 	// We should destroy all of the old gameobjects, and also load the ui if needed.
 	ResetCameraFollow();
-	LoadMap(_nextScene.c_str());
+	LoadMap(_sceneData.NextScene.c_str());
 	GameObject::LoadAllGameObjects();
 	if (_currentBGM != sceneToLoad.BGMName) {
 		Engine::Audio::PlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
@@ -65,19 +77,21 @@ void Engine::loadSceneInternal() {
 		UI::RootUIObject->DestroyChildIfNotName("");
 	}
 	DialogSystem::LoadDialogFromJsonFile(sceneToLoad.MapName);
-	_currentScene = _nextScene;
-	_nextScene = "";
+	_sceneData.CurrentScene = _sceneData.NextScene;
+	_sceneData.NextScene = "";
 	GameState::NextLoadMapName = "";
 	GameState::Battle::ExitingFromBattle = false;
 }
 
-void Engine::LoadScene(const string& name) {
+void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime) {
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName.empty()) {
 		newName = gameSceneConfig.defaultScene;
 	}
-	_nextScene = newName;
+	_sceneData.FadeOutTime = fadeOutTime;
+	_sceneData.FadeInTime = fadeInTime;
+	_sceneData.NextScene = newName;
 }
 
 bool Engine::HandleMapLoad() {
@@ -86,15 +100,15 @@ bool Engine::HandleMapLoad() {
 	switch (_currentLoadingState) {
 		// If we are not loading, check to see if we should trigger it
 		case CurrentSceneLoadingState::NotLoading:
-			if (_nextScene.empty()) return true;
-			StartFullScreenFade(1.0f, ScreenFadeTypes::FadeOut);
+			if (_sceneData.NextScene.empty()) return true;
+			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;
 			// While fading out, we should not allow others to update, and when finished we should load the scene properly and then fade in
 		case CurrentSceneLoadingState::WaitingForFadeOut:
 			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
 			loadSceneInternal();
-			StartFullScreenFade(0.25f, ScreenFadeTypes::FadeIn);
+			StartFullScreenFade(_sceneData.FadeInTime, ScreenFadeTypes::FadeIn);
 			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
 			return false;
 		// After 50% of current time is done, we should allow updates from the gameobjects.
@@ -109,6 +123,9 @@ bool Engine::HandleMapLoad() {
 			}
 			return false;
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
+			if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
+				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
+			}
 			return true;
 	}
 	return false;
@@ -197,9 +214,13 @@ void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset, Color& 
 float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds, TweenEaseTypes ease) {
 	auto func = geLinearInterpolation;
 	switch (ease) {
+		case TweenEaseTypes::Linear:
+			break;
 		case TweenEaseTypes::QuintOut:
 			func = geQuinticEaseOut;
+			break;
 		default:
+			sgLogDebug("Ease type not implemented, using linear");
 			break;
 	}
 	float progressPercent = func(timeSeconds / totalSeconds);

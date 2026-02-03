@@ -22,24 +22,32 @@ static const Point _interactionEastWestWidthHeight = {26, 8};
 static const Point _interactionNorthSouthWidthHeight = {8, 26};
 
 void Player::Create(TiledObject* objData) {
+	int loadLocation = -1;
+	Direction direction = Direction::South;
 	for (auto i = 0; i < objData->NumProperties; ++i) {
 		auto prop = objData->Properties[i];
-		if (prop.Name != string("loadLocation")) continue;
-		auto loadLocation = prop.Data.IntData;
-		if (loadLocation != GameState::NextLoadScreen) continue;
-		sgLogDebug("Making player start at pos %d!!", loadLocation);
-		auto player = new Player(objData);
-		// We should override this if we are exiting from a battle.
-		if (GameState::Battle::ExitingFromBattle) {
-			player->X() = GameState::NextLoadLocation.X;
-			player->Y() = GameState::NextLoadLocation.Y;
-			player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
-			GameState::NextLoadLocation = {0, 0};
+		// Only load player if we are on the right map start.
+		if (prop.Name == string_view("loadLocation")) {
+			loadLocation = prop.Data.IntData;
+		} else if (prop.Name == string_view("direction")) {
+			direction = static_cast<Direction>(prop.Data.IntData);
 		}
-		player->_animator->StartAnimation(player->getAnimNameFromDirection());
-		SetCameraFollowTarget(&player->X(), &player->Y());
-		_gameObjects.push_back(unique_ptr<GameObject>(player));
 	}
+	if (loadLocation != GameState::NextLoadScreen) return;
+	sgLogDebug("Making player start at pos %d!!", loadLocation);
+	auto player = new Player(objData);
+	// We should override this if we are exiting from a battle.
+	if (GameState::Battle::ExitingFromBattle) {
+		player->X() = GameState::NextLoadLocation.X;
+		player->Y() = GameState::NextLoadLocation.Y;
+		player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
+		GameState::NextLoadLocation = {0, 0};
+	} else {
+		player->_direction = direction;
+	}
+	player->_animator->StartAnimation(player->getAnimNameFromDirection());
+	SetCameraFollowTarget(&player->X(), &player->Y());
+	_gameObjects.push_back(unique_ptr<GameObject>(player));
 }
 
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {

@@ -49,7 +49,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
-			_animator->StartAnimation(VICTORY_STR);
+			_animator->AddAnimationToQueue(VICTORY_STR, true);
 			BattleSystem::TriggerBattleVictoryStart();
 			break;
 		case BattlerStates::BattleEnd:

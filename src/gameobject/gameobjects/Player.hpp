@@ -13,9 +13,9 @@ namespace Etf {
 class IInteractable;
 
 class Player : public GameObject {
-	enum class Direction { North,
+	enum class Direction { South,
 						   East,
-						   South,
+						   North,
 						   West };
 
    public:

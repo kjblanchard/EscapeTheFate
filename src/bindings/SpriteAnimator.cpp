@@ -52,5 +52,7 @@ void SpriteAnimator::UpdateAnimatorSpeed(float speed) {
 	_animator->AnimationSpeed = speed;
 }
 
-void SpriteAnimator::AddAnimationToQueue() {
+void SpriteAnimator::AddAnimationToQueue(const string& animName, bool clearCurrentQueue) {
+	if (clearCurrentQueue) ClearAnimationQueue(_animator);
+	AddAnimationToAnimatorQueue(_animator, animName.c_str(), -1);
 }

@@ -9,7 +9,7 @@ struct sgGameObject;
 
 namespace Etf {
 
-enum class CurrentSceneLoadingState{
+enum class CurrentSceneLoadingState {
 	NotLoading,
 	WaitingForFadeOut,
 	FadingIn,
@@ -24,15 +24,15 @@ enum class ScreenFadeTypes {
 
 struct Engine {
    public:
-	inline static const std::string& CurrentScene() { return _currentScene; }
-	static void LoadScene(const std::string& name = "");
-	//TODO Do we even need this anymore?  Probably not
+	static const std::string& CurrentScene();
+	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f);
+	// TODO Do we even need this anymore?  Probably not
 	static Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
-	//Used for UI mainly, cause we need to handle drawing it outselves on top of everything
+	// Used for UI mainly, cause we need to handle drawing it outselves on top of everything
 	static Sprite* CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 	static void SetSpriteVisible(Sprite* sprite, bool visible);
 	static void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
-	//Returns if we are currently loading a scene
+	// Returns if we are currently loading a scene
 	static bool HandleMapLoad();
 	// Fades out the full screen FBO if we aren't already fading
 	static void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
@@ -90,8 +90,6 @@ struct Engine {
 	static void PlaySFX(const std::string& name, float volume);
 
    private:
-	static std::string _currentScene;
-	static std::string _nextScene;
 	static void loadSceneInternal();
 };
 
