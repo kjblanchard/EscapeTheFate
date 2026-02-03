@@ -45,12 +45,12 @@ to discuss what you would like to change.
 
 ## Credits
 
-- [Typing Text sound](https://freesound.org/people/Sky_Motion/sounds/416777/) -
-    Creative Commons
-- [Screen Transition Sound] ("https://freesound.org/people/distillerystudio/sounds/327754/) -
-    distillerystudio
-- [Transition 2](https://freesound.org/people/newagesoup/sounds/462089/) -
-    newagesoup
-- [LearnOpenGL](https://learnopengl.com) -
-    OpenGL learning
+- [Typing Text sound](https://freesound.org/people/Sky_Motion/sounds/416777/)
+    by Creative Commons
+- [Screen Transition Sound](https://freesound.org/people/distillerystudio/sounds/327754/)
+    by distillerystudio
+- [Transition 2](https://freesound.org/people/newagesoup/sounds/462089/)
+    by newagesoup
+- [LearnOpenGL](https://learnopengl.com)
+    by OpenGL learning
 
