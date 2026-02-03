@@ -4,6 +4,13 @@
 
 ## Todos
 
+- Jitter, game is not smooth at 60fps.. try different update methods
+- Jitter in middle of screen
+- Web build color on ATB bar is non-existant
+- Web build does not load on a black screen, not sure why that is
+- Web build sometimes does not fade fully, should set fade at end back to full.
+- House dialog
+- Fix bigs
 
 ### Battle
 
@@ -11,14 +18,13 @@
 
 ### Bugs
 
+- Errors.log has (null) in front of it, lol.
 - When fadetime is 0, it skips both.
 - When loading map doesn't exist, gets a segfault
 - ASAN issue when trying to load a bgm that doesn't exist on scene change
 
 ## Backlogged
 
-- Jitter on web build is bad, try sdl_renderer?
-- Jitter on middle of screen too
 - add enemy health bar and player health bar
 - check on discord bot updates.
 - More fields that can be optional to make it easier to write the jsonc file

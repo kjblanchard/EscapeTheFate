@@ -4,7 +4,7 @@
 
 - Custom c engine library [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
-- [Progress Board and release milestones]("https://github.com/kjblanchard/EscapeTheFate/blob/master/TODO.md")
+- [Progress Board and release milestones](https://github.com/kjblanchard/EscapeTheFate/blob/master/TODO.md)
 - Play the game here, or likely watch its "progress"
     [Play!](https://escapethefate.supergoon.com)
     ||  [Debug/Dev build](https://escapethefate-dev.supergoon.com)
