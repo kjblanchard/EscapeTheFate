@@ -2,7 +2,6 @@
 #include <functional>
 #include <memory>
 #include <unordered_map>
-struct sgGameObject;
 struct TiledObject;
 namespace Etf {
 
@@ -14,16 +13,20 @@ class GameObject {
 	float& Y();
 
    protected:
-	inline sgGameObject* internalGO() { return GO; }
+	// inline sgGameObject* internalGO() { return GO; }
 	static std::vector<std::shared_ptr<GameObject>> _gameObjects;
 	static std::vector<std::weak_ptr<IInteractable>> _interactables;
 	GameObject(int x, int y);
 	bool DoNotDestroy = false;
 	bool ShouldBeDestroyed = false;
+	float _x = 0;
+	float _y = 0;
 
    private:
 	static std::unordered_map<int, std::function<void(TiledObject* objData)>> _loaderMap;
-	sgGameObject* GO;
+	static unsigned int _currentID;
+	unsigned int _id;
+	// sgGameObject* GO;
 
    public:
 	// Loads all gameobjects in the current map, then destroys all the old unless they have donotdestroy

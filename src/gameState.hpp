@@ -4,6 +4,7 @@
 #include <string>
 namespace Etf {
 struct GameState {
+	static int CurrentFadeState;
 	// This is the location that we will load on the next screen, used when switching maps to one of the predefined places.
 	static int NextLoadScreen;
 	//Used when we are exiting a battle, so that we load from this location.
@@ -17,7 +18,9 @@ struct GameState {
 	static unsigned int Ticks;
 	static bool InDialog;
 	struct Battle {
+		//If this is set to true, players will load at the last load location
 		static bool ExitingFromBattle;
+		//If this is set to true, the battle system will uddate each frame.
 		static bool InBattle;
 		static int NextBattleGroup;
 	} Battle;

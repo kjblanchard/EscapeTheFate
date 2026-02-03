@@ -47,8 +47,9 @@ bool MapExit::CheckAndHandleMapExitOverlaps(RectangleF& rect) {
 		auto mapPtr = mapExit.lock();
 
 		if (Engine::CheckForRectCollision(rect, mapPtr->_location)) {
+			Engine::PlaySFX("transition2", 0.5f);
 			GameState::NextLoadScreen = mapPtr->_locationToLoad;
-			Engine::LoadScene(mapPtr->_mapToLoad);
+			Engine::LoadScene(mapPtr->_mapToLoad, 0.25f, 0.25f);
 			return true;
 		}
 	}

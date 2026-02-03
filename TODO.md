@@ -1,17 +1,9 @@
 # Escape The Fate
 
-Cpp game?
-
 ## In Progress
-
-- Animation system should use regular pointers and needs an overhaul, why use handles
-    : not needed right now, and works fine.
-    : just don't try and cache the things, no need
 
 ## Todos
 
-- Check perf
-    : [link](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
 
 ### Battle
 
@@ -19,27 +11,37 @@ Cpp game?
 
 ### Bugs
 
+- When fadetime is 0, it skips both.
 - When loading map doesn't exist, gets a segfault
 - ASAN issue when trying to load a bgm that doesn't exist on scene change
 
 ## Backlogged
 
+- Jitter on web build is bad, try sdl_renderer?
+- Jitter on middle of screen too
 - add enemy health bar and player health bar
 - check on discord bot updates.
-- ui animation for player speed
-    : not really needed right now, will just make it look better.
 - More fields that can be optional to make it easier to write the jsonc file
-    : not really needed right now
+  - not really needed right now
 - Dialog system slidefade anim .. would be cool if we could handle tweening the opacity
 - Better error handling / loading from json
 - Use gameconfig to handle the dialog box variables, instead of const
 
-## Refactors
-
-- remove gameobject system from the C engine, only makes it annoying to work with
-
 ## Completed
 
+- warnings rel 1.x
+- leaks rel1.x
+- transition screen for switching between maps
+- ui animation for player atb in battle.
+  - not really needed right now, will just make it look better.
+- when you start battle the anim is moving back
+- refactor battle exit
+- remove gameobject system from the C engine, only makes it annoying to work with
+- Animation system should use regular pointers and needs an overhaul, why use handles
+    : not needed right now, and works fine.
+    : just don't try and cache the things, no need
+- Check perf
+    : [link](https://www.brendangregg.com/FlameGraphs/cpuflamegraphs.html)
 - Sometimes player does not animate and just slides.
 - Jitter when walking into walls and when at map center.
 - Battle finger should only pop up after the animation
@@ -55,7 +57,8 @@ Cpp game?
     : need to track what direction - done
     : cleanup properly
     : we should have battle system enable and disable the ui as needed
-- currently crashes when gameobjects keep spawning, either it is getting deleted for some reason, or it isn't being allocated correctly in gameobject
+- currently crashes when gameobjects keep spawning, either it is getting deleted
+    for some reason, or it isn't being allocated correctly in gameobject
     : somehow numGameobjects is higher than sizegameobjects
     : removing the counting system
 - Enemy dies
@@ -102,19 +105,20 @@ Cpp game?
 
 ## Version / Release Roadmap
 
-- 0.1.0: basic dialog with interactions, enter battle, can kill enemy, battle ended.
+- 0.1.x: basic dialog with interactions, enter battle, can kill enemy, battle ended.
     : dialog - done
     : battle enter - done
     : battle finish - done
-    : battle end
+    : battle end - done
+    : go through all todos and update - done
     : fix all leaks
-    : go through all todos and update
 
-- 0.2.0: local multiplayer
+- 0.2.x: local multiplayer
     : second player can spawn
     : camera follows main p1
     : second player can switch screens and interact with things
     : second battler
+    : steam playtest - steamworks baby
 
 - 0.3.0: Main menu and splash screens
     : open a menu when exploring, should be small enough for both

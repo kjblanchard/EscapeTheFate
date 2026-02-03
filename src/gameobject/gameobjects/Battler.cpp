@@ -12,31 +12,27 @@ using namespace std;
 using namespace Etf;
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), _battlerData(args.BattleData) {
-	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), internalGO(), {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
-	_animator = Engine::Animation::CreateAnimatorFull(args.BattleData->Sprite.c_str(), _sprite);
-	StartAnimation(args.BattleData->IdleAnimation, false);
+	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), &_x, &_y, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
+	// _animator = Engine::Animation::CreateAnimatorFull(args.BattleData->Sprite.c_str(), _sprite);
+	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
+	_animator->StartAnimation(args.BattleData->IdleAnimation);
 	_gameObjects.push_back(shared_ptr<GameObject>(this));
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
 }
 
+float Battler::SpriteWidth() {
+	return _sprite->TextureSourceRect.w;
+}
+
+float Battler::SpriteHeight() {
+	return _sprite->TextureSourceRect.h;
+}
+
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
 	takeDamageImpl(damage);
-}
-
-Battler::~Battler() {
-	Engine::Animation::DestroyAnimatorFull(_animator);
-}
-
-void Battler::StartAnimation(const std::string& name, bool backToIdle) {
-	if (backToIdle) {
-		PlayAnimation(_animator, name.c_str(), 1);
-		AddAnimationToAnimatorQueue(_animator, _battlerData->IdleAnimation.c_str(), -1);
-	} else {
-		PlayAnimation(_animator, name.c_str(), -1);
-	}
 }
 
 void Battler::updateATBGauge() {

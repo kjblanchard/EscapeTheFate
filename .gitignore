@@ -9,3 +9,8 @@ terraform.tfvars
 *.swn
 *.swo
 *errors.log
+out.folded
+out.perf
+perf.data
+test.svg
+perf.data.old

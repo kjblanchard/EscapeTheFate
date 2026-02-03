@@ -1,7 +1,9 @@
 #pragma once
 #include <battle/battlerData.hpp>
 #include <battle/battlerUI.hpp>
+#include <bindings/SpriteAnimator.hpp>
 #include <gameobject/GameObject.hpp>
+#include <memory>
 struct Sprite;
 namespace Etf {
 class UIText;
@@ -14,8 +16,10 @@ struct BattlerArgs {
 class Battler : public GameObject {
    public:
 	Battler(const BattlerArgs& args);
-	virtual ~Battler();
+	virtual ~Battler() = default;
 	inline float SpriteX() { return X() + _battlerData->Location.x; }
+	float SpriteWidth();
+	float SpriteHeight();
 	inline float SpriteY() { return Y() + _battlerData->Location.y; }
 	void Draw() override;
 	// Updates the speed, and also calls updateimpl
@@ -23,7 +27,6 @@ class Battler : public GameObject {
 		updateATBGauge();
 		updateImpl();
 	}
-	void StartAnimation(const std::string& name, bool backToIdle = true);
 
    public:
 	inline unsigned int CurrentHP() { return _currentHP; }
@@ -46,8 +49,8 @@ class Battler : public GameObject {
 
    protected:
 	Sprite* _sprite;
-	unsigned int _animator;
 	int _locationX, _locationY;
+	std::unique_ptr<SpriteAnimator> _animator;
 
    private:
 	void updateATBGauge();

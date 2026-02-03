@@ -22,6 +22,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		}
 		_menuBoxStartX = _commandMenu->OriginalX();
 		_menuBoxStartY = _commandMenu->OriginalY();
+		_commandMenu->SetVisible(false);
 		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
 		auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
 		if (!vlg) {
@@ -57,13 +58,17 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		_targetSelectionFinger->SetVisible(false);
 		auto hpObject = UI::RootUIObject->GetChildByName("P1Health");
 		_hpObject = static_cast<UIText*>(hpObject);
+		auto progressBarAnim = UI::RootUIObject->GetChildByName("P1ATB");
+		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
+		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
+		StartATBIdleAnim();
 		auto progressBarObject = UI::RootUIObject->GetChildByName("P1ATBProgressBar");
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
 	} else {
 		auto hpObject = UI::RootUIObject->GetChildByName("EnemyHP");
 		_hpObject = static_cast<UIText*>(hpObject);
-		if(_hpObject) _hpObject->SetVisible(true);
+		if (_hpObject) _hpObject->SetVisible(true);
 	}
 }
 
@@ -110,6 +115,7 @@ void BattlerUI::UpdateAnimations() {
 		case Closing: {
 			_currentAnimationTime += DeltaTimeSeconds;
 			if (_currentAnimationTime > Animation_Open_Time) {
+				_commandMenu->SetVisible(false);
 				_currentState = Closed;
 				break;
 			}
@@ -133,8 +139,7 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 }
 
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
-	// TODO this should use the battlers width and center it, and then move a little above it
-	auto x = battler->X() + 20;
+	auto x = battler->X() + (battler->SpriteWidth() / 2) - 5;
 	auto y = battler->Y() - 10;
 	_targetSelectionFinger->SetAbsolutePosition(x, y);
 }

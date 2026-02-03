@@ -9,14 +9,34 @@ struct sgGameObject;
 
 namespace Etf {
 
+enum class CurrentSceneLoadingState {
+	NotLoading,
+	WaitingForFadeOut,
+	FadingIn,
+	FadingInAllowUpdate,
+};
+
+enum class ScreenFadeTypes {
+	NotFading,
+	FadeIn,
+	FadeOut,
+};
+
 struct Engine {
    public:
-	inline static const std::string& CurrentScene() { return _currentScene; }
-	static void LoadScene(const std::string& name = "");
-	static Sprite* CreateSpriteFull(const std::string& name, sgGameObject* parent, RectangleF sourceRect, RectangleF offsetSizeRect);
+	static const std::string& CurrentScene();
+	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f);
+	// TODO Do we even need this anymore?  Probably not
+	static Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
+	// Used for UI mainly, cause we need to handle drawing it outselves on top of everything
+	static Sprite* CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 	static void SetSpriteVisible(Sprite* sprite, bool visible);
 	static void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
-	static void HandleMapLoad();
+	// Returns if we are currently loading a scene
+	static bool HandleMapLoad();
+	// Fades out the full screen FBO if we aren't already fading
+	static void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
+	static void UpdateScreenFade();
 
 	struct Audio {
 		static void PlayBGM(const std::string& name, float volume = 1.0f);
@@ -24,14 +44,6 @@ struct Engine {
 		static void StopBGMBackground();
 
 	} Audio;
-
-	struct Animation {
-		static unsigned int CreateAnimatorFull(const std::string& name, Sprite* sprite);
-		static void StartAnimatorAnimation(unsigned int animator, const char*, float animSpeed = 1.0);
-		static void UpdateAnimatorAnimationSpeed(unsigned int animator, float animSpeed);
-		static void DestroyAnimatorFull(unsigned int animator);
-
-	} Animation;
 
 	struct Tweening {
 		enum class TweenEaseTypes {
@@ -78,8 +90,6 @@ struct Engine {
 	static void PlaySFX(const std::string& name, float volume);
 
    private:
-	static std::string _currentScene;
-	static std::string _nextScene;
 	static void loadSceneInternal();
 };
 

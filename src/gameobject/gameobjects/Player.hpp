@@ -1,6 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/rectangle.h>
 
+#include <bindings/SpriteAnimator.hpp>
 #include <cmath>
 #include <gameobject/GameObject.hpp>
 #include <memory>
@@ -12,14 +13,13 @@ namespace Etf {
 class IInteractable;
 
 class Player : public GameObject {
-	enum class Direction { North,
+	enum class Direction { South,
 						   East,
-						   South,
+						   North,
 						   West };
 
    public:
 	static void Create(TiledObject* objData);
-	~Player();
 
    private:
 	void Start() override;
@@ -40,7 +40,7 @@ class Player : public GameObject {
 	Sprite* _sprite;
 	Sprite* _InteractionSprite;
 	Direction _direction = Direction::South;
-	unsigned int _animator;
+	std::unique_ptr<SpriteAnimator> _animator;
 	bool DoNotDestroy = false;
 	int _width, _height;
 	RectangleF _collisionRect = {};

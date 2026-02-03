@@ -22,35 +22,41 @@ static const Point _interactionEastWestWidthHeight = {26, 8};
 static const Point _interactionNorthSouthWidthHeight = {8, 26};
 
 void Player::Create(TiledObject* objData) {
+	int loadLocation = -1;
+	Direction direction = Direction::South;
 	for (auto i = 0; i < objData->NumProperties; ++i) {
 		auto prop = objData->Properties[i];
-		if (prop.Name != string("loadLocation")) continue;
-		auto loadLocation = prop.Data.IntData;
-		if (loadLocation != GameState::NextLoadScreen) continue;
-		sgLogDebug("Making player start at pos %d!!", loadLocation);
-		auto player = new Player(objData);
-		// We should override this if we are exiting from a battle.
-		if (GameState::Battle::ExitingFromBattle) {
-			player->X() = GameState::NextLoadLocation.X;
-			player->Y() = GameState::NextLoadLocation.Y;
-			player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
-			Engine::Animation::StartAnimatorAnimation(player->_animator, player->getAnimNameFromDirection());
-			GameState::NextLoadLocation = {0, 0};
+		// Only load player if we are on the right map start.
+		if (prop.Name == string_view("loadLocation")) {
+			loadLocation = prop.Data.IntData;
+		} else if (prop.Name == string_view("direction")) {
+			direction = static_cast<Direction>(prop.Data.IntData);
 		}
-		SetCameraFollowTarget(&player->X(), &player->Y());
-		_gameObjects.push_back(unique_ptr<GameObject>(player));
 	}
+	if (loadLocation != GameState::NextLoadScreen) return;
+	sgLogDebug("Making player start at pos %d!!", loadLocation);
+	auto player = new Player(objData);
+	// We should override this if we are exiting from a battle.
+	if (GameState::Battle::ExitingFromBattle) {
+		player->X() = GameState::NextLoadLocation.X;
+		player->Y() = GameState::NextLoadLocation.Y;
+		player->_direction = static_cast<Direction>(GameState::NextLoadDirection);
+		GameState::NextLoadLocation = {0, 0};
+	} else {
+		player->_direction = direction;
+	}
+	player->_animator->StartAnimation(player->getAnimNameFromDirection());
+	SetCameraFollowTarget(&player->X(), &player->Y());
+	_gameObjects.push_back(unique_ptr<GameObject>(player));
 }
 
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
-	_sprite = Engine::CreateSpriteFull("player1", internalGO(), {0, 0, 32, 32}, {0, 0, 32, 32});
-	_InteractionSprite = Engine::CreateSpriteFull("interaction", internalGO(), {0, 0, 16, 16}, {20, -5, 16, 16});
+	_sprite = Engine::CreateSpriteFull("player1", &_x, &_y, {0, 0, 32, 32}, {0, 0, 32, 32});
+	_InteractionSprite = Engine::CreateSpriteFull("interaction", &_x, &_y, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
-	_animator = Engine::Animation::CreateAnimatorFull("player1", _sprite);
+	_animator = make_unique<SpriteAnimator>("player1", _sprite);
 }
-Player::~Player() {
-	Engine::Animation::DestroyAnimatorFull(_animator);
-}
+
 void Player::Start() {}
 void Player::Update() {
 	handlePlayerMovement();
@@ -111,7 +117,7 @@ void Player::handleInteractions() {
 	_currentInteractable = interactable;
 	if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
 		_currentInteractable->Interact();
-		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
+		_animator->UpdateAnimatorSpeed(0.0);
 	}
 }
 
@@ -146,7 +152,7 @@ bool Player::handlePlayerMovement() {
 	}
 
 	if (_direction != previousDirection) {
-		Engine::Animation::StartAnimatorAnimation(_animator, getAnimNameFromDirection());
+		_animator->StartAnimation(getAnimNameFromDirection());
 		GameState::NextLoadDirection = static_cast<int>(_direction);
 	}
 
@@ -164,10 +170,10 @@ bool Player::handlePlayerMovement() {
 		// Update gamestate with players location.
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
-		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 1.0);
+		_animator->UpdateAnimatorSpeed(1.0f);
 
 	} else {
-		Engine::Animation::UpdateAnimatorAnimationSpeed(_animator, 0.0);
+		_animator->UpdateAnimatorSpeed(0.0f);
 	}
 	return moved;
 }

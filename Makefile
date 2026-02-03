@@ -16,7 +16,6 @@ BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
 UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
 WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
 PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
-# TODO Needed on the build step for ios, so that it can allow provisioning updates, need to put this in correctly
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
@@ -91,6 +90,9 @@ idevices:
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
+# This will error if you are using asan if you have leaks, so maybe disable that.
+perf:
+	@perf record -F 99 -g -- $(RUN_CMD) && perf script > out.perf && stackcollapse-perf.pl out.perf > out.folded && flamegraph.pl out.folded > test.svg && firefox test.svg
 
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
