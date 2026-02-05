@@ -11,6 +11,7 @@ namespace Etf {
 
 enum class CurrentSceneLoadingState {
 	NotLoading,
+	NextSceneQueued,
 	WaitingForFadeOut,
 	FadingIn,
 	FadingInAllowUpdate,
@@ -36,6 +37,7 @@ struct Engine {
 	static bool HandleMapLoad();
 	// Fades out the full screen FBO if we aren't already fading
 	static void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
+	// if screen is fading, updates the time on it and tweens the fade.
 	static void UpdateScreenFade();
 
 	struct Audio {

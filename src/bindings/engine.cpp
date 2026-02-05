@@ -45,6 +45,11 @@ static struct FadeData {
 
 static CurrentSceneLoadingState _currentLoadingState = CurrentSceneLoadingState::NotLoading;
 
+static void endScreenFade(){
+	_fadeData.CurrentFadeColor.A = _fadeData.EndFadeAlpha;
+	GraphicsUpdateFBOColor(&_fadeData.CurrentFadeColor);
+}
+
 void Engine::PlaySFX(const std::string& name, float volume) {
 	PlaySfxOneShot(name.c_str(), volume);
 }
@@ -89,6 +94,7 @@ void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime) 
 	if (newName.empty()) {
 		newName = gameSceneConfig.defaultScene;
 	}
+	_currentLoadingState = CurrentSceneLoadingState::NextSceneQueued;
 	_sceneData.FadeOutTime = fadeOutTime;
 	_sceneData.FadeInTime = fadeInTime;
 	_sceneData.NextScene = newName;
@@ -100,7 +106,8 @@ bool Engine::HandleMapLoad() {
 	switch (_currentLoadingState) {
 		// If we are not loading, check to see if we should trigger it
 		case CurrentSceneLoadingState::NotLoading:
-			if (_sceneData.NextScene.empty()) return true;
+			return true;
+		case Etf::CurrentSceneLoadingState::NextSceneQueued:
 			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;
@@ -125,6 +132,7 @@ bool Engine::HandleMapLoad() {
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
 			if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
+				endScreenFade();
 			}
 			return true;
 	}
@@ -145,12 +153,15 @@ void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
 	GameState::CurrentFadeState = (int)fadeType;
 }
 
+
 void Engine::UpdateScreenFade() {
 	if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) return;
 	_fadeData.CurrentFadeTime += GameState::DeltaTimeSeconds;
+	// sgLogWarn("Screen is fading currently");
 	if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
 		_fadeData.CurrentFadeStatus = ScreenFadeTypes::NotFading;
 		GameState::CurrentFadeState = (int)_fadeData.CurrentFadeStatus;
+		// sgLogWarn("Screen is finished fading and switching to not fading");
 		return;
 	}
 	_fadeData.CurrentFadeColor.A = Tweening::GetTweenedValue(_fadeData.LastFadeColor.A, _fadeData.EndFadeAlpha, _fadeData.CurrentFadeTime, _fadeData.FadeTime);

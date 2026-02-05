@@ -2,13 +2,16 @@
 
 ## In Progress
 
+- Emscripten
+  - Web build does not load on a black screen, not sure why that is
+    - trying to fix logic for loading tor only happen on fade
+  - Web build sometimes does not fade fully, should set fade at end back to full.
+
 ## Todos
 
 - Jitter, game is not smooth at 60fps.. try different update methods
 - Jitter in middle of screen
 - Web build color on ATB bar is non-existant
-- Web build does not load on a black screen, not sure why that is
-- Web build sometimes does not fade fully, should set fade at end back to full.
 - House dialog
 - Fix bigs
 
