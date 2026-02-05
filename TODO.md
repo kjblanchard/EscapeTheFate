@@ -2,18 +2,15 @@
 
 ## In Progress
 
-- Emscripten
-  - Web build does not load on a black screen, not sure why that is
-    - trying to fix logic for loading tor only happen on fade
-  - Web build sometimes does not fade fully, should set fade at end back to full.
-
 ## Todos
 
-- Jitter, game is not smooth at 60fps.. try different update methods
-- Jitter in middle of screen
-- Web build color on ATB bar is non-existant
-- House dialog
-- Fix bigs
+- House dialog / dialog when none exists
+- Fix bugs
+- Errors.log has (null) in front of it, lol.
+- When fadetime is 0, it skips both.
+- When loading map doesn't exist, gets a segfault
+- ASAN issue when trying to load a bgm that doesn't exist on scene change
+- Issue with fadein time when loading takes too long.
 
 ### Battle
 
@@ -21,13 +18,11 @@
 
 ### Bugs
 
-- Errors.log has (null) in front of it, lol.
-- When fadetime is 0, it skips both.
-- When loading map doesn't exist, gets a segfault
-- ASAN issue when trying to load a bgm that doesn't exist on scene change
+## Current Release
 
 ## Backlogged
 
+- BGM fadeout and fadein
 - add enemy health bar and player health bar
 - check on discord bot updates.
 - More fields that can be optional to make it easier to write the jsonc file
@@ -38,6 +33,15 @@
 
 ## Completed
 
+- Jitter in middle of screen
+- Web build color on ATB bar is non-existant
+- Web build - moving screens during a fade causes fade to not happen, shouldn't be able to exit until faded.
+- Emscripten
+  - Web build does not load on a black screen, not sure why that is
+    - trying to fix logic for loading tor only happen on fade
+  - Web build sometimes does not fade fully, should set fade at end back to full.
+
+- Jitter, game is not smooth at 60fps.. try different update methods
 - warnings rel 1.x
 - leaks rel1.x
 - transition screen for switching between maps

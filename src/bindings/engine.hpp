@@ -26,7 +26,7 @@ enum class ScreenFadeTypes {
 struct Engine {
    public:
 	static const std::string& CurrentScene();
-	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f);
+	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
 	// TODO Do we even need this anymore?  Probably not
 	static Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 	// Used for UI mainly, cause we need to handle drawing it outselves on top of everything

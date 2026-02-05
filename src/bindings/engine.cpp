@@ -31,6 +31,7 @@ static struct SceneData {
 	string NextScene = "";
 	float FadeOutTime = 0;
 	float FadeInTime = 0;
+	bool PlayTransitionSFX = false;
 
 } _sceneData;
 
@@ -45,7 +46,7 @@ static struct FadeData {
 
 static CurrentSceneLoadingState _currentLoadingState = CurrentSceneLoadingState::NotLoading;
 
-static void endScreenFade(){
+static void endScreenFade() {
 	_fadeData.CurrentFadeColor.A = _fadeData.EndFadeAlpha;
 	GraphicsUpdateFBOColor(&_fadeData.CurrentFadeColor);
 }
@@ -88,13 +89,16 @@ void Engine::loadSceneInternal() {
 	GameState::Battle::ExitingFromBattle = false;
 }
 
-void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime) {
+void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
+	if (_currentLoadingState != CurrentSceneLoadingState::NotLoading) return;
+	sgLogWarn("Loading scene");
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName.empty()) {
 		newName = gameSceneConfig.defaultScene;
 	}
 	_currentLoadingState = CurrentSceneLoadingState::NextSceneQueued;
+	_sceneData.PlayTransitionSFX = playTransitionSound;
 	_sceneData.FadeOutTime = fadeOutTime;
 	_sceneData.FadeInTime = fadeInTime;
 	_sceneData.NextScene = newName;
@@ -108,24 +112,21 @@ bool Engine::HandleMapLoad() {
 		case CurrentSceneLoadingState::NotLoading:
 			return true;
 		case Etf::CurrentSceneLoadingState::NextSceneQueued:
+			if (_sceneData.PlayTransitionSFX) Engine::PlaySFX("transition2", 0.5f);
 			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;
 			// While fading out, we should not allow others to update, and when finished we should load the scene properly and then fade in
 		case CurrentSceneLoadingState::WaitingForFadeOut:
 			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
+			sgLogWarn("Calling loadscene internal");
 			loadSceneInternal();
 			StartFullScreenFade(_sceneData.FadeInTime, ScreenFadeTypes::FadeIn);
 			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
 			return false;
 		// After 50% of current time is done, we should allow updates from the gameobjects.
 		case CurrentSceneLoadingState::FadingIn:
-			// Check to see if we are finished fading from some kind of lag
-			if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) {
-				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
-				return true;
-			}
-			if (_fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.5f) {
+			if (_fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.9f) {
 				_currentLoadingState = CurrentSceneLoadingState::FadingInAllowUpdate;
 			}
 			return false;
@@ -152,7 +153,6 @@ void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
 	_fadeData.EndFadeAlpha = fadeType == ScreenFadeTypes::FadeIn ? 255 : 0;
 	GameState::CurrentFadeState = (int)fadeType;
 }
-
 
 void Engine::UpdateScreenFade() {
 	if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) return;

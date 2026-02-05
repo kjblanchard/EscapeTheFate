@@ -29,13 +29,12 @@ void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
 	//Initial load screen.
-	Engine::LoadScene("", 0.1f, 0.75);
+	Engine::LoadScene("", 0.1f, 1.75, false);
 }
 
 void update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
-	GameState::Ticks = Ticks;
 	// If we are currently loading, do not update things.
 	if (!Engine::HandleMapLoad()) {
 		return;
@@ -54,7 +53,7 @@ void draw() {
 
 static void enterBattle() {
 	GameState::NextLoadMapName = Engine::CurrentScene();
-	Engine::LoadScene("forest1", 0.15f, 1.0f);
+	Engine::LoadScene("forest1", 0.25f, 0.75f, false);
 }
 
 void handleInput() {
