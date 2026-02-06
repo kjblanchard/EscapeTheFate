@@ -281,6 +281,54 @@
                  "width":16,
                  "x":118.310859115001,
                  "y":125.79119930975
+                }, 
+                {
+                 "height":30.6666666666667,
+                 "id":46,
+                 "name":"BedText",
+                 "properties":[
+                        {
+                         "name":"name",
+                         "type":"string",
+                         "value":"bed"
+                        }],
+                 "template":"templates\/Dialog",
+                 "type":"5TextInteraction",
+                 "width":26.6666666666667,
+                 "x":226,
+                 "y":118.666666666667
+                }, 
+                {
+                 "height":17.3333666666666,
+                 "id":47,
+                 "name":"PotsText",
+                 "properties":[
+                        {
+                         "name":"name",
+                         "type":"string",
+                         "value":"pots"
+                        }],
+                 "template":"templates\/Dialog",
+                 "type":"5TextInteraction",
+                 "width":66.6667,
+                 "x":0.333316666666676,
+                 "y":100.66665
+                }, 
+                {
+                 "height":16.6667333333333,
+                 "id":48,
+                 "name":"FireplaceText",
+                 "properties":[
+                        {
+                         "name":"name",
+                         "type":"string",
+                         "value":"fireplace"
+                        }],
+                 "template":"templates\/Dialog",
+                 "type":"5TextInteraction",
+                 "width":20.6667,
+                 "x":14.3333166666666,
+                 "y":55.9999666666667
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -289,7 +337,7 @@
          "y":0
         }],
  "nextlayerid":7,
- "nextobjectid":46,
+ "nextobjectid":49,
  "orientation":"orthogonal",
  "properties":[
         {

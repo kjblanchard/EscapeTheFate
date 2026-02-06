@@ -4,7 +4,6 @@
 
 ## Todos
 
-- House dialog / dialog when none exists
 - Fix bugs
 - Errors.log has (null) in front of it, lol.
 - When fadetime is 0, it skips both.
@@ -33,6 +32,7 @@
 
 ## Completed
 
+- House dialog / dialog when none exists
 - Jitter in middle of screen
 - Web build color on ATB bar is non-existant
 - Web build - moving screens during a fade causes fade to not happen, shouldn't be able to exit until faded.
