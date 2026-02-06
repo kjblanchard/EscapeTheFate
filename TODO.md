@@ -2,14 +2,13 @@
 
 ## In Progress
 
+
 ## Todos
 
 - Fix bugs
-- Errors.log has (null) in front of it, lol.
 - When fadetime is 0, it skips both.
-- When loading map doesn't exist, gets a segfault
-- ASAN issue when trying to load a bgm that doesn't exist on scene change
 - Issue with fadein time when loading takes too long.
+- leaks
 
 ### Battle
 
@@ -32,6 +31,9 @@
 
 ## Completed
 
+- ASAN issue when trying to load a bgm that doesn't exist on scene change
+- When loading map doesn't exist, gets a segfault
+- Errors.log has (null) in front of it, lol.
 - House dialog / dialog when none exists
 - Jitter in middle of screen
 - Web build color on ATB bar is non-existant

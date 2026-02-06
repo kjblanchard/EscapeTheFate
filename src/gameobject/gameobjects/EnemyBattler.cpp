@@ -7,7 +7,7 @@ using namespace Etf;
 using namespace std;
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
-	auto hpObject = UI::RootUIObject->GetChildByName("EnemyHP");
+	auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
 	_hpObject = static_cast<UIText*>(hpObject);
 	_hpObject->UpdateText(to_string(_currentHP));
 }

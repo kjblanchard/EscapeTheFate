@@ -11,6 +11,7 @@
 #include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 #include <unordered_map>
+
 #include "ui/uiAnimation.hpp"
 
 using namespace Etf;
@@ -178,7 +179,7 @@ static UIObject* handleUIArgs(const string& name, json_object* data) {
 	return newGuy;
 }
 
-std::unique_ptr<UIObject> UI::RootUIObject;
+std::unique_ptr<UIObject> UI::_rootUIObject;
 
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
@@ -196,7 +197,7 @@ void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
 
 void UI::LoadUIFromFile(const string& filename) {
 	// Initialize the root object if needed
-	if (!RootUIObject) RootUIObject = make_unique<UIObject>();
+	GetRootUIObject();
 	// Check the cached files to avoid filesystem reads, and return if there is an error loading
 	if (!_cachedUIFiles.contains(filename)) {
 		if (!loadJsonFromFile(filename)) return;
@@ -207,19 +208,19 @@ void UI::LoadUIFromFile(const string& filename) {
 	Engine::Json::jforeach_lambda(fullUIFileGeneric, [&](const char* key, void* value) {
 		json_object* child = (json_object*)value;
 		newPanelNames.push_back(key);
-		if (RootUIObject->HasChildOfName(key)) {
+		if (_rootUIObject->HasChildOfName(key)) {
 			sgLogDebug("Not creating panel, it already exists %s", key);
 			return;
 		}
 		auto topPanel = handleUIArgs(key, child);
 		if (!topPanel) return;
-		RootUIObject->AddChild(topPanel);
+		_rootUIObject->AddChild(topPanel);
 	});
-	RootUIObject->DestroyChildIfNotName(newPanelNames);
+	_rootUIObject->DestroyChildIfNotName(newPanelNames);
 }
 void UI::DrawUI() {
-	if (!RootUIObject) return;
-	RootUIObject->Draw(0, 0);
+	if (!_rootUIObject) return;
+	_rootUIObject->Draw(0, 0);
 }
 
 void UI::DestroyUI() {
@@ -227,5 +228,12 @@ void UI::DestroyUI() {
 		jReleaseObjectFromFile(value);
 	}
 	_cachedUIFiles.clear();
-	RootUIObject.reset();
+	_rootUIObject.reset();
+}
+
+UIObject* UI::GetRootUIObject() {
+	if (!_rootUIObject) {
+		_rootUIObject = make_unique<UIObject>();
+	}
+	return _rootUIObject.get();
 }

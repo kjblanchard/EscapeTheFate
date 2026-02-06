@@ -65,7 +65,8 @@ void Engine::loadSceneInternal() {
 		return scene.MapName == _sceneData.NextScene;
 	});
 	if (it == gameSceneConfig.scenes.end()) {
-		sgLogWarn("Could not find scene with name %s, not loading", _sceneData.NextScene.c_str());
+		sgLogError("Could not find scene with name %s, not loading", _sceneData.NextScene.c_str());
+		_currentLoadingState = CurrentSceneLoadingState::NotLoading;
 		return;
 	}
 	auto& sceneToLoad = *it;
@@ -80,7 +81,7 @@ void Engine::loadSceneInternal() {
 	if (!sceneToLoad.UIName.empty()) {
 		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), sceneToLoad.UIName));
 	} else {
-		UI::RootUIObject->DestroyChildIfNotName("");
+		UI::GetRootUIObject()->DestroyChildIfNotName("");
 	}
 	DialogSystem::LoadDialogFromJsonFile(sceneToLoad.MapName);
 	_sceneData.CurrentScene = _sceneData.NextScene;

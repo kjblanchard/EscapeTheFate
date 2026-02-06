@@ -66,7 +66,7 @@ static void updateDialogTextLetters(int lettersToDisplay) {
 
 static void initializeDialogBox() {
 	if (!_dialogBoxObject) {
-		_dialogBoxObject = UI::RootUIObject->GetChildByName("DialogBox");
+		_dialogBoxObject = UI::GetRootUIObject()->GetChildByName("DialogBox");
 	}
 	if (_dialogBoxObject && !_dialogBoxTextObject) {
 		_dialogBoxTextObject = (UIText*)_dialogBoxObject->GetChildByName("DialogBoxText");

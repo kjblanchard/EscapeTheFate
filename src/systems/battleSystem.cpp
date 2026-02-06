@@ -152,9 +152,9 @@ static void initializeBattleSystem() {
 
 static void cacheBattleUIElements() {
 	// Need to find the command menu, HUD, etc.
-	_battleUI.RootPanel = UI::RootUIObject->GetChildByName("BattlePanel");
+	_battleUI.RootPanel = UI::GetRootUIObject()->GetChildByName("BattlePanel");
 	assert(_battleUI.RootPanel && "No root object found");
-	_battleUI.PlayerHUD = UI::RootUIObject->GetChildByName("PlayerStatusHUD");
+	_battleUI.PlayerHUD = UI::GetRootUIObject()->GetChildByName("PlayerStatusHUD");
 	assert(_battleUI.PlayerHUD && "No hud object found");
 	int battlerNum = 1;
 	for (auto& obj : _battleUI.PlayerCommandsObjects) {
