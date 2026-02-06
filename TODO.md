@@ -2,13 +2,14 @@
 
 ## In Progress
 
+- restart stream when you click it before it's loaded
 
 ## Todos
 
 - Fix bugs
 - When fadetime is 0, it skips both.
 - Issue with fadein time when loading takes too long.
-- leaks
+- battle in debughome sends you offmap
 
 ### Battle
 
@@ -31,6 +32,7 @@
 
 ## Completed
 
+- leaks
 - ASAN issue when trying to load a bgm that doesn't exist on scene change
 - When loading map doesn't exist, gets a segfault
 - Errors.log has (null) in front of it, lol.
