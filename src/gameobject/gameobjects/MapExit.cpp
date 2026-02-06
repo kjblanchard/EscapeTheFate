@@ -12,6 +12,8 @@
 using namespace Etf;
 using namespace std;
 
+const float MAP_FADEOUT_TIME = 0.25f;
+const float MAP_FADEIN_TIME = 0.35f;
 std::vector<std::weak_ptr<MapExit>> MapExit::_mapExits;
 
 void MapExit::Create(TiledObject* objData) {
@@ -48,7 +50,7 @@ bool MapExit::CheckAndHandleMapExitOverlaps(RectangleF& rect) {
 
 		if (Engine::CheckForRectCollision(rect, mapPtr->_location)) {
 			GameState::NextLoadScreen = mapPtr->_locationToLoad;
-			Engine::LoadScene(mapPtr->_mapToLoad, 0.5f, 0.5f);
+			Engine::LoadScene(mapPtr->_mapToLoad, MAP_FADEOUT_TIME, MAP_FADEIN_TIME);
 			return true;
 		}
 	}

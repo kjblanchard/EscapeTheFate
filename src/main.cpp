@@ -53,7 +53,7 @@ void draw() {
 
 static void enterBattle() {
 	GameState::NextLoadMapName = Engine::CurrentScene();
-	Engine::LoadScene("forest1", 0.25f, 0.75f, false);
+	Engine::LoadScene("forest1", 0.25f, 2.75f, false);
 }
 
 void handleInput() {

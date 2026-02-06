@@ -5,9 +5,9 @@
     },
     "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
+        ".",
         "old-delete",
-        "templates",
-        "."
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -98,11 +98,14 @@
             "expandedGroupLayers": [
                 6
             ],
-            "scale": 1.5,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 2,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 258.3333333333333,
-                "y": 143.33333333333331
+                "x": 127.75,
+                "y": 319.5
             }
         },
         "debugTown.tmj#house": {
@@ -127,8 +130,8 @@
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 127.83333333333333,
-                "y": 150
+                "x": 128,
+                "y": 40.16666666666666
             }
         },
         "debugTownHome.tmj#inside": {
@@ -157,8 +160,8 @@
             "scale": 0.75,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 256,
-                "y": 144
+                "x": 256.66666666666663,
+                "y": 143.33333333333326
             }
         },
         "forest1.tmj#outside": {

@@ -13,6 +13,14 @@ enum class CurrentSceneLoadingState {
 	NotLoading,
 	NextSceneQueued,
 	WaitingForFadeOut,
+	LoadingStart,
+	LoadingMap,
+	LoadingGameObjects,
+	LoadingUI,
+	LoadingDialog,
+	LoadingFinish,
+	//Use this to not add a big jump to the loading after a load
+	JustLoaded,
 	FadingIn,
 	FadingInAllowUpdate,
 };

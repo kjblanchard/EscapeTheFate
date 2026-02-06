@@ -56,7 +56,7 @@ static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 	ResetCameraFollow();
-	Engine::LoadScene(_loadMap);
+	Engine::LoadScene(_loadMap, 0.75f, 0.25f, false);
 	_nextBattleState = NotInBattle;
 	GameState::Battle::InBattle = false;
 	GameState::Battle::ExitingFromBattle = true;

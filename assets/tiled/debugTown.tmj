@@ -422,11 +422,19 @@
                  "y":144
                 }, 
                 {
+                 "height":15.5,
                  "id":31,
+                 "properties":[
+                        {
+                         "name":"name",
+                         "type":"string",
+                         "value":"forestSign"
+                        }],
                  "template":"templates\/Dialog.tx",
                  "type":"5TextInteraction",
-                 "x":48,
-                 "y":224
+                 "width":16.5,
+                 "x":47.5,
+                 "y":224.5
                 }, 
                 {
                  "height":16,

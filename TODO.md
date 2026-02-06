@@ -7,7 +7,6 @@
 
 - Fix bugs
 - When fadetime is 0, it skips both.
-- Issue with fadein time when loading takes too long.
 
 ### Battle
 
@@ -30,6 +29,7 @@
 
 ## Completed
 
+- Issue with fadein time when loading takes too long.
 - battle in debughome sends you offmap
     : happens if you dont move on a new map, probably fine for now.
 - restart stream when you click it before it's loaded
@@ -129,7 +129,7 @@
     : battle finish - done
     : battle end - done
     : go through all todos and update - done
-    : fix all leaks
+    : fix all leaks - done
 
 - 0.2.x: local multiplayer
     : second player can spawn
@@ -137,6 +137,7 @@
     : second player can switch screens and interact with things
     : second battler
     : steam playtest - steamworks baby
+    : load all json at game load instead of on demand.
 
 - 0.3.0: Main menu and splash screens
     : open a menu when exploring, should be small enough for both
