@@ -47,6 +47,9 @@ void Player::Create(TiledObject* objData) {
 	}
 	player->_animator->StartAnimation(player->getAnimNameFromDirection());
 	SetCameraFollowTarget(&player->X(), &player->Y());
+	//make load location to where we are now incase we don't move and get into a battle.
+	GameState::NextLoadLocation.X = player->X();
+	GameState::NextLoadLocation.Y = player->Y();
 	_gameObjects.push_back(unique_ptr<GameObject>(player));
 }
 
