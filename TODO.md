@@ -10,6 +10,8 @@
 
 ### Bugs
 
+- likely does not preload the tiled things cause of the way they are named
+
 ## Current Release
 
 ## Backlogged

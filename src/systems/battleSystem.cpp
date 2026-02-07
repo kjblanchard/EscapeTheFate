@@ -123,8 +123,8 @@ static void loadPlayers() {
 	args.BattleData = &p1BattlerData;
 	args.X = spawnLocation->X();
 	args.Y = spawnLocation->Y();
-	// auto battler = new PlayerBattler(args);
-	// _battlers.at(playerSpawnLocation) = battler;
+	auto battler = new PlayerBattler(args);
+	_battlers.at(playerSpawnLocation) = battler;
 }
 
 static void loadEnemies() {
@@ -170,7 +170,6 @@ static void initializeBattleSystem() {
 	cacheBattleUIElements();
 	_initialized = true;
 	_battleUI.RootPanel->SetVisible(false);
-	// BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 	_nextBattleState = NotInBattle;
 }

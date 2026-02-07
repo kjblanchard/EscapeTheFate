@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include <ui/uiImage.hpp>
 #include <ui/uiAnimation.hpp>
+#include <ui/uiImage.hpp>
 #include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 namespace Etf {
@@ -21,17 +21,25 @@ class BattlerUI {
 	void UpdateHP(const std::string& hp);
 	void UpdateProgressBar(float percent);
 	inline void OpenCommandsMenu() {
+		return;
 		_commandMenu->SetVisible(true);
 		_currentState = PlayerUIAnimationStates::Opening;
 		_currentAnimationTime = 0;
 	}
 	inline void CloseCommandsMenu() {
+		return;
 		_currentState = PlayerUIAnimationStates::Closing;
 		_currentAnimationTime = 0;
 		_finger->SetVisible(false);
 	}
-	inline void StartATBIdleAnim(){ _progressBarAnim->GetAnimator().StartAnimation("idle");}
-	inline void StartATBTurnAnim(){ _progressBarAnim->GetAnimator().StartAnimation("turn");}
+	inline void StartATBIdleAnim() {
+		return;
+		_progressBarAnim->GetAnimator().StartAnimation("idle");
+	}
+	inline void StartATBTurnAnim() {
+		return;
+		_progressBarAnim->GetAnimator().StartAnimation("turn");
+	}
 	void StartTargetSelection();
 	void MoveFingerToBattlerLocation(Battler* battler);
 	void CloseTargetSelection();

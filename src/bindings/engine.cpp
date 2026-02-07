@@ -5,20 +5,23 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Tweening/easing.h>
 #include <Supergoon/camera.h>
+#include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
-#include <Supergoon/engine.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
+#include <filesystem>
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <iostream>
+#include <string>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
@@ -348,9 +351,31 @@ static void loadAllMaps() {
 	BattleSystem::InitializeBattleSystem();
 	GameObject::DestroyAllGameObjects();
 	loadEnd();
+	// Load all textures
 	ResetCameraFollow();
+}
+
+void LoadAllTexturesFromFolder(const std::string& folderPath) {
+	namespace fs = std::filesystem;
+	for (const auto& entry : fs::directory_iterator(folderPath)) {
+		if (!entry.is_regular_file())
+			continue;
+		std::string filename = entry.path().filename().string();
+			sgLogWarn("checking to load %s", entry.path().stem().string().c_str());
+		// Check for .png extension
+		if (entry.path().extension() == ".png") {
+			sgLogWarn("Loading %s", entry.path().stem().string().c_str());
+			// Remove the .png suffix
+			std::string baseName = entry.path().stem().string();
+			// Call your texture loader with just the filename
+			auto texture = TextureCreate(baseName.c_str());
+			TextureLoadFromPng(texture, baseName.c_str());
+		}
+	}
 }
 
 void Engine::PreloadAssets() {
 	loadAllMaps();
+	std::string folder = format("{}assets/img", GetBasePath());	 // from your helper
+	LoadAllTexturesFromFolder(folder);
 }
