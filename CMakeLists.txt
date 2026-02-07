@@ -9,7 +9,7 @@ option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configur
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
-option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
@@ -140,7 +140,8 @@ if(EMSCRIPTEN)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(LINK_FLAGS
     # "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=3 -s USE_VORBIS=1 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
-    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
+    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
+
   )
   set_target_properties(
     ${EXECUTABLE_TARGET_NAME}

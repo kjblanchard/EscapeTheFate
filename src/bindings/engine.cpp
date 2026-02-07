@@ -11,6 +11,7 @@
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
+#include <Supergoon/engine.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -62,6 +63,8 @@ const std::string& Engine::CurrentScene() {
 }
 
 static void loadSetupAndBgm() {
+	sgLogWarn("Starting load setup/bgm");
+	IsGameLoading = true;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {
 		return scene.MapName == _sceneData.NextScene;
@@ -82,6 +85,7 @@ static void loadSetupAndBgm() {
 }
 
 static void loadUI() {
+	sgLogWarn("Starting load ui");
 	if (!_sceneData.SceneToLoad->UIName.empty()) {
 		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), _sceneData.SceneToLoad->UIName));
 	} else {
@@ -90,10 +94,12 @@ static void loadUI() {
 }
 
 static void loadDialog() {
+	sgLogWarn("Starting load dialog");
 	DialogSystem::LoadDialogFromJsonFile(_sceneData.SceneToLoad->MapName);
 }
 
 static void loadEnd() {
+	sgLogWarn("Starting load end");
 	_sceneData.CurrentScene = _sceneData.NextScene;
 	_sceneData.NextScene = "";
 	GameState::NextLoadMapName = "";
@@ -101,6 +107,7 @@ static void loadEnd() {
 }
 
 void Engine::loadSceneInternal() {
+	sgLogWarn("Starting load map");
 	LoadMap(_sceneData.NextScene.c_str());
 }
 
@@ -147,8 +154,8 @@ bool Engine::HandleMapLoad() {
 			_currentLoadingState = CurrentSceneLoadingState::LoadingGameObjects;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
+			sgLogWarn("Starting load gameobjects");
 			GameObject::LoadAllGameObjects();
-			// sgLogWarn("changing to load ui");
 			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingUI:
@@ -166,13 +173,16 @@ bool Engine::HandleMapLoad() {
 			_currentLoadingState = CurrentSceneLoadingState::JustLoaded;
 			return false;
 		case Etf::CurrentSceneLoadingState::JustLoaded:
+			sgLogWarn("Starting just loaded");
 			StartFullScreenFade(_sceneData.FadeInTime, ScreenFadeTypes::FadeIn);
 			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
 			return false;
 		// After 50% of current time is done, we should allow updates from the gameobjects.
 		case CurrentSceneLoadingState::FadingIn:
+			sgLogWarn("Starting fading in");
 			// Handle if fadetime is 0
 			if (!_fadeData.FadeTime) {
+				sgLogWarn("End screen fade early, switch to not loading");
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
 				endScreenFade();
 				return true;
@@ -182,8 +192,11 @@ bool Engine::HandleMapLoad() {
 			}
 			return false;
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
+			// sgLogWarn("Starting fading in allow update");
 			if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
+				IsGameLoading = false;
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
+				sgLogWarn("End screen fade");
 				endScreenFade();
 			}
 			return true;

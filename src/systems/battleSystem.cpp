@@ -1,5 +1,6 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/camera.h>
+#include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
@@ -122,8 +123,8 @@ static void loadPlayers() {
 	args.BattleData = &p1BattlerData;
 	args.X = spawnLocation->X();
 	args.Y = spawnLocation->Y();
-	auto battler = new PlayerBattler(args);
-	_battlers.at(playerSpawnLocation) = battler;
+	// auto battler = new PlayerBattler(args);
+	// _battlers.at(playerSpawnLocation) = battler;
 }
 
 static void loadEnemies() {
@@ -175,9 +176,11 @@ static void initializeBattleSystem() {
 }
 
 static void loadBattle() {
-	if(!_initialized) initializeBattleSystem();
+	IsGameLoading = true;
+	if (!_initialized) initializeBattleSystem();
 	_battlers.resize(8);
 	sgLogWarn("loading battle");
+	//Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();
 	_battleUI.RootPanel->SetVisible(true);
@@ -232,6 +235,7 @@ void BattleSystem::BattleSystemUpdate() {
 			break;
 		case BattleStartTriggered:
 			_nextBattleState = Battle;
+			IsGameLoading = false;
 			break;
 		case Battle:
 			BattleUpdate();
