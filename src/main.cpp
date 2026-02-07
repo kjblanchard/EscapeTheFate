@@ -28,7 +28,10 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-	//Initial load screen.
+#ifdef __EMSCRIPTEN__
+	Engine::PreloadAssets();
+#endif
+	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 }
 

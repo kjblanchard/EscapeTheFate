@@ -47,10 +47,10 @@ void Player::Create(TiledObject* objData) {
 	}
 	player->_animator->StartAnimation(player->getAnimNameFromDirection());
 	SetCameraFollowTarget(&player->X(), &player->Y());
-	//make load location to where we are now incase we don't move and get into a battle.
+	// make load location to where we are now incase we don't move and get into a battle.
 	GameState::NextLoadLocation.X = player->X();
 	GameState::NextLoadLocation.Y = player->Y();
-	_gameObjects.push_back(unique_ptr<GameObject>(player));
+	_gameObjects.push_back(shared_ptr<GameObject>(player));
 }
 
 Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
@@ -58,6 +58,10 @@ Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	_InteractionSprite = Engine::CreateSpriteFull("interaction", &_x, &_y, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
 	_animator = make_unique<SpriteAnimator>("player1", _sprite);
+}
+
+Player::~Player() {
+	// ResetCameraFollow();
 }
 
 void Player::Start() {}

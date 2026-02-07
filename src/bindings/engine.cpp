@@ -18,6 +18,7 @@
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
@@ -101,7 +102,6 @@ static void loadEnd() {
 
 void Engine::loadSceneInternal() {
 	LoadMap(_sceneData.NextScene.c_str());
-	// GameObject::LoadAllGameObjects();
 }
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
@@ -116,8 +116,6 @@ void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, 
 	_sceneData.PlayTransitionSFX = playTransitionSound;
 	_sceneData.FadeOutTime = fadeOutTime;
 	_sceneData.FadeInTime = fadeInTime;
-	// _sceneData.FadeOutTime = 0;
-	// _sceneData.FadeInTime = 0;
 	_sceneData.NextScene = newName;
 }
 
@@ -131,10 +129,8 @@ bool Engine::HandleMapLoad() {
 		case Etf::CurrentSceneLoadingState::NextSceneQueued:
 			if (_sceneData.PlayTransitionSFX) Engine::PlaySFX("transition2", 0.5f);
 			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
-			// sgLogWarn("changing to waiting for fadeout");
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;
-			// While fading out, we should not allow others to update, and when finished we should load the scene properly and then fade in
 		case CurrentSceneLoadingState::WaitingForFadeOut:
 			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
 			_currentLoadingState = CurrentSceneLoadingState::LoadingStart;
@@ -326,4 +322,22 @@ RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key)
 		jfloat(rectJson, "w"),
 		jfloat(rectJson, "h"),
 	};
+}
+static void loadAllMaps() {
+	auto& config = GameConfig::GetGameConfig();
+	for (auto& scene : config.scene.scenes) {
+		_sceneData.SceneToLoad = &scene;
+		LoadMap(scene.MapName.c_str());
+		GameObject::LoadAllGameObjects();
+		loadUI();
+		loadDialog();
+	}
+	BattleSystem::InitializeBattleSystem();
+	GameObject::DestroyAllGameObjects();
+	loadEnd();
+	ResetCameraFollow();
+}
+
+void Engine::PreloadAssets() {
+	loadAllMaps();
 }

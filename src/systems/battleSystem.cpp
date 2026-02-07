@@ -31,8 +31,10 @@ enum class BattleStates {
 };
 using enum BattleStates;
 
-static BattleStates _currentBattleState = NotInitialized;
-static BattleStates _nextBattleState = NotInitialized;
+static bool _initialized = false;
+
+static BattleStates _currentBattleState = NotInBattle;
+static BattleStates _nextBattleState = NotInBattle;
 static vector<BattlerData> _battlerData;
 // Loaded battle groups from the database, used when loading battle and stays loaded
 static vector<vector<int>> _battleGroups;
@@ -144,12 +146,6 @@ static void loadEnemies() {
 	}
 }
 
-static void initializeBattleSystem() {
-	sgLogWarn("Initializing battle");
-	loadBattleDB();
-	loadBattleGroups();
-}
-
 static void cacheBattleUIElements() {
 	// Need to find the command menu, HUD, etc.
 	_battleUI.RootPanel = UI::GetRootUIObject()->GetChildByName("BattlePanel");
@@ -167,10 +163,21 @@ static void cacheBattleUIElements() {
 	assert(_battleUI.VictoryPanel && "No victory panel found");
 }
 
+static void initializeBattleSystem() {
+	loadBattleDB();
+	loadBattleGroups();
+	cacheBattleUIElements();
+	_initialized = true;
+	_battleUI.RootPanel->SetVisible(false);
+	// BattleLocation::ClearAllBattleLocations();
+	_battlers.clear();
+	_nextBattleState = NotInBattle;
+}
+
 static void loadBattle() {
+	if(!_initialized) initializeBattleSystem();
 	_battlers.resize(8);
 	sgLogWarn("loading battle");
-	cacheBattleUIElements();
 	loadPlayers();
 	loadEnemies();
 	_battleUI.RootPanel->SetVisible(true);
@@ -188,7 +195,6 @@ static void BattleUpdate() {}
 static void triggerStateChange() {
 	switch (_nextBattleState) {
 		case BattleStartTriggered:
-			if (_currentBattleState == NotInitialized) initializeBattleSystem();
 			loadBattle();
 			break;
 		case BattleVictory:
@@ -204,7 +210,7 @@ static void triggerStateChange() {
 }
 
 void BattleSystem::TriggerBattleStart() {
-	if ((_currentBattleState == NotInBattle || _currentBattleState == NotInitialized) && _nextBattleState != BattleStartTriggered) {
+	if ((_currentBattleState == NotInBattle) && _nextBattleState != BattleStartTriggered) {
 		_loadMap = Engine::CurrentScene();
 		_nextBattleState = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
@@ -237,6 +243,10 @@ void BattleSystem::BattleSystemUpdate() {
 
 void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
 	_battlers.at(battlerNum)->TakeDamage(damage);
+}
+
+void BattleSystem::InitializeBattleSystem() {
+	initializeBattleSystem();
 }
 
 const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {

@@ -23,7 +23,8 @@ std::unordered_map<int, std::function<void(TiledObject* objData)>> GameObject::_
 	{6, BattleLocation::Create},
 };
 
-GameObject::GameObject(int x, int y) : _x(x), _y(y), _id(_currentID++) {}
+GameObject::GameObject(int x, int y) : _x(x), _y(y), _id(_currentID++) {
+}
 
 GameObject::~GameObject() {}
 
@@ -60,7 +61,6 @@ void GameObject::LoadAllGameObjects() {
 		if (it == _loaderMap.end()) continue;
 		it->second(currentObject);
 	}
-	// Sweep pass: remove all objects marked for destruction
 	// Remove_if basically moves the items to the end of the vector and moves around things, but does not actually erase them, which is needed to destroy the players properly
 	_gameObjects.erase(
 		std::remove_if(
@@ -75,4 +75,8 @@ void GameObject::LoadAllGameObjects() {
 void GameObject::DestroyAllGameObjects() {
 	_gameObjects.clear();
 	_interactables.clear();
+}
+
+void GameObject::AddGameObject(GameObject* gameobject) {
+	_gameObjects.push_back(shared_ptr<GameObject>(gameobject));
 }

@@ -47,6 +47,7 @@ struct Engine {
 	static void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
 	// if screen is fading, updates the time on it and tweens the fade.
 	static void UpdateScreenFade();
+	static void PreloadAssets();
 
 	struct Audio {
 		static void PlayBGM(const std::string& name, float volume = 1.0f);
