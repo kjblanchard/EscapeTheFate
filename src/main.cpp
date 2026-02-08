@@ -24,6 +24,7 @@ namespace Etf {
 static const int B = 27;
 
 static void startImGUI() {
+#ifdef imgui
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
@@ -34,6 +35,7 @@ static void startImGUI() {
 	// auto ptr = GraphicsGetContextPtr();
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
+#endif
 }
 
 void initialize() {
@@ -56,7 +58,9 @@ void start() {
 
 int handleEvent(void* event) {
 	auto sdlEvent = static_cast<SDL_Event*>(event);
+#ifdef imgui
 	ImGui_ImplSDL3_ProcessEvent(sdlEvent);
+#endif
 	return false;
 }
 
@@ -74,18 +78,28 @@ void update() {
 	}
 }
 
-void draw() {
-	GameObject::DrawGameObjects();
-	UI::DrawUI();
+static void drawImGUI() {
+#ifdef imgui
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();  // Show demo window! :)
+#endif
+}
+
+void draw() {
+	GameObject::DrawGameObjects();
+	UI::DrawUI();
+#ifdef imgui
+	drawImGUI();
+#endif
 }
 
 void postDraw() {
+#ifdef imgui
 	ImGui::Render();
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+#endif
 }
 
 static void enterBattle() {
@@ -98,14 +112,18 @@ void handleInput() {
 		enterBattle();
 	}
 }
+static void shutdownImGUI() {
+#ifdef imgui
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
+	ImGui::DestroyContext();
+#endif
+}
 
 void quit() {
 	GameObject::DestroyAllGameObjects();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL3_Shutdown();
-	ImGui::DestroyContext();
 }
 }  // namespace Etf
 

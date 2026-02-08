@@ -49,16 +49,17 @@ set(EXECUTABLE_SOURCE_FILES_CORE
 )
 
 if(IMGUI_DEBUGGING)
-    list(APPEND EXECUTABLE_SOURCE_FILES_CORE
-      ./external/imgui.cpp
-      ./external/imgui_demo.cpp
-      ./external/imgui_draw.cpp
-      ./external/imgui_impl_opengl3.cpp
-      ./external/imgui_tables.cpp
-      ./external/imgui_impl_sdl3.cpp
-      ./external/imgui_widgets.cpp
-    )
-endif(SDL_GL)
+  list(APPEND EXECUTABLE_SOURCE_FILES_CORE
+    ./external/imgui.cpp
+    ./external/imgui_demo.cpp
+    ./external/imgui_draw.cpp
+    ./external/imgui_impl_opengl3.cpp
+    ./external/imgui_tables.cpp
+    ./external/imgui_impl_sdl3.cpp
+    ./external/imgui_widgets.cpp
+  )
+  add_definitions(-Dimgui)
+endif(IMGUI_DEBUGGING)
 
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
   ${EXECUTABLE_SOURCE_FILES_CORE}
@@ -70,8 +71,8 @@ if(MSVC)
     CACHE INTERNAL "")
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
-set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
-set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
+    set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
+    set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
       add_definitions(-DIS_MOBILE)
       set(INSTALL_DIR
@@ -95,21 +96,21 @@ endif(MSVC)
 
 if(APPLE)
   set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/cmake/Info.plist)
-    set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    set_target_properties(
-      ${EXECUTABLE_TARGET_NAME}
-        PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
-        # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
-        XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
-        XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
-        XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
-        # when building on github, we don't want to sign anything cause there is no cert
-        XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
-        XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
-        # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
-    )
-  endif(APPLE)
+  set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_target_properties(
+    ${EXECUTABLE_TARGET_NAME}
+    PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
+    # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+    XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
+    XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
+    XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
+    # when building on github, we don't want to sign anything cause there is no cert
+    XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
+    XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
+    # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+  )
+endif(APPLE)
 
 if(ENGINE_CACHED STREQUAL "ON")
   add_subdirectory(SupergoonEngine)
@@ -153,9 +154,9 @@ if(EMSCRIPTEN)
   set(CMAKE_EXECUTABLE_SUFFIX
     ".html"
     CACHE STRING "Use html" FORCE)
-# cannot use sdl3 currently
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  # cannot use sdl3 currently
+  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(LINK_FLAGS
