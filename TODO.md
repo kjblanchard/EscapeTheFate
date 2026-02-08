@@ -2,12 +2,11 @@
 
 ## In Progress
 
-- Integrate imgui
-- add debug messages for texture creation, cache, etc
-- try do it on emscripten, left off with battleui commented out., and playerupdate
-- refactor a bit after cleaning up loading
-
 ## Todos
+
+- Imgui textures
+- add debug messages for texture creation, cache, etc
+- refactor a bit after cleaning up loading
 
 ### Battle
 
@@ -32,6 +31,8 @@
 
 ## Completed
 
+- try do it on emscripten, left off with battleui commented out., and playerupdate
+- Integrate imgui
 - Fix bugs
 - When fadetime is 0, it skips both.
 - Issue with fadein time when loading takes too long.
