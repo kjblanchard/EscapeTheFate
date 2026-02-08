@@ -22,24 +22,24 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 }
 
 float Battler::SpriteWidth() {
-	// return _sprite->TextureSourceRect.w;
+	return _sprite->TextureSourceRect.w;
 }
 
 float Battler::SpriteHeight() {
-	// return _sprite->TextureSourceRect.h;
+	return _sprite->TextureSourceRect.h;
 }
 
 void Battler::TakeDamage(int damage) {
-	// _currentHP -= damage;
-	// takeDamageImpl(damage);
+	_currentHP -= damage;
+	takeDamageImpl(damage);
 }
 
 void Battler::updateATBGauge() {
-	// if (_currentATBCharge >= _maxATBCharge) return;
-	// auto delta = DeltaTimeSeconds * 20;
-	// auto gaguePower = delta * _battlerData->Spd;
-	// _currentATBCharge += gaguePower;
-	// _currentATBCharge = _currentATBCharge > _maxATBCharge ? _maxATBCharge : _currentATBCharge;
+	if (_currentATBCharge >= _maxATBCharge) return;
+	auto delta = DeltaTimeSeconds * 20;
+	auto gaguePower = delta * _battlerData->Spd;
+	_currentATBCharge += gaguePower;
+	_currentATBCharge = _currentATBCharge > _maxATBCharge ? _maxATBCharge : _currentATBCharge;
 }
 
 // Right now this is taken care of by the sprite and animation system from the engine

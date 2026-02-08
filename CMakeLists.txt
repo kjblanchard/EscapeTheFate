@@ -7,6 +7,7 @@ option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
+option(IMGUI_DEBUGGING "Should we build with imgui enabled" ON)
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
 option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
@@ -20,7 +21,7 @@ set(EXECUTABLE_TARGET_NAME EscapeTheFate)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
-add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
+set(EXECUTABLE_SOURCE_FILES_CORE
   src/main.cpp 
   src/gameConfig.cpp 
   src/gameState.cpp 
@@ -45,6 +46,22 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/systems/battleSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
+)
+
+if(IMGUI_DEBUGGING)
+    list(APPEND EXECUTABLE_SOURCE_FILES_CORE
+      ./external/imgui.cpp
+      ./external/imgui_demo.cpp
+      ./external/imgui_draw.cpp
+      ./external/imgui_impl_opengl3.cpp
+      ./external/imgui_tables.cpp
+      ./external/imgui_impl_sdl3.cpp
+      ./external/imgui_widgets.cpp
+    )
+endif(SDL_GL)
+
+add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
+  ${EXECUTABLE_SOURCE_FILES_CORE}
   ${ICON_PATH})
 
 if(MSVC)
@@ -110,7 +127,10 @@ endif(ENGINE_CACHED STREQUAL "ON")
 
 include(FetchContent)
 
-target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE 
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/external
+)
 
 if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))

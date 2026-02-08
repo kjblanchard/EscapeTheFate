@@ -16,55 +16,55 @@ static const float Animation_Close_Time = 0.10;
 BattlerUI::BattlerUI(unsigned int battlerNum) {
 	_player = battlerNum < 3;
 	if (_player) {
-		// _commandMenu = UI::GetRootUIObject()->GetChildByName("CommandsNineSlice");
-		// if (!_commandMenu) {
-		// 	sgLogCritical("Could not fild child CommandsNineSlice, exiting");
-		// }
-		// _menuBoxStartX = _commandMenu->OriginalX();
-		// _menuBoxStartY = _commandMenu->OriginalY();
-		// _commandMenu->SetVisible(false);
-		// _commandMenu->SetX(_menuBoxStartX + Animation_Offset);
-		// auto vlg = UI::GetRootUIObject()->GetChildByName("CommandsVLG");
-		// if (!vlg) {
-		// 	sgLogCritical("Could not fild child commandsvlg, exiting");
-		// }
-		// _menuItems[0] = vlg->GetChildByName("AttackText");
-		// _menuItems[1] = vlg->GetChildByName("MagicText");
-		// _menuItems[2] = vlg->GetChildByName("SkillsText");
-		// _menuItems[3] = vlg->GetChildByName("ItemsText");
-		// Color color = {180, 180, 180, 255};
-		// auto first = true;
-		// for (auto menuItem : _menuItems) {
-		// 	if (!menuItem)
-		// 		sgLogCritical("Could not fild child thing, exiting");
-		// 	auto menuCasted = static_cast<UIText*>(menuItem);
-		// 	if (!menuCasted) continue;
-		// 	if (first) {
-		// 		first = false;
-		// 	} else {
-		// 		menuCasted->UpdateDrawColor(color);
-		// 	}
-		// }
-		// auto finger = UI::GetRootUIObject()->GetChildByName("Finger");
-		// if (finger) {
-		// 	_finger = static_cast<UIImage*>(finger);
-		// }
-		// finger->SetVisible(false);
-		// auto ui = UI::GetRootUIObject()->GetChildByName("Player1CommandsUI");
-		// auto tsFinger = ui->GetChildByName("BattleSelectionFinger");
-		// if (tsFinger) {
-		// 	_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
-		// }
-		// _targetSelectionFinger->SetVisible(false);
-		// auto hpObject = UI::GetRootUIObject()->GetChildByName("P1Health");
-		// _hpObject = static_cast<UIText*>(hpObject);
-		// auto progressBarAnim = UI::GetRootUIObject()->GetChildByName("P1ATB");
-		// _progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
-		// if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
-		// StartATBIdleAnim();
-		// auto progressBarObject = UI::GetRootUIObject()->GetChildByName("P1ATBProgressBar");
-		// if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
-		// _progressBar = static_cast<UIProgressBar*>(progressBarObject);
+		_commandMenu = UI::GetRootUIObject()->GetChildByName("CommandsNineSlice");
+		if (!_commandMenu) {
+			sgLogCritical("Could not fild child CommandsNineSlice, exiting");
+		}
+		_menuBoxStartX = _commandMenu->OriginalX();
+		_menuBoxStartY = _commandMenu->OriginalY();
+		_commandMenu->SetVisible(false);
+		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
+		auto vlg = UI::GetRootUIObject()->GetChildByName("CommandsVLG");
+		if (!vlg) {
+			sgLogCritical("Could not fild child commandsvlg, exiting");
+		}
+		_menuItems[0] = vlg->GetChildByName("AttackText");
+		_menuItems[1] = vlg->GetChildByName("MagicText");
+		_menuItems[2] = vlg->GetChildByName("SkillsText");
+		_menuItems[3] = vlg->GetChildByName("ItemsText");
+		Color color = {180, 180, 180, 255};
+		auto first = true;
+		for (auto menuItem : _menuItems) {
+			if (!menuItem)
+				sgLogCritical("Could not fild child thing, exiting");
+			auto menuCasted = static_cast<UIText*>(menuItem);
+			if (!menuCasted) continue;
+			if (first) {
+				first = false;
+			} else {
+				menuCasted->UpdateDrawColor(color);
+			}
+		}
+		auto finger = UI::GetRootUIObject()->GetChildByName("Finger");
+		if (finger) {
+			_finger = static_cast<UIImage*>(finger);
+		}
+		finger->SetVisible(false);
+		auto ui = UI::GetRootUIObject()->GetChildByName("Player1CommandsUI");
+		auto tsFinger = ui->GetChildByName("BattleSelectionFinger");
+		if (tsFinger) {
+			_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
+		}
+		_targetSelectionFinger->SetVisible(false);
+		auto hpObject = UI::GetRootUIObject()->GetChildByName("P1Health");
+		_hpObject = static_cast<UIText*>(hpObject);
+		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName("P1ATB");
+		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
+		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
+		StartATBIdleAnim();
+		auto progressBarObject = UI::GetRootUIObject()->GetChildByName("P1ATBProgressBar");
+		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
+		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
 	} else {
 		auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
 		_hpObject = static_cast<UIText*>(hpObject);
@@ -79,28 +79,23 @@ BattlerUI::~BattlerUI() {
 }
 
 void BattlerUI::UpdateProgressBar(float percent) {
-	return;
 	_progressBar->SetBarPercent(percent);
 }
 
 void BattlerUI::StartTargetSelection() {
-	return;
 	_targetSelectionFinger->SetVisible(true);
 }
 
 void BattlerUI::CloseTargetSelection() {
-	return;
 	_targetSelectionFinger->SetVisible(false);
 }
 
 void BattlerUI::UpdateHP(const string& hp) {
-	return;
 	if (!_hpObject) return;
 	_hpObject->UpdateText(hp);
 }
 
 void BattlerUI::UpdateAnimations() {
-	return;
 	switch (_currentState) {
 		case Closed:
 			break;
@@ -134,7 +129,6 @@ void BattlerUI::UpdateAnimations() {
 }
 
 void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
-	return;
 	if (!_player || _currentState != Opened) return;
 	auto uiobject = _menuItems[newLocation];
 	if (!uiobject) sgLogCritical("No menu item to switch to");
@@ -145,14 +139,12 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 }
 
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
-	return;
 	auto x = battler->X() + (battler->SpriteWidth() / 2) - 5;
 	auto y = battler->Y() - 10;
 	_targetSelectionFinger->SetAbsolutePosition(x, y);
 }
 
 void BattlerUI::ClosePlayerInfoBox() {
-	return;
 	auto menu = UI::GetRootUIObject()->GetChildByName("PlayerStatusHUD");
 	if (menu) {
 		menu->SetVisible(false);

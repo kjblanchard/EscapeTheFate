@@ -2,6 +2,11 @@
 
 ## In Progress
 
+- Integrate imgui
+- add debug messages for texture creation, cache, etc
+- try do it on emscripten, left off with battleui commented out., and playerupdate
+- refactor a bit after cleaning up loading
+
 ## Todos
 
 ### Battle

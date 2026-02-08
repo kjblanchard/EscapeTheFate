@@ -1,6 +1,7 @@
 #include <Supergoon/Audio/Audio.h>
 #include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/Input/keyboard.h>
+#include <Supergoon/Platform/sdl/sdlWindow.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/engine.h>
 #include <Supergoon/log.h>
@@ -15,8 +16,25 @@
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
+#include "imgui.h"
+#include "imgui_impl_opengl3.h"
+#include "imgui_impl_sdl3.h"
+
 namespace Etf {
 static const int B = 27;
+
+static void startImGUI() {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
+	// Setup Platform/Renderer backends
+	// auto window = WindowGet();
+	// auto ptr = GraphicsGetContextPtr();
+	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
+	ImGui_ImplOpenGL3_Init();
+}
 
 void initialize() {
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
@@ -33,6 +51,13 @@ void start() {
 #endif
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
+	startImGUI();
+}
+
+int handleEvent(void* event) {
+	auto sdlEvent = static_cast<SDL_Event*>(event);
+	ImGui_ImplSDL3_ProcessEvent(sdlEvent);
+	return false;
 }
 
 void update() {
@@ -52,6 +77,15 @@ void update() {
 void draw() {
 	GameObject::DrawGameObjects();
 	UI::DrawUI();
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL3_NewFrame();
+	ImGui::NewFrame();
+	ImGui::ShowDemoWindow();  // Show demo window! :)
+}
+
+void postDraw() {
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
 static void enterBattle() {
@@ -69,6 +103,9 @@ void quit() {
 	GameObject::DestroyAllGameObjects();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
+	ImGui::DestroyContext();
 }
 }  // namespace Etf
 
@@ -78,4 +115,5 @@ void (*_updateFunc)(void) = Etf::update;
 void (*_drawFunc)(void) = Etf::draw;
 void (*_quitFunc)(void) = Etf::quit;
 void (*_inputFunc)(void) = Etf::handleInput;
-int (*_handleEventFunc)(void*) = nullptr;
+int (*_handleEventFunc)(void*) = Etf::handleEvent;
+void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::postDraw;

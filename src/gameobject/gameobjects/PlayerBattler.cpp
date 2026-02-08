@@ -16,12 +16,12 @@ using enum BattlerStates;
 
 const string VICTORY_STR = "cheer1";
 
-// PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
-// 	_battlerUI->UpdateHP(to_string(_currentHP));
-// }
-PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(nullptr) {
+PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
+// PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(nullptr) {
+// 	_battlerUI->UpdateHP(to_string(_currentHP));
+// }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	if (newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) {
@@ -85,32 +85,32 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 }
 
 void PlayerBattler::updateImpl() {
-	// _battlerUI->UpdateAnimations();
-	// switch (_currentBattlerState) {
-	// 	case BattlerStates::Default:
-	// 		handleStateChange(ATBCharging);
-	// 		break;
-	// 	case BattlerStates::ATBCharging: {
-	// 		auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
-	// 		_battlerUI->UpdateProgressBar(progress);
-	// 		if (_currentATBCharge >= _maxATBCharge) {
-	// 			handleStateChange(ATBFullyCharged);
-	// 		}
-	// 		break;
-	// 	}
-	// 	case ATBFullyCharged: {
-	// 		handleStateChange(CommandSelection);
-	// 		break;
-	// 	}
-	// 	case TargetSelection:
-	// 		break;
-	// 	case BattleEndStart:
-	// 		handleStateChange(BattleEndIdle);
-	// 		break;
-	// 	default:
-	// 		break;
-	// }
-	// handleInput();
+	_battlerUI->UpdateAnimations();
+	switch (_currentBattlerState) {
+		case BattlerStates::Default:
+			handleStateChange(ATBCharging);
+			break;
+		case BattlerStates::ATBCharging: {
+			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
+			_battlerUI->UpdateProgressBar(progress);
+			if (_currentATBCharge >= _maxATBCharge) {
+				handleStateChange(ATBFullyCharged);
+			}
+			break;
+		}
+		case ATBFullyCharged: {
+			handleStateChange(CommandSelection);
+			break;
+		}
+		case TargetSelection:
+			break;
+		case BattleEndStart:
+			handleStateChange(BattleEndIdle);
+			break;
+		default:
+			break;
+	}
+	handleInput();
 }
 
 void PlayerBattler::takeDamageImpl(int damage) {}
