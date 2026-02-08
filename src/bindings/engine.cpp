@@ -5,6 +5,7 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Tweening/easing.h>
 #include <Supergoon/camera.h>
+#include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
@@ -14,10 +15,14 @@
 
 #include <algorithm>
 #include <bindings/engine.hpp>
+#include <filesystem>
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <iostream>
+#include <string>
+#include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
@@ -31,6 +36,8 @@ static struct SceneData {
 	string NextScene = "";
 	float FadeOutTime = 0;
 	float FadeInTime = 0;
+	bool PlayTransitionSFX = false;
+	Scene* SceneToLoad = nullptr;
 
 } _sceneData;
 
@@ -45,6 +52,11 @@ static struct FadeData {
 
 static CurrentSceneLoadingState _currentLoadingState = CurrentSceneLoadingState::NotLoading;
 
+static void endScreenFade() {
+	_fadeData.CurrentFadeColor.A = _fadeData.EndFadeAlpha;
+	GraphicsUpdateFBOColor(&_fadeData.CurrentFadeColor);
+}
+
 void Engine::PlaySFX(const std::string& name, float volume) {
 	PlaySfxOneShot(name.c_str(), volume);
 }
@@ -53,42 +65,65 @@ const std::string& Engine::CurrentScene() {
 	return _sceneData.CurrentScene;
 }
 
-void Engine::loadSceneInternal() {
+static void loadSetupAndBgm() {
+	sgLogWarn("Starting load setup/bgm");
+	IsGameLoading = true;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {
 		return scene.MapName == _sceneData.NextScene;
 	});
 	if (it == gameSceneConfig.scenes.end()) {
-		sgLogWarn("Could not find scene with name %s, not loading", _sceneData.NextScene.c_str());
+		sgLogError("Could not find scene with name %s, not loading", _sceneData.NextScene.c_str());
+		_currentLoadingState = CurrentSceneLoadingState::NotLoading;
 		return;
 	}
+	_sceneData.SceneToLoad = &*it;
 	auto& sceneToLoad = *it;
 	// We should destroy all of the old gameobjects, and also load the ui if needed.
 	ResetCameraFollow();
-	LoadMap(_sceneData.NextScene.c_str());
-	GameObject::LoadAllGameObjects();
 	if (_currentBGM != sceneToLoad.BGMName) {
 		Engine::Audio::PlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
 		_currentBGM = sceneToLoad.BGMName;
 	}
-	if (!sceneToLoad.UIName.empty()) {
-		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), sceneToLoad.UIName));
+}
+
+static void loadUI() {
+	sgLogWarn("Starting load ui");
+	if (!_sceneData.SceneToLoad->UIName.empty()) {
+		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), _sceneData.SceneToLoad->UIName));
 	} else {
-		UI::RootUIObject->DestroyChildIfNotName("");
+		UI::GetRootUIObject()->DestroyChildIfNotName("");
 	}
-	DialogSystem::LoadDialogFromJsonFile(sceneToLoad.MapName);
+}
+
+static void loadDialog() {
+	sgLogWarn("Starting load dialog");
+	DialogSystem::LoadDialogFromJsonFile(_sceneData.SceneToLoad->MapName);
+}
+
+static void loadEnd() {
+	sgLogWarn("Starting load end");
 	_sceneData.CurrentScene = _sceneData.NextScene;
 	_sceneData.NextScene = "";
 	GameState::NextLoadMapName = "";
 	GameState::Battle::ExitingFromBattle = false;
 }
 
-void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime) {
+void Engine::loadSceneInternal() {
+	sgLogWarn("Starting load map");
+	LoadMap(_sceneData.NextScene.c_str());
+}
+
+void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
+	if (_currentLoadingState != CurrentSceneLoadingState::NotLoading) return;
+	sgLogWarn("Loading scene");
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName.empty()) {
 		newName = gameSceneConfig.defaultScene;
 	}
+	_currentLoadingState = CurrentSceneLoadingState::NextSceneQueued;
+	_sceneData.PlayTransitionSFX = playTransitionSound;
 	_sceneData.FadeOutTime = fadeOutTime;
 	_sceneData.FadeInTime = fadeInTime;
 	_sceneData.NextScene = newName;
@@ -100,31 +135,72 @@ bool Engine::HandleMapLoad() {
 	switch (_currentLoadingState) {
 		// If we are not loading, check to see if we should trigger it
 		case CurrentSceneLoadingState::NotLoading:
-			if (_sceneData.NextScene.empty()) return true;
+			return true;
+		case Etf::CurrentSceneLoadingState::NextSceneQueued:
+			if (_sceneData.PlayTransitionSFX) Engine::PlaySFX("transition2", 0.5f);
 			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;
-			// While fading out, we should not allow others to update, and when finished we should load the scene properly and then fade in
 		case CurrentSceneLoadingState::WaitingForFadeOut:
 			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
+			_currentLoadingState = CurrentSceneLoadingState::LoadingStart;
+			// sgLogWarn("changing to load start");
+			return false;
+		case Etf::CurrentSceneLoadingState::LoadingStart:
+			loadSetupAndBgm();
+			// sgLogWarn("changing to load map");
+			_currentLoadingState = CurrentSceneLoadingState::LoadingMap;
+			return false;
+		case Etf::CurrentSceneLoadingState::LoadingMap:
 			loadSceneInternal();
+			// sgLogWarn("changing to load gameobjects");
+			_currentLoadingState = CurrentSceneLoadingState::LoadingGameObjects;
+			return false;
+		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
+			sgLogWarn("Starting load gameobjects");
+			GameObject::LoadAllGameObjects();
+			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
+			return false;
+		case Etf::CurrentSceneLoadingState::LoadingUI:
+			loadUI();
+			// sgLogWarn("changing to load dialog");
+			_currentLoadingState = CurrentSceneLoadingState::LoadingDialog;
+			return false;
+		case Etf::CurrentSceneLoadingState::LoadingDialog:
+			loadDialog();
+			// sgLogWarn("changing to load finish");
+			_currentLoadingState = CurrentSceneLoadingState::LoadingFinish;
+			return false;
+		case Etf::CurrentSceneLoadingState::LoadingFinish:
+			loadEnd();
+			_currentLoadingState = CurrentSceneLoadingState::JustLoaded;
+			return false;
+		case Etf::CurrentSceneLoadingState::JustLoaded:
+			sgLogWarn("Starting just loaded");
 			StartFullScreenFade(_sceneData.FadeInTime, ScreenFadeTypes::FadeIn);
 			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
 			return false;
 		// After 50% of current time is done, we should allow updates from the gameobjects.
 		case CurrentSceneLoadingState::FadingIn:
-			// Check to see if we are finished fading from some kind of lag
-			if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) {
+			sgLogWarn("Starting fading in");
+			// Handle if fadetime is 0
+			if (!_fadeData.FadeTime) {
+				sgLogWarn("End screen fade early, switch to not loading");
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
+				endScreenFade();
 				return true;
 			}
-			if (_fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.5f) {
+			if (!_fadeData.FadeTime || _fadeData.FadeTime / _fadeData.CurrentFadeTime >= 0.9f) {
 				_currentLoadingState = CurrentSceneLoadingState::FadingInAllowUpdate;
 			}
 			return false;
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
+			// sgLogWarn("Starting fading in allow update");
 			if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
+				IsGameLoading = false;
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
+				sgLogWarn("End screen fade");
+				endScreenFade();
 			}
 			return true;
 	}
@@ -148,6 +224,8 @@ void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
 void Engine::UpdateScreenFade() {
 	if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) return;
 	_fadeData.CurrentFadeTime += GameState::DeltaTimeSeconds;
+	// sgLogDebug("Fade time is %f of %f", _fadeData.CurrentFadeTime, _fadeData.FadeTime);
+	// sgLogWarn("Screen is fading currently");
 	if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
 		_fadeData.CurrentFadeStatus = ScreenFadeTypes::NotFading;
 		GameState::CurrentFadeState = (int)_fadeData.CurrentFadeStatus;
@@ -260,4 +338,44 @@ RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key)
 		jfloat(rectJson, "w"),
 		jfloat(rectJson, "h"),
 	};
+}
+static void loadAllMaps() {
+	auto& config = GameConfig::GetGameConfig();
+	for (auto& scene : config.scene.scenes) {
+		_sceneData.SceneToLoad = &scene;
+		LoadMap(scene.MapName.c_str());
+		GameObject::LoadAllGameObjects();
+		loadUI();
+		loadDialog();
+	}
+	BattleSystem::InitializeBattleSystem();
+	GameObject::DestroyAllGameObjects();
+	loadEnd();
+	// Load all textures
+	ResetCameraFollow();
+}
+
+void LoadAllTexturesFromFolder(const std::string& folderPath) {
+	namespace fs = std::filesystem;
+	for (const auto& entry : fs::directory_iterator(folderPath)) {
+		if (!entry.is_regular_file())
+			continue;
+		std::string filename = entry.path().filename().string();
+			sgLogWarn("checking to load %s", entry.path().stem().string().c_str());
+		// Check for .png extension
+		if (entry.path().extension() == ".png") {
+			sgLogWarn("Loading %s", entry.path().stem().string().c_str());
+			// Remove the .png suffix
+			std::string baseName = entry.path().stem().string();
+			// Call your texture loader with just the filename
+			auto texture = TextureCreate(baseName.c_str());
+			TextureLoadFromPng(texture, baseName.c_str());
+		}
+	}
+}
+
+void Engine::PreloadAssets() {
+	loadAllMaps();
+	std::string folder = format("{}assets/img", GetBasePath());	 // from your helper
+	LoadAllTexturesFromFolder(folder);
 }

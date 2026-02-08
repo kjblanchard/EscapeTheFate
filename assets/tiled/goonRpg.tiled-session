@@ -5,9 +5,9 @@
     },
     "activeFile": "debugTown.tmj",
     "expandedProjectPaths": [
+        ".",
         "old-delete",
-        "templates",
-        "."
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -98,11 +98,14 @@
             "expandedGroupLayers": [
                 6
             ],
-            "scale": 1.5,
+            "expandedObjectLayers": [
+                5
+            ],
+            "scale": 2,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 258.3333333333333,
-                "y": 143.33333333333331
+                "x": 127.75,
+                "y": 319.5
             }
         },
         "debugTown.tmj#house": {
@@ -120,11 +123,15 @@
             "expandedGroupLayers": [
                 4
             ],
+            "expandedObjectLayers": [
+                6,
+                5
+            ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
                 "x": 128,
-                "y": 87.99999999999997
+                "y": 40.16666666666666
             }
         },
         "debugTownHome.tmj#inside": {
@@ -153,8 +160,8 @@
             "scale": 0.75,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": -175.33333333333337,
-                "y": 406.66666666666663
+                "x": 256.66666666666663,
+                "y": 143.33333333333326
             }
         },
         "forest1.tmj#outside": {
@@ -218,7 +225,7 @@
     "last.exportedFilePath": "/home/kevin/git/EscapeTheFate/assets/tiled",
     "last.externalTilesetPath": "/Users/kevin/git/c/etf/assets/tiled",
     "last.imagePath": "/Users/kevin/git/c/etf/assets/img",
-    "last.objectTemplatePath": "/Users/kevin/git/c/sgEngine/assets/tiled/templates",
+    "last.objectTemplatePath": "/home/kevin/git/EscapeTheFate/assets/tiled/templates",
     "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
     "map.height": 17,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",

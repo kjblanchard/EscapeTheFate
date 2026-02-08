@@ -15,7 +15,6 @@ struct GameState {
 	static int NextLoadDirection;
 	static float DeltaTimeSeconds;
 	static float DeltaTimeMilliseconds;
-	static unsigned int Ticks;
 	static bool InDialog;
 	struct Battle {
 		//If this is set to true, players will load at the last load location

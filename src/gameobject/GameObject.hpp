@@ -35,6 +35,8 @@ class GameObject {
 	static void DrawGameObjects();
 	// Destroys all gameobjects and interactables
 	static void DestroyAllGameObjects();
+	//Used when gameobjects are not created from the map.
+	static void AddGameObject(GameObject* gameobject);
 
    public:
 	virtual ~GameObject();

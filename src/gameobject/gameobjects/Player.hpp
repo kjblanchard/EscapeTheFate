@@ -20,6 +20,7 @@ class Player : public GameObject {
 
    public:
 	static void Create(TiledObject* objData);
+	~Player();
 
    private:
 	void Start() override;

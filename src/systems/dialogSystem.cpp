@@ -3,6 +3,7 @@
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
 
+#include <filesystem>
 #include <format>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
@@ -65,7 +66,7 @@ static void updateDialogTextLetters(int lettersToDisplay) {
 
 static void initializeDialogBox() {
 	if (!_dialogBoxObject) {
-		_dialogBoxObject = UI::RootUIObject->GetChildByName("DialogBox");
+		_dialogBoxObject = UI::GetRootUIObject()->GetChildByName("DialogBox");
 	}
 	if (_dialogBoxObject && !_dialogBoxTextObject) {
 		_dialogBoxTextObject = (UIText*)_dialogBoxObject->GetChildByName("DialogBoxText");
@@ -81,9 +82,9 @@ static void initializeDialogBox() {
 }
 
 static void startDialogText() {
-	sgLogWarn("Current text is %s", _currentText.c_str());
+	sgLogDebug("Current text is %s", _currentText.c_str());
 	_currentText = _currentDialogVector->at(_currentTextInDialog);
-	sgLogWarn("new text is %s", _currentText.c_str());
+	sgLogDebug("new text is %s", _currentText.c_str());
 	_currentDisplayedNumChars = 0;
 	_currentTimeOnLetter = 0;
 	updateDialogText(_currentText, _currentDisplayedNumChars);
@@ -215,10 +216,12 @@ void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	_currentMap = filename;
 	if (_loadedDialog.find(filename) != _loadedDialog.end()) return;
 	auto loadString = format("{}assets/dialog/{}.json", GetBasePath(), filename);
-	sgLogDebug("Loading dialog for %s", loadString.c_str());
+	if (!std::filesystem::exists(loadString)) {
+		sgLogDebug("No dialog file for %s", loadString.c_str());
+		return;
+	}
 	auto newDialog = jGetObjectFromFile(loadString.c_str());
 	if (!newDialog) {
-		sgLogWarn("No dialog file found for %s", loadString.c_str());
 		return;
 	}
 	parseJsonIntoMap(newDialog);

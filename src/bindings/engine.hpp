@@ -11,7 +11,16 @@ namespace Etf {
 
 enum class CurrentSceneLoadingState {
 	NotLoading,
+	NextSceneQueued,
 	WaitingForFadeOut,
+	LoadingStart,
+	LoadingMap,
+	LoadingGameObjects,
+	LoadingUI,
+	LoadingDialog,
+	LoadingFinish,
+	//Use this to not add a big jump to the loading after a load
+	JustLoaded,
 	FadingIn,
 	FadingInAllowUpdate,
 };
@@ -25,7 +34,7 @@ enum class ScreenFadeTypes {
 struct Engine {
    public:
 	static const std::string& CurrentScene();
-	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f);
+	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
 	// TODO Do we even need this anymore?  Probably not
 	static Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 	// Used for UI mainly, cause we need to handle drawing it outselves on top of everything
@@ -36,7 +45,9 @@ struct Engine {
 	static bool HandleMapLoad();
 	// Fades out the full screen FBO if we aren't already fading
 	static void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
+	// if screen is fading, updates the time on it and tweens the fade.
 	static void UpdateScreenFade();
+	static void PreloadAssets();
 
 	struct Audio {
 		static void PlayBGM(const std::string& name, float volume = 1.0f);

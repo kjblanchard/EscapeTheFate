@@ -13,6 +13,7 @@ class BattleSystem {
 	static void TriggerBattleEnd();
 	static void BattleSystemUpdate();
 	static void SendBattleDamage(int battlerNum, int damage);
+	static void InitializeBattleSystem();
 
 	static const std::vector<Battler*>& GetEnemyBattlers();
 };

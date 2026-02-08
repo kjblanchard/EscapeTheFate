@@ -1,5 +1,6 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/camera.h>
+#include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/log.h>
@@ -31,8 +32,10 @@ enum class BattleStates {
 };
 using enum BattleStates;
 
-static BattleStates _currentBattleState = NotInitialized;
-static BattleStates _nextBattleState = NotInitialized;
+static bool _initialized = false;
+
+static BattleStates _currentBattleState = NotInBattle;
+static BattleStates _nextBattleState = NotInBattle;
 static vector<BattlerData> _battlerData;
 // Loaded battle groups from the database, used when loading battle and stays loaded
 static vector<vector<int>> _battleGroups;
@@ -56,7 +59,7 @@ static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 	ResetCameraFollow();
-	Engine::LoadScene(_loadMap);
+	Engine::LoadScene(_loadMap, 0.75f, 0.25f, false);
 	_nextBattleState = NotInBattle;
 	GameState::Battle::InBattle = false;
 	GameState::Battle::ExitingFromBattle = true;
@@ -144,17 +147,11 @@ static void loadEnemies() {
 	}
 }
 
-static void initializeBattleSystem() {
-	sgLogWarn("Initializing battle");
-	loadBattleDB();
-	loadBattleGroups();
-}
-
 static void cacheBattleUIElements() {
 	// Need to find the command menu, HUD, etc.
-	_battleUI.RootPanel = UI::RootUIObject->GetChildByName("BattlePanel");
+	_battleUI.RootPanel = UI::GetRootUIObject()->GetChildByName("BattlePanel");
 	assert(_battleUI.RootPanel && "No root object found");
-	_battleUI.PlayerHUD = UI::RootUIObject->GetChildByName("PlayerStatusHUD");
+	_battleUI.PlayerHUD = UI::GetRootUIObject()->GetChildByName("PlayerStatusHUD");
 	assert(_battleUI.PlayerHUD && "No hud object found");
 	int battlerNum = 1;
 	for (auto& obj : _battleUI.PlayerCommandsObjects) {
@@ -167,10 +164,22 @@ static void cacheBattleUIElements() {
 	assert(_battleUI.VictoryPanel && "No victory panel found");
 }
 
+static void initializeBattleSystem() {
+	loadBattleDB();
+	loadBattleGroups();
+	cacheBattleUIElements();
+	_initialized = true;
+	_battleUI.RootPanel->SetVisible(false);
+	_battlers.clear();
+	_nextBattleState = NotInBattle;
+}
+
 static void loadBattle() {
+	IsGameLoading = true;
+	if (!_initialized) initializeBattleSystem();
 	_battlers.resize(8);
 	sgLogWarn("loading battle");
-	cacheBattleUIElements();
+	//Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();
 	_battleUI.RootPanel->SetVisible(true);
@@ -188,7 +197,6 @@ static void BattleUpdate() {}
 static void triggerStateChange() {
 	switch (_nextBattleState) {
 		case BattleStartTriggered:
-			if (_currentBattleState == NotInitialized) initializeBattleSystem();
 			loadBattle();
 			break;
 		case BattleVictory:
@@ -204,7 +212,7 @@ static void triggerStateChange() {
 }
 
 void BattleSystem::TriggerBattleStart() {
-	if ((_currentBattleState == NotInBattle || _currentBattleState == NotInitialized) && _nextBattleState != BattleStartTriggered) {
+	if ((_currentBattleState == NotInBattle) && _nextBattleState != BattleStartTriggered) {
 		_loadMap = Engine::CurrentScene();
 		_nextBattleState = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
@@ -226,6 +234,7 @@ void BattleSystem::BattleSystemUpdate() {
 			break;
 		case BattleStartTriggered:
 			_nextBattleState = Battle;
+			IsGameLoading = false;
 			break;
 		case Battle:
 			BattleUpdate();
@@ -237,6 +246,10 @@ void BattleSystem::BattleSystemUpdate() {
 
 void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
 	_battlers.at(battlerNum)->TakeDamage(damage);
+}
+
+void BattleSystem::InitializeBattleSystem() {
+	initializeBattleSystem();
 }
 
 const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {

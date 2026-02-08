@@ -16,7 +16,7 @@ static const float Animation_Close_Time = 0.10;
 BattlerUI::BattlerUI(unsigned int battlerNum) {
 	_player = battlerNum < 3;
 	if (_player) {
-		_commandMenu = UI::RootUIObject->GetChildByName("CommandsNineSlice");
+		_commandMenu = UI::GetRootUIObject()->GetChildByName("CommandsNineSlice");
 		if (!_commandMenu) {
 			sgLogCritical("Could not fild child CommandsNineSlice, exiting");
 		}
@@ -24,7 +24,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		_menuBoxStartY = _commandMenu->OriginalY();
 		_commandMenu->SetVisible(false);
 		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
-		auto vlg = UI::RootUIObject->GetChildByName("CommandsVLG");
+		auto vlg = UI::GetRootUIObject()->GetChildByName("CommandsVLG");
 		if (!vlg) {
 			sgLogCritical("Could not fild child commandsvlg, exiting");
 		}
@@ -45,28 +45,28 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 				menuCasted->UpdateDrawColor(color);
 			}
 		}
-		auto finger = UI::RootUIObject->GetChildByName("Finger");
+		auto finger = UI::GetRootUIObject()->GetChildByName("Finger");
 		if (finger) {
 			_finger = static_cast<UIImage*>(finger);
 		}
 		finger->SetVisible(false);
-		auto ui = UI::RootUIObject->GetChildByName("Player1CommandsUI");
+		auto ui = UI::GetRootUIObject()->GetChildByName("Player1CommandsUI");
 		auto tsFinger = ui->GetChildByName("BattleSelectionFinger");
 		if (tsFinger) {
 			_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
 		}
 		_targetSelectionFinger->SetVisible(false);
-		auto hpObject = UI::RootUIObject->GetChildByName("P1Health");
+		auto hpObject = UI::GetRootUIObject()->GetChildByName("P1Health");
 		_hpObject = static_cast<UIText*>(hpObject);
-		auto progressBarAnim = UI::RootUIObject->GetChildByName("P1ATB");
+		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName("P1ATB");
 		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
 		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
 		StartATBIdleAnim();
-		auto progressBarObject = UI::RootUIObject->GetChildByName("P1ATBProgressBar");
+		auto progressBarObject = UI::GetRootUIObject()->GetChildByName("P1ATBProgressBar");
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
 	} else {
-		auto hpObject = UI::RootUIObject->GetChildByName("EnemyHP");
+		auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
 		_hpObject = static_cast<UIText*>(hpObject);
 		if (_hpObject) _hpObject->SetVisible(true);
 	}
@@ -145,7 +145,7 @@ void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
 }
 
 void BattlerUI::ClosePlayerInfoBox() {
-	auto menu = UI::RootUIObject->GetChildByName("PlayerStatusHUD");
+	auto menu = UI::GetRootUIObject()->GetChildByName("PlayerStatusHUD");
 	if (menu) {
 		menu->SetVisible(false);
 	}

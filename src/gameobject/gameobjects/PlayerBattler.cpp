@@ -19,6 +19,9 @@ const string VICTORY_STR = "cheer1";
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
+// PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(nullptr) {
+// 	_battlerUI->UpdateHP(to_string(_currentHP));
+// }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	if (newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) {

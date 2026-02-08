@@ -2,8 +2,12 @@
 
 ## In Progress
 
-## Todos
+- Integrate imgui
+- add debug messages for texture creation, cache, etc
+- try do it on emscripten, left off with battleui commented out., and playerupdate
+- refactor a bit after cleaning up loading
 
+## Todos
 
 ### Battle
 
@@ -11,14 +15,13 @@
 
 ### Bugs
 
-- When fadetime is 0, it skips both.
-- When loading map doesn't exist, gets a segfault
-- ASAN issue when trying to load a bgm that doesn't exist on scene change
+- likely does not preload the tiled things cause of the way they are named
+
+## Current Release
 
 ## Backlogged
 
-- Jitter on web build is bad, try sdl_renderer?
-- Jitter on middle of screen too
+- BGM fadeout and fadein
 - add enemy health bar and player health bar
 - check on discord bot updates.
 - More fields that can be optional to make it easier to write the jsonc file
@@ -29,6 +32,26 @@
 
 ## Completed
 
+- Fix bugs
+- When fadetime is 0, it skips both.
+- Issue with fadein time when loading takes too long.
+- battle in debughome sends you offmap
+    : happens if you dont move on a new map, probably fine for now.
+- restart stream when you click it before it's loaded
+- leaks
+- ASAN issue when trying to load a bgm that doesn't exist on scene change
+- When loading map doesn't exist, gets a segfault
+- Errors.log has (null) in front of it, lol.
+- House dialog / dialog when none exists
+- Jitter in middle of screen
+- Web build color on ATB bar is non-existant
+- Web build - moving screens during a fade causes fade to not happen, shouldn't be able to exit until faded.
+- Emscripten
+  - Web build does not load on a black screen, not sure why that is
+    - trying to fix logic for loading tor only happen on fade
+  - Web build sometimes does not fade fully, should set fade at end back to full.
+
+- Jitter, game is not smooth at 60fps.. try different update methods
 - warnings rel 1.x
 - leaks rel1.x
 - transition screen for switching between maps
@@ -111,9 +134,10 @@
     : battle finish - done
     : battle end - done
     : go through all todos and update - done
-    : fix all leaks
+    : fix all leaks - done
 
 - 0.2.x: local multiplayer
+    : load all json at game load instead of on demand.
     : second player can spawn
     : camera follows main p1
     : second player can switch screens and interact with things

@@ -7,9 +7,10 @@ option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
+option(IMGUI_DEBUGGING "Should we build with imgui enabled" ON)
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
-option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
@@ -20,7 +21,7 @@ set(EXECUTABLE_TARGET_NAME EscapeTheFate)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INSTALL_MESSAGE LAZY)
 
-add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
+set(EXECUTABLE_SOURCE_FILES_CORE
   src/main.cpp 
   src/gameConfig.cpp 
   src/gameState.cpp 
@@ -45,6 +46,23 @@ add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
   src/systems/battleSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
+)
+
+if(IMGUI_DEBUGGING)
+  list(APPEND EXECUTABLE_SOURCE_FILES_CORE
+    ./external/imgui.cpp
+    ./external/imgui_demo.cpp
+    ./external/imgui_draw.cpp
+    ./external/imgui_impl_opengl3.cpp
+    ./external/imgui_tables.cpp
+    ./external/imgui_impl_sdl3.cpp
+    ./external/imgui_widgets.cpp
+  )
+  add_definitions(-Dimgui)
+endif(IMGUI_DEBUGGING)
+
+add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
+  ${EXECUTABLE_SOURCE_FILES_CORE}
   ${ICON_PATH})
 
 if(MSVC)
@@ -53,8 +71,8 @@ if(MSVC)
     CACHE INTERNAL "")
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
-set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
-set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
+    set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
+    set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
       add_definitions(-DIS_MOBILE)
       set(INSTALL_DIR
@@ -78,21 +96,21 @@ endif(MSVC)
 
 if(APPLE)
   set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/cmake/Info.plist)
-    set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-    set_target_properties(
-      ${EXECUTABLE_TARGET_NAME}
-        PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
-        # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
-        XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
-        XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
-        XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
-        # when building on github, we don't want to sign anything cause there is no cert
-        XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
-        XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
-        # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
-    )
-  endif(APPLE)
+  set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_target_properties(
+    ${EXECUTABLE_TARGET_NAME}
+    PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
+    # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+    XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
+    XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
+    XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
+    # when building on github, we don't want to sign anything cause there is no cert
+    XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
+    XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
+    # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+  )
+endif(APPLE)
 
 if(ENGINE_CACHED STREQUAL "ON")
   add_subdirectory(SupergoonEngine)
@@ -110,7 +128,10 @@ endif(ENGINE_CACHED STREQUAL "ON")
 
 include(FetchContent)
 
-target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/src)
+target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE 
+  ${CMAKE_SOURCE_DIR}/src
+  ${CMAKE_SOURCE_DIR}/external
+)
 
 if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
@@ -133,14 +154,15 @@ if(EMSCRIPTEN)
   set(CMAKE_EXECUTABLE_SUFFIX
     ".html"
     CACHE STRING "Use html" FORCE)
-# cannot use sdl3 currently
-# set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-# set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  # cannot use sdl3 currently
+  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(LINK_FLAGS
     # "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=3 -s USE_VORBIS=1 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
-    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
+    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
+
   )
   set_target_properties(
     ${EXECUTABLE_TARGET_NAME}

@@ -1,7 +1,7 @@
 #pragma once
 #include <string>
-#include <ui/uiImage.hpp>
 #include <ui/uiAnimation.hpp>
+#include <ui/uiImage.hpp>
 #include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 namespace Etf {
@@ -30,8 +30,12 @@ class BattlerUI {
 		_currentAnimationTime = 0;
 		_finger->SetVisible(false);
 	}
-	inline void StartATBIdleAnim(){ _progressBarAnim->GetAnimator().StartAnimation("idle");}
-	inline void StartATBTurnAnim(){ _progressBarAnim->GetAnimator().StartAnimation("turn");}
+	inline void StartATBIdleAnim() {
+		_progressBarAnim->GetAnimator().StartAnimation("idle");
+	}
+	inline void StartATBTurnAnim() {
+		_progressBarAnim->GetAnimator().StartAnimation("turn");
+	}
 	void StartTargetSelection();
 	void MoveFingerToBattlerLocation(Battler* battler);
 	void CloseTargetSelection();
