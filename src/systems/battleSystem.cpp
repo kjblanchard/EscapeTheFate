@@ -178,7 +178,7 @@ static void loadBattle() {
 	IsGameLoading = true;
 	if (!_initialized) initializeBattleSystem();
 	_battlers.resize(8);
-	sgLogWarn("loading battle");
+	sgLogDebug("loading battle");
 	//Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();

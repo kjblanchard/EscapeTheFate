@@ -1,11 +1,7 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Platform/opengl/openglTexture.h>
-
+#include <imgui.h>
 #include <debug/debugWindow.hpp>
-
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl3.h"
 
 using namespace Etf;
 
@@ -35,30 +31,31 @@ void DebugWindow::CreateMainWindow() {
 	if (unsaved_document) window_flags |= ImGuiWindowFlags_UnsavedDocument;
 	// if (no_close) p_open = NULL;  // Don't pass our bool* to Begin
 	//
-	if (!ImGui::Begin("Main", &p_open, window_flags)) {
+	if (!ImGui::Begin("Debug Tools", &p_open, window_flags)) {
 		ImGui::End();
 		return;
 	}
 	auto textures = GetCachedTextures();
 	auto numTextures = GetNumCachedTextures();
-
-	if (ImGui::TreeNode("Cached Textures")) {
-		for (int i = 0; i < numTextures; ++i) {
-			auto texture = textures[i];
-			if (ImGui::TreeNode(texture->Name)) {
+	if (ImGui::CollapsingHeader("Textures")) {
+		if (ImGui::TreeNode("Cached Textures")) {
+			for (int i = 0; i < numTextures; ++i) {
+				auto texture = textures[i];
 				if (ImGui::TreeNode(texture->Name)) {
-					// ImGui::Text("Path:");
-					// ImGui::SameLine();
-					// ImGui::Text("%s", item->Filepath().c_str());
-					ImGui::Text("RefCount:");
-					ImGui::SameLine();
-					ImGui::Text("%d", texture->RefCount);
+					if (ImGui::TreeNode(texture->Name)) {
+						// ImGui::Text("Path:");
+						// ImGui::SameLine();
+						// ImGui::Text("%s", item->Filepath().c_str());
+						ImGui::Text("RefCount:");
+						ImGui::SameLine();
+						ImGui::Text("%d", texture->RefCount);
+						ImGui::TreePop();
+					}
 					ImGui::TreePop();
 				}
-				ImGui::TreePop();
 			}
+			ImGui::TreePop();
 		}
-		ImGui::TreePop();
 	}
 
 	ImGui::End();

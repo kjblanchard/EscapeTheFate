@@ -50,7 +50,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
 )
 
 if(IMGUI_DEBUGGING)
-  list(APPEND EXECUTABLE_SOURCE_FILES_CORE
+  set(IMGUI_SRC 
     ./external/imgui.cpp
     ./external/imgui_demo.cpp
     ./external/imgui_draw.cpp
@@ -58,10 +58,14 @@ if(IMGUI_DEBUGGING)
     ./external/imgui_tables.cpp
     ./external/imgui_impl_sdl3.cpp
     ./external/imgui_widgets.cpp
+  )
+  list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC}
     ./src/debug/debugWindow.cpp
     ./src/debug/textureTab.cpp
   )
   add_definitions(-Dimgui)
+  #Ignore source file warnings from external imgui  
+  set_source_files_properties( ${IMGUI_SRC} PROPERTIES COMPILE_FLAGS "-w" )
 endif(IMGUI_DEBUGGING)
 if(PRELOAD_ALL_ASSETS)
   add_definitions(-DPRELOAD_ALL_ASSETS)

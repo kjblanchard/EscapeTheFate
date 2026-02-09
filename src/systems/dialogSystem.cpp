@@ -123,7 +123,7 @@ static void closeCurrentInteraction() {
 }
 
 static void progressCurrentInteraction() {
-	sgLogWarn("Current text is %d and current num is %d", _currentTextInDialog, _currentNumTextInDialog);
+	sgLogDebug("Current text is %d and current num is %d", _currentTextInDialog, _currentNumTextInDialog);
 	if (_currentTextInDialog >= _currentNumTextInDialog - 1) {
 		closeCurrentInteraction();
 	} else {

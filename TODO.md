@@ -12,8 +12,6 @@
 
 ### Bugs
 
-- likely does not preload the tiled things cause of the way they are named
-
 ## Current Release
 
 ## Backlogged
@@ -29,6 +27,7 @@
 
 ## Completed
 
+- likely does not preload the tiled things cause of the way they are named
 - add debug messages for texture creation, cache, etc
 - Imgui textures
 - try do it on emscripten, left off with battleui commented out., and playerupdate
@@ -46,7 +45,8 @@
 - House dialog / dialog when none exists
 - Jitter in middle of screen
 - Web build color on ATB bar is non-existant
-- Web build - moving screens during a fade causes fade to not happen, shouldn't be able to exit until faded.
+- Web build - moving screens during a fade causes fade to not happen,
+  shouldn't be able to exit until faded.
 - Emscripten
   - Web build does not load on a black screen, not sure why that is
     - trying to fix logic for loading tor only happen on fade

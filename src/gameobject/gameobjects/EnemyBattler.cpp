@@ -13,7 +13,7 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 }
 
 EnemyBattler::~EnemyBattler() {
-	sgLogWarn("Destroying battler");
+	sgLogDebug("Destroying enemy battler");
 	if (_hpObject) {
 		_hpObject->SetVisible(false);
 	}

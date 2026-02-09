@@ -34,6 +34,8 @@ static void startImGUI() {
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
+	// ImGui::StyleColorsLight();
+	ImGui::StyleColorsClassic();
 	// Setup Platform/Renderer backends
 	// auto window = WindowGet();
 	// auto ptr = GraphicsGetContextPtr();
@@ -45,6 +47,7 @@ static void startImGUI() {
 void initialize() {
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& _gameConfig = GameConfig::GetGameConfig();
+	sgSetLogLevel(_gameConfig.debug.debugLevel);
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
 }
@@ -129,6 +132,9 @@ void quit() {
 	GameObject::DestroyAllGameObjects();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
+#ifdef imgui
+	shutdownImGUI();
+#endif
 }
 }  // namespace Etf
 

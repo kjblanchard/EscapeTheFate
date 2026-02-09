@@ -1,9 +1,10 @@
-#include <Supergoon/json.h>
 #include <Supergoon/filesystem.h>
+#include <Supergoon/json.h>
 #include <Supergoon/log.h>
+
 #include <bindings/engine.hpp>
-#include <gameConfig.hpp>
 #include <format>
+#include <gameConfig.hpp>
 #include <string>
 
 using namespace std;
@@ -42,6 +43,18 @@ static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObjec
 	}
 	config->debug.interactions = jbool(debugObj, "interactions");
 	config->debug.mapExits = jbool(debugObj, "mapExits");
+	auto debugLogLevelChar = jstr(debugObj, "logLevel");
+	if (!debugLogLevelChar)
+		config->debug.debugLevel = Log_LError;
+	else {
+		auto debugLevelString = string_view(debugLogLevelChar);
+		if (debugLevelString.starts_with('w'))
+			config->debug.debugLevel = Log_LWarn;
+		else if (debugLevelString.starts_with('d'))
+			config->debug.debugLevel = Log_LDebug;
+		else if (debugLevelString.starts_with('i'))
+			config->debug.debugLevel = Log_LInfo;
+	}
 }
 
 static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObject) {

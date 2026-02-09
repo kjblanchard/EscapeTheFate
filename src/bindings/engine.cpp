@@ -66,7 +66,7 @@ const std::string& Engine::CurrentScene() {
 }
 
 static void loadSetupAndBgm() {
-	sgLogWarn("Starting load setup/bgm");
+	sgLogDebug("Starting load setup/bgm");
 	IsGameLoading = true;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {
@@ -88,7 +88,7 @@ static void loadSetupAndBgm() {
 }
 
 static void loadUI() {
-	sgLogWarn("Starting load ui");
+	sgLogDebug("Starting load ui");
 	if (!_sceneData.SceneToLoad->UIName.empty()) {
 		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), _sceneData.SceneToLoad->UIName));
 	} else {
@@ -97,12 +97,12 @@ static void loadUI() {
 }
 
 static void loadDialog() {
-	sgLogWarn("Starting load dialog");
+	sgLogDebug("Starting load dialog");
 	DialogSystem::LoadDialogFromJsonFile(_sceneData.SceneToLoad->MapName);
 }
 
 static void loadEnd() {
-	sgLogWarn("Starting load end");
+	sgLogDebug("Starting load end");
 	_sceneData.CurrentScene = _sceneData.NextScene;
 	_sceneData.NextScene = "";
 	GameState::NextLoadMapName = "";
@@ -110,13 +110,13 @@ static void loadEnd() {
 }
 
 void Engine::loadSceneInternal() {
-	sgLogWarn("Starting load map");
+	sgLogDebug("Starting load map");
 	LoadMap(_sceneData.NextScene.c_str());
 }
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
 	if (_currentLoadingState != CurrentSceneLoadingState::NotLoading) return;
-	sgLogWarn("Loading scene");
+	sgLogDebug("Loading scene");
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName.empty()) {
@@ -144,31 +144,31 @@ bool Engine::HandleMapLoad() {
 		case CurrentSceneLoadingState::WaitingForFadeOut:
 			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
 			_currentLoadingState = CurrentSceneLoadingState::LoadingStart;
-			// sgLogWarn("changing to load start");
+			// sgLogDebug("changing to load start");
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingStart:
 			loadSetupAndBgm();
-			// sgLogWarn("changing to load map");
+			// sgLogDebug("changing to load map");
 			_currentLoadingState = CurrentSceneLoadingState::LoadingMap;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingMap:
 			loadSceneInternal();
-			// sgLogWarn("changing to load gameobjects");
+			// sgLogDebug("changing to load gameobjects");
 			_currentLoadingState = CurrentSceneLoadingState::LoadingGameObjects;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
-			sgLogWarn("Starting load gameobjects");
+			sgLogDebug("Starting load gameobjects");
 			GameObject::LoadAllGameObjects();
 			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingUI:
 			loadUI();
-			// sgLogWarn("changing to load dialog");
+			// sgLogDebug("changing to load dialog");
 			_currentLoadingState = CurrentSceneLoadingState::LoadingDialog;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingDialog:
 			loadDialog();
-			// sgLogWarn("changing to load finish");
+			// sgLogDebug("changing to load finish");
 			_currentLoadingState = CurrentSceneLoadingState::LoadingFinish;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingFinish:
@@ -176,16 +176,16 @@ bool Engine::HandleMapLoad() {
 			_currentLoadingState = CurrentSceneLoadingState::JustLoaded;
 			return false;
 		case Etf::CurrentSceneLoadingState::JustLoaded:
-			sgLogWarn("Starting just loaded");
+			sgLogDebug("Starting just loaded");
 			StartFullScreenFade(_sceneData.FadeInTime, ScreenFadeTypes::FadeIn);
 			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
 			return false;
 		// After 50% of current time is done, we should allow updates from the gameobjects.
 		case CurrentSceneLoadingState::FadingIn:
-			sgLogWarn("Starting fading in");
+			sgLogDebug("Starting fading in");
 			// Handle if fadetime is 0
 			if (!_fadeData.FadeTime) {
-				sgLogWarn("End screen fade early, switch to not loading");
+				sgLogDebug("End screen fade early, switch to not loading");
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
 				endScreenFade();
 				return true;
@@ -195,11 +195,11 @@ bool Engine::HandleMapLoad() {
 			}
 			return false;
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
-			// sgLogWarn("Starting fading in allow update");
+			// sgLogDebug("Starting fading in allow update");
 			if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
 				IsGameLoading = false;
 				_currentLoadingState = CurrentSceneLoadingState::NotLoading;
-				sgLogWarn("End screen fade");
+				sgLogDebug("End screen fade");
 				endScreenFade();
 			}
 			return true;
@@ -209,7 +209,7 @@ bool Engine::HandleMapLoad() {
 
 void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
 	if (fadeType == ScreenFadeTypes::NotFading || _fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) {
-		sgLogWarn("Cannot fade: request: %d, status: %d", fadeType, _fadeData.CurrentFadeStatus);
+		sgLogDebug("Cannot fade: request: %d, status: %d", fadeType, _fadeData.CurrentFadeStatus);
 		return;
 	}
 	_fadeData.LastFadeColor = GraphicsGetFBOColor();
@@ -225,7 +225,7 @@ void Engine::UpdateScreenFade() {
 	if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) return;
 	_fadeData.CurrentFadeTime += GameState::DeltaTimeSeconds;
 	// sgLogDebug("Fade time is %f of %f", _fadeData.CurrentFadeTime, _fadeData.FadeTime);
-	// sgLogWarn("Screen is fading currently");
+	// sgLogDebug("Screen is fading currently");
 	if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
 		_fadeData.CurrentFadeStatus = ScreenFadeTypes::NotFading;
 		GameState::CurrentFadeState = (int)_fadeData.CurrentFadeStatus;
@@ -361,10 +361,10 @@ void LoadAllTexturesFromFolder(const std::string& folderPath) {
 		if (!entry.is_regular_file())
 			continue;
 		std::string filename = entry.path().filename().string();
-			sgLogWarn("checking to load %s", entry.path().stem().string().c_str());
+			sgLogDebug("checking to load %s", entry.path().stem().string().c_str());
 		// Check for .png extension
 		if (entry.path().extension() == ".png") {
-			sgLogWarn("Loading %s", entry.path().stem().string().c_str());
+			sgLogDebug("Loading %s", entry.path().stem().string().c_str());
 			// Remove the .png suffix
 			std::string baseName = entry.path().stem().string();
 			// Call your texture loader with just the filename
