@@ -196,7 +196,6 @@ void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
 }
 
 void UI::LoadUIFromFile(const string& filename) {
-	// Initialize the root object if needed
 	GetRootUIObject();
 	// Check the cached files to avoid filesystem reads, and return if there is an error loading
 	if (!_cachedUIFiles.contains(filename)) {

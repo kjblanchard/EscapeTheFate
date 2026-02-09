@@ -344,12 +344,12 @@ static void loadAllMaps() {
 	for (auto& scene : config.scene.scenes) {
 		_sceneData.SceneToLoad = &scene;
 		LoadMap(scene.MapName.c_str());
-		GameObject::LoadAllGameObjects();
+		// GameObject::LoadAllGameObjects();
 		loadUI();
 		loadDialog();
 	}
 	BattleSystem::InitializeBattleSystem();
-	GameObject::DestroyAllGameObjects();
+	// GameObject::DestroyAllGameObjects();
 	loadEnd();
 	// Load all textures
 	ResetCameraFollow();
@@ -375,7 +375,7 @@ void LoadAllTexturesFromFolder(const std::string& folderPath) {
 }
 
 void Engine::PreloadAssets() {
+	std::string textureFolder = format("{}assets/img", GetBasePath());	 // from your helper
+	LoadAllTexturesFromFolder(textureFolder);
 	loadAllMaps();
-	std::string folder = format("{}assets/img", GetBasePath());	 // from your helper
-	LoadAllTexturesFromFolder(folder);
 }
