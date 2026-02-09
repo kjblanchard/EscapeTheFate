@@ -4,7 +4,15 @@
 
 ## Todos
 
-- refactor a bit after cleaning up loading
+- proper controller support
+  - probably need to draw this out
+- steam playtest - steamworks baby
+- more debug options for playtesters
+  - Console
+  - Debug rects for collisions
+  - Scene load
+  - Sound
+  - UI
 
 ### Battle
 
@@ -14,8 +22,14 @@
 
 ## Current Release
 
+- second player can spawn
+- camera follows main p1
+- second player can switch screens and interact with things
+- second battler
+
 ## Backlogged
 
+- More debug utils, copy from old repo
 - BGM fadeout and fadein
 - add enemy health bar and player health bar
 - check on discord bot updates.
@@ -27,6 +41,7 @@
 
 ## Completed
 
+- refactor a bit after cleaning up loading
 - likely does not preload the tiled things cause of the way they are named
 - add debug messages for texture creation, cache, etc
 - Imgui textures
@@ -46,7 +61,7 @@
 - Jitter in middle of screen
 - Web build color on ATB bar is non-existant
 - Web build - moving screens during a fade causes fade to not happen,
-  shouldn't be able to exit until faded.
+    shouldn't be able to exit until faded.
 - Emscripten
   - Web build does not load on a black screen, not sure why that is
     - trying to fix logic for loading tor only happen on fade
@@ -129,16 +144,8 @@
 
 ## Version / Release Roadmap
 
-- 0.1.x: basic dialog with interactions, enter battle, can kill enemy, battle ended.
-    : dialog - done
-    : battle enter - done
-    : battle finish - done
-    : battle end - done
-    : go through all todos and update - done
-    : fix all leaks - done
-
 - 0.2.x: local multiplayer
-    : load all json at game load instead of on demand.
+    : load all json at game load instead of on demand. - done
     : second player can spawn
     : camera follows main p1
     : second player can switch screens and interact with things
@@ -156,3 +163,13 @@
     : equipment that can be used
     : equip and change stats with the equip
     : saving and loading
+
+## Previous releases
+
+- 0.1.x: basic dialog with interactions, enter battle, can kill enemy, battle ended.
+    : dialog - done
+    : battle enter - done
+    : battle finish - done
+    : battle end - done
+    : go through all todos and update - done
+    : fix all leaks - done

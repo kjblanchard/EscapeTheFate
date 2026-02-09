@@ -76,7 +76,7 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 	} else if (enemyNum < 0) {
 		enemyNum = (int)enemyBattlers.size() - 1;
 	}
-	sgLogWarn("Trying to move to location bounds %d", enemyNum);
+	sgLogDebug("Trying to move to location bounds %d", enemyNum);
 	const auto battler = enemyBattlers.at(enemyNum);
 	if (battler) {
 		_battlerUI->MoveFingerToBattlerLocation(battler);
