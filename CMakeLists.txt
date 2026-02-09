@@ -57,6 +57,8 @@ if(IMGUI_DEBUGGING)
     ./external/imgui_tables.cpp
     ./external/imgui_impl_sdl3.cpp
     ./external/imgui_widgets.cpp
+    ./src/debug/debugWindow.cpp
+    ./src/debug/textureTab.cpp
   )
   add_definitions(-Dimgui)
 endif(IMGUI_DEBUGGING)

@@ -16,9 +16,12 @@
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
+#ifdef imgui
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl3.h"
+#include <debug/debugWindow.hpp>
+#endif
 
 namespace Etf {
 static const int B = 27;
@@ -48,9 +51,9 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-#ifdef __EMSCRIPTEN__
+// #ifdef __EMSCRIPTEN__
 	Engine::PreloadAssets();
-#endif
+// #endif
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	startImGUI();
@@ -92,6 +95,7 @@ void draw() {
 	UI::DrawUI();
 #ifdef imgui
 	drawImGUI();
+	DebugWindow::CreateMainWindow();
 #endif
 }
 
