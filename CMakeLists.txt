@@ -8,6 +8,7 @@ option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or 
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 option(IMGUI_DEBUGGING "Should we build with imgui enabled" ON)
+option(PRELOAD_ALL_ASSETS "Preload everything at beginning, useful for EMSCRIPTEN" ON)
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
 option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
@@ -62,6 +63,9 @@ if(IMGUI_DEBUGGING)
   )
   add_definitions(-Dimgui)
 endif(IMGUI_DEBUGGING)
+if(PRELOAD_ALL_ASSETS)
+  add_definitions(-DPRELOAD_ALL_ASSETS)
+endif(PRELOAD_ALL_ASSETS)
 
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
   ${EXECUTABLE_SOURCE_FILES_CORE}

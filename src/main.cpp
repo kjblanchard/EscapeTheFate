@@ -17,10 +17,11 @@
 #include <ui/ui.hpp>
 
 #ifdef imgui
+#include <debug/debugWindow.hpp>
+
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl3.h"
-#include <debug/debugWindow.hpp>
 #endif
 
 namespace Etf {
@@ -51,17 +52,17 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-// #ifdef __EMSCRIPTEN__
+#ifdef PRELOAD_ALL_ASSETS
 	Engine::PreloadAssets();
-// #endif
+#endif
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	startImGUI();
 }
 
 int handleEvent(void* event) {
-	auto sdlEvent = static_cast<SDL_Event*>(event);
 #ifdef imgui
+	auto sdlEvent = static_cast<SDL_Event*>(event);
 	ImGui_ImplSDL3_ProcessEvent(sdlEvent);
 #endif
 	return false;

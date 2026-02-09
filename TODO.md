@@ -4,8 +4,6 @@
 
 ## Todos
 
-- Imgui textures
-- add debug messages for texture creation, cache, etc
 - refactor a bit after cleaning up loading
 
 ### Battle
@@ -31,6 +29,8 @@
 
 ## Completed
 
+- add debug messages for texture creation, cache, etc
+- Imgui textures
 - try do it on emscripten, left off with battleui commented out., and playerupdate
 - Integrate imgui
 - Fix bugs
