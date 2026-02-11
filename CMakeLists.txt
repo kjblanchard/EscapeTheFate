@@ -47,6 +47,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/battleSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
+  src/bindings/Controller.cpp
 )
 
 if(IMGUI_DEBUGGING)
@@ -151,7 +152,6 @@ if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ASAN_FLAGS}")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ASAN_FLAGS}")
-
   endif()
 endif()
 

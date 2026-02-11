@@ -40,7 +40,7 @@
         ]
     },
     "debug": {
-        "logLevel": "w",
+        "logLevel": "d",
         "interactions": false,
         "mapExits": false
     }

@@ -3,6 +3,7 @@
 #include <Supergoon/camera.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
+#include <bindings/Controller.hpp>
 
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
@@ -122,7 +123,8 @@ void Player::handleInteractions() {
 		Engine::SetSpriteVisible(_InteractionSprite, false);
 	}
 	_currentInteractable = interactable;
-	if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+	// if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+	if (_currentInteractable && Controller::IsButtonJustPressed(GameButtons::A)) {
 		_currentInteractable->Interact();
 		_animator->UpdateAnimatorSpeed(0.0);
 	}
@@ -134,25 +136,29 @@ bool Player::handlePlayerMovement() {
 	auto previousDirection = _direction;
 	auto velocityX = 0;
 	auto velocityY = 0;
-	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.UP)) {
+	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.UP)) {
+	if (Controller::IsButtonPressed(GameButtons::UP)) {
 		moved = true;
 		velocityY -= 1;
 		_direction = Direction::North;
 	}
 
-	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.DOWN)) {
+	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.DOWN)) {
+	if (Controller::IsButtonPressed(GameButtons::DOWN)) {
 		moved = true;
 		velocityY += 1;
 		_direction = Direction::South;
 	}
 
-	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.LEFT)) {
+	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.LEFT)) {
+	if (Controller::IsButtonPressed(GameButtons::LEFT)) {
 		moved = true;
 		velocityX -= 1;
 		_direction = Direction::West;
 	}
 
-	if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.RIGHT)) {
+	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.RIGHT)) {
+	if (Controller::IsButtonPressed(GameButtons::RIGHT)) {
 		moved = true;
 		velocityX += 1;
 		_direction = Direction::East;

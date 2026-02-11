@@ -4,8 +4,10 @@
 
 ## Todos
 
-- proper controller support
-  - probably need to draw this out
+- spawn second player with controller
+  - Draw out changes needed to handle second player.
+- if second player, add to party and bring into battle
+  - Different color for fingers
 - steam playtest - steamworks baby
 - more debug options for playtesters
   - Console
@@ -41,6 +43,8 @@
 
 ## Completed
 
+- proper controller support
+  - probably need to draw this out
 - refactor a bit after cleaning up loading
 - likely does not preload the tiled things cause of the way they are named
 - add debug messages for texture creation, cache, etc

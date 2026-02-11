@@ -9,6 +9,7 @@
 #include <Supergoon/window.h>
 
 #include <bindings/engine.hpp>
+#include <bindings/Controller.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
@@ -50,6 +51,7 @@ void initialize() {
 	sgSetLogLevel(_gameConfig.debug.debugLevel);
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
+	Controller::InitializeControllers();
 }
 
 void start() {
