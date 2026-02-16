@@ -39,7 +39,6 @@
 				}
 			},
 			"ControllerImages": {
-
 				"children": {
 					"ControllerImage1": {
 						"type": "image",
@@ -86,6 +85,17 @@
 						"priority": 1
 					}
 				}
+			},
+			"KeyboardImage": {
+				"type": "image",
+				"file": "keyboard",
+				"visible": true,
+				"scale": 1.0,
+				"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+				"rect": { "x": 16, "y": 0, "w": 16, "h": 16 },
+				"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+				"camera": false,
+				"priority": 1
 			}
 		}
 	}

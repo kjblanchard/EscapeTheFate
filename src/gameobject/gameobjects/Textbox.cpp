@@ -30,6 +30,10 @@ Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	}
 }
 
+Textbox::~Textbox() {
+	GameObjectSystem::RemoveGameObjectOfType<IInteractable>(this);
+}
+
 void Textbox::Interact() {
 	DialogSystem::TextBoxInteractionUpdate(this, _textToWrite);
 }
