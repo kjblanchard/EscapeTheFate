@@ -47,18 +47,53 @@ struct ControllerConfig {
 
 class Controller {
    public:
-	static void InitializeControllers();
-	static bool IsButtonPressed(GameButtons button, int playerNum = 0);
-	static bool IsButtonJustPressed(GameButtons button, int playerNum = 0);
-	static bool IsButtonJustReleased(GameButtons button, int playerNum = 0);
-	static void AssignGamepadToController(int gamepadNum);
+	Controller();
+	bool IsButtonPressed(GameButtons button, int playerNum = 0);
+	bool IsButtonJustPressed(GameButtons button, int playerNum = 0);
+	bool IsButtonJustReleased(GameButtons button, int playerNum = 0);
+	void AssignGamepadToController(int gamepadNum);
 
    private:
-	Controller();
-	ControllerConfig _controllerConfig;
-	int _joystickAssigned = 0;
+	ControllerConfig ControllerConfig_;
+	int JoystickAssigned_ = 0;
 };
 }  // namespace Etf
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
    // typedef enum SDL_GamepadButton
 // {
 //     SDL_GAMEPAD_BUTTON_INVALID = -1,

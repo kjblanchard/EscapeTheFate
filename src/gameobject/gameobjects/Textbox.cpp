@@ -1,20 +1,20 @@
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 
-#include <string_view>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
+#include <string_view>
+#include <systems/GameObjectSystem.hpp>
 #include <systems/dialogSystem.hpp>
-#include <memory>
 
 using namespace Etf;
 using namespace std;
 
 void Textbox::Create(TiledObject* objData) {
-	auto textbox = make_shared<Textbox>(objData);
-	_gameObjects.push_back(textbox);
-	_interactables.push_back(textbox);
+	auto textbox = new Textbox(objData);
+	GameObjectSystem::AddGameObject(textbox);
+	GameObjectSystem::AddGameObjectOfType<IInteractable>(textbox);
 }
 
 Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
@@ -24,7 +24,7 @@ Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	InteractionRect.h = objData->Height;
 	for (int i = 0; i < objData->NumProperties; ++i) {
 		TiledProperty* currentProp = &objData->Properties[i];
-		if(string_view(currentProp->Name) != "name") continue;
+		if (string_view(currentProp->Name) != "name") continue;
 		_textToWrite = currentProp->Data.StringData;
 		break;
 	}

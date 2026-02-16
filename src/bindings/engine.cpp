@@ -20,8 +20,8 @@
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
-#include <iostream>
 #include <string>
+#include <systems/GameObjectSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
@@ -158,7 +158,7 @@ bool Engine::HandleMapLoad() {
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
 			sgLogDebug("Starting load gameobjects");
-			GameObject::LoadAllGameObjects();
+			GameObjectSystem::Load();
 			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingUI:
@@ -361,7 +361,7 @@ void LoadAllTexturesFromFolder(const std::string& folderPath) {
 		if (!entry.is_regular_file())
 			continue;
 		std::string filename = entry.path().filename().string();
-			sgLogDebug("checking to load %s", entry.path().stem().string().c_str());
+		sgLogDebug("checking to load %s", entry.path().stem().string().c_str());
 		// Check for .png extension
 		if (entry.path().extension() == ".png") {
 			sgLogDebug("Loading %s", entry.path().stem().string().c_str());
@@ -375,7 +375,7 @@ void LoadAllTexturesFromFolder(const std::string& folderPath) {
 }
 
 void Engine::PreloadAssets() {
-	std::string textureFolder = format("{}assets/img", GetBasePath());	 // from your helper
+	std::string textureFolder = format("{}assets/img", GetBasePath());	// from your helper
 	LoadAllTexturesFromFolder(textureFolder);
 	loadAllMaps();
 }

@@ -12,13 +12,13 @@ using namespace std;
 using namespace Etf;
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), _battlerData(args.BattleData) {
-	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), &_x, &_y, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
+	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
-	_gameObjects.push_back(shared_ptr<GameObject>(this));
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
+	AddGameObjectToGameObjectSystem(this);
 }
 
 float Battler::SpriteWidth() {

@@ -1,7 +1,4 @@
 #pragma once
-#include <functional>
-#include <memory>
-#include <unordered_map>
 struct TiledObject;
 namespace Etf {
 
@@ -13,38 +10,27 @@ class GameObject {
 	float& Y();
 
    protected:
-	// inline sgGameObject* internalGO() { return GO; }
-	static std::vector<std::shared_ptr<GameObject>> _gameObjects;
-	static std::vector<std::weak_ptr<IInteractable>> _interactables;
 	GameObject(int x, int y);
-	bool DoNotDestroy = false;
-	bool ShouldBeDestroyed = false;
-	float _x = 0;
-	float _y = 0;
+	bool DoNotDestroy_ = false;
+	bool ShouldBeDestroyed_ = false;
+	float X_ = 0;
+	float Y_ = 0;
 
    private:
-	static std::unordered_map<int, std::function<void(TiledObject* objData)>> _loaderMap;
 	static unsigned int _currentID;
 	unsigned int _id;
-	// sgGameObject* GO;
 
    public:
-	// Loads all gameobjects in the current map, then destroys all the old unless they have donotdestroy
-	static void LoadAllGameObjects();
-	static void UpdateGameObjects();
-	static void DrawGameObjects();
-	// Destroys all gameobjects and interactables
-	static void DestroyAllGameObjects();
-	//Used when gameobjects are not created from the map.
-	static void AddGameObject(GameObject* gameobject);
-
-   public:
-	virtual ~GameObject();
+	virtual ~GameObject() = default;
 
    protected:
 	virtual void Start() {};
 	virtual void Update() {};
 	virtual void Draw() {};
+
+	friend class GameObjectSystem;
 };
+
+void AddGameObjectToGameObjectSystem(GameObject* gameobject);
 
 }  // namespace Etf

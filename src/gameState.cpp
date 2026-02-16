@@ -7,6 +7,7 @@ float GameState::DeltaTimeSeconds;
 float GameState::DeltaTimeMilliseconds;
 bool GameState::InDialog = false;
 int GameState::CurrentFadeState = (int)ScreenFadeTypes::NotFading;
+bool GameState::Players::Player2Spawned = false;
 
 bool GameState::Battle::InBattle = false;
 int GameState::Battle::NextBattleGroup = 1;

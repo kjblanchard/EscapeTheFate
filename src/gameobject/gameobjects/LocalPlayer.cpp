@@ -3,17 +3,15 @@
 #include <Supergoon/camera.h>
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
-#include <bindings/Controller.hpp>
 
+#include <bindings/Controller.hpp>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
+#include <gameobject/gameobjects/LocalPlayer.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
-#include <gameobject/gameobjects/Player.hpp>
 #include <memory>
 
-#include "gameobject/GameObject.hpp"
-#include "interfaces/IInteractable.hpp"
 using namespace std;
 using namespace Etf;
 
@@ -22,7 +20,7 @@ static const RectangleF _collisionOffsetAndSizeRect = {8, 8, 16, 22};
 static const Point _interactionEastWestWidthHeight = {26, 8};
 static const Point _interactionNorthSouthWidthHeight = {8, 26};
 
-void Player::Create(TiledObject* objData) {
+void LocalPlayer::Create(TiledObject* objData) {
 	int loadLocation = -1;
 	Direction direction = Direction::South;
 	for (auto i = 0; i < objData->NumProperties; ++i) {
@@ -36,7 +34,7 @@ void Player::Create(TiledObject* objData) {
 	}
 	if (loadLocation != GameState::NextLoadScreen) return;
 	sgLogDebug("Making player start at pos %d!!", loadLocation);
-	auto player = new Player(objData);
+	auto player = new LocalPlayer(objData);
 	// We should override this if we are exiting from a battle.
 	if (GameState::Battle::ExitingFromBattle) {
 		player->X() = GameState::NextLoadLocation.X;
@@ -51,22 +49,18 @@ void Player::Create(TiledObject* objData) {
 	// make load location to where we are now incase we don't move and get into a battle.
 	GameState::NextLoadLocation.X = player->X();
 	GameState::NextLoadLocation.Y = player->Y();
-	_gameObjects.push_back(shared_ptr<GameObject>(player));
+	AddGameObjectToGameObjectSystem(player);
 }
 
-Player::Player(TiledObject* objData) : GameObject(objData->X, objData->Y) {
-	_sprite = Engine::CreateSpriteFull("player1", &_x, &_y, {0, 0, 32, 32}, {0, 0, 32, 32});
-	_InteractionSprite = Engine::CreateSpriteFull("interaction", &_x, &_y, {0, 0, 16, 16}, {20, -5, 16, 16});
+LocalPlayer::LocalPlayer(TiledObject* objData) : GameObject(objData->X, objData->Y) {
+	_sprite = Engine::CreateSpriteFull("player1", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
+	_InteractionSprite = Engine::CreateSpriteFull("interaction", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(_InteractionSprite, false);
 	_animator = make_unique<SpriteAnimator>("player1", _sprite);
 }
 
-Player::~Player() {
-	// ResetCameraFollow();
-}
-
-void Player::Start() {}
-void Player::Update() {
+void LocalPlayer::Start() {}
+void LocalPlayer::Update() {
 	handlePlayerMovement();
 	handleInteractions();
 	if (handleMapExits()) {
@@ -74,7 +68,7 @@ void Player::Update() {
 	}
 }
 
-void Player::updateInteractionRect() {
+void LocalPlayer::updateInteractionRect() {
 	switch (_direction) {
 		case Direction::East:
 			_interactionRect.x = _collisionRect.x + _collisionRect.w;
@@ -105,64 +99,63 @@ void Player::updateInteractionRect() {
 	}
 }
 
-void Player::handleInteractions() {
+void LocalPlayer::handleInteractions() {
 	updateInteractionRect();
-	IInteractable* interactable = nullptr;
-	for (auto interact : GameObject::_interactables) {
-		if (interact.expired()) continue;
-		auto interactPtr = interact.lock().get();
-		if (Engine::CheckForRectCollision(_interactionRect, interactPtr->InteractionRect)) {
-			interactable = interactPtr;
-			break;
-		}
-	}
-	// Hide or show the interaction rect based off state
-	if (interactable && !_currentInteractable) {
-		Engine::SetSpriteVisible(_InteractionSprite, true);
-	} else if (!interactable && _currentInteractable) {
-		Engine::SetSpriteVisible(_InteractionSprite, false);
-	}
-	_currentInteractable = interactable;
-	// if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
-	if (_currentInteractable && Controller::IsButtonJustPressed(GameButtons::A)) {
-		_currentInteractable->Interact();
-		_animator->UpdateAnimatorSpeed(0.0);
-	}
+	// IInteractable* interactable = nullptr;
+	// for (auto interact : GameObject::_interactables) {
+	// 	if (interact.expired()) continue;
+	// 	auto interactPtr = interact.lock().get();
+	// 	if (Engine::CheckForRectCollision(_interactionRect, interactPtr->InteractionRect)) {
+	// 		interactable = interactPtr;
+	// 		break;
+	// 	}
+	// }
+	// // Hide or show the interaction rect based off state
+	// if (interactable && !_currentInteractable) {
+	// 	Engine::SetSpriteVisible(_InteractionSprite, true);
+	// } else if (!interactable && _currentInteractable) {
+	// 	Engine::SetSpriteVisible(_InteractionSprite, false);
+	// }
+	// _currentInteractable = interactable;
+	// // if (_currentInteractable && IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+	// if (_currentInteractable && Controller::IsButtonJustPressed(GameButtons::A)) {
+	// 	_currentInteractable->Interact();
+	// 	_animator->UpdateAnimatorSpeed(0.0);
+	// }
 }
 
-bool Player::handlePlayerMovement() {
+bool LocalPlayer::handlePlayerMovement() {
 	if (GameState::InDialog) return false;
 	auto moved = false;
 	auto previousDirection = _direction;
 	auto velocityX = 0;
 	auto velocityY = 0;
-	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.UP)) {
-	if (Controller::IsButtonPressed(GameButtons::UP)) {
-		moved = true;
-		velocityY -= 1;
-		_direction = Direction::North;
-	}
+	// if (Controller::IsButtonPressed(GameButtons::UP)) {
+	// 	moved = true;
+	// 	velocityY -= 1;
+	// 	_direction = Direction::North;
+	// }
 
-	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.DOWN)) {
-	if (Controller::IsButtonPressed(GameButtons::DOWN)) {
-		moved = true;
-		velocityY += 1;
-		_direction = Direction::South;
-	}
+	// // if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.DOWN)) {
+	// if (Controller::IsButtonPressed(GameButtons::DOWN)) {
+	// 	moved = true;
+	// 	velocityY += 1;
+	// 	_direction = Direction::South;
+	// }
 
-	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.LEFT)) {
-	if (Controller::IsButtonPressed(GameButtons::LEFT)) {
-		moved = true;
-		velocityX -= 1;
-		_direction = Direction::West;
-	}
+	// // if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.LEFT)) {
+	// if (Controller::IsButtonPressed(GameButtons::LEFT)) {
+	// 	moved = true;
+	// 	velocityX -= 1;
+	// 	_direction = Direction::West;
+	// }
 
-	// if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.RIGHT)) {
-	if (Controller::IsButtonPressed(GameButtons::RIGHT)) {
-		moved = true;
-		velocityX += 1;
-		_direction = Direction::East;
-	}
+	// // if (IsKeyboardKeyDown(GameConfig::GetGameConfig().Controls.RIGHT)) {
+	// if (Controller::IsButtonPressed(GameButtons::RIGHT)) {
+	// 	moved = true;
+	// 	velocityX += 1;
+	// 	_direction = Direction::East;
+	// }
 
 	if (_direction != previousDirection) {
 		_animator->StartAnimation(getAnimNameFromDirection());
@@ -191,11 +184,11 @@ bool Player::handlePlayerMovement() {
 	return moved;
 }
 
-bool Player::handleMapExits() {
+bool LocalPlayer::handleMapExits() {
 	return MapExit::CheckAndHandleMapExitOverlaps(_collisionRect);
 }
 
-constexpr const char* Player::getAnimNameFromDirection() {
+constexpr const char* LocalPlayer::getAnimNameFromDirection() {
 	switch (_direction) {
 		case Direction::North:
 			return "walkU";
@@ -209,6 +202,6 @@ constexpr const char* Player::getAnimNameFromDirection() {
 	return "walkD";	 // or assert
 }
 
-void Player::Draw() {
+void LocalPlayer::Draw() {
 	if (GameConfig::GetGameConfig().debug.interactions) Engine::DrawRectPrimitive(_interactionRect);
 }

@@ -2,6 +2,9 @@
 
 ## In Progress
 
+- draw out how game will manage controllers and map to players.
+- draw out how second player will spawn.
+
 ## Todos
 
 - spawn second player with controller

@@ -8,11 +8,12 @@
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
 
-#include <bindings/engine.hpp>
 #include <bindings/Controller.hpp>
+#include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <systems/GameObjectSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
@@ -51,7 +52,6 @@ void initialize() {
 	sgSetLogLevel(_gameConfig.debug.debugLevel);
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
-	Controller::InitializeControllers();
 }
 
 void start() {
@@ -80,7 +80,7 @@ void update() {
 	if (!Engine::HandleMapLoad()) {
 		return;
 	}
-	GameObject::UpdateGameObjects();
+	GameObjectSystem::Update();
 	DialogSystem::UpdateDialogSystem();
 	if (GameState::Battle::InBattle) {
 		BattleSystem::BattleSystemUpdate();
@@ -97,7 +97,7 @@ static void drawImGUI() {
 }
 
 void draw() {
-	GameObject::DrawGameObjects();
+	GameObjectSystem::Draw();
 	UI::DrawUI();
 #ifdef imgui
 	drawImGUI();
@@ -131,7 +131,7 @@ static void shutdownImGUI() {
 }
 
 void quit() {
-	GameObject::DestroyAllGameObjects();
+	GameObjectSystem::Shutdown();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
 #ifdef imgui

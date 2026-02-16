@@ -1,12 +1,11 @@
 #include <Supergoon/log.h>
 #include <Supergoon/map.h>
 
+#include <algorithm>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
-#include <memory>
-#include <algorithm>
 
 #include "gameobject/GameObject.hpp"
 using namespace Etf;
@@ -14,18 +13,12 @@ using namespace std;
 
 const float MAP_FADEOUT_TIME = 0.25f;
 const float MAP_FADEIN_TIME = 0.35f;
-std::vector<std::weak_ptr<MapExit>> MapExit::_mapExits;
+std::vector<MapExit*> MapExit::_mapExits;
 
 void MapExit::Create(TiledObject* objData) {
-	auto newMap = make_shared<MapExit>(objData);
-	_gameObjects.push_back(newMap);
+	auto newMap = new MapExit(objData);
+	AddGameObjectToGameObjectSystem(newMap);
 	_mapExits.push_back(newMap);
-	if (_mapExits.size() > 20) {
-		_mapExits.erase(remove_if(_mapExits.begin(), _mapExits.end(), [](auto const& w) {
-							return w.expired();
-						}),
-						_mapExits.end());
-	}
 }
 
 MapExit::MapExit(TiledObject* objData) : GameObject(objData->X, objData->Y) {
@@ -43,14 +36,17 @@ MapExit::MapExit(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 	_location.h = objData->Height;
 }
 
-bool MapExit::CheckAndHandleMapExitOverlaps(RectangleF& rect) {
-	for (auto& mapExit : _mapExits) {
-		if (mapExit.expired()) continue;
-		auto mapPtr = mapExit.lock();
+MapExit::~MapExit() {
+	_mapExits.erase(std::find_if(_mapExits.begin(), _mapExits.end(), [this](MapExit* item) {
+		return item == this;
+	}));
+}
 
-		if (Engine::CheckForRectCollision(rect, mapPtr->_location)) {
-			GameState::NextLoadScreen = mapPtr->_locationToLoad;
-			Engine::LoadScene(mapPtr->_mapToLoad, MAP_FADEOUT_TIME, MAP_FADEIN_TIME);
+bool MapExit::CheckAndHandleMapExitOverlaps(RectangleF& rect) {
+	for (auto mapExit : _mapExits) {
+		if (Engine::CheckForRectCollision(rect, mapExit->_location)) {
+			GameState::NextLoadScreen = mapExit->_locationToLoad;
+			Engine::LoadScene(mapExit->_mapToLoad, MAP_FADEOUT_TIME, MAP_FADEIN_TIME);
 			return true;
 		}
 	}

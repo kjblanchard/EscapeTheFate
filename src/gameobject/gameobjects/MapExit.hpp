@@ -3,8 +3,8 @@
 
 #include <gameobject/GameObject.hpp>
 #include <memory>
-#include <vector>
 #include <string>
+#include <vector>
 struct TiledObject;
 namespace Etf {
 class MapExit : public GameObject {
@@ -13,10 +13,11 @@ class MapExit : public GameObject {
 	// Checks for overlaps, and also handles by setting the scene to load.
 	static bool CheckAndHandleMapExitOverlaps(RectangleF& rect);
 	MapExit(TiledObject* objData);
+	~MapExit();
 	void Draw() override;
 
    private:
-	static std::vector<std::weak_ptr<MapExit>> _mapExits;
+	static std::vector<MapExit*> _mapExits;
 	std::string _mapToLoad;
 	int _locationToLoad;
 	RectangleF _location;

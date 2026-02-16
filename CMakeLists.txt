@@ -27,7 +27,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameConfig.cpp 
   src/gameState.cpp 
   src/gameobject/GameObject.cpp
-  src/gameobject/gameobjects/Player.cpp
+  src/gameobject/gameobjects/LocalPlayer.cpp
   src/gameobject/gameobjects/Battler.cpp
   src/gameobject/gameobjects/PlayerBattler.cpp
   src/gameobject/gameobjects/EnemyBattler.cpp
@@ -45,9 +45,12 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   ./src/ui/uiProgressBar.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
+  ./src/systems/PlayerSystem.cpp
+  ./src/systems/GameObjectSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
   src/bindings/Controller.cpp
+  src/bindings/Player.cpp
 )
 
 if(IMGUI_DEBUGGING)
@@ -62,7 +65,6 @@ if(IMGUI_DEBUGGING)
   )
   list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC}
     ./src/debug/debugWindow.cpp
-    ./src/debug/textureTab.cpp
   )
   add_definitions(-Dimgui)
   #Ignore source file warnings from external imgui  

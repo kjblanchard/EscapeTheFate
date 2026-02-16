@@ -12,7 +12,7 @@ namespace Etf {
 
 class IInteractable;
 
-class Player : public GameObject {
+class LocalPlayer : public GameObject {
 	enum class Direction { South,
 						   East,
 						   North,
@@ -20,7 +20,7 @@ class Player : public GameObject {
 
    public:
 	static void Create(TiledObject* objData);
-	~Player();
+	// ~LocalPlayer();
 
    private:
 	void Start() override;
@@ -36,8 +36,8 @@ class Player : public GameObject {
 	inline float roundCollisionResolve(float x, float grid = 0.01) { return std::round(x / grid) * grid; }
 
    private:
-	static std::vector<std::unique_ptr<Player>> _players;
-	Player(TiledObject* objData);
+	static std::vector<std::unique_ptr<LocalPlayer>> _players;
+	LocalPlayer(TiledObject* objData);
 	Sprite* _sprite;
 	Sprite* _InteractionSprite;
 	Direction _direction = Direction::South;
