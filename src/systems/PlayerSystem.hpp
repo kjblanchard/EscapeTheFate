@@ -1,15 +1,34 @@
 #pragma once
+#include <bindings/Player.hpp>
+#include <memory>
+#include <ui/uiObject.hpp>
 namespace Etf {
 
 // Functions to be ran by the main for this system.
 class PlayerSystem {
    public:
 	// Initializes the max num players for the game.
-	void StartPlayerSystem();
+	static void StartPlayerSystem();
 	// Handles if someone is trying to update the virtual controller assigned to this player to another player
-	void UpdatePlayerSystem();
+	static void UpdatePlayerSystem();
 	// Cleanup
-	void ShutdownPlayerSystem();
+	static void ShutdownPlayerSystem();
+
+	static const std::shared_ptr<Player>& GetPlayerByNum(int playerNum);
+
+   private:
+	static constexpr int kMaxNumLocalPlayers = 2;
+	static std::shared_ptr<Player> Players_[kMaxNumLocalPlayers];
+	//TODO we are statically setting this to 4, same with joystick images, prolly use vector
+	static std::shared_ptr<Controller> Controllers_[4];
+	static struct sUI {
+		UIObject* KeyboardImage = nullptr;
+		UIObject* JoystickImages[4] = {nullptr, nullptr, nullptr, nullptr};
+	} PlayerUIObjectCache_;
+	static void GetGameControllerImages();
+	static void GetGameKeyboardImages();
+	static void SetImagesToCurrentInput();
+	static void SetStartupInput();
 };
 
 }  // namespace Etf

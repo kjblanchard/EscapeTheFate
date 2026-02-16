@@ -2,5 +2,5 @@
 using namespace Etf;
 
 const Controller& Player::GetController() const {
-	return Controller_;
+	return *Controller_;
 }

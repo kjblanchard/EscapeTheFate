@@ -16,6 +16,7 @@
 #include <systems/GameObjectSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
+#include <systems/PlayerSystem.hpp>
 #include <ui/ui.hpp>
 
 #ifdef imgui
@@ -60,6 +61,8 @@ void start() {
 #ifdef PRELOAD_ALL_ASSETS
 	Engine::PreloadAssets();
 #endif
+	//Start all systems
+	PlayerSystem::StartPlayerSystem();
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	startImGUI();

@@ -23,7 +23,7 @@ Controller::Controller() {
 	ControllerConfig_.JoystickButtonConfig[5] = ControllerConfig::DefaultJoystickButtons::B;
 }
 
-bool Controller::IsButtonJustPressed(GameButtons button, int playerNum) {
+bool Controller::IsButtonJustPressed(GameButtons button, int playerNum) const {
 	auto keyboardKey = ControllerConfig_.KeyboardKeyConfig[static_cast<int>(button)];
 	auto keyboardPressed = IsKeyboardKeyJustPressed(keyboardKey);
 	// First player uses keyboard and joystick
@@ -38,7 +38,7 @@ bool Controller::IsButtonJustPressed(GameButtons button, int playerNum) {
 	return keyboardPressed;
 }
 
-bool Controller::IsButtonPressed(GameButtons button, int playerNum) {
+bool Controller::IsButtonPressed(GameButtons button, int playerNum) const {
 	auto keyboardKey = ControllerConfig_.KeyboardKeyConfig[static_cast<int>(button)];
 	auto keyboardPressed = IsKeyboardKeyDown(keyboardKey);
 	// First player uses keyboard and joystick
@@ -53,8 +53,10 @@ bool Controller::IsButtonPressed(GameButtons button, int playerNum) {
 	return keyboardPressed;
 }
 
-bool Controller::IsButtonJustReleased(GameButtons button, int playerNum) {
+bool Controller::IsButtonJustReleased(GameButtons button, int playerNum) const {
 	return false;
 }
 
-void Controller::AssignGamepadToController(int gamepadNum) {}
+void Controller::AssignGamepadToController(int gamepadNum) {
+	JoystickAssigned_ = gamepadNum;
+}
