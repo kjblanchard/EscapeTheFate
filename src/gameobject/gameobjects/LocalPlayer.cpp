@@ -45,8 +45,6 @@ void LocalPlayer::Create(TiledObject* objData) {
 	if (GameState::Battle::ExitingFromBattle) {
 		localPlayer->SetX(GameState::NextLoadLocation.X);
 		localPlayer->SetY(GameState::NextLoadLocation.Y);
-		localPlayer->ActualX_ = localPlayer->X_;
-		localPlayer->ActualX_ = localPlayer->Y_;
 		localPlayer->Direction_ = static_cast<Direction>(GameState::NextLoadDirection);
 		GameState::NextLoadLocation = {0, 0};
 	} else {
@@ -60,7 +58,7 @@ void LocalPlayer::Create(TiledObject* objData) {
 	AddGameObjectToGameObjectSystem(localPlayer);
 }
 
-LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<Player>& player) : GameObject(objData->X, objData->Y), ActualX_(objData->X), ActualY_(objData->Y), Player_(player) {
+LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<Player>& player) : GameObject(objData->X, objData->Y), Player_(player) {
 	Sprite_ = Engine::CreateSpriteFull("player1", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
 	InteractionSprite_ = Engine::CreateSpriteFull("interaction", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(InteractionSprite_, false);
@@ -174,17 +172,14 @@ bool LocalPlayer::handlePlayerMovement() {
 	}
 
 	if (moved) {
-		float desiredX = (ActualX_ + velocityX * _moveSpeed * GameState::DeltaTimeSeconds);
-		float desiredY = (ActualY_ + velocityY * _moveSpeed * GameState::DeltaTimeSeconds);
+		float desiredX = (X() + velocityX * _moveSpeed * GameState::DeltaTimeSeconds);
+		float desiredY = (Y() + velocityY * _moveSpeed * GameState::DeltaTimeSeconds);
 		CollisionRect_ = {desiredX + _collisionOffsetAndSizeRect.x, desiredY + _collisionOffsetAndSizeRect.y, _collisionOffsetAndSizeRect.w, _collisionOffsetAndSizeRect.h};
 		CheckRectForCollisionWithSolids(&CollisionRect_);
-		// CollisionRect_.x = roundCollisionResolve(CollisionRect_.x);
-		// CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
-		ActualX_ = (CollisionRect_.x - _collisionOffsetAndSizeRect.x);
-		ActualY_ = (CollisionRect_.y - _collisionOffsetAndSizeRect.y);
-		SetX((int)ActualX_);
-		SetY((int)ActualY_);
-		sgLogWarn("ActualX is %f Y %f, and xy is %f %f", ActualX_, ActualY_, X(), Y());
+		CollisionRect_.x = roundCollisionResolve(CollisionRect_.x);
+		CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
+		SetX(CollisionRect_.x - _collisionOffsetAndSizeRect.x);
+		SetY(CollisionRect_.y - _collisionOffsetAndSizeRect.y);
 		// Update gamestate with players location.
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
