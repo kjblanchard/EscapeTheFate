@@ -2,12 +2,9 @@
 
 ## In Progress
 
-- Trying to fix up player, and draw things on non-floats.  do not draw in between.
-- Need to add imgui for camera to try and fix jitter, or pinpoint problem.
-- Do not use opengl.
-- Need to add imgui for players that shows joysticks too.
 - Steam is only made on desktop, etc
 - draw out how second player will spawn.
+- Handle movement with thumbstick.
 
 ## Todos
 

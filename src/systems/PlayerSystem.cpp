@@ -75,13 +75,15 @@ void PlayerSystem::UpdatePlayerSystem() {
 		auto otherPlayer = i == 0 ? i + 1 : i - 1;
 		auto& otherPlayerThing = Players_[otherPlayer];
 		auto& controller = player->Controller_;
-		if (controller->IsButtonJustPressed(GameButtons::LB) && controller->IsButtonJustPressed(GameButtons::RB)) {
+		if (controller->IsButtonJustPressed(GameButtons::RB)) {
 			sgLogDebug("Trying to reassign controller to next player, if there is a input attached");
 			if (controller->DoesGamepadHaveJoystickAssigned()) {
 				sgLogDebug("Reassigning");
 				auto controllerToReassign = controller->JoystickAssigned_;
 				controller->AssignGamepadToController(-1);
 				otherPlayerThing->Controller_->AssignGamepadToController(controllerToReassign);
+				//Do not do the other player, cause we just switched.
+				return;
 			}
 		}
 	}

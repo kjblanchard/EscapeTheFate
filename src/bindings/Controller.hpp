@@ -61,6 +61,7 @@ class Controller {
 	ControllerConfig ControllerConfig_;
 	int JoystickAssigned_ = -1;
 	friend class PlayerSystem;
+	friend void DisplayPlayersTab();
 };
 }  // namespace Etf
 
