@@ -7,9 +7,14 @@ class Player {
    public:
 	// Used for input functions
 	const Controller& GetController() const;
+	Player();
 
    private:
 	std::shared_ptr<Controller> Controller_;
+	int PlayerNum_;
+	//PlayerSystem manages the players
 	friend class PlayerSystem;
+	//ImGUI debugging
+	friend void DisplayPlayersTab();
 };
 }  // namespace Etf

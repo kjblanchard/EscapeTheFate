@@ -1,3 +1,4 @@
+#include <SDL3/SDL_scancode.h>
 #include <Supergoon/Input/joystick.h>
 #include <Supergoon/Input/keyboard.h>
 #include <assert.h>
@@ -14,6 +15,8 @@ Controller::Controller() {
 	ControllerConfig_.KeyboardKeyConfig[3] = ControllerConfig::DefaultKeyboardbuttons::RIGHT;
 	ControllerConfig_.KeyboardKeyConfig[4] = ControllerConfig::DefaultKeyboardbuttons::A;
 	ControllerConfig_.KeyboardKeyConfig[5] = ControllerConfig::DefaultKeyboardbuttons::B;
+	ControllerConfig_.KeyboardKeyConfig[6] = ControllerConfig::DefaultKeyboardbuttons::LB;
+	ControllerConfig_.KeyboardKeyConfig[7] = ControllerConfig::DefaultKeyboardbuttons::RB;
 
 	ControllerConfig_.JoystickButtonConfig[0] = ControllerConfig::DefaultJoystickButtons::UP;
 	ControllerConfig_.JoystickButtonConfig[1] = ControllerConfig::DefaultJoystickButtons::LEFT;
@@ -21,6 +24,8 @@ Controller::Controller() {
 	ControllerConfig_.JoystickButtonConfig[3] = ControllerConfig::DefaultJoystickButtons::RIGHT;
 	ControllerConfig_.JoystickButtonConfig[4] = ControllerConfig::DefaultJoystickButtons::A;
 	ControllerConfig_.JoystickButtonConfig[5] = ControllerConfig::DefaultJoystickButtons::B;
+	ControllerConfig_.JoystickButtonConfig[6] = ControllerConfig::DefaultJoystickButtons::LB;
+	ControllerConfig_.JoystickButtonConfig[7] = ControllerConfig::DefaultJoystickButtons::RB;
 }
 
 bool Controller::IsButtonJustPressed(GameButtons button, int playerNum) const {

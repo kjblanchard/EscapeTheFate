@@ -65,6 +65,8 @@ if(IMGUI_DEBUGGING)
   )
   list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC}
     ./src/debug/debugWindow.cpp
+    ./src/debug/DebugPlayers.cpp
+    ./src/debug/DebugCamera.cpp
   )
   add_definitions(-Dimgui)
   #Ignore source file warnings from external imgui  
@@ -195,6 +197,18 @@ if(EMSCRIPTEN)
       ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
       CACHE STRING "Icon path")
   endif(EMSCRIPTEN)
+
+  find_library(STEAMAPI_LIBRARY
+    NAMES steam_api
+    PATHS /usr/local/lib
+  )
+
+  if (NOT STEAMAPI_LIBRARY)
+    message(FATAL_ERROR "libsteam_api not found")
+  endif()
+
+  target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE ${STEAMAPI_LIBRARY})
+
 
   # install(
   #   DIRECTORY src/

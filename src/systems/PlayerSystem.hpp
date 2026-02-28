@@ -17,8 +17,8 @@ class PlayerSystem {
 	static const std::shared_ptr<Player>& GetPlayerByNum(int playerNum);
 
    private:
-	static constexpr int kMaxNumLocalPlayers = 2;
-	static std::shared_ptr<Player> Players_[kMaxNumLocalPlayers];
+	static constexpr int MaxNumLocalPlayers_ = 2;
+	static std::shared_ptr<Player> Players_[MaxNumLocalPlayers_];
 	//TODO we are statically setting this to 4, same with joystick images, prolly use vector
 	static std::shared_ptr<Controller> Controllers_[4];
 	static struct sUI {
@@ -29,6 +29,8 @@ class PlayerSystem {
 	static void GetGameKeyboardImages();
 	static void SetImagesToCurrentInput();
 	static void SetStartupInput();
+
+	friend void DisplayPlayersTab();
 };
 
 }  // namespace Etf

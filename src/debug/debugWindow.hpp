@@ -1,10 +1,8 @@
 #pragma once
+#include <functional>
 
 namespace Etf {
 
-class DebugWindow {
-   public:
-	static void CreateMainWindow();
-};
-
+void CreateMainWindow();
+void AddTabFuncToMainWindow(std::function<void()> drawFunc);
 }  // namespace Etf

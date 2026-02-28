@@ -39,6 +39,7 @@ class LocalPlayer : public GameObject {
    private:
 	static std::vector<std::unique_ptr<LocalPlayer>> Players_;
 	LocalPlayer(TiledObject* objData, const std::shared_ptr<Player>& player);
+	float ActualX_ = 0, ActualY_ = 0;
 	Sprite* Sprite_;
 	Sprite* InteractionSprite_;
 	Direction Direction_ = Direction::South;

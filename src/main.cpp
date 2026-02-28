@@ -7,6 +7,7 @@
 #include <Supergoon/log.h>
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
+#include <steam/steam_api.h>
 
 #include <bindings/Controller.hpp>
 #include <bindings/engine.hpp>
@@ -14,12 +15,14 @@
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
 #include <systems/GameObjectSystem.hpp>
+#include <systems/PlayerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
-#include <systems/PlayerSystem.hpp>
 #include <ui/ui.hpp>
 
 #ifdef imgui
+#include <debug/DebugCamera.hpp>
+#include <debug/DebugPlayers.hpp>
 #include <debug/debugWindow.hpp>
 
 #include "imgui.h"
@@ -28,7 +31,7 @@
 #endif
 
 namespace Etf {
-static const int B = 27;
+// static const int B = 27;
 
 static void startImGUI() {
 #ifdef imgui
@@ -53,6 +56,9 @@ void initialize() {
 	sgSetLogLevel(_gameConfig.debug.debugLevel);
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
+	if (!SteamAPI_Init()) {
+		sgLogError("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed).\n");
+	}
 }
 
 void start() {
@@ -61,11 +67,13 @@ void start() {
 #ifdef PRELOAD_ALL_ASSETS
 	Engine::PreloadAssets();
 #endif
-	//Start all systems
+	// Start all systems
 	PlayerSystem::StartPlayerSystem();
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	startImGUI();
+	AddTabFuncToMainWindow(DisplayPlayersTab);
+	AddTabFuncToMainWindow(DisplayCameraTab);
 }
 
 int handleEvent(void* event) {
@@ -85,6 +93,7 @@ void update() {
 	}
 	GameObjectSystem::Update();
 	DialogSystem::UpdateDialogSystem();
+	PlayerSystem::UpdatePlayerSystem();
 	if (GameState::Battle::InBattle) {
 		BattleSystem::BattleSystemUpdate();
 	}
@@ -104,7 +113,7 @@ void draw() {
 	UI::DrawUI();
 #ifdef imgui
 	drawImGUI();
-	DebugWindow::CreateMainWindow();
+	CreateMainWindow();
 #endif
 }
 
@@ -115,15 +124,15 @@ void postDraw() {
 #endif
 }
 
-static void enterBattle() {
-	GameState::NextLoadMapName = Engine::CurrentScene();
-	Engine::LoadScene("forest1", 0.25f, 2.75f, false);
-}
+// static void enterBattle() {
+// 	GameState::NextLoadMapName = Engine::CurrentScene();
+// 	Engine::LoadScene("forest1", 0.25f, 2.75f, false);
+// }
 
 void handleInput() {
-	if (IsKeyboardKeyJustPressed(B)) {
-		enterBattle();
-	}
+	// if (IsKeyboardKeyJustPressed(B)) {
+	// 	enterBattle();
+	// }
 }
 static void shutdownImGUI() {
 #ifdef imgui

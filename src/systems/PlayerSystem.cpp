@@ -8,7 +8,7 @@
 using namespace Etf;
 using namespace std;
 
-std::shared_ptr<Player> PlayerSystem::Players_[kMaxNumLocalPlayers] = {nullptr, nullptr};
+std::shared_ptr<Player> PlayerSystem::Players_[MaxNumLocalPlayers_] = {nullptr, nullptr};
 PlayerSystem::sUI PlayerSystem::PlayerUIObjectCache_;
 std::shared_ptr<Controller> PlayerSystem::Controllers_[4];
 
@@ -58,7 +58,8 @@ void PlayerSystem::StartPlayerSystem() {
 	for (auto i = 0; i < geGamepadMaxPads(); ++i) {
 		Controllers_[i] = make_shared<Controller>();
 	}
-	for (auto i = 0; i < kMaxNumLocalPlayers; ++i) {
+
+	for (auto i = 0; i < MaxNumLocalPlayers_; ++i) {
 		Players_[i] = make_shared<Player>();
 		Players_[i]->Controller_ = Controllers_[i];
 	}
@@ -67,9 +68,23 @@ void PlayerSystem::StartPlayerSystem() {
 	SetImagesToCurrentInput();
 	SetStartupInput();
 }
-
 void PlayerSystem::UpdatePlayerSystem() {
 	// Listen for input to reassign to other players
+	for (auto i = 0; i < MaxNumLocalPlayers_; ++i) {
+		auto& player = Players_[i];
+		auto otherPlayer = i == 0 ? i + 1 : i - 1;
+		auto& otherPlayerThing = Players_[otherPlayer];
+		auto& controller = player->Controller_;
+		if (controller->IsButtonJustPressed(GameButtons::LB) && controller->IsButtonJustPressed(GameButtons::RB)) {
+			sgLogDebug("Trying to reassign controller to next player, if there is a input attached");
+			if (controller->DoesGamepadHaveJoystickAssigned()) {
+				sgLogDebug("Reassigning");
+				auto controllerToReassign = controller->JoystickAssigned_;
+				controller->AssignGamepadToController(-1);
+				otherPlayerThing->Controller_->AssignGamepadToController(controllerToReassign);
+			}
+		}
+	}
 }
 
 void PlayerSystem::ShutdownPlayerSystem() {
@@ -79,6 +94,6 @@ void PlayerSystem::ShutdownPlayerSystem() {
 }
 
 const shared_ptr<Player>& PlayerSystem::GetPlayerByNum(int playerNum) {
-	auto playerNumToReturn = playerNum > kMaxNumLocalPlayers ? 0 : playerNum;
+	auto playerNumToReturn = playerNum > MaxNumLocalPlayers_ ? 0 : playerNum;
 	return Players_[playerNumToReturn];
 }

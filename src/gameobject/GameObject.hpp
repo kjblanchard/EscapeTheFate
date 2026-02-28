@@ -6,8 +6,12 @@ class IInteractable;
 
 class GameObject {
    public:
-	float& X();
-	float& Y();
+	float X();
+	float Y();
+	void SetX(float x);
+	void SetY(float y);
+	float* GetXHandle();
+	float* GetYHandle();
 
    protected:
 	GameObject(int x, int y);

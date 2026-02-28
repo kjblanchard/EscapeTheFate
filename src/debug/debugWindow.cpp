@@ -1,11 +1,20 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Platform/opengl/openglTexture.h>
 #include <imgui.h>
+
 #include <debug/debugWindow.hpp>
+#include <vector>
 
 using namespace Etf;
+using namespace std;
 
-void DebugWindow::CreateMainWindow() {
+static vector<function<void()>> TabDrawFunctions_;
+
+void Etf::AddTabFuncToMainWindow(std::function<void()> drawFunc) {
+	TabDrawFunctions_.push_back(drawFunc);
+}
+
+void Etf::CreateMainWindow() {
 	static bool p_open = true;
 	static bool no_titlebar = false;
 	static bool no_scrollbar = false;
@@ -56,6 +65,9 @@ void DebugWindow::CreateMainWindow() {
 			}
 			ImGui::TreePop();
 		}
+	}
+	for (auto& func : TabDrawFunctions_) {
+		func();
 	}
 
 	ImGui::End();
