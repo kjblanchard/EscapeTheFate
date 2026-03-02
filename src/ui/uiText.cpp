@@ -13,7 +13,9 @@ UIText::UIText(UITextArgs& args) {
 	_debugBox = args.DebugBox;
 	_name = args.Name;
 	_priority = args.Priority;
-	_text = Engine::TextBoi::CreateText(args.FontName, args.FontSize, args.Rect, args.TextToDraw, args.NumCharsToDraw, args.CenteredX, args.CenteredY);
+	auto rect = RectangleF{0,0,_location.w, _location.h};
+	// _text = Engine::TextBoi::CreateText(args.FontName, args.FontSize, args.Rect, args.TextToDraw, args.NumCharsToDraw, args.CenteredX, args.CenteredY);
+	_text = Engine::TextBoi::CreateText(args.FontName, args.FontSize, rect, args.TextToDraw, args.NumCharsToDraw, args.CenteredX, args.CenteredY);
 }
 
 UIText::~UIText() {
@@ -21,7 +23,7 @@ UIText::~UIText() {
 }
 
 void UIText::OnDraw(float offsetX, float offsetY) {
-	Engine::TextBoi::DrawText(_text, offsetX, offsetY, _drawColor);
+	Engine::TextBoi::DrawText(_text, offsetX + _location.x, offsetY + _location.y, _drawColor);
 }
 
 void UIText::UpdateText(const string& newText, int numLettersToDraw) {

@@ -2,7 +2,7 @@
 #include <Supergoon/Platform/opengl/openglTexture.h>
 #include <imgui.h>
 
-#include <debug/debugWindow.hpp>
+#include <debug/DebugWindow.hpp>
 #include <vector>
 
 using namespace Etf;

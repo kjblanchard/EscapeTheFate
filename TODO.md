@@ -2,6 +2,7 @@
 
 ## In Progress
 
+- Sound debug
 - Steam is only made on desktop, etc
 - draw out how second player will spawn.
 - Handle movement with thumbstick.

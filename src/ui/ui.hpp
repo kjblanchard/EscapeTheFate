@@ -12,5 +12,6 @@ class UI {
    private:
 	static void destroyOldUIPanelsIfNeeded(const std::string& newFile);
 	static std::unique_ptr<UIObject> _rootUIObject;
+	friend void DisplayUITab();
 };
 }  // namespace Etf

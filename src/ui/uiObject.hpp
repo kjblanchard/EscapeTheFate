@@ -36,6 +36,8 @@ class UIObject {
 	virtual void OnDraw(float offsetX, float offsetY) {}
 	// Calls ondraw and then draws all children, left virtual for hlg/vlg
 	virtual void Draw(float offsetX, float offsetY);
+	//Called by imgui if in debug mode
+	virtual void DebugDraw();
 	virtual ~UIObject() = default;
 	// Recursive search, can be expensive if you search high
 	UIObject* GetChildByName(const std::string& name);
@@ -51,13 +53,15 @@ class UIObject {
 	void DestroyChildIfNotName(const std::vector<std::string> names, bool force = false);
 
    protected:
+	void DebugDrawInternal();
 	// Will call OnDirty when dirty.
 	bool _dirty = true;
 	bool _doNotDestroy = false;
 	// will not draw self or children if not visible;
 	bool _visible = true;
 	// Used when drawing, higher priority is drawn on top of lower
-	unsigned int _priority = 0;
+	int _priority = 0;
+	int ID_;
 	std::string _name = "root";
 	std::vector<std::unique_ptr<UIObject>> _children;
 	UIObject* _parent = nullptr;
@@ -65,5 +69,6 @@ class UIObject {
 	RectangleF _location = {0, 0, 0, 0};
 	const RectangleF _originalLocation = {0,0,0,0};
 	bool _debugBox = false;
+	friend void DisplayUITab();
 };
 }  // namespace Etf

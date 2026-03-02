@@ -64,9 +64,10 @@ if(IMGUI_DEBUGGING)
     ./external/imgui_widgets.cpp
   )
   list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC}
-    ./src/debug/debugWindow.cpp
+    ./src/debug/DebugWindow.cpp
     ./src/debug/DebugPlayers.cpp
     ./src/debug/DebugCamera.cpp
+    ./src/debug/DebugUI.cpp
   )
   add_definitions(-Dimgui)
   #Ignore source file warnings from external imgui  

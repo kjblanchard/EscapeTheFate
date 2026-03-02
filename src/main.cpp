@@ -23,7 +23,8 @@
 #ifdef imgui
 #include <debug/DebugCamera.hpp>
 #include <debug/DebugPlayers.hpp>
-#include <debug/debugWindow.hpp>
+#include <debug/DebugWindow.hpp>
+#include <debug/DebugUI.hpp>
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
@@ -31,7 +32,7 @@
 #endif
 
 namespace Etf {
-// static const int B = 27;
+static const int B = 27;
 
 static void startImGUI() {
 #ifdef imgui
@@ -74,6 +75,7 @@ void start() {
 	startImGUI();
 	AddTabFuncToMainWindow(DisplayPlayersTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);
+	AddTabFuncToMainWindow(DisplayUITab);
 }
 
 int handleEvent(void* event) {
@@ -124,15 +126,15 @@ void postDraw() {
 #endif
 }
 
-// static void enterBattle() {
-// 	GameState::NextLoadMapName = Engine::CurrentScene();
-// 	Engine::LoadScene("forest1", 0.25f, 2.75f, false);
-// }
+static void enterBattle() {
+	GameState::NextLoadMapName = Engine::CurrentScene();
+	Engine::LoadScene("forest1", 0.25f, 2.75f, false);
+}
 
 void handleInput() {
-	// if (IsKeyboardKeyJustPressed(B)) {
-	// 	enterBattle();
-	// }
+	if (IsKeyboardKeyJustPressed(B)) {
+		enterBattle();
+	}
 }
 static void shutdownImGUI() {
 #ifdef imgui
