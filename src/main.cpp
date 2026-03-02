@@ -113,8 +113,6 @@ static void drawImGUI() {
 void draw() {
 	GameObjectSystem::Draw();
 	UI::DrawUI();
-	auto color = Color{255,0,0,255};
-	DrawLine(0,32,16,32, 1, &color, false);
 #ifdef imgui
 	drawImGUI();
 	CreateMainWindow();

@@ -8,7 +8,7 @@
 using namespace Etf;
 using namespace std;
 
-UIText::UIText(UITextArgs& args) {
+UIText::UIText(UITextArgs& args): _drawColor(args.TextColor) {
 	_location = args.Rect;
 	_debugBox = args.DebugBox;
 	_name = args.Name;

@@ -38,105 +38,134 @@
 					}
 				}
 			},
-			"ControllerImages": {
-				"children": {
-					"ControllerImage1": {
-						"type": "image",
-						"file": "gamecontroller",
-						"visible": true,
-						"scale": 1.0,
-						"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
-						"rect": { "x": 0, "y": 0, "w": 16, "h": 16 },
-						"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
-						"camera": false,
-						"priority": 1
-					},
-					"ControllerImage2": {
-						"type": "image",
-						"file": "gamecontroller",
-						"visible": true,
-						"scale": 1.0,
-						"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
-						"rect": { "x": 0, "y": 16, "w": 16, "h": 16 },
-						"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
-						"camera": false,
-						"priority": 1
-					},
-					"ControllerImage3": {
-						"type": "image",
-						"file": "gamecontroller",
-						"visible": true,
-						"scale": 1.0,
-						"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
-						"rect": { "x": 0, "y": 32, "w": 16, "h": 16 },
-						"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
-						"camera": false,
-						"priority": 1
-					},
-					"ControllerImage4": {
-						"type": "image",
-						"file": "gamecontroller",
-						"visible": true,
-						"scale": 1.0,
-						"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
-						"rect": { "x": 0, "y": 48, "w": 16, "h": 16 },
-						"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
-						"camera": false,
-						"priority": 1
-					}
-				}
-			},
-			"KeyboardImage": {
-				"type": "image",
-				"file": "keyboard",
+			"PlayersGuide": {
+				"rect": { "x": 180, "y": 0, "w": 100, "h": 40 },
+				"file": "uibase",
+				"type": "nineSlice",
 				"visible": true,
 				"scale": 1.0,
-				"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
-				"rect": { "x": 16, "y": 0, "w": 16, "h": 16 },
-				"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+				"color": { "R": 80, "G": 0, "B": 120, "A": 150 },
+				"srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+				"xOffset": 8,
+				"yOffset": 9,
 				"camera": false,
-				"priority": 1
-			},
-			"PlayersGuide": {
 				"children": {
 					"Player1": {
+						"rect": { "x": 15, "y": 5, "w": 0, "h": 0 },
 						"children": {
 							"MainText": {
 								"type": "text",
 								"font": "PressStart2P",
 								"fontSize": 8,
-								"rect": { "x": 0, "y": 0, "w": 32, "h": 32 },
+								"rect": { "x": 0, "y": -10, "w": 32, "h": 32 },
+								"color": { "R": 255, "G": 0, "B": 255, "A": 255 },
 								"text": "P1",
 								"centeredX": true,
 								"centeredY": true,
 								"wordWrap": true,
-								"numCharsToDraw": 100
+								"numCharsToDraw": 10,
+								"priority": 0
 
 							},
-							"LineText": {
+							"P1Line": {
+								"type": "line",
+								"rect": { "x": 0, "y": 5, "w": 32, "h": 32 },
+								"x1": 0,
+								"x2": 40,
+								"y1": 5,
+								"y2": 5,
+								"thickness": 2,
+								"priority": 1,
+								"color": { "R": 255, "G": 0, "B": 255, "A": 255 }
+							},
+							"ControllerImage": {
+								"type": "image",
+								"file": "gamecontroller",
+								"visible": true,
+								"scale": 1.0,
+								"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+								"rect": { "x": 0, "y": 13, "w": 16, "h": 16 },
+								"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+								"camera": false,
+								"priority": 0
+							},
+							"KeyboardImage": {
+								"type": "image",
+								"file": "keyboard",
+								"visible": true,
+								"scale": 1.0,
+								"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+								"rect": { "x": 16, "y": 10, "w": 16, "h": 16 },
+								"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+								"camera": false,
+								"priority": 0
+							}
+						}
+					},
+					"Player2": {
+						"rect": { "x": 50, "y": 5, "w": 0, "h": 0 },
+						"children": {
+							"MainText": {
 								"type": "text",
 								"font": "PressStart2P",
 								"fontSize": 8,
-								"rect": { "x": 8, "y": 8, "w": 32, "h": 32 },
-								"text": "_____",
+								"rect": { "x": 0, "y": -10, "w": 32, "h": 32 },
+								"color": { "R": 255, "G": 0, "B": 255, "A": 255 },
+								"text": "P2",
 								"centeredX": true,
 								"centeredY": true,
 								"wordWrap": true,
-								"numCharsToDraw": 100
+								"numCharsToDraw": 10,
+								"priority": 0
 
 							},
-							"PadImage": {
+							"P1Line": {
+								"type": "line",
+								"rect": { "x": 0, "y": 5, "w": 32, "h": 32 },
+								"x1": 0,
+								"x2": 30,
+								"y1": 5,
+								"y2": 5,
+								"thickness": 2,
+								"priority": 1,
+								"color": { "R": 255, "G": 0, "B": 255, "A": 255 }
+
+							},
+							"SpawnButtonImage": {
 								"type": "image",
 								"file": "padButtonsExport",
 								"visible": true,
 								"scale": 1.0,
 								"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
-								"rect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+								"rect": { "x": 30, "y": 0, "w": 16, "h": 16 },
 								"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
 								"camera": false,
-								"priority": 1
+								"priority": 2
+							},
+
+							"ControllerImage": {
+								"type": "image",
+								"file": "gamecontroller",
+								"visible": true,
+								"scale": 1.0,
+								"color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+								"rect": { "x": 10, "y": 13, "w": 16, "h": 16 },
+								"srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+								"camera": false,
+								"priority": 0
 							}
 						}
+					},
+					"SeparatorLine": {
+						"type": "line",
+						"rect": { "x": 50, "y": 5, "w": 32, "h": 32 },
+						"x1": 0,
+						"x2": 0,
+						"y1": 0,
+						"y2": 30,
+						"thickness": 1,
+						"priority": 1,
+						"color": { "R": 255, "G": 0, "B": 255, "A": 255 }
 					}
 				}
 			}

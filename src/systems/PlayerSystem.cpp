@@ -63,10 +63,10 @@ void PlayerSystem::StartPlayerSystem() {
 		Players_[i] = make_shared<Player>();
 		Players_[i]->Controller_ = Controllers_[i];
 	}
-	GetGameControllerImages();
-	GetGameKeyboardImages();
-	SetImagesToCurrentInput();
-	SetStartupInput();
+	// GetGameControllerImages();
+	// GetGameKeyboardImages();
+	// SetImagesToCurrentInput();
+	// SetStartupInput();
 }
 void PlayerSystem::UpdatePlayerSystem() {
 	// Listen for input to reassign to other players

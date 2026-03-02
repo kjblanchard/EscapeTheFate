@@ -43,6 +43,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
   ./src/ui/uiProgressBar.cpp
+  ./src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
   ./src/systems/PlayerSystem.cpp
