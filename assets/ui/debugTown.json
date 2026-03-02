@@ -132,7 +132,7 @@
 
 							},
 							"SpawnButtonImage": {
-								"type": "image",
+								"type": "animation",
 								"file": "padButtonsExport",
 								"visible": true,
 								"scale": 1.0,

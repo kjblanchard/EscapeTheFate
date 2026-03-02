@@ -19,15 +19,20 @@ class PlayerSystem {
    private:
 	static constexpr int MaxNumLocalPlayers_ = 2;
 	static std::shared_ptr<Player> Players_[MaxNumLocalPlayers_];
-	//TODO we are statically setting this to 4, same with joystick images, prolly use vector
+	// TODO we are statically setting this to 4, same with joystick images, prolly use vector
 	static std::shared_ptr<Controller> Controllers_[4];
 	static struct sUI {
-		UIObject* KeyboardImage = nullptr;
-		UIObject* JoystickImages[4] = {nullptr, nullptr, nullptr, nullptr};
+		struct Player1 {
+			UIObject* KeyboardImage = nullptr;
+			UIObject* JoystickImage = nullptr;
+		} Player1;
+		struct Player2 {
+			UIObject* JoystickImage = nullptr;
+			UIObject* AButtonImage = nullptr;
+		} Player2;
 	} PlayerUIObjectCache_;
-	static void GetGameControllerImages();
-	static void GetGameKeyboardImages();
-	static void SetImagesToCurrentInput();
+	static void GetPlayer1UI();
+	static void GetPlayer2UI();
 	static void SetStartupInput();
 
 	friend void DisplayPlayersTab();

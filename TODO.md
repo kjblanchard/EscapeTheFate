@@ -2,10 +2,11 @@
 
 ## In Progress
 
+- draw out how second player will spawn.
+  - And how we will set the controller icons
+- Handle movement with thumbstick.
 - Sound debug
 - Steam is only made on desktop, etc
-- draw out how second player will spawn.
-- Handle movement with thumbstick.
 
 ## Todos
 
