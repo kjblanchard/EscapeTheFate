@@ -69,7 +69,7 @@ void start() {
 	Engine::PreloadAssets();
 #endif
 	// Start all systems
-	PlayerSystem::StartPlayerSystem();
+	StartPlayerSystem();
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	startImGUI();
@@ -95,7 +95,7 @@ void update() {
 	}
 	GameObjectSystem::Update();
 	DialogSystem::UpdateDialogSystem();
-	PlayerSystem::UpdatePlayerSystem();
+	UpdatePlayerSystem();
 	if (GameState::Battle::InBattle) {
 		BattleSystem::BattleSystemUpdate();
 	}

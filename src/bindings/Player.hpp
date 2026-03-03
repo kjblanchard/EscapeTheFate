@@ -12,9 +12,11 @@ class Player {
    private:
 	std::shared_ptr<Controller> Controller_;
 	int PlayerNum_;
-	//PlayerSystem manages the players
-	friend class PlayerSystem;
-	//ImGUI debugging
+	// ImGUI debugging
 	friend void DisplayPlayersTab();
+	// PlayerSystem manages the players
+	friend void StartPlayerSystem();
+	friend void UpdatePlayerSystem();
+	friend void ShutdownPlayerSystem();
 };
 }  // namespace Etf

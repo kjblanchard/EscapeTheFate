@@ -38,7 +38,7 @@ void LocalPlayer::Create(TiledObject* objData) {
 	if (loadLocation != GameState::NextLoadScreen) return;
 	sgLogDebug("Making player start at pos %d!!", loadLocation);
 	// We should assign player to this, based on what we are creating.. for now, just assign the initial player to it.
-	auto player = PlayerSystem::GetPlayerByNum(0);
+	auto player = GetPlayerByNum(0);
 
 	auto localPlayer = new LocalPlayer(objData, player);
 	// We should override this if we are exiting from a battle.
