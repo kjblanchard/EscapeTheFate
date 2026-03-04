@@ -1,45 +1,44 @@
 #include <Supergoon/Input/joystick.h>
 #include <Supergoon/log.h>
-#include <assert.h>
 
+#include <cassert>
+#include <gameState.hpp>
 #include <systems/PlayerSystem.hpp>
 #include <ui/ui.hpp>
-
-#include "gameState.hpp"
-#include "ui/uiAnimation.hpp"
+#include <ui/uiAnimation.hpp>
 
 using namespace Etf;
 using namespace std;
 
-static constexpr int sMaxNumLocalPlayers_ = 2;
-static std::shared_ptr<Player> sPlayers[sMaxNumLocalPlayers_];
-// TODO we are statically setting this to 4, same with joystick images, prolly use vector
-static std::shared_ptr<Controller> sControllers[4];
-static struct sUI {
-	struct Player1 {
+static constexpr int sMaxNumLocalPlayers_ = 2;	// only support 2 in local mode.
+static constexpr int sMaxNumControllers = 4;	// match engine max controllers
+static shared_ptr<Player> sPlayers[sMaxNumLocalPlayers_];
+static shared_ptr<Controller> sControllers[sMaxNumControllers];
+static struct PlayersUI {
+	struct {
 		UIObject* KeyboardImage = nullptr;
 		UIObject* JoystickImage = nullptr;
 	} Player1;
-	struct Player2 {
+	struct {
 		UIObject* JoystickImage = nullptr;
 		UIAnimation* AButtonAnimation = nullptr;
 	} Player2;
-} sPlayerUIObjectCache;
+} sPlayersUI;
 
 static void getPlayer1UI() {
 	auto playersGuide = UI::GetRootUIObject()->GetChildByName("PlayersGuide");
 	assert(playersGuide && "No players guide");
 	auto player1 = playersGuide->GetChildByName("Player1");
 	assert(player1 && "No player1 UI");
-	sPlayerUIObjectCache.Player1.JoystickImage = player1->GetChildByName("ControllerImage");
-	sPlayerUIObjectCache.Player1.KeyboardImage = player1->GetChildByName("KeyboardImage");
-	sPlayerUIObjectCache.Player1.JoystickImage->SetVisible(false);
-	sPlayerUIObjectCache.Player1.KeyboardImage->SetVisible(true);
+	sPlayersUI.Player1.JoystickImage = player1->GetChildByName("ControllerImage");
+	sPlayersUI.Player1.KeyboardImage = player1->GetChildByName("KeyboardImage");
+	sPlayersUI.Player1.JoystickImage->SetVisible(false);
+	sPlayersUI.Player1.KeyboardImage->SetVisible(true);
 }
 
 static void getPlayer2UI() {
 	auto playersGuide = UI::GetRootUIObject()->GetChildByName("PlayersGuide");
-	auto& player2 = sPlayerUIObjectCache.Player2;
+	auto& player2 = sPlayersUI.Player2;
 	assert(playersGuide && "No players guide");
 	auto player = playersGuide->GetChildByName("Player2");
 	assert(player && "No player2 UI");
@@ -57,20 +56,11 @@ static void setStartupInput() {
 		sControllers[i]->AssignGamepadToController(i);
 		if (pNum > 1) continue;
 		if (pNum == 0) {
-			sPlayerUIObjectCache.Player1.JoystickImage->SetVisible(true);
+			sPlayersUI.Player1.JoystickImage->SetVisible(true);
 		} else {
-			sPlayerUIObjectCache.Player2.JoystickImage->SetVisible(true);
+			sPlayersUI.Player2.JoystickImage->SetVisible(true);
 		}
 		++pNum;
-	}
-}
-
-static void handlePlayer2ButtonPress(bool isVisible, UIAnimation& player2Anim) {
-	if (isVisible) {
-		player2Anim.SetVisible(true);
-		player2Anim.GetAnimator().StartAnimation("pressed");
-	} else {
-		player2Anim.SetVisible(false);
 	}
 }
 
@@ -87,6 +77,15 @@ void Etf::StartPlayerSystem() {
 	setStartupInput();
 }
 
+static void handlePlayer2ButtonPress(bool isVisible, UIAnimation& player2Anim) {
+	if (isVisible) {
+		player2Anim.SetVisible(true);
+		player2Anim.GetAnimator().StartAnimation("pressed");
+	} else {
+		player2Anim.SetVisible(false);
+	}
+}
+
 static void handleControllerSwitch(int playerNum, shared_ptr<Controller>& controller, shared_ptr<Controller>& otherController) {
 	sgLogDebug("Trying to reassign controller to next player");
 	if (controller->DoesGamepadHaveJoystickAssigned()) {
@@ -97,33 +96,34 @@ static void handleControllerSwitch(int playerNum, shared_ptr<Controller>& contro
 	}
 }
 
-static void updateUIAfterSwitch() {
+static void updateUI() {
 	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
 		auto isP1 = i == 0;
-		auto joyImage = isP1 ? sPlayerUIObjectCache.Player1.JoystickImage : sPlayerUIObjectCache.Player2.JoystickImage;
+		auto joyImage = isP1 ? sPlayersUI.Player1.JoystickImage : sPlayersUI.Player2.JoystickImage;
 		auto visible = sPlayers[i]->GetController().DoesGamepadHaveJoystickAssigned();
 		joyImage->SetVisible(visible);
 		auto updateP2Button = !isP1 && !GameState::Players::Player2Spawned;
 		if (!updateP2Button) continue;
-		handlePlayer2ButtonPress(visible, *sPlayerUIObjectCache.Player2.AButtonAnimation);
+		handlePlayer2ButtonPress(visible, *sPlayersUI.Player2.AButtonAnimation);
 	}
 }
 
 void Etf::UpdatePlayerSystem() {
-	// Listen for input to reassign to other players
-	bool switched = false;
 	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
 		auto& player = sPlayers[i];
 		auto& controller = player->Controller_;
 		if (controller->IsButtonJustPressed(GameButtons::RB)) {
 			auto otherPNum = i == 0 ? i + 1 : i - 1;
-			auto& otherPlayerController = sPlayers[otherPNum]->Controller_;
-			handleControllerSwitch(i, controller, otherPlayerController);
-			switched = true;
+			auto& otherPController = sPlayers[otherPNum]->Controller_;
+			handleControllerSwitch(i, controller, otherPController);
+			updateUI();
 			break;
 		}
 	}
-	if (switched) updateUIAfterSwitch();
+	auto& p2Controller = sPlayers[1]->GetController();
+	if (p2Controller.IsButtonJustPressed(GameButtons::A) && !GameState::Players::Player2Spawned) {
+		sgLogDebug("Should spawn the player 2!");
+	}
 }
 
 void Etf::ShutdownPlayerSystem() {
