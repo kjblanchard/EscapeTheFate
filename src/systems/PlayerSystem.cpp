@@ -87,36 +87,43 @@ void Etf::StartPlayerSystem() {
 	setStartupInput();
 }
 
-void Etf::UpdatePlayerSystem() {
-	// Listen for input to reassign to other players
-	bool switched = false;
-	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
-		auto& player = sPlayers[i];
-		auto otherPlayer = i == 0 ? i + 1 : i - 1;
-		auto& otherPlayerThing = sPlayers[otherPlayer];
-		auto& controller = player->Controller_;
-		if (controller->IsButtonJustPressed(GameButtons::RB)) {
-			sgLogDebug("Trying to reassign controller to next player, if there is a input attached");
-			if (controller->DoesGamepadHaveJoystickAssigned()) {
-				auto nController = controller->DoesGamepadHaveJoystickAssigned();
-				sgLogDebug("Reassigning controller %d", nController);
-				controller->AssignGamepadToController(-1);
-				otherPlayerThing->Controller_->AssignGamepadToController(nController);
-				switched = true;
-				break;
-			}
-		}
+static void handleControllerSwitch(int playerNum, shared_ptr<Controller>& controller, shared_ptr<Controller>& otherController) {
+	sgLogDebug("Trying to reassign controller to next player");
+	if (controller->DoesGamepadHaveJoystickAssigned()) {
+		auto joystickID = controller->Joystick();
+		sgLogDebug("Reassigning joystick %d from player %d", joystickID, playerNum);
+		controller->AssignGamepadToController(-1);
+		otherController->AssignGamepadToController(joystickID);
 	}
-	if (!switched) return;
+}
+
+static void updateUIAfterSwitch() {
 	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
 		auto isP1 = i == 0;
 		auto joyImage = isP1 ? sPlayerUIObjectCache.Player1.JoystickImage : sPlayerUIObjectCache.Player2.JoystickImage;
-		auto visible = sPlayers[i]->Controller_->DoesGamepadHaveJoystickAssigned();
+		auto visible = sPlayers[i]->GetController().DoesGamepadHaveJoystickAssigned();
 		joyImage->SetVisible(visible);
 		auto updateP2Button = !isP1 && !GameState::Players::Player2Spawned;
 		if (!updateP2Button) continue;
 		handlePlayer2ButtonPress(visible, *sPlayerUIObjectCache.Player2.AButtonAnimation);
 	}
+}
+
+void Etf::UpdatePlayerSystem() {
+	// Listen for input to reassign to other players
+	bool switched = false;
+	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
+		auto& player = sPlayers[i];
+		auto& controller = player->Controller_;
+		if (controller->IsButtonJustPressed(GameButtons::RB)) {
+			auto otherPNum = i == 0 ? i + 1 : i - 1;
+			auto& otherPlayerController = sPlayers[otherPNum]->Controller_;
+			handleControllerSwitch(i, controller, otherPlayerController);
+			switched = true;
+			break;
+		}
+	}
+	if (switched) updateUIAfterSwitch();
 }
 
 void Etf::ShutdownPlayerSystem() {

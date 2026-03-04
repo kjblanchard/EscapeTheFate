@@ -40,12 +40,7 @@ static void startImGUI() {
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
 	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
-	// ImGui::StyleColorsLight();
 	ImGui::StyleColorsClassic();
-	// Setup Platform/Renderer backends
-	// auto window = WindowGet();
-	// auto ptr = GraphicsGetContextPtr();
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
 #endif

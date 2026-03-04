@@ -56,6 +56,7 @@ class Controller {
 	bool IsButtonJustReleased(GameButtons button, int playerNum = 0) const;
 	void AssignGamepadToController(int gamepadNum);
 	inline bool DoesGamepadHaveJoystickAssigned() const { return JoystickAssigned_ != -1; }
+	inline int Joystick() const { return JoystickAssigned_; }
 
    private:
 	ControllerConfig ControllerConfig_;
