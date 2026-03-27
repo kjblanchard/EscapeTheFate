@@ -1,5 +1,5 @@
 #include <Supergoon/Animation/animator.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/state.h>
 
 #include <bindings/engine.hpp>

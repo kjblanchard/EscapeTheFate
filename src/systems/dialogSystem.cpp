@@ -1,7 +1,7 @@
 #include <Supergoon/Tweening/easing.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <filesystem>
 #include <format>

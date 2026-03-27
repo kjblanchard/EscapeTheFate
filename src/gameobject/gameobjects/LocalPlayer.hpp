@@ -21,12 +21,14 @@ class LocalPlayer : public GameObject {
 
    public:
 	static void Create(TiledObject* objData);
+	static void CreatePlayerTwo(TiledObject* objData);
 	// ~LocalPlayer();
 
    private:
 	void Start() override;
 	void Update() override;
 	void Draw() override;
+	void handleplayerJoystickMovement();
 	// Returns if player moved this frame
 	bool handlePlayerMovement();
 	void updateInteractionRect();

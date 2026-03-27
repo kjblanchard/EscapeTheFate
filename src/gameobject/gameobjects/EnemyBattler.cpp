@@ -1,5 +1,5 @@
 #include <bindings/engine.hpp>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <ui/ui.hpp>
 

@@ -2,11 +2,9 @@
 
 ## In Progress
 
-- draw out how second player will spawn.
-  - And how we will set the controller icons
 - Handle movement with thumbstick.
-- Sound debug
-- Steam is only made on desktop, etc
+- draw out how second player will spawn.
+- when you are walking next to the house it messes up the player
 
 ## Todos
 
@@ -15,6 +13,7 @@
 - if second player, add to party and bring into battle
   - Different color for fingers
 - steam playtest - steamworks baby
+- Steam is only made on desktop, etc
 - more debug options for playtesters
   - Console
   - Debug rects for collisions

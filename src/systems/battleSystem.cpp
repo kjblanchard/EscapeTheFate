@@ -3,7 +3,7 @@
 #include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <assert.h>
 
 #include <battle/battlerData.hpp>

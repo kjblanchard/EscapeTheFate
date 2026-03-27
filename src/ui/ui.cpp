@@ -1,6 +1,6 @@
 #include <Supergoon/Primitives/rectangle.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <bindings/engine.hpp>
 #include <ui/ui.hpp>

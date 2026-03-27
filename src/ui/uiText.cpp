@@ -1,4 +1,4 @@
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/text.h>
 
 #include <bindings/engine.hpp>

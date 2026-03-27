@@ -1,9 +1,8 @@
 #include <Supergoon/Primitives/rectangle.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
-#include <format>
 #include <memory>
 #include <ui/uiObject.hpp>
 #ifdef imgui
@@ -18,7 +17,7 @@ static int sCurrentID = 0;
 UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visible(args.Visible), _priority(args.Priority), ID_(sCurrentID++), _name(args.Name), _location(args.Rect), _originalLocation(args.Rect), _debugBox(args.DebugBox) {
 }
 
-RectangleF UIObject::GetAbsolutePosition() {
+RectangleF UIObject::AbsolutePosition() const {
 	auto parent = _parent;
 	auto pos = _location;
 	while (parent) {
@@ -135,11 +134,11 @@ void UIObject::DebugDrawInternal() {
 }
 void UIObject::DebugDraw() {}
 
-void UIObject::SetAbsolutePosition(int x, int y) {
+void UIObject::AbsolutePosition(int x, int y) {
 	int parentAbsX = 0;
 	int parentAbsY = 0;
 	if (_parent) {
-		auto p = _parent->GetAbsolutePosition();
+		auto p = _parent->AbsolutePosition();
 		parentAbsX = p.x;
 		parentAbsY = p.y;
 	}

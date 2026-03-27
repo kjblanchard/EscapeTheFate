@@ -1,5 +1,5 @@
 #include <Supergoon/Graphics/graphics.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <ui/uiProgressBar.hpp>
 

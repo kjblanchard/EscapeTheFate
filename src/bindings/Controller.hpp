@@ -48,12 +48,24 @@ struct ControllerConfig {
 	int JoystickButtonConfig[static_cast<int>(GameButtons::NUM_GAME_BUTTONS)];
 };
 
+enum class JoystickAxis {
+	LeftThumbstickX,
+	LeftThumbstickY,
+	RightThumbstickX,
+	RightThumbstickY,
+	LeftTrigger,
+	RightTrigger,
+};
+
 class Controller {
    public:
 	Controller();
 	bool IsButtonPressed(GameButtons button, int playerNum = 0) const;
 	bool IsButtonJustPressed(GameButtons button, int playerNum = 0) const;
 	bool IsButtonJustReleased(GameButtons button, int playerNum = 0) const;
+	//Gets the current state of a joystick axis.
+	float JoystickAxisState(JoystickAxis axis) const;
+	float JoystickAxisThisFrameMovement(JoystickAxis axis) const;
 	void AssignGamepadToController(int gamepadNum);
 	inline bool DoesGamepadHaveJoystickAssigned() const { return JoystickAssigned_ != -1; }
 	inline int Joystick() const { return JoystickAssigned_; }

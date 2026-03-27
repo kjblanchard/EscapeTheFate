@@ -1,6 +1,6 @@
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/sprite.h>
 
 #include <bindings/engine.hpp>

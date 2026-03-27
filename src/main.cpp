@@ -4,7 +4,7 @@
 #include <Supergoon/Platform/sdl/sdlWindow.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/engine.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
 #include <steam/steam_api.h>
@@ -23,8 +23,8 @@
 #ifdef imgui
 #include <debug/DebugCamera.hpp>
 #include <debug/DebugPlayers.hpp>
-#include <debug/DebugWindow.hpp>
 #include <debug/DebugUI.hpp>
+#include <debug/DebugWindow.hpp>
 
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
@@ -39,7 +39,7 @@ static void startImGUI() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
 	ImGui::StyleColorsClassic();
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
@@ -60,6 +60,7 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
+	Engine::InitializeEngine();
 #ifdef PRELOAD_ALL_ASSETS
 	Engine::PreloadAssets();
 #endif

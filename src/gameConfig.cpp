@@ -1,6 +1,6 @@
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <bindings/engine.hpp>
 #include <format>
@@ -45,15 +45,15 @@ static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObjec
 	config->debug.mapExits = jbool(debugObj, "mapExits");
 	auto debugLogLevelChar = jstr(debugObj, "logLevel");
 	if (!debugLogLevelChar)
-		config->debug.debugLevel = Log_LError;
+		config->debug.debugLevel = sgLogLevelError;
 	else {
 		auto debugLevelString = string_view(debugLogLevelChar);
 		if (debugLevelString.starts_with('w'))
-			config->debug.debugLevel = Log_LWarn;
+			config->debug.debugLevel = sgLogLevelWarn;
 		else if (debugLevelString.starts_with('d'))
-			config->debug.debugLevel = Log_LDebug;
+			config->debug.debugLevel = sgLogLevelDebug;
 		else if (debugLevelString.starts_with('i'))
-			config->debug.debugLevel = Log_LInfo;
+			config->debug.debugLevel = sgLogLevelInfo;
 	}
 }
 

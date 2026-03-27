@@ -8,10 +8,11 @@
 #include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/text.h>
+#include <sgforge/unpack.h>
+#include <sgtools/log.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -28,6 +29,8 @@
 
 using namespace Etf;
 using namespace std;
+
+static Directory* sDirectory = nullptr;
 
 static string _currentBGM = "";
 
@@ -63,6 +66,10 @@ void Engine::PlaySFX(const std::string& name, float volume) {
 
 const std::string& Engine::CurrentScene() {
 	return _sceneData.CurrentScene;
+}
+
+void Engine::InitializeEngine() {
+	sDirectory = LoadDirectoryFromFile("etf.sg");
 }
 
 static void loadSetupAndBgm() {
@@ -313,13 +320,19 @@ float Engine::Tweening::GetTweenedValue(float start, float end, float timeSecond
 
 void Engine::Audio::PlayBGM(const std::string& name, float volume) {
 	SetBgmTrack(0);
-	LoadBgm(name.c_str(), volume, -1);
+	// LoadBgm(name.c_str(), volume, -1);
+	auto fullPath = std::format("{}.ogg", name);
+	char* buf;
+	size_t sz;
+	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, sDirectory);
+	LoadBgmBuffer(fullPath.c_str(), volume, -1, buf, sz);
 	PlayBgm();
 }
 
 void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
 	SetBgmTrack(1);
-	LoadBgm(name.c_str(), volume, -1);
+	auto fullPath = std::format("./assets/audio/bgm/{}.ogg", name);
+	LoadBgm(fullPath.c_str(), volume, -1);
 	PlayBgm();
 }
 

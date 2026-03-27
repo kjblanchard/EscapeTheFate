@@ -25,9 +25,9 @@ class UIObject {
 	inline void SetX(float x){_location.x = x;}
 	inline void SetY(float y){_location.y = y;}
 	// Gets the position on the screen currently, currently recursive call to root so can be expensive.
-	RectangleF GetAbsolutePosition();
+	RectangleF AbsolutePosition() const;
 	//Sets the position based on absolute position, can be expensive as it calls getAbsolute position on itself
-	void SetAbsolutePosition(int x, int y);
+	void AbsolutePosition(int x, int y);
 	// What to do when this is dirty, called before
 	virtual void OnDirty() {}
 	// Calls dirty on all children.

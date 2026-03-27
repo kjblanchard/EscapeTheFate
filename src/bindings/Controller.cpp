@@ -57,6 +57,8 @@ bool Controller::IsButtonPressed(GameButtons button, int playerNum) const {
 	}
 	return keyboardPressed;
 }
+float Controller::JoystickAxisState(JoystickAxis axis) const { return 0; }
+float Controller::JoystickAxisThisFrameMovement(JoystickAxis axis) const { return 0; }
 
 bool Controller::IsButtonJustReleased(GameButtons button, int playerNum) const {
 	return false;

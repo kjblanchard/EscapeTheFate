@@ -1,5 +1,5 @@
 #include <Supergoon/Input/joystick.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <cassert>
 #include <gameState.hpp>
