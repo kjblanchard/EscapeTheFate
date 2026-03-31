@@ -60,8 +60,18 @@ static void endScreenFade() {
 	GraphicsUpdateFBOColor(&_fadeData.CurrentFadeColor);
 }
 
-void Engine::PlaySFX(const std::string& name, float volume) {
-	PlaySfxOneShot(name.c_str(), volume);
+void Engine::Audio::PlaySFX(const std::string& name, float volume) {
+	// PlaySfxOneShot(name.c_str(), volume);
+	sgLogWarn("Trying to play sfx %s", name.c_str());
+	PlaySfxOneShotF(name.c_str(), volume);
+}
+
+void Engine::Audio::PlaySFXBuffer(const string& name, float volume) {
+	auto fullPath = std::format("{}.ogg", name);
+	char* buf;
+	size_t sz;
+	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, sDirectory);
+	PlaySfxOneShot(fullPath.c_str(), volume, buf, sz);
 }
 
 const std::string& Engine::CurrentScene() {
@@ -144,7 +154,7 @@ bool Engine::HandleMapLoad() {
 		case CurrentSceneLoadingState::NotLoading:
 			return true;
 		case Etf::CurrentSceneLoadingState::NextSceneQueued:
-			if (_sceneData.PlayTransitionSFX) Engine::PlaySFX("transition2", 0.5f);
+			if (_sceneData.PlayTransitionSFX) Engine::Audio::PlaySFXBuffer("transition2", 0.5f);
 			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;

@@ -19,7 +19,7 @@ enum class CurrentSceneLoadingState {
 	LoadingUI,
 	LoadingDialog,
 	LoadingFinish,
-	//Use this to not add a big jump to the loading after a load
+	// Use this to not add a big jump to the loading after a load
 	JustLoaded,
 	FadingIn,
 	FadingInAllowUpdate,
@@ -53,6 +53,8 @@ struct Engine {
 	struct Audio {
 		static void PlayBGM(const std::string& name, float volume = 1.0f);
 		static void PlayBGMBackground(const std::string& name, float volume = 1.0f);
+		static void PlaySFX(const std::string& name, float volume);
+		static void PlaySFXBuffer(const std::string& name, float volume);
 		static void StopBGMBackground();
 
 	} Audio;
@@ -99,7 +101,6 @@ struct Engine {
 	static inline bool CheckForRectCollision(RectangleF& lhs, RectangleF& rhs) {
 		return lhs.x < rhs.x + rhs.w && lhs.x + lhs.w > rhs.x && lhs.y < rhs.y + rhs.h && lhs.y + lhs.h > rhs.y;
 	}
-	static void PlaySFX(const std::string& name, float volume);
 
    private:
 	static void loadSceneInternal();

@@ -40,7 +40,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 		case BattlerStates::ATBFullyCharged:
 			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
-			Engine::PlaySFX("playerTurn", 5.0f);
+			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
 			break;
 		case BattlerStates::TargetSelection:
 			_currentTargetBattler = 0;
@@ -125,12 +125,12 @@ void PlayerBattler::handleInputCommandsMenu() {
 		switch (_currentMenuLocation) {
 			// Attack pressed, do the thing and back out of handling input here.
 			case 0:
-				Engine::PlaySFX("menuSelect", 1.0f);
+				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 				handleStateChange(TargetSelection);
 				return;
 			default:
 				sgLogDebug("Button not implemented", _currentMenuLocation);
-				Engine::PlaySFX("error1", 1.0f);
+				Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 				break;
 		}
 	}
@@ -138,7 +138,7 @@ void PlayerBattler::handleInputCommandsMenu() {
 	if (newLocation != _currentMenuLocation) {
 		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
 		_battlerUI->MoveCursorInMenu(_currentMenuLocation);
-		Engine::PlaySFX("menuMove", 1.0f);
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 	}
 }
 void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
@@ -152,13 +152,13 @@ void PlayerBattler::handleInputTargetSelection() {
 	int newTarget = _currentTargetBattler;
 
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
-		Engine::PlaySFX("menuMove", 1.0f);
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		--newTarget;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
-		Engine::PlaySFX("menuMove", 1.0f);
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		++newTarget;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
-		Engine::PlaySFX("menuSelect", 1.0f);
+		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 		vector<Battler*> battlers;
 		getEnemyBattlers(battlers);
 		const auto battler = battlers.at(newTarget);
