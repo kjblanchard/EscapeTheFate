@@ -6,6 +6,7 @@
 struct Sprite;
 struct Text;
 struct sgGameObject;
+typedef struct Texture Texture;
 
 namespace Etf {
 
@@ -49,6 +50,10 @@ struct Engine {
 	// if screen is fading, updates the time on it and tweens the fade.
 	static void UpdateScreenFade();
 	static void PreloadAssets();
+	struct Textures {
+		static void LoadTextureFromBuffer(Texture* tex, const std::string& name);
+
+	} Textures;
 
 	struct Audio {
 		static void PlayBGM(const std::string& name, float volume = 1.0f);

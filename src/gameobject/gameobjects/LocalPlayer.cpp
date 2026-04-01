@@ -78,7 +78,7 @@ void LocalPlayer::Create(TiledObject* objData) {
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<Player>& player) : GameObject(objData->X, objData->Y), Player_(player) {
-	Sprite_ = Engine::CreateSpriteFull("player1", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
+	Sprite_ = Engine::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
 	InteractionSprite_ = Engine::CreateSpriteFull("interaction", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(InteractionSprite_, false);
 	Animator_ = make_unique<SpriteAnimator>("player1", Sprite_);

@@ -72,9 +72,9 @@ void Etf::StartPlayerSystem() {
 		sPlayers[i] = make_shared<Player>();
 		sPlayers[i]->Controller_ = sControllers[i];
 	}
-	getPlayer1UI();
-	getPlayer2UI();
-	setStartupInput();
+	// getPlayer1UI();
+	// getPlayer2UI();
+	// setStartupInput();
 }
 
 static void handlePlayer2ButtonPress(bool isVisible, UIAnimation& player2Anim) {

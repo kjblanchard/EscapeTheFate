@@ -4,9 +4,9 @@
 #include <Supergoon/Platform/sdl/sdlWindow.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/engine.h>
-#include <sgtools/log.h>
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
+#include <sgtools/log.h>
 #include <steam/steam_api.h>
 
 #include <bindings/Controller.hpp>
@@ -61,13 +61,14 @@ void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
 	Engine::InitializeEngine();
-#ifdef PRELOAD_ALL_ASSETS
-	Engine::PreloadAssets();
-#endif
-	// Start all systems
-	StartPlayerSystem();
+	// #ifdef PRELOAD_ALL_ASSETS
+	// 	Engine::PreloadAssets();
+	// #endif
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
+	// Start all systems
+	// Player system relies on the UI being initialized
+	StartPlayerSystem();
 	startImGUI();
 	AddTabFuncToMainWindow(DisplayPlayersTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);

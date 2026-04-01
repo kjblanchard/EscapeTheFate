@@ -48,6 +48,8 @@ static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObjec
 		config->debug.debugLevel = sgLogLevelError;
 	else {
 		auto debugLevelString = string_view(debugLogLevelChar);
+		if (debugLevelString.starts_with('e'))
+			config->debug.debugLevel = sgLogLevelError;
 		if (debugLevelString.starts_with('w'))
 			config->debug.debugLevel = sgLogLevelWarn;
 		else if (debugLevelString.starts_with('d'))

@@ -13,6 +13,7 @@
 #include <Supergoon/text.h>
 #include <sgforge/unpack.h>
 #include <sgtools/log.h>
+#include <Supergoon/state.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -80,6 +81,7 @@ const std::string& Engine::CurrentScene() {
 
 void Engine::InitializeEngine() {
 	sDirectory = LoadDirectoryFromFile("etf.sg");
+	AssetDirectory = sDirectory;
 }
 
 static void loadSetupAndBgm() {
@@ -258,11 +260,29 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	sprite->parentY = followY;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
-	TextureLoadFromPng(sprite->Texture, name.c_str());
+	char* buf;
+	size_t sz;
+	auto result = GetDataFromDirectory(name.c_str(), &buf, &sz, sDirectory);
+	if (result) {
+		TextureLoadFromPngBuffer(sprite->Texture, name.c_str(), buf, sz);
+	} else {
+		;
+	}
+
 	sprite->Shader = GetDefaultShader();
 	sprite->TextureSourceRect = sourceRect;
 	sprite->OffsetAndSizeRectF = offsetSizeRect;
 	return sprite;
+}
+
+void Engine::Textures::LoadTextureFromBuffer(Texture* tex, const std::string& name) {
+	char* buf;
+	size_t sz;
+	string filename = format("{}.png", name);
+	auto result = GetDataFromDirectory(filename.c_str(), &buf, &sz, sDirectory);
+	if (result) {
+		TextureLoadFromPngBuffer(tex, name.c_str(), buf, sz);
+	}
 }
 
 // TODO this should be refactored instead of copy/paste from createspritefull
@@ -272,7 +292,16 @@ Sprite* Engine::CreateManualSpriteFull(const std::string& name, float* followX, 
 	sprite->parentY = followY;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
-	TextureLoadFromPng(sprite->Texture, name.c_str());
+	sgLogDebug("Loading sprite %s", name.c_str());
+	// auto fullPath = std::format("{}.ogg", name);
+	char* buf;
+	size_t sz;
+	auto result = GetDataFromDirectory(name.c_str(), &buf, &sz, sDirectory);
+	if (result) {
+		TextureLoadFromPngBuffer(sprite->Texture, name.c_str(), buf, sz);
+	} else {
+		;
+	}
 	sprite->Shader = GetDefaultShader();
 	sprite->TextureSourceRect = sourceRect;
 	sprite->OffsetAndSizeRectF = offsetSizeRect;

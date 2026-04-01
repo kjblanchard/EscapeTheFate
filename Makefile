@@ -34,13 +34,13 @@ REBUILD := lrebuild
 endif
 
 .PHONY: all
-all:
-    @echo "OS: $(UNAME_S) -> using $(REBUILD)"
-
+# all:
+#     @echo "OS: $(UNAME_S) -> using $(REBUILD)"
 
 # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 use this if we are using past version 4.0
 #
-all: build install run
+# all: build install run
+all: build run
 clean:
 	@rm -rf $(BUILD_DIR)
 configure:
@@ -52,7 +52,7 @@ install:
 run:
 	@$(RUN_CMD)
 
-debug: build install
+debug: build
 	@gdb  $(RUN_CMD)
 
 package:
@@ -100,7 +100,7 @@ perf:
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
 #variables for packing
-DIRS := ./assets/audio/bgm ./assets/audio/sfx
+DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img
 FILES := $(foreach d,$(DIRS),$(wildcard $(d)/*))
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
