@@ -10,10 +10,10 @@
 #include <Supergoon/json.h>
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
+#include <Supergoon/state.h>
 #include <Supergoon/text.h>
 #include <sgforge/unpack.h>
 #include <sgtools/log.h>
-#include <Supergoon/state.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
@@ -266,7 +266,7 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	if (result) {
 		TextureLoadFromPngBuffer(sprite->Texture, name.c_str(), buf, sz);
 	} else {
-		;
+		sgLogDebug("Could not find!");
 	}
 
 	sprite->Shader = GetDefaultShader();
@@ -282,6 +282,8 @@ void Engine::Textures::LoadTextureFromBuffer(Texture* tex, const std::string& na
 	auto result = GetDataFromDirectory(filename.c_str(), &buf, &sz, sDirectory);
 	if (result) {
 		TextureLoadFromPngBuffer(tex, name.c_str(), buf, sz);
+	} else {
+		sgLogDebug("Could not find!");
 	}
 }
 
