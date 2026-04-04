@@ -212,7 +212,12 @@ std::unique_ptr<UIObject> UI::_rootUIObject;
 
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
-	auto obj = jGetObjectFromFile(filename.c_str());
+	// auto obj = jGetObjectFromFile(filename.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory(filename.c_str(), &buf, &sz);
+	// auto obj = jGetObjectFromFile(filename.c_str());
+	auto obj = jGetObjectFromBuffer(buf, sz);
 	if (!obj) {
 		sgLogError("Error parsing UI file %s ", filename.c_str());
 		return false;

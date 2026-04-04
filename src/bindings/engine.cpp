@@ -109,7 +109,8 @@ static void loadSetupAndBgm() {
 static void loadUI() {
 	sgLogDebug("Starting load ui");
 	if (!_sceneData.SceneToLoad->UIName.empty()) {
-		UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), _sceneData.SceneToLoad->UIName));
+		// UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), _sceneData.SceneToLoad->UIName));
+		UI::LoadUIFromFile(_sceneData.SceneToLoad->UIName);
 	} else {
 		UI::GetRootUIObject()->DestroyChildIfNotName("");
 	}

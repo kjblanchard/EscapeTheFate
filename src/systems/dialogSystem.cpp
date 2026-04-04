@@ -2,8 +2,6 @@
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <sgtools/log.h>
-
-#include <filesystem>
 #include <format>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
@@ -72,7 +70,7 @@ static void initializeDialogBox() {
 		_dialogBoxTextObject = (UIText*)_dialogBoxObject->GetChildByName("DialogBoxText");
 	}
 	if (!_dialogBoxObject || !_dialogBoxTextObject) {
-		sgLogWarn("Could not initialize dialog box, no ui object found properly");
+		sgLogCritical("Could not initialize dialog box, no ui object found properly");
 		return;
 	}
 	_dialogBoxObject->SetVisible(false);
