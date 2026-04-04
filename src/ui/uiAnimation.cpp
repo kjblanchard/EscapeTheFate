@@ -18,7 +18,8 @@ UIAnimation::UIAnimation(UIAnimationArgs& args) {
 	_priority = args.Priority;
 	_color = args.DrawColor;
 	_debugBox = args.DebugBox;
-	_sprite = Engine::CreateManualSpriteFull(args.Filename.c_str(), &locWithOffsetX, &locWithOffsetY, {0, 0, 32, 32}, {0, 0, 32, 32});
+	auto stringPng = args.Filename + ".png";
+	_sprite = Engine::CreateManualSpriteFull(stringPng.c_str(), &locWithOffsetX, &locWithOffsetY, {0, 0, 32, 32}, {0, 0, 32, 32});
 	_animator = make_unique<SpriteAnimator>(args.Filename, _sprite);
 }
 

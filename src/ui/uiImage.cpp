@@ -18,7 +18,6 @@ UIImage::UIImage(UIImageArgs& args) {
 	_debugBox = args.DebugBox;
 	_texture = TextureCreate(_filename.c_str());
 	Engine::Textures::LoadTextureFromBuffer(_texture, _filename);
-	// TextureLoadFromPng(_texture, _filename.c_str());
 }
 
 UIImage::~UIImage() {
