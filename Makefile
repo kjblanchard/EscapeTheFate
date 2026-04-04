@@ -100,8 +100,8 @@ perf:
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
 #variables for packing
-DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img
-FILES := $(foreach d,$(DIRS),$(wildcard $(d)/*))
+DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite
+FILES := $(filter-out %.aseprite,$(foreach d,$(DIRS),$(wildcard $(d)/*)))
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
 	@sgforge $(ALL_FILES_STRING) -o etf.sg

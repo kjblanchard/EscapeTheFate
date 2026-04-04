@@ -382,6 +382,16 @@ void Engine::Audio::StopBGMBackground() {
 	StopBgm();
 }
 
+void Engine::Json::GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz) {
+	auto fullPath = std::format("{}.json", name);
+	auto result = GetDataFromDirectory(fullPath.c_str(), buf, sz, sDirectory);
+	if (!result) {
+		*buf = NULL;
+		*sz = 0;
+		sgLogError("Could not load json for %s", name);
+	}
+}
+
 RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key) {
 	auto obj = static_cast<json_object*>(object);
 	auto rectJson = jobj(obj, key.c_str());

@@ -78,6 +78,7 @@ struct Engine {
 	} Textboi;
 
 	struct Json {
+		static void GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz);
 		static RectangleF GetRectFromObject(void* object, const std::string& key);
 		template <typename Lambda>
 		static void jforeach_lambda(void* obj, Lambda&& lambda) {

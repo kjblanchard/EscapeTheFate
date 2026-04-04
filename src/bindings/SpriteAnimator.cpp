@@ -3,7 +3,8 @@
 #include <Supergoon/sprite.h>
 
 #include <bindings/SpriteAnimator.hpp>
-#include <format>
+#include <bindings/engine.hpp>
+// #include <format>
 #include <memory>
 #include <unordered_map>
 using namespace Etf;
@@ -13,8 +14,13 @@ unordered_map<string, weak_ptr<AnimationData>> _loadedAnimationData;
 
 static shared_ptr<AnimationData> createAnimationDataFromFile(const string& filename) {
 	auto raw = CreateAnimationData();
-	auto fullFilename = format("{}assets/aseprite/{}.json", GetBasePath(), filename);
-	CreateAnimationDataFromAsepriteFile(raw, fullFilename.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory(filename.c_str(), &buf, &sz);
+	if (!buf && !sz) {
+		return nullptr;
+	}
+	CreateAnimationDataFromAsepriteBuffer(raw, buf, sz);
 	return shared_ptr<AnimationData>(raw, DestroyAnimationData);
 }
 
