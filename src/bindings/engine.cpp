@@ -82,6 +82,7 @@ const std::string& Engine::CurrentScene() {
 void Engine::InitializeEngine() {
 	sDirectory = LoadDirectoryFromFile("etf.sg");
 	AssetDirectory = sDirectory;
+	ShaderSetDirectory(sDirectory);
 }
 
 static void loadSetupAndBgm() {
