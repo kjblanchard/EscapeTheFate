@@ -100,7 +100,7 @@ perf:
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
 #variables for packing
-DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config ./assets/dialog ./assets/ui
+DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config ./assets/dialog ./assets/ui ./assets/fonts
 FILES := $(filter-out %.aseprite,$(foreach d,$(DIRS),$(wildcard $(d)/*)))
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:

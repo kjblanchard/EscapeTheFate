@@ -323,7 +323,7 @@ void Engine::SetSpriteVisible(Sprite* sprite, bool visible) {
 }
 
 Text* Engine::TextBoi::CreateText(const std::string& fontName, unsigned int fontSize, RectangleF location, const std::string& text, unsigned int numChars, bool centeredX, bool centeredY) {
-	TextSetFont(fontName.c_str(), fontSize);
+	TextSetFont(fontName.c_str(), fontSize, sDirectory);
 	auto textPtr = TextCreate(&location, text.c_str());
 	textPtr->NumLettersToDraw = numChars;
 	textPtr->CenteredX = centeredX;
