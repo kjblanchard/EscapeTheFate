@@ -47,6 +47,7 @@ static void startImGUI() {
 }
 
 void initialize() {
+	Engine::InitializeEngine();
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	sgSetLogLevel(_gameConfig.debug.debugLevel);
@@ -60,7 +61,6 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-	Engine::InitializeEngine();
 	// #ifdef PRELOAD_ALL_ASSETS
 	// 	Engine::PreloadAssets();
 	// #endif

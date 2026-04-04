@@ -87,8 +87,10 @@ static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObjec
 }
 
 void GameConfig::LoadGameConfig(const std::string& configFileName) {
-	auto loadString = format("{}{}", GetBasePath(), configFileName);
-	auto root = jGetObjectFromFile(loadString.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory("gameConfig", &buf, &sz);
+	auto root = jGetObjectFromBuffer(buf,sz);
 	if (!root) {
 		sgLogCritical("Error reading config file, please make sure it is in assets folder/gameConfig.jsonc!");
 	}

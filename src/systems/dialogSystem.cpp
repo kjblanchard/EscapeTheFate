@@ -215,12 +215,16 @@ static void parseJsonIntoMap(json_object* dialogRoot) {
 void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	_currentMap = filename;
 	if (_loadedDialog.find(filename) != _loadedDialog.end()) return;
-	auto loadString = format("{}assets/dialog/{}.json", GetBasePath(), filename);
-	if (!std::filesystem::exists(loadString)) {
-		sgLogDebug("No dialog file for %s", loadString.c_str());
-		return;
-	}
-	auto newDialog = jGetObjectFromFile(loadString.c_str());
+	auto loadString = format("{}D", filename);
+//TODO since using buffers, commented this out.. not sure if this is doing something laggy
+	// if (!std::filesystem::exists(loadString)) {
+	// 	sgLogDebug("No dialog file for %s", loadString.c_str());
+	// 	return;
+	// }
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory(loadString.c_str(), &buf, &sz);
+	auto newDialog = jGetObjectFromBuffer(buf, sz);
 	if (!newDialog) {
 		return;
 	}
