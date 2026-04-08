@@ -185,9 +185,7 @@ if(EMSCRIPTEN)
     PROPERTIES
     LINK_FLAGS
     "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
-    --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets")
-    # --preload-file ${CMAKE_SOURCE_DIR}/src@/assets/lua/ \
-    # --preload-file ${ENGINE_SCRIPT_PATH}@/assets/lua/ ")
+    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/etf.sg")
   elseif(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET
       "10.14"
@@ -200,24 +198,13 @@ if(EMSCRIPTEN)
       CACHE STRING "Icon path")
   endif(EMSCRIPTEN)
 
-  find_library(STEAMAPI_LIBRARY
-    NAMES steam_api
-    PATHS /usr/local/lib
-  )
+  # find_library(STEAMAPI_LIBRARY
+  #   NAMES steam_api
+  #   PATHS /usr/local/lib
+  # )
 
-  if (NOT STEAMAPI_LIBRARY)
-    message(FATAL_ERROR "libsteam_api not found")
-  endif()
+  # if (NOT STEAMAPI_LIBRARY)
+  #   message(FATAL_ERROR "libsteam_api not found")
+  # endif()
 
-  target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE ${STEAMAPI_LIBRARY})
-
-
-  # install(
-  #   DIRECTORY src/
-  #   DESTINATION ${INSTALL_DIR}/assets/lua
-  #   COMPONENT assets)
-
-  install(
-    DIRECTORY assets
-    DESTINATION ${INSTALL_DIR}
-    COMPONENT assets)
+  # target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE ${STEAMAPI_LIBRARY})

@@ -132,7 +132,15 @@ static void loadEnd() {
 
 void Engine::loadSceneInternal() {
 	sgLogDebug("Starting load map");
-	LoadMap(_sceneData.NextScene.c_str());
+	char* buf;
+	size_t sz;
+	string nextMapName = _sceneData.NextScene + ".tmj";
+	auto result = GetDataFromDirectory(nextMapName.c_str(), &buf, &sz, sDirectory);
+	if (!result) {
+		sgLogCritical("Could not load map %s", nextMapName.c_str());
+	}
+
+	LoadMapFromBuffer(_sceneData.NextScene.c_str(), buf, sz);
 }
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
@@ -374,8 +382,11 @@ void Engine::Audio::PlayBGM(const std::string& name, float volume) {
 
 void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
 	SetBgmTrack(1);
-	auto fullPath = std::format("./assets/audio/bgm/{}.ogg", name);
-	LoadBgm(fullPath.c_str(), volume, -1);
+	auto fullPath = std::format("{}.ogg", name);
+	char* buf;
+	size_t sz;
+	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, sDirectory);
+	LoadBgmBuffer(fullPath.c_str(), volume, -1, buf, sz);
 	PlayBgm();
 }
 
@@ -406,19 +417,19 @@ RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key)
 	};
 }
 static void loadAllMaps() {
-	auto& config = GameConfig::GetGameConfig();
-	for (auto& scene : config.scene.scenes) {
-		_sceneData.SceneToLoad = &scene;
-		LoadMap(scene.MapName.c_str());
-		// GameObject::LoadAllGameObjects();
-		loadUI();
-		loadDialog();
-	}
-	BattleSystem::InitializeBattleSystem();
-	// GameObject::DestroyAllGameObjects();
-	loadEnd();
-	// Load all textures
-	ResetCameraFollow();
+	// auto& config = GameConfig::GetGameConfig();
+	// for (auto& scene : config.scene.scenes) {
+	// 	_sceneData.SceneToLoad = &scene;
+	// 	LoadMap(scene.MapName.c_str());
+	// 	// GameObject::LoadAllGameObjects();
+	// 	loadUI();
+	// 	loadDialog();
+	// }
+	// BattleSystem::InitializeBattleSystem();
+	// // GameObject::DestroyAllGameObjects();
+	// loadEnd();
+	// // Load all textures
+	// ResetCameraFollow();
 }
 
 void LoadAllTexturesFromFolder(const std::string& folderPath) {

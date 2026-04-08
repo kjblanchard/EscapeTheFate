@@ -7,7 +7,7 @@
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
 #include <sgtools/log.h>
-#include <steam/steam_api.h>
+// #include <steam/steam_api.h>
 
 #include <bindings/Controller.hpp>
 #include <bindings/engine.hpp>
@@ -47,15 +47,16 @@ static void startImGUI() {
 }
 
 void initialize() {
+	sgSetLogLevel(sgLogLevelError);
 	Engine::InitializeEngine();
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	sgSetLogLevel(_gameConfig.debug.debugLevel);
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
-	if (!SteamAPI_Init()) {
-		sgLogError("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed).\n");
-	}
+	// if (!SteamAPI_Init()) {
+	// 	sgLogError("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed).\n");
+	// }
 }
 
 void start() {

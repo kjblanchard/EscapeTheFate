@@ -3,7 +3,6 @@
 #include <sgtools/log.h>
 
 #include <bindings/engine.hpp>
-#include <format>
 #include <gameConfig.hpp>
 #include <string>
 
@@ -91,8 +90,9 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	size_t sz;
 	Engine::Json::GetJsonBufferFromDirectory("gameConfig", &buf, &sz);
 	auto root = jGetObjectFromBuffer(buf,sz);
+	// auto root = jGetObjectFromFile(configFileName.c_str());
 	if (!root) {
-		sgLogCritical("Error reading config file, please make sure it is in assets folder/gameConfig.jsonc!");
+		sgLogCritical("Error reading game config file!");
 	}
 	loadAudioSettingsToConfig(&_config, root);
 	loadWindowSettingsToConfig(&_config, root);

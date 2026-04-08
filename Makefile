@@ -100,8 +100,17 @@ perf:
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
 #variables for packing
-DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config ./assets/dialog ./assets/ui ./assets/fonts ./assets/shaders ./assets/tiled ./assets/tiled/templates
-FILES := $(filter-out %.aseprite,$(foreach d,$(DIRS),$(wildcard $(d)/*)))
+DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config  ./assets/dialog ./assets/ui ./assets/fonts ./assets/shaders ./assets/tiled/templates ./assets/tiled
+#./assets/tiled
+#./assets/tiled/templates
+# FILES := $(filter-out %.aseprite,$(foreach d,$(DIRS),$(wildcard $(d)/*)))
+# FILES := $(shell find $(DIRS) -type f)
+FILES := $(shell find $(DIRS) -type f \
+    ! -name "*.aseprite" \
+    ! -name "*.tmx" \
+    ! -name "*.tsx")
+
+
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
 	@sgforge $(ALL_FILES_STRING) -o etf.sg
