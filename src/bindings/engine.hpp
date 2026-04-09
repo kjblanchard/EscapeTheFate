@@ -35,6 +35,7 @@ enum class ScreenFadeTypes {
 struct Engine {
    public:
 	static void InitializeEngine();
+	static void ShutdownEngine();
 	static const std::string& CurrentScene();
 	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
 	// TODO Do we even need this anymore?  Probably not

@@ -146,6 +146,7 @@ void quit() {
 	GameObjectSystem::Shutdown();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
+	Engine::ShutdownEngine();
 #ifdef imgui
 	shutdownImGUI();
 #endif

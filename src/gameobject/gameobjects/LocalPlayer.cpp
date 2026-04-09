@@ -148,29 +148,29 @@ void LocalPlayer::handleInteractions() {
 }
 
 void LocalPlayer::handleplayerJoystickMovement() {
-	auto& controller = Player_->GetController();
-	auto xStick = controller.JoystickAxisState(JoystickAxis::LeftThumbstickX);
-	auto yStick = controller.JoystickAxisState(JoystickAxis::LeftThumbstickY);
-	auto direction = Direction_;
-	if (fabs(xStick) > fabs(yStick)) {
-		if (xStick > 0.1f) {
-			direction = Direction::East;
-		} else if (xStick < -0.1f) {
-			direction = Direction::West;
-		}
-	} else {
-		if (yStick > 0.1f) {
-			direction = Direction::South;
-		} else if (yStick < -0.1f) {
-			direction = Direction::North;
-		}
-	}
+	// auto& controller = Player_->GetController();
+	// auto xStick = controller.JoystickAxisState(JoystickAxis::LeftThumbstickX);
+	// auto yStick = controller.JoystickAxisState(JoystickAxis::LeftThumbstickY);
+	// auto direction = Direction_;
+	// if (fabs(xStick) > fabs(yStick)) {
+	// 	if (xStick > 0.1f) {
+	// 		direction = Direction::East;
+	// 	} else if (xStick < -0.1f) {
+	// 		direction = Direction::West;
+	// 	}
+	// } else {
+	// 	if (yStick > 0.1f) {
+	// 		direction = Direction::South;
+	// 	} else if (yStick < -0.1f) {
+	// 		direction = Direction::North;
+	// 	}
+	// }
 	// 	// Check for joystick movement
-	if (xStick || yStick) {
-		auto moveX = sMoveSpeed * xStick * GameState::DeltaTimeSeconds;
-		auto moveY = sMoveSpeed * yStick * GameState::DeltaTimeSeconds;
-		// moved = true;
-	}
+	// if (xStick || yStick) {
+	// 	auto moveX = sMoveSpeed * xStick * GameState::DeltaTimeSeconds;
+	// 	auto moveY = sMoveSpeed * yStick * GameState::DeltaTimeSeconds;
+	// 	// moved = true;
+	// }
 }
 
 bool LocalPlayer::handlePlayerMovement() {

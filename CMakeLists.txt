@@ -11,7 +11,7 @@ option(IMGUI_DEBUGGING "Should we build with imgui enabled" ON)
 option(PRELOAD_ALL_ASSETS "Preload everything at beginning, useful for EMSCRIPTEN" ON)
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
-option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)

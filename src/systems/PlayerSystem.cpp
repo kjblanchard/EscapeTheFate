@@ -25,44 +25,44 @@ static struct PlayersUI {
 	} Player2;
 } sPlayersUI;
 
-static void getPlayer1UI() {
-	auto playersGuide = UI::GetRootUIObject()->GetChildByName("PlayersGuide");
-	assert(playersGuide && "No players guide");
-	auto player1 = playersGuide->GetChildByName("Player1");
-	assert(player1 && "No player1 UI");
-	sPlayersUI.Player1.JoystickImage = player1->GetChildByName("ControllerImage");
-	sPlayersUI.Player1.KeyboardImage = player1->GetChildByName("KeyboardImage");
-	sPlayersUI.Player1.JoystickImage->SetVisible(false);
-	sPlayersUI.Player1.KeyboardImage->SetVisible(true);
-}
+// static void getPlayer1UI() {
+// 	auto playersGuide = UI::GetRootUIObject()->GetChildByName("PlayersGuide");
+// 	assert(playersGuide && "No players guide");
+// 	auto player1 = playersGuide->GetChildByName("Player1");
+// 	assert(player1 && "No player1 UI");
+// 	sPlayersUI.Player1.JoystickImage = player1->GetChildByName("ControllerImage");
+// 	sPlayersUI.Player1.KeyboardImage = player1->GetChildByName("KeyboardImage");
+// 	sPlayersUI.Player1.JoystickImage->SetVisible(false);
+// 	sPlayersUI.Player1.KeyboardImage->SetVisible(true);
+// }
 
-static void getPlayer2UI() {
-	auto playersGuide = UI::GetRootUIObject()->GetChildByName("PlayersGuide");
-	auto& player2 = sPlayersUI.Player2;
-	assert(playersGuide && "No players guide");
-	auto player = playersGuide->GetChildByName("Player2");
-	assert(player && "No player2 UI");
-	player2.JoystickImage = player->GetChildByName("ControllerImage");
-	player2.AButtonAnimation = static_cast<UIAnimation*>(player->GetChildByName("SpawnButtonImage"));
-	player2.JoystickImage->SetVisible(false);
-	player2.AButtonAnimation->SetVisible(false);
-	assert(player2.JoystickImage && player2.AButtonAnimation && "Could not load player2 stuff");
-}
+// static void getPlayer2UI() {
+// 	auto playersGuide = UI::GetRootUIObject()->GetChildByName("PlayersGuide");
+// 	auto& player2 = sPlayersUI.Player2;
+// 	assert(playersGuide && "No players guide");
+// 	auto player = playersGuide->GetChildByName("Player2");
+// 	assert(player && "No player2 UI");
+// 	player2.JoystickImage = player->GetChildByName("ControllerImage");
+// 	player2.AButtonAnimation = static_cast<UIAnimation*>(player->GetChildByName("SpawnButtonImage"));
+// 	player2.JoystickImage->SetVisible(false);
+// 	player2.AButtonAnimation->SetVisible(false);
+// 	assert(player2.JoystickImage && player2.AButtonAnimation && "Could not load player2 stuff");
+// }
 
-static void setStartupInput() {
-	auto nJoysticks = SG_GetCurrentNumControllers();
-	auto pNum = 0;
-	for (auto i = 0; i < nJoysticks; ++i) {
-		sControllers[i]->AssignGamepadToController(i);
-		if (pNum > 1) continue;
-		if (pNum == 0) {
-			sPlayersUI.Player1.JoystickImage->SetVisible(true);
-		} else {
-			sPlayersUI.Player2.JoystickImage->SetVisible(true);
-		}
-		++pNum;
-	}
-}
+// static void setStartupInput() {
+// 	auto nJoysticks = SG_GetCurrentNumControllers();
+// 	auto pNum = 0;
+// 	for (auto i = 0; i < nJoysticks; ++i) {
+// 		sControllers[i]->AssignGamepadToController(i);
+// 		if (pNum > 1) continue;
+// 		if (pNum == 0) {
+// 			sPlayersUI.Player1.JoystickImage->SetVisible(true);
+// 		} else {
+// 			sPlayersUI.Player2.JoystickImage->SetVisible(true);
+// 		}
+// 		++pNum;
+// 	}
+// }
 
 void Etf::StartPlayerSystem() {
 	for (auto i = 0; i < geGamepadMaxPads(); ++i) {

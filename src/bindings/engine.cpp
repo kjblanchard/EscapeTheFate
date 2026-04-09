@@ -12,6 +12,7 @@
 #include <Supergoon/sprite.h>
 #include <Supergoon/state.h>
 #include <Supergoon/text.h>
+#include <sgforge/directory.h>
 #include <sgforge/unpack.h>
 #include <sgtools/log.h>
 
@@ -83,6 +84,12 @@ void Engine::InitializeEngine() {
 	sDirectory = LoadDirectoryFromFile("etf.sg");
 	AssetDirectory = sDirectory;
 	ShaderSetDirectory(sDirectory);
+}
+
+void Engine::ShutdownEngine() {
+	if (sDirectory) {
+		sgFreeDirectory(sDirectory);
+	}
 }
 
 static void loadSetupAndBgm() {
