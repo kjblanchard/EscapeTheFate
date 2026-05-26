@@ -110,11 +110,14 @@ static void drawImGUI() {
 
 void draw() {
 	GameObjectSystem::Draw();
-	UI::DrawUI();
 #ifdef imgui
 	drawImGUI();
 	CreateMainWindow();
 #endif
+}
+
+void drawUI() {
+	UI::DrawUI();
 }
 
 void postDraw() {
@@ -160,4 +163,5 @@ void (*_drawFunc)(void) = Etf::draw;
 void (*_quitFunc)(void) = Etf::quit;
 void (*_inputFunc)(void) = Etf::handleInput;
 int (*_handleEventFunc)(void*) = Etf::handleEvent;
+void (*GraphicsPostFBODrawUIFunc)(void) = Etf::drawUI;
 void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::postDraw;
