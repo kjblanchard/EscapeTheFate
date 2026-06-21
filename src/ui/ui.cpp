@@ -1,5 +1,4 @@
 #include <Supergoon/Primitives/rectangle.h>
-#include <Supergoon/camera.h>
 #include <Supergoon/json.h>
 #include <sgtools/log.h>
 
@@ -254,7 +253,7 @@ void UI::LoadUIFromFile(const string& filename) {
 }
 void UI::DrawUI() {
 	if (!_rootUIObject) return;
-	_rootUIObject->Draw(CameraGetSubPixelX(), CameraGetSubPixelY());
+	_rootUIObject->Draw(0, 0);
 }
 
 void UI::DestroyUI() {
