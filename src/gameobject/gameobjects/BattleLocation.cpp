@@ -1,4 +1,4 @@
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/map.h>
 
 #include <gameobject/gameobjects/BattleLocation.hpp>

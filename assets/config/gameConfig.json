@@ -15,7 +15,7 @@
         "scenes": [
             {
                 "MapName": "debugTown",
-                "UIName": "debugTown",
+                "UIName": "debugTownU",
                 "BGMName": "town2",
                 "BGMVolume": 1.0
             },
@@ -33,13 +33,14 @@
             },
             {
                 "MapName": "forest1",
-                "UIName": "battle",
+                "UIName": "battleU",
                 "BGMName": "battle1",
                 "BGMVolume": 1.0
             }
         ]
     },
     "debug": {
+        "logLevel": "e",
         "interactions": false,
         "mapExits": false
     }

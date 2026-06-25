@@ -1,9 +1,9 @@
-#include <Supergoon/json.h>
 #include <Supergoon/filesystem.h>
-#include <Supergoon/log.h>
+#include <Supergoon/json.h>
+#include <sgtools/log.h>
+
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
-#include <format>
 #include <string>
 
 using namespace std;
@@ -42,6 +42,20 @@ static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObjec
 	}
 	config->debug.interactions = jbool(debugObj, "interactions");
 	config->debug.mapExits = jbool(debugObj, "mapExits");
+	auto debugLogLevelChar = jstr(debugObj, "logLevel");
+	if (!debugLogLevelChar)
+		config->debug.debugLevel = sgLogLevelError;
+	else {
+		auto debugLevelString = string_view(debugLogLevelChar);
+		if (debugLevelString.starts_with('e'))
+			config->debug.debugLevel = sgLogLevelError;
+		if (debugLevelString.starts_with('w'))
+			config->debug.debugLevel = sgLogLevelWarn;
+		else if (debugLevelString.starts_with('d'))
+			config->debug.debugLevel = sgLogLevelDebug;
+		else if (debugLevelString.starts_with('i'))
+			config->debug.debugLevel = sgLogLevelInfo;
+	}
 }
 
 static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObject) {
@@ -72,10 +86,13 @@ static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObjec
 }
 
 void GameConfig::LoadGameConfig(const std::string& configFileName) {
-	auto loadString = format("{}{}", GetBasePath(), configFileName);
-	auto root = jGetObjectFromFile(loadString.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory("gameConfig", &buf, &sz);
+	auto root = jGetObjectFromBuffer(buf,sz);
+	// auto root = jGetObjectFromFile(configFileName.c_str());
 	if (!root) {
-		sgLogCritical("Error reading config file, please make sure it is in assets folder/gameConfig.jsonc!");
+		sgLogCritical("Error reading game config file!");
 	}
 	loadAudioSettingsToConfig(&_config, root);
 	loadWindowSettingsToConfig(&_config, root);

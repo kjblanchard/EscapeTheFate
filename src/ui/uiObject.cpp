@@ -1,18 +1,23 @@
 #include <Supergoon/Primitives/rectangle.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <algorithm>
 #include <bindings/engine.hpp>
 #include <memory>
 #include <ui/uiObject.hpp>
+#ifdef imgui
+#include <imgui.h>
+#endif
 
 using namespace std;
 using namespace Etf;
 
-UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visible(args.Visible), _priority(args.Priority), _name(args.Name), _location(args.Rect), _originalLocation(args.Rect), _debugBox(args.DebugBox) {
+static int sCurrentID = 0;
+
+UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visible(args.Visible), _priority(args.Priority), ID_(sCurrentID++), _name(args.Name), _location(args.Rect), _originalLocation(args.Rect), _debugBox(args.DebugBox) {
 }
 
-RectangleF UIObject::GetAbsolutePosition() {
+RectangleF UIObject::AbsolutePosition() const {
 	auto parent = _parent;
 	auto pos = _location;
 	while (parent) {
@@ -101,11 +106,39 @@ void UIObject::DestroyChildIfNotName(const std::vector<std::string> names, bool 
 	}
 }
 
-void UIObject::SetAbsolutePosition(int x, int y) {
+void UIObject::DebugDrawInternal() {
+#ifndef imgui
+	return;
+#else
+	ImGui::PushID(ID_);
+	if (ImGui::TreeNode(_name.c_str())) {
+		ImGui::SliderFloat("X", &_location.x, -200, 200);
+		ImGui::SliderFloat("Y", &_location.y, -200, 200);
+		ImGui::SliderFloat("W", &_location.w, 0, 200);
+		ImGui::SliderFloat("H", &_location.h, 0, 200);
+		ImGui::Checkbox("DebugBox", &_debugBox);
+		ImGui::SameLine();
+		ImGui::Checkbox("Visible", &_visible);
+		ImGui::SameLine();
+		ImGui::Checkbox("DoNotDestroy", &_doNotDestroy);
+		ImGui::InputInt("Priority", &_priority);
+		DebugDraw();
+		for (auto& child : _children) {
+			child->DebugDrawInternal();
+		}
+		ImGui::TreePop();
+	}
+	ImGui::PopID();
+
+#endif
+}
+void UIObject::DebugDraw() {}
+
+void UIObject::AbsolutePosition(int x, int y) {
 	int parentAbsX = 0;
 	int parentAbsY = 0;
 	if (_parent) {
-		auto p = _parent->GetAbsolutePosition();
+		auto p = _parent->AbsolutePosition();
 		parentAbsX = p.x;
 		parentAbsY = p.y;
 	}

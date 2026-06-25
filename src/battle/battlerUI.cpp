@@ -1,4 +1,4 @@
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/state.h>
 
 #include <battle/battlerUI.hpp>
@@ -132,16 +132,16 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 	if (!_player || _currentState != Opened) return;
 	auto uiobject = _menuItems[newLocation];
 	if (!uiobject) sgLogCritical("No menu item to switch to");
-	auto thing = uiobject->GetAbsolutePosition();
+	auto thing = uiobject->AbsolutePosition();
 	auto x = thing.x - 15;
 	auto y = thing.y + (15 * newLocation);
-	_finger->SetAbsolutePosition(x, y);
+	_finger->AbsolutePosition(x, y);
 }
 
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
 	auto x = battler->X() + (battler->SpriteWidth() / 2) - 5;
 	auto y = battler->Y() - 10;
-	_targetSelectionFinger->SetAbsolutePosition(x, y);
+	_targetSelectionFinger->AbsolutePosition(x, y);
 }
 
 void BattlerUI::ClosePlayerInfoBox() {

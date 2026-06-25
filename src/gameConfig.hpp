@@ -23,6 +23,7 @@ struct gameConfig {
 	struct debug {
 		bool interactions;
 		bool mapExits;
+		int debugLevel;
 	} debug;
 	struct controls {
 		static const int UP = 26;

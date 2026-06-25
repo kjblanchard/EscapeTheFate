@@ -1,5 +1,6 @@
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
+#include <bindings/engine.hpp>
 
 #include <ui/uiImage.hpp>
 using namespace Etf;
@@ -16,7 +17,7 @@ UIImage::UIImage(UIImageArgs& args) {
 	_color = args.DrawColor;
 	_debugBox = args.DebugBox;
 	_texture = TextureCreate(_filename.c_str());
-	TextureLoadFromPng(_texture, _filename.c_str());
+	Engine::Textures::LoadTextureFromBuffer(_texture, _filename);
 }
 
 UIImage::~UIImage() {

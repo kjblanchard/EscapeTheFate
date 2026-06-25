@@ -3,8 +3,8 @@
 #include <Supergoon/engine.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
 #include <assert.h>
+#include <sgtools/log.h>
 
 #include <battle/battlerData.hpp>
 #include <format>
@@ -66,9 +66,11 @@ static void battleEnd() {
 }
 
 static void loadBattleGroups() {
-	auto loadPath = format("{}assets/battle/battleGroups.json", GetBasePath());
-	auto dataRootJsonArray = jGetObjectFromFile(loadPath.c_str());
-	if (!dataRootJsonArray) sgLogCritical("No battle groups found at %s, exiting", loadPath.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory("battleGroups", &buf, &sz);
+	auto dataRootJsonArray = jGetObjectFromBuffer(buf, sz);
+	if (!dataRootJsonArray) sgLogCritical("No battle groups found");
 	auto numData = jGetObjectArrayLength(dataRootJsonArray);
 	_battleGroups.reserve(numData);
 	if (!numData) sgLogCritical("No battle groups found in db, exiting!");
@@ -89,9 +91,11 @@ static void loadBattleGroups() {
 }
 
 static void loadBattleDB() {
-	auto loadPath = format("{}assets/battle/battleDB.json", GetBasePath());
-	auto dataRootJsonArray = jGetObjectFromFile(loadPath.c_str());
-	if (!dataRootJsonArray) sgLogCritical("No battler Database found at %s, exiting", loadPath.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory("battleDB", &buf, &sz);
+	auto dataRootJsonArray = jGetObjectFromBuffer(buf, sz);
+	if (!dataRootJsonArray) sgLogCritical("No battler Database found exiting");
 	auto numData = jGetObjectArrayLength(dataRootJsonArray);
 	if (!numData) sgLogCritical("No battlers found in db, exiting!");
 	for (auto i = 0; i < numData; ++i) {
@@ -178,8 +182,8 @@ static void loadBattle() {
 	IsGameLoading = true;
 	if (!_initialized) initializeBattleSystem();
 	_battlers.resize(8);
-	sgLogWarn("loading battle");
-	//Something is terrible with load players.
+	sgLogDebug("loading battle");
+	// Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();
 	_battleUI.RootPanel->SetVisible(true);

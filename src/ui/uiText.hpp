@@ -13,6 +13,7 @@ struct UITextArgs {
 	std::string TextToDraw, Name;
 	int NumCharsToDraw;
 	int Priority;
+	Color TextColor;
 	bool CenteredX, CenteredY, WordWrap, Visible, DebugBox = false;
 };
 class UIText : public UIObject {

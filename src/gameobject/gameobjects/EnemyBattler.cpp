@@ -1,5 +1,5 @@
 #include <bindings/engine.hpp>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <ui/ui.hpp>
 
@@ -13,7 +13,7 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 }
 
 EnemyBattler::~EnemyBattler() {
-	sgLogWarn("Destroying battler");
+	sgLogDebug("Destroying enemy battler");
 	if (_hpObject) {
 		_hpObject->SetVisible(false);
 	}
@@ -23,7 +23,7 @@ void EnemyBattler::updateImpl() {}
 void EnemyBattler::takeDamageImpl(int damage) {
 	_hpObject->UpdateText(to_string(_currentHP));
 	if (_currentHP < 1) {
-		Engine::PlaySFX("enemyDead", 1.0);
+		Engine::Audio::PlaySFXBuffer("enemyDead", 1.0);
 		Engine::SetSpriteVisible(_sprite, false);
 	}
 }

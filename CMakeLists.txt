@@ -8,9 +8,10 @@ option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or 
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
 option(LINK_M "Should we link against the M, only useful on linux builds locally")
 option(IMGUI_DEBUGGING "Should we build with imgui enabled" ON)
+option(PRELOAD_ALL_ASSETS "Preload everything at beginning, useful for EMSCRIPTEN" ON)
 # If ON, gives a debug message when building about vm space or something, nanomalloc. If ON, Memory shows super high
 # usage.. it's wild, to get an accurate reading switch to off.
-option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" OFF)
+option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug mode" ON)
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
@@ -26,7 +27,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameConfig.cpp 
   src/gameState.cpp 
   src/gameobject/GameObject.cpp
-  src/gameobject/gameobjects/Player.cpp
+  src/gameobject/gameobjects/LocalPlayer.cpp
   src/gameobject/gameobjects/Battler.cpp
   src/gameobject/gameobjects/PlayerBattler.cpp
   src/gameobject/gameobjects/EnemyBattler.cpp
@@ -42,14 +43,19 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
   ./src/ui/uiProgressBar.cpp
+  ./src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
+  ./src/systems/PlayerSystem.cpp
+  ./src/systems/GameObjectSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
+  src/bindings/Controller.cpp
+  src/bindings/Player.cpp
 )
 
 if(IMGUI_DEBUGGING)
-  list(APPEND EXECUTABLE_SOURCE_FILES_CORE
+  set(IMGUI_SRC 
     ./external/imgui.cpp
     ./external/imgui_demo.cpp
     ./external/imgui_draw.cpp
@@ -58,8 +64,19 @@ if(IMGUI_DEBUGGING)
     ./external/imgui_impl_sdl3.cpp
     ./external/imgui_widgets.cpp
   )
+  list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC}
+    ./src/debug/DebugWindow.cpp
+    ./src/debug/DebugPlayers.cpp
+    ./src/debug/DebugCamera.cpp
+    ./src/debug/DebugUI.cpp
+  )
   add_definitions(-Dimgui)
+  #Ignore source file warnings from external imgui  
+  set_source_files_properties( ${IMGUI_SRC} PROPERTIES COMPILE_FLAGS "-w" )
 endif(IMGUI_DEBUGGING)
+if(PRELOAD_ALL_ASSETS)
+  add_definitions(-DPRELOAD_ALL_ASSETS)
+endif(PRELOAD_ALL_ASSETS)
 
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
   ${EXECUTABLE_SOURCE_FILES_CORE}
@@ -121,7 +138,7 @@ else()
     GIT_REPOSITORY https://github.com/kjblanchard/SupergoonEngine
     # Use master for development, otherwise make sure to pin to proper engine tag for releases GIT_TAG c55aa25 GIT_TAG
     # master
-    GIT_TAG feature/0.1.x
+    GIT_TAG feature/0.2.x
   )
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED STREQUAL "ON")
@@ -141,7 +158,6 @@ if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${ASAN_FLAGS}")
     set(CMAKE_EXE_LINKER_FLAGS "${CMAKE_EXE_LINKER_FLAGS} ${ASAN_FLAGS}")
     set(CMAKE_SHARED_LINKER_FLAGS "${CMAKE_SHARED_LINKER_FLAGS} ${ASAN_FLAGS}")
-
   endif()
 endif()
 
@@ -169,9 +185,7 @@ if(EMSCRIPTEN)
     PROPERTIES
     LINK_FLAGS
     "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
-    --preload-file ${CMAKE_SOURCE_DIR}/assets@/assets")
-    # --preload-file ${CMAKE_SOURCE_DIR}/src@/assets/lua/ \
-    # --preload-file ${ENGINE_SCRIPT_PATH}@/assets/lua/ ")
+    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/etf.sg")
   elseif(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET
       "10.14"
@@ -184,12 +198,13 @@ if(EMSCRIPTEN)
       CACHE STRING "Icon path")
   endif(EMSCRIPTEN)
 
-  # install(
-  #   DIRECTORY src/
-  #   DESTINATION ${INSTALL_DIR}/assets/lua
-  #   COMPONENT assets)
+  # find_library(STEAMAPI_LIBRARY
+  #   NAMES steam_api
+  #   PATHS /usr/local/lib
+  # )
 
-  install(
-    DIRECTORY assets
-    DESTINATION ${INSTALL_DIR}
-    COMPONENT assets)
+  # if (NOT STEAMAPI_LIBRARY)
+  #   message(FATAL_ERROR "libsteam_api not found")
+  # endif()
+
+  # target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE ${STEAMAPI_LIBRARY})

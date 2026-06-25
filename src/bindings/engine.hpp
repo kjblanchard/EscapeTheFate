@@ -6,6 +6,7 @@
 struct Sprite;
 struct Text;
 struct sgGameObject;
+typedef struct Texture Texture;
 
 namespace Etf {
 
@@ -19,7 +20,7 @@ enum class CurrentSceneLoadingState {
 	LoadingUI,
 	LoadingDialog,
 	LoadingFinish,
-	//Use this to not add a big jump to the loading after a load
+	// Use this to not add a big jump to the loading after a load
 	JustLoaded,
 	FadingIn,
 	FadingInAllowUpdate,
@@ -33,6 +34,8 @@ enum class ScreenFadeTypes {
 
 struct Engine {
    public:
+	static void InitializeEngine();
+	static void ShutdownEngine();
 	static const std::string& CurrentScene();
 	static void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
 	// TODO Do we even need this anymore?  Probably not
@@ -48,10 +51,16 @@ struct Engine {
 	// if screen is fading, updates the time on it and tweens the fade.
 	static void UpdateScreenFade();
 	static void PreloadAssets();
+	struct Textures {
+		static void LoadTextureFromBuffer(Texture* tex, const std::string& name);
+
+	} Textures;
 
 	struct Audio {
 		static void PlayBGM(const std::string& name, float volume = 1.0f);
 		static void PlayBGMBackground(const std::string& name, float volume = 1.0f);
+		static void PlaySFX(const std::string& name, float volume);
+		static void PlaySFXBuffer(const std::string& name, float volume);
 		static void StopBGMBackground();
 
 	} Audio;
@@ -70,6 +79,7 @@ struct Engine {
 	} Textboi;
 
 	struct Json {
+		static void GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz);
 		static RectangleF GetRectFromObject(void* object, const std::string& key);
 		template <typename Lambda>
 		static void jforeach_lambda(void* obj, Lambda&& lambda) {
@@ -98,7 +108,6 @@ struct Engine {
 	static inline bool CheckForRectCollision(RectangleF& lhs, RectangleF& rhs) {
 		return lhs.x < rhs.x + rhs.w && lhs.x + lhs.w > rhs.x && lhs.y < rhs.y + rhs.h && lhs.y + lhs.h > rhs.y;
 	}
-	static void PlaySFX(const std::string& name, float volume);
 
    private:
 	static void loadSceneInternal();

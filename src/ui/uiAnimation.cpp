@@ -1,6 +1,6 @@
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/sprite.h>
 
 #include <bindings/engine.hpp>
@@ -18,7 +18,8 @@ UIAnimation::UIAnimation(UIAnimationArgs& args) {
 	_priority = args.Priority;
 	_color = args.DrawColor;
 	_debugBox = args.DebugBox;
-	_sprite = Engine::CreateManualSpriteFull(args.Filename.c_str(), &locWithOffsetX, &locWithOffsetY, {0, 0, 32, 32}, {0, 0, 32, 32});
+	auto stringPng = args.Filename + ".png";
+	_sprite = Engine::CreateManualSpriteFull(stringPng.c_str(), &locWithOffsetX, &locWithOffsetY, {0, 0, 32, 32}, {0, 0, 32, 32});
 	_animator = make_unique<SpriteAnimator>(args.Filename, _sprite);
 }
 
@@ -32,5 +33,5 @@ void UIAnimation::OnDraw(float offsetX, float offsetY) {
 	RectangleF dst = {0, 0, _location.w, _location.h};
 	// RectangleF dst = {0,0, _location.w, _location.h};
 	Color color = {255, 255, 255, 255};
-	DrawSpriteManual(_sprite, &dst, &color);
+	DrawSpriteManual(_sprite, &dst, &color, false);
 }

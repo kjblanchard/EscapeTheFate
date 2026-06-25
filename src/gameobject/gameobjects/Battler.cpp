@@ -1,24 +1,27 @@
 #include <Supergoon/Animation/animator.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 #include <Supergoon/state.h>
 
 #include <bindings/engine.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
 #include <ui/uiText.hpp>
+#include <format>
 
 #include "gameobject/GameObject.hpp"
 using namespace std;
 using namespace Etf;
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), _battlerData(args.BattleData) {
-	_sprite = Engine::CreateSpriteFull(args.BattleData->Sprite.c_str(), &_x, &_y, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
+	auto spriteName = format("{}.png", args.BattleData->Sprite.c_str());
+	// auto spriteJson = format("{}.png", args.BattleData->Sprite.c_str());
+	_sprite = Engine::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
-	_gameObjects.push_back(shared_ptr<GameObject>(this));
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
+	AddGameObjectToGameObjectSystem(this);
 }
 
 float Battler::SpriteWidth() {

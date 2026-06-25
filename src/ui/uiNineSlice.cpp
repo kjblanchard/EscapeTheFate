@@ -2,6 +2,7 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
+#include <bindings/engine.hpp>
 
 #include <bindings/engine.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -18,7 +19,8 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	_debugBox = args.DebugBox;
 	_color = args.DrawColor;
 	_texture = TextureCreate(_filename.c_str());
-	TextureLoadFromPng(_texture, _filename.c_str());
+	Engine::Textures::LoadTextureFromBuffer(_texture, _filename);
+	// TextureLoadFromPng(_texture, _filename.c_str());
 	_renderTargetTexture = TextureCreateRenderTarget(_location.w, _location.h);
 	int nineSliceImageW = TextureGetWidth(_texture);
 	int nineSliceImageH = TextureGetHeight(_texture);

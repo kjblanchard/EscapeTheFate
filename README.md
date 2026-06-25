@@ -54,4 +54,5 @@ to discuss what you would like to change.
 - [LearnOpenGL](https://learnopengl.com)
     by OpenGL learning
 - [ImGUI](https://github.com/ocornut/imgui) : Debug logging
+- [Gamepad icons](https://greatdocbrown.itch.io/gamepad-ui)
 

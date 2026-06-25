@@ -9,6 +9,7 @@ WINDOWS_GENERATOR ?= "Visual Studio 17 2022"
 APPLE_GENERATOR ?= Xcode
 CONFIGURE_COMMAND ?= "cmake"
 EMSCRIPTEN_CONFIGURE_COMMAND = "emcmake cmake"
+PRELOAD_ALL_ASSETS ?= ON
 IMGUI_DEBUGGING ?= ON
 BUILD_TYPE ?= Debug
 SYSTEM_PACKAGES ?= ON
@@ -24,7 +25,8 @@ IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
-RUN_CMD := open ./build/bin/EscapeTheFate.app
+# RUN_CMD := open ./build/bin/EscapeTheFate.app
+RUN_CMD := ./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
 RUN_CMD := ./build/bin/$(EXECUTABLE_NAME)
@@ -33,17 +35,17 @@ REBUILD := lrebuild
 endif
 
 .PHONY: all
-all:
-    @echo "OS: $(UNAME_S) -> using $(REBUILD)"
-
+# all:
+#     @echo "OS: $(UNAME_S) -> using $(REBUILD)"
 
 # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 use this if we are using past version 4.0
 #
-all: build install run
+# all: build install run
+all: build run
 clean:
 	@rm -rf $(BUILD_DIR)
 configure:
-	$(CONFIGURE_COMMAND) -DCMAKE_POLICY_VERSION_MINIMUM=3.5  -G "$(CMAKE_GENERATOR)" . -B $(BUILD_DIR) -DENGINE_CACHED=$(ENGINE_CACHED) -DIMGUI_DEBUGGING=$(IMGUI_DEBUGGING) -DSYSTEM_PACKAGES=$(SYSTEM_PACKAGES) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(ADDITIONAL_OPTIONS)  -DLINK_M=$(LINK_M)
+	$(CONFIGURE_COMMAND) -DCMAKE_POLICY_VERSION_MINIMUM=3.5  -G "$(CMAKE_GENERATOR)" . -B $(BUILD_DIR) -DPRELOAD_ALL_ASSETS=$(PRELOAD_ALL_ASSETS) -DENGINE_CACHED=$(ENGINE_CACHED) -DIMGUI_DEBUGGING=$(IMGUI_DEBUGGING) -DSYSTEM_PACKAGES=$(SYSTEM_PACKAGES) -DCMAKE_BUILD_TYPE=$(BUILD_TYPE) $(ADDITIONAL_OPTIONS)  -DLINK_M=$(LINK_M)
 build:
 	@$(BUILD_COMMAND) $(ADDITIONAL_BUILD_COMMANDS)
 install:
@@ -51,7 +53,7 @@ install:
 run:
 	@$(RUN_CMD)
 
-debug: build install
+debug: build
 	@gdb  $(RUN_CMD)
 
 package:
@@ -98,4 +100,19 @@ perf:
 
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
+#variables for packing
+DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config  ./assets/dialog ./assets/ui ./assets/fonts ./assets/shaders ./assets/tiled/templates ./assets/tiled
+#./assets/tiled
+#./assets/tiled/templates
+# FILES := $(filter-out %.aseprite,$(foreach d,$(DIRS),$(wildcard $(d)/*)))
+# FILES := $(shell find $(DIRS) -type f)
+FILES := $(shell find $(DIRS) -type f \
+    ! -name "*.aseprite" \
+    ! -name "*.tmx" \
+    ! -name "*.tsx")
+
+
+ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
+pack:
+	@sgforge $(ALL_FILES_STRING) -o etf.sg
 

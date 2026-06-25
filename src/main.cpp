@@ -4,21 +4,32 @@
 #include <Supergoon/Platform/sdl/sdlWindow.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/engine.h>
-#include <Supergoon/log.h>
 #include <Supergoon/state.h>
 #include <Supergoon/window.h>
+#include <sgtools/log.h>
+// #include <steam/steam_api.h>
 
+#include <bindings/Controller.hpp>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
+#include <systems/GameObjectSystem.hpp>
+#include <systems/PlayerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
+#ifdef imgui
+#include <debug/DebugCamera.hpp>
+#include <debug/DebugPlayers.hpp>
+#include <debug/DebugUI.hpp>
+#include <debug/DebugWindow.hpp>
+
 #include "imgui.h"
 #include "imgui_impl_opengl3.h"
 #include "imgui_impl_sdl3.h"
+#endif
 
 namespace Etf {
 static const int B = 27;
@@ -28,37 +39,46 @@ static void startImGUI() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;  // Enable Keyboard Controls
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;   // Enable Gamepad Controls
-	// Setup Platform/Renderer backends
-	// auto window = WindowGet();
-	// auto ptr = GraphicsGetContextPtr();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	ImGui::StyleColorsClassic();
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
 #endif
 }
 
 void initialize() {
+	sgSetLogLevel(sgLogLevelError);
+	Engine::InitializeEngine();
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& _gameConfig = GameConfig::GetGameConfig();
+	sgSetLogLevel(_gameConfig.debug.debugLevel);
 	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
 	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
+	// if (!SteamAPI_Init()) {
+	// 	sgLogError("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed).\n");
+	// }
 }
 
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-#ifdef __EMSCRIPTEN__
-	Engine::PreloadAssets();
-#endif
+	// #ifdef PRELOAD_ALL_ASSETS
+	// 	Engine::PreloadAssets();
+	// #endif
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
+	// Start all systems
+	// Player system relies on the UI being initialized
+	StartPlayerSystem();
 	startImGUI();
+	AddTabFuncToMainWindow(DisplayPlayersTab);
+	AddTabFuncToMainWindow(DisplayCameraTab);
+	AddTabFuncToMainWindow(DisplayUITab);
 }
 
 int handleEvent(void* event) {
-	auto sdlEvent = static_cast<SDL_Event*>(event);
 #ifdef imgui
+	auto sdlEvent = static_cast<SDL_Event*>(event);
 	ImGui_ImplSDL3_ProcessEvent(sdlEvent);
 #endif
 	return false;
@@ -71,8 +91,9 @@ void update() {
 	if (!Engine::HandleMapLoad()) {
 		return;
 	}
-	GameObject::UpdateGameObjects();
+	GameObjectSystem::Update();
 	DialogSystem::UpdateDialogSystem();
+	UpdatePlayerSystem();
 	if (GameState::Battle::InBattle) {
 		BattleSystem::BattleSystemUpdate();
 	}
@@ -88,11 +109,15 @@ static void drawImGUI() {
 }
 
 void draw() {
-	GameObject::DrawGameObjects();
-	UI::DrawUI();
+	GameObjectSystem::Draw();
 #ifdef imgui
 	drawImGUI();
+	CreateMainWindow();
 #endif
+}
+
+void drawUI() {
+	UI::DrawUI();
 }
 
 void postDraw() {
@@ -121,9 +146,13 @@ static void shutdownImGUI() {
 }
 
 void quit() {
-	GameObject::DestroyAllGameObjects();
+	GameObjectSystem::Shutdown();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
+	Engine::ShutdownEngine();
+#ifdef imgui
+	shutdownImGUI();
+#endif
 }
 }  // namespace Etf
 
@@ -134,4 +163,5 @@ void (*_drawFunc)(void) = Etf::draw;
 void (*_quitFunc)(void) = Etf::quit;
 void (*_inputFunc)(void) = Etf::handleInput;
 int (*_handleEventFunc)(void*) = Etf::handleEvent;
+void (*GraphicsPostFBODrawUIFunc)(void) = Etf::drawUI;
 void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::postDraw;

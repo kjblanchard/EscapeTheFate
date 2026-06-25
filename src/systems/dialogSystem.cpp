@@ -1,9 +1,7 @@
 #include <Supergoon/Tweening/easing.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
-
-#include <filesystem>
+#include <sgtools/log.h>
 #include <format>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
@@ -72,7 +70,7 @@ static void initializeDialogBox() {
 		_dialogBoxTextObject = (UIText*)_dialogBoxObject->GetChildByName("DialogBoxText");
 	}
 	if (!_dialogBoxObject || !_dialogBoxTextObject) {
-		sgLogWarn("Could not initialize dialog box, no ui object found properly");
+		sgLogCritical("Could not initialize dialog box, no ui object found properly");
 		return;
 	}
 	_dialogBoxObject->SetVisible(false);
@@ -123,7 +121,7 @@ static void closeCurrentInteraction() {
 }
 
 static void progressCurrentInteraction() {
-	sgLogWarn("Current text is %d and current num is %d", _currentTextInDialog, _currentNumTextInDialog);
+	sgLogDebug("Current text is %d and current num is %d", _currentTextInDialog, _currentNumTextInDialog);
 	if (_currentTextInDialog >= _currentNumTextInDialog - 1) {
 		closeCurrentInteraction();
 	} else {
@@ -215,12 +213,16 @@ static void parseJsonIntoMap(json_object* dialogRoot) {
 void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	_currentMap = filename;
 	if (_loadedDialog.find(filename) != _loadedDialog.end()) return;
-	auto loadString = format("{}assets/dialog/{}.json", GetBasePath(), filename);
-	if (!std::filesystem::exists(loadString)) {
-		sgLogDebug("No dialog file for %s", loadString.c_str());
-		return;
-	}
-	auto newDialog = jGetObjectFromFile(loadString.c_str());
+	auto loadString = format("{}D", filename);
+//TODO since using buffers, commented this out.. not sure if this is doing something laggy
+	// if (!std::filesystem::exists(loadString)) {
+	// 	sgLogDebug("No dialog file for %s", loadString.c_str());
+	// 	return;
+	// }
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory(loadString.c_str(), &buf, &sz);
+	auto newDialog = jGetObjectFromBuffer(buf, sz);
 	if (!newDialog) {
 		return;
 	}

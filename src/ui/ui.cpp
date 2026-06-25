@@ -1,6 +1,6 @@
 #include <Supergoon/Primitives/rectangle.h>
 #include <Supergoon/json.h>
-#include <Supergoon/log.h>
+#include <sgtools/log.h>
 
 #include <bindings/engine.hpp>
 #include <ui/ui.hpp>
@@ -13,6 +13,7 @@
 #include <unordered_map>
 
 #include "ui/uiAnimation.hpp"
+#include "ui/uiLine.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -30,8 +31,34 @@ static Color getColorFromField(json_object* obj, const char* key) {
 	};
 }
 
+static void getUIObjectArgsFromJson(UIObjectArgs& args, const string& name, json_object* data) {
+	args.DoNotDestroy = jbool(data, "doNotDestroy");
+	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
+	args.Priority = jint(data, "priority");
+	args.DebugBox = jbool(data, "debug");
+	args.Name = name;
+	args.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
+}
+
+static UILine* createLine(const string& name, json_object* data) {
+	UILineArgs args;
+	UIObjectArgs objArgs;
+	args.X1 = jfloat(data, "x1");
+	args.X2 = jfloat(data, "x2");
+	args.Y1 = jfloat(data, "y1");
+	args.Y2 = jfloat(data, "y2");
+	args.LineColor = getColorFromField(data, "color");
+	args.Thickness = jint(data, "thickness");
+	getUIObjectArgsFromJson(objArgs, name, data);
+	return new UILine(args, objArgs);
+}
+
 static UIText* createText(const string& name, json_object* data) {
 	UITextArgs args;
+	args.TextColor = {255, 255, 255, 255};
+	if (jKeyExists(data, "color")) {
+		args.TextColor = getColorFromField(data, "color");
+	}
 	args.FontName = jstr(data, "font");
 	args.FontSize = jint(data, "fontSize");
 	args.Rect = Engine::Json::GetRectFromObject(data, "rect");
@@ -152,6 +179,8 @@ static UIObject* handleTypeCreation(const string& name, const string& type, json
 		return createHLGObject(name, data);
 	} else if (type == "progressBar") {
 		return createUIProgressBar(name, data);
+	} else if (type == "line") {
+		return createLine(name, data);
 	} else {
 		return createUIObject(name, data);
 	}
@@ -183,7 +212,12 @@ std::unique_ptr<UIObject> UI::_rootUIObject;
 
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
-	auto obj = jGetObjectFromFile(filename.c_str());
+	// auto obj = jGetObjectFromFile(filename.c_str());
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory(filename.c_str(), &buf, &sz);
+	// auto obj = jGetObjectFromFile(filename.c_str());
+	auto obj = jGetObjectFromBuffer(buf, sz);
 	if (!obj) {
 		sgLogError("Error parsing UI file %s ", filename.c_str());
 		return false;
@@ -196,7 +230,6 @@ void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
 }
 
 void UI::LoadUIFromFile(const string& filename) {
-	// Initialize the root object if needed
 	GetRootUIObject();
 	// Check the cached files to avoid filesystem reads, and return if there is an error loading
 	if (!_cachedUIFiles.contains(filename)) {

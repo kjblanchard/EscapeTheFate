@@ -1,6 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/rectangle.h>
 
+#include <bindings/Player.hpp>
 #include <bindings/SpriteAnimator.hpp>
 #include <cmath>
 #include <gameobject/GameObject.hpp>
@@ -12,7 +13,7 @@ namespace Etf {
 
 class IInteractable;
 
-class Player : public GameObject {
+class LocalPlayer : public GameObject {
 	enum class Direction { South,
 						   East,
 						   North,
@@ -20,12 +21,14 @@ class Player : public GameObject {
 
    public:
 	static void Create(TiledObject* objData);
-	~Player();
+	static void CreatePlayerTwo(TiledObject* objData);
+	// ~LocalPlayer();
 
    private:
 	void Start() override;
 	void Update() override;
 	void Draw() override;
+	void handleplayerJoystickMovement();
 	// Returns if player moved this frame
 	bool handlePlayerMovement();
 	void updateInteractionRect();
@@ -36,17 +39,18 @@ class Player : public GameObject {
 	inline float roundCollisionResolve(float x, float grid = 0.01) { return std::round(x / grid) * grid; }
 
    private:
-	static std::vector<std::unique_ptr<Player>> _players;
-	Player(TiledObject* objData);
-	Sprite* _sprite;
-	Sprite* _InteractionSprite;
-	Direction _direction = Direction::South;
-	std::unique_ptr<SpriteAnimator> _animator;
-	bool DoNotDestroy = false;
-	int _width, _height;
-	RectangleF _collisionRect = {};
-	RectangleF _interactionRect = {};
-	IInteractable* _currentInteractable = nullptr;
+	static std::vector<std::unique_ptr<LocalPlayer>> Players_;
+	LocalPlayer(TiledObject* objData, const std::shared_ptr<Player>& player);
+	Sprite* Sprite_;
+	Sprite* InteractionSprite_;
+	Direction Direction_ = Direction::South;
+	std::unique_ptr<SpriteAnimator> Animator_;
+	bool DoNotDestroy_ = false;
+	int Width_, Height_;
+	RectangleF CollisionRect_ = {};
+	RectangleF InteractionRect_ = {};
+	IInteractable* CurrentInteractable_ = nullptr;
+	const std::shared_ptr<Player> Player_;
 };
 
 }  // namespace Etf
