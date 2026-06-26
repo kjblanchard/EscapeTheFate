@@ -37,7 +37,7 @@ jobs:
       - name: Pack assets
         run: |
           # either use make:
-          make pack
+          make pack SGFORGE=./sgforge
           # OR directly:
           # ./sgforge $ALL_FILES_STRING -o etf.sg
       - name: Upload packed asset

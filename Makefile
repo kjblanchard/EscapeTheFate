@@ -21,6 +21,7 @@ PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
+SGFORGE ?= sgforge
 # default, should be used after a rebuild of some sort.
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
@@ -114,5 +115,5 @@ FILES := $(shell find $(DIRS) -type f \
 
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
-	@sgforge $(ALL_FILES_STRING) -o etf.sg
+	@$(SGFORGE) $(ALL_FILES_STRING) -o etf.sg
 
