@@ -65,9 +65,9 @@ jobs:
     steps:
       - name: Checkout ETF repo
         uses: actions/checkout@v4
-      - name: Setup MSVC (Windows only)
-        if: matrix.os == 'windows-2025'
-        uses: ilammy/msvc-dev-cmd@v1
+      # - name: Setup MSVC (Windows only)
+      #   if: matrix.os == 'windows-2025'
+      #   uses: ilammy/msvc-dev-cmd@v1
       - name: Install dependencies (Ubuntu only)
         if: ${{ matrix.os == 'ubuntu-latest' }}
         run: |
