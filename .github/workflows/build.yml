@@ -22,9 +22,18 @@ jobs:
 
           tar -xzf sgforge.tar.gz
           chmod +x sgforge
-      - name: Verify sgforge
+      - name: Download sgforge (Linux release)
         run: |
-          ./sgforge --help || true
+          curl -L \
+            https://github.com/kjblanchard/sgforge/releases/download/v0.1.0/sgforge-linux.tar.gz \
+            -o sgforge.tar.gz
+
+          tar -xzf sgforge.tar.gz
+
+          echo "Contents after extraction:"
+          find . -maxdepth 3 -type f
+
+          chmod +x sgforge || true
       - name: Pack assets
         run: |
           # either use make:
