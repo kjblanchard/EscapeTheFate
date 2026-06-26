@@ -13,19 +13,10 @@ jobs:
     steps:
       - name: Checkout ETF repo
         uses: actions/checkout@v4
-
       - name: Download sgforge (Linux release)
         run: |
           curl -L \
-            https://github.com/kjblanchard/sgforge/releases/download/v0.1.0/sgforge-linux.tar.gz \
-            -o sgforge.tar.gz
-
-          tar -xzf sgforge.tar.gz
-          chmod +x sgforge
-      - name: Download sgforge (Linux release)
-        run: |
-          curl -L \
-            https://github.com/kjblanchard/sgforge/releases/download/v0.1.0/sgforge-linux.tar.gz \
+            https://github.com/kjblanchard/sgforge/releases/download/v0.1.1/sgforge-linux.tar.gz \
             -o sgforge.tar.gz
 
           tar -xzf sgforge.tar.gz
