@@ -34,8 +34,8 @@
 namespace Etf {
 static const int B = 27;
 
-static void startImGUI() {
 #ifdef imgui
+static void startImGUI() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
@@ -43,8 +43,8 @@ static void startImGUI() {
 	ImGui::StyleColorsClassic();
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
-#endif
 }
+#endif
 
 void initialize() {
 	sgSetLogLevel(sgLogLevelError);
@@ -62,18 +62,17 @@ void initialize() {
 void start() {
 	auto& _gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-	// #ifdef PRELOAD_ALL_ASSETS
-	// 	Engine::PreloadAssets();
-	// #endif
 	// Initial load screen.
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	// Start all systems
 	// Player system relies on the UI being initialized
 	StartPlayerSystem();
+#ifdef imgui
 	startImGUI();
 	AddTabFuncToMainWindow(DisplayPlayersTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);
 	AddTabFuncToMainWindow(DisplayUITab);
+#endif
 }
 
 int handleEvent(void* event) {
@@ -99,14 +98,14 @@ void update() {
 	}
 }
 
-static void drawImGUI() {
 #ifdef imgui
+static void drawImGUI() {
 	ImGui_ImplOpenGL3_NewFrame();
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();  // Show demo window! :)
-#endif
 }
+#endif
 
 void draw() {
 	GameObjectSystem::Draw();
@@ -137,13 +136,14 @@ void handleInput() {
 		enterBattle();
 	}
 }
-static void shutdownImGUI() {
+
 #ifdef imgui
+static void shutdownImGUI() {
 	ImGui_ImplOpenGL3_Shutdown();
 	ImGui_ImplSDL3_Shutdown();
 	ImGui::DestroyContext();
-#endif
 }
+#endif
 
 void quit() {
 	GameObjectSystem::Shutdown();
