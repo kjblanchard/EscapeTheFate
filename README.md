@@ -1,6 +1,6 @@
 # Escape The Fate
 
-## Cross Platform 2d JRPG demo
+## Cross Platform 2D JRPG demo
 
 - Custom c engine library [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
