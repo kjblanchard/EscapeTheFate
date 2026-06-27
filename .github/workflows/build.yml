@@ -18,9 +18,7 @@ jobs:
           curl -L \
             https://github.com/kjblanchard/sgforge/releases/download/v0.1.1/sgforge-linux.tar.gz \
             -o sgforge.tar.gz
-
           tar -xzf sgforge.tar.gz
-
           echo "Contents after extraction:"
           find . -maxdepth 3 -type f
 
@@ -37,6 +35,7 @@ jobs:
           name: etf-assets
           path: etf.sg
    Build-Desktop:
+    needs: pack-assets
     strategy:
       matrix:
         include:
