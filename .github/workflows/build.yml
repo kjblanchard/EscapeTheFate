@@ -105,7 +105,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: etf-assets
-          path: .
+          path: repo
+      - name: Debug filesystem
+        run: |
+          pwd
+          ls -R .
+          find . -name etf.sg -print
       - name: Install CMake
         run: |
           apt update -y && apt upgrade -y
