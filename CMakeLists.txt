@@ -185,7 +185,8 @@ if(EMSCRIPTEN)
     PROPERTIES
     LINK_FLAGS
     "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
-    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/etf.sg")
+    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/etf.sg \
+    --shell-file=${CMAKE_SOURCE_DIR}/cmake/shell.html")
   elseif(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET
       "10.14"
@@ -196,6 +197,8 @@ if(EMSCRIPTEN)
     set(ICON_PATH
       ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
       CACHE STRING "Icon path")
+    target_link_options(EscapeTheFate PRIVATE ""
+)
   endif(EMSCRIPTEN)
 
   # find_library(STEAMAPI_LIBRARY

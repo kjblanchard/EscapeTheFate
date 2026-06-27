@@ -86,8 +86,6 @@ jobs:
     environment: prod
     container:
       image: emscripten/emsdk:4.0.18
-      env:
-        THING_ADD: <div><br>Use WASD to move<br>Built with github actions!<br>Press SPACE to interact, X to start a battle.<br><a href="https://github.com/kjblanchard/etf">Source Code on Github!</a></div>
       credentials:
         username: ${{ vars.DOCKER_USERNAME }}
         password: ${{ secrets.DOCKER_PASSWORD }}
@@ -120,8 +118,6 @@ jobs:
           embuilder build sdl3 freetype ogg libpng vorbis
       - name: Actual build
         run: cd repo && make CMAKE_BUILD_TYPE=Release ENGINE_CACHED=OFF erebuild
-      - name: Update html build
-        run: cd repo/build/bin && awk '/<textarea id="output" rows="8"><\/textarea>/ {print; print ENVIRON["THING_ADD"]; next} 1' EscapeTheFate.html > temp.html && mv temp.html EscapeTheFate.html
       - uses: actions/upload-artifact@v4
         name: Upload to S3
         with:
