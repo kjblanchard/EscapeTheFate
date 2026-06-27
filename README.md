@@ -22,7 +22,6 @@
 - C/Cpp practice
 - Learn OpenGL
 - Better with vim
-- Arch daily driver testing
 - Release a game on steam
 
 ## Installation
