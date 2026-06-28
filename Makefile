@@ -5,22 +5,23 @@ EXECUTABLE_NAME = EscapeTheFate
 BINARY_FOLDER_REL_PATH = $(BUILD_DIR)/$(BINARY_FOLDER)
 DEFAULT_GENERATOR ?= "Ninja"
 BACKUP_GENERATOR ?= "Unix Makefiles"
-WINDOWS_GENERATOR ?= "Visual Studio 17 2022"
+WINDOWS_GENERATOR ?= "Visual Studio 18 2026"
 APPLE_GENERATOR ?= Xcode
 CONFIGURE_COMMAND ?= "cmake"
 EMSCRIPTEN_CONFIGURE_COMMAND = "emcmake cmake"
 PRELOAD_ALL_ASSETS ?= ON
 IMGUI_DEBUGGING ?= ON
 BUILD_TYPE ?= Debug
-SYSTEM_PACKAGES ?= ON
+SYSTEM_PACKAGES ?= OFF
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
-UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
-WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
+UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) . -C $(CURDIR) etf.sg
+WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH) etf.sg"
 PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
+SGFORGE ?= sgforge
 # default, should be used after a rebuild of some sort.
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
@@ -114,5 +115,5 @@ FILES := $(shell find $(DIRS) -type f \
 
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
-	@sgforge $(ALL_FILES_STRING) -o etf.sg
+	@$(SGFORGE) $(ALL_FILES_STRING) -o etf.sg
 

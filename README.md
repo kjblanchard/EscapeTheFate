@@ -1,19 +1,19 @@
 # Escape The Fate
 
-## Cross Platform 2d JRPG demo
+## Cross Platform 2D JRPG demo
 
 - Custom c engine library [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
-- [Progress Board and release milestones](https://github.com/kjblanchard/EscapeTheFate/blob/master/TODO.md)
-- Play the game here, or likely watch its "progress"
-    [Play!](https://escapethefate.supergoon.com)
-    ||  [Debug/Dev build](https://escapethefate-dev.supergoon.com)
-- ![Status Picture](https://github.com/kjblanchard/etf/blob/master/img/state.gif?raw=true)
+- [Progress Board and release milestones](https://github.com/users/kjblanchard/projects/11/)
+- Play the game here, or likely watch its "progress" [Play!](https://escapethefate-dev.supergoon.com)
+- ![Moving status picture](https://github.com/kjblanchard/EscapeTheFate/blob/master/img/moving.gif?raw=true)
+- ![battle status picture](https://github.com/kjblanchard/EscapeTheFate/blob/master/img/battle.gif?raw=true)
 
 ## Details
 
 - BGMs created by me in Garageband
 - Arch Linux + Hyprland + Vim + gdb + Thinkpad T480 ftw
+- M1 pro Macbook Pro ftw
 
 ## Goals
 
@@ -22,7 +22,6 @@
 - C/Cpp practice
 - Learn OpenGL
 - Better with vim
-- Arch daily driver testing
 - Release a game on steam
 
 ## Installation
