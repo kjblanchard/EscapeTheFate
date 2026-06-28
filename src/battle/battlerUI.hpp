@@ -52,7 +52,6 @@ class BattlerUI {
 	UIImage* _targetSelectionFinger;
 	UIAnimation* _progressBarAnim;
 	UIProgressBar* _progressBar;
-	unsigned int _battlerNum;
 	bool _player;
 	float _currentAnimationTime = 0;
 	float _menuBoxStartX, _menuBoxStartY;

@@ -8,7 +8,7 @@
 #include <memory>
 #include <vector>
 struct TiledObject;
-class Sprite;
+struct Sprite;
 namespace Etf {
 
 class IInteractable;
@@ -45,8 +45,8 @@ class LocalPlayer : public GameObject {
 	Sprite* InteractionSprite_;
 	Direction Direction_ = Direction::South;
 	std::unique_ptr<SpriteAnimator> Animator_;
-	bool DoNotDestroy_ = false;
-	int Width_, Height_;
+	// bool DoNotDestroy_ = false;
+	// int Width_, Height_;
 	RectangleF CollisionRect_ = {};
 	RectangleF InteractionRect_ = {};
 	IInteractable* CurrentInteractable_ = nullptr;

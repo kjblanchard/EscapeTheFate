@@ -3,7 +3,6 @@
 
 #include <debug/DebugCamera.hpp>
 using namespace Etf;
-using namespace std;
 
 void Etf::DisplayCameraTab() {
 	if (ImGui::CollapsingHeader("Camera")) {
