@@ -355,25 +355,33 @@ void Engine::TextBoi::DrawText(Text* text, float xOffset, float yOffset, Color& 
 }
 
 float Engine::Tweening::GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds, TweenEaseTypes ease) {
+	if (totalSeconds <= 0.0f)
+		return end;
+
 	auto func = geLinearInterpolation;
+
 	switch (ease) {
 		case TweenEaseTypes::Linear:
 			break;
+
 		case TweenEaseTypes::QuintOut:
 			func = geQuinticEaseOut;
 			break;
+
 		default:
 			sgLogDebug("Ease type not implemented, using linear");
 			break;
 	}
-	float progressPercent = func(timeSeconds / totalSeconds);
-	float progressValue = start + ((end - start) * progressPercent);
-	// clamp to edges
-	if (start < end)
-		progressValue = std::min(progressValue, end);
+	double t = static_cast<double>(timeSeconds / totalSeconds);
+	double progress = func(t);
+	double startD = static_cast<double>(start);
+	double endD = static_cast<double>(end);
+	double value = startD + (endD - startD) * progress;
+	if (startD < endD)
+		value = std::min(value, endD);
 	else
-		progressValue = std::max(progressValue, end);
-	return progressValue;
+		value = std::max(value, endD);
+	return static_cast<float>(value);
 }
 
 void Engine::Audio::PlayBGM(const std::string& name, float volume) {
