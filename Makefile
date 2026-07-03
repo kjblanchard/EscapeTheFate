@@ -15,9 +15,9 @@ BUILD_TYPE ?= Debug
 SYSTEM_PACKAGES ?= ON
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
-UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
-WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
-PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
+# UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
+# WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
+PACKAGE_COMMAND ?= cpack --config build/CPackConfig.cmake
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
@@ -26,7 +26,7 @@ SGFORGE ?= sgforge
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
-# RUN_CMD := open ./build/bin/EscapeTheFate.app
+# Run from the executable, cause it shows proper debug info
 RUN_CMD := ./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
@@ -55,7 +55,6 @@ run:
 	@$(RUN_CMD)
 
 debug: build
-	# @gdb  $(RUN_CMD)
 	@lldb  $(RUN_CMD)
 
 package:
@@ -65,15 +64,15 @@ package:
 rebuild:
 	@$(MAKE) $(REBUILD) 
 mrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build install
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build
 lrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build install 
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build
 xrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build install devsign package
 brebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build install package
+	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build package
 wrebuild:
-	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) IMGUI_DEBUGGING=OFF PACKAGE_COMMAND=$(WINDOWS_PACKAGE_COMMAND) SYSTEM_PACKAGES=OFF configure build install package
+	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF configure build package
 erebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF CONFIGURE_COMMAND=$(EMSCRIPTEN_CONFIGURE_COMMAND) SYSTEM_PACKAGES=OFF clean configure build
 irebuild:
