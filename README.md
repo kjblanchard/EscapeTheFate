@@ -55,3 +55,7 @@ to discuss what you would like to change.
 - [ImGUI](https://github.com/ocornut/imgui) : Debug logging
 - [Gamepad icons](https://greatdocbrown.itch.io/gamepad-ui)
 
+## AI Content
+
+- Macos Icon placeholder
+

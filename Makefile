@@ -11,8 +11,8 @@ CONFIGURE_COMMAND ?= "cmake"
 EMSCRIPTEN_CONFIGURE_COMMAND = "emcmake cmake"
 PRELOAD_ALL_ASSETS ?= ON
 IMGUI_DEBUGGING ?= ON
-BUILD_TYPE ?= Release
-SYSTEM_PACKAGES ?= OFF
+BUILD_TYPE ?= Debug
+SYSTEM_PACKAGES ?= ON
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
 UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) . -C $(CURDIR) etf.sg
@@ -68,7 +68,7 @@ mrebuild:
 lrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build install 
 xrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build install package
+	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build install devsign package
 brebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build install package
 wrebuild:
@@ -92,15 +92,33 @@ irun:
 	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
+#Sign before we package
+devsign:
+	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/$(BUILD_TYPE)/EscapeTheFate.app
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
+
 # This will error if you are using asan if you have leaks, so maybe disable that.
 perf:
 	@perf record -F 99 -g -- $(RUN_CMD) && perf script > out.perf && stackcollapse-perf.pl out.perf > out.folded && flamegraph.pl out.folded > test.svg && firefox test.svg
 
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
+
+# spctl --assess --verbose=4 Release/EscapeTheFate.app
+# Release/EscapeTheFate.app: rejected
+#
+#spctl --assess --verbose=4 --raw Release/EscapeTheFate.app
+# check signature, this is good
+# codesign -vvv --deep --strict Release/EscapeTheFate.app
+# Release/EscapeTheFate.app: valid on disk
+# Release/EscapeTheFate.app: satisfies its Designated Requirement
+# Check for quarantines
+# xattr -lr Release/EscapeTheFate.app
+# if there is, run command
+# xattr -dr com.apple.quarantine Release/EscapeTheFate.app
+#
 #variables for packing
 DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config  ./assets/dialog ./assets/ui ./assets/fonts ./assets/shaders ./assets/tiled/templates ./assets/tiled
 #./assets/tiled

@@ -77,10 +77,25 @@ endif(IMGUI_DEBUGGING)
 if(PRELOAD_ALL_ASSETS)
   add_definitions(-DPRELOAD_ALL_ASSETS)
 endif(PRELOAD_ALL_ASSETS)
+set(ASSET_FILE_LOCATION etf.sg)
+
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET
+        "10.14"
+        CACHE STRING "Minimum OS X deployment version")
+    set(IS_BUNDLE
+        "MACOSX_BUNDLE"
+        CACHE STRING "Is this a bundle")
+    set(ICON_PATH
+        ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
+        CACHE STRING "Icon path")
+endif(APPLE)
 
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
   ${EXECUTABLE_SOURCE_FILES_CORE}
-  ${ICON_PATH})
+  ${ICON_PATH}
+  ${ASSET_FILE_LOCATION}
+)
 
 if(MSVC)
   set(INSTALL_DIR
@@ -115,6 +130,7 @@ if(APPLE)
   set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/cmake/Info.plist)
   set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
+  set_source_files_properties(etf.sg PROPERTIES MACOSX_PACKAGE_LOCATION Resources/data)
   set_target_properties(
     ${EXECUTABLE_TARGET_NAME}
     PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
@@ -199,15 +215,4 @@ if(EMSCRIPTEN)
       CACHE STRING "Icon path")
     target_link_options(EscapeTheFate PRIVATE ""
 )
-  endif(EMSCRIPTEN)
-
-  # find_library(STEAMAPI_LIBRARY
-  #   NAMES steam_api
-  #   PATHS /usr/local/lib
-  # )
-
-  # if (NOT STEAMAPI_LIBRARY)
-  #   message(FATAL_ERROR "libsteam_api not found")
-  # endif()
-
-  # target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE ${STEAMAPI_LIBRARY})
+endif(EMSCRIPTEN)
