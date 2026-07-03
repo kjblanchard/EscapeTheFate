@@ -55,7 +55,8 @@ run:
 	@$(RUN_CMD)
 
 debug: build
-	@gdb  $(RUN_CMD)
+	# @gdb  $(RUN_CMD)
+	@lldb  $(RUN_CMD)
 
 package:
 	$(PACKAGE_COMMAND)
