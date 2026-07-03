@@ -201,7 +201,7 @@ if(EMSCRIPTEN)
     PROPERTIES
     LINK_FLAGS
     "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
-    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/etf.sg \
+    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/data/etf.sg \
     --shell-file=${CMAKE_SOURCE_DIR}/cmake/shell.html")
   elseif(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET

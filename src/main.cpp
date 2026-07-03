@@ -48,7 +48,7 @@ static void startImGUI() {
 #endif
 
 void initialize() {
-	sgSetLogLevel(sgLogLevelError);
+	sgSetLogLevel(sgLogLevelWarn);
 	Engine::InitializeEngine();
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& _gameConfig = GameConfig::GetGameConfig();

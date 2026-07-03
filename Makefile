@@ -88,7 +88,8 @@ iosrebuild:
 		clean configure build install package
 	# Custom run commands
 erun:
-	emrun ./build/bin/$(EXECUTABLE_NAME).html
+	@emrun --no_browser --port 6931 ./build/bin/EscapeTheFate.html
+
 irun:
 	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
 idevices:
