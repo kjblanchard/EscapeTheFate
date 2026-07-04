@@ -75,7 +75,7 @@ jobs:
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.os }}-packages
+          name: ${{ matrix.name }}-packages
           path: |
             build/packages/*.dmg
             build/packages/*.exe
