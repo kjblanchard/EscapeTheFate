@@ -10,9 +10,9 @@
 
 ## Details
 
+- A roguelike JRPGlike boardgamelike pixelart game
 - BGMs created by me in Garageband
-- Arch Linux + Hyprland + Vim + gdb + Thinkpad T480 ftw
-- M1 pro Macbook Pro ftw
+- Sprites are mostly purchased from TimeFantasy sprites.
 - Currently no developer signature, will need to allow in macos/windows in privacy settings or Smart Scan.
 
 ## Goals
