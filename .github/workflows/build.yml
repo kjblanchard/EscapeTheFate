@@ -148,8 +148,12 @@ jobs:
         with:
           pattern: "*-packages"
           path: artifacts
-          merge_multiple: true
-
+          merge-multiple: true
+      - name: Debug downloaded artifacts
+        run: |
+          pwd
+          find artifacts -type f
+          ls -R artifacts
       - name: Get current tag annotation
         id: tag-data
         run: |
