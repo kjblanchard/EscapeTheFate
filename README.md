@@ -2,7 +2,6 @@
 
 ## Cross Platform 2D JRPG demo
 
-- Custom c engine library [Here](https://github.com/kjblanchard/SupergoonEngine)
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
 - [Progress Board and release milestones](https://github.com/users/kjblanchard/projects/11/)
 - Play the game here, or likely watch its "progress" [Play!](https://escapethefate-dev.supergoon.com)
@@ -11,9 +10,10 @@
 
 ## Details
 
+- A roguelike JRPGlike boardgamelike pixelart game
 - BGMs created by me in Garageband
-- Arch Linux + Hyprland + Vim + gdb + Thinkpad T480 ftw
-- M1 pro Macbook Pro ftw
+- Sprites are mostly purchased from TimeFantasy sprites.
+- Currently no developer signature, will need to allow in macos/windows in privacy settings or Smart Scan.
 
 ## Goals
 
@@ -42,6 +42,13 @@ to discuss what you would like to change.
 
 - Non-Commercial use, see LICENSE file for details.
 
+## Supporting Projects
+
+- [Custom C engine](https://github.com/kjblanchard/SupergoonEngine) - wraps SDL/forge/tools/sound/gl
+- [Forge](https://github.com/kjblanchard/sgforge) - asset packer and unpacker
+- [Tools](https://github.com/kjblanchard/sgtools) - Logging and others
+- [Sound](https://github.com/kjblanchard/sgsound) - Openalsoft wrapper
+
 ## Credits
 
 - [Typing Text sound](https://freesound.org/people/Sky_Motion/sounds/416777/)
@@ -54,4 +61,4 @@ to discuss what you would like to change.
     by OpenGL learning
 - [ImGUI](https://github.com/ocornut/imgui) : Debug logging
 - [Gamepad icons](https://greatdocbrown.itch.io/gamepad-ui)
-
+- [Exe Icon](https://images.hdqwalls.com/download/fantasy-floating-islands-under-sunset-sky-hl-1366x768.jpg)

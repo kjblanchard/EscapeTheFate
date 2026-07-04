@@ -17,7 +17,12 @@ option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
 include(FetchContent)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/bin/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/lib/Debug)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib/Release)
+
 set(EXECUTABLE_TARGET_NAME EscapeTheFate)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_INSTALL_MESSAGE LAZY)
@@ -34,7 +39,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameobject/gameobjects/Textbox.cpp
   src/gameobject/gameobjects/MapExit.cpp
   src/gameobject/gameobjects/BattleLocation.cpp
-  ./src/battle/battlerUI.cpp
+  src/battle/battlerUI.cpp
   src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiLayoutGroup.cpp
@@ -42,12 +47,12 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiImage.cpp
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
-  ./src/ui/uiProgressBar.cpp
-  ./src/ui/uiLine.cpp
+  src/ui/uiProgressBar.cpp
+  src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
-  ./src/systems/PlayerSystem.cpp
-  ./src/systems/GameObjectSystem.cpp
+  src/systems/PlayerSystem.cpp
+  src/systems/GameObjectSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
   src/bindings/Controller.cpp
@@ -77,56 +82,67 @@ endif(IMGUI_DEBUGGING)
 if(PRELOAD_ALL_ASSETS)
   add_definitions(-DPRELOAD_ALL_ASSETS)
 endif(PRELOAD_ALL_ASSETS)
+set(ASSET_FILE_LOCATION etf.sg)
+
+if(APPLE)
+    set(CMAKE_OSX_DEPLOYMENT_TARGET
+        "10.14"
+        CACHE STRING "Minimum OS X deployment version")
+    set(IS_BUNDLE
+        "MACOSX_BUNDLE"
+        CACHE STRING "Is this a bundle")
+    set(ICON_PATH
+        ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
+        CACHE STRING "Icon path")
+endif(APPLE)
 
 add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
   ${EXECUTABLE_SOURCE_FILES_CORE}
-  ${ICON_PATH})
+  ${ICON_PATH}
+  ${ASSET_FILE_LOCATION}
+  cmake/AppIcon.rc
+)
+
+# if(WIN32)
+#   target_sources(${EXECUTABLE_TARGET_NAME} PRIVATE AppIcon.rc)
+# endif()
 
 if(MSVC)
-  set(INSTALL_DIR
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>
-    CACHE INTERNAL "")
+  # set(INSTALL_DIR
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
+    message(STATUS "Setting Build to Universal Binary")
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" FORCE)
     set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
     set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
+    set_target_properties(
+      ${EXECUTABLE_TARGET_NAME}
+      PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
+      # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+      XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
+      XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
+      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
+      # when building on github, we don't want to sign anything cause there is no cert
+      XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
+      XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
+      # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+    )
+    #Needed for codesigning and cpack
+    set(CMAKE_SKIP_RPATH TRUE)
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
       add_definitions(-DIS_MOBILE)
-      set(INSTALL_DIR
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app
-        CACHE INTERNAL "")
+      # set(INSTALL_DIR
     else()
-      set(INSTALL_DIR
-        ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/$<CONFIG>/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
-        CACHE INTERNAL "")
     endif(CMAKE_SYSTEM_NAME STREQUAL "iOS")
   else()
-    set(INSTALL_DIR
-      ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}/${EXECUTABLE_TARGET_NAME}.app/Contents/Resources
-      CACHE INTERNAL "")
   endif(CMAKE_GENERATOR STREQUAL "Xcode")
-else()
-  set(INSTALL_DIR
-    ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}
-    CACHE STRING "" FORCE)
 endif(MSVC)
 
 if(APPLE)
   set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES MACOSX_BUNDLE_INFO_PLIST ${CMAKE_SOURCE_DIR}/cmake/Info.plist)
   set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
-  set_target_properties(
-    ${EXECUTABLE_TARGET_NAME}
-    PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
-    # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
-    XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
-    XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
-    XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
-    # when building on github, we don't want to sign anything cause there is no cert
-    XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
-    XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
-    # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
-  )
+  set_source_files_properties(etf.sg PROPERTIES MACOSX_PACKAGE_LOCATION Resources/data)
 endif(APPLE)
 
 if(ENGINE_CACHED STREQUAL "ON")
@@ -142,8 +158,6 @@ else()
   )
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED STREQUAL "ON")
-
-include(FetchContent)
 
 target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE 
   ${CMAKE_SOURCE_DIR}/src
@@ -161,31 +175,21 @@ if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   endif()
 endif()
 
-
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
 
-# Platform specific executable flags
+###### Platform specific executable flags
 if(EMSCRIPTEN)
   message(STATUS "Enabling Emscripten flags for supergoon engine ")
   set(CMAKE_EXECUTABLE_SUFFIX
     ".html"
     CACHE STRING "Use html" FORCE)
-  # cannot use sdl3 currently
-  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(LINK_FLAGS
-    # "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_SDL=3 -s USE_VORBIS=1 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -sMAX_WEBGL_VERSION=2 -sMIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
-    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
-
-  )
-  set_target_properties(
-    ${EXECUTABLE_TARGET_NAME}
-    PROPERTIES
-    LINK_FLAGS
+    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'")
+  set_target_properties( ${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS
     "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
-    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/etf.sg \
+    --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/data/etf.sg \
     --shell-file=${CMAKE_SOURCE_DIR}/cmake/shell.html")
   elseif(APPLE)
     set(CMAKE_OSX_DEPLOYMENT_TARGET
@@ -197,17 +201,35 @@ if(EMSCRIPTEN)
     set(ICON_PATH
       ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
       CACHE STRING "Icon path")
-    target_link_options(EscapeTheFate PRIVATE ""
-)
-  endif(EMSCRIPTEN)
+    # target_link_options(EscapeTheFate PRIVATE "")
+endif(EMSCRIPTEN)
 
-  # find_library(STEAMAPI_LIBRARY
-  #   NAMES steam_api
-  #   PATHS /usr/local/lib
-  # )
-
-  # if (NOT STEAMAPI_LIBRARY)
-  #   message(FATAL_ERROR "libsteam_api not found")
-  # endif()
-
-  # target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE ${STEAMAPI_LIBRARY})
+###### Packaging
+set(CPACK_PACKAGE_NAME "EscapeTheFate")
+set(CPACK_PACKAGE_VENDOR "Supergoon Games")
+set(CPACK_PACKAGE_VERSION "0.1.0")
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "2D deckbuilding JRPG")
+set(CPACK_NSIS_DISPLAY_NAME "Escape the Fate")
+set(CPACK_NSIS_PACKAGE_NAME "Escape the Fate")
+set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
+set(CPACK_NSIS_CONTACT "kevin@supergoon.com")
+set(CPACK_NSIS_HELP_LINK "https://supergoon.com")
+set(CPACK_NSIS_URL_INFO_ABOUT "https://escapethefate-dev.supergoon.com")
+set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AppIcon.ico")
+set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AppIcon.ico")
+install(TARGETS ${EXECUTABLE_TARGET_NAME} RUNTIME DESTINATION . BUNDLE DESTINATION .)
+install(FILES ${CMAKE_SOURCE_DIR}/etf.sg DESTINATION data)
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS")
+elseif(APPLE)
+    if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
+        set(CPACK_GENERATOR "ZIP")
+    else()
+        set(CPACK_GENERATOR "DragNDrop")
+    endif()
+else()
+    set(CPACK_GENERATOR "TGZ")
+endif()
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/packages")
+include(CPack)

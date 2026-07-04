@@ -15,9 +15,10 @@ BUILD_TYPE ?= Debug
 SYSTEM_PACKAGES ?= ON
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
-UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) . -C $(CURDIR) etf.sg
-WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH) etf.sg"
-PACKAGE_COMMAND ?= $(UNIX_PACKAGE_COMMAND)
+# UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
+# WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
+PACKAGE_COMMAND ?= cpack --config build/CPackConfig.cmake -C $(BUILD_TYPE)
+
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
@@ -26,8 +27,8 @@ SGFORGE ?= sgforge
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
-# RUN_CMD := open ./build/bin/EscapeTheFate.app
-RUN_CMD := ./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+# Run from the executable, cause it shows proper debug info
+RUN_CMD := ./build/bin/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
 RUN_CMD := ./build/bin/$(EXECUTABLE_NAME)
@@ -55,7 +56,7 @@ run:
 	@$(RUN_CMD)
 
 debug: build
-	@gdb  $(RUN_CMD)
+	@lldb  $(RUN_CMD)
 
 package:
 	$(PACKAGE_COMMAND)
@@ -64,19 +65,19 @@ package:
 rebuild:
 	@$(MAKE) $(REBUILD) 
 mrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build install
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) clean configure build
 lrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build install 
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build
 xrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build install package
+	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build devsign package
 brebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build install package
+	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build package
 wrebuild:
-	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) IMGUI_DEBUGGING=OFF PACKAGE_COMMAND=$(WINDOWS_PACKAGE_COMMAND) SYSTEM_PACKAGES=OFF configure build install package
+	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF configure build package
 erebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF CONFIGURE_COMMAND=$(EMSCRIPTEN_CONFIGURE_COMMAND) SYSTEM_PACKAGES=OFF clean configure build
 irebuild:
-	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF  ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE -DDISABLE_WERROR=YES" clean configure build install package
+	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF  ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE -DDISABLE_WERROR=YES" clean configure build package
 iosrebuild:
 	$(MAKE) \
 		CMAKE_GENERATOR=$(APPLE_GENERATOR) \
@@ -84,23 +85,54 @@ iosrebuild:
 		ADDITIONAL_BUILD_COMMANDS=$(IOS_BUILD_COMMANDS) \
 		ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" \
 		IMGUI_DEBUGGING=OFF \
-		clean configure build install package
+		clean configure build package
 	# Custom run commands
 erun:
-	emrun ./build/bin/$(EXECUTABLE_NAME).html
+	@emrun --no_browser --port 6931 ./build/bin/EscapeTheFate.html
+
 irun:
-	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
+	xcrun simctl install 0A997707-21D6-4A93-AA1E-E952675BA32D build/bin/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
+#for debugging on ios simulator, in lldb
+# use idevices and make sure it's booted and installed with irun.
+idebug:
+	xcrun simctl launch --wait-for-debugger booted com.supergoon.rpg
+	lldb \
+    -o "platform select ios-simulator" \
+    -o "platform connect 0A997707-21D6-4A93-AA1E-E952675BA32D" \
+    -o "process attach --name EscapeTheFate" \
+	 # br set --name InitializeGraphicsSystem
+	# breakpoint set --name SDL_main
+	# c
+
+#Sign before we package
+devsign:
+	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/$(BUILD_TYPE)/EscapeTheFate.app
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
+
 # This will error if you are using asan if you have leaks, so maybe disable that.
 perf:
 	@perf record -F 99 -g -- $(RUN_CMD) && perf script > out.perf && stackcollapse-perf.pl out.perf > out.folded && flamegraph.pl out.folded > test.svg && firefox test.svg
 
 teamid:
 	@security find-certificate -c "Apple Development" -p | openssl x509 -inform pem -noout -subject
+
+# spctl --assess --verbose=4 Release/EscapeTheFate.app
+# Release/EscapeTheFate.app: rejected
+#
+#spctl --assess --verbose=4 --raw Release/EscapeTheFate.app
+# check signature, this is good
+# codesign -vvv --deep --strict Release/EscapeTheFate.app
+# Release/EscapeTheFate.app: valid on disk
+# Release/EscapeTheFate.app: satisfies its Designated Requirement
+# Check for quarantines
+# xattr -lr Release/EscapeTheFate.app
+# if there is, run command
+# xattr -dr com.apple.quarantine Release/EscapeTheFate.app
+#
 #variables for packing
 DIRS := ./assets/audio/bgm ./assets/audio/sfx ./assets/img ./assets/aseprite ./assets/battle ./assets/config  ./assets/dialog ./assets/ui ./assets/fonts ./assets/shaders ./assets/tiled/templates ./assets/tiled
 #./assets/tiled
@@ -116,4 +148,5 @@ FILES := $(shell find $(DIRS) -type f \
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
 	@$(SGFORGE) $(ALL_FILES_STRING) -o etf.sg
+
 

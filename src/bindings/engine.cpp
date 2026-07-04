@@ -81,7 +81,9 @@ const std::string& Engine::CurrentScene() {
 }
 
 void Engine::InitializeEngine() {
-	sDirectory = LoadDirectoryFromFile("etf.sg");
+	auto filePath = GetBasePath();
+	auto fullFile = string(filePath) + "data/etf.sg";
+	sDirectory = LoadDirectoryFromFile(fullFile.c_str());
 	AssetDirectory = sDirectory;
 	ShaderSetDirectory(sDirectory);
 }

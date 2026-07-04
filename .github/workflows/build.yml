@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout ETF repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Download sgforge (Linux release)
         run: |
           curl -L \
@@ -30,7 +30,7 @@ jobs:
           # OR directly:
           # ./sgforge $ALL_FILES_STRING -o etf.sg
       - name: Upload packed asset
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: etf-assets
           path: etf.sg
@@ -41,31 +41,23 @@ jobs:
         include:
           - os: windows-2025
             make_cmd: wrebuild
-            suffix: zip
-            zlib: wzlib
             name: win
           - os: macos-latest
             make_cmd: xrebuild
-            suffix: tgz
-            zlib: zlib
             name: mac
           - os: macos-latest
             make_cmd: irebuild
-            suffix: tgz
-            zlib: zlib
             name: ios-simulator
           - os: ubuntu-latest
             make_cmd: brebuild
-            suffix: tgz
-            zlib: zlib
             name: linux
     runs-on: ${{ matrix.os }}
     environment: prod
     steps:
       - name: Checkout ETF repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Download packed assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: etf-assets
           path: .
@@ -74,13 +66,20 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt-get install build-essential git make pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev libxtst-dev
+      - name: Install dependencies (Windows only)
+        if: ${{ matrix.os == 'windows-2025' }}
+        run: |
+          choco install nsis -y
       - name: Configure CMake
         run: make BUILD_TYPE=Release ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
-      - name: Save packaged artifacts
-        uses: actions/upload-artifact@v4
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v7
         with:
-          name: ${{ matrix.name }}-artifacts
-          path: build/EscapeTheFate.${{ matrix.suffix }}
+          name: ${{ matrix.name }}-packages
+          path: |
+            build/packages/*.dmg
+            build/packages/*.exe
+            build/packages/*.tar.gz
    Build-Emscripten:
     needs: pack-assets
     runs-on: ubuntu-latest
@@ -96,12 +95,12 @@ jobs:
         with:
           cmake-version: '3.28.3'
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: repo
           submodules: recursive
       - name: Download packed assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: etf-assets
           path: repo
@@ -119,7 +118,7 @@ jobs:
           embuilder build sdl3 freetype ogg libpng vorbis
       - name: Actual build
         run: cd repo && make CMAKE_BUILD_TYPE=Release ENGINE_CACHED=OFF erebuild
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
           name: s3Artifact
@@ -134,21 +133,6 @@ jobs:
       bucket_region: "us-east-1"
       bucket_name: "etf-dev-external-site"
    Create-Release:
-    strategy:
-      matrix:
-        include:
-          - os: win
-            artifact_name: EscapeTheFate.zip
-            asset_name: supergoon_win.zip
-          - os: mac
-            artifact_name: EscapeTheFate.tgz
-            asset_name: supergoon_mac.tgz
-          - os: ios-simulator
-            artifact_name: EscapeTheFate.tgz
-            asset_name: supergoon_ios_sim.tgz
-          - os: linux
-            artifact_name: EscapeTheFate.tgz
-            asset_name: supergoon_ubuntu.tgz
     if: startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment: prod
@@ -156,14 +140,20 @@ jobs:
       - Build-Desktop
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Fetch tags
         run: git fetch --tags --force
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
-          name: ${{ matrix.os }}-artifacts
-
+          pattern: "*-packages"
+          path: artifacts
+          merge-multiple: true
+      - name: Debug downloaded artifacts
+        run: |
+          pwd
+          find artifacts -type f
+          ls -R artifacts
       - name: Get current tag annotation
         id: tag-data
         run: |
@@ -173,13 +163,11 @@ jobs:
             echo 'EOF'
           } >>"${GITHUB_OUTPUT}"
       - name: Upload binaries to release
-        env:
-          ANNOTATION: ${{ steps.tag-data.outputs.git-tag-annotation }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ matrix.artifact_name }}
-          asset_name: ${{ matrix.asset_name }}
+          file: artifacts/*
+          file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
           body: ${{ steps.tag-data.outputs.annotation }}
