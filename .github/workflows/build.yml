@@ -146,7 +146,7 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v7
         with:
-          pattern: *-packages
+          pattern: "*-packages"
           path: artifacts
           merge_multiple: true
 
