@@ -39,7 +39,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameobject/gameobjects/Textbox.cpp
   src/gameobject/gameobjects/MapExit.cpp
   src/gameobject/gameobjects/BattleLocation.cpp
-  ./src/battle/battlerUI.cpp
+  src/battle/battlerUI.cpp
   src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiLayoutGroup.cpp
@@ -47,12 +47,12 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiImage.cpp
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
-  ./src/ui/uiProgressBar.cpp
-  ./src/ui/uiLine.cpp
+  src/ui/uiProgressBar.cpp
+  src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
-  ./src/systems/PlayerSystem.cpp
-  ./src/systems/GameObjectSystem.cpp
+  src/systems/PlayerSystem.cpp
+  src/systems/GameObjectSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
   src/bindings/Controller.cpp
@@ -154,8 +154,6 @@ else()
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED STREQUAL "ON")
 
-include(FetchContent)
-
 target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE 
   ${CMAKE_SOURCE_DIR}/src
   ${CMAKE_SOURCE_DIR}/external
@@ -172,28 +170,22 @@ if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
   endif()
 endif()
 
-
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
 
-# Platform specific executable flags
+###### Platform specific executable flags
 if(EMSCRIPTEN)
   message(STATUS "Enabling Emscripten flags for supergoon engine ")
   set(CMAKE_EXECUTABLE_SUFFIX
     ".html"
     CACHE STRING "Use html" FORCE)
   # cannot use sdl3 currently
-  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_SDL=3 -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  # set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS}  -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(LINK_FLAGS
-    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'"
-
-  )
-  set_target_properties(
-    ${EXECUTABLE_TARGET_NAME}
-    PROPERTIES
-    LINK_FLAGS
+    "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'")
+  set_target_properties( ${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS
     "${LINK_FLAGS} -O0 -s SAFE_HEAP=2 -s STACK_OVERFLOW_CHECK=1 \
     --preload-file ${CMAKE_SOURCE_DIR}/etf.sg@/data/etf.sg \
     --shell-file=${CMAKE_SOURCE_DIR}/cmake/shell.html")
@@ -207,8 +199,7 @@ if(EMSCRIPTEN)
     set(ICON_PATH
       ${CMAKE_SOURCE_DIR}/cmake/AppIcon.icns
       CACHE STRING "Icon path")
-    target_link_options(EscapeTheFate PRIVATE ""
-)
+    # target_link_options(EscapeTheFate PRIVATE "")
 endif(EMSCRIPTEN)
 
 ###### Packaging
