@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout ETF repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Download sgforge (Linux release)
         run: |
           curl -L \
@@ -30,7 +30,7 @@ jobs:
           # OR directly:
           # ./sgforge $ALL_FILES_STRING -o etf.sg
       - name: Upload packed asset
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: etf-assets
           path: etf.sg
@@ -55,9 +55,9 @@ jobs:
     environment: prod
     steps:
       - name: Checkout ETF repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Download packed assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: etf-assets
           path: .
@@ -73,7 +73,7 @@ jobs:
       - name: Configure CMake
         run: make BUILD_TYPE=Release ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
       - name: Upload artifacts
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: ${{ runner.os }}-packages
           path: |
@@ -95,12 +95,12 @@ jobs:
         with:
           cmake-version: '3.28.3'
       - name: Check out repository code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           path: repo
           submodules: recursive
       - name: Download packed assets
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: etf-assets
           path: repo
@@ -118,7 +118,7 @@ jobs:
           embuilder build sdl3 freetype ogg libpng vorbis
       - name: Actual build
         run: cd repo && make CMAKE_BUILD_TYPE=Release ENGINE_CACHED=OFF erebuild
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
           name: s3Artifact
@@ -140,11 +140,11 @@ jobs:
       - Build-Desktop
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
       - name: Fetch tags
         run: git fetch --tags --force
       - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v7
         with:
           name: ${{ matrix.os }}-artifacts
 
