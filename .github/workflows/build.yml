@@ -41,23 +41,15 @@ jobs:
         include:
           - os: windows-2025
             make_cmd: wrebuild
-            suffix: zip
-            zlib: wzlib
             name: win
           - os: macos-latest
             make_cmd: xrebuild
-            suffix: tgz
-            zlib: zlib
             name: mac
           - os: macos-latest
             make_cmd: irebuild
-            suffix: tgz
-            zlib: zlib
             name: ios-simulator
           - os: ubuntu-latest
             make_cmd: brebuild
-            suffix: tgz
-            zlib: zlib
             name: linux
     runs-on: ${{ matrix.os }}
     environment: prod
@@ -74,13 +66,17 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt-get install build-essential git make pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev libxtst-dev
+      - name: Install dependencies (Windows only)
+        if: ${{ matrix.os == 'windows-2025' }}
+        run: |
+          choco install nsis -y
       - name: Configure CMake
         run: make BUILD_TYPE=Release ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
-      - name: Save packaged artifacts
+      - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.name }}-artifacts
-          path: build/EscapeTheFate.${{ matrix.suffix }}
+          name: ${{ runner.os }}-packages
+          path: build/packages/*
    Build-Emscripten:
     needs: pack-assets
     runs-on: ubuntu-latest
@@ -134,21 +130,6 @@ jobs:
       bucket_region: "us-east-1"
       bucket_name: "etf-dev-external-site"
    Create-Release:
-    strategy:
-      matrix:
-        include:
-          - os: win
-            artifact_name: EscapeTheFate.zip
-            asset_name: supergoon_win.zip
-          - os: mac
-            artifact_name: EscapeTheFate.tgz
-            asset_name: supergoon_mac.tgz
-          - os: ios-simulator
-            artifact_name: EscapeTheFate.tgz
-            asset_name: supergoon_ios_sim.tgz
-          - os: linux
-            artifact_name: EscapeTheFate.tgz
-            asset_name: supergoon_ubuntu.tgz
     if: startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     environment: prod
@@ -173,13 +154,10 @@ jobs:
             echo 'EOF'
           } >>"${GITHUB_OUTPUT}"
       - name: Upload binaries to release
-        env:
-          ANNOTATION: ${{ steps.tag-data.outputs.git-tag-annotation }}
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: ${{ matrix.artifact_name }}
-          asset_name: ${{ matrix.asset_name }}
+          file: build/packages/*
           tag: ${{ github.ref }}
           overwrite: true
           body: ${{ steps.tag-data.outputs.annotation }}

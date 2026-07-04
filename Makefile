@@ -17,7 +17,8 @@ ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
 # UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
 # WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
-PACKAGE_COMMAND ?= cpack --config build/CPackConfig.cmake
+PACKAGE_COMMAND ?= cpack --config build/CPackConfig.cmake -C Debug
+
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
 IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
@@ -68,7 +69,7 @@ mrebuild:
 lrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) LINK_M=ON clean configure build
 xrebuild:
-	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build install devsign package
+	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF ADDITIONAL_OPTIONS="-DDISABLE_WERROR=YES" clean configure build devsign package
 brebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build package
 wrebuild:
@@ -84,7 +85,7 @@ iosrebuild:
 		ADDITIONAL_BUILD_COMMANDS=$(IOS_BUILD_COMMANDS) \
 		ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" \
 		IMGUI_DEBUGGING=OFF \
-		clean configure build install package
+		clean configure build package
 	# Custom run commands
 erun:
 	@emrun --no_browser --port 6931 ./build/bin/EscapeTheFate.html

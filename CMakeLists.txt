@@ -240,4 +240,5 @@ else()
     # or "DEB"
     # or "RPM"
 endif()
+set(CPACK_PACKAGE_DIRECTORY "${CMAKE_BINARY_DIR}/packages")
 include(CPack)
