@@ -146,7 +146,9 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v7
         with:
-          name: ${{ matrix.os }}-artifacts
+          pattern: *-packages
+          path: artifacts
+          merge_multiple: true
 
       - name: Get current tag annotation
         id: tag-data
@@ -160,7 +162,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
-          file: build/packages/*
+          file: artifacts/*-packages
+          file_glob: true
           tag: ${{ github.ref }}
           overwrite: true
           body: ${{ steps.tag-data.outputs.annotation }}
