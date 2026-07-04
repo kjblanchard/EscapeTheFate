@@ -76,7 +76,10 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: ${{ runner.os }}-packages
-          path: build/packages/*
+          path: |
+            build/packages/*.dmg
+            build/packages/*.exe
+            build/packages/*.tar.gz
    Build-Emscripten:
     needs: pack-assets
     runs-on: ubuntu-latest

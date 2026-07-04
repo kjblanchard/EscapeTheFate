@@ -28,7 +28,7 @@ UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
 # Run from the executable, cause it shows proper debug info
-RUN_CMD := ./build/bin/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+RUN_CMD := ./build/bin/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
 RUN_CMD := ./build/bin/$(EXECUTABLE_NAME)
