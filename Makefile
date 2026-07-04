@@ -91,9 +91,21 @@ erun:
 	@emrun --no_browser --port 6931 ./build/bin/EscapeTheFate.html
 
 irun:
-	xcrun simctl install 8E52A7E9-F047-4888-962D-78E252321592 build/bin/Debug/EscapeTheFate.app
+	xcrun simctl install 0A997707-21D6-4A93-AA1E-E952675BA32D build/bin/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
+#for debugging on ios simulator, in lldb
+# use idevices and make sure it's booted and installed with irun.
+idebug:
+	xcrun simctl launch --wait-for-debugger booted com.supergoon.rpg
+	lldb \
+    -o "platform select ios-simulator" \
+    -o "platform connect 0A997707-21D6-4A93-AA1E-E952675BA32D" \
+    -o "process attach --name EscapeTheFate" \
+	 # br set --name InitializeGraphicsSystem
+	# breakpoint set --name SDL_main
+	# c
+
 #Sign before we package
 devsign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/$(BUILD_TYPE)/EscapeTheFate.app
@@ -136,4 +148,5 @@ FILES := $(shell find $(DIRS) -type f \
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
 	@$(SGFORGE) $(ALL_FILES_STRING) -o etf.sg
+
 
