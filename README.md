@@ -13,6 +13,7 @@
 - BGMs created by me in Garageband
 - Arch Linux + Hyprland + Vim + gdb + Thinkpad T480 ftw
 - M1 pro Macbook Pro ftw
+- Currently no developer signature, will need to allow in macos/windows in privacy settings or Smart Scan.
 
 ## Goals
 
@@ -60,3 +61,4 @@ to discuss what you would like to change.
     by OpenGL learning
 - [ImGUI](https://github.com/ocornut/imgui) : Debug logging
 - [Gamepad icons](https://greatdocbrown.itch.io/gamepad-ui)
+- [Exe Icon](https://images.hdqwalls.com/download/fantasy-floating-islands-under-sunset-sky-hl-1366x768.jpg)
