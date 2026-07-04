@@ -106,8 +106,22 @@ if(MSVC)
   # set(INSTALL_DIR
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
+    message(STATUS "Setting Build to Universal Binary")
+    set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" FORCE)
     set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
     set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
+    set_target_properties(
+      ${EXECUTABLE_TARGET_NAME}
+      PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
+      # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+      XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
+      XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
+      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
+      # when building on github, we don't want to sign anything cause there is no cert
+      XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
+      XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
+      # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
+    )
     #Needed for codesigning and cpack
     set(CMAKE_SKIP_RPATH TRUE)
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
@@ -124,18 +138,6 @@ if(APPLE)
   set_source_files_properties(${ICON_PATH} PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   set_source_files_properties(${CMAKE_SOURCE_DIR}/cmake/Info.plist PROPERTIES MACOSX_PACKAGE_LOCATION Resources)
   set_source_files_properties(etf.sg PROPERTIES MACOSX_PACKAGE_LOCATION Resources/data)
-  set_target_properties(
-    ${EXECUTABLE_TARGET_NAME}
-    PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
-    # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
-    XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
-    XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
-    XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
-    # when building on github, we don't want to sign anything cause there is no cert
-    XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
-    XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
-    # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
-  )
 endif(APPLE)
 
 if(ENGINE_CACHED STREQUAL "ON")
