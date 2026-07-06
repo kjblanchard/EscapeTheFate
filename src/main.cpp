@@ -25,10 +25,9 @@
 #include <debug/DebugPlayers.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
-
-#include "imgui.h"
-#include "imgui_impl_opengl3.h"
-#include "imgui_impl_sdl3.h"
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl3.h>
 #endif
 
 
@@ -147,7 +146,7 @@ static void shutdownImGUI() {
 #endif
 
 void quit() {
-	GameObjectSystem::Shutdown();
+	GameObjectSystem::ShutdownGameObjectSystem();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
 	Engine::ShutdownEngine();

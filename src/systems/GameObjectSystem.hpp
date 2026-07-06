@@ -8,12 +8,12 @@ class GameObject;
 class GameObjectSystem {
    public:
 	static void Start();
-	static void Update();
 	static void Load();
+	static void Update();
 	static void Draw();
-	static void Shutdown();
 	// Add a gameobject to be managed by the gameobject system
 	static void AddGameObject(GameObject* gameobject);
+	static void ShutdownGameObjectSystem();
 
 	// Allows you go get a list of specific gameobjects, if you use specific interfaces on them, useful for querying
 	template <typename T>
