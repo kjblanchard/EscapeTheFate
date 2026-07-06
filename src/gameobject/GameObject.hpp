@@ -32,7 +32,9 @@ class GameObject {
 	virtual void Update() {};
 	virtual void Draw() {};
 
-	friend class GameObjectSystem;
+	friend void UpdateGameObjectSystem();
+	friend void LoadGameObjectSystem();
+	friend void DrawGameObjectSystem();
 };
 
 void AddGameObjectToGameObjectSystem(GameObject* gameobject);

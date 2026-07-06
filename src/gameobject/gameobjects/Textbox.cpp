@@ -13,8 +13,8 @@ using namespace std;
 
 void Textbox::Create(TiledObject* objData) {
 	auto textbox = new Textbox(objData);
-	GameObjectSystem::AddGameObject(textbox);
-	GameObjectSystem::AddGameObjectOfType<IInteractable>(textbox);
+	AddGameObject(textbox);
+	AddGameObjectOfType<IInteractable>(textbox);
 }
 
 Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
@@ -31,7 +31,7 @@ Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 }
 
 Textbox::~Textbox() {
-	GameObjectSystem::RemoveGameObjectOfType<IInteractable>(this);
+	RemoveGameObjectOfType<IInteractable>(this);
 }
 
 void Textbox::Interact() {

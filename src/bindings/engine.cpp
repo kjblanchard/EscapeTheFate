@@ -196,7 +196,7 @@ bool Engine::HandleMapLoad() {
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
 			sgLogDebug("Starting load gameobjects");
-			GameObjectSystem::Load();
+			LoadGameObjectSystem();
 			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingUI:

@@ -90,7 +90,7 @@ void update() {
 	if (!Engine::HandleMapLoad()) {
 		return;
 	}
-	GameObjectSystem::Update();
+	UpdateGameObjectSystem();
 	DialogSystem::UpdateDialogSystem();
 	UpdatePlayerSystem();
 	if (GameState::Battle::InBattle) {
@@ -108,7 +108,7 @@ static void drawImGUI() {
 #endif
 
 void draw() {
-	GameObjectSystem::Draw();
+	DrawGameObjectSystem();
 #ifdef imgui
 	drawImGUI();
 	CreateMainWindow();
@@ -146,7 +146,7 @@ static void shutdownImGUI() {
 #endif
 
 void quit() {
-	GameObjectSystem::ShutdownGameObjectSystem();
+	ShutdownGameObjectSystem();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
 	Engine::ShutdownEngine();
