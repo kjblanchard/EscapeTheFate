@@ -277,7 +277,7 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	auto sprite = NewSprite();
 	sprite->parentX = followX;
 	sprite->parentY = followY;
-	sprite->Flags |= SpriteFlagVisible;
+	sprite->Flags |= SpriteFlagVisible | SpriteFlagCameraCompensate;
 	sprite->Texture = TextureCreate(name.c_str());
 	char* buf;
 	size_t sz;
