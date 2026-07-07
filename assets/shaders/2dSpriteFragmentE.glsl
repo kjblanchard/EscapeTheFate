@@ -6,8 +6,10 @@ out vec4 FragColor;
 
 uniform sampler2D image;
 uniform vec4 spriteColor;
+uniform vec2 textureSize;
 
 void main()
 {
-    FragColor = spriteColor * texture(image, TexCoords);
+    ivec2 texel = ivec2(TexCoords * textureSize);
+    FragColor = spriteColor * texelFetch(image, texel, 0);
 }
