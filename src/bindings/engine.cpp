@@ -277,6 +277,8 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	auto sprite = NewSprite();
 	sprite->parentX = followX;
 	sprite->parentY = followY;
+	sprite->prevParentX = followX ? *followX : 0;
+	sprite->prevParentY = followY ? *followY : 0;
 	sprite->Flags |= SpriteFlagVisible | SpriteFlagCameraCompensate;
 	sprite->Texture = TextureCreate(name.c_str());
 	char* buf;
@@ -311,6 +313,8 @@ Sprite* Engine::CreateManualSpriteFull(const std::string& name, float* followX, 
 	auto sprite = NewSpriteManual();
 	sprite->parentX = followX;
 	sprite->parentY = followY;
+	sprite->prevParentX = followX ? *followX : 0;
+	sprite->prevParentY = followY ? *followY : 0;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
 	sgLogDebug("Loading sprite %s", name.c_str());
