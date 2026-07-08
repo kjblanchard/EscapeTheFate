@@ -1,6 +1,7 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/Primitives/Point.h>
 #include <Supergoon/camera.h>
+#include <Supergoon/sprite.h>
 #include <sgtools/log.h>
 #include <Supergoon/map.h>
 
@@ -75,6 +76,11 @@ void LocalPlayer::Create(TiledObject* objData) {
 		}
 		AddGameObjectToGameObjectSystem(currentPlayer);
 	}
+}
+
+LocalPlayer::~LocalPlayer() {
+	DestroySprite(Sprite_);
+	DestroySprite(InteractionSprite_);
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<Player>& player) : GameObject(objData->X, objData->Y), Player_(player) {

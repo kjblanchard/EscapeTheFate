@@ -22,7 +22,7 @@ class LocalPlayer : public GameObject {
    public:
 	static void Create(TiledObject* objData);
 	static void CreatePlayerTwo(TiledObject* objData);
-	// ~LocalPlayer();
+	~LocalPlayer() override;
 
    private:
 	void Start() override;
