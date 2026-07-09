@@ -31,6 +31,7 @@ void UpdateGameObjectSystem() {
 
 void LoadGameObjectSystem() {
 	if (!_currentMap) return;
+	BattleLocation::ClearAllBattleLocations();
 	for (auto& currentGo : gameObjects) {
 		if (currentGo->DoNotDestroy_) continue;
 		currentGo->ShouldBeDestroyed_ = true;
