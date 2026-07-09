@@ -8,9 +8,9 @@ class Player {
 	// Used for input functions
 	const Controller& GetController() const;
 	Player();
+	std::shared_ptr<Controller> Controller_;
 
    private:
-	std::shared_ptr<Controller> Controller_;
 	int PlayerNum_;
 	// ImGUI debugging
 	friend void DisplayPlayersTab();

@@ -16,6 +16,7 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	_filename = args.Filename;
 	_priority = args.Priority;
 	_name = args.Name;
+	_visible = args.Visible;
 	_debugBox = args.DebugBox;
 	_color = args.DrawColor;
 	_texture = TextureCreate(_filename.c_str());

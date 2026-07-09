@@ -8,6 +8,7 @@
 #include <ui/uiAnimation.hpp>
 
 using namespace Etf;
+using namespace PlayerSystem;
 using namespace std;
 
 static constexpr int sMaxNumLocalPlayers_ = 2;	// only support 2 in local mode.
@@ -64,7 +65,7 @@ static struct PlayersUI {
 // 	}
 // }
 
-void Etf::StartPlayerSystem() {
+void Etf::PlayerSystem::StartPlayerSystem() {
 	for (auto i = 0; i < geGamepadMaxPads(); ++i) {
 		sControllers[i] = make_shared<Controller>();
 	}
@@ -108,7 +109,7 @@ static void updateUI() {
 	}
 }
 
-void Etf::UpdatePlayerSystem() {
+void Etf::PlayerSystem::UpdatePlayerSystem() {
 	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
 		auto& player = sPlayers[i];
 		auto& controller = player->Controller_;
@@ -126,13 +127,13 @@ void Etf::UpdatePlayerSystem() {
 	}
 }
 
-void Etf::ShutdownPlayerSystem() {
+void Etf::PlayerSystem::ShutdownPlayerSystem() {
 	for (auto player : sPlayers) {
 		player.reset();
 	}
 }
 
-const shared_ptr<Player>& Etf::GetPlayerByNum(int playerNum) {
+const shared_ptr<Player>& Etf::PlayerSystem::GetPlayerByNum(int playerNum) {
 	auto playerNumToReturn = playerNum > sMaxNumLocalPlayers_ ? 0 : playerNum;
 	return sPlayers[playerNumToReturn];
 }

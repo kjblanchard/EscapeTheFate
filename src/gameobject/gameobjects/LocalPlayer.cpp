@@ -43,12 +43,12 @@ void LocalPlayer::Create(TiledObject* objData) {
 	if (loadLocation != GameState::NextLoadScreen) return;
 	sgLogDebug("Making player start at pos %d!!", loadLocation);
 	// We should assign player to this, based on what we are creating.. for now, just assign the initial player to it.
-	auto player = GetPlayerByNum(0);
+	auto player = PlayerSystem::GetPlayerByNum(0);
 
 	auto p1 = new LocalPlayer(objData, player);
 	vector<LocalPlayer*> players = {p1};
 	if (GameState::Players::Player2Spawned) {
-		player = GetPlayerByNum(1);
+		player = PlayerSystem::GetPlayerByNum(1);
 		players.emplace_back(new LocalPlayer(objData, player));
 	}
 	// We should override this if we are exiting from a battle.

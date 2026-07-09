@@ -5,9 +5,6 @@
 #include <Supergoon/camera.h>
 #include <Supergoon/engine.h>
 #include <Supergoon/state.h>
-#include <Supergoon/window.h>
-#include <sgtools/log.h>
-// #include <steam/steam_api.h>
 
 #include <bindings/Controller.hpp>
 #include <bindings/engine.hpp>
@@ -19,56 +16,46 @@
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
+#include "SDL3/SDL_events.h"
+#include "debug/DebugCamera.hpp"
+#include "debug/DebugPlayers.hpp"
+#include "debug/DebugUI.hpp"
+#include "debug/DebugWindow.hpp"
 
 #ifdef imgui
+#include <Supergoon/Platform/sdl/sdlWindow.h>
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl3.h>
+
 #include <debug/DebugCamera.hpp>
 #include <debug/DebugPlayers.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
-#include <imgui.h>
-#include <imgui_impl_opengl3.h>
-#include <imgui_impl_sdl3.h>
 #endif
+
 
 
 namespace Etf {
 static const int B = 27;
 
-#ifdef imgui
-static void startImGUI() {
-	IMGUI_CHECKVERSION();
-	ImGui::CreateContext();
-	ImGuiIO& io = ImGui::GetIO();
-	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
-	ImGui::StyleColorsClassic();
-	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
-	ImGui_ImplOpenGL3_Init();
-}
-#endif
 
 void initialize() {
-	sgSetLogLevel(sgLogLevelWarn);
 	Engine::InitializeEngine();
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
-	auto& _gameConfig = GameConfig::GetGameConfig();
-	sgSetLogLevel(_gameConfig.debug.debugLevel);
-	SetWindowOptions(_gameConfig.window.xWin, _gameConfig.window.yWin, _gameConfig.window.title.c_str());
-	SetGlobalBgmVolume(_gameConfig.audio.bgmVolume);
-	// if (!SteamAPI_Init()) {
-	// 	sgLogError("Fatal Error - Steam must be running to play this game (SteamAPI_Init() failed).\n");
-	// }
+	auto& gameConfig = GameConfig::GetGameConfig();
+	Engine::SetLogLevel(gameConfig.debug.debugLevel);
+	Engine::SetupWindow(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title);
+	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
 }
 
 void start() {
-	auto& _gameConfig = GameConfig::GetGameConfig();
-	GraphicsSetLogicalWorldSize(_gameConfig.window.x, _gameConfig.window.y);
-	// Initial load screen.
+	auto& gameConfig = GameConfig::GetGameConfig();
+	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
 	Engine::LoadScene("", 0.1f, 1.75, false);
-	// Start all systems
-	// Player system relies on the UI being initialized
-	StartPlayerSystem();
+	PlayerSystem::StartPlayerSystem();
 #ifdef imgui
-	startImGUI();
+	Engine::ImGui::StartImGui();
 	AddTabFuncToMainWindow(DisplayPlayersTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);
 	AddTabFuncToMainWindow(DisplayUITab);
@@ -92,7 +79,7 @@ void update() {
 	}
 	UpdateGameObjectSystem();
 	DialogSystem::UpdateDialogSystem();
-	UpdatePlayerSystem();
+	PlayerSystem::UpdatePlayerSystem();
 	if (GameState::Battle::InBattle) {
 		BattleSystem::BattleSystemUpdate();
 	}

@@ -31,7 +31,7 @@
 				"rect": { "x": 180, "y": 0, "w": 100, "h": 40 },
 				"file": "uibase",
 				"type": "nineSlice",
-				"visible": true,
+				"visible": false,
 				"scale": 1.0,
 				"color": { "R": 80, "G": 0, "B": 120, "A": 150 },
 				"srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },

@@ -12,6 +12,7 @@
 #include <Supergoon/sprite.h>
 #include <Supergoon/state.h>
 #include <Supergoon/text.h>
+#include <Supergoon/window.h>
 #include <sgforge/directory.h>
 #include <sgforge/unpack.h>
 #include <sgtools/log.h>
@@ -29,8 +30,36 @@
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
+#ifdef imgui
+#include <Supergoon/Platform/sdl/sdlWindow.h>
+#include <imgui.h>
+#include <imgui_impl_opengl3.h>
+#include <imgui_impl_sdl3.h>
+
+#include <debug/DebugCamera.hpp>
+#include <debug/DebugPlayers.hpp>
+#include <debug/DebugUI.hpp>
+#include <debug/DebugWindow.hpp>
+#endif
+
 using namespace Etf;
 using namespace std;
+
+#ifdef imgui
+static void startImGUI() {
+	IMGUI_CHECKVERSION();
+	ImGui::CreateContext();
+	ImGuiIO& io = ImGui::GetIO();
+	io.ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+	ImGui::StyleColorsClassic();
+	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
+	ImGui_ImplOpenGL3_Init();
+}
+#endif
+
+void Engine::ImGui::StartImGui() {
+	startImGUI();
+}
 
 static Directory* sDirectory = nullptr;
 
@@ -81,11 +110,20 @@ const std::string& Engine::CurrentScene() {
 }
 
 void Engine::InitializeEngine() {
+	sgSetLogLevel(sgLogLevelWarn);
 	auto filePath = GetBasePath();
 	auto fullFile = string(filePath) + "data/etf.sg";
 	sDirectory = LoadDirectoryFromFile(fullFile.c_str());
 	AssetDirectory = sDirectory;
 	ShaderSetDirectory(sDirectory);
+}
+
+void Engine::SetLogLevel(int logLevel) {
+	sgSetLogLevel(logLevel);
+}
+
+void Engine::SetupWindow(int width, int height, std::string& windowName) {
+	SetWindowOptions(width, height, windowName.c_str());
 }
 
 void Engine::ShutdownEngine() {
@@ -139,7 +177,7 @@ static void loadEnd() {
 	GameState::Battle::ExitingFromBattle = false;
 }
 
-void Engine::loadSceneInternal() {
+static void loadSceneInternal() {
 	sgLogDebug("Starting load map");
 	char* buf;
 	size_t sz;
@@ -279,7 +317,7 @@ Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float*
 	sprite->parentY = followY;
 	sprite->prevParentX = followX ? *followX : 0;
 	sprite->prevParentY = followY ? *followY : 0;
-	sprite->Flags |= SpriteFlagVisible | SpriteFlagCameraCompensate;
+	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
 	char* buf;
 	size_t sz;
@@ -409,6 +447,10 @@ void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
 	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, sDirectory);
 	LoadBgmBuffer(fullPath.c_str(), volume, -1, buf, sz);
 	PlayBgm();
+}
+
+void Engine::Audio::SetGlobalBGMVolume(float volume) {
+	SetGlobalBgmVolume(volume);
 }
 
 void Engine::Audio::StopBGMBackground() {
