@@ -55,11 +55,14 @@ static void startImGUI() {
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
 }
-#endif
 
 void Engine::ImGui::StartImGui() {
 	startImGUI();
 }
+#else
+void Engine::ImGui::StartImGui() {
+}
+#endif
 
 static Directory* sDirectory = nullptr;
 
