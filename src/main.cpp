@@ -1,17 +1,14 @@
 #include <bindings/engine.hpp>
+#include <debug/DebugCamera.hpp>
+#include <debug/DebugPlayers.hpp>
+#include <debug/DebugUI.hpp>
+#include <debug/DebugWindow.hpp>
 #include <gameState.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
-
-#ifdef imgui
-#include <debug/DebugCamera.hpp>
-#include <debug/DebugPlayers.hpp>
-#include <debug/DebugUI.hpp>
-#include <debug/DebugWindow.hpp>
-#endif
 
 namespace Etf {
 
@@ -23,11 +20,12 @@ static void start() {
 	Engine::StartEngine();
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	PlayerSystem::StartPlayerSystem();
-	// setup debug windows
+#ifdef imgui
 	Engine::DebugUI::StartImGui();
 	AddTabFuncToMainWindow(DisplayPlayersTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);
 	AddTabFuncToMainWindow(DisplayUITab);
+#endif
 }
 
 static int handleEvent(void* event) {
