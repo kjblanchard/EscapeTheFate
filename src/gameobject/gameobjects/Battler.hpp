@@ -16,7 +16,7 @@ struct BattlerArgs {
 class Battler : public GameObject {
    public:
 	Battler(const BattlerArgs& args);
-	virtual ~Battler() = default;
+	~Battler() override;
 	inline float SpriteX() { return X() + _battlerData->Location.x; }
 	float SpriteWidth();
 	float SpriteHeight();

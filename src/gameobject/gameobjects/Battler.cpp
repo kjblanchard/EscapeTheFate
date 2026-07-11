@@ -1,4 +1,5 @@
 #include <Supergoon/Animation/animator.h>
+#include <Supergoon/sprite.h>
 #include <sgtools/log.h>
 #include <Supergoon/state.h>
 
@@ -11,6 +12,10 @@
 #include "gameobject/GameObject.hpp"
 using namespace std;
 using namespace Etf;
+
+Battler::~Battler() {
+	DestroySprite(_sprite);
+}
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), _battlerData(args.BattleData) {
 	auto spriteName = format("{}.png", args.BattleData->Sprite.c_str());

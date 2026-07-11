@@ -1,6 +1,5 @@
 #include <Supergoon/map.h>
 
-#include <algorithm>
 #include <functional>
 #include <gameobject/GameObject.hpp>
 #include <gameobject/gameobjects/BattleLocation.hpp>
@@ -12,61 +11,61 @@
 #include <systems/GameObjectSystem.hpp>
 #include <unordered_map>
 #include <vector>
-using namespace Etf;
 using namespace std;
-
-std::vector<shared_ptr<GameObject>> kGameObjects;
-std::vector<weak_ptr<IInteractable>> kInteractables;
-std::unordered_map<int, std::function<void(TiledObject* objData)>> kLoadMap = {
+namespace Etf {
+static vector<shared_ptr<GameObject>> gameObjects;
+static vector<weak_ptr<IInteractable>> interactableGameObjects;
+static unordered_map<int, function<void(TiledObject* objData)>> gameobjectLoadFunctions = {
 	{4, LocalPlayer::Create},
 	{5, Textbox::Create},
 	{2, MapExit::Create},
 	{6, BattleLocation::Create},
 };
 
-void GameObjectSystem::Load() {
+void StartGameObjectSystem() {}
+void UpdateGameObjectSystem() {
+	for (auto& gameobject : gameObjects) {
+		gameobject->Update();
+	}
+}
+
+void LoadGameObjectSystem() {
 	if (!_currentMap) return;
-	for (auto& currentGo : kGameObjects) {
+	BattleLocation::ClearAllBattleLocations();
+	for (auto& currentGo : gameObjects) {
 		if (currentGo->DoNotDestroy_) continue;
 		currentGo->ShouldBeDestroyed_ = true;
 	}
 	// Load new gameobjects
 	for (auto i = 0; i < _currentMap->NumObjects; ++i) {
 		auto currentObject = &_currentMap->Objects[i];
-		auto it = kLoadMap.find(currentObject->ObjectType);
-		if (it == kLoadMap.end()) continue;
+		auto it = gameobjectLoadFunctions.find(currentObject->ObjectType);
+		if (it == gameobjectLoadFunctions.end()) continue;
 		it->second(currentObject);
 	}
-	// Remove_if basically moves the items to the end of the vector and moves around things, but does not actually erase them, which is needed to destroy the players properly
-	kGameObjects.erase(
+	gameObjects.erase(
 		std::remove_if(
-			kGameObjects.begin(),
-			kGameObjects.end(),
+			gameObjects.begin(),
+			gameObjects.end(),
 			[](auto& go) {
 				return go->ShouldBeDestroyed_;
 			}),
-		kGameObjects.end());
+		gameObjects.end());
 }
 
-void GameObjectSystem::Start() {}
-
-void GameObjectSystem::Update() {
-	for (auto& gameobject : kGameObjects) {
-		gameobject->Update();
-	}
-}
-
-void GameObjectSystem::AddGameObject(GameObject* gameobject) {
-	kGameObjects.push_back(shared_ptr<GameObject>(gameobject));
-}
-
-void GameObjectSystem::Draw() {
-	for (auto& gameobject : kGameObjects) {
+void DrawGameObjectSystem() {
+	for (auto& gameobject : gameObjects) {
 		gameobject->Draw();
 	}
 }
 
-void GameObjectSystem::Shutdown() {
-	kGameObjects.clear();
-	kInteractables.clear();
+void AddGameObject(GameObject* gameobject) {
+	gameObjects.push_back(shared_ptr<GameObject>(gameobject));
 }
+
+
+void ShutdownGameObjectSystem() {
+	gameObjects.clear();
+	interactableGameObjects.clear();
+}
+}  // namespace Etf

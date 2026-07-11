@@ -132,6 +132,7 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
 	args.Scale = jint(data, "scale");
+	args.Visible = jbool(data, "visible");
 	args.Xoffset = jint(data, "xOffset");
 	args.Yoffset = jint(data, "xOffset");
 	args.DebugBox = jbool(data, "debug");
