@@ -12,11 +12,11 @@
 
 namespace Etf {
 
-static void initialize() {
+void initialize() {
 	Engine::InitializeEngine("gameConfig.json");
 }
 
-static void start() {
+void start() {
 	Engine::StartEngine();
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	PlayerSystem::StartPlayerSystem();
@@ -28,12 +28,12 @@ static void start() {
 #endif
 }
 
-static int handleEvent(void* event) {
+int handleEvent(void* event) {
 	Engine::DebugUI::HandleEvent(event);
 	return false;
 }
 
-static void update() {
+void update() {
 	// If we are currently loading, do not update things.
 	Engine::Update();
 	if (!Engine::HandleMapLoad()) {
@@ -47,12 +47,12 @@ static void update() {
 	}
 }
 
-static void draw() {
+void draw() {
 	DrawGameObjectSystem();
 	Engine::DebugUI::Draw();
 }
 
-static void quit() {
+void quit() {
 	ShutdownGameObjectSystem();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
