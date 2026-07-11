@@ -82,7 +82,7 @@ void Engine::DebugUI::ShutdownImGui() {
 }
 #else
 void Engine::DebugUI::StartImGui() {}
-void Engine::DebugUI::HandleEvent() {}
+void Engine::DebugUI::HandleEvent(void* event) {}
 void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
 void Engine::DebugUI::ShutdownImGui() {}
