@@ -31,7 +31,9 @@
 #include <ui/ui.hpp>
 
 #ifdef imgui
+#include <SDL3/SDL_events.h>
 #include <Supergoon/Platform/sdl/sdlWindow.h>
+#include <imconfig.h>
 #include <imgui.h>
 #include <imgui_impl_opengl3.h>
 #include <imgui_impl_sdl3.h>
@@ -46,7 +48,7 @@ using namespace Etf;
 using namespace std;
 
 #ifdef imgui
-static void startImGUI() {
+void Engine::DebugUI::StartImGui() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
@@ -56,12 +58,34 @@ static void startImGUI() {
 	ImGui_ImplOpenGL3_Init();
 }
 
-void Engine::ImGui::StartImGui() {
-	startImGUI();
+void Engine::DebugUI::HandleEvent(void* event) {
+	auto sdlEvent = static_cast<SDL_Event*>(event);
+	ImGui_ImplSDL3_ProcessEvent(sdlEvent);
+}
+void Engine::DebugUI::Draw() {
+	ImGui_ImplOpenGL3_NewFrame();
+	ImGui_ImplSDL3_NewFrame();
+	ImGui::NewFrame();
+	ImGui::ShowDemoWindow();
+	CreateMainWindow();
+}
+
+void Engine::DebugUI::Render() {
+	ImGui::Render();
+	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+}
+
+void Engine::DebugUI::ShutdownImGui() {
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
+	ImGui::DestroyContext();
 }
 #else
-void Engine::ImGui::StartImGui() {
-}
+void Engine::DebugUI::StartImGui() {}
+void Engine::DebugUI::HandleEvent() {}
+void Engine::DebugUI::Draw() {}
+void Engine::DebugUI::Render() {}
+void Engine::DebugUI::ShutdownImGui() {}
 #endif
 
 static Directory* sDirectory = nullptr;
@@ -112,13 +136,28 @@ const std::string& Engine::CurrentScene() {
 	return _sceneData.CurrentScene;
 }
 
-void Engine::InitializeEngine() {
+void Engine::InitializeEngine(const string& gameconfigFileName) {
 	sgSetLogLevel(sgLogLevelWarn);
 	auto filePath = GetBasePath();
 	auto fullFile = string(filePath) + "data/etf.sg";
 	sDirectory = LoadDirectoryFromFile(fullFile.c_str());
 	AssetDirectory = sDirectory;
 	ShaderSetDirectory(sDirectory);
+	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
+	auto& gameConfig = GameConfig::GetGameConfig();
+	Engine::SetLogLevel(gameConfig.debug.debugLevel);
+	Engine::SetupWindow(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title);
+	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
+}
+
+void Engine::StartEngine() {
+	auto& gameConfig = GameConfig::GetGameConfig();
+	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
+}
+
+void Engine::Update() {
+	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
+	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 }
 
 void Engine::SetLogLevel(int logLevel) {
@@ -522,3 +561,5 @@ void Engine::PreloadAssets() {
 	LoadAllTexturesFromFolder(textureFolder);
 	loadAllMaps();
 }
+
+void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::Engine::DebugUI::Render;

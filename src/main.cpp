@@ -16,11 +16,6 @@
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
-#include "SDL3/SDL_events.h"
-#include "debug/DebugCamera.hpp"
-#include "debug/DebugPlayers.hpp"
-#include "debug/DebugUI.hpp"
-#include "debug/DebugWindow.hpp"
 
 #ifdef imgui
 #include <Supergoon/Platform/sdl/sdlWindow.h>
@@ -34,46 +29,32 @@
 #include <debug/DebugWindow.hpp>
 #endif
 
-
-
 namespace Etf {
 static const int B = 27;
 
-
 void initialize() {
-	Engine::InitializeEngine();
-	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
-	auto& gameConfig = GameConfig::GetGameConfig();
-	Engine::SetLogLevel(gameConfig.debug.debugLevel);
-	Engine::SetupWindow(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title);
-	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
+	Engine::InitializeEngine("gameConfig.json");
 }
 
 void start() {
-	auto& gameConfig = GameConfig::GetGameConfig();
-	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
+	Engine::StartEngine();
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	PlayerSystem::StartPlayerSystem();
-#ifdef imgui
-	Engine::ImGui::StartImGui();
+	//setup debug windows
+	Engine::DebugUI::StartImGui();
 	AddTabFuncToMainWindow(DisplayPlayersTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);
 	AddTabFuncToMainWindow(DisplayUITab);
-#endif
 }
 
 int handleEvent(void* event) {
-#ifdef imgui
-	auto sdlEvent = static_cast<SDL_Event*>(event);
-	ImGui_ImplSDL3_ProcessEvent(sdlEvent);
-#endif
+	Engine::DebugUI::HandleEvent(event);
 	return false;
 }
 
 void update() {
-	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
-	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	// If we are currently loading, do not update things.
+	Engine::Update();
 	if (!Engine::HandleMapLoad()) {
 		return;
 	}
@@ -85,32 +66,9 @@ void update() {
 	}
 }
 
-#ifdef imgui
-static void drawImGUI() {
-	ImGui_ImplOpenGL3_NewFrame();
-	ImGui_ImplSDL3_NewFrame();
-	ImGui::NewFrame();
-	ImGui::ShowDemoWindow();  // Show demo window! :)
-}
-#endif
-
 void draw() {
 	DrawGameObjectSystem();
-#ifdef imgui
-	drawImGUI();
-	CreateMainWindow();
-#endif
-}
-
-void drawUI() {
-	UI::DrawUI();
-}
-
-void postDraw() {
-#ifdef imgui
-	ImGui::Render();
-	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-#endif
+	Engine::DebugUI::Draw();
 }
 
 static void enterBattle() {
@@ -124,22 +82,12 @@ void handleInput() {
 	}
 }
 
-#ifdef imgui
-static void shutdownImGUI() {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL3_Shutdown();
-	ImGui::DestroyContext();
-}
-#endif
-
 void quit() {
 	ShutdownGameObjectSystem();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
 	Engine::ShutdownEngine();
-#ifdef imgui
-	shutdownImGUI();
-#endif
+	Engine::DebugUI::ShutdownImGui();
 }
 }  // namespace Etf
 
@@ -150,5 +98,3 @@ void (*_drawFunc)(void) = Etf::draw;
 void (*_quitFunc)(void) = Etf::quit;
 void (*_inputFunc)(void) = Etf::handleInput;
 int (*_handleEventFunc)(void*) = Etf::handleEvent;
-void (*GraphicsPostFBODrawUIFunc)(void) = Etf::drawUI;
-void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::postDraw;

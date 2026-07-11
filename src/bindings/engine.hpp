@@ -33,7 +33,8 @@ enum class ScreenFadeTypes {
 };
 
 namespace Engine {
-void InitializeEngine();
+void InitializeEngine(const std::string& gameconfigFileName);
+void StartEngine();
 void SetLogLevel(int logLevel);
 void SetupWindow(int width, int height, std::string& windowName);
 void ShutdownEngine();
@@ -52,6 +53,7 @@ bool HandleMapLoad();
 void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
 // if screen is fading, updates the time on it and tweens the fade.
 void UpdateScreenFade();
+void Update();
 void PreloadAssets();
 namespace Textures {
 void LoadTextureFromBuffer(Texture* tex, const std::string& name);
@@ -66,8 +68,12 @@ void SetGlobalBGMVolume(float volume);
 void StopBGMBackground();
 }  // namespace Audio
 
-namespace ImGui {
+namespace DebugUI {
 void StartImGui();
+void HandleEvent(void* event);
+void Draw();
+void Render();
+void ShutdownImGui();
 
 }
 

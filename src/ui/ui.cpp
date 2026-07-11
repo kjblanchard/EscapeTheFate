@@ -105,7 +105,7 @@ static UIImage* createImage(const string& name, json_object* data) {
 	args.Filename = jstr(data, "file");
 	args.Scale = jfloat(data, "scale");
 	args.DebugBox = jbool(data, "debug");
-	args.Visible = jbool(data, "visible");
+	args.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
 	args.Name = name;
 	return new UIImage(args);
 }
@@ -132,7 +132,7 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
 	args.Scale = jint(data, "scale");
-	args.Visible = jbool(data, "visible");
+	args.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
 	args.Xoffset = jint(data, "xOffset");
 	args.Yoffset = jint(data, "xOffset");
 	args.DebugBox = jbool(data, "debug");
@@ -271,3 +271,5 @@ UIObject* UI::GetRootUIObject() {
 	}
 	return _rootUIObject.get();
 }
+
+void (*GraphicsPostFBODrawUIFunc)(void) = UI::DrawUI;
