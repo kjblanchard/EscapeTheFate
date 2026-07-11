@@ -11,7 +11,11 @@ using namespace std;
 static vector<function<void()>> TabDrawFunctions_;
 
 void Etf::AddTabFuncToMainWindow(std::function<void()> drawFunc) {
+#ifdef imgui
 	TabDrawFunctions_.push_back(drawFunc);
+#else
+	return;
+#endif
 }
 
 void Etf::CreateMainWindow() {
