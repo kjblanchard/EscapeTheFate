@@ -6,10 +6,14 @@ using namespace Etf;
 using namespace std;
 
 void Etf::DisplayPlayerControllerTab() {
+#ifdef imgui
 	if (ImGui::CollapsingHeader("Players")) {
 		for (auto i = 0; i < 2; ++i) {
 			auto& player = PlayerSystem::GetPlayerByNum(i);
 			ImGui::Text("PlayerNum: %s", to_string(player->PlayerNum_).c_str());
 		}
 	}
+#else
+	return;
+#endif
 }

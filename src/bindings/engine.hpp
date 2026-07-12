@@ -1,6 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
+#include <functional>
 
 #include <string>
 struct Sprite;
@@ -32,14 +33,26 @@ enum class ScreenFadeTypes {
 	FadeOut,
 };
 
+struct EngineInitializeArgs {
+	std::string GameConfigFilename;
+	void (*InitializeFunc)(void);
+	void (*StartFunc)(void);
+	void (*UpdateFunc)(void);
+	void (*DrawFunc)(void);
+	void (*QuitFunc)(void);
+	void (*InputFunc)(void);
+	int (*HandleEventFunc)(void*);
+	void (*GraphicsPostFBODrawDebugFunc)(void);
+};
+
 namespace Engine {
-void InitializeEngine(const std::string& gameconfigFileName);
+void InitializeEngine(EngineInitializeArgs args);
 void StartEngine();
 void SetLogLevel(int logLevel);
 void SetupWindow(int width, int height, std::string& windowName);
 void ShutdownEngine();
 const std::string& CurrentScene();
-//Empty string will load the default scene set in the gameconfig.
+// Empty string will load the default scene set in the gameconfig.
 void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
 // TODO Do we even need this anymore?  Probably not
 Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
@@ -69,13 +82,14 @@ void StopBGMBackground();
 }  // namespace Audio
 
 namespace DebugUI {
-void StartImGui();
+void Start();
+void AddTab(std::function<void()> func);
 void HandleEvent(void* event);
 void Draw();
 void Render();
 void ShutdownImGui();
 
-}
+}  // namespace DebugUI
 
 namespace Tweening {
 enum class TweenEaseTypes {

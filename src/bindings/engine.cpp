@@ -48,7 +48,7 @@ using namespace Etf;
 using namespace std;
 
 #ifdef imgui
-void Engine::DebugUI::StartImGui() {
+void Engine::DebugUI::Start() {
 	IMGUI_CHECKVERSION();
 	ImGui::CreateContext();
 	ImGuiIO& io = ImGui::GetIO();
@@ -67,7 +67,7 @@ void Engine::DebugUI::Draw() {
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();
-	CreateMainWindow();
+	DrawMainDebugWindow();
 }
 
 void Engine::DebugUI::Render() {
@@ -80,12 +80,16 @@ void Engine::DebugUI::ShutdownImGui() {
 	ImGui_ImplSDL3_Shutdown();
 	ImGui::DestroyContext();
 }
+void Engine::DebugUI::AddTab(std::function<void()> func) {
+	AddTabFuncToMainDebugWindow(func);
+}
 #else
-void Engine::DebugUI::StartImGui() {}
+void Engine::DebugUI::Start() {}
 void Engine::DebugUI::HandleEvent(void* event) {}
 void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
 void Engine::DebugUI::ShutdownImGui() {}
+void Engine::DebugUI::AddTab(std::function<void()> func) {}
 #endif
 
 static Directory* sDirectory = nullptr;
@@ -136,8 +140,15 @@ const std::string& Engine::CurrentScene() {
 	return _sceneData.CurrentScene;
 }
 
-void Engine::InitializeEngine(const string& gameconfigFileName) {
+void Engine::InitializeEngine(EngineInitializeArgs args) {
 	sgSetLogLevel(sgLogLevelWarn);
+	SetInitializeFunction(args.InitializeFunc);
+	SetStartFunction(args.StartFunc);
+	SetUpdateFunction(args.UpdateFunc);
+	SetHandleEventFunction(args.HandleEventFunc);
+	SetDrawFunction(args.DrawFunc);
+	SetDrawUIFunction(UI::DrawUI);
+	SetQuitFunction(args.QuitFunc);
 	auto filePath = GetBasePath();
 	auto fullFile = string(filePath) + "data/etf.sg";
 	sDirectory = LoadDirectoryFromFile(fullFile.c_str());

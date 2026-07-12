@@ -5,6 +5,7 @@
 using namespace Etf;
 
 void Etf::DisplayCameraTab() {
+#ifdef imgui
 	if (ImGui::CollapsingHeader("Camera")) {
 		static float* camPosX = nullptr;
 		static float* camPosY = nullptr;
@@ -27,4 +28,7 @@ void Etf::DisplayCameraTab() {
 			}
 		}
 	}
+#else
+	return;
+#endif
 }

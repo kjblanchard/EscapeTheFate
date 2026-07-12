@@ -10,15 +10,12 @@ using namespace std;
 
 static vector<function<void()>> TabDrawFunctions_;
 
-void Etf::AddTabFuncToMainWindow(std::function<void()> drawFunc) {
-#ifdef imgui
+void Etf::AddTabFuncToMainDebugWindow(std::function<void()> drawFunc) {
 	TabDrawFunctions_.push_back(drawFunc);
-#else
-	return;
-#endif
 }
 
-void Etf::CreateMainWindow() {
+void Etf::DrawMainDebugWindow() {
+#ifdef imgui
 	static bool p_open = true;
 	static bool no_titlebar = false;
 	static bool no_scrollbar = false;
@@ -75,4 +72,7 @@ void Etf::CreateMainWindow() {
 	}
 
 	ImGui::End();
+#else
+	return;
+#endif
 }

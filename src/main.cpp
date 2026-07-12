@@ -15,19 +15,16 @@
 namespace Etf {
 
 void initialize() {
-	Engine::InitializeEngine("gameConfig.json");
+	Engine::DebugUI::AddTab(DisplayCameraTab);
+	Engine::DebugUI::AddTab(DisplayPlayerControllerTab);
+	Engine::DebugUI::AddTab(DisplayUITab);
 }
 
 void start() {
 	Engine::StartEngine();
 	Engine::LoadScene("", 0.1f, 1.75, false);
 	PlayerSystem::StartPlayerSystem();
-#ifdef imgui
-	Engine::DebugUI::StartImGui();
-	AddTabFuncToMainWindow(DisplayPlayerControllerTab);
-	AddTabFuncToMainWindow(DisplayCameraTab);
-	AddTabFuncToMainWindow(DisplayUITab);
-#endif
+	Engine::DebugUI::Start();
 }
 
 int handleEvent(void* event) {
@@ -62,11 +59,18 @@ void quit() {
 	Engine::DebugUI::ShutdownImGui();
 }
 }  // namespace Etf
-
-void (*_initializeFunc)(void) = Etf::initialize;
-void (*_inputFunc)(void) = nullptr;
-void (*_startFunc)(void) = Etf::start;
-void (*_updateFunc)(void) = Etf::update;
-void (*_drawFunc)(void) = Etf::draw;
-void (*_quitFunc)(void) = Etf::quit;
-int (*_handleEventFunc)(void*) = Etf::handleEvent;
+   //
+void InitializeEngineFunctions() {
+	auto args = Etf::EngineInitializeArgs{
+		"gameConfig.json",
+		Etf::initialize,
+		Etf::start,
+		Etf::update,
+		Etf::draw,
+		Etf::quit,
+		nullptr,
+		Etf::handleEvent,
+		nullptr,
+	};
+	Etf::Engine::InitializeEngine(args);
+}
