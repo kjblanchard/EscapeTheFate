@@ -11,7 +11,7 @@ void GameObject::SetX(float x) { X_ = x; }
 void GameObject::SetY(float y) { Y_ = y; }
 
 void Etf::AddGameObjectToGameObjectSystem(GameObject* gameobject) {
-	AddGameObject(gameobject);
+	GameObjectSystem::AddGameObject(gameobject);
 }
 
 float* GameObject::GetXHandle() { return &X_; }

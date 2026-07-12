@@ -1,5 +1,3 @@
-#include <Supergoon/engine.h>
-
 #include <bindings/engine.hpp>
 #include <debug/DebugCamera.hpp>
 #include <debug/DebugPlayers.hpp>
@@ -33,33 +31,28 @@ int handleEvent(void* event) {
 }
 
 void update() {
-	// If we are currently loading, do not update things.
 	Engine::Update();
-	if (!Engine::HandleMapLoad()) {
-		return;
-	}
-	UpdateGameObjectSystem();
+	if (!Engine::HandleMapLoad()) return;
+	GameObjectSystem::UpdateGameObjectSystem();
 	DialogSystem::UpdateDialogSystem();
 	PlayerSystem::UpdatePlayerSystem();
-	if (GameState::Battle::InBattle) {
-		BattleSystem::BattleSystemUpdate();
-	}
+	if (GameState::Battle::InBattle) BattleSystem::BattleSystemUpdate();
 }
 
 void draw() {
-	DrawGameObjectSystem();
+	GameObjectSystem::DrawGameObjectSystem();
 	Engine::DebugUI::Draw();
 }
 
 void quit() {
-	ShutdownGameObjectSystem();
+	GameObjectSystem::ShutdownGameObjectSystem();
 	UI::DestroyUI();
 	DialogSystem::ShutdownDialogSystem();
-	Engine::ShutdownEngine();
-	Engine::DebugUI::ShutdownImGui();
+	Engine::Shutdown();
 }
 }  // namespace Etf
-   //
+
+extern "C" {
 void InitializeEngineFunctions() {
 	auto args = Etf::EngineInitializeArgs{
 		"gameConfig.json",
@@ -73,4 +66,5 @@ void InitializeEngineFunctions() {
 		nullptr,
 	};
 	Etf::Engine::InitializeEngine(args);
+}
 }

@@ -134,7 +134,7 @@ void LocalPlayer::updateInteractionRect() {
 void LocalPlayer::handleInteractions() {
 	updateInteractionRect();
 	IInteractable* interactable = nullptr;
-	for (auto interact : GetGameObjectsOfType<IInteractable>()) {
+	for (auto interact : GameObjectSystem::GetGameObjectsOfType<IInteractable>()) {
 		if (Engine::CheckForRectCollision(InteractionRect_, interact->InteractionRect)) {
 			interactable = interact;
 			break;

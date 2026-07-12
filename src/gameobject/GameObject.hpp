@@ -1,4 +1,5 @@
 #pragma once
+#include "systems/GameObjectSystem.hpp"
 struct TiledObject;
 namespace Etf {
 
@@ -32,9 +33,9 @@ class GameObject {
 	virtual void Update() {};
 	virtual void Draw() {};
 
-	friend void UpdateGameObjectSystem();
-	friend void LoadGameObjectSystem();
-	friend void DrawGameObjectSystem();
+	friend void GameObjectSystem::UpdateGameObjectSystem();
+	friend void GameObjectSystem::LoadGameObjectSystem();
+	friend void GameObjectSystem::DrawGameObjectSystem();
 };
 
 void AddGameObjectToGameObjectSystem(GameObject* gameobject);

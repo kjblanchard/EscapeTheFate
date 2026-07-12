@@ -13,6 +13,7 @@
 #include <vector>
 using namespace std;
 namespace Etf {
+namespace GameObjectSystem {
 static vector<shared_ptr<GameObject>> gameObjects;
 static vector<weak_ptr<IInteractable>> interactableGameObjects;
 static unordered_map<int, function<void(TiledObject* objData)>> gameobjectLoadFunctions = {
@@ -63,9 +64,9 @@ void AddGameObject(GameObject* gameobject) {
 	gameObjects.push_back(shared_ptr<GameObject>(gameobject));
 }
 
-
 void ShutdownGameObjectSystem() {
 	gameObjects.clear();
 	interactableGameObjects.clear();
 }
+}  // namespace GameObjectSystem
 }  // namespace Etf

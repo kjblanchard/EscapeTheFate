@@ -5,6 +5,7 @@
 struct TiledObject;
 namespace Etf {
 class GameObject;
+namespace GameObjectSystem {
 void StartGameObjectSystem();
 void LoadGameObjectSystem();
 void UpdateGameObjectSystem();
@@ -32,4 +33,5 @@ void RemoveGameObjectOfType(T* gameobject) {
 	auto& list = GetGameObjectsOfType<T>();
 	list.erase(std::remove(list.begin(), list.end(), gameobject), list.end());
 }
+}  // namespace GameObjectSystem
 }  // namespace Etf

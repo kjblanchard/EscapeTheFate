@@ -50,7 +50,7 @@ void InitializeEngine(EngineInitializeArgs args);
 void StartEngine();
 void SetLogLevel(int logLevel);
 void SetupWindow(int width, int height, std::string& windowName);
-void ShutdownEngine();
+void Shutdown();
 const std::string& CurrentScene();
 // Empty string will load the default scene set in the gameconfig.
 void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
@@ -87,7 +87,6 @@ void AddTab(std::function<void()> func);
 void HandleEvent(void* event);
 void Draw();
 void Render();
-void ShutdownImGui();
 
 }  // namespace DebugUI
 

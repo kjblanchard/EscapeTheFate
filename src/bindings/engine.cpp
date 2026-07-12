@@ -75,11 +75,6 @@ void Engine::DebugUI::Render() {
 	ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 }
 
-void Engine::DebugUI::ShutdownImGui() {
-	ImGui_ImplOpenGL3_Shutdown();
-	ImGui_ImplSDL3_Shutdown();
-	ImGui::DestroyContext();
-}
 void Engine::DebugUI::AddTab(std::function<void()> func) {
 	AddTabFuncToMainDebugWindow(func);
 }
@@ -88,7 +83,6 @@ void Engine::DebugUI::Start() {}
 void Engine::DebugUI::HandleEvent(void* event) {}
 void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
-void Engine::DebugUI::ShutdownImGui() {}
 void Engine::DebugUI::AddTab(std::function<void()> func) {}
 #endif
 
@@ -179,10 +173,15 @@ void Engine::SetupWindow(int width, int height, std::string& windowName) {
 	SetWindowOptions(width, height, windowName.c_str());
 }
 
-void Engine::ShutdownEngine() {
+void Engine::Shutdown() {
 	if (sDirectory) {
 		sgFreeDirectory(sDirectory);
 	}
+#ifdef imgui
+	ImGui_ImplOpenGL3_Shutdown();
+	ImGui_ImplSDL3_Shutdown();
+	ImGui::DestroyContext();
+#endif
 }
 
 static void loadSetupAndBgm() {
@@ -287,7 +286,7 @@ bool Engine::HandleMapLoad() {
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
 			sgLogDebug("Starting load gameobjects");
-			LoadGameObjectSystem();
+			GameObjectSystem::LoadGameObjectSystem();
 			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingUI:
