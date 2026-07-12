@@ -5,7 +5,7 @@
 using namespace Etf;
 void Etf::DisplayUITab() {
 	if (ImGui::CollapsingHeader("UI")) {
-		for (auto& obj : UI::_rootUIObject->_children) {
+		for (auto& obj : UI::GetRootUIObject()->_children) {
 			obj->DebugDrawInternal();
 		}
 	}

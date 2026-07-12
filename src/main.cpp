@@ -24,7 +24,7 @@ void start() {
 	PlayerSystem::StartPlayerSystem();
 #ifdef imgui
 	Engine::DebugUI::StartImGui();
-	AddTabFuncToMainWindow(DisplayPlayersTab);
+	AddTabFuncToMainWindow(DisplayPlayerControllerTab);
 	AddTabFuncToMainWindow(DisplayCameraTab);
 	AddTabFuncToMainWindow(DisplayUITab);
 #endif

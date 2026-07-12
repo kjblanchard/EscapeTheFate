@@ -19,6 +19,7 @@ using namespace Etf;
 using namespace std;
 
 unordered_map<string, json_object*> _cachedUIFiles;
+std::unique_ptr<UIObject> _rootUIObject;
 
 static Color getColorFromField(json_object* obj, const char* key) {
 	auto rectJson = jobj(obj, key);
@@ -209,7 +210,6 @@ static UIObject* handleUIArgs(const string& name, json_object* data) {
 	return newGuy;
 }
 
-std::unique_ptr<UIObject> UI::_rootUIObject;
 
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
@@ -227,8 +227,6 @@ static bool loadJsonFromFile(const string& filename) {
 	return true;
 }
 
-void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
-}
 
 void UI::LoadUIFromFile(const string& filename) {
 	GetRootUIObject();
