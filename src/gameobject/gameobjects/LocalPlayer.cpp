@@ -5,7 +5,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/map.h>
 
-#include <bindings/Controller.hpp>
+#include <components/PlayerController.hpp>
 #include <bindings/engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
@@ -14,7 +14,8 @@
 #include <interfaces/IInteractable.hpp>
 #include <memory>
 #include <systems/GameObjectSystem.hpp>
-#include <systems/PlayerSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
+#include "interfaces/IController.hpp"
 
 using namespace std;
 using namespace Etf;
@@ -83,7 +84,7 @@ LocalPlayer::~LocalPlayer() {
 	DestroySprite(InteractionSprite_);
 }
 
-LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<Player>& player) : GameObject(objData->X, objData->Y), Player_(player) {
+LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player) : GameObject(objData->X, objData->Y), Player_(player) {
 	Sprite_ = Engine::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
 	InteractionSprite_ = Engine::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::SetSpriteVisible(InteractionSprite_, false);
@@ -146,7 +147,7 @@ void LocalPlayer::handleInteractions() {
 		Engine::SetSpriteVisible(InteractionSprite_, false);
 	}
 	CurrentInteractable_ = interactable;
-	if (CurrentInteractable_ && Player_->GetController().IsButtonJustPressed(GameButtons::A)) {
+	if (CurrentInteractable_ && Player_->IsButtonJustPressed(ControllerButtons::A)) {
 		// if (_currentInteractable && Controller::IsButtonJustPressed(GameButtons::A)) {
 		CurrentInteractable_->Interact();
 		Animator_->UpdateAnimatorSpeed(0.0);
@@ -185,23 +186,22 @@ bool LocalPlayer::handlePlayerMovement() {
 	auto previousDirection = Direction_;
 	auto velocityX = 0;
 	auto velocityY = 0;
-	auto& controller = Player_->GetController();
-	if (controller.IsButtonPressed(GameButtons::UP)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Up)) {
 		moved = true;
 		velocityY -= 1;
 		Direction_ = Direction::North;
 	}
-	if (controller.IsButtonPressed(GameButtons::DOWN)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Down)) {
 		moved = true;
 		velocityY += 1;
 		Direction_ = Direction::South;
 	}
-	if (controller.IsButtonPressed(GameButtons::LEFT)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Left)) {
 		moved = true;
 		velocityX -= 1;
 		Direction_ = Direction::West;
 	}
-	if (controller.IsButtonPressed(GameButtons::RIGHT)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Right)) {
 		moved = true;
 		velocityX += 1;
 		Direction_ = Direction::East;

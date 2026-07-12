@@ -1,51 +1,19 @@
-#pragma once
-
 namespace Etf {
-
-enum class GameButtons {
-	UP,
-	LEFT,
-	DOWN,
-	RIGHT,
+enum class ControllerButtons {
+	Up,
+	Left,
+	Down,
+	Right,
 	A,
 	B,
-	LB,
-	RB,
-	// LT,
-	// RT,
-	// START,
-	// SELECT,
-	// GUIDE,
+	LeftBumper,
+	RightBumper,
+	LeftTrigger,
+	RightTrigger,
+	Start,
+	Select,
+	Guide,
 	NUM_GAME_BUTTONS,
-};
-
-struct ControllerConfig {
-	struct DefaultKeyboardbuttons {
-		static const int UP = 26;
-		static const int LEFT = 4;
-		static const int DOWN = 22;
-		static const int RIGHT = 7;
-		static const int A = 44;
-		static const int B = 27;
-		static const int LB = 18;
-		static const int RB = 19;
-	};
-
-	struct DefaultJoystickButtons {
-		static const int UP = 11;
-		static const int LEFT = 13;
-		static const int DOWN = 12;
-		static const int RIGHT = 14;
-		static const int A = 0;
-		static const int B = 1;
-		static const int X = 2;
-		static const int Y = 3;
-		static const int LB = 9;
-		static const int RB = 10;
-	};
-
-	int KeyboardKeyConfig[static_cast<int>(GameButtons::NUM_GAME_BUTTONS)];
-	int JoystickButtonConfig[static_cast<int>(GameButtons::NUM_GAME_BUTTONS)];
 };
 
 enum class JoystickAxis {
@@ -56,26 +24,7 @@ enum class JoystickAxis {
 	LeftTrigger,
 	RightTrigger,
 };
-
-class Controller {
-   public:
-	Controller();
-	bool IsButtonPressed(GameButtons button, int playerNum = 0) const;
-	bool IsButtonJustPressed(GameButtons button, int playerNum = 0) const;
-	bool IsButtonJustReleased(GameButtons button, int playerNum = 0) const;
-	//Gets the current state of a joystick axis.
-	float JoystickAxisState(JoystickAxis axis) const;
-	float JoystickAxisThisFrameMovement(JoystickAxis axis) const;
-	void AssignGamepadToController(int gamepadNum);
-	inline bool DoesGamepadHaveJoystickAssigned() const { return JoystickAssigned_ != -1; }
-	inline int Joystick() const { return JoystickAssigned_; }
-
-   private:
-	ControllerConfig ControllerConfig_;
-	int JoystickAssigned_ = -1;
-	friend void DisplayPlayersTab();
-};
-}  // namespace Etf
+}
 
 // typedef enum SDL_GamepadButton
 // {

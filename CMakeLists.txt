@@ -51,12 +51,11 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
-  src/systems/PlayerSystem.cpp
+  src/systems/PlayerControllerSystem.cpp
   src/systems/GameObjectSystem.cpp
   src/bindings/engine.cpp
   src/bindings/SpriteAnimator.cpp
-  src/bindings/Controller.cpp
-  src/bindings/Player.cpp
+  src/components/PlayerController.cpp
 )
 
 if(IMGUI_DEBUGGING)

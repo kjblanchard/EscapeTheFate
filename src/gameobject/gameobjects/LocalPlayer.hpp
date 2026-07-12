@@ -1,7 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/rectangle.h>
 
-#include <bindings/Player.hpp>
+#include <components/PlayerController.hpp>
 #include <bindings/SpriteAnimator.hpp>
 #include <cmath>
 #include <gameobject/GameObject.hpp>
@@ -40,7 +40,7 @@ class LocalPlayer : public GameObject {
 
    private:
 	static std::vector<std::unique_ptr<LocalPlayer>> Players_;
-	LocalPlayer(TiledObject* objData, const std::shared_ptr<Player>& player);
+	LocalPlayer(TiledObject* objData, const std::shared_ptr<PlayerController>& player);
 	Sprite* Sprite_;
 	Sprite* InteractionSprite_;
 	Direction Direction_ = Direction::South;
@@ -50,7 +50,7 @@ class LocalPlayer : public GameObject {
 	RectangleF CollisionRect_ = {};
 	RectangleF InteractionRect_ = {};
 	IInteractable* CurrentInteractable_ = nullptr;
-	const std::shared_ptr<Player> Player_;
+	const std::shared_ptr<PlayerController> Player_;
 };
 
 }  // namespace Etf

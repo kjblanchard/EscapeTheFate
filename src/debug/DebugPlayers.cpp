@@ -5,7 +5,7 @@
 using namespace Etf;
 using namespace std;
 
-void Etf::DisplayPlayersTab() {
+void Etf::DisplayPlayerControllerTab() {
 	if (ImGui::CollapsingHeader("Players")) {
 		for (auto i = 0; i < 2; ++i) {
 			auto& player = PlayerSystem::GetPlayerByNum(i);

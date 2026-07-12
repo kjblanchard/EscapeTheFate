@@ -1,5 +1,5 @@
 #pragma once
-#include <bindings/Player.hpp>
+#include <components/PlayerController.hpp>
 #include <memory>
 #include <ui/uiObject.hpp>
 namespace Etf {
@@ -10,7 +10,7 @@ namespace PlayerSystem {
 void StartPlayerSystem();
 void UpdatePlayerSystem();
 void ShutdownPlayerSystem();
-const std::shared_ptr<Player>& GetPlayerByNum(int playerNum);
+const std::shared_ptr<PlayerController>& GetPlayerByNum(int playerNum);
 }  // namespace PlayerSystem
 
 }  // namespace Etf

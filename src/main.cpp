@@ -1,3 +1,5 @@
+#include <Supergoon/engine.h>
+
 #include <bindings/engine.hpp>
 #include <debug/DebugCamera.hpp>
 #include <debug/DebugPlayers.hpp>
@@ -5,7 +7,7 @@
 #include <debug/DebugWindow.hpp>
 #include <gameState.hpp>
 #include <systems/GameObjectSystem.hpp>
-#include <systems/PlayerSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
