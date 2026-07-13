@@ -30,6 +30,8 @@
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
+#include "systems/SystemCallbacks.hpp"
+
 #ifdef imgui
 #include <SDL3/SDL_events.h>
 #include <Supergoon/Platform/sdl/sdlWindow.h>
@@ -88,7 +90,8 @@ void Engine::DebugUI::AddTab(std::function<void()> func) {}
 
 static Directory* sDirectory = nullptr;
 
-static string _currentBGM = "";
+static string currentBGM_ = "";
+static vector<SystemCallbacks> systems_;
 
 static struct SceneData {
 	string CurrentScene = "";
@@ -158,11 +161,24 @@ void Engine::InitializeEngine(EngineInitializeArgs args) {
 void Engine::StartEngine() {
 	auto& gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
+	for (auto& system : systems_) {
+		if (system.Start) system.Start();
+	}
+	Engine::LoadScene("", 0.1f, 1.75, false);
 }
 
 void Engine::Update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
+	if (!Engine::HandleMapLoad()) return;
+	for (auto& system : systems_) {
+		system.Update();
+	}
+}
+void Engine::Draw() {
+	for (auto& system : systems_) {
+		if (system.Draw) system.Draw();
+	}
 }
 
 void Engine::SetLogLevel(int logLevel) {
@@ -174,6 +190,9 @@ void Engine::SetupWindow(int width, int height, std::string& windowName) {
 }
 
 void Engine::Shutdown() {
+	for (auto& system : systems_) {
+		if (system.Shutdown) system.Shutdown();
+	}
 	if (sDirectory) {
 		sgFreeDirectory(sDirectory);
 	}
@@ -182,6 +201,12 @@ void Engine::Shutdown() {
 	ImGui_ImplSDL3_Shutdown();
 	ImGui::DestroyContext();
 #endif
+}
+
+void Engine::RegisterSystems(const std::vector<SystemCallbacks>& systems) {
+	for (auto& system : systems) {
+		systems_.push_back(system);
+	}
 }
 
 static void loadSetupAndBgm() {
@@ -200,9 +225,9 @@ static void loadSetupAndBgm() {
 	auto& sceneToLoad = *it;
 	// We should destroy all of the old gameobjects, and also load the ui if needed.
 	ResetCameraFollow();
-	if (_currentBGM != sceneToLoad.BGMName) {
+	if (currentBGM_ != sceneToLoad.BGMName) {
 		Engine::Audio::PlayBGM(sceneToLoad.BGMName, sceneToLoad.BGMVolume);
-		_currentBGM = sceneToLoad.BGMName;
+		currentBGM_ = sceneToLoad.BGMName;
 	}
 }
 
@@ -286,7 +311,7 @@ bool Engine::HandleMapLoad() {
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
 			sgLogDebug("Starting load gameobjects");
-			GameObjectSystem::LoadGameObjectSystem();
+			GameObjectSystem::Load();
 			_currentLoadingState = CurrentSceneLoadingState::LoadingUI;
 			return false;
 		case Etf::CurrentSceneLoadingState::LoadingUI:

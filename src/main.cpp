@@ -10,46 +10,62 @@
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 
+#include "systems/SystemCallbacks.hpp"
+
 namespace Etf {
 
 void initialize() {
 	Engine::DebugUI::AddTab(DisplayCameraTab);
 	Engine::DebugUI::AddTab(DisplayPlayerControllerTab);
 	Engine::DebugUI::AddTab(DisplayUITab);
+	const std::vector<SystemCallbacks> systems_{
+		{
+			GameObjectSystem::Start,
+			GameObjectSystem::Update,
+			GameObjectSystem::Draw,
+			GameObjectSystem::Shutdown,
+		},
+		{
+			PlayerControllerSystem::Start,
+			PlayerControllerSystem::Update,
+			nullptr,
+			nullptr,
+		},
+		{
+			nullptr,
+			DialogSystem::Update,
+			nullptr,
+			DialogSystem::Shutdown,
+		},
+		{
+			nullptr,
+			BattleSystem::BattleSystemUpdate,
+			nullptr,
+			nullptr,
+		},
+	};
+	Engine::RegisterSystems(systems_);
 }
 
-void start() {
-	Engine::StartEngine();
-	Engine::LoadScene("", 0.1f, 1.75, false);
-	PlayerSystem::StartPlayerSystem();
-	Engine::DebugUI::Start();
-}
+// void start() {
+// 	Engine::StartEngine();
+// }
 
 int handleEvent(void* event) {
 	Engine::DebugUI::HandleEvent(event);
 	return false;
 }
 
-void update() {
-	Engine::Update();
-	if (!Engine::HandleMapLoad()) return;
-	GameObjectSystem::UpdateGameObjectSystem();
-	DialogSystem::UpdateDialogSystem();
-	PlayerSystem::UpdatePlayerSystem();
-	if (GameState::Battle::InBattle) BattleSystem::BattleSystemUpdate();
-}
+// void update() {
+// 	Engine::Update();
+// }
 
-void draw() {
-	GameObjectSystem::DrawGameObjectSystem();
-	Engine::DebugUI::Draw();
-}
+// void draw() {
+// }
 
-void quit() {
-	GameObjectSystem::ShutdownGameObjectSystem();
-	UI::DestroyUI();
-	DialogSystem::ShutdownDialogSystem();
-	Engine::Shutdown();
-}
+// void quit() {
+// 	Engine::Shutdown();
+// }
 }  // namespace Etf
 
 extern "C" {
@@ -57,10 +73,10 @@ void InitializeEngineFunctions() {
 	auto args = Etf::EngineInitializeArgs{
 		"gameConfig.json",
 		Etf::initialize,
-		Etf::start,
-		Etf::update,
-		Etf::draw,
-		Etf::quit,
+		Etf::Engine::StartEngine,
+		Etf::Engine::Update,
+		Etf::Engine::Draw,
+		Etf::Engine::Shutdown,
 		nullptr,
 		Etf::handleEvent,
 		nullptr,

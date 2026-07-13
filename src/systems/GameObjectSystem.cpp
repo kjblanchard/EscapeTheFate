@@ -23,14 +23,14 @@ static unordered_map<int, function<void(TiledObject* objData)>> gameobjectLoadFu
 	{6, BattleLocation::Create},
 };
 
-void StartGameObjectSystem() {}
-void UpdateGameObjectSystem() {
+void Start() {}
+void Update() {
 	for (auto& gameobject : gameObjects) {
 		gameobject->Update();
 	}
 }
 
-void LoadGameObjectSystem() {
+void Load() {
 	if (!_currentMap) return;
 	BattleLocation::ClearAllBattleLocations();
 	for (auto& currentGo : gameObjects) {
@@ -54,7 +54,7 @@ void LoadGameObjectSystem() {
 		gameObjects.end());
 }
 
-void DrawGameObjectSystem() {
+void Draw() {
 	for (auto& gameobject : gameObjects) {
 		gameobject->Draw();
 	}
@@ -64,7 +64,7 @@ void AddGameObject(GameObject* gameobject) {
 	gameObjects.push_back(shared_ptr<GameObject>(gameobject));
 }
 
-void ShutdownGameObjectSystem() {
+void Shutdown() {
 	gameObjects.clear();
 	interactableGameObjects.clear();
 }

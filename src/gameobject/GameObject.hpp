@@ -33,9 +33,9 @@ class GameObject {
 	virtual void Update() {};
 	virtual void Draw() {};
 
-	friend void GameObjectSystem::UpdateGameObjectSystem();
-	friend void GameObjectSystem::LoadGameObjectSystem();
-	friend void GameObjectSystem::DrawGameObjectSystem();
+	friend void GameObjectSystem::Update();
+	friend void GameObjectSystem::Load();
+	friend void GameObjectSystem::Draw();
 };
 
 void AddGameObjectToGameObjectSystem(GameObject* gameobject);

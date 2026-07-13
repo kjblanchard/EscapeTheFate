@@ -232,6 +232,7 @@ void BattleSystem::TriggerBattleVictoryStart() {
 }
 
 void BattleSystem::BattleSystemUpdate() {
+	if(GameState::Battle::InBattle) return;
 	if (_nextBattleState != _currentBattleState) triggerStateChange();
 	switch (_currentBattleState) {
 		case NotInBattle:

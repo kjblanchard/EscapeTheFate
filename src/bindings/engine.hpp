@@ -1,7 +1,9 @@
 #pragma once
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
+#include <systems/SystemCallbacks.hpp>
 #include <functional>
+#include <array>
 
 #include <string>
 struct Sprite;
@@ -49,8 +51,10 @@ namespace Engine {
 void InitializeEngine(EngineInitializeArgs args);
 void StartEngine();
 void SetLogLevel(int logLevel);
+void Draw();
 void SetupWindow(int width, int height, std::string& windowName);
 void Shutdown();
+void RegisterSystems(const std::vector<SystemCallbacks>& systems);
 const std::string& CurrentScene();
 // Empty string will load the default scene set in the gameconfig.
 void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);

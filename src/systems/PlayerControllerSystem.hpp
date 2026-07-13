@@ -5,11 +5,11 @@
 namespace Etf {
 
 class UIAnimation;
-namespace PlayerSystem {
+namespace PlayerControllerSystem {
 
-void StartPlayerSystem();
-void UpdatePlayerSystem();
-void ShutdownPlayerSystem();
+void Start();
+void Update();
+void Shutdown();
 const std::shared_ptr<PlayerController>& GetPlayerByNum(int playerNum);
 }  // namespace PlayerSystem
 

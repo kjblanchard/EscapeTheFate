@@ -9,6 +9,7 @@
 #include <ui/ui.hpp>
 #include <ui/uiText.hpp>
 #include <unordered_map>
+#include <systems/SystemCallbacks.hpp>
 
 #include "bindings/engine.hpp"
 
@@ -230,7 +231,7 @@ void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	jReleaseObjectFromFile(newDialog);
 }
 
-void DialogSystem::UpdateDialogSystem() {
+void DialogSystem::Update() {
 	switch (_currentState) {
 		case DialogBoxStates::Unloaded:
 			initializeDialogBox();
@@ -250,6 +251,6 @@ void DialogSystem::UpdateDialogSystem() {
 	}
 }
 
-void DialogSystem::ShutdownDialogSystem() {
+void DialogSystem::Shutdown() {
 	_loadedDialog.clear();
 }
