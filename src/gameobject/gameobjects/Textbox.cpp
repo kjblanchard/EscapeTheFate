@@ -39,5 +39,5 @@ void Textbox::Interact() {
 }
 
 void Textbox::Draw() {
-	if (GameConfig::GetGameConfig().debug.interactions) Engine::DrawRectPrimitive(InteractionRect);
+	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect);
 }

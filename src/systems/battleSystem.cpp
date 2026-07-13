@@ -216,7 +216,7 @@ static void triggerStateChange() {
 
 void BattleSystem::TriggerBattleStart() {
 	if ((_currentBattleState == NotInBattle) && _nextBattleState != BattleStartTriggered) {
-		_loadMap = Engine::CurrentScene();
+		_loadMap = Engine::CurrentSceneName();
 		_nextBattleState = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
 	}

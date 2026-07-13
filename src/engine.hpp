@@ -10,11 +10,12 @@ struct Text;
 struct sgGameObject;
 typedef struct Texture Texture;
 
+// This function should be created in the main.cpp, so that it can be used to initialize the game properly.
 extern void InitializeGame();
 
 namespace Etf {
 
-
+// Loading states used internally for loading without delays
 enum class CurrentSceneLoadingState {
 	NotLoading,
 	NextSceneQueued,
@@ -31,53 +32,38 @@ enum class CurrentSceneLoadingState {
 	FadingInAllowUpdate,
 };
 
-enum class ScreenFadeTypes {
+enum class LoadingScreenFadeTypes {
 	NotFading,
 	FadeIn,
 	FadeOut,
 };
 
-struct EngineInitializeArgs {
-	std::string GameConfigFilename;
-	void (*InitializeFunc)(void);
-	void (*StartFunc)(void);
-	void (*UpdateFunc)(void);
-	void (*DrawFunc)(void);
-	void (*QuitFunc)(void);
-	void (*InputFunc)(void);
-	int (*HandleEventFunc)(void*);
-	void (*GraphicsPostFBODrawDebugFunc)(void);
-};
-
 namespace Engine {
-void InitializeEngine(const std::string& configFilename, void (*initializeFunc)(void));
-void StartEngine();
-void SetLogLevel(int logLevel);
-int HandleEvents(void* event);
-void Draw();
-void SetupWindow(int width, int height, std::string& windowName);
-void Shutdown();
+// Called by main.cpp to set the current systems.
 void RegisterSystems(const std::vector<SystemCallbacks>& systems);
-const std::string& CurrentScene();
-// Empty string will load the default scene set in the gameconfig.
+const std::string& CurrentSceneName();
+// Empty string will load the default scene from gameconfig.
 void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
+static inline bool CheckForRectCollision(RectangleF& lhs, RectangleF& rhs) {
+	return lhs.x < rhs.x + rhs.w && lhs.x + lhs.w > rhs.x && lhs.y < rhs.y + rhs.h && lhs.y + lhs.h > rhs.y;
+}
+
+namespace Debug {
+void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
+}
+
+namespace Textures {
+void LoadTextureFromBuffer(Texture* tex, const std::string& name);
+}
+
+namespace Sprites {
 // TODO Do we even need this anymore?  Probably not
 Sprite* CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 // Used for UI mainly, cause we need to handle drawing it outselves on top of everything
 Sprite* CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect);
 void SetSpriteVisible(Sprite* sprite, bool visible);
-void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
-// Returns if we are currently loading a scene
-bool HandleMapLoad();
-// Fades out the full screen FBO if we aren't already fading
-void StartFullScreenFade(float time, ScreenFadeTypes fadeType);
-// if screen is fading, updates the time on it and tweens the fade.
-void UpdateScreenFade();
-void Update();
-void PreloadAssets();
-namespace Textures {
-void LoadTextureFromBuffer(Texture* tex, const std::string& name);
-}
+
+}  // namespace Sprites
 
 namespace Audio {
 void PlayBGM(const std::string& name, float volume = 1.0f);
@@ -130,18 +116,5 @@ void jforeach_lambda(void* obj, Lambda&& lambda) {
 		&wrapper);
 }
 }  // namespace Json
-
-// function engine.Collision.CheckForCollision(a, b)
-// return a.x < b.x + b.w and
-// a.x + a.w > b.x and
-// a.y < b.y + b.h and
-// a.y + a.h > b.y
-// end
-
-static inline bool CheckForRectCollision(RectangleF& lhs, RectangleF& rhs) {
-	return lhs.x < rhs.x + rhs.w && lhs.x + lhs.w > rhs.x && lhs.y < rhs.y + rhs.h && lhs.y + lhs.h > rhs.y;
-}
-
-};	// namespace Engine
-
+}  // namespace Engine
 }  // namespace Etf

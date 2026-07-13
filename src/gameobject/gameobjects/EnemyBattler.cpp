@@ -24,6 +24,6 @@ void EnemyBattler::takeDamageImpl(int damage) {
 	_hpObject->UpdateText(to_string(_currentHP));
 	if (_currentHP < 1) {
 		Engine::Audio::PlaySFXBuffer("enemyDead", 1.0);
-		Engine::SetSpriteVisible(_sprite, false);
+		Engine::Sprites::SetSpriteVisible(_sprite, false);
 	}
 }

@@ -19,7 +19,6 @@
 
 #include <algorithm>
 #include <engine.hpp>
-#include <filesystem>
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
@@ -47,6 +46,20 @@
 
 using namespace Etf;
 using namespace std;
+
+static void StartEngine();
+static void Draw();
+static int HandleEngineEvents(void* event);
+static void Shutdown();
+static void InitializeEngine(const std::string& configFilename, void (*initializeFunc)(void));
+// Fades out the full screen FBO if we aren't already fading
+static void StartFullScreenFade(float time, LoadingScreenFadeTypes fadeType);
+// if screen is fading, updates the time on it and tweens the fade.
+static void UpdateScreenFade();
+// Returns if we are currently loading a scene
+static bool HandleMapLoad();
+static void loadAllMaps();
+static void Update();
 
 #ifdef imgui
 void Engine::DebugUI::Start() {
@@ -114,7 +127,7 @@ static struct FadeData {
 	unsigned int EndFadeAlpha = 255;
 	float FadeTime = 1.0f;
 	float CurrentFadeTime = 0;
-	ScreenFadeTypes CurrentFadeStatus = ScreenFadeTypes::NotFading;
+	LoadingScreenFadeTypes CurrentFadeStatus = LoadingScreenFadeTypes::NotFading;
 } _fadeData;
 
 static CurrentSceneLoadingState _currentLoadingState = CurrentSceneLoadingState::NotLoading;
@@ -138,19 +151,19 @@ void Engine::Audio::PlaySFXBuffer(const string& name, float volume) {
 	PlaySfxOneShot(fullPath.c_str(), volume, buf, sz);
 }
 
-const std::string& Engine::CurrentScene() {
+const std::string& Engine::CurrentSceneName() {
 	return _sceneData.CurrentScene;
 }
 
-void Engine::InitializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
+static void InitializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
 	sgSetLogLevel(sgLogLevelWarn);
 	SetInitializeFunction(initializefunc);
-	SetStartFunction(Engine::StartEngine);
-	SetUpdateFunction(Engine::Update);
-	SetHandleEventFunction(Engine::HandleEvents);
-	SetDrawFunction(Engine::Draw);
+	SetStartFunction(StartEngine);
+	SetUpdateFunction(Update);
+	SetHandleEventFunction(HandleEngineEvents);
+	SetDrawFunction(Draw);
 	SetDrawUIFunction(UI::DrawUI);
-	SetQuitFunction(Engine::Shutdown);
+	SetQuitFunction(Shutdown);
 	auto filePath = GetBasePath();
 	auto fullFile = string(filePath) + "data/etf.sg";
 	sDirectory = LoadDirectoryFromFile(fullFile.c_str());
@@ -158,13 +171,13 @@ void Engine::InitializeEngine(const std::string& configFilename, void (*initiali
 	ShaderSetDirectory(sDirectory);
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& gameConfig = GameConfig::GetGameConfig();
-	Engine::SetLogLevel(gameConfig.debug.debugLevel);
-	Engine::SetupWindow(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title);
+	sgSetLogLevel(gameConfig.debug.debugLevel);
+	SetWindowOptions(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title.c_str());
 	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
-	GameState::IsEngineStarted = true;
 }
 
-void Engine::StartEngine() {
+static void StartEngine() {
+	loadAllMaps();
 	auto& gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
 	for (auto& system : systems_) {
@@ -174,38 +187,27 @@ void Engine::StartEngine() {
 	Engine::DebugUI::Start();
 }
 
-void Engine::Update() {
-	if (GameState::IsEngineStarted == false) return;
+static void Update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
-	if (!Engine::HandleMapLoad()) return;
+	if (!HandleMapLoad()) return;
 	for (auto& system : systems_) {
 		system.Update();
 	}
 }
-void Engine::Draw() {
-	if (GameState::IsEngineStarted == false) return;
+static void Draw() {
 	for (auto& system : systems_) {
 		if (system.Draw) system.Draw();
 	}
 	Engine::DebugUI::Draw();
 }
 
-int Engine::HandleEvents(void* event) {
-	if (GameState::IsEngineStarted == false) return false;
+static int HandleEngineEvents(void* event) {
 	Engine::DebugUI::HandleEvent(event);
 	return false;
 }
 
-void Engine::SetLogLevel(int logLevel) {
-	sgSetLogLevel(logLevel);
-}
-
-void Engine::SetupWindow(int width, int height, std::string& windowName) {
-	SetWindowOptions(width, height, windowName.c_str());
-}
-
-void Engine::Shutdown() {
+static void Shutdown() {
 	for (auto& system : systems_) {
 		if (system.Shutdown) system.Shutdown();
 	}
@@ -298,20 +300,20 @@ void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, 
 	_sceneData.NextScene = newName;
 }
 
-bool Engine::HandleMapLoad() {
+static bool HandleMapLoad() {
 	// Handle screen fading as needed.
-	Engine::UpdateScreenFade();
+	UpdateScreenFade();
 	switch (_currentLoadingState) {
 		// If we are not loading, check to see if we should trigger it
 		case CurrentSceneLoadingState::NotLoading:
 			return true;
 		case Etf::CurrentSceneLoadingState::NextSceneQueued:
 			if (_sceneData.PlayTransitionSFX) Engine::Audio::PlaySFXBuffer("transition2", 0.5f);
-			StartFullScreenFade(_sceneData.FadeOutTime, ScreenFadeTypes::FadeOut);
+			StartFullScreenFade(_sceneData.FadeOutTime, LoadingScreenFadeTypes::FadeOut);
 			_currentLoadingState = CurrentSceneLoadingState::WaitingForFadeOut;
 			return false;
 		case CurrentSceneLoadingState::WaitingForFadeOut:
-			if (_fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) return false;
+			if (_fadeData.CurrentFadeStatus != LoadingScreenFadeTypes::NotFading) return false;
 			_currentLoadingState = CurrentSceneLoadingState::LoadingStart;
 			// sgLogDebug("changing to load start");
 			return false;
@@ -346,7 +348,7 @@ bool Engine::HandleMapLoad() {
 			return false;
 		case Etf::CurrentSceneLoadingState::JustLoaded:
 			sgLogDebug("Starting just loaded");
-			StartFullScreenFade(_sceneData.FadeInTime, ScreenFadeTypes::FadeIn);
+			StartFullScreenFade(_sceneData.FadeInTime, LoadingScreenFadeTypes::FadeIn);
 			_currentLoadingState = CurrentSceneLoadingState::FadingIn;
 			return false;
 		// After 50% of current time is done, we should allow updates from the gameobjects.
@@ -376,8 +378,8 @@ bool Engine::HandleMapLoad() {
 	return false;
 }
 
-void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
-	if (fadeType == ScreenFadeTypes::NotFading || _fadeData.CurrentFadeStatus != ScreenFadeTypes::NotFading) {
+static void StartFullScreenFade(float time, LoadingScreenFadeTypes fadeType) {
+	if (fadeType == LoadingScreenFadeTypes::NotFading || _fadeData.CurrentFadeStatus != LoadingScreenFadeTypes::NotFading) {
 		sgLogDebug("Cannot fade: request: %d, status: %d", fadeType, _fadeData.CurrentFadeStatus);
 		return;
 	}
@@ -386,25 +388,25 @@ void Engine::StartFullScreenFade(float time, ScreenFadeTypes fadeType) {
 	_fadeData.FadeTime = time;
 	_fadeData.CurrentFadeColor = _fadeData.LastFadeColor;
 	_fadeData.CurrentFadeStatus = fadeType;
-	_fadeData.EndFadeAlpha = fadeType == ScreenFadeTypes::FadeIn ? 255 : 0;
+	_fadeData.EndFadeAlpha = fadeType == LoadingScreenFadeTypes::FadeIn ? 255 : 0;
 	GameState::CurrentFadeState = (int)fadeType;
 }
 
-void Engine::UpdateScreenFade() {
-	if (_fadeData.CurrentFadeStatus == ScreenFadeTypes::NotFading) return;
+static void UpdateScreenFade() {
+	if (_fadeData.CurrentFadeStatus == LoadingScreenFadeTypes::NotFading) return;
 	_fadeData.CurrentFadeTime += GameState::DeltaTimeSeconds;
 	// sgLogDebug("Fade time is %f of %f", _fadeData.CurrentFadeTime, _fadeData.FadeTime);
 	// sgLogDebug("Screen is fading currently");
 	if (_fadeData.CurrentFadeTime >= _fadeData.FadeTime) {
-		_fadeData.CurrentFadeStatus = ScreenFadeTypes::NotFading;
+		_fadeData.CurrentFadeStatus = LoadingScreenFadeTypes::NotFading;
 		GameState::CurrentFadeState = (int)_fadeData.CurrentFadeStatus;
 		return;
 	}
-	_fadeData.CurrentFadeColor.A = Tweening::GetTweenedValue(_fadeData.LastFadeColor.A, _fadeData.EndFadeAlpha, _fadeData.CurrentFadeTime, _fadeData.FadeTime);
+	_fadeData.CurrentFadeColor.A = Engine::Tweening::GetTweenedValue(_fadeData.LastFadeColor.A, _fadeData.EndFadeAlpha, _fadeData.CurrentFadeTime, _fadeData.FadeTime);
 	GraphicsUpdateFBOColor(&_fadeData.CurrentFadeColor);
 }
 
-Sprite* Engine::CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
+Sprite* Engine::Sprites::CreateSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
 	auto sprite = NewSprite();
 	sprite->parentX = followX;
 	sprite->parentY = followY;
@@ -440,7 +442,7 @@ void Engine::Textures::LoadTextureFromBuffer(Texture* tex, const std::string& na
 }
 
 // TODO this should be refactored instead of copy/paste from createspritefull
-Sprite* Engine::CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
+Sprite* Engine::Sprites::CreateManualSpriteFull(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect) {
 	auto sprite = NewSpriteManual();
 	sprite->parentX = followX;
 	sprite->parentY = followY;
@@ -464,11 +466,11 @@ Sprite* Engine::CreateManualSpriteFull(const std::string& name, float* followX, 
 	return sprite;
 }
 
-void Engine::DrawRectPrimitive(RectangleF& rect, Color color, bool filled, bool cameraOffset) {
+void Engine::Debug::DrawRectPrimitive(RectangleF& rect, Color color, bool filled, bool cameraOffset) {
 	DrawRect(&rect, &color, filled, cameraOffset);
 }
 
-void Engine::SetSpriteVisible(Sprite* sprite, bool visible) {
+void Engine::Sprites::SetSpriteVisible(Sprite* sprite, bool visible) {
 	if (visible)
 		sprite->Flags |= SpriteFlagVisible;	 // set bit
 	else
@@ -572,51 +574,27 @@ RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key)
 		jfloat(rectJson, "h"),
 	};
 }
+
 static void loadAllMaps() {
-	// auto& config = GameConfig::GetGameConfig();
-	// for (auto& scene : config.scene.scenes) {
-	// 	_sceneData.SceneToLoad = &scene;
-	// 	LoadMap(scene.MapName.c_str());
-	// 	// GameObject::LoadAllGameObjects();
-	// 	loadUI();
-	// 	loadDialog();
-	// }
-	// BattleSystem::InitializeBattleSystem();
-	// // GameObject::DestroyAllGameObjects();
-	// loadEnd();
-	// // Load all textures
-	// ResetCameraFollow();
-}
-
-void LoadAllTexturesFromFolder(const std::string& folderPath) {
-	namespace fs = std::filesystem;
-	for (const auto& entry : fs::directory_iterator(folderPath)) {
-		if (!entry.is_regular_file())
-			continue;
-		std::string filename = entry.path().filename().string();
-		sgLogDebug("checking to load %s", entry.path().stem().string().c_str());
-		// Check for .png extension
-		if (entry.path().extension() == ".png") {
-			sgLogDebug("Loading %s", entry.path().stem().string().c_str());
-			// Remove the .png suffix
-			std::string baseName = entry.path().stem().string();
-			// Call your texture loader with just the filename
-			auto texture = TextureCreate(baseName.c_str());
-			TextureLoadFromPng(texture, baseName.c_str());
-		}
+	auto& config = GameConfig::GetGameConfig();
+	for (auto& scene : config.scene.scenes) {
+		_sceneData.SceneToLoad = &scene;
+		LoadMap(scene.MapName.c_str());
+		// GameObject::LoadAllGameObjects();
+		loadUI();
+		loadDialog();
 	}
+	BattleSystem::InitializeBattleSystem();
+	// GameObject::DestroyAllGameObjects();
+	loadEnd();
+	// Load all textures
+	ResetCameraFollow();
 }
 
-void Engine::PreloadAssets() {
-	std::string textureFolder = format("{}assets/img", GetBasePath());	// from your helper
-	LoadAllTexturesFromFolder(textureFolder);
-	loadAllMaps();
-}
-
-void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::Engine::DebugUI::Render;
-
+//Enable C engine
 extern "C" {
 void InitializeEngineFunctions() {
-	Etf::Engine::InitializeEngine("gameConfig.json", InitializeGame);
+	InitializeEngine("gameConfig.json", InitializeGame);
 }
+void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::Engine::DebugUI::Render;
 }

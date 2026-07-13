@@ -85,9 +85,9 @@ LocalPlayer::~LocalPlayer() {
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player) : GameObject(objData->X, objData->Y), Player_(player) {
-	Sprite_ = Engine::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
-	InteractionSprite_ = Engine::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
-	Engine::SetSpriteVisible(InteractionSprite_, false);
+	Sprite_ = Engine::Sprites::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
+	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
+	Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
 	Animator_ = make_unique<SpriteAnimator>("player1", Sprite_);
 }
 
@@ -142,9 +142,9 @@ void LocalPlayer::handleInteractions() {
 	}
 	// Hide or show the interaction rect based off state
 	if (interactable && !CurrentInteractable_) {
-		Engine::SetSpriteVisible(InteractionSprite_, true);
+		Engine::Sprites::SetSpriteVisible(InteractionSprite_, true);
 	} else if (!interactable && CurrentInteractable_) {
-		Engine::SetSpriteVisible(InteractionSprite_, false);
+		Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
 	}
 	CurrentInteractable_ = interactable;
 	if (CurrentInteractable_ && Player_->IsButtonJustPressed(ControllerButtons::A)) {
@@ -251,5 +251,5 @@ constexpr const char* LocalPlayer::getAnimNameFromDirection() {
 }
 
 void LocalPlayer::Draw() {
-	if (GameConfig::GetGameConfig().debug.interactions) Engine::DrawRectPrimitive(InteractionRect_);
+	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect_);
 }

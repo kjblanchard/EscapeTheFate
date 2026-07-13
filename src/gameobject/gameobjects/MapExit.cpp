@@ -54,5 +54,5 @@ bool MapExit::CheckAndHandleMapExitOverlaps(RectangleF& rect) {
 }
 
 void MapExit::Draw() {
-	if (GameConfig::GetGameConfig().debug.mapExits) Engine::DrawRectPrimitive(_location);
+	if (GameConfig::GetGameConfig().debug.mapExits) Engine::Debug::DrawRectPrimitive(_location);
 }
