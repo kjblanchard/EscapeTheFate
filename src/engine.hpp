@@ -14,7 +14,6 @@ typedef struct Texture Texture;
 extern void InitializeGame();
 
 namespace Etf {
-
 // Loading states used internally for loading without delays
 enum class CurrentSceneLoadingState {
 	NotLoading,
@@ -26,10 +25,10 @@ enum class CurrentSceneLoadingState {
 	LoadingUI,
 	LoadingDialog,
 	LoadingFinish,
-	// Use this to not add a big jump to the loading after a load
 	JustLoaded,
 	FadingIn,
 	FadingInAllowUpdate,
+	Count,
 };
 
 enum class LoadingScreenFadeTypes {
@@ -68,22 +67,11 @@ void SetSpriteVisible(Sprite* sprite, bool visible);
 namespace Audio {
 void PlayBGM(const std::string& name, float volume = 1.0f);
 void PlayBGMBackground(const std::string& name, float volume = 1.0f);
-void PlaySFX(const std::string& name, float volume);
 void PlaySFXBuffer(const std::string& name, float volume);
 void SetGlobalBGMVolume(float volume);
 void StopBGMBackground();
 }  // namespace Audio
-
-namespace DebugUI {
-void Start();
-void AddTab(std::function<void()> func);
-void AddTab(const std::vector<std::function<void()>>& funcs);
-void HandleEvent(void* event);
-void Draw();
-void Render();
-
-}  // namespace DebugUI
-
+   //
 namespace Tweening {
 enum class TweenEaseTypes {
 	Linear,
@@ -92,10 +80,10 @@ enum class TweenEaseTypes {
 float GetTweenedValue(float start, float end, float timeSeconds, float totalSeconds, TweenEaseTypes ease = TweenEaseTypes::Linear);
 }  // namespace Tweening
 
-namespace TextBoi {
+namespace TextUtils {
 Text* CreateText(const std::string& fontName, unsigned int fontSize, RectangleF location, const std::string& text, unsigned int numChars, bool centeredX, bool centeredY);
 void DrawText(Text* text, float xOffset, float yOffset, Color& color);
-}  // namespace TextBoi
+}  // namespace TextUtils
 
 namespace Json {
 void GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz);
@@ -116,5 +104,16 @@ void jforeach_lambda(void* obj, Lambda&& lambda) {
 		&wrapper);
 }
 }  // namespace Json
+
+namespace DebugUI {
+void Start();
+void AddTab(std::function<void()> func);
+void AddTab(const std::vector<std::function<void()>>& funcs);
+void HandleEvent(void* event);
+void Draw();
+void Render();
+
+}  // namespace DebugUI
+
 }  // namespace Engine
 }  // namespace Etf

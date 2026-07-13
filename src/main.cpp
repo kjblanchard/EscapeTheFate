@@ -3,6 +3,7 @@
 #include <debug/DebugPlayers.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
+#include <debug/DebugEngine.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
@@ -11,7 +12,7 @@
 using namespace Etf;
 
 void InitializeGame() {
-	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab});
+	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab});
 	const std::vector<SystemCallbacks> systems_{
 		{
 			.Start = GameObjectSystem::Start,
