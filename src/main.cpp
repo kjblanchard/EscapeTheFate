@@ -47,25 +47,12 @@ void initialize() {
 	Engine::RegisterSystems(systems_);
 }
 
-// void start() {
-// 	Engine::StartEngine();
-// }
 
 int handleEvent(void* event) {
 	Engine::DebugUI::HandleEvent(event);
 	return false;
 }
 
-// void update() {
-// 	Engine::Update();
-// }
-
-// void draw() {
-// }
-
-// void quit() {
-// 	Engine::Shutdown();
-// }
 }  // namespace Etf
 
 extern "C" {
