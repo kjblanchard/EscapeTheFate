@@ -14,10 +14,10 @@ void Etf::DisplayCameraTab() {
 		ImGui::SliderFloat("CameraY", camPosY, 0, 1000);
 		static float* previousCamFollowX = nullptr;
 		static float* previousCamFollowY = nullptr;
-		float* camFollowX = nullptr;
-		float* camFollowY = nullptr;
+		static float* camFollowX = nullptr;
+		static float* camFollowY = nullptr;
 		CameraGetFollow(&camFollowX, &camFollowY);
-		static auto cameraFollow = camFollowX && camFollowY;
+		auto cameraFollow = camFollowX && camFollowY;
 		if (ImGui::Checkbox("IsFollowing", &cameraFollow)) {
 			if (cameraFollow) {
 				SetCameraFollowTarget(previousCamFollowX, previousCamFollowY);
