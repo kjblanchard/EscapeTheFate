@@ -21,26 +21,16 @@
 using namespace Etf;
 using namespace std;
 
-enum class BattleStates {
-	NotInitialized,
-	NotInBattle,
-	BattleStartTriggered,
-	Battle,
-	BattleVictory,
-	BattleEnd,
-};
-using enum BattleStates;
-
-static bool _initialized = false;
-
-static BattleStates _currentBattleState = NotInBattle;
-static BattleStates _nextBattleState = NotInBattle;
-static vector<BattlerData> _battlerData;
-// Loaded battle groups from the database, used when loading battle and stays loaded
-static vector<vector<int>> _battleGroups;
+// Non statics for debugging
+bool battleInitialized_ = false;
+BattleStates currentBattleState_ = NotInBattle;
+BattleStates nextBattleState_ = NotInBattle;
+string sceneToLoadAfterBattle_ = "";
+vector<BattlerData> battlerDatabase_;
+//  Loaded battle groups from the database, used when loading battle and stays loaded
+vector<vector<int>> _battleGroups;
 // Current battlers spawned in, always the size of all positions.
-static vector<Battler*> _battlers;
-static string _loadMap = "";
+vector<Battler*> _battlers;
 
 // Holds all of the UI objects in a (organized?) place.
 struct BattleUI {
@@ -58,8 +48,8 @@ static void battleEnd() {
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 	ResetCameraFollow();
-	Engine::LoadScene(_loadMap, 0.75f, 0.25f, false);
-	_nextBattleState = NotInBattle;
+	Engine::LoadScene(sceneToLoadAfterBattle_, 0.75f, 0.25f, false);
+	nextBattleState_ = NotInBattle;
 	GameState::Battle::InBattle = false;
 	GameState::Battle::ExitingFromBattle = true;
 }
@@ -100,18 +90,18 @@ static void loadBattleDB() {
 	for (auto i = 0; i < numData; ++i) {
 		auto currentJsonObject = jGetObjectInObjectWithIndex(dataRootJsonArray, i);
 		if (!currentJsonObject) continue;
-		_battlerData.emplace_back();
-		_battlerData.back().Name = jstr(currentJsonObject, "name");
-		_battlerData.back().HP = jint(currentJsonObject, "hp");
-		_battlerData.back().Str = jint(currentJsonObject, "str");
-		_battlerData.back().Mag = jint(currentJsonObject, "mag");
-		_battlerData.back().Def = jint(currentJsonObject, "def");
-		_battlerData.back().MDef = jint(currentJsonObject, "mdef");
-		_battlerData.back().Spd = jint(currentJsonObject, "spd");
-		_battlerData.back().Pow = jint(currentJsonObject, "pow");
-		_battlerData.back().Sprite = jstr(currentJsonObject, "sprite");
-		_battlerData.back().IdleAnimation = jstr(currentJsonObject, "idle");
-		_battlerData.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
+		battlerDatabase_.emplace_back();
+		battlerDatabase_.back().Name = jstr(currentJsonObject, "name");
+		battlerDatabase_.back().HP = jint(currentJsonObject, "hp");
+		battlerDatabase_.back().Str = jint(currentJsonObject, "str");
+		battlerDatabase_.back().Mag = jint(currentJsonObject, "mag");
+		battlerDatabase_.back().Def = jint(currentJsonObject, "def");
+		battlerDatabase_.back().MDef = jint(currentJsonObject, "mdef");
+		battlerDatabase_.back().Spd = jint(currentJsonObject, "spd");
+		battlerDatabase_.back().Pow = jint(currentJsonObject, "pow");
+		battlerDatabase_.back().Sprite = jstr(currentJsonObject, "sprite");
+		battlerDatabase_.back().IdleAnimation = jstr(currentJsonObject, "idle");
+		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }
@@ -119,7 +109,7 @@ static void loadBattleDB() {
 static void loadPlayers() {
 	const int playerData = 0;
 	const int playerSpawnLocation = 1;
-	auto& p1BattlerData = _battlerData.at(playerData);
+	auto& p1BattlerData = battlerDatabase_.at(playerData);
 	auto spawnLocation = BattleLocation::GetBattleLocation(playerSpawnLocation);
 	BattlerArgs args;
 	args.BattlerNum = 0;
@@ -143,7 +133,7 @@ static void loadEnemies() {
 		args.BattlerNum = 0;
 		args.X = spawnLocation->X();
 		args.Y = spawnLocation->Y();
-		args.BattleData = &_battlerData.at(battlerID);
+		args.BattleData = &battlerDatabase_.at(battlerID);
 		auto battler = new EnemyBattler(args);
 		_battlers.at(i + 4) = battler;
 		++i;
@@ -171,15 +161,15 @@ static void initializeBattleSystem() {
 	loadBattleDB();
 	loadBattleGroups();
 	cacheBattleUIElements();
-	_initialized = true;
+	battleInitialized_ = true;
 	_battleUI.RootPanel->SetVisible(false);
 	_battlers.clear();
-	_nextBattleState = NotInBattle;
+	nextBattleState_ = NotInBattle;
 }
 
 static void loadBattle() {
 	IsGameLoading = true;
-	if (!_initialized) initializeBattleSystem();
+	if (!battleInitialized_) initializeBattleSystem();
 	_battlers.resize(8);
 	sgLogDebug("loading battle");
 	// Something is terrible with load players.
@@ -198,7 +188,7 @@ static void BattleUpdate() {}
 
 // Used to reduce the boilerplate if we change states in multiple places
 static void triggerStateChange() {
-	switch (_nextBattleState) {
+	switch (nextBattleState_) {
 		case BattleStartTriggered:
 			loadBattle();
 			break;
@@ -211,33 +201,33 @@ static void triggerStateChange() {
 		default:
 			break;
 	}
-	_currentBattleState = _nextBattleState;
+	currentBattleState_ = nextBattleState_;
 }
 
 void BattleSystem::TriggerBattleStart() {
-	if ((_currentBattleState == NotInBattle) && _nextBattleState != BattleStartTriggered) {
-		_loadMap = Engine::CurrentSceneName();
-		_nextBattleState = BattleStates::BattleStartTriggered;
+	if ((currentBattleState_ == NotInBattle) && nextBattleState_ != BattleStartTriggered) {
+		sceneToLoadAfterBattle_ = Engine::CurrentSceneName();
+		nextBattleState_ = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
 	}
 }
 void BattleSystem::TriggerBattleEnd() {
-	_nextBattleState = BattleEnd;
+	nextBattleState_ = BattleEnd;
 	triggerStateChange();
 }
 void BattleSystem::TriggerBattleVictoryStart() {
-	_nextBattleState = BattleVictory;
+	nextBattleState_ = BattleVictory;
 	triggerStateChange();
 }
 
 void BattleSystem::BattleSystemUpdate() {
-	if (GameState::Battle::InBattle) return;
-	if (_nextBattleState != _currentBattleState) triggerStateChange();
-	switch (_currentBattleState) {
+	if (!GameState::Battle::InBattle) return;
+	if (nextBattleState_ != currentBattleState_) triggerStateChange();
+	switch (currentBattleState_) {
 		case NotInBattle:
 			break;
 		case BattleStartTriggered:
-			_nextBattleState = Battle;
+			nextBattleState_ = Battle;
 			IsGameLoading = false;
 			break;
 		case Battle:

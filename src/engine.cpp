@@ -114,7 +114,7 @@ static void initializeEngine(const std::string& configFilename, void (*initializ
 }
 
 static void startEngine() {
-	loadAllMaps();
+	// loadAllMaps();
 	auto& gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
 	for (auto& system : systems_) {

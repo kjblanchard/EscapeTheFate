@@ -9,10 +9,11 @@
 #include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
+#include <debug/DebugBattle.hpp>
 using namespace Etf;
 
 void InitializeGame() {
-	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab});
+	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab});
 	const std::vector<SystemCallbacks> systems_{
 		{
 			.Start = GameObjectSystem::Start,
