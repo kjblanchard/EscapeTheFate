@@ -3,71 +3,33 @@
 #include <debug/DebugPlayers.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
-#include <gameState.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
+#include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
-#include <ui/ui.hpp>
+using namespace Etf;
 
-#include "systems/SystemCallbacks.hpp"
-
-namespace Etf {
-
-void initialize() {
-	Engine::DebugUI::AddTab(DisplayCameraTab);
-	Engine::DebugUI::AddTab(DisplayPlayerControllerTab);
-	Engine::DebugUI::AddTab(DisplayUITab);
+void InitializeGame() {
+	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab});
 	const std::vector<SystemCallbacks> systems_{
 		{
-			GameObjectSystem::Start,
-			GameObjectSystem::Update,
-			GameObjectSystem::Draw,
-			GameObjectSystem::Shutdown,
+			.Start = GameObjectSystem::Start,
+			.Update = GameObjectSystem::Update,
+			.Draw = GameObjectSystem::Draw,
+			.Shutdown = GameObjectSystem::Shutdown,
 		},
 		{
-			PlayerControllerSystem::Start,
-			PlayerControllerSystem::Update,
-			nullptr,
-			nullptr,
+			.Start = PlayerControllerSystem::Start,
+			.Update = PlayerControllerSystem::Update,
 		},
 		{
-			nullptr,
-			DialogSystem::Update,
-			nullptr,
-			DialogSystem::Shutdown,
+			.Update = DialogSystem::Update,
+			.Shutdown = DialogSystem::Shutdown,
 		},
 		{
-			nullptr,
-			BattleSystem::BattleSystemUpdate,
-			nullptr,
-			nullptr,
+			.Update = BattleSystem::BattleSystemUpdate,
 		},
 	};
 	Engine::RegisterSystems(systems_);
-}
-
-
-int handleEvent(void* event) {
-	Engine::DebugUI::HandleEvent(event);
-	return false;
-}
-
-}  // namespace Etf
-
-extern "C" {
-void InitializeEngineFunctions() {
-	auto args = Etf::EngineInitializeArgs{
-		"gameConfig.json",
-		Etf::initialize,
-		Etf::Engine::StartEngine,
-		Etf::Engine::Update,
-		Etf::Engine::Draw,
-		Etf::Engine::Shutdown,
-		nullptr,
-		Etf::handleEvent,
-		nullptr,
-	};
-	Etf::Engine::InitializeEngine(args);
-}
 }

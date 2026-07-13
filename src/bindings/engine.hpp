@@ -1,17 +1,19 @@
 #pragma once
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
-#include <systems/SystemCallbacks.hpp>
-#include <functional>
-#include <array>
 
+#include <functional>
 #include <string>
+#include <systems/SystemCallbacks.hpp>
 struct Sprite;
 struct Text;
 struct sgGameObject;
 typedef struct Texture Texture;
 
+extern void InitializeGame();
+
 namespace Etf {
+
 
 enum class CurrentSceneLoadingState {
 	NotLoading,
@@ -48,9 +50,10 @@ struct EngineInitializeArgs {
 };
 
 namespace Engine {
-void InitializeEngine(EngineInitializeArgs args);
+void InitializeEngine(const std::string& configFilename, void (*initializeFunc)(void));
 void StartEngine();
 void SetLogLevel(int logLevel);
+int HandleEvents(void* event);
 void Draw();
 void SetupWindow(int width, int height, std::string& windowName);
 void Shutdown();
@@ -88,6 +91,7 @@ void StopBGMBackground();
 namespace DebugUI {
 void Start();
 void AddTab(std::function<void()> func);
+void AddTab(const std::vector<std::function<void()>>& funcs);
 void HandleEvent(void* event);
 void Draw();
 void Render();

@@ -1,6 +1,7 @@
 #include <bindings/engine.hpp>
 #include <gameState.hpp>
 using namespace Etf;
+int GameState::IsEngineStarted = false;
 int GameState::NextLoadScreen = 0;
 sgVector2 GameState::NextLoadLocation = {0, 0};
 float GameState::DeltaTimeSeconds;

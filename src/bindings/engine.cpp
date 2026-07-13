@@ -79,6 +79,14 @@ void Engine::DebugUI::Render() {
 
 void Engine::DebugUI::AddTab(std::function<void()> func) {
 	AddTabFuncToMainDebugWindow(func);
+	
+}
+void Engine::DebugUI::AddTab(const std::vector<std::function<void()>>& funcs) {
+	for (auto& func: funcs) {
+		AddTabFuncToMainDebugWindow(func);
+	
+	}
+	
 }
 #else
 void Engine::DebugUI::Start() {}
@@ -86,6 +94,7 @@ void Engine::DebugUI::HandleEvent(void* event) {}
 void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
 void Engine::DebugUI::AddTab(std::function<void()> func) {}
+void Engine::DebugUI::AddTab(const std::vector<std::function<void()>>& funcs) {}
 #endif
 
 static Directory* sDirectory = nullptr;
@@ -137,15 +146,15 @@ const std::string& Engine::CurrentScene() {
 	return _sceneData.CurrentScene;
 }
 
-void Engine::InitializeEngine(EngineInitializeArgs args) {
+void Engine::InitializeEngine(const std::string& configFilename ,void(*initializefunc)(void)) {
 	sgSetLogLevel(sgLogLevelWarn);
-	SetInitializeFunction(args.InitializeFunc);
-	SetStartFunction(args.StartFunc);
-	SetUpdateFunction(args.UpdateFunc);
-	SetHandleEventFunction(args.HandleEventFunc);
-	SetDrawFunction(args.DrawFunc);
+	SetInitializeFunction(initializefunc);
+	SetStartFunction(Engine::StartEngine);
+	SetUpdateFunction(Engine::Update);
+	SetHandleEventFunction(Engine::HandleEvents);
+	SetDrawFunction(Engine::Draw);
 	SetDrawUIFunction(UI::DrawUI);
-	SetQuitFunction(args.QuitFunc);
+	SetQuitFunction(Engine::Shutdown);
 	auto filePath = GetBasePath();
 	auto fullFile = string(filePath) + "data/etf.sg";
 	sDirectory = LoadDirectoryFromFile(fullFile.c_str());
@@ -156,6 +165,7 @@ void Engine::InitializeEngine(EngineInitializeArgs args) {
 	Engine::SetLogLevel(gameConfig.debug.debugLevel);
 	Engine::SetupWindow(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title);
 	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
+	GameState::IsEngineStarted = true;
 }
 
 void Engine::StartEngine() {
@@ -165,9 +175,11 @@ void Engine::StartEngine() {
 		if (system.Start) system.Start();
 	}
 	Engine::LoadScene("", 0.1f, 1.75, false);
+	Engine::DebugUI::Start();
 }
 
 void Engine::Update() {
+	if(GameState::IsEngineStarted == false) return;
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	if (!Engine::HandleMapLoad()) return;
@@ -176,9 +188,17 @@ void Engine::Update() {
 	}
 }
 void Engine::Draw() {
+	if(GameState::IsEngineStarted == false) return;
 	for (auto& system : systems_) {
 		if (system.Draw) system.Draw();
 	}
+	Engine::DebugUI::Draw();
+}
+
+int Engine::HandleEvents(void* event) {
+	if(GameState::IsEngineStarted == false) return false;
+	Engine::DebugUI::HandleEvent(event);
+	return false;
 }
 
 void Engine::SetLogLevel(int logLevel) {
@@ -598,3 +618,9 @@ void Engine::PreloadAssets() {
 }
 
 void (*GraphicsPostFBODrawDebugFunc)(void) = Etf::Engine::DebugUI::Render;
+
+extern "C" {
+void InitializeEngineFunctions() {
+	Etf::Engine::InitializeEngine("gameConfig.json", InitializeGame);
+}
+}
