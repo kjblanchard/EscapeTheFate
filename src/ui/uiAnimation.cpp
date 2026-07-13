@@ -3,7 +3,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/sprite.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <ui/uiAnimation.hpp>
 using namespace Etf;
 using namespace std;

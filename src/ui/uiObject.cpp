@@ -2,7 +2,7 @@
 #include <sgtools/log.h>
 
 #include <algorithm>
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <memory>
 #include <ui/uiObject.hpp>
 #ifdef imgui

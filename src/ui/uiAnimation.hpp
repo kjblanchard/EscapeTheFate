@@ -2,7 +2,7 @@
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
 
-#include <bindings/SpriteAnimator.hpp>
+#include <components/SpriteAnimator.hpp>
 #include <memory>
 #include <string>
 #include <ui/uiObject.hpp>

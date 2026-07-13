@@ -6,7 +6,7 @@
 #include <Supergoon/map.h>
 
 #include <components/PlayerController.hpp>
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/LocalPlayer.hpp>

@@ -1,7 +1,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/text.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <cstring>
 #include <ui/uiText.hpp>
 

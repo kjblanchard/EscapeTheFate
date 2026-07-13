@@ -53,8 +53,8 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/battleSystem.cpp
   src/systems/PlayerControllerSystem.cpp
   src/systems/GameObjectSystem.cpp
-  src/bindings/engine.cpp
-  src/bindings/SpriteAnimator.cpp
+  src/engine.cpp
+  src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
   src/debug/DebugWindow.cpp
   src/debug/DebugPlayers.cpp
@@ -64,13 +64,13 @@ set(EXECUTABLE_SOURCE_FILES_CORE
 
 if(IMGUI_DEBUGGING)
   set(IMGUI_SRC 
-    ./external/imgui.cpp
-    ./external/imgui_demo.cpp
-    ./external/imgui_draw.cpp
-    ./external/imgui_impl_opengl3.cpp
-    ./external/imgui_tables.cpp
-    ./external/imgui_impl_sdl3.cpp
-    ./external/imgui_widgets.cpp
+    external/imgui.cpp
+    external/imgui_demo.cpp
+    external/imgui_draw.cpp
+    external/imgui_impl_opengl3.cpp
+    external/imgui_tables.cpp
+    external/imgui_impl_sdl3.cpp
+    external/imgui_widgets.cpp
   )
   list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC})
   add_definitions(-Dimgui)

@@ -7,6 +7,7 @@
 #include <sgtools/log.h>
 
 #include <battle/battlerData.hpp>
+#include <engine.hpp>
 #include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
@@ -16,8 +17,6 @@
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
 #include <vector>
-
-#include "bindings/engine.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -232,7 +231,7 @@ void BattleSystem::TriggerBattleVictoryStart() {
 }
 
 void BattleSystem::BattleSystemUpdate() {
-	if(GameState::Battle::InBattle) return;
+	if (GameState::Battle::InBattle) return;
 	if (_nextBattleState != _currentBattleState) triggerStateChange();
 	switch (_currentBattleState) {
 		case NotInBattle:

@@ -3,7 +3,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/state.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
 #include <ui/uiText.hpp>

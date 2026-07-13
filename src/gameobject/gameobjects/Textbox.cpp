@@ -1,7 +1,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/map.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
 #include <string_view>

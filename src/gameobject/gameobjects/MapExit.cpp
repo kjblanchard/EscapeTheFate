@@ -2,7 +2,7 @@
 #include <Supergoon/map.h>
 
 #include <algorithm>
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>

@@ -2,7 +2,7 @@
 #include <Supergoon/Primitives/rectangle.h>
 
 #include <components/PlayerController.hpp>
-#include <bindings/SpriteAnimator.hpp>
+#include <components/SpriteAnimator.hpp>
 #include <cmath>
 #include <gameobject/GameObject.hpp>
 #include <memory>
