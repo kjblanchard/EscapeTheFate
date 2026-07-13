@@ -111,7 +111,7 @@ devsign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/$(BUILD_TYPE)/EscapeTheFate.app
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
-	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
+	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements ./build/bin/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 
 # This will error if you are using asan if you have leaks, so maybe disable that.
 perf:
