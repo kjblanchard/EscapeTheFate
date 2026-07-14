@@ -62,6 +62,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/debug/DebugUI.cpp
   src/debug/DebugEngine.cpp
   src/debug/DebugBattle.cpp
+  src/debug/DebugConsoleWindow.cpp
 )
 
 if(IMGUI_DEBUGGING)

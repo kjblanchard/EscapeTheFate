@@ -10,10 +10,14 @@
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
 #include <debug/DebugBattle.hpp>
+#include <debug/DebugConsoleWindow.hpp>
 using namespace Etf;
 
 void InitializeGame() {
 	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab});
+	auto name = (std::string)"Console";
+	DebugConsoleWindow::Initialize();
+	Engine::DebugUI::AddWindow({{name, DebugConsoleWindow::Draw}});
 	const std::vector<SystemCallbacks> systems_{
 		{
 			.Start = GameObjectSystem::Start,

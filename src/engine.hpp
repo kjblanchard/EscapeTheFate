@@ -109,6 +109,7 @@ namespace DebugUI {
 void Start();
 void AddTab(std::function<void()> func);
 void AddTab(const std::vector<std::function<void()>>& funcs);
+void AddWindow(const std::vector<std::pair<const std::string&, std::function<void()>>>& funcs);
 void HandleEvent(void* event);
 void Draw();
 void Render();

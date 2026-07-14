@@ -529,6 +529,7 @@ void Engine::DebugUI::Start() {
 	ImGui::StyleColorsClassic();
 	ImGui_ImplSDL3_InitForOpenGL((SDL_Window*)WindowGet()->Handle, GraphicsGetContextPtr());
 	ImGui_ImplOpenGL3_Init();
+	DebugWindow::Initialize();
 }
 
 void Engine::DebugUI::HandleEvent(void* event) {
@@ -540,7 +541,7 @@ void Engine::DebugUI::Draw() {
 	ImGui_ImplSDL3_NewFrame();
 	ImGui::NewFrame();
 	ImGui::ShowDemoWindow();
-	DrawMainDebugWindow();
+	DebugWindow::DrawWindows();
 }
 
 void Engine::DebugUI::Render() {
@@ -549,11 +550,17 @@ void Engine::DebugUI::Render() {
 }
 
 void Engine::DebugUI::AddTab(std::function<void()> func) {
-	AddTabFuncToMainDebugWindow(func);
+	DebugWindow::AddTabFuncToMainDebugWindow(func);
 }
 void Engine::DebugUI::AddTab(const std::vector<std::function<void()>>& funcs) {
 	for (auto& func : funcs) {
-		AddTabFuncToMainDebugWindow(func);
+		DebugWindow::AddTabFuncToMainDebugWindow(func);
+	}
+}
+
+void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, std::function<void()>>>& funcs) {
+	for (auto& [name, func] : funcs) {
+		DebugWindow::AddWindowFunc(name, func);
 	}
 }
 #else
@@ -563,6 +570,7 @@ void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
 void Engine::DebugUI::AddTab(std::function<void()> func) {}
 void Engine::DebugUI::AddTab(const std::vector<std::function<void()>>& funcs) {}
+void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, std::function<void>>>& funcs) {}
 #endif
 
 // Enable C engine

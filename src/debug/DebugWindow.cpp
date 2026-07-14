@@ -8,13 +8,19 @@
 using namespace Etf;
 using namespace std;
 
-static vector<function<void()>> TabDrawFunctions_;
+struct debugWindow {
+	string WindowName;
+	function<void()> DrawFunction;
+};
 
-void Etf::AddTabFuncToMainDebugWindow(std::function<void()> drawFunc) {
-	TabDrawFunctions_.push_back(drawFunc);
+static vector<function<void()>> mainWindowTabDrawFunctions_;
+static vector<debugWindow> windowsToDraw_;
+
+void DebugWindow::AddTabFuncToMainDebugWindow(std::function<void()> drawFunc) {
+	mainWindowTabDrawFunctions_.push_back(drawFunc);
 }
 
-void Etf::DrawMainDebugWindow() {
+static void drawWindowInternal(debugWindow& windowToDraw) {
 #ifdef imgui
 	static bool p_open = true;
 	static bool no_titlebar = false;
@@ -41,10 +47,18 @@ void Etf::DrawMainDebugWindow() {
 	if (unsaved_document) window_flags |= ImGuiWindowFlags_UnsavedDocument;
 	// if (no_close) p_open = NULL;  // Don't pass our bool* to Begin
 	//
-	if (!ImGui::Begin("Debug Tools", &p_open, window_flags)) {
+	if (!ImGui::Begin(windowToDraw.WindowName.c_str(), &p_open, window_flags)) {
 		ImGui::End();
 		return;
 	}
+	windowToDraw.DrawFunction();
+	ImGui::End();
+#else
+	return;
+#endif
+}
+
+static void drawMainWindow() {
 	auto textures = GetCachedTextures();
 	auto numTextures = GetNumCachedTextures();
 	if (ImGui::CollapsingHeader("Textures")) {
@@ -67,12 +81,21 @@ void Etf::DrawMainDebugWindow() {
 			ImGui::TreePop();
 		}
 	}
-	for (auto& func : TabDrawFunctions_) {
+	for (auto& func : mainWindowTabDrawFunctions_) {
 		func();
 	}
+}
 
-	ImGui::End();
-#else
-	return;
-#endif
+void DebugWindow::Initialize() {
+	AddWindowFunc("Debugging Tools", drawMainWindow);
+}
+
+void DebugWindow::AddWindowFunc(const std::string& windowName, std::function<void()> drawFunc) {
+	windowsToDraw_.push_back({windowName, drawFunc});
+}
+
+void DebugWindow::DrawWindows() {
+	for (auto& window : windowsToDraw_) {
+		drawWindowInternal(window);
+	}
 }
