@@ -1,17 +1,19 @@
-#include <imgui.h>
 #include <Supergoon/Graphics/graphics.h>
-#include <debug/DebugGameWindow.hpp>
-#include "sgtools/log.h"
 #include <Supergoon/Graphics/texture.h>
+#include <Supergoon/Platform/opengl/openglTexture.h>
+#include <imgui.h>
+
+#include <debug/DebugGameWindow.hpp>
+
+#include "sgtools/log.h"
 using namespace Etf;
 using namespace std;
 
-extern  Texture* _imGUIScreenRenderTargetTexture;
+extern Texture* _imGUIScreenRenderTargetTexture;
 extern int _logicalX;
 extern int _logicalY;
 
-
-void DebugGameWindow::Initialize() { }
+void DebugGameWindow::Initialize() {}
 
 void DebugGameWindow::Draw() {
 #ifdef imgui
@@ -27,11 +29,23 @@ void DebugGameWindow::Draw() {
 	int scaledHeight = _logicalY * scale;
 	sgLogInternal(sgLogLevelWarn, "Window size %f:%f, logicalsize %d:%d scale %d:%d scalewidth %d:%d", imguiWindowSize.x, imguiWindowSize.y, _logicalX, _logicalY, scale, scale, scaledWidth, scaledHeight);
 	// // Step 3: Render the SDL_Texture in ImGui with the same scaling
-	ImVec2 imguiSize(scaledWidth, scaledHeight);  // Use the scaled size
-	auto tex = (ImTextureID)(intptr_t)TextureGetID(_imGUIScreenRenderTargetTexture);
+	// ImVec2 imguiSize(scaledWidth, scaledHeight);  // Use the scaled size
+	// ImVec2 imguiSize(100, 100);	 // Use the scaled size
+	// auto tex = (ImTextureID)(intptr_t)TextureGetID(_imGUIScreenRenderTargetTexture);
+	auto tex = (Texture*)TextureGetID(_imGUIScreenRenderTargetTexture);
 	// ImGui::Image(tex, imguiSize);
-	ImGui::Image( tex, imguiSize, ImVec2(0, 1), ImVec2(1, 0)
-);
+	// ImGui::Image( tex, imguiSize, ImVec2(0, 1), ImVec2(1, 0));
+	if(!tex) return;
+	sgLogWarn("Texture ID=%u FBO=%u size=%dx%d\n",
+       _imGUIScreenRenderTargetTexture->ID,
+       _imGUIScreenRenderTargetTexture->FBO,
+       _imGUIScreenRenderTargetTexture->Width,
+       _imGUIScreenRenderTargetTexture->Height);
+	ImGui::Image(
+    tex,
+    ImVec2(480, 270),
+    ImVec2(0, 0),
+    ImVec2(480, 270));
 
 #else
 	return;
