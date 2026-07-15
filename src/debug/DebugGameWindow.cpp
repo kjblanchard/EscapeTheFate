@@ -17,35 +17,16 @@ void DebugGameWindow::Initialize() {}
 
 void DebugGameWindow::Draw() {
 #ifdef imgui
-	// auto graphics = _imGUIScreenRenderTargetTexture;
 	ImVec2 imguiWindowSize = ImGui::GetContentRegionAvail();
-	// // Step 1: Calculate the integer scaling factor
-	int scaleX = imguiWindowSize.x / _logicalX;	 // Integer division for X axis
-	int scaleY = imguiWindowSize.y / _logicalY;	 // Integer division for Y axis
-	// // Choose the smaller scale factor to maintain aspect ratio
+	int scaleX = imguiWindowSize.x / _logicalX;
+	int scaleY = imguiWindowSize.y / _logicalY;
 	int scale = (scaleX < scaleY) ? scaleX : scaleY;
-	// // Step 2: Calculate the scaled size (what SDL would render to the screen)
+	if (scale < 1) scale = 1;
 	int scaledWidth = _logicalX * scale;
 	int scaledHeight = _logicalY * scale;
-	sgLogInternal(sgLogLevelWarn, "Window size %f:%f, logicalsize %d:%d scale %d:%d scalewidth %d:%d", imguiWindowSize.x, imguiWindowSize.y, _logicalX, _logicalY, scale, scale, scaledWidth, scaledHeight);
-	// // Step 3: Render the SDL_Texture in ImGui with the same scaling
-	// ImVec2 imguiSize(scaledWidth, scaledHeight);  // Use the scaled size
-	// ImVec2 imguiSize(100, 100);	 // Use the scaled size
-	// auto tex = (ImTextureID)(intptr_t)TextureGetID(_imGUIScreenRenderTargetTexture);
-	auto tex = (Texture*)TextureGetID(_imGUIScreenRenderTargetTexture);
-	// ImGui::Image(tex, imguiSize);
-	// ImGui::Image( tex, imguiSize, ImVec2(0, 1), ImVec2(1, 0));
+	auto tex = (void*)TextureGetID(_imGUIScreenRenderTargetTexture);
 	if(!tex) return;
-	sgLogWarn("Texture ID=%u FBO=%u size=%dx%d\n",
-       _imGUIScreenRenderTargetTexture->ID,
-       _imGUIScreenRenderTargetTexture->FBO,
-       _imGUIScreenRenderTargetTexture->Width,
-       _imGUIScreenRenderTargetTexture->Height);
-	ImGui::Image(
-    tex,
-    ImVec2(480, 270),
-    ImVec2(0, 0),
-    ImVec2(480, 270));
+	ImGui::Image(tex, ImVec2(scaledWidth, scaledHeight), ImVec2(0, 1), ImVec2(1, 0));
 
 #else
 	return;
