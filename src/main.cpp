@@ -11,6 +11,7 @@
 #include <systems/dialogSystem.hpp>
 #include <debug/DebugBattle.hpp>
 #include <debug/DebugConsoleWindow.hpp>
+#include <debug/DebugGameWindow.hpp>
 using namespace Etf;
 
 void InitializeGame() {
@@ -18,6 +19,8 @@ void InitializeGame() {
 	auto name = (std::string)"Console";
 	DebugConsoleWindow::Initialize();
 	Engine::DebugUI::AddWindow({{name, DebugConsoleWindow::Draw}});
+	name = "Game";
+	Engine::DebugUI::AddWindow({{name, DebugGameWindow::Draw}});
 	const std::vector<SystemCallbacks> systems_{
 		{
 			.Start = GameObjectSystem::Start,

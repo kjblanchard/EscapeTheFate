@@ -29,7 +29,6 @@ static void drawWindowInternal(debugWindow& windowToDraw) {
 	static bool no_move = false;
 	static bool no_resize = false;
 	static bool no_collapse = false;
-	// static bool no_close = false;
 	static bool no_nav = false;
 	static bool no_background = false;
 	static bool no_bring_to_front = false;
@@ -45,8 +44,6 @@ static void drawWindowInternal(debugWindow& windowToDraw) {
 	if (no_background) window_flags |= ImGuiWindowFlags_NoBackground;
 	if (no_bring_to_front) window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
 	if (unsaved_document) window_flags |= ImGuiWindowFlags_UnsavedDocument;
-	// if (no_close) p_open = NULL;  // Don't pass our bool* to Begin
-	//
 	if (!ImGui::Begin(windowToDraw.WindowName.c_str(), &p_open, window_flags)) {
 		ImGui::End();
 		return;
@@ -59,6 +56,7 @@ static void drawWindowInternal(debugWindow& windowToDraw) {
 }
 
 static void drawMainWindow() {
+#ifdef imgui
 	auto textures = GetCachedTextures();
 	auto numTextures = GetNumCachedTextures();
 	if (ImGui::CollapsingHeader("Textures")) {
@@ -67,9 +65,6 @@ static void drawMainWindow() {
 				auto texture = textures[i];
 				if (ImGui::TreeNode(texture->Name)) {
 					if (ImGui::TreeNode(texture->Name)) {
-						// ImGui::Text("Path:");
-						// ImGui::SameLine();
-						// ImGui::Text("%s", item->Filepath().c_str());
 						ImGui::Text("RefCount:");
 						ImGui::SameLine();
 						ImGui::Text("%d", texture->RefCount);
@@ -84,6 +79,9 @@ static void drawMainWindow() {
 	for (auto& func : mainWindowTabDrawFunctions_) {
 		func();
 	}
+#else
+	return;
+#endif
 }
 
 void DebugWindow::Initialize() {

@@ -570,7 +570,7 @@ void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
 void Engine::DebugUI::AddTab(std::function<void()> func) {}
 void Engine::DebugUI::AddTab(const std::vector<std::function<void()>>& funcs) {}
-void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, std::function<void>>>& funcs) {}
+void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, std::function<void()>>>& funcs){}
 #endif
 
 // Enable C engine
