@@ -1,6 +1,8 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Platform/opengl/openglTexture.h>
 #include <imgui.h>
+#include <string>
+#include <functional>
 
 #include <debug/DebugWindow.hpp>
 #include <vector>
