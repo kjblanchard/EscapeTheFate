@@ -114,7 +114,7 @@ static void initializeEngine(const std::string& configFilename, void (*initializ
 }
 
 static void startEngine() {
-	// loadAllMaps();
+	loadAllMaps();
 	auto& gameConfig = GameConfig::GetGameConfig();
 	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
 	for (auto& system : systems_) {
@@ -205,72 +205,73 @@ static void loadEnd() {
 
 static bool handleMapLoad() {
 	// Handle screen fading as needed.
-	updateScreenFade();
-	switch (currentLoadingState_) {
-		// If we are not loading, check to see if we should trigger it
-		case CurrentSceneLoadingState::NotLoading:
-			return true;
-		case Etf::CurrentSceneLoadingState::NextSceneQueued:
-			if (sceneData_.PlayTransitionSFX) Engine::Audio::PlaySFXBuffer("transition2", 0.5f);
-			startFullScreenFade(sceneData_.FadeOutTime, LoadingScreenFadeTypes::FadeOut);
-			currentLoadingState_ = CurrentSceneLoadingState::WaitingForFadeOut;
-			return false;
-		case CurrentSceneLoadingState::WaitingForFadeOut:
-			if (fadeData_.CurrentFadeStatus != LoadingScreenFadeTypes::NotFading) return false;
-			currentLoadingState_ = CurrentSceneLoadingState::LoadingStart;
-			return false;
-		case Etf::CurrentSceneLoadingState::LoadingStart:
-			loadSetupAndBgm();
-			currentLoadingState_ = CurrentSceneLoadingState::LoadingMap;
-			return false;
-		case Etf::CurrentSceneLoadingState::LoadingMap:
-			loadSceneInternal();
-			currentLoadingState_ = CurrentSceneLoadingState::LoadingGameObjects;
-			return false;
-		case Etf::CurrentSceneLoadingState::LoadingGameObjects:
-			sgLogDebug("Starting load gameobjects");
-			GameObjectSystem::Load();
-			currentLoadingState_ = CurrentSceneLoadingState::LoadingUI;
-			return false;
-		case Etf::CurrentSceneLoadingState::LoadingUI:
-			loadUI();
-			currentLoadingState_ = CurrentSceneLoadingState::LoadingDialog;
-			return false;
-		case Etf::CurrentSceneLoadingState::LoadingDialog:
-			loadDialog();
-			currentLoadingState_ = CurrentSceneLoadingState::LoadingFinish;
-			return false;
-		case Etf::CurrentSceneLoadingState::LoadingFinish:
-			loadEnd();
-			currentLoadingState_ = CurrentSceneLoadingState::JustLoaded;
-			return false;
-		case Etf::CurrentSceneLoadingState::JustLoaded:
-			startFullScreenFade(sceneData_.FadeInTime, LoadingScreenFadeTypes::FadeIn);
-			currentLoadingState_ = CurrentSceneLoadingState::FadingIn;
-			return false;
-		// After 50% of current time is done, we should allow updates from the gameobjects.
-		case CurrentSceneLoadingState::FadingIn:
-			sgLogDebug("Starting fading in");
-			if (!fadeData_.FadeTime) {
-				currentLoadingState_ = CurrentSceneLoadingState::NotLoading;
-				endScreenFade();
+
+		updateScreenFade();
+		switch (currentLoadingState_) {
+			// If we are not loading, check to see if we should trigger it
+			case CurrentSceneLoadingState::NotLoading:
 				return true;
-			}
-			if (!fadeData_.FadeTime || fadeData_.FadeTime / fadeData_.CurrentFadeTime >= 0.9f) {
-				currentLoadingState_ = CurrentSceneLoadingState::FadingInAllowUpdate;
-			}
-			return false;
-		case CurrentSceneLoadingState::FadingInAllowUpdate:
-			// sgLogDebug("Starting fading in allow update");
-			if (fadeData_.CurrentFadeTime >= fadeData_.FadeTime) {
-				IsGameLoading = false;
-				currentLoadingState_ = CurrentSceneLoadingState::NotLoading;
-				endScreenFade();
-			}
-			return true;
-		case Etf::CurrentSceneLoadingState::Count:
-			return true;
-	}
+			case Etf::CurrentSceneLoadingState::NextSceneQueued:
+				if (sceneData_.PlayTransitionSFX) Engine::Audio::PlaySFXBuffer("transition2", 0.5f);
+				startFullScreenFade(sceneData_.FadeOutTime, LoadingScreenFadeTypes::FadeOut);
+				currentLoadingState_ = CurrentSceneLoadingState::WaitingForFadeOut;
+				return false;
+			case CurrentSceneLoadingState::WaitingForFadeOut:
+				if (fadeData_.CurrentFadeStatus != LoadingScreenFadeTypes::NotFading) return false;
+				currentLoadingState_ = CurrentSceneLoadingState::LoadingStart;
+				return false;
+			case Etf::CurrentSceneLoadingState::LoadingStart:
+				loadSetupAndBgm();
+				currentLoadingState_ = CurrentSceneLoadingState::LoadingMap;
+				return false;
+			case Etf::CurrentSceneLoadingState::LoadingMap:
+				loadSceneInternal();
+				currentLoadingState_ = CurrentSceneLoadingState::LoadingGameObjects;
+				return false;
+			case Etf::CurrentSceneLoadingState::LoadingGameObjects:
+				sgLogDebug("Starting load gameobjects");
+				GameObjectSystem::Load();
+				currentLoadingState_ = CurrentSceneLoadingState::LoadingUI;
+				return false;
+			case Etf::CurrentSceneLoadingState::LoadingUI:
+				loadUI();
+				currentLoadingState_ = CurrentSceneLoadingState::LoadingDialog;
+				return false;
+			case Etf::CurrentSceneLoadingState::LoadingDialog:
+				loadDialog();
+				currentLoadingState_ = CurrentSceneLoadingState::LoadingFinish;
+				return false;
+			case Etf::CurrentSceneLoadingState::LoadingFinish:
+				loadEnd();
+				currentLoadingState_ = CurrentSceneLoadingState::JustLoaded;
+				return false;
+			case Etf::CurrentSceneLoadingState::JustLoaded:
+				startFullScreenFade(sceneData_.FadeInTime, LoadingScreenFadeTypes::FadeIn);
+				currentLoadingState_ = CurrentSceneLoadingState::FadingIn;
+				return false;
+			// After 50% of current time is done, we should allow updates from the gameobjects.
+			case CurrentSceneLoadingState::FadingIn:
+				sgLogDebug("Starting fading in");
+				if (!fadeData_.FadeTime) {
+					currentLoadingState_ = CurrentSceneLoadingState::NotLoading;
+					endScreenFade();
+					return true;
+				}
+				if (!fadeData_.FadeTime || fadeData_.FadeTime / fadeData_.CurrentFadeTime >= 0.9f) {
+					currentLoadingState_ = CurrentSceneLoadingState::FadingInAllowUpdate;
+				}
+				return false;
+			case CurrentSceneLoadingState::FadingInAllowUpdate:
+				// sgLogDebug("Starting fading in allow update");
+				if (fadeData_.CurrentFadeTime >= fadeData_.FadeTime) {
+					IsGameLoading = false;
+					currentLoadingState_ = CurrentSceneLoadingState::NotLoading;
+					endScreenFade();
+				}
+				return true;
+			case Etf::CurrentSceneLoadingState::Count:
+				return true;
+		}
 	return false;
 }
 
@@ -393,15 +394,15 @@ void Engine::Sprites::SetSpriteVisible(Sprite* sprite, bool visible) {
 }
 
 static void loadSceneInternal() {
-	sgLogDebug("Starting load map");
-	char* buf;
-	size_t sz;
-	string nextMapName = sceneData_.NextScene + ".tmj";
-	auto result = GetDataFromDirectory(nextMapName.c_str(), &buf, &sz, directory_);
-	if (!result) {
-		sgLogCritical("Could not load map %s", nextMapName.c_str());
-	}
-	LoadMapFromBuffer(sceneData_.NextScene.c_str(), buf, sz);
+		sgLogDebug("Starting load map");
+		char* buf;
+		size_t sz;
+		string nextMapName = sceneData_.NextScene + ".tmj";
+		auto result = GetDataFromDirectory(nextMapName.c_str(), &buf, &sz, directory_);
+		if (!result) {
+			sgLogCritical("Could not load map %s", nextMapName.c_str());
+		}
+		LoadMapFromBuffer(sceneData_.NextScene.c_str(), buf, sz);
 }
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
@@ -570,7 +571,7 @@ void Engine::DebugUI::Draw() {}
 void Engine::DebugUI::Render() {}
 void Engine::DebugUI::AddTab(std::function<void()> func) {}
 void Engine::DebugUI::AddTab(const std::vector<std::function<void()>>& funcs) {}
-void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, std::function<void()>>>& funcs){}
+void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, std::function<void()>>>& funcs) {}
 #endif
 
 // Enable C engine
