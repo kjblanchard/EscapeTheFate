@@ -1,6 +1,8 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Platform/opengl/openglTexture.h>
 #include <imgui.h>
+#include <string>
+#include <functional>
 
 #include <debug/DebugWindow.hpp>
 #include <vector>
@@ -8,13 +10,20 @@
 using namespace Etf;
 using namespace std;
 
-static vector<function<void()>> TabDrawFunctions_;
+struct debugWindow {
+	string WindowName;
+	function<void()> DrawFunction;
+};
 
-void Etf::AddTabFuncToMainWindow(std::function<void()> drawFunc) {
-	TabDrawFunctions_.push_back(drawFunc);
+static vector<function<void()>> mainWindowTabDrawFunctions_;
+static vector<debugWindow> windowsToDraw_;
+
+void DebugWindow::AddTabFuncToMainDebugWindow(std::function<void()> drawFunc) {
+	mainWindowTabDrawFunctions_.push_back(drawFunc);
 }
 
-void Etf::CreateMainWindow() {
+static void drawWindowInternal(debugWindow& windowToDraw) {
+#ifdef imgui
 	static bool p_open = true;
 	static bool no_titlebar = false;
 	static bool no_scrollbar = false;
@@ -22,7 +31,6 @@ void Etf::CreateMainWindow() {
 	static bool no_move = false;
 	static bool no_resize = false;
 	static bool no_collapse = false;
-	// static bool no_close = false;
 	static bool no_nav = false;
 	static bool no_background = false;
 	static bool no_bring_to_front = false;
@@ -38,12 +46,19 @@ void Etf::CreateMainWindow() {
 	if (no_background) window_flags |= ImGuiWindowFlags_NoBackground;
 	if (no_bring_to_front) window_flags |= ImGuiWindowFlags_NoBringToFrontOnFocus;
 	if (unsaved_document) window_flags |= ImGuiWindowFlags_UnsavedDocument;
-	// if (no_close) p_open = NULL;  // Don't pass our bool* to Begin
-	//
-	if (!ImGui::Begin("Debug Tools", &p_open, window_flags)) {
+	if (!ImGui::Begin(windowToDraw.WindowName.c_str(), &p_open, window_flags)) {
 		ImGui::End();
 		return;
 	}
+	windowToDraw.DrawFunction();
+	ImGui::End();
+#else
+	return;
+#endif
+}
+
+static void drawMainWindow() {
+#ifdef imgui
 	auto textures = GetCachedTextures();
 	auto numTextures = GetNumCachedTextures();
 	if (ImGui::CollapsingHeader("Textures")) {
@@ -52,9 +67,6 @@ void Etf::CreateMainWindow() {
 				auto texture = textures[i];
 				if (ImGui::TreeNode(texture->Name)) {
 					if (ImGui::TreeNode(texture->Name)) {
-						// ImGui::Text("Path:");
-						// ImGui::SameLine();
-						// ImGui::Text("%s", item->Filepath().c_str());
 						ImGui::Text("RefCount:");
 						ImGui::SameLine();
 						ImGui::Text("%d", texture->RefCount);
@@ -66,9 +78,24 @@ void Etf::CreateMainWindow() {
 			ImGui::TreePop();
 		}
 	}
-	for (auto& func : TabDrawFunctions_) {
+	for (auto& func : mainWindowTabDrawFunctions_) {
 		func();
 	}
+#else
+	return;
+#endif
+}
 
-	ImGui::End();
+void DebugWindow::Initialize() {
+	AddWindowFunc("Debugging Tools", drawMainWindow);
+}
+
+void DebugWindow::AddWindowFunc(const std::string& windowName, std::function<void()> drawFunc) {
+	windowsToDraw_.push_back({windowName, drawFunc});
+}
+
+void DebugWindow::DrawWindows() {
+	for (auto& window : windowsToDraw_) {
+		drawWindowInternal(window);
+	}
 }

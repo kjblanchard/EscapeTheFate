@@ -1,7 +1,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/map.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
 #include <string_view>
@@ -13,8 +13,8 @@ using namespace std;
 
 void Textbox::Create(TiledObject* objData) {
 	auto textbox = new Textbox(objData);
-	AddGameObject(textbox);
-	AddGameObjectOfType<IInteractable>(textbox);
+	GameObjectSystem::AddGameObject(textbox);
+	GameObjectSystem::AddGameObjectOfType<IInteractable>(textbox);
 }
 
 Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
@@ -31,7 +31,7 @@ Textbox::Textbox(TiledObject* objData) : GameObject(objData->X, objData->Y) {
 }
 
 Textbox::~Textbox() {
-	RemoveGameObjectOfType<IInteractable>(this);
+	GameObjectSystem::RemoveGameObjectOfType<IInteractable>(this);
 }
 
 void Textbox::Interact() {
@@ -39,5 +39,5 @@ void Textbox::Interact() {
 }
 
 void Textbox::Draw() {
-	if (GameConfig::GetGameConfig().debug.interactions) Engine::DrawRectPrimitive(InteractionRect);
+	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect);
 }

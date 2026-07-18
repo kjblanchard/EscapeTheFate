@@ -5,13 +5,14 @@
 struct TiledObject;
 namespace Etf {
 class GameObject;
-void StartGameObjectSystem();
-void LoadGameObjectSystem();
-void UpdateGameObjectSystem();
-void DrawGameObjectSystem();
+namespace GameObjectSystem {
+void Start();
+void Load();
+void Update();
+void Draw();
 // Add a gameobject to be managed by the gameobject system
 void AddGameObject(GameObject* gameobject);
-void ShutdownGameObjectSystem();
+void Shutdown();
 
 // Allows you go get a list of specific gameobjects, if you use specific interfaces on them, useful for querying
 template <typename T>
@@ -32,4 +33,5 @@ void RemoveGameObjectOfType(T* gameobject) {
 	auto& list = GetGameObjectsOfType<T>();
 	list.erase(std::remove(list.begin(), list.end(), gameobject), list.end());
 }
+}  // namespace GameObjectSystem
 }  // namespace Etf

@@ -3,7 +3,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/state.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
 #include <ui/uiText.hpp>
@@ -20,7 +20,7 @@ Battler::~Battler() {
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), _battlerData(args.BattleData) {
 	auto spriteName = format("{}.png", args.BattleData->Sprite.c_str());
 	// auto spriteJson = format("{}.png", args.BattleData->Sprite.c_str());
-	_sprite = Engine::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
+	_sprite = Engine::Sprites::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
 	_currentHP = _battlerData->HP;

@@ -2,9 +2,8 @@
 #include <Supergoon/Graphics/texture.h>
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
-#include <bindings/engine.hpp>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <ui/uiNineSlice.hpp>
 using namespace Etf;
 using namespace std;

@@ -2,7 +2,7 @@
 #include <Supergoon/json.h>
 #include <sgtools/log.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiLayoutGroup.hpp>
@@ -19,6 +19,7 @@ using namespace Etf;
 using namespace std;
 
 unordered_map<string, json_object*> _cachedUIFiles;
+std::unique_ptr<UIObject> _rootUIObject;
 
 static Color getColorFromField(json_object* obj, const char* key) {
 	auto rectJson = jobj(obj, key);
@@ -105,7 +106,7 @@ static UIImage* createImage(const string& name, json_object* data) {
 	args.Filename = jstr(data, "file");
 	args.Scale = jfloat(data, "scale");
 	args.DebugBox = jbool(data, "debug");
-	args.Visible = jbool(data, "visible");
+	args.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
 	args.Name = name;
 	return new UIImage(args);
 }
@@ -132,7 +133,7 @@ static UINineSlice* createNineSliceObject(const string& name, json_object* data)
 	args.Priority = jint(data, "priority");
 	args.Filename = jstr(data, "file");
 	args.Scale = jint(data, "scale");
-	args.Visible = jbool(data, "visible");
+	args.Visible = jKeyExists(data, "visible") ? jbool(data, "visible") : true;
 	args.Xoffset = jint(data, "xOffset");
 	args.Yoffset = jint(data, "xOffset");
 	args.DebugBox = jbool(data, "debug");
@@ -209,7 +210,6 @@ static UIObject* handleUIArgs(const string& name, json_object* data) {
 	return newGuy;
 }
 
-std::unique_ptr<UIObject> UI::_rootUIObject;
 
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
@@ -227,8 +227,6 @@ static bool loadJsonFromFile(const string& filename) {
 	return true;
 }
 
-void UI::destroyOldUIPanelsIfNeeded(const std::string& newFile) {
-}
 
 void UI::LoadUIFromFile(const string& filename) {
 	GetRootUIObject();
@@ -271,3 +269,5 @@ UIObject* UI::GetRootUIObject() {
 	}
 	return _rootUIObject.get();
 }
+
+void (*GraphicsPostFBODrawUIFunc)(void) = UI::DrawUI;

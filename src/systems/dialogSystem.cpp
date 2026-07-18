@@ -2,15 +2,16 @@
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <sgtools/log.h>
+
+#include <engine.hpp>
 #include <format>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
+#include <systems/SystemCallbacks.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiText.hpp>
 #include <unordered_map>
-
-#include "bindings/engine.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -214,11 +215,11 @@ void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	_currentMap = filename;
 	if (_loadedDialog.find(filename) != _loadedDialog.end()) return;
 	auto loadString = format("{}D", filename);
-//TODO since using buffers, commented this out.. not sure if this is doing something laggy
-	// if (!std::filesystem::exists(loadString)) {
-	// 	sgLogDebug("No dialog file for %s", loadString.c_str());
-	// 	return;
-	// }
+	// TODO since using buffers, commented this out.. not sure if this is doing something laggy
+	//  if (!std::filesystem::exists(loadString)) {
+	//  	sgLogDebug("No dialog file for %s", loadString.c_str());
+	//  	return;
+	//  }
 	char* buf;
 	size_t sz;
 	Engine::Json::GetJsonBufferFromDirectory(loadString.c_str(), &buf, &sz);
@@ -230,7 +231,7 @@ void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	jReleaseObjectFromFile(newDialog);
 }
 
-void DialogSystem::UpdateDialogSystem() {
+void DialogSystem::Update() {
 	switch (_currentState) {
 		case DialogBoxStates::Unloaded:
 			initializeDialogBox();
@@ -250,6 +251,6 @@ void DialogSystem::UpdateDialogSystem() {
 	}
 }
 
-void DialogSystem::ShutdownDialogSystem() {
+void DialogSystem::Shutdown() {
 	_loadedDialog.clear();
 }

@@ -2,7 +2,7 @@
 #include <sgtools/log.h>
 
 #include <algorithm>
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <memory>
 #include <ui/uiObject.hpp>
 #ifdef imgui
@@ -71,7 +71,7 @@ void UIObject::Draw(float offsetX, float offsetY) {
 	}
 	if (_debugBox) {
 		RectangleF debugRect = {offsetX + _location.x, offsetY + _location.y, _location.w, _location.h};
-		Engine::DrawRectPrimitive(debugRect, {255, 255, 0, 255}, false, false);
+		Engine::Debug::DrawRectPrimitive(debugRect, {255, 255, 0, 255}, false, false);
 	}
 }
 

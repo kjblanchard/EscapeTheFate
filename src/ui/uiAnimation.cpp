@@ -3,7 +3,7 @@
 #include <sgtools/log.h>
 #include <Supergoon/sprite.h>
 
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <ui/uiAnimation.hpp>
 using namespace Etf;
 using namespace std;
@@ -19,7 +19,7 @@ UIAnimation::UIAnimation(UIAnimationArgs& args) {
 	_color = args.DrawColor;
 	_debugBox = args.DebugBox;
 	auto stringPng = args.Filename + ".png";
-	_sprite = Engine::CreateManualSpriteFull(stringPng.c_str(), &locWithOffsetX, &locWithOffsetY, {0, 0, 32, 32}, {0, 0, 32, 32});
+	_sprite = Engine::Sprites::CreateManualSpriteFull(stringPng.c_str(), &locWithOffsetX, &locWithOffsetY, {0, 0, 32, 32}, {0, 0, 32, 32});
 	_animator = make_unique<SpriteAnimator>(args.Filename, _sprite);
 }
 

@@ -2,7 +2,7 @@
 #include <sgtools/log.h>
 
 #include <algorithm>
-#include <bindings/engine.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
@@ -19,9 +19,6 @@ const string VICTORY_STR = "cheer1";
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
-// PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(nullptr) {
-// 	_battlerUI->UpdateHP(to_string(_currentHP));
-// }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	if (newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) {
@@ -117,11 +114,11 @@ void PlayerBattler::takeDamageImpl(int damage) {}
 
 void PlayerBattler::handleInputCommandsMenu() {
 	auto newLocation = _currentMenuLocation;
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
+	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
 		--newLocation;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
 		++newLocation;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
 		switch (_currentMenuLocation) {
 			// Attack pressed, do the thing and back out of handling input here.
 			case 0:
@@ -151,13 +148,13 @@ void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
 void PlayerBattler::handleInputTargetSelection() {
 	int newTarget = _currentTargetBattler;
 
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.UP)) {
+	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		--newTarget;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.DOWN)) {
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		++newTarget;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 		vector<Battler*> battlers;
 		getEnemyBattlers(battlers);
@@ -190,8 +187,8 @@ void PlayerBattler::handleInput() {
 			handleInputTargetSelection();
 			break;
 		case BattlerStates::BattleEndIdle:
-			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.A)) {
-				handleStateChange(BattleEnd);
+			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+				handleStateChange(BattlerStates::BattleEnd);
 			}
 			break;
 		default:

@@ -26,12 +26,28 @@ struct gameConfig {
 		int debugLevel;
 	} debug;
 	struct controls {
-		static const int UP = 26;
-		static const int LEFT = 4;
-		static const int DOWN = 22;
-		static const int RIGHT = 7;
-		static const int A = 44;
-		static const int B = 27;
+		struct keyboard {
+			static const int UP = 26;
+			static const int LEFT = 4;
+			static const int DOWN = 22;
+			static const int RIGHT = 7;
+			static const int A = 44;
+			static const int B = 27;
+			static const int LB = 18;
+			static const int RB = 19;
+		} Keyboard;
+		struct joystick {
+			static const int UP = 11;
+			static const int LEFT = 13;
+			static const int DOWN = 12;
+			static const int RIGHT = 14;
+			static const int A = 0;
+			static const int B = 1;
+			static const int X = 2;
+			static const int Y = 3;
+			static const int LB = 9;
+			static const int RB = 10;
+		} Joystick;
 	} Controls;
 };
 

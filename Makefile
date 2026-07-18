@@ -1,8 +1,6 @@
 .PHONY: all configure build clean debug release
 BUILD_DIR = build
-BINARY_FOLDER = bin
 EXECUTABLE_NAME = EscapeTheFate
-BINARY_FOLDER_REL_PATH = $(BUILD_DIR)/$(BINARY_FOLDER)
 DEFAULT_GENERATOR ?= "Ninja"
 BACKUP_GENERATOR ?= "Unix Makefiles"
 WINDOWS_GENERATOR ?= "Visual Studio 18 2026"
@@ -10,13 +8,11 @@ APPLE_GENERATOR ?= Xcode
 CONFIGURE_COMMAND ?= "cmake"
 EMSCRIPTEN_CONFIGURE_COMMAND = "emcmake cmake"
 PRELOAD_ALL_ASSETS ?= ON
-IMGUI_DEBUGGING ?= OFF
+IMGUI_DEBUGGING ?= ON
 BUILD_TYPE ?= Debug
 SYSTEM_PACKAGES ?= ON
 ENGINE_CACHED ?= ON
 BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
-# UNIX_PACKAGE_COMMAND ?= tar --exclude='*.aseprite' -czvf $(BUILD_DIR)/$(EXECUTABLE_NAME).tgz -C $(BINARY_FOLDER_REL_PATH) .
-# WINDOWS_PACKAGE_COMMAND ?= "7z a -r $(BUILD_DIR)/$(EXECUTABLE_NAME).zip $(BINARY_FOLDER_REL_PATH)"
 PACKAGE_COMMAND ?= cpack --config build/CPackConfig.cmake -C $(BUILD_TYPE)
 
 ADDITIONAL_OPTIONS ?=
@@ -28,22 +24,17 @@ UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
 # Run from the executable, cause it shows proper debug info
-RUN_CMD := ./build/bin/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+RUN_CMD := ./build/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
-RUN_CMD := ./build/bin/$(EXECUTABLE_NAME)
+RUN_CMD := ./build/$(EXECUTABLE_NAME)
 else
 REBUILD := lrebuild
 endif
 
 .PHONY: all
-# all:
-#     @echo "OS: $(UNAME_S) -> using $(REBUILD)"
-
 # -DCMAKE_POLICY_VERSION_MINIMUM=3.5 use this if we are using past version 4.0
-#
-# all: build install run
-all: build run
+all: pack build run
 clean:
 	@rm -rf $(BUILD_DIR)
 configure:
@@ -88,10 +79,10 @@ iosrebuild:
 		clean configure build package
 	# Custom run commands
 erun:
-	@emrun --no_browser --port 6931 ./build/bin/EscapeTheFate.html
+	@emrun --no_browser --port 6931 ./build/EscapeTheFate.html
 
 irun:
-	xcrun simctl install 0A997707-21D6-4A93-AA1E-E952675BA32D build/bin/Debug/EscapeTheFate.app
+	xcrun simctl install 0A997707-21D6-4A93-AA1E-E952675BA32D build/Debug/EscapeTheFate.app
 idevices:
 	xcrun simctl list devices
 #for debugging on ios simulator, in lldb
@@ -108,10 +99,10 @@ idebug:
 
 #Sign before we package
 devsign:
-	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/$(BUILD_TYPE)/EscapeTheFate.app
+	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/$(BUILD_TYPE)/EscapeTheFate.app
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
-	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/bin/EscapeTheFate.app
+	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements ./build/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 
 # This will error if you are using asan if you have leaks, so maybe disable that.
 perf:

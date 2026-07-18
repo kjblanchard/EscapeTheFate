@@ -1,7 +1,7 @@
 #pragma once
 #include <battle/battlerData.hpp>
 #include <battle/battlerUI.hpp>
-#include <bindings/SpriteAnimator.hpp>
+#include <components/SpriteAnimator.hpp>
 #include <gameobject/GameObject.hpp>
 #include <memory>
 struct Sprite;

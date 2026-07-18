@@ -16,9 +16,9 @@ option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
 include(FetchContent)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/bin/Debug)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/bin/Release)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/Debug)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/Release)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/lib/Debug)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY_RELEASE ${CMAKE_BINARY_DIR}/lib/Release)
@@ -51,30 +51,32 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
-  src/systems/PlayerSystem.cpp
+  src/systems/PlayerControllerSystem.cpp
   src/systems/GameObjectSystem.cpp
-  src/bindings/engine.cpp
-  src/bindings/SpriteAnimator.cpp
-  src/bindings/Controller.cpp
-  src/bindings/Player.cpp
+  src/engine.cpp
+  src/components/SpriteAnimator.cpp
+  src/components/PlayerController.cpp
+  src/debug/DebugWindow.cpp
+  src/debug/DebugPlayers.cpp
+  src/debug/DebugCamera.cpp
+  src/debug/DebugUI.cpp
+  src/debug/DebugEngine.cpp
+  src/debug/DebugBattle.cpp
+  src/debug/DebugConsoleWindow.cpp
+  src/debug/DebugGameWindow.cpp
 )
 
 if(IMGUI_DEBUGGING)
   set(IMGUI_SRC 
-    ./external/imgui.cpp
-    ./external/imgui_demo.cpp
-    ./external/imgui_draw.cpp
-    ./external/imgui_impl_opengl3.cpp
-    ./external/imgui_tables.cpp
-    ./external/imgui_impl_sdl3.cpp
-    ./external/imgui_widgets.cpp
+    external/imgui.cpp
+    external/imgui_demo.cpp
+    external/imgui_draw.cpp
+    external/imgui_impl_opengl3.cpp
+    external/imgui_tables.cpp
+    external/imgui_impl_sdl3.cpp
+    external/imgui_widgets.cpp
   )
-  list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC}
-    ./src/debug/DebugWindow.cpp
-    ./src/debug/DebugPlayers.cpp
-    ./src/debug/DebugCamera.cpp
-    ./src/debug/DebugUI.cpp
-  )
+  list(APPEND EXECUTABLE_SOURCE_FILES_CORE ${IMGUI_SRC})
   add_definitions(-Dimgui)
   #Ignore source file warnings from external imgui  
   set_source_files_properties( ${IMGUI_SRC} PROPERTIES COMPILE_FLAGS "-w" )
@@ -153,8 +155,8 @@ else()
     SupergoonEngine
     GIT_REPOSITORY https://github.com/kjblanchard/SupergoonEngine
     # Use master for development, otherwise make sure to pin to proper engine tag for releases GIT_TAG c55aa25 GIT_TAG
-    GIT_TAG feature/fixJitters
-    # GIT_TAG feature/0.2.x
+    GIT_TAG feature/refactor-project
+    # GIT_TAG master
   )
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED STREQUAL "ON")
@@ -218,6 +220,7 @@ set(CPACK_NSIS_HELP_LINK "https://supergoon.com")
 set(CPACK_NSIS_URL_INFO_ABOUT "https://escapethefate-dev.supergoon.com")
 set(CPACK_NSIS_MUI_ICON "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AppIcon.ico")
 set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AppIcon.ico")
+set(CPACK_PACKAGE_EXECUTABLES "EscapeTheFate" "Escape the Fate")
 install(TARGETS ${EXECUTABLE_TARGET_NAME} RUNTIME DESTINATION . BUNDLE DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/etf.sg DESTINATION data)
 if(WIN32)

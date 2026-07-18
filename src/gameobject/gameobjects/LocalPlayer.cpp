@@ -5,8 +5,8 @@
 #include <sgtools/log.h>
 #include <Supergoon/map.h>
 
-#include <bindings/Controller.hpp>
-#include <bindings/engine.hpp>
+#include <components/PlayerController.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/LocalPlayer.hpp>
@@ -14,7 +14,8 @@
 #include <interfaces/IInteractable.hpp>
 #include <memory>
 #include <systems/GameObjectSystem.hpp>
-#include <systems/PlayerSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
+#include "interfaces/IController.hpp"
 
 using namespace std;
 using namespace Etf;
@@ -43,12 +44,12 @@ void LocalPlayer::Create(TiledObject* objData) {
 	if (loadLocation != GameState::NextLoadScreen) return;
 	sgLogDebug("Making player start at pos %d!!", loadLocation);
 	// We should assign player to this, based on what we are creating.. for now, just assign the initial player to it.
-	auto player = PlayerSystem::GetPlayerByNum(0);
+	auto player = PlayerControllerSystem::GetPlayerByNum(0);
 
 	auto p1 = new LocalPlayer(objData, player);
 	vector<LocalPlayer*> players = {p1};
 	if (GameState::Players::Player2Spawned) {
-		player = PlayerSystem::GetPlayerByNum(1);
+		player = PlayerControllerSystem::GetPlayerByNum(1);
 		players.emplace_back(new LocalPlayer(objData, player));
 	}
 	// We should override this if we are exiting from a battle.
@@ -83,10 +84,10 @@ LocalPlayer::~LocalPlayer() {
 	DestroySprite(InteractionSprite_);
 }
 
-LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<Player>& player) : GameObject(objData->X, objData->Y), Player_(player) {
-	Sprite_ = Engine::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
-	InteractionSprite_ = Engine::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
-	Engine::SetSpriteVisible(InteractionSprite_, false);
+LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player) : GameObject(objData->X, objData->Y), Player_(player) {
+	Sprite_ = Engine::Sprites::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
+	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
+	Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
 	Animator_ = make_unique<SpriteAnimator>("player1", Sprite_);
 }
 
@@ -133,7 +134,7 @@ void LocalPlayer::updateInteractionRect() {
 void LocalPlayer::handleInteractions() {
 	updateInteractionRect();
 	IInteractable* interactable = nullptr;
-	for (auto interact : GetGameObjectsOfType<IInteractable>()) {
+	for (auto interact : GameObjectSystem::GetGameObjectsOfType<IInteractable>()) {
 		if (Engine::CheckForRectCollision(InteractionRect_, interact->InteractionRect)) {
 			interactable = interact;
 			break;
@@ -141,12 +142,12 @@ void LocalPlayer::handleInteractions() {
 	}
 	// Hide or show the interaction rect based off state
 	if (interactable && !CurrentInteractable_) {
-		Engine::SetSpriteVisible(InteractionSprite_, true);
+		Engine::Sprites::SetSpriteVisible(InteractionSprite_, true);
 	} else if (!interactable && CurrentInteractable_) {
-		Engine::SetSpriteVisible(InteractionSprite_, false);
+		Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
 	}
 	CurrentInteractable_ = interactable;
-	if (CurrentInteractable_ && Player_->GetController().IsButtonJustPressed(GameButtons::A)) {
+	if (CurrentInteractable_ && Player_->IsButtonJustPressed(ControllerButtons::A)) {
 		// if (_currentInteractable && Controller::IsButtonJustPressed(GameButtons::A)) {
 		CurrentInteractable_->Interact();
 		Animator_->UpdateAnimatorSpeed(0.0);
@@ -185,23 +186,22 @@ bool LocalPlayer::handlePlayerMovement() {
 	auto previousDirection = Direction_;
 	auto velocityX = 0;
 	auto velocityY = 0;
-	auto& controller = Player_->GetController();
-	if (controller.IsButtonPressed(GameButtons::UP)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Up)) {
 		moved = true;
 		velocityY -= 1;
 		Direction_ = Direction::North;
 	}
-	if (controller.IsButtonPressed(GameButtons::DOWN)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Down)) {
 		moved = true;
 		velocityY += 1;
 		Direction_ = Direction::South;
 	}
-	if (controller.IsButtonPressed(GameButtons::LEFT)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Left)) {
 		moved = true;
 		velocityX -= 1;
 		Direction_ = Direction::West;
 	}
-	if (controller.IsButtonPressed(GameButtons::RIGHT)) {
+	if (Player_->IsButtonPressed(ControllerButtons::Right)) {
 		moved = true;
 		velocityX += 1;
 		Direction_ = Direction::East;
@@ -251,5 +251,5 @@ constexpr const char* LocalPlayer::getAnimNameFromDirection() {
 }
 
 void LocalPlayer::Draw() {
-	if (GameConfig::GetGameConfig().debug.interactions) Engine::DrawRectPrimitive(InteractionRect_);
+	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect_);
 }

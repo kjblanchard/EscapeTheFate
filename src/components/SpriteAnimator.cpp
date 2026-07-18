@@ -2,8 +2,8 @@
 #include <Supergoon/filesystem.h>
 #include <Supergoon/sprite.h>
 
-#include <bindings/SpriteAnimator.hpp>
-#include <bindings/engine.hpp>
+#include <components/SpriteAnimator.hpp>
+#include <engine.hpp>
 // #include <format>
 #include <memory>
 #include <unordered_map>

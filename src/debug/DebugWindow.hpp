@@ -3,6 +3,12 @@
 
 namespace Etf {
 
-void CreateMainWindow();
-void AddTabFuncToMainWindow(std::function<void()> drawFunc);
+namespace DebugWindow {
+void Initialize();
+void AddTabFuncToMainDebugWindow(std::function<void()> drawFunc);
+void AddWindowFunc(const std::string& windowName, std::function<void()> drawFunc);
+void DrawWindows();
+
+}  // namespace DebugWindow
+
 }  // namespace Etf
