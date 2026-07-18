@@ -10,6 +10,7 @@
 				"rect": { "x": 60, "y": 60, "w": 156, "h": 70 },
 				"srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
 				"camera": true,
+				"visible": false,
 				"priority": 1,
 				"xOffset": 8,
 				"yOffset": 9,
