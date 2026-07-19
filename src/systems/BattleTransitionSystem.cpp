@@ -1,5 +1,7 @@
+#include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/Graphics/shader.h>
 
+#include <algorithm>
 #include <cstdlib>
 #include <engine.hpp>
 #include <gameConfig.hpp>
@@ -23,6 +25,16 @@ float resX_ = 480.0f;
 float resY_ = 270.0f;
 }  // namespace
 
+static void startBattleBGM(const string& sceneName) {
+	auto& scenes = GameConfig::GetGameConfig().scene.scenes;
+	auto it = find_if(scenes.begin(), scenes.end(), [&](const Scene& s) {
+		return s.MapName == sceneName;
+	});
+	if (it != scenes.end() && !it->BGMName.empty()) {
+		Engine::Audio::PlayBGM(it->BGMName, it->BGMVolume);
+	}
+}
+
 void BattleTransitionSystem::Start() {
 	auto& config = GameConfig::GetGameConfig();
 	resX_ = (float)config.window.x;
@@ -39,11 +51,13 @@ void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 	pendingScene_ = battleScene;
 	elapsed_ = 0.0f;
 	transitioning_ = true;
+	GameState::Battle::InBattle = true;
 	activeShader_ = (rand() % 2 == 0) ? swirlShader_ : blurShader_;
 	SetScreenShaderOverride(activeShader_);
 	ShaderUse(activeShader_);
 	ShaderSetUniformFloat(activeShader_, "time", 0.0f, false);
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
+	startBattleBGM(battleScene);
 }
 
 void BattleTransitionSystem::Update() {
@@ -57,11 +71,13 @@ void BattleTransitionSystem::Update() {
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
 
 	if (elapsed_ >= TRANSITION_DURATION) {
+		// Force screen to black before clearing override so there's no flash
+		Color black = {0, 0, 0, 0};
+		GraphicsUpdateFBOColor(&black);
 		SetScreenShaderOverride(nullptr);
 		transitioning_ = false;
 		activeShader_ = nullptr;
 		elapsed_ = 0.0f;
-		GameState::Battle::InBattle = true;
 		Engine::LoadScene(pendingScene_, 0.0f, 2.75f, false);
 		pendingScene_ = "";
 	}

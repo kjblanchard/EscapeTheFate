@@ -27,5 +27,12 @@ void main() {
     float fade = clamp(1.0 - time * 1.4, 0.0, 1.0);
     vec4 sampled = texture(image, swirlUV);
     float centerFade = clamp(dist / (shrink * 0.5 + 0.01), 0.0, 1.0);
-    FragColor = spriteColor * sampled * fade * centerFade;
+
+    vec3 tinted = sampled.rgb;
+    tinted.r = min(tinted.r * (1.0 + time * 0.8), 1.0);
+    tinted.g *= (1.0 - time * 0.4);
+    tinted.b *= (1.0 - time * 0.6);
+    tinted = mix(tinted, tinted * tinted * 2.0, time * 0.5);
+
+    FragColor = spriteColor * vec4(tinted * fade * centerFade, sampled.a * fade * centerFade);
 }

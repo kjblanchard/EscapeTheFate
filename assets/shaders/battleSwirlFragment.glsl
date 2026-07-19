@@ -26,5 +26,14 @@ void main() {
     float fade = clamp(1.0 - time * 1.4, 0.0, 1.0);
     vec4 sampled = texture(image, swirlUV);
     float centerFade = clamp(dist / (shrink * 0.5 + 0.01), 0.0, 1.0);
-    color = spriteColor * sampled * fade * centerFade;
+
+    // Warm red/orange tint that intensifies with the swirl
+    vec3 tinted = sampled.rgb;
+    tinted.r = min(tinted.r * (1.0 + time * 0.8), 1.0);
+    tinted.g *= (1.0 - time * 0.4);
+    tinted.b *= (1.0 - time * 0.6);
+    // Boost contrast as the effect ramps up
+    tinted = mix(tinted, tinted * tinted * 2.0, time * 0.5);
+
+    color = spriteColor * vec4(tinted * fade * centerFade, sampled.a * fade * centerFade);
 }
