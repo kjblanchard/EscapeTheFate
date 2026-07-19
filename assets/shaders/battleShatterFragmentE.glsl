@@ -21,7 +21,7 @@ float hash1(vec2 p) {
 void main() {
     vec2 uv = TexCoords;
 
-    float cellScale = 12.0;
+    float cellScale = 10.0;
     vec2 scaledUV = uv * cellScale;
     vec2 cellID = floor(scaledUV);
     vec2 cellUV = fract(scaledUV);
@@ -47,40 +47,26 @@ void main() {
     }
 
     float edge = secondDist - minDist;
+    float crackLine = smoothstep(0.05, 0.0, edge);
 
     float shardRand = hash1(nearestCell);
-    float fallDelay = shardRand * 0.4;
-    float fallSpeed = 1.5 + shardRand * 2.0;
-    float rotSpeed = (shardRand - 0.5) * 4.0;
+    float fallStart = 0.15 + shardRand * 0.35;
+    float fallSpeed = 2.0 + shardRand * 3.0;
 
-    float crackLine = smoothstep(0.02, 0.0, edge);
-    float crackFlash = clamp(1.0 - time * 3.0, 0.0, 1.0);
+    float fallTime = max(time - fallStart, 0.0);
+    float fallDist = fallTime * fallTime * fallSpeed;
 
-    float fallTime = max(time - fallDelay * 0.3, 0.0);
-    float gravity = fallTime * fallTime * fallSpeed;
-    float rotation = fallTime * rotSpeed;
+    float shardGone = step(0.8, fallDist);
 
-    vec2 shardCenter = (nearestCell + 0.5) / cellScale;
-    vec2 toCenter = uv - shardCenter;
-    float cosR = cos(rotation);
-    float sinR = sin(rotation);
-    vec2 rotatedOffset = vec2(
-        toCenter.x * cosR - toCenter.y * sinR,
-        toCenter.x * sinR + toCenter.y * cosR
-    );
-    vec2 fallingUV = shardCenter + rotatedOffset + vec2(0.0, gravity * 0.3);
+    vec4 sampled = texture(image, uv);
 
-    vec4 sampled = texture(image, fallingUV);
+    float crackIntensity = crackLine * clamp(time * 5.0, 0.0, 1.0) * clamp(1.0 - fallTime * 2.0, 0.0, 1.0);
 
-    float shardVisible = step(fallingUV.y, 1.3) * step(-0.3, fallingUV.x) * step(fallingUV.x, 1.3);
-    float shardFade = clamp(1.0 - fallTime * 1.2, 0.0, 1.0);
-
-    float tintStrength = time * 0.8;
+    float tintStrength = time * 0.5;
     vec3 tinted = mix(sampled.rgb, sampled.rgb * tintColor, tintStrength);
 
-    vec3 shardColor = tinted * shardVisible * shardFade;
-    vec3 crackColor = vec3(1.0) * crackLine * crackFlash;
-    vec3 finalColor = shardColor + crackColor * shardVisible * shardFade;
+    vec3 shardWithCracks = tinted + vec3(crackIntensity);
+    vec3 finalColor = mix(shardWithCracks, vec3(0.0), shardGone);
 
     FragColor = spriteColor * vec4(finalColor, 1.0);
 }
