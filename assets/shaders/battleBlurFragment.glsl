@@ -12,18 +12,22 @@ void main() {
     const int SAMPLES = 16;
     vec2 uv = TexCoords;
 
-    // Shift UVs to the left over time so the image appears to pull right
-    float pullStrength = time * time * 0.4;
+    // Per-scanline variation — different rows pull at different speeds
+    float row = floor(uv.y * resolution.y);
+    float lineNoise = fract(sin(row * 43.758) * 2137.193);
+    float lineSpeed = 0.6 + lineNoise * 0.8;
+
+    // Dramatic pull to the right — cubic ramp with per-line variation
+    float pullStrength = time * time * time * 1.2 * lineSpeed;
     uv.x -= pullStrength;
 
-    // Heavy directional blur toward the right that ramps aggressively
-    vec2 blurDir = vec2(1.0, 0.0);
-    float blurAmount = time * time * 0.25;
+    // Heavy directional blur that increases per line
+    float blurAmount = time * time * 0.35 * lineSpeed;
 
     vec4 accum = vec4(0.0);
     for (int i = 0; i < SAMPLES; ++i) {
         float t = float(i) / float(SAMPLES - 1);
-        vec2 offset = blurDir * blurAmount * t;
+        vec2 offset = vec2(blurAmount * t, 0.0);
         accum += texture(image, uv + offset);
     }
     accum /= float(SAMPLES);
