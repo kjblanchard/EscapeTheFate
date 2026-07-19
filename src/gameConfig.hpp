@@ -23,6 +23,7 @@ struct gameConfig {
 	struct debug {
 		bool interactions;
 		bool mapExits;
+		bool battleZones;
 		int debugLevel;
 	} debug;
 	struct controls {

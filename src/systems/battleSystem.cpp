@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <sgtools/log.h>
 
+#include <battle/battleZones.hpp>
 #include <battle/battlerData.hpp>
 #include <engine.hpp>
 #include <format>
@@ -78,6 +79,7 @@ static void loadBattleGroups() {
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }
+
 
 static void loadBattleDB() {
 	char* buf;

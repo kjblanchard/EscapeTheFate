@@ -196,16 +196,33 @@
                  "name":"Battle Zone 0",
                  "properties":[
                         {
-                         "name":"battleId",
+                         "name":"id",
                          "type":"string",
-                         "value":"1"
+                         "value":"0"
                         }],
                  "rotation":0,
                  "type":"1BattleZone",
                  "visible":true,
-                 "width":480,
+                 "width":224,
                  "x":0,
                  "y":64
+                }, 
+                {
+                 "height":256,
+                 "id":23,
+                 "name":"Battle Zone 1",
+                 "properties":[
+                        {
+                         "name":"id",
+                         "type":"string",
+                         "value":"0"
+                        }],
+                 "rotation":0,
+                 "type":"1BattleZone",
+                 "visible":true,
+                 "width":224,
+                 "x":224,
+                 "y":0
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -214,7 +231,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":23,
+ "nextobjectid":24,
  "orientation":"orthogonal",
  "properties":[
         {
@@ -228,7 +245,7 @@
          "value":"Shotka Trail"
         }],
  "renderorder":"right-down",
- "tiledversion":"1.11.2",
+ "tiledversion":"1.8.6",
  "tileheight":16,
  "tilesets":[
         {
@@ -276,6 +293,6 @@
         }],
  "tilewidth":16,
  "type":"map",
- "version":"1.11",
+ "version":"1.8",
  "width":30
 }

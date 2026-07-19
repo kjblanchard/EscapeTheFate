@@ -334,7 +334,7 @@ const std::string& Engine::CurrentSceneName() {
 	return sceneData_.CurrentScene;
 }
 
-void Engine::Debug::DrawRectPrimitive(RectangleF& rect, Color color, bool filled, bool cameraOffset) {
+void Engine::Debug::DrawRectPrimitive(const RectangleF& rect, Color color, bool filled, bool cameraOffset) {
 	DrawRect(&rect, &color, filled, cameraOffset);
 }
 

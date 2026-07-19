@@ -1,9 +1,9 @@
 #include <Supergoon/Input/keyboard.h>
 #include <Supergoon/Primitives/Point.h>
 #include <Supergoon/camera.h>
+#include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <sgtools/log.h>
-#include <Supergoon/map.h>
 
 #include <components/PlayerController.hpp>
 #include <engine.hpp>
@@ -15,6 +15,7 @@
 #include <memory>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
+
 #include "interfaces/IController.hpp"
 
 using namespace std;
@@ -24,7 +25,6 @@ static const int sMoveSpeed = 100;
 static const RectangleF sCollisionOffsetAndSizeRect = {8, 8, 16, 22};
 static const Point sInteractionEastWestWidthHeight = {26, 8};
 static const Point sInteractionNorthSouthWidthHeight = {8, 26};
-
 
 void LocalPlayer::CreatePlayerTwo(TiledObject* objData) {
 }
@@ -48,10 +48,6 @@ void LocalPlayer::Create(TiledObject* objData) {
 
 	auto p1 = new LocalPlayer(objData, player);
 	vector<LocalPlayer*> players = {p1};
-	if (GameState::Players::Player2Spawned) {
-		player = PlayerControllerSystem::GetPlayerByNum(1);
-		players.emplace_back(new LocalPlayer(objData, player));
-	}
 	// We should override this if we are exiting from a battle.
 	for (auto i = 0; i < players.size(); ++i) {
 		auto currentPlayer = players[i];
@@ -93,6 +89,7 @@ LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController
 
 void LocalPlayer::Start() {}
 void LocalPlayer::Update() {
+	GameState::Players::LocalPlayerData[0].MovedThisFrame = false;
 	handlePlayerMovement();
 	handleInteractions();
 	if (handleMapExits()) {
@@ -225,6 +222,11 @@ bool LocalPlayer::handlePlayerMovement() {
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
 		Animator_->UpdateAnimatorSpeed(1.0f);
+		GameState::Players::LocalPlayerData[0].MovedThisFrame = true;
+		GameState::Players::LocalPlayerData[0].Location.x = X();
+		GameState::Players::LocalPlayerData[0].Location.y = Y();
+		GameState::Players::LocalPlayerData[0].Location.w = 4;
+		GameState::Players::LocalPlayerData[0].Location.h = 4;
 
 	} else {
 		Animator_->UpdateAnimatorSpeed(0.0f);
