@@ -18,12 +18,12 @@ void main() {
     float lineNoise = fract(sin(row * 43.758) * 2137.193);
     float lineSpeed = 0.4 + lineNoise * 1.2;
 
-    // Very dramatic pull to the right — quartic ramp with per-line variation
-    float pullStrength = time * time * time * time * 2.5 * lineSpeed;
+    // Pull starts immediately (linear base) and accelerates hard (quadratic on top)
+    float pullStrength = (time * 0.3 + time * time * 1.8) * lineSpeed;
     uv.x -= pullStrength;
 
-    // Aggressive directional blur that scales with the pull
-    float blurAmount = time * time * time * 0.6 * lineSpeed;
+    // Blur also starts from frame 1 and ramps aggressively
+    float blurAmount = (time * 0.1 + time * time * 0.5) * lineSpeed;
 
     vec4 accum = vec4(0.0);
     for (int i = 0; i < SAMPLES; ++i) {
