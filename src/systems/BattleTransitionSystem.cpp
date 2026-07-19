@@ -46,6 +46,24 @@ void BattleTransitionSystem::Start() {
 	ShaderCompile(blurShader_, "2dScreenVertex", "battleBlurFragment");
 }
 
+static void pickRandomTint(float& r, float& g, float& b) {
+	// Palette of vivid battle tints — randomly pick one each transition
+	static const float tints[][3] = {
+		{2.0f, 0.4f, 0.3f},  // hot red
+		{2.0f, 1.0f, 0.2f},  // fiery orange/yellow
+		{0.3f, 0.5f, 2.0f},  // electric blue
+		{1.8f, 0.2f, 1.5f},  // magenta/purple
+		{0.2f, 2.0f, 0.8f},  // toxic green
+		{1.5f, 0.3f, 2.0f},  // violet
+		{2.0f, 0.6f, 1.0f},  // hot pink
+		{0.4f, 1.8f, 2.0f},  // cyan
+	};
+	int idx = rand() % 8;
+	r = tints[idx][0];
+	g = tints[idx][1];
+	b = tints[idx][2];
+}
+
 void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 	if (transitioning_) return;
 	pendingScene_ = battleScene;
@@ -57,6 +75,9 @@ void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 	ShaderUse(activeShader_);
 	ShaderSetUniformFloat(activeShader_, "time", 0.0f, false);
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
+	float tr, tg, tb;
+	pickRandomTint(tr, tg, tb);
+	ShaderSetUniformVector3f(activeShader_, "tintColor", tr, tg, tb, false);
 	startBattleBGM(battleScene);
 }
 
@@ -71,8 +92,8 @@ void BattleTransitionSystem::Update() {
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
 
 	if (elapsed_ >= TRANSITION_DURATION) {
-		// Force screen to black before clearing override so there's no flash
-		Color black = {0, 0, 0, 0};
+		// Keep RGB white but zero alpha so screen is black; fade-in tweens alpha back to 255
+		Color black = {255, 255, 255, 0};
 		GraphicsUpdateFBOColor(&black);
 		SetScreenShaderOverride(nullptr);
 		transitioning_ = false;

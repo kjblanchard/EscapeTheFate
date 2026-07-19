@@ -7,6 +7,7 @@ uniform sampler2D image;
 uniform vec4 spriteColor;
 uniform float time;
 uniform vec2 resolution;
+uniform vec3 tintColor;
 
 void main() {
     const int SAMPLES = 12;
@@ -26,13 +27,10 @@ void main() {
     accum /= float(SAMPLES);
 
     float fade = clamp(1.0 - time * 1.1, 0.0, 1.0);
-    vec3 shifted = accum.rgb;
-    shifted.r *= (1.0 - time * 0.5);
-    shifted.g *= (1.0 - time * 0.3);
-    shifted.b = min(shifted.b * (1.0 + time * 0.6), 1.0);
-    shifted = shifted * (1.0 + time * 0.4);
-    float luma = dot(shifted, vec3(0.299, 0.587, 0.114));
-    vec3 desaturated = mix(shifted, vec3(luma), time * 0.3);
+    float tintStrength = time * 1.2;
+    vec3 shifted = mix(accum.rgb, accum.rgb * tintColor, tintStrength);
+    shifted *= (1.0 + time * 0.5);
+    shifted = pow(shifted, vec3(1.0 - time * 0.2));
 
-    FragColor = spriteColor * vec4(desaturated * fade, accum.a * fade);
+    FragColor = spriteColor * vec4(shifted * fade, accum.a * fade);
 }
