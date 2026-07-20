@@ -6,8 +6,6 @@ uniform sampler2D image;
 uniform vec4 spriteColor;
 uniform float time;
 uniform vec2 resolution;
-uniform vec3 tintColor;
-
 void main() {
     const int SAMPLES = 10;
     vec2 uv = TexCoords - vec2(0.5);
@@ -20,7 +18,6 @@ void main() {
     float swirl = time * 8.0;
     float shrink = 1.0 - time * 0.85;
 
-    // Blur along the swirl arc — sample multiple rotations around the main angle
     float blurArc = time * time * 1.5;
     vec4 accum = vec4(0.0);
     for (int i = 0; i < SAMPLES; ++i) {
@@ -36,10 +33,5 @@ void main() {
     float fade = clamp(1.0 - time * 1.4, 0.0, 1.0);
     float centerFade = clamp(dist / (shrink * 0.5 + 0.01), 0.0, 1.0);
 
-    float tintStrength = time * 1.2;
-    vec3 tinted = mix(accum.rgb, accum.rgb * tintColor, tintStrength);
-    tinted = pow(tinted, vec3(1.0 - time * 0.3));
-    tinted *= (1.0 + time * 0.6);
-
-    color = spriteColor * vec4(tinted * fade * centerFade, accum.a * fade * centerFade);
+    color = spriteColor * vec4(accum.rgb * fade * centerFade, accum.a * fade * centerFade);
 }
