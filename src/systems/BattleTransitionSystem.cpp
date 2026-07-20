@@ -17,7 +17,6 @@ static constexpr float TRANSITION_DURATION = 1.5f;
 namespace {
 Shader* swirlShader_ = nullptr;
 Shader* blurShader_ = nullptr;
-Shader* shatterShader_ = nullptr;
 Shader* activeShader_ = nullptr;
 float elapsed_ = 0.0f;
 bool transitioning_ = false;
@@ -45,8 +44,6 @@ void BattleTransitionSystem::Start() {
 	ShaderCompile(swirlShader_, "2dScreenVertex", "battleSwirlFragment");
 	blurShader_ = ShaderCreate();
 	ShaderCompile(blurShader_, "2dScreenVertex", "battleBlurFragment");
-	shatterShader_ = ShaderCreate();
-	ShaderCompile(shatterShader_, "2dScreenVertex", "battleShatterFragment");
 }
 
 void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
@@ -55,8 +52,8 @@ void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 	elapsed_ = 0.0f;
 	transitioning_ = true;
 	GameState::Battle::InBattle = true;
-	int pick = rand() % 3;
-	activeShader_ = pick == 0 ? swirlShader_ : (pick == 1 ? blurShader_ : shatterShader_);
+	int pick = rand() % 2;
+	activeShader_ = pick == 0 ? swirlShader_ : blurShader_;
 	SetScreenShaderOverride(activeShader_);
 	ShaderUse(activeShader_);
 	ShaderSetUniformFloat(activeShader_, "time", 0.0f, false);
@@ -96,10 +93,6 @@ void BattleTransitionSystem::Shutdown() {
 	if (blurShader_) {
 		ShaderDestroy(blurShader_);
 		blurShader_ = nullptr;
-	}
-	if (shatterShader_) {
-		ShaderDestroy(shatterShader_);
-		shatterShader_ = nullptr;
 	}
 }
 
