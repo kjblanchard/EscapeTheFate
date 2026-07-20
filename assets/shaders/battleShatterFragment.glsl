@@ -56,78 +56,54 @@ vec2 getShardDisplacement(vec2 cellID) {
 void main() {
     vec2 uv = TexCoords;
 
-    // --- Phase 1: Cracks appear (time 0.0 - 0.25) ---
-    vec2 crackCell;
-    float crackMin, crackSecond;
-    voronoi(uv, crackCell, crackMin, crackSecond);
-    float edge = crackSecond - crackMin;
+    // Find which shard this pixel belongs to
+    vec2 cellID;
+    float minDist, secondDist;
+    voronoi(uv, cellID, minDist, secondDist);
+
+    // Crack edge detection
+    float edge = secondDist - minDist;
     float crackLine = smoothstep(0.05, 0.0, edge);
     float crackAppear = smoothstep(0.0, 0.25, time);
-    float crackIntensity = crackLine * crackAppear;
 
-    // --- Phase 2: Shards fall (time > 0.1) ---
-    // Reverse-map: find which shard has fallen to cover this pixel.
-    // A shard originally at sourceUV has displacement D, so it's now at sourceUV + D.
-    // We want sourceUV + D = uv, i.e., sourceUV = uv - D.
-    // Iterate twice to converge.
+    // Per-shard fall
+    vec2 disp = getShardDisplacement(cellID);
+    float shardRand = hash1(cellID);
+    float shardFallStart = 0.1 + shardRand * 0.25;
+    float shardFalling = step(shardFallStart, time);
 
-    // Iteration 1: assume no displacement, find local shard
-    vec2 cell1;
-    float min1, sec1;
-    voronoi(uv, cell1, min1, sec1);
-    vec2 disp1 = getShardDisplacement(cell1);
+    // Source UV: where this shard pixel originally was before it fell here
+    vec2 sourceUV = uv - disp;
 
-    // Iteration 2: look at the source position
-    vec2 sourceUV = uv - disp1;
-    vec2 cell2;
-    float min2, sec2;
-    voronoi(sourceUV, cell2, min2, sec2);
-    vec2 disp2 = getShardDisplacement(cell2);
+    // If source is off-screen, the shard has left the viewport — show black
+    bool offScreen = sourceUV.x < 0.0 || sourceUV.x > 1.0 ||
+                     sourceUV.y < 0.0 || sourceUV.y > 1.0;
 
-    // Final source: where the shard covering this pixel originally was
-    vec2 finalSource = uv - disp2;
-    vec2 finalCell;
-    float finalMin, finalSec;
-    voronoi(finalSource, finalCell, finalMin, finalSec);
-
-    // Check if this shard actually reaches our pixel
-    vec2 finalDisp = getShardDisplacement(finalCell);
-    vec2 expectedPos = finalSource + finalDisp;
-    float error = length(expectedPos - uv) * CELL_SCALE;
-
-    // If source is out of bounds or error is too large, no shard covers this pixel
-    bool hasShard = finalSource.x >= 0.0 && finalSource.x <= 1.0 &&
-                    finalSource.y >= 0.0 && finalSource.y <= 1.0 &&
-                    error < 0.6;
-
-    // Edge detection on the fallen shard
-    float shardEdge = finalSec - finalMin;
-    float shardCrack = smoothstep(0.05, 0.02, shardEdge);
-
-    // Sample texture at the shard's original position
-    vec4 sampled = texture(image, finalSource);
+    // Sample the original screen at the source position
+    vec4 sampled = texture(image, sourceUV);
 
     // Tint
     float tintStrength = time * 0.5;
     vec3 tinted = mix(sampled.rgb, sampled.rgb * tintColor, tintStrength);
 
-    // Compose: before shards start moving, show cracks on original image
-    // After movement begins, show displaced shards with edges
-    float fallPhase = smoothstep(0.1, 0.3, time);
-    float shardRand = hash1(finalCell);
-    float shardFallStart = 0.1 + shardRand * 0.25;
-    float shardFalling = step(shardFallStart, time);
+    // Crack highlight on the shard edges
+    float crackFade = clamp(1.0 - (time - shardFallStart) * 3.0, 0.0, 1.0);
+    float crackIntensity = crackLine * crackAppear * crackFade;
 
-    vec3 staticImage = texture(image, uv).rgb + vec3(crackIntensity);
-    vec3 fallenShard = tinted * (1.0 - shardCrack * 0.5) + vec3(shardCrack * 0.3);
+    vec3 shardColor = tinted + vec3(crackIntensity);
 
+    // Before falling starts, show original image with cracks
+    // After falling starts, show the displaced textured shard
     vec3 finalColor;
-    if (!hasShard && fallPhase > 0.0) {
-        finalColor = mix(staticImage, vec3(0.0), fallPhase);
-    } else if (shardFalling > 0.0 && fallPhase > 0.0) {
-        finalColor = mix(staticImage, fallenShard, fallPhase);
+    if (shardFalling < 0.5) {
+        // Shard hasn't started falling yet — show static image with cracks
+        vec3 original = texture(image, uv).rgb;
+        finalColor = original + vec3(crackLine * crackAppear);
+    } else if (offScreen) {
+        // Shard has fallen off — black void
+        finalColor = vec3(0.0);
     } else {
-        finalColor = staticImage;
+        finalColor = shardColor;
     }
 
     color = spriteColor * vec4(finalColor, 1.0);

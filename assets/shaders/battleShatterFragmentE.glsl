@@ -57,61 +57,54 @@ vec2 getShardDisplacement(vec2 cellID) {
 void main() {
     vec2 uv = TexCoords;
 
-    vec2 crackCell;
-    float crackMin, crackSecond;
-    voronoi(uv, crackCell, crackMin, crackSecond);
-    float edge = crackSecond - crackMin;
+    // Find which shard this pixel belongs to
+    vec2 cellID;
+    float minDist, secondDist;
+    voronoi(uv, cellID, minDist, secondDist);
+
+    // Crack edge detection
+    float edge = secondDist - minDist;
     float crackLine = smoothstep(0.05, 0.0, edge);
     float crackAppear = smoothstep(0.0, 0.25, time);
-    float crackIntensity = crackLine * crackAppear;
 
-    vec2 cell1;
-    float min1, sec1;
-    voronoi(uv, cell1, min1, sec1);
-    vec2 disp1 = getShardDisplacement(cell1);
-
-    vec2 sourceUV = uv - disp1;
-    vec2 cell2;
-    float min2, sec2;
-    voronoi(sourceUV, cell2, min2, sec2);
-    vec2 disp2 = getShardDisplacement(cell2);
-
-    vec2 finalSource = uv - disp2;
-    vec2 finalCell;
-    float finalMin, finalSec;
-    voronoi(finalSource, finalCell, finalMin, finalSec);
-
-    vec2 finalDisp = getShardDisplacement(finalCell);
-    vec2 expectedPos = finalSource + finalDisp;
-    float error = length(expectedPos - uv) * CELL_SCALE;
-
-    bool hasShard = finalSource.x >= 0.0 && finalSource.x <= 1.0 &&
-                    finalSource.y >= 0.0 && finalSource.y <= 1.0 &&
-                    error < 0.6;
-
-    float shardEdge = finalSec - finalMin;
-    float shardCrack = smoothstep(0.05, 0.02, shardEdge);
-
-    vec4 sampled = texture(image, finalSource);
-
-    float tintStrength = time * 0.5;
-    vec3 tinted = mix(sampled.rgb, sampled.rgb * tintColor, tintStrength);
-
-    float fallPhase = smoothstep(0.1, 0.3, time);
-    float shardRand = hash1(finalCell);
+    // Per-shard fall
+    vec2 disp = getShardDisplacement(cellID);
+    float shardRand = hash1(cellID);
     float shardFallStart = 0.1 + shardRand * 0.25;
     float shardFalling = step(shardFallStart, time);
 
-    vec3 staticImage = texture(image, uv).rgb + vec3(crackIntensity);
-    vec3 fallenShard = tinted * (1.0 - shardCrack * 0.5) + vec3(shardCrack * 0.3);
+    // Source UV: where this shard pixel originally was before it fell here
+    vec2 sourceUV = uv - disp;
 
+    // If source is off-screen, the shard has left the viewport — show black
+    bool offScreen = sourceUV.x < 0.0 || sourceUV.x > 1.0 ||
+                     sourceUV.y < 0.0 || sourceUV.y > 1.0;
+
+    // Sample the original screen at the source position
+    vec4 sampled = texture(image, sourceUV);
+
+    // Tint
+    float tintStrength = time * 0.5;
+    vec3 tinted = mix(sampled.rgb, sampled.rgb * tintColor, tintStrength);
+
+    // Crack highlight on the shard edges
+    float crackFade = clamp(1.0 - (time - shardFallStart) * 3.0, 0.0, 1.0);
+    float crackIntensity = crackLine * crackAppear * crackFade;
+
+    vec3 shardColor = tinted + vec3(crackIntensity);
+
+    // Before falling starts, show original image with cracks
+    // After falling starts, show the displaced textured shard
     vec3 finalColor;
-    if (!hasShard && fallPhase > 0.0) {
-        finalColor = mix(staticImage, vec3(0.0), fallPhase);
-    } else if (shardFalling > 0.0 && fallPhase > 0.0) {
-        finalColor = mix(staticImage, fallenShard, fallPhase);
+    if (shardFalling < 0.5) {
+        // Shard hasn't started falling yet — show static image with cracks
+        vec3 original = texture(image, uv).rgb;
+        finalColor = original + vec3(crackLine * crackAppear);
+    } else if (offScreen) {
+        // Shard has fallen off — black void
+        finalColor = vec3(0.0);
     } else {
-        finalColor = staticImage;
+        finalColor = shardColor;
     }
 
     FragColor = spriteColor * vec4(finalColor, 1.0);
