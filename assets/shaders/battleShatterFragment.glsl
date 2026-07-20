@@ -50,7 +50,7 @@ vec2 getShardDisplacement(vec2 cellID) {
     float fallTime = max(time - fallStart, 0.0);
     float fallDist = fallTime * fallTime * fallSpeed;
     float xDrift = (hash1(cellID + vec2(7.3, 13.1)) - 0.5) * 0.3 * fallTime;
-    return vec2(xDrift, -fallDist) / CELL_SCALE;
+    return vec2(xDrift, fallDist) / CELL_SCALE;
 }
 
 void main() {
