@@ -12,12 +12,10 @@
 using namespace Etf;
 using namespace std;
 
-static constexpr float TRANSITION_DURATION = 1.5f;
 
 namespace {
-Shader* swirlShader_ = nullptr;
+constexpr float transitionDuration_ = 1.5f;
 Shader* blurShader_ = nullptr;
-Shader* shatterShader_ = nullptr;
 Shader* activeShader_ = nullptr;
 float elapsed_ = 0.0f;
 bool transitioning_ = false;
@@ -41,12 +39,8 @@ void BattleTransitionSystem::Start() {
 	resX_ = (float)config.window.x;
 	resY_ = (float)config.window.y;
 
-	swirlShader_ = ShaderCreate();
-	ShaderCompile(swirlShader_, "2dScreenVertex", "battleSwirlFragment");
 	blurShader_ = ShaderCreate();
 	ShaderCompile(blurShader_, "2dScreenVertex", "battleBlurFragment");
-	shatterShader_ = ShaderCreate();
-	ShaderCompile(shatterShader_, "2dScreenVertex", "battleShatterFragment");
 }
 
 void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
@@ -55,8 +49,7 @@ void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 	elapsed_ = 0.0f;
 	transitioning_ = true;
 	GameState::Battle::InBattle = true;
-	int pick = rand() % 3;
-	activeShader_ = pick == 0 ? swirlShader_ : (pick == 1 ? blurShader_ : shatterShader_);
+	activeShader_ = blurShader_;
 	SetScreenShaderOverride(activeShader_);
 	ShaderUse(activeShader_);
 	ShaderSetUniformFloat(activeShader_, "time", 0.0f, false);
@@ -67,14 +60,14 @@ void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 void BattleTransitionSystem::Update() {
 	if (!transitioning_) return;
 	elapsed_ += GameState::DeltaTimeSeconds;
-	float t = elapsed_ / TRANSITION_DURATION;
+	float t = elapsed_ / transitionDuration_;
 	if (t > 1.0f) t = 1.0f;
 
 	ShaderUse(activeShader_);
 	ShaderSetUniformFloat(activeShader_, "time", t, false);
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
 
-	if (elapsed_ >= TRANSITION_DURATION) {
+	if (elapsed_ >= transitionDuration_) {
 		// Keep RGB white but zero alpha so screen is black; fade-in tweens alpha back to 255
 		Color black = {255, 255, 255, 0};
 		GraphicsUpdateFBOColor(&black);
@@ -89,17 +82,9 @@ void BattleTransitionSystem::Update() {
 
 void BattleTransitionSystem::Shutdown() {
 	SetScreenShaderOverride(nullptr);
-	if (swirlShader_) {
-		ShaderDestroy(swirlShader_);
-		swirlShader_ = nullptr;
-	}
 	if (blurShader_) {
 		ShaderDestroy(blurShader_);
 		blurShader_ = nullptr;
-	}
-	if (shatterShader_) {
-		ShaderDestroy(shatterShader_);
-		shatterShader_ = nullptr;
 	}
 }
 
