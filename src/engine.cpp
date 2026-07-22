@@ -111,8 +111,16 @@ void initializeEngine(const std::string& configFilename, void (*initializefunc)(
 }
 
 void startEngine() {
-	loadAllMaps();
 	auto& gameConfig = GameConfig::GetGameConfig();
+	//preload all textures
+	for (const auto& tex : gameConfig.PreloadTextures) {
+		sgLogWarn("creating texture %s", tex.c_str());
+		auto fullTex = tex + ".png";
+		Texture* texture = TextureCreate(fullTex.c_str());
+		Engine::Textures::LoadTextureFromBuffer(texture, tex);
+	}
+	//preload all maps, not sure if any benefit besides the dialog
+	loadAllMaps();
 	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
 	for (auto& system : systems_) {
 		if (system.Start) system.Start();
@@ -301,8 +309,8 @@ void loadAllMaps() {
 	auto& config = GameConfig::GetGameConfig();
 	for (auto& scene : config.scene.scenes) {
 		sceneData_.SceneToLoad = &scene;
-		LoadMap(scene.MapName.c_str());
-		// GameObject::LoadAllGameObjects();
+		// LoadMap(scene.MapName.c_str());
+		// GameObjectSystem::Load();
 		loadUI();
 		loadDialog();
 	}

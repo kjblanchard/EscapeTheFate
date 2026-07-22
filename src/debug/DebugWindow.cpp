@@ -65,6 +65,7 @@ static void drawMainWindow() {
 		if (ImGui::TreeNode("Cached Textures")) {
 			for (int i = 0; i < numTextures; ++i) {
 				auto texture = textures[i];
+				if(!texture) continue;
 				if (ImGui::TreeNode(texture->Name)) {
 					if (ImGui::TreeNode(texture->Name)) {
 						ImGui::Text("RefCount:");
