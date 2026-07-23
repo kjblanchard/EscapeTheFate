@@ -122,7 +122,7 @@ jobs:
         name: Upload to S3
         with:
           name: s3Artifact
-          path: repo/build
+          path: repo/build/release
    Push-Files-To-S3:
     uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
     needs: Build-Emscripten
