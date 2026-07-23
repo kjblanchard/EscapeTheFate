@@ -7,6 +7,7 @@
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
 #include <engine.hpp>
+#include <systems/BattleTransitionSystem.hpp>
 #include <systems/BattleZoneSystem.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
@@ -45,7 +46,11 @@ void InitializeGame() {
 			.Update = BattleZoneSystem::Update,
 			.Draw = BattleZoneSystem::Draw,
 			.Shutdown = BattleZoneSystem::Shutdown,
-
+		},
+		{
+			.Start = BattleTransitionSystem::Start,
+			.Update = BattleTransitionSystem::Update,
+			.Shutdown = BattleTransitionSystem::Shutdown,
 		}};
 	Engine::RegisterSystems(systems_);
 }

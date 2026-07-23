@@ -9,6 +9,7 @@
 
 #include "battle/battleZones.hpp"
 #include "engine.hpp"
+#include "systems/BattleTransitionSystem.hpp"
 
 using namespace Etf;
 using namespace std;
@@ -59,6 +60,7 @@ void BattleZoneSystem::Start() {
 }
 
 void BattleZoneSystem::Update() {
+	if (BattleTransitionSystem::IsTransitioning()) return;
 	// If a player is moving within a battle zone, increase walk time
 	for (auto zone : battleZones_) {
 		for (auto i = 0; i < maxNumLocalPlayers_; ++i) {
@@ -67,11 +69,10 @@ void BattleZoneSystem::Update() {
 				GameState::Battle::CurrentStepsWithoutBattle += GameState::DeltaTimeSeconds;
 				// If walktime is more than the current zones battle encounter time, then we should start the battle
 				if (GameState::Battle::CurrentStepsWithoutBattle >= zone->EncounterTime()) {
-					GameState::Battle::InBattle = true;
 					GameState::NextLoadMapName = Engine::CurrentSceneName();
 					auto& battleZoneData = GetBattleZoneData(zone->Zone());
 					auto& nextbattleScene = getBattleSceneRandom(battleZoneData);
-					Engine::LoadScene(nextbattleScene, 0.25f, 2.75f, false);
+					BattleTransitionSystem::TriggerTransition(nextbattleScene);
 					GameState::Battle::CurrentStepsWithoutBattle = 0;
 				}
 			}

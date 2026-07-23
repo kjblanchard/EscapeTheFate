@@ -9,6 +9,7 @@ struct Scene {
 };
 
 struct gameConfig {
+	static std::vector<std::string> PreloadTextures;
 	struct audio {
 		float bgmVolume, sfxVolume;
 	} audio;

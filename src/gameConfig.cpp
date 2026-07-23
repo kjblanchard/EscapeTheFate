@@ -9,7 +9,34 @@
 using namespace std;
 using namespace Etf;
 
+vector<string> Etf::gameConfig::PreloadTextures = {};
+
 gameConfig GameConfig::_config;
+const vector<string> preloadTextures_ = {
+	"atbBar",
+	"blackBird",
+	"house",
+	"interaction",
+	"outside",
+	"player1Battler",
+	"supergoonLogo",
+	"terrain",
+	"battleTurnMarker",
+	"fingers",
+	"icons_tf_16",
+	"keyboard",
+	"padButtonsExport",
+	"player2",
+	"sword1",
+	"uibase",
+	"bBlackBird",
+	"gamecontroller",
+	"inside",
+	"null",
+	"player1",
+	"supergoongameslogo",
+	"terrain",
+};
 
 static void loadAudioSettingsToConfig(gameConfig* config, json_object* rootObject) {
 	auto audioObject = jobj(rootObject, "audio");
@@ -89,7 +116,7 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	char* buf;
 	size_t sz;
 	Engine::Json::GetJsonBufferFromDirectory("gameConfig", &buf, &sz);
-	auto root = jGetObjectFromBuffer(buf,sz);
+	auto root = jGetObjectFromBuffer(buf, sz);
 	// auto root = jGetObjectFromFile(configFileName.c_str());
 	if (!root) {
 		sgLogCritical("Error reading game config file!");
@@ -99,4 +126,5 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	loadDebugSettingsToConfig(&_config, root);
 	loadSceneSettingsToConfig(&_config, root);
 	jReleaseObjectFromFile(root);
+	_config.PreloadTextures = preloadTextures_;
 }

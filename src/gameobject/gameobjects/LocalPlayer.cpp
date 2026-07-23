@@ -178,7 +178,7 @@ void LocalPlayer::handleplayerJoystickMovement() {
 }
 
 bool LocalPlayer::handlePlayerMovement() {
-	if (GameState::InDialog) return false;
+	if (GameState::InDialog || GameState::Battle::InBattle) return false;
 	auto moved = false;
 	auto previousDirection = Direction_;
 	auto velocityX = 0;
