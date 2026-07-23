@@ -119,7 +119,6 @@ void startEngine() {
 		Texture* texture = TextureCreate(fullTex.c_str());
 		Engine::Textures::LoadTextureFromBuffer(texture, tex);
 	}
-	//preload all maps, not sure if any benefit besides the dialog
 	loadAllMaps();
 	GraphicsSetLogicalWorldSize(gameConfig.window.x, gameConfig.window.y);
 	for (auto& system : systems_) {
@@ -309,7 +308,7 @@ void loadAllMaps() {
 	auto& config = GameConfig::GetGameConfig();
 	for (auto& scene : config.scene.scenes) {
 		sceneData_.SceneToLoad = &scene;
-		// LoadMap(scene.MapName.c_str());
+		LoadMap(scene.MapName.c_str());
 		// GameObjectSystem::Load();
 		loadUI();
 		loadDialog();
