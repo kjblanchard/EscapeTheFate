@@ -14,7 +14,7 @@ using namespace std;
 
 
 namespace {
-constexpr float transitionDuration_ = 1.5f;
+constexpr float transitionDuration_ = 0.5f;
 Shader* blurShader_ = nullptr;
 Shader* activeShader_ = nullptr;
 float elapsed_ = 0.0f;

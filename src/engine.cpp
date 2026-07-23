@@ -114,7 +114,7 @@ void startEngine() {
 	auto& gameConfig = GameConfig::GetGameConfig();
 	//preload all textures
 	for (const auto& tex : gameConfig.PreloadTextures) {
-		sgLogWarn("creating texture %s", tex.c_str());
+		sgLogDebug("creating texture %s", tex.c_str());
 		auto fullTex = tex + ".png";
 		Texture* texture = TextureCreate(fullTex.c_str());
 		Engine::Textures::LoadTextureFromBuffer(texture, tex);
@@ -433,10 +433,10 @@ void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, 
 
 void Engine::Audio::PlayBGM(const std::string& name, float volume) {
 	if (currentBGM_ == name) {
-		sgLogWarn("Backing out, not playing bgm %s", name.c_str());
+		sgLogDebug("Backing out, not playing bgm %s", name.c_str());
 		return;
 	}
-	sgLogWarn("Playin, bgm %s", name.c_str());
+	sgLogDebug("Playin, bgm %s", name.c_str());
 	SetBgmTrack(0);
 	playBGMInternal(name, volume);
 	currentBGM_ = name;
