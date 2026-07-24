@@ -23,7 +23,7 @@ BattleZone::BattleZone(TiledObject* objData) : GameObject(objData->X, objData->Y
 		auto prop = objData->Properties[i];
 		if (prop.Name == string("id")) {
 			zone_ = prop.Data.IntData;
-			sgLogWarn("Assigning zone id %d", zone_);
+			sgLogDebug("Assigning zone id %d", zone_);
 		}
 	}
 	location_.x = X();
@@ -31,7 +31,7 @@ BattleZone::BattleZone(TiledObject* objData) : GameObject(objData->X, objData->Y
 	location_.w = objData->Width;
 	location_.h = objData->Height;
 	auto& zoneDbData = BattleZoneSystem::GetBattleZoneDataFromDB(zone_);
-	encounterTime_ = zoneDbData.EncounterTime * (0.5f + (float)rand() / RAND_MAX);	// between .5 and 1.5 for the time.
+	encounterTime_ = zoneDbData.EncounterTime * (0.5f + (rand() / (float)RAND_MAX));  // between .5 and 1.5 for the time.
 	BattleZoneSystem::AddBattleZone(this);
 }
 

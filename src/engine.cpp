@@ -16,6 +16,7 @@
 #include <sgforge/directory.h>
 #include <sgforge/unpack.h>
 #include <sgtools/log.h>
+#include <stddef.h>
 
 #include <algorithm>
 #include <engine.hpp>
@@ -184,7 +185,6 @@ void loadSetupAndBgm() {
 void loadUI() {
 	sgLogDebug("Starting load ui");
 	if (!sceneData_.SceneToLoad->UIName.empty()) {
-		// UI::LoadUIFromFile(format("{}assets/ui/{}.json", GetBasePath(), _sceneData.SceneToLoad->UIName));
 		UI::LoadUIFromFile(sceneData_.SceneToLoad->UIName);
 	} else {
 		UI::GetRootUIObject()->DestroyChildIfNotName("");
@@ -306,15 +306,21 @@ void updateScreenFade() {
 
 void loadAllMaps() {
 	auto& config = GameConfig::GetGameConfig();
+	char* buf;
+	size_t sz;
 	for (auto& scene : config.scene.scenes) {
 		sceneData_.SceneToLoad = &scene;
-		LoadMap(scene.MapName.c_str());
-		// GameObjectSystem::Load();
+		auto name = scene.MapName + ".tmj";
+		auto result = GetDataFromDirectory(name.c_str(), &buf, &sz, directory_);
+		if(!result){
+			sgLogDebug("Could not preload map file %s", name.c_str());
+			continue;
+		}
+		LoadMapFromBuffer(scene.MapName.c_str(), buf, sz);
 		loadUI();
 		loadDialog();
 	}
 	BattleSystem::InitializeBattleSystem();
-	// GameObject::DestroyAllGameObjects();
 	loadEnd();
 	// Load all textures
 	ResetCameraFollow();
@@ -513,7 +519,7 @@ void Engine::Json::GetJsonBufferFromDirectory(const char* name, char** buf, size
 	if (!result) {
 		*buf = NULL;
 		*sz = 0;
-		sgLogError("Could not load json for %s", name);
+		sgLogDebug("Could not load json for %s", name);
 	}
 }
 
