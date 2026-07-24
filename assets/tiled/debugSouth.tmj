@@ -191,38 +191,21 @@
                  "y":1
                 }, 
                 {
-                 "height":256,
-                 "id":22,
-                 "name":"Battle Zone 0",
+                 "height":240,
+                 "id":25,
+                 "name":"Battle zone 0",
                  "properties":[
                         {
                          "name":"id",
-                         "type":"string",
-                         "value":"0"
+                         "type":"int",
+                         "value":0
                         }],
                  "rotation":0,
                  "type":"1BattleZone",
                  "visible":true,
-                 "width":224,
-                 "x":0,
-                 "y":64
-                }, 
-                {
-                 "height":256,
-                 "id":23,
-                 "name":"Battle Zone 1",
-                 "properties":[
-                        {
-                         "name":"id",
-                         "type":"string",
-                         "value":"0"
-                        }],
-                 "rotation":0,
-                 "type":"1BattleZone",
-                 "visible":true,
-                 "width":224,
-                 "x":224,
-                 "y":0
+                 "width":336,
+                 "x":48,
+                 "y":32
                 }],
          "opacity":1,
          "type":"objectgroup",
@@ -231,7 +214,7 @@
          "y":0
         }],
  "nextlayerid":6,
- "nextobjectid":24,
+ "nextobjectid":27,
  "orientation":"orthogonal",
  "properties":[
         {

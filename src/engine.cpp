@@ -112,7 +112,7 @@ void initializeEngine(const std::string& configFilename, void (*initializefunc)(
 
 void startEngine() {
 	auto& gameConfig = GameConfig::GetGameConfig();
-	//preload all textures
+	// preload all textures
 	for (const auto& tex : gameConfig.PreloadTextures) {
 		sgLogDebug("creating texture %s", tex.c_str());
 		auto fullTex = tex + ".png";
@@ -515,6 +515,13 @@ void Engine::Json::GetJsonBufferFromDirectory(const char* name, char** buf, size
 		*sz = 0;
 		sgLogError("Could not load json for %s", name);
 	}
+}
+
+json_object* Engine::Json::GetJsonObjectFromDirectory(const char* name) {
+	char* buf;
+	size_t sz;
+	GetJsonBufferFromDirectory(name, &buf, &sz);
+	return jGetObjectFromBuffer(buf, sz);
 }
 
 RectangleF Engine::Json::GetRectFromObject(void* object, const std::string& key) {

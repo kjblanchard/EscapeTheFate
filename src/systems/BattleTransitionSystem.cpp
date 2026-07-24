@@ -38,7 +38,6 @@ void BattleTransitionSystem::Start() {
 	auto& config = GameConfig::GetGameConfig();
 	resX_ = (float)config.window.x;
 	resY_ = (float)config.window.y;
-
 	blurShader_ = ShaderCreate();
 	ShaderCompile(blurShader_, "2dScreenVertex", "battleBlurFragment");
 }
@@ -62,11 +61,9 @@ void BattleTransitionSystem::Update() {
 	elapsed_ += GameState::DeltaTimeSeconds;
 	float t = elapsed_ / transitionDuration_;
 	if (t > 1.0f) t = 1.0f;
-
 	ShaderUse(activeShader_);
 	ShaderSetUniformFloat(activeShader_, "time", t, false);
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
-
 	if (elapsed_ >= transitionDuration_) {
 		// Keep RGB white but zero alpha so screen is black; fade-in tweens alpha back to 255
 		Color black = {255, 255, 255, 0};

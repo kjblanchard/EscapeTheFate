@@ -1,28 +1,24 @@
 #include <Supergoon/json.h>
 #include <sgtools/log.h>
 
+#include <battle/battleZones.hpp>
+#include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/BattleZone.hpp>
+#include <systems/BattleTransitionSystem.hpp>
 #include <systems/BattleZoneSystem.hpp>
 #include <vector>
-
-#include "battle/battleZones.hpp"
-#include "engine.hpp"
-#include "systems/BattleTransitionSystem.hpp"
 
 using namespace Etf;
 using namespace std;
 
-const int maxNumLocalPlayers_ = 2;
+constexpr int maxNumLocalPlayers_ = 2;
 vector<BattleZone*> battleZones_;
 vector<BattleZoneData> battleZoneDatabase_;
 
 static void loadBattleZones() {
-	char* buf;
-	size_t sz;
-	Engine::Json::GetJsonBufferFromDirectory("battleZones", &buf, &sz);
-	auto dataRootJsonArray = jGetObjectFromBuffer(buf, sz);
+	auto dataRootJsonArray = Engine::Json::GetJsonObjectFromDirectory("battleZones");
 	if (!dataRootJsonArray) sgLogCritical("No battle zones found exiting");
 	auto numData = jGetObjectArrayLength(dataRootJsonArray);
 	if (!numData) sgLogCritical("No zones found in zonedb, exiting!");
@@ -55,6 +51,13 @@ const string& getBattleSceneRandom(const BattleZoneData& zone) {
 	return zone.Maps[rand() % zone.Maps.size()];
 }
 
+int getBattleGroupRandom(const BattleZoneData& zone) {
+	if (zone.Maps.empty()) {
+		sgLogCritical("Zone has no groups, cannot select battlers!");
+	}
+	return zone.BattleGroups[rand() % zone.BattleGroups.size()];
+}
+
 void BattleZoneSystem::Start() {
 	loadBattleZones();
 }
@@ -70,8 +73,12 @@ void BattleZoneSystem::Update() {
 				// If walktime is more than the current zones battle encounter time, then we should start the battle
 				if (GameState::Battle::CurrentStepsWithoutBattle >= zone->EncounterTime()) {
 					GameState::NextLoadMapName = Engine::CurrentSceneName();
-					auto& battleZoneData = GetBattleZoneData(zone->Zone());
+					auto& battleZoneData = GetBattleZoneDataFromDB(zone->Zone());
+					auto battleGroup = getBattleGroupRandom(battleZoneData);
+					sgLogDebug("Setting battle group to be %d", battleGroup);
+					GameState::Battle::NextBattleGroup = battleGroup;
 					auto& nextbattleScene = getBattleSceneRandom(battleZoneData);
+					sgLogDebug("Setting battle scene to be %s", nextbattleScene.c_str());
 					BattleTransitionSystem::TriggerTransition(nextbattleScene);
 					GameState::Battle::CurrentStepsWithoutBattle = 0;
 				}
@@ -96,7 +103,7 @@ void BattleZoneSystem::DestroyBattleZoneGameObject(const BattleZone* zone) {
 	}));
 }
 
-const BattleZoneData& BattleZoneSystem::GetBattleZoneData(int id) {
+const BattleZoneData& BattleZoneSystem::GetBattleZoneDataFromDB(int id) {
 	if (id >= battleZoneDatabase_.size()) {
 		sgLogWarn("Trying to get battle zone id %d from battle zone db with db size of %d", id, battleZoneDatabase_.size());
 		return battleZoneDatabase_.at(0);

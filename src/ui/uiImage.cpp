@@ -18,8 +18,6 @@ UIImage::UIImage(UIImageArgs& args) {
 	_debugBox = args.DebugBox;
 	auto fullTex = _filename + ".png";
 	_texture = TextureCreate(fullTex.c_str());
-	// _texture = TextureCreate(_filename.c_str());
-	// Engine::Textures::LoadTextureFromBuffer(_texture, _filename);
 }
 
 UIImage::~UIImage() {

@@ -1,6 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
+#include <Supergoon/json.h>
 
 #include <functional>
 #include <string>
@@ -87,6 +88,7 @@ void DrawText(Text* text, float xOffset, float yOffset, Color& color);
 
 namespace Json {
 void GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz);
+json_object* GetJsonObjectFromDirectory(const char* name);
 RectangleF GetRectFromObject(void* object, const std::string& key);
 template <typename Lambda>
 void jforeach_lambda(void* obj, Lambda&& lambda) {
