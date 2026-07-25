@@ -1,7 +1,16 @@
 #pragma once
+#include <battle/enemyBattlerUI.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
+#include <memory>
 struct Shader;
 namespace Etf {
+
+enum class EnemyBattlerStates {
+	Default,
+	ATBCharging,
+	ATBFullyCharged,
+	Attacking,
+};
 
 class EnemyBattler : public Battler {
    public:
@@ -14,10 +23,11 @@ class EnemyBattler : public Battler {
 	void takeDamageImpl(int damage) override;
 
    private:
-	UIText* _hpObject;
+	std::unique_ptr<EnemyBattlerUI> _enemyUI;
 	Shader* _deathShader = nullptr;
 	float _deathEffectTime = 0.0f;
 	bool _deathEffectPlaying = false;
+	EnemyBattlerStates _currentState = EnemyBattlerStates::Default;
 	static constexpr float kDeathEffectDuration = 0.7f;
 };
 

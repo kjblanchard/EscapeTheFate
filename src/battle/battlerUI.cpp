@@ -90,9 +90,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
 	} else {
-		auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
-		_hpObject = static_cast<UIText*>(hpObject);
-		if (_hpObject) _hpObject->SetVisible(true);
+		_hpObject = nullptr;
 	}
 }
 

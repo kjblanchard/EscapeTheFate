@@ -134,7 +134,7 @@ static void loadEnemies() {
 		}
 		BattlerArgs args;
 		auto spawnLocation = BattleLocation::GetBattleLocation(i + 4);
-		args.BattlerNum = 0;
+		args.BattlerNum = i;
 		args.X = spawnLocation->X();
 		args.Y = spawnLocation->Y();
 		args.BattleData = &battlerDatabase_.at(battlerID);
