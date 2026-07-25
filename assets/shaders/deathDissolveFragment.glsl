@@ -39,9 +39,9 @@ void main()
 
     if (sampled.a < 0.01) discard;
 
-    vec3 redColor = mix(vec3(1.0, 0.2, 0.2), vec3(1.0, 0.5, 0.45), time);
-    float redMix = clamp(time * time * 2.0, 0.0, 0.75);
-    vec3 tinted = mix(sampled.rgb, redColor, redMix);
+    vec3 redColor = vec3(1.0, 0.2, 0.2);
+    float redMix = smoothstep(0.0, 0.2, time) * (1.0 - smoothstep(0.4, 0.9, time));
+    vec3 tinted = mix(sampled.rgb, redColor, redMix * 0.8);
 
     float alpha = sampled.a * (1.0 - smoothstep(0.1, 0.7, time));
 
