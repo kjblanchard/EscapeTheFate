@@ -9,6 +9,7 @@
 #include <engine.hpp>
 #include <systems/BattleTransitionSystem.hpp>
 #include <systems/BattleZoneSystem.hpp>
+#include <systems/SplashSystem.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
@@ -24,6 +25,11 @@ void InitializeGame() {
 	name = "Game";
 	Engine::DebugUI::AddWindow({{name, DebugGameWindow::Draw}});
 	const std::vector<SystemCallbacks> systems_{
+		{
+			.Start = SplashSystem::Start,
+			.Update = SplashSystem::Update,
+			.Draw = SplashSystem::Draw,
+		},
 		{
 			.Start = GameObjectSystem::Start,
 			.Update = GameObjectSystem::Update,

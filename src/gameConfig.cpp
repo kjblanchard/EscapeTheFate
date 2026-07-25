@@ -85,6 +85,16 @@ static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObjec
 	}
 }
 
+static void loadLogosToConfig(gameConfig* config, json_object* rootObject) {
+	auto logosObj = jobj(rootObject, "logos");
+	if (!logosObj) return;
+	auto numLogos = jGetObjectArrayLength(logosObj);
+	for (int i = 0; i < numLogos; ++i) {
+		auto name = jstrIndex(logosObj, i);
+		if (name) config->logos.emplace_back(name);
+	}
+}
+
 static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObject) {
 	auto sceneObj = jobj(rootObject, "scene");
 	if (!sceneObj) {
@@ -124,6 +134,7 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	loadWindowSettingsToConfig(&_config, root);
 	loadDebugSettingsToConfig(&_config, root);
 	loadSceneSettingsToConfig(&_config, root);
+	loadLogosToConfig(&_config, root);
 	jReleaseObjectFromFile(root);
 	_config.PreloadTextures = preloadTextures_;
 }

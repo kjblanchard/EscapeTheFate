@@ -125,7 +125,9 @@ void startEngine() {
 	for (auto& system : systems_) {
 		if (system.Start) system.Start();
 	}
-	Engine::LoadScene("", 0.1f, 1.75, false);
+	if (gameConfig.logos.empty()) {
+		Engine::LoadScene("", 0.1f, 1.75, false);
+	}
 	Engine::DebugUI::Start();
 }
 

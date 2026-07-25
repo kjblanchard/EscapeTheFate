@@ -10,6 +10,7 @@ struct Scene {
 
 struct gameConfig {
 	static std::vector<std::string> PreloadTextures;
+	std::vector<std::string> logos;
 	struct audio {
 		float bgmVolume, sfxVolume;
 	} audio;
