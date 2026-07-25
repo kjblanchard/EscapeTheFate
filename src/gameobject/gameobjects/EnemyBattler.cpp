@@ -1,4 +1,6 @@
+#include <Supergoon/Graphics/shader.h>
 #include <engine.hpp>
+#include <gameState.hpp>
 #include <sgtools/log.h>
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <ui/ui.hpp>
@@ -10,6 +12,8 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
 	_hpObject = static_cast<UIText*>(hpObject);
 	_hpObject->UpdateText(to_string(_currentHP));
+	_deathShader = ShaderCreate();
+	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
 }
 
 EnemyBattler::~EnemyBattler() {
@@ -17,13 +21,31 @@ EnemyBattler::~EnemyBattler() {
 	if (_hpObject) {
 		_hpObject->SetVisible(false);
 	}
+	_deathShader = nullptr;
 }
 
-void EnemyBattler::updateImpl() {}
+void EnemyBattler::updateImpl() {
+	if (!_deathEffectPlaying) return;
+	_deathEffectTime += GameState::DeltaTimeSeconds;
+	float t = _deathEffectTime / kDeathEffectDuration;
+	if (t > 1.0f) t = 1.0f;
+	ShaderSetUniformFloat(_deathShader, "time", t, 1);
+	if (_deathEffectTime >= kDeathEffectDuration) {
+		Engine::Sprites::SetSpriteVisible(_sprite, false);
+		_sprite->Shader = GetDefaultShader();
+		ShaderDestroy(_deathShader);
+		_deathShader = nullptr;
+		_deathEffectPlaying = false;
+	}
+}
+
 void EnemyBattler::takeDamageImpl(int damage) {
 	_hpObject->UpdateText(to_string(_currentHP));
-	if (_currentHP < 1) {
+	if (_currentHP < 1 && !_deathEffectPlaying) {
 		Engine::Audio::PlaySFXBuffer("enemyDead", 1.0);
-		Engine::Sprites::SetSpriteVisible(_sprite, false);
+		_deathEffectPlaying = true;
+		_deathEffectTime = 0.0f;
+		_sprite->Shader = _deathShader;
+		ShaderSetUniformFloat(_deathShader, "time", 0.0f, 1);
 	}
 }

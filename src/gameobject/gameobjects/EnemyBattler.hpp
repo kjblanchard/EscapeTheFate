@@ -1,5 +1,6 @@
 #pragma once
 #include <gameobject/gameobjects/Battler.hpp>
+struct Shader;
 namespace Etf {
 
 class EnemyBattler : public Battler {
@@ -14,6 +15,10 @@ class EnemyBattler : public Battler {
 
    private:
 	UIText* _hpObject;
+	Shader* _deathShader = nullptr;
+	float _deathEffectTime = 0.0f;
+	bool _deathEffectPlaying = false;
+	static constexpr float kDeathEffectDuration = 1.0f;
 };
 
 }  // namespace Etf
