@@ -14,7 +14,7 @@ float hash(float n) {
 
 void main()
 {
-    vec2 blockId = floor(TexCoords / 2.0);
+    vec2 blockId = floor(TexCoords);
     float bh = hash(blockId.x * 127.1 + blockId.y * 311.7 + seed * 53.3);
 
     float angle = hash(bh * 71.9 + seed * 13.1) * 6.2832;
@@ -39,8 +39,8 @@ void main()
 
     if (sampled.a < 0.01) discard;
 
-    vec3 redColor = mix(vec3(1.0, 0.6, 0.5), vec3(1.0, 0.85, 0.8), time);
-    float redMix = clamp(time * 1.5, 0.0, 0.6);
+    vec3 redColor = mix(vec3(1.0, 0.2, 0.2), vec3(1.0, 0.5, 0.45), time);
+    float redMix = clamp(time * time * 2.0, 0.0, 0.75);
     vec3 tinted = mix(sampled.rgb, redColor, redMix);
 
     float alpha = sampled.a * (1.0 - smoothstep(0.1, 0.7, time));
