@@ -16,21 +16,25 @@ float hash(float n) {
 
 void main()
 {
-    float stripId = floor(TexCoords.y / 3.0);
-    float stripSeed = hash(stripId * 17.3 + seed * 91.7);
+    vec2 blockId = floor(TexCoords / 3.0);
+    float bh = hash(blockId.x * 127.1 + blockId.y * 311.7 + seed * 53.3);
 
-    float direction = sign(stripSeed - 0.5);
-    float speed = 1.0 + stripSeed * 3.0;
+    float angle = hash(bh * 71.9 + seed * 13.1) * 6.2832;
+    float speed = 2.0 + hash(bh * 37.3 + seed * 97.1) * 4.0;
+    float angularVel = (hash(bh * 23.7 + seed * 41.3) - 0.5) * 5.0;
 
-    float delay = hash(stripId * 53.1 + seed * 7.3) * 0.3;
+    float delay = bh * 0.25;
     float localTime = max(0.0, time - delay);
 
-    float offset = direction * speed * localTime * localTime * srcRect.z;
+    float curAngle = angle + angularVel * localTime;
+    vec2 disp = vec2(cos(curAngle), sin(curAngle)) * speed * localTime * localTime * srcRect.z * 0.5;
 
-    float sampleX = TexCoords.x - offset;
-    if (sampleX < 0.0 || sampleX >= srcRect.z) discard;
+    vec2 samplePos = TexCoords - disp;
 
-    ivec2 texel = ivec2(srcRect.xy) + ivec2(int(sampleX), int(TexCoords.y));
+    if (samplePos.x < 0.0 || samplePos.x >= srcRect.z ||
+        samplePos.y < 0.0 || samplePos.y >= srcRect.w) discard;
+
+    ivec2 texel = ivec2(srcRect.xy) + ivec2(int(samplePos.x), int(samplePos.y));
     ivec2 maxTexel = ivec2(srcRect.xy + srcRect.zw) - 1;
     texel = clamp(texel, ivec2(srcRect.xy), maxTexel);
     vec4 sampled = texelFetch(image, texel, 0);
@@ -38,10 +42,10 @@ void main()
     if (sampled.a < 0.01) discard;
 
     vec3 redColor = vec3(1.0, 0.3, 0.3);
-    float redMix = clamp(time * 2.5, 0.0, 0.85);
+    float redMix = clamp(time * 3.0, 0.0, 0.85);
     vec3 tinted = mix(sampled.rgb, redColor, redMix);
 
-    float alpha = sampled.a * (1.0 - smoothstep(0.2, 0.9, time));
+    float alpha = sampled.a * (1.0 - smoothstep(0.1, 0.7, time));
 
     FragColor = spriteColor * vec4(tinted, alpha);
 }

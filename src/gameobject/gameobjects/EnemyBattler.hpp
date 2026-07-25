@@ -18,7 +18,7 @@ class EnemyBattler : public Battler {
 	Shader* _deathShader = nullptr;
 	float _deathEffectTime = 0.0f;
 	bool _deathEffectPlaying = false;
-	static constexpr float kDeathEffectDuration = 0.6f;
+	static constexpr float kDeathEffectDuration = 0.45f;
 };
 
 }  // namespace Etf
