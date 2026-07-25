@@ -1,22 +1,24 @@
-#include <engine.hpp>
+#include <debug/DebugBattle.hpp>
 #include <debug/DebugCamera.hpp>
+#include <debug/DebugConsoleWindow.hpp>
+#include <debug/DebugEngine.hpp>
+#include <debug/DebugGameWindow.hpp>
 #include <debug/DebugPlayers.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
-#include <debug/DebugEngine.hpp>
+#include <engine.hpp>
+#include <systems/BattleTransitionSystem.hpp>
+#include <systems/BattleZoneSystem.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
-#include <debug/DebugBattle.hpp>
-#include <debug/DebugConsoleWindow.hpp>
-#include <debug/DebugGameWindow.hpp>
 using namespace Etf;
 
 void InitializeGame() {
 	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab});
-	auto name = (std::string)"Console";
+	auto name = (std::string) "Console";
 	DebugConsoleWindow::Initialize();
 	Engine::DebugUI::AddWindow({{name, DebugConsoleWindow::Draw}});
 	name = "Game";
@@ -39,6 +41,16 @@ void InitializeGame() {
 		{
 			.Update = BattleSystem::BattleSystemUpdate,
 		},
-	};
+		{
+			.Start = BattleZoneSystem::Start,
+			.Update = BattleZoneSystem::Update,
+			.Draw = BattleZoneSystem::Draw,
+			.Shutdown = BattleZoneSystem::Shutdown,
+		},
+		{
+			.Start = BattleTransitionSystem::Start,
+			.Update = BattleTransitionSystem::Update,
+			.Shutdown = BattleTransitionSystem::Shutdown,
+		}};
 	Engine::RegisterSystems(systems_);
 }

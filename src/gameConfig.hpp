@@ -9,6 +9,7 @@ struct Scene {
 };
 
 struct gameConfig {
+	static std::vector<std::string> PreloadTextures;
 	struct audio {
 		float bgmVolume, sfxVolume;
 	} audio;
@@ -23,6 +24,7 @@ struct gameConfig {
 	struct debug {
 		bool interactions;
 		bool mapExits;
+		bool battleZones;
 		int debugLevel;
 	} debug;
 	struct controls {

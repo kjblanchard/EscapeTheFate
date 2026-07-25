@@ -6,6 +6,7 @@
 #include <assert.h>
 #include <sgtools/log.h>
 
+#include <battle/battleZones.hpp>
 #include <battle/battlerData.hpp>
 #include <engine.hpp>
 #include <format>
@@ -32,6 +33,7 @@ vector<vector<int>> _battleGroups;
 // Current battlers spawned in, always the size of all positions.
 vector<Battler*> _battlers;
 
+namespace {
 // Holds all of the UI objects in a (organized?) place.
 struct BattleUI {
 	// Top level, hide or show the whole thing
@@ -41,10 +43,12 @@ struct BattleUI {
 	// All the player commands menus, usually controlled by the battler.
 	UIObject* PlayerCommandsObjects[3] = {nullptr, nullptr, nullptr};
 	UIObject* VictoryPanel = nullptr;
-} static _battleUI;
+} battleUI_;
+
+}  // namespace
 
 static void battleEnd() {
-	_battleUI.VictoryPanel->SetVisible(false);
+	battleUI_.VictoryPanel->SetVisible(false);
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
 	ResetCameraFollow();
@@ -142,19 +146,19 @@ static void loadEnemies() {
 
 static void cacheBattleUIElements() {
 	// Need to find the command menu, HUD, etc.
-	_battleUI.RootPanel = UI::GetRootUIObject()->GetChildByName("BattlePanel");
-	assert(_battleUI.RootPanel && "No root object found");
-	_battleUI.PlayerHUD = UI::GetRootUIObject()->GetChildByName("PlayerStatusHUD");
-	assert(_battleUI.PlayerHUD && "No hud object found");
+	battleUI_.RootPanel = UI::GetRootUIObject()->GetChildByName("BattlePanel");
+	assert(battleUI_.RootPanel && "No root object found");
+	battleUI_.PlayerHUD = UI::GetRootUIObject()->GetChildByName("PlayerStatusHUD");
+	assert(battleUI_.PlayerHUD && "No hud object found");
 	int battlerNum = 1;
-	for (auto& obj : _battleUI.PlayerCommandsObjects) {
+	for (auto& obj : battleUI_.PlayerCommandsObjects) {
 		auto nameLookup = format("Player{}CommandsUI", to_string(battlerNum));
-		obj = _battleUI.RootPanel->GetChildByName(nameLookup);
+		obj = battleUI_.RootPanel->GetChildByName(nameLookup);
 		++battlerNum;
 		assert(obj && "No command object found");
 	}
-	_battleUI.VictoryPanel = _battleUI.RootPanel->GetChildByName("VictoryPanel");
-	assert(_battleUI.VictoryPanel && "No victory panel found");
+	battleUI_.VictoryPanel = battleUI_.RootPanel->GetChildByName("VictoryPanel");
+	assert(battleUI_.VictoryPanel && "No victory panel found");
 }
 
 static void initializeBattleSystem() {
@@ -162,7 +166,7 @@ static void initializeBattleSystem() {
 	loadBattleGroups();
 	cacheBattleUIElements();
 	battleInitialized_ = true;
-	_battleUI.RootPanel->SetVisible(false);
+	battleUI_.RootPanel->SetVisible(false);
 	_battlers.clear();
 	nextBattleState_ = NotInBattle;
 }
@@ -175,13 +179,13 @@ static void loadBattle() {
 	// Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();
-	_battleUI.RootPanel->SetVisible(true);
-	_battleUI.PlayerHUD->SetVisible(true);
-	_battleUI.VictoryPanel->SetVisible(false);
+	battleUI_.RootPanel->SetVisible(true);
+	battleUI_.PlayerHUD->SetVisible(true);
+	battleUI_.VictoryPanel->SetVisible(false);
 }
 
 static void battleVictory() {
-	_battleUI.VictoryPanel->SetVisible(true);
+	battleUI_.VictoryPanel->SetVisible(true);
 }
 
 static void BattleUpdate() {}

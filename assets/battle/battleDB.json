@@ -24,7 +24,7 @@
         "spd": 3,
         "pow": 100,
         "sprite": "blackBird",
-        "rect": { "x": -5, "y": -10, "w": 61, "h": 57 },
+        "rect": { "x": -5, "y": -15, "w": 61, "h": 57 },
         "idle": "moveR"
     }
 ]

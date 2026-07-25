@@ -8,10 +8,10 @@ float GameState::DeltaTimeSeconds;
 float GameState::DeltaTimeMilliseconds;
 bool GameState::InDialog = false;
 int GameState::CurrentFadeState = (int)LoadingScreenFadeTypes::NotFading;
-bool GameState::Players::Player2Spawned = false;
-
+PlayerData GameState::Players::LocalPlayerData[2];
 bool GameState::Battle::InBattle = false;
 int GameState::Battle::NextBattleGroup = 1;
 bool GameState::Battle::ExitingFromBattle = false;
 std::string GameState::NextLoadMapName = "";
 int GameState::NextLoadDirection = 0;
+float GameState::Battle::CurrentStepsWithoutBattle = 0;

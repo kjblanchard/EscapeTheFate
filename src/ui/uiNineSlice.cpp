@@ -18,9 +18,8 @@ UINineSlice::UINineSlice(UINineSliceArgs& args) {
 	_visible = args.Visible;
 	_debugBox = args.DebugBox;
 	_color = args.DrawColor;
-	_texture = TextureCreate(_filename.c_str());
-	Engine::Textures::LoadTextureFromBuffer(_texture, _filename);
-	// TextureLoadFromPng(_texture, _filename.c_str());
+	auto fullTex = _filename + ".png";
+	_texture = TextureCreate(fullTex.c_str());
 	_renderTargetTexture = TextureCreateRenderTarget(_location.w, _location.h);
 	int nineSliceImageW = TextureGetWidth(_texture);
 	int nineSliceImageH = TextureGetHeight(_texture);

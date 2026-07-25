@@ -1,8 +1,16 @@
 #pragma once
 #include <Supergoon/Primitives/Vector2.h>
+#include <Supergoon/Primitives/rectangle.h>
 
 #include <string>
 namespace Etf {
+struct PlayerData {
+	RectangleF Location = {0, 0, 0, 0};
+	bool MovedThisFrame = false;
+	bool Spawned = false;
+};
+
+class LocalPlayer;
 struct GameState {
 	// static int IsEngineStarted;
 	static int CurrentFadeState;
@@ -18,11 +26,10 @@ struct GameState {
 	static float DeltaTimeMilliseconds;
 	static bool InDialog;
 	struct Players {
-		//Has player two spawned yet, controls if screen changing spawns player2
-		static bool Player2Spawned;
-
+		static PlayerData LocalPlayerData[2];
 	} Players;
 	struct Battle {
+		static float CurrentStepsWithoutBattle;
 		// If this is set to true, players will load at the last load location
 		static bool ExitingFromBattle;
 		// If this is set to true, the battle system will uddate each frame.

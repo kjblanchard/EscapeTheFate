@@ -3,6 +3,7 @@
 #include <functional>
 #include <gameobject/GameObject.hpp>
 #include <gameobject/gameobjects/BattleLocation.hpp>
+#include <gameobject/gameobjects/BattleZone.hpp>
 #include <gameobject/gameobjects/LocalPlayer.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
@@ -17,6 +18,7 @@ namespace GameObjectSystem {
 static vector<shared_ptr<GameObject>> gameObjects;
 static vector<weak_ptr<IInteractable>> interactableGameObjects;
 static unordered_map<int, function<void(TiledObject* objData)>> gameobjectLoadFunctions = {
+	{1, BattleZone::Create},
 	{4, LocalPlayer::Create},
 	{5, Textbox::Create},
 	{2, MapExit::Create},

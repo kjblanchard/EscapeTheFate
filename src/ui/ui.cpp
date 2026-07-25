@@ -210,15 +210,9 @@ static UIObject* handleUIArgs(const string& name, json_object* data) {
 	return newGuy;
 }
 
-
 static bool loadJsonFromFile(const string& filename) {
 	sgLogDebug("Loading file %s to be cached", filename.c_str());
-	// auto obj = jGetObjectFromFile(filename.c_str());
-	char* buf;
-	size_t sz;
-	Engine::Json::GetJsonBufferFromDirectory(filename.c_str(), &buf, &sz);
-	// auto obj = jGetObjectFromFile(filename.c_str());
-	auto obj = jGetObjectFromBuffer(buf, sz);
+	auto obj = Etf::Engine::Json::GetJsonObjectFromDirectory(filename.c_str());
 	if (!obj) {
 		sgLogError("Error parsing UI file %s ", filename.c_str());
 		return false;
@@ -226,7 +220,6 @@ static bool loadJsonFromFile(const string& filename) {
 	_cachedUIFiles[filename] = obj;
 	return true;
 }
-
 
 void UI::LoadUIFromFile(const string& filename) {
 	GetRootUIObject();

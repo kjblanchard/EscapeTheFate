@@ -16,8 +16,8 @@ UIImage::UIImage(UIImageArgs& args) {
 	_priority = args.Priority;
 	_color = args.DrawColor;
 	_debugBox = args.DebugBox;
-	_texture = TextureCreate(_filename.c_str());
-	Engine::Textures::LoadTextureFromBuffer(_texture, _filename);
+	auto fullTex = _filename + ".png";
+	_texture = TextureCreate(fullTex.c_str());
 }
 
 UIImage::~UIImage() {

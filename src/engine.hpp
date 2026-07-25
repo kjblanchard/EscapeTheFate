@@ -1,6 +1,7 @@
 #pragma once
 #include <Supergoon/Primitives/Color.h>
 #include <Supergoon/Primitives/rectangle.h>
+#include <Supergoon/json.h>
 
 #include <functional>
 #include <string>
@@ -43,12 +44,12 @@ void RegisterSystems(const std::vector<SystemCallbacks>& systems);
 const std::string& CurrentSceneName();
 // Empty string will load the default scene from gameconfig.
 void LoadScene(const std::string& name = "", float fadeOutTime = 1.0f, float fadeInTime = 1.0f, bool playTransitionSound = true);
-static inline bool CheckForRectCollision(RectangleF& lhs, RectangleF& rhs) {
+static inline bool CheckForRectCollision(const RectangleF& lhs, const RectangleF& rhs) {
 	return lhs.x < rhs.x + rhs.w && lhs.x + lhs.w > rhs.x && lhs.y < rhs.y + rhs.h && lhs.y + lhs.h > rhs.y;
 }
 
 namespace Debug {
-void DrawRectPrimitive(RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
+void DrawRectPrimitive(const RectangleF& rect, Color color = {255, 0, 0, 255}, bool filled = false, bool cameraOffset = true);
 }
 
 namespace Textures {
@@ -87,6 +88,7 @@ void DrawText(Text* text, float xOffset, float yOffset, Color& color);
 
 namespace Json {
 void GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz);
+json_object* GetJsonObjectFromDirectory(const char* name);
 RectangleF GetRectFromObject(void* object, const std::string& key);
 template <typename Lambda>
 void jforeach_lambda(void* obj, Lambda&& lambda) {
