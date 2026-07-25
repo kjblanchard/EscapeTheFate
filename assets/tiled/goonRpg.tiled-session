@@ -3,11 +3,11 @@
         "height": 4300,
         "width": 2
     },
-    "activeFile": "debugSouth.tmj",
+    "activeFile": "cloud.tmj",
     "expandedProjectPaths": [
-        "templates",
         ".",
-        "old-delete"
+        "old-delete",
+        "templates"
     ],
     "exportAsImage.includeBackgroundColor": true,
     "file.lastUsedOpenFilter": "All Files (*)",
@@ -63,11 +63,14 @@
                 3
             ],
             "scale": 2,
-            "selectedLayer": 3,
+            "selectedLayer": 1,
             "viewCenter": {
-                "x": 258.75,
-                "y": 136
+                "x": 198.25,
+                "y": 177.75
             }
+        },
+        "cloud.tmj#cloud": {
+            "scaleInDock": 1
         },
         "cloud.tsj": {
             "scaleInDock": 2,
@@ -84,8 +87,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 203,
-                "y": 181
+                "x": 239.75,
+                "y": 160.25
             }
         },
         "debugSouth.tmj#outside": {
@@ -104,8 +107,8 @@
             "scale": 2,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 304,
-                "y": 141
+                "x": 303.75,
+                "y": 141.25
             }
         },
         "debugTown.tmj#house": {
@@ -130,8 +133,8 @@
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 127.99999999999999,
-                "y": 37.333333333333336
+                "x": 128.16666666666663,
+                "y": 37.499999999999986
             }
         },
         "debugTownHome.tmj#inside": {
@@ -157,11 +160,11 @@
             "expandedGroupLayers": [
                 2
             ],
-            "scale": 0.75,
+            "scale": 2.4405,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 255.99999999999997,
-                "y": 144
+                "x": 311.6164720344192,
+                "y": 267.3632452366318
             }
         },
         "forest1.tmj#outside": {
@@ -234,24 +237,30 @@
     "map.tileWidth": 16,
     "map.width": 30,
     "openFiles": [
-        "debugTown.tmj",
         "debugSouth.tmj",
+        "debugTown.tmj",
         "debugTownHome.tmj",
-        "forest1.tmj"
+        "forest1.tmj",
+        "inside.tsj",
+        "house.tsj",
+        "outside.tsj",
+        "terrain.tsj",
+        "cloud.tsj",
+        "cloud.tmj"
     ],
     "project": "goonRpg.tiled-project",
     "property.type": "int",
     "recentFiles": [
-        "debugTown.tmj",
-        "forest1.tmj",
-        "debugTownHome.tmj",
         "debugSouth.tmj",
-        "cloud.tmj",
-        "cloud.tsj",
-        "house.tsj",
+        "debugTown.tmj",
+        "debugTownHome.tmj",
+        "forest1.tmj",
         "inside.tsj",
-        "terrain.tsj",
+        "house.tsj",
         "outside.tsj",
+        "terrain.tsj",
+        "cloud.tsj",
+        "cloud.tmj",
         "old-delete/untitled.tmj",
         "old-delete/cloud.tsx"
     ],
