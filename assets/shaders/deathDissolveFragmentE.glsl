@@ -41,11 +41,11 @@ void main()
 
     if (sampled.a < 0.01) discard;
 
-    vec3 redColor = vec3(1.0, 0.2, 0.2);
-    float redMix = smoothstep(0.0, 0.2, time) * (1.0 - smoothstep(0.4, 0.9, time));
-    vec3 tinted = mix(sampled.rgb, redColor, redMix * 0.55);
+    vec3 redColor = vec3(1.0, 0.3, 0.25);
+    float redMix = smoothstep(0.0, 0.15, time);
+    vec3 tinted = mix(sampled.rgb, redColor, redMix * 0.9);
 
-    float alpha = sampled.a * (1.0 - smoothstep(0.1, 0.7, time)) * mix(1.0, 0.7, redMix);
+    float alpha = sampled.a * 0.6 * (1.0 - smoothstep(0.15, 0.85, time));
 
     FragColor = spriteColor * vec4(tinted, alpha);
 }
