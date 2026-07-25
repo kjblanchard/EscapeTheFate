@@ -117,7 +117,6 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	size_t sz;
 	Engine::Json::GetJsonBufferFromDirectory("gameConfig", &buf, &sz);
 	auto root = jGetObjectFromBuffer(buf, sz);
-	// auto root = jGetObjectFromFile(configFileName.c_str());
 	if (!root) {
 		sgLogCritical("Error reading game config file!");
 	}

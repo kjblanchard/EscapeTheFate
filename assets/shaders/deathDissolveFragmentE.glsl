@@ -1,5 +1,4 @@
 #version 300 es
-#version 300 es
 
 precision mediump float;
 precision highp int;
@@ -18,10 +17,8 @@ void main()
     // Sink left and down over time
     vec2 drift = vec2(-6.0, 6.0) * time;
     vec2 samplePos = TexCoords - drift;
-
     // Outside sprite bounds
-    if (samplePos.x < 0.0 || samplePos.y < 0.0 ||
-        samplePos.x >= srcRect.z || samplePos.y >= srcRect.w)
+    if (samplePos.x < 0.0 || samplePos.y < 0.0 || samplePos.x >= srcRect.z || samplePos.y >= srcRect.w)
     {
         discard;
     }
@@ -36,7 +33,6 @@ void main()
 
     if (sampled.a < 0.01)
         discard;
-
     // Red tint
     const vec3 redTint = vec3(1.0, 0.25, 0.2);
     vec3 tinted = mix(sampled.rgb, redTint, 0.45);

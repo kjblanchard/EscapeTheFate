@@ -14,8 +14,7 @@ void main()
     // Sink left and down over time
     vec2 drift = vec2(-1.0, 1.0) * time * 6.0;
     vec2 samplePos = TexCoords - drift;
-    if (samplePos.x < 0.0 || samplePos.x >= srcRect.z ||
-        samplePos.y < 0.0 || samplePos.y >= srcRect.w)
+    if (samplePos.x < 0.0 || samplePos.x >= srcRect.z || samplePos.y < 0.0 || samplePos.y >= srcRect.w)
         discard;
     ivec2 texel = ivec2(srcRect.xy) + ivec2(samplePos);
     ivec2 maxTexel = ivec2(srcRect.xy + srcRect.zw) - 1;
