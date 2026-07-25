@@ -65,8 +65,8 @@
             "scale": 2,
             "selectedLayer": 1,
             "viewCenter": {
-                "x": 198.25,
-                "y": 177.75
+                "x": 194.75,
+                "y": 174.25
             }
         },
         "cloud.tmj#cloud": {
@@ -87,8 +87,8 @@
             "scale": 2,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 239.75,
-                "y": 160.25
+                "x": 240,
+                "y": 157
             }
         },
         "debugSouth.tmj#outside": {
@@ -105,7 +105,7 @@
                 5
             ],
             "scale": 2,
-            "selectedLayer": 5,
+            "selectedLayer": 1,
             "viewCenter": {
                 "x": 303.75,
                 "y": 141.25
@@ -127,14 +127,14 @@
                 4
             ],
             "expandedObjectLayers": [
-                6,
-                5
+                5,
+                6
             ],
             "scale": 3,
             "selectedLayer": 5,
             "viewCenter": {
-                "x": 128.16666666666663,
-                "y": 37.499999999999986
+                "x": 128,
+                "y": 37.33333333333333
             }
         },
         "debugTownHome.tmj#inside": {
@@ -160,11 +160,11 @@
             "expandedGroupLayers": [
                 2
             ],
-            "scale": 2.4405,
+            "scale": 1.5,
             "selectedLayer": 4,
             "viewCenter": {
-                "x": 311.6164720344192,
-                "y": 267.3632452366318
+                "x": 280.33333333333326,
+                "y": 211
             }
         },
         "forest1.tmj#outside": {
@@ -183,6 +183,26 @@
                 "x": 256.8119244279883,
                 "y": 144.3083641887402
             }
+        },
+        "forest2.tmj": {
+            "expandedGroupLayers": [
+                6
+            ],
+            "scale": 1.5,
+            "selectedLayer": 0,
+            "viewCenter": {
+                "x": 298.33333333333326,
+                "y": 130.33333333333334
+            }
+        },
+        "forest2.tmj#cloud": {
+            "scaleInDock": 1
+        },
+        "forest2.tmj#outside": {
+            "scaleInDock": 1
+        },
+        "forest2.tmj#terrain": {
+            "scaleInDock": 1
         },
         "house.tsj": {
             "scaleInDock": 1,
@@ -230,12 +250,12 @@
     "last.imagePath": "/Users/kevin/git/c/etf/assets/img",
     "last.objectTemplatePath": "/home/kevin/git/EscapeTheFate/assets/tiled/templates",
     "lastUsedTilesetExportFilter": "JSON tileset files (*.tsj *.json)",
-    "map.height": 17,
+    "map.height": 18,
     "map.lastUsedExportFilter": "JSON map files (*.tmj *.json)",
     "map.lastUsedFormat": "json",
     "map.tileHeight": 16,
     "map.tileWidth": 16,
-    "map.width": 30,
+    "map.width": 32,
     "openFiles": [
         "debugSouth.tmj",
         "debugTown.tmj",
@@ -251,6 +271,7 @@
     "project": "goonRpg.tiled-project",
     "property.type": "int",
     "recentFiles": [
+        "forest2.tmj",
         "debugSouth.tmj",
         "debugTown.tmj",
         "debugTownHome.tmj",
@@ -261,8 +282,7 @@
         "terrain.tsj",
         "cloud.tsj",
         "cloud.tmj",
-        "old-delete/untitled.tmj",
-        "old-delete/cloud.tsx"
+        "old-delete/untitled.tmj"
     ],
     "tileset.lastUsedFilter": "Tiled tileset files (*.tsx *.xml)",
     "tileset.lastUsedFormat": "json",

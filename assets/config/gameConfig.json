@@ -36,6 +36,18 @@
                 "UIName": "battleU",
                 "BGMName": "battle1",
                 "BGMVolume": 1.0
+            },
+            {
+                "MapName": "forest2",
+                "UIName": "battleU",
+                "BGMName": "battle1",
+                "BGMVolume": 1.0
+            },
+            {
+                "MapName": "cloud",
+                "UIName": "",
+                "BGMName": "town1",
+                "BGMVolume": 1.0
             }
         ]
     },
