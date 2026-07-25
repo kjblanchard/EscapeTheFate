@@ -61,29 +61,6 @@ static void loadWindowSettingsToConfig(gameConfig* config, json_object* rootObje
 	config->window.title = jstr(windowObject, "title");
 }
 
-static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObject) {
-	auto debugObj = jobj(rootObject, "debug");
-	if (!debugObj) {
-		sgLogWarn("Could not load debug settings, setting defaults");
-		return;
-	}
-	config->debug.interactions = jbool(debugObj, "interactions");
-	config->debug.mapExits = jbool(debugObj, "mapExits");
-	auto debugLogLevelChar = jstr(debugObj, "logLevel");
-	if (!debugLogLevelChar)
-		config->debug.debugLevel = sgLogLevelError;
-	else {
-		auto debugLevelString = string_view(debugLogLevelChar);
-		if (debugLevelString.starts_with('e'))
-			config->debug.debugLevel = sgLogLevelError;
-		if (debugLevelString.starts_with('w'))
-			config->debug.debugLevel = sgLogLevelWarn;
-		else if (debugLevelString.starts_with('d'))
-			config->debug.debugLevel = sgLogLevelDebug;
-		else if (debugLevelString.starts_with('i'))
-			config->debug.debugLevel = sgLogLevelInfo;
-	}
-}
 
 static void loadLogosToConfig(gameConfig* config, json_object* rootObject) {
 	auto logosObj = jobj(rootObject, "logos");
@@ -132,7 +109,6 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	}
 	loadAudioSettingsToConfig(&_config, root);
 	loadWindowSettingsToConfig(&_config, root);
-	loadDebugSettingsToConfig(&_config, root);
 	loadSceneSettingsToConfig(&_config, root);
 	loadLogosToConfig(&_config, root);
 	jReleaseObjectFromFile(root);

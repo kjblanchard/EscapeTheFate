@@ -106,7 +106,6 @@ void initializeEngine(const std::string& configFilename, void (*initializefunc)(
 	ShaderSetDirectory(directory_);
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& gameConfig = GameConfig::GetGameConfig();
-	sgSetLogLevel(gameConfig.debug.debugLevel);
 	SetWindowOptions(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title.c_str());
 	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
 }

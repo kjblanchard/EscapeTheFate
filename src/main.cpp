@@ -4,6 +4,7 @@
 #include <debug/DebugEngine.hpp>
 #include <debug/DebugGameWindow.hpp>
 #include <debug/DebugPlayers.hpp>
+#include <debug/DebugSettings.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
 #include <engine.hpp>
@@ -18,7 +19,7 @@
 using namespace Etf;
 
 void InitializeGame() {
-	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab});
+	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab, DisplaySettingsTab});
 	auto name = (std::string) "Console";
 	DebugConsoleWindow::Initialize();
 	Engine::DebugUI::AddWindow({{name, DebugConsoleWindow::Draw}});

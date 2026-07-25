@@ -51,10 +51,5 @@
                 "BGMVolume": 1.0
             }
         ]
-    },
-    "debug": {
-        "logLevel": "w",
-        "interactions": false,
-        "mapExits": false
     }
 }
