@@ -316,12 +316,12 @@ void loadAllMaps() {
 			sgLogDebug("Could not preload map file %s", name.c_str());
 			continue;
 		}
-		LoadMapFromBuffer(scene.MapName.c_str(), buf, sz);
+		CacheMapFromBuffer(scene.MapName.c_str(), buf, sz);
 		loadUI();
 		loadDialog();
 	}
 	BattleSystem::InitializeBattleSystem();
-	loadEnd();
+	// loadEnd();
 	// Load all textures
 	ResetCameraFollow();
 }
