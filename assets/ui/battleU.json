@@ -324,7 +324,17 @@
                 "centeredX": false,
                 "centeredY": false,
                 "numCharsToDraw": 100
+            },
+            "TurnMarker": {
+                "type": "animation",
+                "visible": true,
+                "rect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                "srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                "file": "battleTurnMarker",
+                "scale": 1.0,
+                "color": { "R": 255, "G": 255, "B": 255, "A": 255 }
             }
+
         }
     }
 }

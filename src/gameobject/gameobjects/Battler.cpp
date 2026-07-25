@@ -1,15 +1,14 @@
 #include <Supergoon/Animation/animator.h>
 #include <Supergoon/sprite.h>
-#include <sgtools/log.h>
 #include <Supergoon/state.h>
+#include <sgtools/log.h>
 
 #include <engine.hpp>
+#include <format>
+#include <gameobject/GameObject.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
 #include <ui/uiText.hpp>
-#include <format>
-
-#include "gameobject/GameObject.hpp"
 using namespace std;
 using namespace Etf;
 
@@ -30,11 +29,11 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 }
 
 float Battler::SpriteWidth() {
-	return _sprite->TextureSourceRect.w;
+	return _sprite->OffsetAndSizeRectF.w;
 }
 
 float Battler::SpriteHeight() {
-	return _sprite->TextureSourceRect.h;
+	return _sprite->OffsetAndSizeRectF.h;
 }
 
 void Battler::TakeDamage(int damage) {

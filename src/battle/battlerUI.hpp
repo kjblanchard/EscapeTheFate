@@ -41,10 +41,13 @@ class BattlerUI {
 	void CloseTargetSelection();
 	void MoveCursorInMenu(unsigned int newLocation);
 	void UpdateAnimations();
+	void StartPlayerTurn(Battler* battler);
+	void EndPlayerTurn(Battler* battler);
 	// Used when battle is over currently
 	static void ClosePlayerInfoBox();
 
    private:
+	static UIAnimation* _turnMarkerAnim;
 	UIObject* _commandMenu;
 	UIObject* _menuItems[4];
 	UIText* _hpObject;

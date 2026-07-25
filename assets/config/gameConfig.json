@@ -11,7 +11,7 @@
         "title": "Escape The Fate"
     },
     "scene": {
-        "defaultScene": "cloud",
+        "defaultScene": "debugTown",
         "scenes": [
             {
                 "MapName": "debugTown",

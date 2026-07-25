@@ -1,19 +1,43 @@
-#include <sgtools/log.h>
 #include <Supergoon/state.h>
+#include <sgtools/log.h>
 
 #include <battle/battlerUI.hpp>
 #include <engine.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <ui/ui.hpp>
+
+#include "ui/uiAnimation.hpp"
 using namespace Etf;
 using namespace std;
 using enum PlayerUIAnimationStates;
 
-static const float Animation_Offset = 120.0f;
-static const float Animation_Open_Time = 0.15f;
-static const float Animation_Close_Time = 0.10;
+namespace {
+const float Animation_Offset = 120.0f;
+const float Animation_Open_Time = 0.15f;
+const float Animation_Close_Time = 0.10;
+}  // namespace
+
+UIAnimation* BattlerUI::_turnMarkerAnim = nullptr;
+
+void BattlerUI::StartPlayerTurn(Battler* battler) {
+	auto x = battler->X() + (battler->SpriteWidth() / 2) - 10;
+	auto y = battler->Y() - 3;
+	_turnMarkerAnim->AbsolutePosition(x, y);
+	_turnMarkerAnim->SetVisible(true);
+}
+
+void BattlerUI::EndPlayerTurn(Battler* battler) {
+	_turnMarkerAnim->SetVisible(false);
+}
 
 BattlerUI::BattlerUI(unsigned int battlerNum) {
+	// turnmarker test
+	auto turnMarker = UI::GetRootUIObject()->GetChildByName("TurnMarker");
+	if (!turnMarker) sgLogCritical("Could not find turnMarker, exiting");
+	_turnMarkerAnim = static_cast<UIAnimation*>(turnMarker);
+	_turnMarkerAnim->SetVisible(false);
+	_turnMarkerAnim->GetAnimator().StartAnimation("playing");
+
 	_player = battlerNum < 3;
 	if (_player) {
 		_commandMenu = UI::GetRootUIObject()->GetChildByName("CommandsNineSlice");

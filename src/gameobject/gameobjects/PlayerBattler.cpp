@@ -9,35 +9,39 @@
 #include <iterator>
 #include <systems/battleSystem.hpp>
 
-
 using namespace Etf;
 using namespace std;
 using enum BattlerStates;
 
 const string VICTORY_STR = "cheer1";
 
+bool PlayerBattler::shouldBattleEnd() {
+	std::vector<Battler*> enemyBattlers;
+	getEnemyBattlers(enemyBattlers);
+	if (enemyBattlers.size() < 1) {
+		return true;
+	}
+	return false;
+}
+
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
-	if (newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) {
-		std::vector<Battler*> enemyBattlers;
-		getEnemyBattlers(enemyBattlers);
-		if (enemyBattlers.size() < 1) {
-			newState = BattleEndStart;
-		}
-	}
+	if ((newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) && shouldBattleEnd()) newState = BattleEndStart;
 	switch (newState) {
 		case BattlerStates::ATBCharging:
 			_battlerUI->StartATBIdleAnim();
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
+			_battlerUI->EndPlayerTurn(this);
 			break;
 		case BattlerStates::ATBFullyCharged:
 			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
 			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
+			_battlerUI->StartPlayerTurn(this);
 			break;
 		case BattlerStates::TargetSelection:
 			_currentTargetBattler = 0;
@@ -50,6 +54,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
 			_animator->AddAnimationToQueue(VICTORY_STR, true);
+			_battlerUI->EndPlayerTurn(this);
 			BattleSystem::TriggerBattleVictoryStart();
 			break;
 		case BattlerStates::BattleEnd:
@@ -61,7 +66,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 	_currentBattlerState = newState;
 }
 void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
-	sgLogDebug("Trying to move to location %d", enemyNum);
+	sgLogDebug("Trying to move finger to location %d", enemyNum);
 	std::vector<Battler*> enemyBattlers;
 	getEnemyBattlers(enemyBattlers);
 	if (enemyBattlers.empty()) {

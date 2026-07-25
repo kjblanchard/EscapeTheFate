@@ -34,6 +34,8 @@ class PlayerBattler : public Battler {
 	void handleClickAction();
 	void getEnemyBattlers(std::vector<Battler*>& battlerVector);
 	void moveFingerToEnemyNum(int enemyNum);
+	bool shouldBattleEnd();
+	void startATBAnimation();
 
    private:
 	std::unique_ptr<BattlerUI> _battlerUI;
