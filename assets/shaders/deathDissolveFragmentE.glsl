@@ -43,9 +43,9 @@ void main()
 
     vec3 redColor = vec3(1.0, 0.2, 0.2);
     float redMix = smoothstep(0.0, 0.2, time) * (1.0 - smoothstep(0.4, 0.9, time));
-    vec3 tinted = mix(sampled.rgb, redColor, redMix * 0.8);
+    vec3 tinted = mix(sampled.rgb, redColor, redMix * 0.55);
 
-    float alpha = sampled.a * (1.0 - smoothstep(0.1, 0.7, time));
+    float alpha = sampled.a * (1.0 - smoothstep(0.1, 0.7, time)) * mix(1.0, 0.7, redMix);
 
     FragColor = spriteColor * vec4(tinted, alpha);
 }
