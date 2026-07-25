@@ -34,6 +34,12 @@ class Battler : public GameObject {
 
    public:
 	void TakeDamage(int damage);
+#ifdef imgui
+	inline int& DebugHP() { return _currentHP; }
+	inline float& DebugATBCharge() { return _currentATBCharge; }
+	inline int DebugMaxATB() { return _maxATBCharge; }
+	inline BattlerData* DebugData() { return _battlerData; }
+#endif
 
    protected:
 	// called by update each frame

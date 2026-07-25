@@ -37,6 +37,11 @@ class PlayerBattler : public Battler {
 	bool shouldBattleEnd();
 	void startATBAnimation();
 
+#ifdef imgui
+   public:
+	inline BattlerStates& DebugState() { return _currentBattlerState; }
+#endif
+
    private:
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
