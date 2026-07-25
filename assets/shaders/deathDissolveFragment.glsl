@@ -7,36 +7,37 @@ uniform vec4 spriteColor;
 uniform vec4 srcRect;
 uniform float time;
 
-float hash2(vec2 p) {
-    return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453);
-}
-
 void main()
 {
-    ivec2 texel = ivec2(srcRect.xy) + ivec2(TexCoords);
-    ivec2 maxTexel = ivec2(srcRect.xy + srcRect.zw) - 1;
-    texel = clamp(texel, ivec2(srcRect.xy), maxTexel);
-    vec4 sampled = texelFetch(image, texel, 0);
+    float stretch = 1.0 + time * 3.0;
+    float normalizedY = TexCoords.y / srcRect.w;
+    float stretchedY = normalizedY * stretch - (stretch - 1.0);
 
+    if (stretchedY < 0.0 || stretchedY > 1.0) discard;
+
+    int samples = 8;
+    float blurSpread = time * 12.0;
+    vec4 accumulated = vec4(0.0);
+    float totalWeight = 0.0;
+
+    for (int i = 0; i < samples; i++) {
+        float offset = (float(i) / float(samples - 1) - 0.5) * blurSpread;
+        float sampleY = stretchedY * srcRect.w + offset;
+        ivec2 texel = ivec2(srcRect.xy) + ivec2(TexCoords.x, sampleY);
+        ivec2 maxTexel = ivec2(srcRect.xy + srcRect.zw) - 1;
+        texel = clamp(texel, ivec2(srcRect.xy), maxTexel);
+        float weight = 1.0 - abs(float(i) / float(samples - 1) - 0.5) * 2.0;
+        accumulated += texelFetch(image, texel, 0) * weight;
+        totalWeight += weight;
+    }
+
+    vec4 sampled = accumulated / totalWeight;
     if (sampled.a < 0.01) discard;
 
-    vec2 localPixel = floor(TexCoords);
-    float noise = hash2(localPixel);
+    float redMix = clamp(time * 2.0, 0.0, 0.85);
+    vec3 redTinted = mix(sampled.rgb, vec3(sampled.r * 1.5, sampled.g * 0.1, sampled.b * 0.05), redMix);
 
-    float vertBias = (TexCoords.y / srcRect.w) * 0.15;
-    float threshold = noise * 0.85 + vertBias;
+    float alpha = sampled.a * (1.0 - smoothstep(0.3, 1.0, time));
 
-    if (threshold < time) discard;
-
-    float edgeWidth = 0.10;
-    float edgeFactor = 1.0 - smoothstep(0.0, edgeWidth, threshold - time);
-
-    float redMix = clamp(time * 1.5, 0.0, 0.65);
-    vec3 redTinted = mix(sampled.rgb, vec3(sampled.r * 1.2, sampled.g * 0.15, sampled.b * 0.05), redMix);
-
-    vec3 glowColor = vec3(1.0, 0.35, 0.0);
-    float glowDecay = 1.0 - smoothstep(0.5, 1.0, time);
-    vec3 finalRgb = mix(redTinted, glowColor, edgeFactor * glowDecay * 0.9);
-
-    color = spriteColor * vec4(finalRgb, sampled.a);
+    color = spriteColor * vec4(redTinted, alpha);
 }
