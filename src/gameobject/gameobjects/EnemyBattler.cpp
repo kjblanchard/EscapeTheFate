@@ -1,4 +1,5 @@
 #include <Supergoon/Graphics/shader.h>
+#include <cstdlib>
 #include <engine.hpp>
 #include <gameState.hpp>
 #include <sgtools/log.h>
@@ -21,7 +22,13 @@ EnemyBattler::~EnemyBattler() {
 	if (_hpObject) {
 		_hpObject->SetVisible(false);
 	}
-	_deathShader = nullptr;
+	if (_deathShader) {
+		if (_sprite && _sprite->Shader == _deathShader) {
+			_sprite->Shader = GetDefaultShader();
+		}
+		ShaderDestroy(_deathShader);
+		_deathShader = nullptr;
+	}
 }
 
 void EnemyBattler::updateImpl() {
@@ -46,6 +53,8 @@ void EnemyBattler::takeDamageImpl(int damage) {
 		_deathEffectPlaying = true;
 		_deathEffectTime = 0.0f;
 		_sprite->Shader = _deathShader;
+		float randomSeed = (float)(rand() % 1000) / 1000.0f;
+		ShaderSetUniformFloat(_deathShader, "seed", randomSeed, 1);
 		ShaderSetUniformFloat(_deathShader, "time", 0.0f, 1);
 	}
 }
