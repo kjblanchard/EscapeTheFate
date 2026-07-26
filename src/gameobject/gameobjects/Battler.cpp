@@ -3,6 +3,7 @@
 #include <Supergoon/state.h>
 #include <sgtools/log.h>
 
+#include <battle/abilityData.hpp>
 #include <engine.hpp>
 #include <format>
 #include <gameobject/GameObject.hpp>
@@ -21,6 +22,7 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_sprite = Engine::Sprites::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
+	_hitAnimPool = make_unique<HitAnimPool>("sword1", 32.0f, 32.0f);
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
@@ -40,6 +42,19 @@ void Battler::TakeDamage(int damage) {
 	takeDamageImpl(damage);
 }
 
+void Battler::PlayHitAnimation(const AbilityData& ability) {
+	float x = SpriteX() + _battlerData->AnimOffsetX;
+	float y = SpriteY() + _battlerData->AnimOffsetY;
+	_hitAnimPool->Play(ability.AnimationTag, x, y);
+	if (!ability.SFXName.empty()) {
+		Engine::Audio::PlaySFXBuffer(ability.SFXName, 1.0f);
+	}
+}
+
+void Battler::updateHitAnims() {
+	if (_hitAnimPool) _hitAnimPool->Update(DeltaTimeSeconds);
+}
+
 void Battler::updateATBGauge() {
 	if (_currentATBCharge >= _maxATBCharge) return;
 	auto delta = DeltaTimeSeconds * 20;
@@ -48,5 +63,6 @@ void Battler::updateATBGauge() {
 	_currentATBCharge = _currentATBCharge > _maxATBCharge ? _maxATBCharge : _currentATBCharge;
 }
 
-// Right now this is taken care of by the sprite and animation system from the engine
-void Battler ::Draw() {}
+void Battler::Draw() {
+	if (_hitAnimPool) _hitAnimPool->Draw();
+}

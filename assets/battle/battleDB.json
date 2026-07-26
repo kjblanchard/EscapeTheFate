@@ -13,6 +13,8 @@
         "rect": { "x": -5, "y": -10, "w": 48, "h": 48 },
         "hpBarOffsetX": 0,
         "hpBarOffsetY": 0,
+        "animOffsetX": 8,
+        "animOffsetY": 8,
         "idle": "idle1"
     },
     {
@@ -29,6 +31,8 @@
         "rect": { "x": -5, "y": -15, "w": 61, "h": 57 },
         "hpBarOffsetX": 0,
         "hpBarOffsetY": -12,
+        "animOffsetX": 14,
+        "animOffsetY": 12,
         "idle": "moveR"
     }
 ]

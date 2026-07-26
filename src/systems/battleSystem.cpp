@@ -28,6 +28,7 @@ BattleStates currentBattleState_ = NotInBattle;
 BattleStates nextBattleState_ = NotInBattle;
 string sceneToLoadAfterBattle_ = "";
 vector<BattlerData> battlerDatabase_;
+vector<AbilityData> abilityDatabase_;
 //  Loaded battle groups from the database, used when loading battle and stays loaded
 vector<vector<int>> _battleGroups;
 // Current battlers spawned in, always the size of all positions.
@@ -107,7 +108,29 @@ static void loadBattleDB() {
 		battlerDatabase_.back().IdleAnimation = jstr(currentJsonObject, "idle");
 		battlerDatabase_.back().HpBarOffsetX = jint(currentJsonObject, "hpBarOffsetX");
 		battlerDatabase_.back().HpBarOffsetY = jint(currentJsonObject, "hpBarOffsetY");
+		battlerDatabase_.back().AnimOffsetX = jint(currentJsonObject, "animOffsetX");
+		battlerDatabase_.back().AnimOffsetY = jint(currentJsonObject, "animOffsetY");
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
+	}
+	jReleaseObjectFromFile(dataRootJsonArray);
+}
+
+static void loadAbilityDB() {
+	char* buf;
+	size_t sz;
+	Engine::Json::GetJsonBufferFromDirectory("abilities", &buf, &sz);
+	auto dataRootJsonArray = jGetObjectFromBuffer(buf, sz);
+	if (!dataRootJsonArray) sgLogCritical("No ability database found, exiting");
+	auto numData = jGetObjectArrayLength(dataRootJsonArray);
+	for (auto i = 0; i < numData; ++i) {
+		auto currentJsonObject = jGetObjectInObjectWithIndex(dataRootJsonArray, i);
+		if (!currentJsonObject) continue;
+		abilityDatabase_.emplace_back();
+		abilityDatabase_.back().Name = jstr(currentJsonObject, "name");
+		abilityDatabase_.back().AnimationFile = jstr(currentJsonObject, "animFile");
+		abilityDatabase_.back().AnimationTag = jstr(currentJsonObject, "animTag");
+		abilityDatabase_.back().SFXName = jstr(currentJsonObject, "sfx");
+		abilityDatabase_.back().BaseDamage = jint(currentJsonObject, "baseDamage");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }
@@ -165,6 +188,7 @@ static void cacheBattleUIElements() {
 
 static void initializeBattleSystem() {
 	loadBattleDB();
+	loadAbilityDB();
 	loadBattleGroups();
 	cacheBattleUIElements();
 	battleInitialized_ = true;
@@ -254,4 +278,8 @@ void BattleSystem::InitializeBattleSystem() {
 
 const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {
 	return _battlers;
+}
+
+const AbilityData& BattleSystem::GetAbilityByID(int id) {
+	return abilityDatabase_.at(id);
 }

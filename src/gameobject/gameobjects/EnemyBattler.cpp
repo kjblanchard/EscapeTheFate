@@ -150,7 +150,9 @@ void EnemyBattler::updateImpl() {
 			getPlayerBattlers(players);
 			if (!players.empty()) {
 				auto target = players[0];
-				target->TakeDamage(1);
+				const auto& ability = BattleSystem::GetAbilityByID(0);
+				target->TakeDamage(ability.BaseDamage);
+				target->PlayHitAnimation(ability);
 			}
 			_currentATBCharge = 0;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
@@ -162,7 +164,6 @@ void EnemyBattler::updateImpl() {
 
 void EnemyBattler::takeDamageImpl(int damage) {
 	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
-	Engine::Audio::PlaySFXBuffer("slash1", 1.0f);
 	if (hpPercent < 0) hpPercent = 0;
 	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
 	if (_currentHP < 1 && !_deathEffectPlaying) {

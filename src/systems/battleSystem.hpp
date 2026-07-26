@@ -1,4 +1,5 @@
 #pragma once
+#include <battle/abilityData.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <vector>
 
@@ -15,14 +16,13 @@ enum class BattleStates {
 using enum BattleStates;
 
 namespace BattleSystem {
-// Triggers the battle system to initialize on the next frame
 void TriggerBattleStart();
-// Changes battle state to victory screen
 void TriggerBattleVictoryStart();
 void TriggerBattleEnd();
 void BattleSystemUpdate();
 void SendBattleDamage(int battlerNum, int damage);
 void InitializeBattleSystem();
 const std::vector<Battler*>& GetEnemyBattlers();
+const AbilityData& GetAbilityByID(int id);
 };	// namespace BattleSystem
 }  // namespace Etf

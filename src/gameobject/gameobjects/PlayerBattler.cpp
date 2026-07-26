@@ -138,7 +138,6 @@ void PlayerBattler::updateImpl() {
 
 void PlayerBattler::takeDamageImpl(int damage) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
-	Engine::Audio::PlaySFXBuffer("slash1", 1.0f);
 	if (!_isPlayingDamageAnim) {
 		_isPlayingDamageAnim = true;
 		_damageAnimTimer = 0.5f;
@@ -195,7 +194,9 @@ void PlayerBattler::handleInputTargetSelection() {
 		const auto battler = battlers.at(newTarget);
 		_animator->PlayAnimationThenLoopSecond("slash2", _battlerData->IdleAnimation);
 		if (battler) {
-			battler->TakeDamage(1);
+			const auto& ability = BattleSystem::GetAbilityByID(0);
+			battler->TakeDamage(ability.BaseDamage);
+			battler->PlayHitAnimation(ability);
 		}
 		_currentATBCharge = 0;
 		handleStateChange(ATBCharging);

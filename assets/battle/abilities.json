@@ -1,0 +1,10 @@
+[
+    {
+        "id": 0,
+        "name": "Attack",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "sfx": "slash1",
+        "baseDamage": 1
+    }
+]

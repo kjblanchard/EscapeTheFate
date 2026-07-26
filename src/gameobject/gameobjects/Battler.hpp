@@ -1,4 +1,5 @@
 #pragma once
+#include <battle/HitAnimPool.hpp>
 #include <battle/battlerData.hpp>
 #include <battle/battlerUI.hpp>
 #include <components/SpriteAnimator.hpp>
@@ -6,6 +7,7 @@
 #include <memory>
 struct Sprite;
 namespace Etf {
+struct AbilityData;
 class UIText;
 
 struct BattlerArgs {
@@ -22,9 +24,9 @@ class Battler : public GameObject {
 	float SpriteHeight();
 	inline float SpriteY() { return Y() + _battlerData->Location.y; }
 	void Draw() override;
-	// Updates the speed, and also calls updateimpl
 	inline void Update() override final {
 		updateATBGauge();
+		updateHitAnims();
 		updateImpl();
 	}
 
@@ -33,6 +35,7 @@ class Battler : public GameObject {
 	inline int Def() { return _battlerData->Def; }
 	inline const std::string& Name() const { return _battlerData->Name; }
 	virtual bool IsPlayer() = 0;
+	void PlayHitAnimation(const AbilityData& ability);
 
    public:
 	void TakeDamage(int damage);
@@ -59,9 +62,11 @@ class Battler : public GameObject {
 	Sprite* _sprite;
 	int _locationX, _locationY;
 	std::unique_ptr<SpriteAnimator> _animator;
+	std::unique_ptr<HitAnimPool> _hitAnimPool;
 
    private:
 	void updateATBGauge();
+	void updateHitAnims();
 };
 
 }  // namespace Etf
