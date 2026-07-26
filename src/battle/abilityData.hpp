@@ -7,5 +7,6 @@ struct AbilityData {
 	std::string AnimationTag;
 	std::string SFXName;
 	int BaseDamage = 1;
+	bool Friendly = false;
 };
 }  // namespace Etf

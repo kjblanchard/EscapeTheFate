@@ -22,7 +22,7 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_sprite = Engine::Sprites::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
-	_hitAnimPool = make_unique<HitAnimPool>("sword1", 32.0f, 32.0f);
+	_hitAnimPool = make_unique<HitAnimPool>("sword1", 64.0f, 64.0f);
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
@@ -40,6 +40,12 @@ float Battler::SpriteHeight() {
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
 	takeDamageImpl(damage);
+}
+
+void Battler::Heal(int amount) {
+	_currentHP += amount;
+	if (_currentHP > _battlerData->HP) _currentHP = _battlerData->HP;
+	healImpl(amount);
 }
 
 void Battler::PlayHitAnimation(const AbilityData& ability) {

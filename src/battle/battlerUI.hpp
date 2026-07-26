@@ -30,6 +30,7 @@ class BattlerUI {
 		_currentState = PlayerUIAnimationStates::Closing;
 		_currentAnimationTime = 0;
 		_finger->SetVisible(false);
+		CloseMagicMenu();
 	}
 	inline void StartATBIdleAnim() {
 		if (_progressBarAnim) _progressBarAnim->GetAnimator().StartAnimation("idle");
@@ -42,16 +43,22 @@ class BattlerUI {
 	void CloseTargetSelection();
 	void UpdateTargetInfo(const std::string& displayName);
 	void MoveCursorInMenu(unsigned int newLocation);
+	void OpenMagicMenu();
+	void CloseMagicMenu();
+	void MoveCursorInMagicMenu(unsigned int newLocation);
 	void UpdateAnimations();
 	void StartPlayerTurn(Battler* battler);
 	void EndPlayerTurn(Battler* battler);
-	// Used when battle is over currently
 	static void ClosePlayerInfoBox();
 
    private:
 	static UIAnimation* _turnMarkerAnim;
 	UIObject* _commandMenu;
 	UIObject* _menuItems[4];
+	UIObject* _magicMenu;
+	UIObject* _magicMenuItems[4];
+	int _magicMenuItemCount = 0;
+	UIImage* _magicFinger;
 	UIText* _hpObject;
 	UIImage* _finger;
 	UIImage* _targetSelectionFinger;
@@ -61,8 +68,11 @@ class BattlerUI {
 	UIProgressBar* _progressBar;
 	bool _player;
 	float _currentAnimationTime = 0;
+	float _magicAnimationTime = 0;
 	float _menuBoxStartX, _menuBoxStartY;
+	float _magicMenuStartX = 0;
 	PlayerUIAnimationStates _currentState = PlayerUIAnimationStates::Closed;
+	PlayerUIAnimationStates _magicMenuState = PlayerUIAnimationStates::Closed;
 };
 
 }  // namespace Etf

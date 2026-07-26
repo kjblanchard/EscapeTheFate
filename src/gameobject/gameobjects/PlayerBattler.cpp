@@ -43,11 +43,17 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
 			_battlerUI->StartPlayerTurn(this);
 			break;
-		case BattlerStates::TargetSelection:
+		case BattlerStates::MagicSelection:
+			_currentMagicMenuLocation = 0;
+			_battlerUI->OpenMagicMenu();
+			_battlerUI->MoveCursorInMagicMenu(0);
+			break;
+		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
 			_battlerUI->StartTargetSelection();
-			moveFingerToEnemyNum(0);
+			moveFingerToTargetNum(0);
 			break;
+		}
 		case BattlerStates::BattleEndStart:
 			Engine::Audio::PlayBGM("victory");
 			_battlerUI->CloseCommandsMenu();
@@ -153,10 +159,15 @@ void PlayerBattler::handleInputCommandsMenu() {
 		++newLocation;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
 		switch (_currentMenuLocation) {
-			// Attack pressed, do the thing and back out of handling input here.
 			case 0:
 				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+				_selectedAbilityID = 0;
+				_targetingFriendly = false;
 				handleStateChange(TargetSelection);
+				return;
+			case 1:
+				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+				handleStateChange(MagicSelection);
 				return;
 			default:
 				sgLogDebug("Button not implemented", _currentMenuLocation);

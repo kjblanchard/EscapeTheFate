@@ -5,6 +5,16 @@
         "animFile": "sword1",
         "animTag": "slash",
         "sfx": "slash1",
-        "baseDamage": 1
+        "baseDamage": 1,
+        "friendly": false
+    },
+    {
+        "id": 1,
+        "name": "Cure",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "sfx": "menuSelect",
+        "baseDamage": -3,
+        "friendly": true
     }
 ]

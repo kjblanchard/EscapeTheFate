@@ -39,6 +39,7 @@ class Battler : public GameObject {
 
    public:
 	void TakeDamage(int damage);
+	void Heal(int amount);
 #ifdef imgui
 	inline int& DebugHP() { return _currentHP; }
 	inline float& DebugATBCharge() { return _currentATBCharge; }
@@ -47,10 +48,9 @@ class Battler : public GameObject {
 #endif
 
    protected:
-	// called by update each frame
 	virtual void updateImpl() {}
-	// what should happen when you take damage
 	virtual void takeDamageImpl(int damage) = 0;
+	virtual void healImpl(int amount) {}
 
    protected:
 	BattlerData* _battlerData;

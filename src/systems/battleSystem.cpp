@@ -131,6 +131,7 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().AnimationTag = jstr(currentJsonObject, "animTag");
 		abilityDatabase_.back().SFXName = jstr(currentJsonObject, "sfx");
 		abilityDatabase_.back().BaseDamage = jint(currentJsonObject, "baseDamage");
+		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }

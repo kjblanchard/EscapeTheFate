@@ -27,6 +27,50 @@
                         "camera": false,
                         "priority": 3
                     },
+                    "MagicNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "visible": false,
+                        "scale": 1.0,
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": -80, "y": 0, "w": 72, "h": 40 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+                        "camera": false,
+                        "priority": 2,
+                        "xOffset": 8,
+                        "yOffset": 9,
+                        "children": {
+                            "MagicVLG": {
+                                "rect": { "x": 8, "y": 8, "w": 56, "h": 12 },
+                                "type": "vlg",
+                                "spacing": "15",
+                                "visible": true,
+                                "children": {
+                                    "CureText": {
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
+                                        "text": "Cure",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "MagicFinger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": false,
+                        "scale": 1.0,
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -88, "y": 8, "w": 16, "h": 16 },
+                        "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
+                        "camera": false,
+                        "priority": 3
+                    },
                     "CommandsNineSlice": {
                         "type": "nineSlice",
                         "file": "uibase",
