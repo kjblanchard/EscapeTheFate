@@ -96,6 +96,8 @@ static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObjec
 		config->scene.scenes.back().MapName = jstr(currentSceneObj, "MapName");
 		config->scene.scenes.back().UIName = jstr(currentSceneObj, "UIName");
 		config->scene.scenes.back().BGMVolume = jfloat(currentSceneObj, "BGMVolume");
+		auto displayName = jstr(currentSceneObj, "DisplayName");
+		config->scene.scenes.back().DisplayName = displayName ? displayName : "";
 	}
 }
 

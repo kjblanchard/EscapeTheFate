@@ -15,6 +15,7 @@
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
+#include <systems/SceneNameSystem.hpp>
 #include <systems/dialogSystem.hpp>
 using namespace Etf;
 
@@ -58,6 +59,10 @@ void InitializeGame() {
 			.Start = BattleTransitionSystem::Start,
 			.Update = BattleTransitionSystem::Update,
 			.Shutdown = BattleTransitionSystem::Shutdown,
+		},
+		{
+			.Start = SceneNameSystem::Start,
+			.Update = SceneNameSystem::Update,
 		}};
 	Engine::RegisterSystems(systems_);
 }

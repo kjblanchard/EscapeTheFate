@@ -4,7 +4,7 @@
 
 namespace Etf {
 struct Scene {
-	std::string MapName, UIName, BGMName;
+	std::string MapName, UIName, BGMName, DisplayName;
 	float BGMVolume;
 };
 
