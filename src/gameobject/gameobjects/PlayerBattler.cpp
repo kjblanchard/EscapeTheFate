@@ -88,6 +88,12 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 
 void PlayerBattler::updateImpl() {
 	_battlerUI->UpdateAnimations();
+	if (_isPlayingDamageAnim) {
+		_damageAnimTimer -= GameState::DeltaTimeSeconds;
+		if (_damageAnimTimer <= 0) {
+			_isPlayingDamageAnim = false;
+		}
+	}
 	switch (_currentBattlerState) {
 		case BattlerStates::Default:
 			handleStateChange(ATBCharging);
@@ -117,7 +123,11 @@ void PlayerBattler::updateImpl() {
 
 void PlayerBattler::takeDamageImpl(int damage) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
-	_animator->PlayAnimationThenLoopSecond("damage2", _battlerData->IdleAnimation);
+	if (!_isPlayingDamageAnim) {
+		_isPlayingDamageAnim = true;
+		_damageAnimTimer = 0.5f;
+		_animator->PlayAnimationThenLoopSecond("damage2", _battlerData->IdleAnimation);
+	}
 }
 
 void PlayerBattler::handleInputCommandsMenu() {

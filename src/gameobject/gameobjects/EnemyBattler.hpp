@@ -29,22 +29,22 @@ class EnemyBattler : public Battler {
    private:
 	UIText* _hpObject;
 	Shader* _deathShader = nullptr;
-	Shader* _blackoutShader = nullptr;
 	float _deathEffectTime = 0.0f;
 	bool _deathEffectPlaying = false;
 	static constexpr float kDeathEffectDuration = 0.7f;
 
 	UIAnimation* _atbBarAnim = nullptr;
 	UIProgressBar* _atbProgressBar = nullptr;
+	UIProgressBar* _hpProgressBar = nullptr;
 
 	EnemyBattlerStates _enemyState = EnemyBattlerStates::ATBCharging;
 	float _attackDelay = 0.0f;
 	float _attackDelayTimer = 0.0f;
-	float _blinkTimer = 0.0f;
 	float _blinkToggleTimer = 0.0f;
 	bool _blinkDark = false;
-	static constexpr float kBlinkDuration = 0.4f;
-	static constexpr float kBlinkToggleInterval = 0.06f;
+	int _blinkCount = 0;
+	static constexpr int kBlinkTotal = 2;
+	static constexpr float kBlinkToggleInterval = 0.1f;
 };
 
 }  // namespace Etf

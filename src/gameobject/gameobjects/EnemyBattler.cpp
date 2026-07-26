@@ -1,4 +1,5 @@
 #include <Supergoon/Graphics/shader.h>
+#include <Supergoon/sprite.h>
 #include <cstdlib>
 #include <engine.hpp>
 #include <gameState.hpp>
@@ -8,12 +9,16 @@
 #include <ui/ui.hpp>
 #include <ui/uiAnimation.hpp>
 #include <ui/uiProgressBar.hpp>
+#include <ui/uiText.hpp>
 #include <algorithm>
 #include <iterator>
 
 using namespace Etf;
 using namespace std;
 using enum EnemyBattlerStates;
+
+static const Color kWhite = {255, 255, 255, 255};
+static const Color kBlack = {0, 0, 0, 255};
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
@@ -22,16 +27,25 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 
 	_deathShader = ShaderCreate();
 	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
-	_blackoutShader = ShaderCreate();
-	ShaderCompile(_blackoutShader, "2dSpriteVertex", "spriteBlackoutFragment");
 
 	float barX = args.X + _battlerData->Location.x;
-	float barY = args.Y + _battlerData->Location.y + _battlerData->Location.h + 2;
+	float barY = args.Y + _battlerData->Location.y + _battlerData->Location.h - 2;
+
+	UIProgressBarArgs hpBarArgs;
+	hpBarArgs.Name = "EnemyHPBar";
+	hpBarArgs.Rect = {barX, barY, 32, 6};
+	hpBarArgs.BarRect = {1, 1, 30, 4};
+	hpBarArgs.BarColor = {50, 200, 50, 255};
+	hpBarArgs.Priority = 1;
+	hpBarArgs.Visible = true;
+	_hpProgressBar = new UIProgressBar(hpBarArgs);
+	_hpProgressBar->SetBarPercent(100.0f);
+	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_hpProgressBar);
 
 	UIAnimationArgs atbArgs;
 	atbArgs.Filename = "atbBar";
 	atbArgs.Name = "EnemyATBBar";
-	atbArgs.Rect = {barX, barY, 32, 16};
+	atbArgs.Rect = {barX, barY + 7, 32, 10};
 	atbArgs.SourceRect = {0, 0, 16, 16};
 	atbArgs.Scale = 1.0f;
 	atbArgs.DrawColor = {255, 255, 255, 255};
@@ -43,8 +57,8 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 
 	UIProgressBarArgs pbArgs;
 	pbArgs.Name = "EnemyATBProgress";
-	pbArgs.Rect = {0, 0, 32, 16};
-	pbArgs.BarRect = {4, 6, 24, 3};
+	pbArgs.Rect = {0, 0, 32, 10};
+	pbArgs.BarRect = {4, 3, 24, 3};
 	pbArgs.BarColor = {255, 140, 0, 255};
 	pbArgs.Priority = 1;
 	pbArgs.Visible = true;
@@ -60,19 +74,15 @@ EnemyBattler::~EnemyBattler() {
 	if (_atbBarAnim) {
 		_atbBarAnim->SetVisible(false);
 	}
+	if (_hpProgressBar) {
+		_hpProgressBar->SetVisible(false);
+	}
 	if (_deathShader) {
 		if (_sprite && _sprite->Shader == _deathShader) {
 			_sprite->Shader = GetDefaultShader();
 		}
 		ShaderDestroy(_deathShader);
 		_deathShader = nullptr;
-	}
-	if (_blackoutShader) {
-		if (_sprite && _sprite->Shader == _blackoutShader) {
-			_sprite->Shader = GetDefaultShader();
-		}
-		ShaderDestroy(_blackoutShader);
-		_blackoutShader = nullptr;
 	}
 }
 
@@ -96,6 +106,7 @@ void EnemyBattler::updateImpl() {
 			_deathShader = nullptr;
 			_deathEffectPlaying = false;
 			if (_atbBarAnim) _atbBarAnim->SetVisible(false);
+			if (_hpProgressBar) _hpProgressBar->SetVisible(false);
 		}
 		return;
 	}
@@ -107,7 +118,7 @@ void EnemyBattler::updateImpl() {
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(progress);
 			if (_currentATBCharge >= _maxATBCharge) {
 				if (_atbBarAnim) _atbBarAnim->GetAnimator().StartAnimation("turn");
-				_attackDelay = 0.3f + (rand() % 500) / 1000.0f;
+				_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
 				_attackDelayTimer = 0.0f;
 				_enemyState = DelayBeforeAttack;
 			}
@@ -116,23 +127,25 @@ void EnemyBattler::updateImpl() {
 		case DelayBeforeAttack: {
 			_attackDelayTimer += GameState::DeltaTimeSeconds;
 			if (_attackDelayTimer >= _attackDelay) {
-				_blinkTimer = 0.0f;
 				_blinkToggleTimer = 0.0f;
 				_blinkDark = false;
+				_blinkCount = 0;
 				_enemyState = Blinking;
 			}
 			break;
 		}
 		case Blinking: {
-			_blinkTimer += GameState::DeltaTimeSeconds;
 			_blinkToggleTimer += GameState::DeltaTimeSeconds;
 			if (_blinkToggleTimer >= kBlinkToggleInterval) {
 				_blinkToggleTimer = 0.0f;
 				_blinkDark = !_blinkDark;
-				_sprite->Shader = _blinkDark ? _blackoutShader : GetDefaultShader();
+				_sprite->DrawColor = _blinkDark ? kBlack : kWhite;
+				if (!_blinkDark) {
+					++_blinkCount;
+				}
 			}
-			if (_blinkTimer >= kBlinkDuration) {
-				_sprite->Shader = GetDefaultShader();
+			if (_blinkCount >= kBlinkTotal) {
+				_sprite->DrawColor = kWhite;
 				_enemyState = Attacking;
 			}
 			break;
@@ -155,6 +168,9 @@ void EnemyBattler::updateImpl() {
 
 void EnemyBattler::takeDamageImpl(int damage) {
 	_hpObject->UpdateText(to_string(_currentHP));
+	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
+	if (hpPercent < 0) hpPercent = 0;
+	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
 	if (_currentHP < 1 && !_deathEffectPlaying) {
 		Engine::Audio::PlaySFXBuffer("enemyDead", 1.0);
 		_deathEffectPlaying = true;

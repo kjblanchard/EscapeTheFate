@@ -47,6 +47,8 @@ class PlayerBattler : public Battler {
 	unsigned int _currentMenuLocation = 0;
 	int _currentTargetBattler = 0;
 	BattlerStates _currentBattlerState = BattlerStates::Default;
+	float _damageAnimTimer = 0.0f;
+	bool _isPlayingDamageAnim = false;
 };
 
 }  // namespace Etf
