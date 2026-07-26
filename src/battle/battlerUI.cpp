@@ -263,12 +263,11 @@ void BattlerUI::CloseMagicMenu() {
 void BattlerUI::MoveCursorInMagicMenu(unsigned int col, unsigned int row) {
 	if (!_magicFinger || !_magicMenu) return;
 	if ((int)col >= _magicMenuCols || (int)row >= _magicMenuRows) return;
-	int index = col * _magicMenuRows + row;
-	auto uiobject = _magicMenuItems[index];
+	auto uiobject = _magicMenuItems[0];
 	if (!uiobject) return;
 	auto pos = uiobject->AbsolutePosition();
-	auto x = pos.x - 15;
-	auto y = pos.y;
+	auto x = pos.x - 15 + (50 * col);
+	auto y = pos.y + (15 * row);
 	_magicFinger->AbsolutePosition(x, y);
 }
 
