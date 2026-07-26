@@ -105,6 +105,8 @@ static void loadBattleDB() {
 		battlerDatabase_.back().Pow = jint(currentJsonObject, "pow");
 		battlerDatabase_.back().Sprite = jstr(currentJsonObject, "sprite");
 		battlerDatabase_.back().IdleAnimation = jstr(currentJsonObject, "idle");
+		battlerDatabase_.back().HpBarOffsetX = jint(currentJsonObject, "hpBarOffsetX");
+		battlerDatabase_.back().HpBarOffsetY = jint(currentJsonObject, "hpBarOffsetY");
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);

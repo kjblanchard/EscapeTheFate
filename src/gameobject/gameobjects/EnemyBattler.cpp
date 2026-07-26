@@ -31,13 +31,13 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	constexpr float kPanelW = kBarWidth + kPadding * 2;
 	constexpr float kPanelH = kBarHeight * 2 + kPadding * 2;
 
-	float panelX = X() + (SpriteWidth() / 2) - (kPanelW / 2);
-	float panelY = Y() + SpriteHeight() - 12;
+	float panelX = X() + (SpriteWidth() / 2) - (kPanelW / 2) + _battlerData->HpBarOffsetX;
+	float panelY = Y() + SpriteHeight() + _battlerData->HpBarOffsetY;
 
 	UIPanelArgs panelArgs;
 	panelArgs.Name = "EnemyBarPanel";
 	panelArgs.Rect = {panelX, panelY, kPanelW, kPanelH};
-	panelArgs.FillColor = {10, 10, 15, 220};
+	panelArgs.FillColor = {0, 0, 0, 0};
 	panelArgs.BorderColor = {80, 80, 100, 255};
 	panelArgs.Priority = 0;
 	panelArgs.Visible = true;

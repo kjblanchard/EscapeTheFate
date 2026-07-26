@@ -11,6 +11,8 @@
         "pow": 100,
         "sprite": "player1Battler",
         "rect": { "x": -5, "y": -10, "w": 48, "h": 48 },
+        "hpBarOffsetX": 0,
+        "hpBarOffsetY": 0,
         "idle": "idle1"
     },
     {
@@ -25,6 +27,8 @@
         "pow": 100,
         "sprite": "blackBird",
         "rect": { "x": -5, "y": -15, "w": 61, "h": 57 },
+        "hpBarOffsetX": 0,
+        "hpBarOffsetY": -12,
         "idle": "moveR"
     }
 ]

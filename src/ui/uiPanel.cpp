@@ -14,6 +14,8 @@ UIPanel::UIPanel(const UIPanelArgs& args) {
 
 void UIPanel::OnDraw(float offsetX, float offsetY) {
 	RectangleF rect = {offsetX + _location.x, offsetY + _location.y, _location.w, _location.h};
-	DrawRect(&rect, &_fillColor, true, false);
+	if (_fillColor.A > 0) {
+		DrawRect(&rect, &_fillColor, true, false);
+	}
 	Engine::Debug::DrawRectPrimitive(rect, _borderColor, false, false);
 }
