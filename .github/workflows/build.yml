@@ -70,8 +70,17 @@ jobs:
         if: ${{ matrix.os == 'windows-2025' }}
         run: |
           choco install nsis -y
+      - name: Set version from tag
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=0.0.0-dev" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
       - name: Configure CMake
-        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
+        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd}}
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -116,8 +125,17 @@ jobs:
       - name: Build dependencies
         run: |
           embuilder build sdl3 freetype ogg libpng vorbis
+      - name: Set version from tag
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=0.0.0-dev" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
       - name: Actual build
-        run: cd repo && make BUILD_TYPE=Release ENGINE_CACHED=OFF erebuild
+        run: cd repo && make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
       - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
