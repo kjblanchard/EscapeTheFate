@@ -1,3 +1,4 @@
+#include <Supergoon/Graphics/graphics.h>
 #include <engine.hpp>
 #include <ui/uiPanel.hpp>
 
