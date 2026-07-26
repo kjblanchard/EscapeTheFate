@@ -1,15 +1,17 @@
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/sprite.h>
+#include <sgtools/log.h>
+
+#include <algorithm>
 #include <cstdlib>
 #include <engine.hpp>
 #include <gameState.hpp>
-#include <sgtools/log.h>
 #include <gameobject/gameobjects/EnemyBattler.hpp>
+#include <iterator>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiLine.hpp>
 #include <ui/uiProgressBar.hpp>
-#include <algorithm>
-#include <iterator>
 
 using namespace Etf;
 using namespace std;
@@ -21,10 +23,8 @@ static const Color kBlack = {0, 0, 0, 255};
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_deathShader = ShaderCreate();
 	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
-
-	float barX = X() + (SpriteWidth() / 2) - 12;
-	float barY = Y() + SpriteHeight() + 2;
-
+	float barX = X() + (SpriteWidth() / 2) - 20;
+	float barY = Y() + SpriteHeight() - 16;
 	UIProgressBarArgs hpBarArgs;
 	hpBarArgs.Name = "EnemyHPBar";
 	hpBarArgs.Rect = {barX, barY, 24, 4};
@@ -37,9 +37,21 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_hpProgressBar->SetBarPercent(100.0f);
 	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_hpProgressBar);
 
+	// UILineArgs lineArgs;
+	// lineArgs.LineColor = {255,255,255,255};
+	// lineArgs.Thickness = 2;
+	// lineArgs.X1 = hpBarArgs.Rect.x;
+	// lineArgs.X2 =  lineArgs.X1 + hpBarArgs.Rect.w;
+	// lineArgs.Y1 = lineArgs.Y2 = hpBarArgs.Rect.y + hpBarArgs.Rect.h -2;
+	// UIObjectArgs lineObjArgs;
+	// lineObjArgs.Visible = true;
+	// lineObjArgs.Name = "line";
+	// auto line = new UILine(lineArgs, lineObjArgs);
+	// UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(line);
+
 	UIProgressBarArgs pbArgs;
 	pbArgs.Name = "EnemyATBProgress";
-	pbArgs.Rect = {barX, barY + 5, 24, 4};
+	pbArgs.Rect = {barX, barY + 3, 24, 4};
 	pbArgs.BarRect = {1, 1, 22, 2};
 	pbArgs.BarColor = {255, 140, 0, 255};
 	pbArgs.BackgroundColor = {20, 20, 20, 255};
@@ -147,6 +159,7 @@ void EnemyBattler::updateImpl() {
 
 void EnemyBattler::takeDamageImpl(int damage) {
 	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
+	Engine::Audio::PlaySFXBuffer("slash1", 1.0f);
 	if (hpPercent < 0) hpPercent = 0;
 	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
 	if (_currentHP < 1 && !_deathEffectPlaying) {

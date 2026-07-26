@@ -123,10 +123,11 @@ void PlayerBattler::updateImpl() {
 
 void PlayerBattler::takeDamageImpl(int damage) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
+	Engine::Audio::PlaySFXBuffer("slash1", 1.0f);
 	if (!_isPlayingDamageAnim) {
 		_isPlayingDamageAnim = true;
 		_damageAnimTimer = 0.5f;
-		_animator->PlayAnimationThenLoopSecond("damage2", _battlerData->IdleAnimation);
+		_animator->PlayAnimationThenLoopSecond("damage1", _battlerData->IdleAnimation);
 	}
 }
 

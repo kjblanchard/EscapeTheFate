@@ -2,7 +2,7 @@
     {
         "id": 0,
         "name": "Kevin",
-        "hp": 10,
+        "hp": 15,
         "str": 5,
         "mag": 5,
         "def": 5,
@@ -16,12 +16,12 @@
     {
         "id": 1,
         "name": "Black Bird",
-        "hp": 1,
+        "hp": 2,
         "str": 5,
         "mag": 5,
         "def": 5,
         "mdef": 3,
-        "spd": 3,
+        "spd": 1,
         "pow": 100,
         "sprite": "blackBird",
         "rect": { "x": -5, "y": -15, "w": 61, "h": 57 },
