@@ -58,17 +58,13 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		_menuItems[1] = vlg->GetChildByName("MagicText");
 		_menuItems[2] = vlg->GetChildByName("SkillsText");
 		_menuItems[3] = vlg->GetChildByName("ItemsText");
-		Color color = {180, 180, 180, 255};
-		auto first = true;
-		for (auto menuItem : _menuItems) {
-			if (!menuItem)
+		Color disabledColor = {180, 180, 180, 255};
+		for (int i = 0; i < 4; ++i) {
+			if (!_menuItems[i])
 				sgLogCritical("Could not fild child thing, exiting");
-			auto menuCasted = static_cast<UIText*>(menuItem);
-			if (!menuCasted) continue;
-			if (first) {
-				first = false;
-			} else {
-				menuCasted->UpdateDrawColor(color);
+			if (i >= 2) {
+				auto menuCasted = static_cast<UIText*>(_menuItems[i]);
+				if (menuCasted) menuCasted->UpdateDrawColor(disabledColor);
 			}
 		}
 		auto finger = UI::GetRootUIObject()->GetChildByName("Finger");

@@ -5,6 +5,8 @@
 #include <components/SpriteAnimator.hpp>
 #include <gameobject/GameObject.hpp>
 #include <memory>
+#include <string>
+#include <unordered_map>
 struct Sprite;
 namespace Etf {
 struct AbilityData;
@@ -62,7 +64,7 @@ class Battler : public GameObject {
 	Sprite* _sprite;
 	int _locationX, _locationY;
 	std::unique_ptr<SpriteAnimator> _animator;
-	std::unique_ptr<HitAnimPool> _hitAnimPool;
+	std::unordered_map<std::string, std::unique_ptr<HitAnimPool>> _hitAnimPools;
 
    private:
 	void updateATBGauge();

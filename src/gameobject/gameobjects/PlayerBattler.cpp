@@ -50,6 +50,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			break;
 		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
+			_battlerUI->CloseMagicMenu();
 			_battlerUI->StartTargetSelection();
 			moveFingerToTargetNum(0);
 			break;

@@ -31,6 +31,7 @@ const vector<string> preloadTextures_ = {
 	"uibase",
 	"bBlackBird",
 	"gamecontroller",
+	"heal",
 	"inside",
 	"null",
 	"player1",

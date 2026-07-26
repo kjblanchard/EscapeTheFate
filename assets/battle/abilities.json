@@ -11,8 +11,8 @@
     {
         "id": 1,
         "name": "Cure",
-        "animFile": "sword1",
-        "animTag": "slash",
+        "animFile": "heal",
+        "animTag": "heal2",
         "sfx": "menuSelect",
         "baseDamage": -3,
         "friendly": true

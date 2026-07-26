@@ -22,7 +22,6 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_sprite = Engine::Sprites::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
-	_hitAnimPool = make_unique<HitAnimPool>("sword1", 64.0f, 64.0f);
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
@@ -51,14 +50,21 @@ void Battler::Heal(int amount) {
 void Battler::PlayHitAnimation(const AbilityData& ability) {
 	float x = SpriteX() + _battlerData->AnimOffsetX;
 	float y = SpriteY() + _battlerData->AnimOffsetY;
-	_hitAnimPool->Play(ability.AnimationTag, x, y);
+	auto it = _hitAnimPools.find(ability.AnimationFile);
+	if (it == _hitAnimPools.end()) {
+		_hitAnimPools[ability.AnimationFile] = make_unique<HitAnimPool>(ability.AnimationFile, 64.0f, 64.0f);
+		it = _hitAnimPools.find(ability.AnimationFile);
+	}
+	it->second->Play(ability.AnimationTag, x, y);
 	if (!ability.SFXName.empty()) {
 		Engine::Audio::PlaySFXBuffer(ability.SFXName, 1.0f);
 	}
 }
 
 void Battler::updateHitAnims() {
-	if (_hitAnimPool) _hitAnimPool->Update(DeltaTimeSeconds);
+	for (auto& [key, pool] : _hitAnimPools) {
+		pool->Update(DeltaTimeSeconds);
+	}
 }
 
 void Battler::updateATBGauge() {
@@ -70,5 +76,7 @@ void Battler::updateATBGauge() {
 }
 
 void Battler::Draw() {
-	if (_hitAnimPool) _hitAnimPool->Draw();
+	for (auto& [key, pool] : _hitAnimPools) {
+		pool->Draw();
+	}
 }
