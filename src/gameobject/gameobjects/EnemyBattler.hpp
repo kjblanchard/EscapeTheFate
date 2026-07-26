@@ -3,6 +3,7 @@
 #include <vector>
 struct Shader;
 namespace Etf {
+class UIPanel;
 class UIProgressBar;
 
 enum class EnemyBattlerStates {
@@ -31,6 +32,7 @@ class EnemyBattler : public Battler {
 	bool _deathEffectPlaying = false;
 	static constexpr float kDeathEffectDuration = 0.7f;
 
+	UIPanel* _barPanel = nullptr;
 	UIProgressBar* _atbProgressBar = nullptr;
 	UIProgressBar* _hpProgressBar = nullptr;
 

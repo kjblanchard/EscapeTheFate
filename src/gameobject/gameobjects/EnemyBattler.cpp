@@ -11,6 +11,7 @@
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiLine.hpp>
+#include <ui/uiPanel.hpp>
 #include <ui/uiProgressBar.hpp>
 
 using namespace Etf;
@@ -23,51 +24,54 @@ static const Color kBlack = {0, 0, 0, 255};
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_deathShader = ShaderCreate();
 	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
-	float barX = X() + (SpriteWidth() / 2) - 20;
-	float barY = Y() + SpriteHeight() - 16;
+
+	constexpr float kBarWidth = 18;
+	constexpr float kBarHeight = 3;
+	constexpr float kPadding = 1;
+	constexpr float kPanelW = kBarWidth + kPadding * 2;
+	constexpr float kPanelH = kBarHeight * 2 + kPadding * 2;
+
+	float panelX = X() + (SpriteWidth() / 2) - (kPanelW / 2);
+	float panelY = Y() + SpriteHeight() - 12;
+
+	UIPanelArgs panelArgs;
+	panelArgs.Name = "EnemyBarPanel";
+	panelArgs.Rect = {panelX, panelY, kPanelW, kPanelH};
+	panelArgs.FillColor = {10, 10, 15, 220};
+	panelArgs.BorderColor = {80, 80, 100, 255};
+	panelArgs.Priority = 0;
+	panelArgs.Visible = true;
+	_barPanel = new UIPanel(panelArgs);
+	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_barPanel);
+
 	UIProgressBarArgs hpBarArgs;
 	hpBarArgs.Name = "EnemyHPBar";
-	hpBarArgs.Rect = {barX, barY, 24, 4};
-	hpBarArgs.BarRect = {1, 1, 22, 2};
+	hpBarArgs.Rect = {kPadding, kPadding, kBarWidth, kBarHeight};
+	hpBarArgs.BarRect = {0, 0, kBarWidth, kBarHeight};
 	hpBarArgs.BarColor = {50, 200, 50, 255};
-	hpBarArgs.BackgroundColor = {20, 20, 20, 255};
+	hpBarArgs.BackgroundColor = {30, 30, 30, 255};
 	hpBarArgs.Priority = 1;
 	hpBarArgs.Visible = true;
 	_hpProgressBar = new UIProgressBar(hpBarArgs);
 	_hpProgressBar->SetBarPercent(100.0f);
-	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_hpProgressBar);
-
-	// UILineArgs lineArgs;
-	// lineArgs.LineColor = {255,255,255,255};
-	// lineArgs.Thickness = 2;
-	// lineArgs.X1 = hpBarArgs.Rect.x;
-	// lineArgs.X2 =  lineArgs.X1 + hpBarArgs.Rect.w;
-	// lineArgs.Y1 = lineArgs.Y2 = hpBarArgs.Rect.y + hpBarArgs.Rect.h -2;
-	// UIObjectArgs lineObjArgs;
-	// lineObjArgs.Visible = true;
-	// lineObjArgs.Name = "line";
-	// auto line = new UILine(lineArgs, lineObjArgs);
-	// UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(line);
+	_barPanel->AddChild(_hpProgressBar);
 
 	UIProgressBarArgs pbArgs;
 	pbArgs.Name = "EnemyATBProgress";
-	pbArgs.Rect = {barX, barY + 3, 24, 4};
-	pbArgs.BarRect = {1, 1, 22, 2};
+	pbArgs.Rect = {kPadding, kPadding + kBarHeight, kBarWidth, kBarHeight};
+	pbArgs.BarRect = {0, 0, kBarWidth, kBarHeight};
 	pbArgs.BarColor = {255, 140, 0, 255};
-	pbArgs.BackgroundColor = {20, 20, 20, 255};
+	pbArgs.BackgroundColor = {30, 30, 30, 255};
 	pbArgs.Priority = 1;
 	pbArgs.Visible = true;
 	_atbProgressBar = new UIProgressBar(pbArgs);
-	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_atbProgressBar);
+	_barPanel->AddChild(_atbProgressBar);
 }
 
 EnemyBattler::~EnemyBattler() {
 	sgLogDebug("Destroying enemy battler");
-	if (_hpProgressBar) {
-		_hpProgressBar->SetVisible(false);
-	}
-	if (_atbProgressBar) {
-		_atbProgressBar->SetVisible(false);
+	if (_barPanel) {
+		_barPanel->SetVisible(false);
 	}
 	if (_deathShader) {
 		if (_sprite && _sprite->Shader == _deathShader) {
@@ -97,8 +101,7 @@ void EnemyBattler::updateImpl() {
 			ShaderDestroy(_deathShader);
 			_deathShader = nullptr;
 			_deathEffectPlaying = false;
-			if (_hpProgressBar) _hpProgressBar->SetVisible(false);
-			if (_atbProgressBar) _atbProgressBar->SetVisible(false);
+			if (_barPanel) _barPanel->SetVisible(false);
 		}
 		return;
 	}
