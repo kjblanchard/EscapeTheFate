@@ -117,6 +117,7 @@ void PlayerBattler::updateImpl() {
 
 void PlayerBattler::takeDamageImpl(int damage) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
+	_animator->PlayAnimationThenLoopSecond("damage2", _battlerData->IdleAnimation);
 }
 
 void PlayerBattler::handleInputCommandsMenu() {

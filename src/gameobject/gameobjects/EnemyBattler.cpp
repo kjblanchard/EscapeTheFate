@@ -6,6 +6,8 @@
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiAnimation.hpp>
+#include <ui/uiProgressBar.hpp>
 #include <algorithm>
 #include <iterator>
 
@@ -13,12 +15,41 @@ using namespace Etf;
 using namespace std;
 using enum EnemyBattlerStates;
 
-EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(3)) {
+EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
 	_hpObject = static_cast<UIText*>(hpObject);
 	_hpObject->UpdateText(to_string(_currentHP));
+
 	_deathShader = ShaderCreate();
 	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
+	_blackoutShader = ShaderCreate();
+	ShaderCompile(_blackoutShader, "2dSpriteVertex", "spriteBlackoutFragment");
+
+	float barX = args.X + _battlerData->Location.x;
+	float barY = args.Y + _battlerData->Location.y + _battlerData->Location.h + 2;
+
+	UIAnimationArgs atbArgs;
+	atbArgs.Filename = "atbBar";
+	atbArgs.Name = "EnemyATBBar";
+	atbArgs.Rect = {barX, barY, 32, 16};
+	atbArgs.SourceRect = {0, 0, 16, 16};
+	atbArgs.Scale = 1.0f;
+	atbArgs.DrawColor = {255, 255, 255, 255};
+	atbArgs.Priority = 0;
+	atbArgs.Visible = true;
+	_atbBarAnim = new UIAnimation(atbArgs);
+	_atbBarAnim->GetAnimator().StartAnimation("idle");
+	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_atbBarAnim);
+
+	UIProgressBarArgs pbArgs;
+	pbArgs.Name = "EnemyATBProgress";
+	pbArgs.Rect = {0, 0, 32, 16};
+	pbArgs.BarRect = {4, 6, 24, 3};
+	pbArgs.BarColor = {255, 140, 0, 255};
+	pbArgs.Priority = 1;
+	pbArgs.Visible = true;
+	_atbProgressBar = new UIProgressBar(pbArgs);
+	_atbBarAnim->AddChild(_atbProgressBar);
 }
 
 EnemyBattler::~EnemyBattler() {
@@ -26,12 +57,22 @@ EnemyBattler::~EnemyBattler() {
 	if (_hpObject) {
 		_hpObject->SetVisible(false);
 	}
+	if (_atbBarAnim) {
+		_atbBarAnim->SetVisible(false);
+	}
 	if (_deathShader) {
 		if (_sprite && _sprite->Shader == _deathShader) {
 			_sprite->Shader = GetDefaultShader();
 		}
 		ShaderDestroy(_deathShader);
 		_deathShader = nullptr;
+	}
+	if (_blackoutShader) {
+		if (_sprite && _sprite->Shader == _blackoutShader) {
+			_sprite->Shader = GetDefaultShader();
+		}
+		ShaderDestroy(_blackoutShader);
+		_blackoutShader = nullptr;
 	}
 }
 
@@ -54,6 +95,7 @@ void EnemyBattler::updateImpl() {
 			ShaderDestroy(_deathShader);
 			_deathShader = nullptr;
 			_deathEffectPlaying = false;
+			if (_atbBarAnim) _atbBarAnim->SetVisible(false);
 		}
 		return;
 	}
@@ -62,9 +104,9 @@ void EnemyBattler::updateImpl() {
 	switch (_enemyState) {
 		case ATBCharging: {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.0f;
-			_battlerUI->UpdateProgressBar(progress);
+			if (_atbProgressBar) _atbProgressBar->SetBarPercent(progress);
 			if (_currentATBCharge >= _maxATBCharge) {
-				_battlerUI->StartATBTurnAnim();
+				if (_atbBarAnim) _atbBarAnim->GetAnimator().StartAnimation("turn");
 				_attackDelay = 0.3f + (rand() % 500) / 1000.0f;
 				_attackDelayTimer = 0.0f;
 				_enemyState = DelayBeforeAttack;
@@ -76,7 +118,7 @@ void EnemyBattler::updateImpl() {
 			if (_attackDelayTimer >= _attackDelay) {
 				_blinkTimer = 0.0f;
 				_blinkToggleTimer = 0.0f;
-				_blinkVisible = true;
+				_blinkDark = false;
 				_enemyState = Blinking;
 			}
 			break;
@@ -86,11 +128,11 @@ void EnemyBattler::updateImpl() {
 			_blinkToggleTimer += GameState::DeltaTimeSeconds;
 			if (_blinkToggleTimer >= kBlinkToggleInterval) {
 				_blinkToggleTimer = 0.0f;
-				_blinkVisible = !_blinkVisible;
-				Engine::Sprites::SetSpriteVisible(_sprite, _blinkVisible);
+				_blinkDark = !_blinkDark;
+				_sprite->Shader = _blinkDark ? _blackoutShader : GetDefaultShader();
 			}
 			if (_blinkTimer >= kBlinkDuration) {
-				Engine::Sprites::SetSpriteVisible(_sprite, true);
+				_sprite->Shader = GetDefaultShader();
 				_enemyState = Attacking;
 			}
 			break;
@@ -100,12 +142,11 @@ void EnemyBattler::updateImpl() {
 			getPlayerBattlers(players);
 			if (!players.empty()) {
 				auto target = players[0];
-				int damage = max(1, _battlerData->Str - target->Def() / 2);
-				target->TakeDamage(damage);
+				target->TakeDamage(1);
 			}
 			_currentATBCharge = 0;
-			_battlerUI->StartATBIdleAnim();
-			_battlerUI->UpdateProgressBar(0);
+			if (_atbBarAnim) _atbBarAnim->GetAnimator().StartAnimation("idle");
+			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
 			_enemyState = ATBCharging;
 			break;
 		}

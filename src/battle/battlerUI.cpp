@@ -93,15 +93,6 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
 		_hpObject = static_cast<UIText*>(hpObject);
 		if (_hpObject) _hpObject->SetVisible(true);
-		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName("EnemyATB");
-		if (progressBarAnim) {
-			_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
-			StartATBIdleAnim();
-		}
-		auto progressBarObject = UI::GetRootUIObject()->GetChildByName("EnemyATBProgressBar");
-		if (progressBarObject) {
-			_progressBar = static_cast<UIProgressBar*>(progressBarObject);
-		}
 	}
 }
 
