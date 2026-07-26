@@ -48,7 +48,8 @@ class PlayerBattler : public Battler {
    private:
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
-	unsigned int _currentMagicMenuLocation = 0;
+	unsigned int _magicMenuRow = 0;
+	unsigned int _magicMenuCol = 0;
 	int _currentTargetBattler = 0;
 	int _selectedAbilityID = 0;
 	bool _targetingFriendly = false;

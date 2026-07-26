@@ -44,12 +44,12 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->StartPlayerTurn(this);
 			break;
 		case BattlerStates::MagicSelection:
-			_currentMagicMenuLocation = 0;
+			_magicMenuRow = 0;
+			_magicMenuCol = 0;
 			_battlerUI->OpenMagicMenu();
 			break;
 		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
-			_battlerUI->CloseMagicMenu();
 			_battlerUI->StartTargetSelection();
 			moveFingerToTargetNum(0);
 			break;
@@ -241,15 +241,24 @@ void PlayerBattler::moveFingerToTargetNum(int targetNum) {
 }
 
 void PlayerBattler::handleInputMagicMenu() {
-	auto newLocation = _currentMagicMenuLocation;
+	auto newRow = _magicMenuRow;
+	auto newCol = _magicMenuCol;
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
-		--newLocation;
+		if (newRow > 0) --newRow;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
-		++newLocation;
+		if (newRow < 3) ++newRow;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.LEFT)) {
+		if (newCol > 0) --newCol;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.RIGHT)) {
+		if (newCol < 1) ++newCol;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+		_selectedAbilityID = slotIndex + 1;
+		if (!BattleSystem::HasAbility(_selectedAbilityID)) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-		// Map magic menu slot to ability ID (slot 0 = Cure = ability ID 1)
-		_selectedAbilityID = _currentMagicMenuLocation + 1;
 		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
 		_targetingFriendly = ability.Friendly;
 		handleStateChange(TargetSelection);
@@ -261,15 +270,11 @@ void PlayerBattler::handleInputMagicMenu() {
 		return;
 	}
 
-	if (newLocation != _currentMagicMenuLocation) {
-		// Clamp to valid range (currently only 1 item)
-		if ((int)newLocation < 0) newLocation = 0;
-		if ((int)newLocation > 0) newLocation = 0;
-		if (newLocation != _currentMagicMenuLocation) {
-			_currentMagicMenuLocation = newLocation;
-			_battlerUI->MoveCursorInMagicMenu(_currentMagicMenuLocation);
-			Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-		}
+	if (newRow != _magicMenuRow || newCol != _magicMenuCol) {
+		_magicMenuRow = newRow;
+		_magicMenuCol = newCol;
+		_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 	}
 }
 
@@ -311,7 +316,11 @@ void PlayerBattler::handleInputTargetSelection() {
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.B)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		_battlerUI->CloseTargetSelection();
-		_currentBattlerState = CommandSelection;
+		if (_selectedAbilityID > 0) {
+			_currentBattlerState = MagicSelection;
+		} else {
+			_currentBattlerState = CommandSelection;
+		}
 		return;
 	}
 

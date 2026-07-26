@@ -125,8 +125,9 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 			_magicMenu->SetVisible(false);
 			_magicMenu->SetX(_magicMenuStartX + Animation_Offset);
 		}
-		_magicMenuItems[0] = UI::GetRootUIObject()->GetChildByName("MagicSlot0");
-		_magicMenuItemCount = 1;
+		for (int i = 0; i < 8; ++i) {
+			_magicMenuItems[i] = UI::GetRootUIObject()->GetChildByName("MagicSlot" + to_string(i));
+		}
 		auto magicFingerObj = UI::GetRootUIObject()->GetChildByName("MagicFinger");
 		if (magicFingerObj) {
 			_magicFinger = static_cast<UIImage*>(magicFingerObj);
@@ -207,7 +208,7 @@ void BattlerUI::UpdateAnimations() {
 				if (_magicAnimationTime >= Animation_Open_Time) {
 					_magicMenuState = Opened;
 					_magicMenu->SetX(_magicMenuStartX);
-					MoveCursorInMagicMenu(_pendingMagicCursorPos);
+					MoveCursorInMagicMenu(_pendingMagicCol, _pendingMagicRow);
 					if (_magicFinger) _magicFinger->SetVisible(true);
 					break;
 				}
@@ -247,7 +248,8 @@ void BattlerUI::OpenMagicMenu() {
 	_magicMenu->SetVisible(true);
 	_magicMenuState = PlayerUIAnimationStates::Opening;
 	_magicAnimationTime = 0;
-	_pendingMagicCursorPos = 0;
+	_pendingMagicCol = 0;
+	_pendingMagicRow = 0;
 }
 
 void BattlerUI::CloseMagicMenu() {
@@ -258,10 +260,11 @@ void BattlerUI::CloseMagicMenu() {
 	if (_magicFinger) _magicFinger->SetVisible(false);
 }
 
-void BattlerUI::MoveCursorInMagicMenu(unsigned int newLocation) {
+void BattlerUI::MoveCursorInMagicMenu(unsigned int col, unsigned int row) {
 	if (!_magicFinger || !_magicMenu) return;
-	if ((int)newLocation >= _magicMenuItemCount) return;
-	auto uiobject = _magicMenuItems[newLocation];
+	if ((int)col >= _magicMenuCols || (int)row >= _magicMenuRows) return;
+	int index = col * _magicMenuRows + row;
+	auto uiobject = _magicMenuItems[index];
 	if (!uiobject) return;
 	auto pos = uiobject->AbsolutePosition();
 	auto x = pos.x - 15;

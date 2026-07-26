@@ -24,5 +24,6 @@ void SendBattleDamage(int battlerNum, int damage);
 void InitializeBattleSystem();
 const std::vector<Battler*>& GetEnemyBattlers();
 const AbilityData& GetAbilityByID(int id);
+bool HasAbility(int id);
 };	// namespace BattleSystem
 }  // namespace Etf

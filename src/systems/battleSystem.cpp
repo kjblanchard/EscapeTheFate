@@ -284,3 +284,7 @@ const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {
 const AbilityData& BattleSystem::GetAbilityByID(int id) {
 	return abilityDatabase_.at(id);
 }
+
+bool BattleSystem::HasAbility(int id) {
+	return id >= 0 && id < (int)abilityDatabase_.size();
+}

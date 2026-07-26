@@ -45,7 +45,7 @@ class BattlerUI {
 	void MoveCursorInMenu(unsigned int newLocation);
 	void OpenMagicMenu();
 	void CloseMagicMenu();
-	void MoveCursorInMagicMenu(unsigned int newLocation);
+	void MoveCursorInMagicMenu(unsigned int col, unsigned int row);
 	void UpdateAnimations();
 	void StartPlayerTurn(Battler* battler);
 	void EndPlayerTurn(Battler* battler);
@@ -56,8 +56,9 @@ class BattlerUI {
 	UIObject* _commandMenu;
 	UIObject* _menuItems[4];
 	UIObject* _magicMenu = nullptr;
-	UIObject* _magicMenuItems[4] = {};
-	int _magicMenuItemCount = 0;
+	UIObject* _magicMenuItems[8] = {};
+	int _magicMenuRows = 4;
+	int _magicMenuCols = 2;
 	UIImage* _magicFinger = nullptr;
 	UIText* _hpObject;
 	UIImage* _finger;
@@ -71,7 +72,8 @@ class BattlerUI {
 	float _magicAnimationTime = 0;
 	float _menuBoxStartX, _menuBoxStartY;
 	float _magicMenuStartX = 0;
-	unsigned int _pendingMagicCursorPos = 0;
+	unsigned int _pendingMagicCol = 0;
+	unsigned int _pendingMagicRow = 0;
 	PlayerUIAnimationStates _currentState = PlayerUIAnimationStates::Closed;
 	PlayerUIAnimationStates _magicMenuState = PlayerUIAnimationStates::Closed;
 };
