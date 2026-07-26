@@ -71,6 +71,7 @@ class BattlerUI {
 	float _magicAnimationTime = 0;
 	float _menuBoxStartX, _menuBoxStartY;
 	float _magicMenuStartX = 0;
+	unsigned int _pendingMagicCursorPos = 0;
 	PlayerUIAnimationStates _currentState = PlayerUIAnimationStates::Closed;
 	PlayerUIAnimationStates _magicMenuState = PlayerUIAnimationStates::Closed;
 };
