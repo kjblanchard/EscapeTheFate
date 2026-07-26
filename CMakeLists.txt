@@ -59,6 +59,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/BattleZoneSystem.cpp
   src/systems/BattleTransitionSystem.cpp
   src/systems/SplashSystem.cpp
+  src/systems/SceneNameSystem.cpp
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
