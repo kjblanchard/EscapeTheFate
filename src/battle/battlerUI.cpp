@@ -125,11 +125,8 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 			_magicMenu->SetVisible(false);
 			_magicMenu->SetX(_magicMenuStartX + Animation_Offset);
 		}
-		auto magicVlg = UI::GetRootUIObject()->GetChildByName("MagicVLG");
-		if (magicVlg) {
-			_magicMenuItems[0] = magicVlg->GetChildByName("CureText");
-			_magicMenuItemCount = 1;
-		}
+		_magicMenuItems[0] = UI::GetRootUIObject()->GetChildByName("MagicSlot0");
+		_magicMenuItemCount = 1;
 		auto magicFingerObj = UI::GetRootUIObject()->GetChildByName("MagicFinger");
 		if (magicFingerObj) {
 			_magicFinger = static_cast<UIImage*>(magicFingerObj);
@@ -209,6 +206,8 @@ void BattlerUI::UpdateAnimations() {
 				_magicAnimationTime += DeltaTimeSeconds;
 				if (_magicAnimationTime >= Animation_Open_Time) {
 					_magicMenuState = Opened;
+					_magicMenu->SetX(_magicMenuStartX);
+					MoveCursorInMagicMenu(_pendingMagicCursorPos);
 					if (_magicFinger) _magicFinger->SetVisible(true);
 					break;
 				}
@@ -248,6 +247,7 @@ void BattlerUI::OpenMagicMenu() {
 	_magicMenu->SetVisible(true);
 	_magicMenuState = PlayerUIAnimationStates::Opening;
 	_magicAnimationTime = 0;
+	_pendingMagicCursorPos = 0;
 }
 
 void BattlerUI::CloseMagicMenu() {
@@ -263,9 +263,9 @@ void BattlerUI::MoveCursorInMagicMenu(unsigned int newLocation) {
 	if ((int)newLocation >= _magicMenuItemCount) return;
 	auto uiobject = _magicMenuItems[newLocation];
 	if (!uiobject) return;
-	auto thing = uiobject->AbsolutePosition();
-	auto x = thing.x - 15;
-	auto y = thing.y + (15 * newLocation);
+	auto pos = uiobject->AbsolutePosition();
+	auto x = pos.x - 15;
+	auto y = pos.y;
 	_magicFinger->AbsolutePosition(x, y);
 }
 

@@ -46,7 +46,6 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 		case BattlerStates::MagicSelection:
 			_currentMagicMenuLocation = 0;
 			_battlerUI->OpenMagicMenu();
-			_battlerUI->MoveCursorInMagicMenu(0);
 			break;
 		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
