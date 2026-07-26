@@ -30,6 +30,7 @@ class Battler : public GameObject {
 
    public:
 	inline unsigned int CurrentHP() { return _currentHP; }
+	inline int Def() { return _battlerData->Def; }
 	virtual bool IsPlayer() = 0;
 
    public:

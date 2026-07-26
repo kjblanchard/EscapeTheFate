@@ -31,10 +31,10 @@ class BattlerUI {
 		_finger->SetVisible(false);
 	}
 	inline void StartATBIdleAnim() {
-		_progressBarAnim->GetAnimator().StartAnimation("idle");
+		if (_progressBarAnim) _progressBarAnim->GetAnimator().StartAnimation("idle");
 	}
 	inline void StartATBTurnAnim() {
-		_progressBarAnim->GetAnimator().StartAnimation("turn");
+		if (_progressBarAnim) _progressBarAnim->GetAnimator().StartAnimation("turn");
 	}
 	void StartTargetSelection();
 	void MoveFingerToBattlerLocation(Battler* battler);

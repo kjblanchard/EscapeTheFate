@@ -115,7 +115,9 @@ void PlayerBattler::updateImpl() {
 	handleInput();
 }
 
-void PlayerBattler::takeDamageImpl(int damage) {}
+void PlayerBattler::takeDamageImpl(int damage) {
+	_battlerUI->UpdateHP(to_string(_currentHP));
+}
 
 void PlayerBattler::handleInputCommandsMenu() {
 	auto newLocation = _currentMenuLocation;

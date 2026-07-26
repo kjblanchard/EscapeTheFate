@@ -317,13 +317,30 @@
             "EnemyHP": {
                 "type": "text",
                 "font": "PressStart2P",
-                "debug": true,
                 "fontSize": 8,
                 "rect": { "x": 100, "y": 80, "w": 16, "h": 12 },
                 "text": "10",
                 "centeredX": false,
                 "centeredY": false,
                 "numCharsToDraw": 100
+            },
+            "EnemyATB": {
+                "type": "animation",
+                "visible": true,
+                "rect": { "x": 85, "y": 90, "w": 32, "h": 16 },
+                "srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                "file": "atbBar",
+                "scale": 1.0,
+                "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                "children": {
+                    "EnemyATBProgressBar": {
+                        "type": "progressBar",
+                        "visible": true,
+                        "rect": { "x": 0, "y": 0, "w": 32, "h": 16 },
+                        "barRect": { "x": 4, "y": 6, "w": 24, "h": 3 },
+                        "barColor": { "R": 255, "G": 140, "B": 0, "A": 255 }
+                    }
+                }
             },
             "TurnMarker": {
                 "type": "animation",
