@@ -151,6 +151,10 @@ void PlayerBattler::takeDamageImpl(int damage) {
 	}
 }
 
+void PlayerBattler::healImpl(int amount) {
+	_battlerUI->UpdateHP(to_string(_currentHP));
+}
+
 void PlayerBattler::handleInputCommandsMenu() {
 	auto newLocation = _currentMenuLocation;
 	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
@@ -189,6 +193,86 @@ void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
 	});
 }
 
+void PlayerBattler::getPlayerBattlers(std::vector<Battler*>& battlerVector) {
+	auto battlers = BattleSystem::GetEnemyBattlers();
+	copy_if(battlers.begin(), battlers.end(), back_inserter(battlerVector), [](Battler* battler) {
+		return battler && battler->IsPlayer() && battler->CurrentHP() > 0;
+	});
+}
+
+void PlayerBattler::getAllTargets(std::vector<Battler*>& battlerVector) {
+	if (_targetingFriendly) {
+		getPlayerBattlers(battlerVector);
+	} else {
+		getEnemyBattlers(battlerVector);
+	}
+}
+
+void PlayerBattler::moveFingerToTargetNum(int targetNum) {
+	std::vector<Battler*> targets;
+	getAllTargets(targets);
+	if (targets.empty()) return;
+
+	if (targetNum > (int)targets.size() - 1) {
+		targetNum = 0;
+	} else if (targetNum < 0) {
+		targetNum = (int)targets.size() - 1;
+	}
+	const auto battler = targets.at(targetNum);
+	if (battler) {
+		_battlerUI->MoveFingerToBattlerLocation(battler);
+
+		string displayName = battler->Name();
+		int sameNameCount = 0;
+		int ordinal = 0;
+		for (size_t i = 0; i < targets.size(); ++i) {
+			if (targets[i]->Name() == displayName) {
+				if ((int)i < targetNum) ++ordinal;
+				++sameNameCount;
+			}
+		}
+		if (sameNameCount > 1) {
+			displayName += ' ';
+			displayName += ('A' + ordinal);
+		}
+		_battlerUI->UpdateTargetInfo(displayName);
+	}
+	_currentTargetBattler = targetNum;
+}
+
+void PlayerBattler::handleInputMagicMenu() {
+	auto newLocation = _currentMagicMenuLocation;
+	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
+		--newLocation;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
+		++newLocation;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+		// Map magic menu slot to ability ID (slot 0 = Cure = ability ID 1)
+		_selectedAbilityID = _currentMagicMenuLocation + 1;
+		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		_targetingFriendly = ability.Friendly;
+		handleStateChange(TargetSelection);
+		return;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.B)) {
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		_battlerUI->CloseMagicMenu();
+		_currentBattlerState = CommandSelection;
+		return;
+	}
+
+	if (newLocation != _currentMagicMenuLocation) {
+		// Clamp to valid range (currently only 1 item)
+		if ((int)newLocation < 0) newLocation = 0;
+		if ((int)newLocation > 0) newLocation = 0;
+		if (newLocation != _currentMagicMenuLocation) {
+			_currentMagicMenuLocation = newLocation;
+			_battlerUI->MoveCursorInMagicMenu(_currentMagicMenuLocation);
+			Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		}
+	}
+}
+
 void PlayerBattler::handleInputTargetSelection() {
 	int newTarget = _currentTargetBattler;
 
@@ -198,23 +282,41 @@ void PlayerBattler::handleInputTargetSelection() {
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		++newTarget;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.LEFT) ||
+			   IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.RIGHT)) {
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		_targetingFriendly = !_targetingFriendly;
+		_currentTargetBattler = 0;
+		moveFingerToTargetNum(0);
+		return;
 	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-		vector<Battler*> battlers;
-		getEnemyBattlers(battlers);
-		const auto battler = battlers.at(newTarget);
+		vector<Battler*> targets;
+		getAllTargets(targets);
+		if (targets.empty()) return;
+		const auto battler = targets.at(_currentTargetBattler);
 		_animator->PlayAnimationThenLoopSecond("slash2", _battlerData->IdleAnimation);
 		if (battler) {
-			const auto& ability = BattleSystem::GetAbilityByID(0);
-			battler->TakeDamage(ability.BaseDamage);
+			const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+			if (ability.BaseDamage < 0) {
+				battler->Heal(-ability.BaseDamage);
+			} else {
+				battler->TakeDamage(ability.BaseDamage);
+			}
 			battler->PlayHitAnimation(ability);
 		}
 		_currentATBCharge = 0;
 		handleStateChange(ATBCharging);
+		return;
+	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.B)) {
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		_battlerUI->CloseTargetSelection();
+		_currentBattlerState = CommandSelection;
+		return;
 	}
 
 	if (newTarget != _currentTargetBattler) {
-		moveFingerToEnemyNum(newTarget);
+		moveFingerToTargetNum(newTarget);
 	}
 }
 
@@ -228,6 +330,9 @@ void PlayerBattler::handleInput() {
 			break;
 		case BattlerStates::CommandSelection:
 			handleInputCommandsMenu();
+			break;
+		case BattlerStates::MagicSelection:
+			handleInputMagicMenu();
 			break;
 		case BattlerStates::TargetSelection:
 			handleInputTargetSelection();

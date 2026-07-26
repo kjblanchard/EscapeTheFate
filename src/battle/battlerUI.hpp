@@ -55,10 +55,10 @@ class BattlerUI {
 	static UIAnimation* _turnMarkerAnim;
 	UIObject* _commandMenu;
 	UIObject* _menuItems[4];
-	UIObject* _magicMenu;
-	UIObject* _magicMenuItems[4];
+	UIObject* _magicMenu = nullptr;
+	UIObject* _magicMenuItems[4] = {};
 	int _magicMenuItemCount = 0;
-	UIImage* _magicFinger;
+	UIImage* _magicFinger = nullptr;
 	UIText* _hpObject;
 	UIImage* _finger;
 	UIImage* _targetSelectionFinger;

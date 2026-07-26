@@ -162,6 +162,12 @@ void EnemyBattler::updateImpl() {
 	}
 }
 
+void EnemyBattler::healImpl(int amount) {
+	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
+	if (hpPercent > 100) hpPercent = 100;
+	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
+}
+
 void EnemyBattler::takeDamageImpl(int damage) {
 	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
 	if (hpPercent < 0) hpPercent = 0;
