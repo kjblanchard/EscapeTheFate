@@ -82,6 +82,21 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 	const auto battler = enemyBattlers.at(enemyNum);
 	if (battler) {
 		_battlerUI->MoveFingerToBattlerLocation(battler);
+
+		string displayName = battler->Name();
+		int sameNameCount = 0;
+		int ordinal = 0;
+		for (size_t i = 0; i < enemyBattlers.size(); ++i) {
+			if (enemyBattlers[i]->Name() == displayName) {
+				if ((int)i < enemyNum) ++ordinal;
+				++sameNameCount;
+			}
+		}
+		if (sameNameCount > 1) {
+			displayName += ' ';
+			displayName += ('A' + ordinal);
+		}
+		_battlerUI->UpdateTargetInfo(displayName);
 	}
 	_currentTargetBattler = enemyNum;
 }

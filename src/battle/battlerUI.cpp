@@ -5,6 +5,8 @@
 #include <engine.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiNineSlice.hpp>
+#include <ui/uiText.hpp>
 
 #include "ui/uiAnimation.hpp"
 using namespace Etf;
@@ -89,6 +91,37 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		auto progressBarObject = UI::GetRootUIObject()->GetChildByName("P1ATBProgressBar");
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
+
+		UINineSliceArgs infoBoxArgs;
+		infoBoxArgs.Filename = "uibase";
+		infoBoxArgs.Name = "TargetInfoBox";
+		infoBoxArgs.Rect = {5, 5, 90, 18};
+		infoBoxArgs.SourceRect = {0, 0, 64, 64};
+		infoBoxArgs.Xoffset = 8;
+		infoBoxArgs.Yoffset = 8;
+		infoBoxArgs.Scale = 1.0f;
+		infoBoxArgs.DrawColor = {80, 0, 120, 235};
+		infoBoxArgs.Priority = 2;
+		infoBoxArgs.Visible = false;
+		_targetInfoBox = new UINineSlice(infoBoxArgs);
+		UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_targetInfoBox);
+
+		UITextArgs infoTextArgs;
+		infoTextArgs.FontName = "PressStart2P";
+		infoTextArgs.FontSize = 8;
+		infoTextArgs.Rect = {6, 3, 78, 12};
+		infoTextArgs.TextToDraw = "";
+		infoTextArgs.Name = "TargetInfoText";
+		infoTextArgs.NumCharsToDraw = 100;
+		infoTextArgs.Priority = 3;
+		infoTextArgs.TextColor = {255, 255, 255, 255};
+		infoTextArgs.CenteredX = true;
+		infoTextArgs.CenteredY = true;
+		infoTextArgs.WordWrap = false;
+		infoTextArgs.Visible = true;
+		infoTextArgs.DebugBox = false;
+		_targetInfoText = new UIText(infoTextArgs);
+		_targetInfoBox->AddChild(_targetInfoText);
 	}
 }
 
@@ -105,10 +138,16 @@ void BattlerUI::UpdateProgressBar(float percent) {
 
 void BattlerUI::StartTargetSelection() {
 	_targetSelectionFinger->SetVisible(true);
+	if (_targetInfoBox) _targetInfoBox->SetVisible(true);
 }
 
 void BattlerUI::CloseTargetSelection() {
 	_targetSelectionFinger->SetVisible(false);
+	if (_targetInfoBox) _targetInfoBox->SetVisible(false);
+}
+
+void BattlerUI::UpdateTargetInfo(const std::string& displayName) {
+	if (_targetInfoText) _targetInfoText->UpdateText(displayName);
 }
 
 void BattlerUI::UpdateHP(const string& hp) {

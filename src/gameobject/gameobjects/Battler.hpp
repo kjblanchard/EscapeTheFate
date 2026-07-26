@@ -31,6 +31,7 @@ class Battler : public GameObject {
    public:
 	inline unsigned int CurrentHP() { return _currentHP; }
 	inline int Def() { return _battlerData->Def; }
+	inline const std::string& Name() const { return _battlerData->Name; }
 	virtual bool IsPlayer() = 0;
 
    public:

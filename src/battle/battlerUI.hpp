@@ -2,6 +2,7 @@
 #include <string>
 #include <ui/uiAnimation.hpp>
 #include <ui/uiImage.hpp>
+#include <ui/uiNineSlice.hpp>
 #include <ui/uiProgressBar.hpp>
 #include <ui/uiText.hpp>
 namespace Etf {
@@ -39,6 +40,7 @@ class BattlerUI {
 	void StartTargetSelection();
 	void MoveFingerToBattlerLocation(Battler* battler);
 	void CloseTargetSelection();
+	void UpdateTargetInfo(const std::string& displayName);
 	void MoveCursorInMenu(unsigned int newLocation);
 	void UpdateAnimations();
 	void StartPlayerTurn(Battler* battler);
@@ -53,6 +55,8 @@ class BattlerUI {
 	UIText* _hpObject;
 	UIImage* _finger;
 	UIImage* _targetSelectionFinger;
+	UINineSlice* _targetInfoBox;
+	UIText* _targetInfoText;
 	UIAnimation* _progressBarAnim;
 	UIProgressBar* _progressBar;
 	bool _player;
