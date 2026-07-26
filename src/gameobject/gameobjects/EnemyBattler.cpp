@@ -7,9 +7,7 @@
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
-#include <ui/uiAnimation.hpp>
 #include <ui/uiProgressBar.hpp>
-#include <ui/uiText.hpp>
 #include <algorithm>
 #include <iterator>
 
@@ -21,61 +19,43 @@ static const Color kWhite = {255, 255, 255, 255};
 static const Color kBlack = {0, 0, 0, 255};
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
-	auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
-	_hpObject = static_cast<UIText*>(hpObject);
-	_hpObject->UpdateText(to_string(_currentHP));
-
 	_deathShader = ShaderCreate();
 	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
 
-	float barX = args.X + _battlerData->Location.x;
-	float barY = args.Y + _battlerData->Location.y + _battlerData->Location.h - 2;
+	float barX = X() + (SpriteWidth() / 2) - 12;
+	float barY = Y() + SpriteHeight() + 2;
 
 	UIProgressBarArgs hpBarArgs;
 	hpBarArgs.Name = "EnemyHPBar";
-	hpBarArgs.Rect = {barX, barY, 32, 6};
-	hpBarArgs.BarRect = {1, 1, 30, 4};
+	hpBarArgs.Rect = {barX, barY, 24, 4};
+	hpBarArgs.BarRect = {1, 1, 22, 2};
 	hpBarArgs.BarColor = {50, 200, 50, 255};
+	hpBarArgs.BackgroundColor = {20, 20, 20, 255};
 	hpBarArgs.Priority = 1;
 	hpBarArgs.Visible = true;
 	_hpProgressBar = new UIProgressBar(hpBarArgs);
 	_hpProgressBar->SetBarPercent(100.0f);
 	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_hpProgressBar);
 
-	UIAnimationArgs atbArgs;
-	atbArgs.Filename = "atbBar";
-	atbArgs.Name = "EnemyATBBar";
-	atbArgs.Rect = {barX, barY + 7, 32, 10};
-	atbArgs.SourceRect = {0, 0, 16, 16};
-	atbArgs.Scale = 1.0f;
-	atbArgs.DrawColor = {255, 255, 255, 255};
-	atbArgs.Priority = 0;
-	atbArgs.Visible = true;
-	_atbBarAnim = new UIAnimation(atbArgs);
-	_atbBarAnim->GetAnimator().StartAnimation("idle");
-	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_atbBarAnim);
-
 	UIProgressBarArgs pbArgs;
 	pbArgs.Name = "EnemyATBProgress";
-	pbArgs.Rect = {0, 0, 32, 10};
-	pbArgs.BarRect = {4, 3, 24, 3};
+	pbArgs.Rect = {barX, barY + 5, 24, 4};
+	pbArgs.BarRect = {1, 1, 22, 2};
 	pbArgs.BarColor = {255, 140, 0, 255};
+	pbArgs.BackgroundColor = {20, 20, 20, 255};
 	pbArgs.Priority = 1;
 	pbArgs.Visible = true;
 	_atbProgressBar = new UIProgressBar(pbArgs);
-	_atbBarAnim->AddChild(_atbProgressBar);
+	UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_atbProgressBar);
 }
 
 EnemyBattler::~EnemyBattler() {
 	sgLogDebug("Destroying enemy battler");
-	if (_hpObject) {
-		_hpObject->SetVisible(false);
-	}
-	if (_atbBarAnim) {
-		_atbBarAnim->SetVisible(false);
-	}
 	if (_hpProgressBar) {
 		_hpProgressBar->SetVisible(false);
+	}
+	if (_atbProgressBar) {
+		_atbProgressBar->SetVisible(false);
 	}
 	if (_deathShader) {
 		if (_sprite && _sprite->Shader == _deathShader) {
@@ -105,8 +85,8 @@ void EnemyBattler::updateImpl() {
 			ShaderDestroy(_deathShader);
 			_deathShader = nullptr;
 			_deathEffectPlaying = false;
-			if (_atbBarAnim) _atbBarAnim->SetVisible(false);
 			if (_hpProgressBar) _hpProgressBar->SetVisible(false);
+			if (_atbProgressBar) _atbProgressBar->SetVisible(false);
 		}
 		return;
 	}
@@ -117,7 +97,6 @@ void EnemyBattler::updateImpl() {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.0f;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(progress);
 			if (_currentATBCharge >= _maxATBCharge) {
-				if (_atbBarAnim) _atbBarAnim->GetAnimator().StartAnimation("turn");
 				_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
 				_attackDelayTimer = 0.0f;
 				_enemyState = DelayBeforeAttack;
@@ -136,7 +115,8 @@ void EnemyBattler::updateImpl() {
 		}
 		case Blinking: {
 			_blinkToggleTimer += GameState::DeltaTimeSeconds;
-			if (_blinkToggleTimer >= kBlinkToggleInterval) {
+			float threshold = _blinkDark ? kBlinkDarkTime : kBlinkLightTime;
+			if (_blinkToggleTimer >= threshold) {
 				_blinkToggleTimer = 0.0f;
 				_blinkDark = !_blinkDark;
 				_sprite->DrawColor = _blinkDark ? kBlack : kWhite;
@@ -158,7 +138,6 @@ void EnemyBattler::updateImpl() {
 				target->TakeDamage(1);
 			}
 			_currentATBCharge = 0;
-			if (_atbBarAnim) _atbBarAnim->GetAnimator().StartAnimation("idle");
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
 			_enemyState = ATBCharging;
 			break;
@@ -167,7 +146,6 @@ void EnemyBattler::updateImpl() {
 }
 
 void EnemyBattler::takeDamageImpl(int damage) {
-	_hpObject->UpdateText(to_string(_currentHP));
 	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
 	if (hpPercent < 0) hpPercent = 0;
 	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);

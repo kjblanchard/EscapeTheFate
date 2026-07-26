@@ -12,6 +12,7 @@ struct UIProgressBarArgs {
 	RectangleF Rect;
 	RectangleF BarRect;
 	Color BarColor;
+	Color BackgroundColor = {0, 0, 0, 0};
 	int Priority;
 	bool Visible, DebugBox = false, DoNotDestroy = false;
 };
@@ -26,5 +27,6 @@ class UIProgressBar : public UIObject {
 	RectangleF _barRect;
 	float _barPercent = 0;
 	Color _barColor = {255, 255, 255, 255};
+	Color _backgroundColor = {0, 0, 0, 0};
 };
 }  // namespace Etf
