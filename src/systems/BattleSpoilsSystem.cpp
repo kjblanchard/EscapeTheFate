@@ -32,7 +32,7 @@ static const float TICK_INTERVAL = 0.1f;
 
 static const float BACKDROP_REST_X = 40.0f;
 static const float BACKDROP_REST_Y = 15.0f;
-static const float BACKDROP_START_Y = -270.0f;
+static const float BACKDROP_START_X = -420.0f;
 static const float BACKDROP_W = 400.0f;
 static const float BACKDROP_H = 240.0f;
 
@@ -90,7 +90,7 @@ static void buildUI() {
 
 	UIProgressBarArgs backingArgs;
 	backingArgs.Name = "SpoilsSolidBacking";
-	backingArgs.Rect = {BACKDROP_REST_X, BACKDROP_START_Y, BACKDROP_W, BACKDROP_H};
+	backingArgs.Rect = {BACKDROP_START_X, BACKDROP_REST_Y, BACKDROP_W, BACKDROP_H};
 	backingArgs.BarRect = {0, 0, BACKDROP_W, BACKDROP_H};
 	backingArgs.BarColor = {40, 10, 60, 255};
 	backingArgs.BackgroundColor = {40, 10, 60, 255};
@@ -103,7 +103,7 @@ static void buildUI() {
 	UINineSliceArgs backdropArgs;
 	backdropArgs.Filename = "uibase";
 	backdropArgs.Name = "SpoilsBackdrop";
-	backdropArgs.Rect = {BACKDROP_REST_X, BACKDROP_START_Y, BACKDROP_W, BACKDROP_H};
+	backdropArgs.Rect = {BACKDROP_START_X, BACKDROP_REST_Y, BACKDROP_W, BACKDROP_H};
 	backdropArgs.SourceRect = {0, 0, 64, 64};
 	backdropArgs.Xoffset = 8;
 	backdropArgs.Yoffset = 8;
@@ -335,12 +335,12 @@ static void calculateDrops() {
 static void updateAnimatingIn() {
 	_animTime += GameState::DeltaTimeSeconds;
 
-	float backdropY = Engine::Tweening::GetTweenedValue(
-		BACKDROP_START_Y, BACKDROP_REST_Y,
+	float backdropX = Engine::Tweening::GetTweenedValue(
+		BACKDROP_START_X, BACKDROP_REST_X,
 		_animTime, BACKDROP_ANIM_TIME,
 		Engine::Tweening::TweenEaseTypes::QuintOut);
-	_backdrop->SetY(backdropY);
-	_solidBacking->SetY(backdropY);
+	_backdrop->SetX(backdropX);
+	_solidBacking->SetX(backdropX);
 
 	float infoX = Engine::Tweening::GetTweenedValue(
 		INFO_START_X, INFO_REST_X,
@@ -356,8 +356,8 @@ static void updateAnimatingIn() {
 
 	float longestAnim = BACKDROP_ANIM_TIME;
 	if (_animTime >= longestAnim) {
-		_backdrop->SetY(BACKDROP_REST_Y);
-		_solidBacking->SetY(BACKDROP_REST_Y);
+		_backdrop->SetX(BACKDROP_REST_X);
+		_solidBacking->SetX(BACKDROP_REST_X);
 		_infoPanel->SetX(INFO_REST_X);
 		_portraitPanel->SetX(PORTRAIT_REST_X);
 		_currentState = SpoilsState::WaitingForInput;
