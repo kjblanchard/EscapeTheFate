@@ -27,6 +27,7 @@ UIObject* gameOverPanel_ = nullptr;
 
 bool allPlayersDead() {
 	auto& battlers = BattleSystem::GetEnemyBattlers();
+	if (battlers.empty()) return false;
 	bool hasPlayer = false;
 	for (auto* b : battlers) {
 		if (!b || !b->IsPlayer()) continue;
@@ -45,13 +46,6 @@ void cacheUI() {
 	gameOverPanel_ = battlePanel->GetChildByName("GameOverPanel");
 }
 
-void cleanupBattle() {
-	BattleLocation::ClearAllBattleLocations();
-	ResetCameraFollow();
-	GameState::Battle::InBattle = false;
-	GameState::Battle::ExitingFromBattle = false;
-}
-
 }  // namespace
 
 void GameOverSystem::Update() {
@@ -62,7 +56,8 @@ void GameOverSystem::Update() {
 			if (!allPlayersDead()) return;
 			cacheUI();
 			BattleSystem::TriggerGameOver();
-			Engine::Audio::SetGlobalBGMVolume(0.0f);
+			Engine::Audio::StopBGM();
+			Engine::Audio::PlayBGM("gameover");
 			timer_ = 0.0f;
 			state_ = GameOverState::FadingOut;
 			break;
@@ -75,8 +70,8 @@ void GameOverSystem::Update() {
 			Color c = {255, 255, 255, alpha};
 			GraphicsUpdateFBOColor(&c);
 			if (timer_ >= kFadeOutDuration) {
-				Color black = {0, 0, 0, 255};
-				GraphicsUpdateFBOColor(&black);
+				Color white = {255, 255, 255, 255};
+				GraphicsUpdateFBOColor(&white);
 				if (gameOverPanel_) gameOverPanel_->SetVisible(true);
 				timer_ = 0.0f;
 				state_ = GameOverState::ShowingGameOver;
@@ -87,9 +82,11 @@ void GameOverSystem::Update() {
 			timer_ += GameState::DeltaTimeSeconds;
 			if (timer_ >= kShowDuration) {
 				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
-				cleanupBattle();
-				Color white = {255, 255, 255, 255};
-				GraphicsUpdateFBOColor(&white);
+				gameOverPanel_ = nullptr;
+				BattleLocation::ClearAllBattleLocations();
+				ResetCameraFollow();
+				GameState::Battle::InBattle = false;
+				GameState::Battle::ExitingFromBattle = false;
 				Engine::LoadScene("cloud", 0.0f, 0.5f, false);
 				state_ = GameOverState::TransitionToTitle;
 			}
@@ -97,7 +94,6 @@ void GameOverSystem::Update() {
 		}
 		case GameOverState::TransitionToTitle: {
 			state_ = GameOverState::NotActive;
-			gameOverPanel_ = nullptr;
 			break;
 		}
 	}

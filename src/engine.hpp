@@ -70,6 +70,7 @@ void PlayBGM(const std::string& name, float volume = 1.0f);
 void PlayBGMBackground(const std::string& name, float volume = 1.0f);
 void PlaySFXBuffer(const std::string& name, float volume);
 void SetGlobalBGMVolume(float volume);
+void StopBGM();
 void StopBGMBackground();
 }  // namespace Audio
    //

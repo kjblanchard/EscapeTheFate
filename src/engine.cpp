@@ -467,6 +467,12 @@ void Engine::Audio::SetGlobalBGMVolume(float volume) {
 	SetGlobalBgmVolume(volume);
 }
 
+void Engine::Audio::StopBGM() {
+	SetBgmTrack(0);
+	StopBgm();
+	currentBGM_ = "";
+}
+
 void Engine::Audio::StopBGMBackground() {
 	SetBgmTrack(1);
 	StopBgm();

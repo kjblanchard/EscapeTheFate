@@ -259,6 +259,7 @@ static void triggerStateChange() {
 		case BattleGameOver:
 			battleUI_.RootPanel->SetVisible(false);
 			_battlers.clear();
+			battleInitialized_ = false;
 			break;
 		default:
 			break;
