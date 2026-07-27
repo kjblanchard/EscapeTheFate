@@ -163,13 +163,17 @@ static void buildUI() {
 	_infoPanel->AddChild(_xpGainedText);
 
 	float itemsOffsetY = 0.0f;
-	for (size_t idx = 0; idx < _wonItems.size(); ++idx) {
+	if (!_wonItems.empty()) {
+		string itemStr = "Got: " + _wonItems[0];
+		for (size_t idx = 1; idx < _wonItems.size(); ++idx) {
+			itemStr += ", " + _wonItems[idx];
+		}
 		UITextArgs itemArgs;
 		itemArgs.FontName = "PressStart2P";
 		itemArgs.FontSize = 8;
-		itemArgs.Rect = {10, 24.0f + idx * 12.0f, INFO_W - 20, 12};
-		itemArgs.TextToDraw = "Got: " + _wonItems[idx];
-		itemArgs.Name = "SpoilsItem" + to_string(idx);
+		itemArgs.Rect = {10, 24.0f, INFO_W - 20, 12};
+		itemArgs.TextToDraw = itemStr;
+		itemArgs.Name = "SpoilsItemLine";
 		itemArgs.NumCharsToDraw = 100;
 		itemArgs.Priority = 1;
 		itemArgs.TextColor = {150, 255, 150, 255};
@@ -180,9 +184,8 @@ static void buildUI() {
 		itemArgs.DebugBox = false;
 		auto* itemText = new UIText(itemArgs);
 		_infoPanel->AddChild(itemText);
-		itemsOffsetY = (idx + 1) * 12.0f;
+		itemsOffsetY = 16.0f;
 	}
-	if (!_wonItems.empty()) itemsOffsetY += 4.0f;
 
 	auto& battlers = BattleSystem::GetEnemyBattlers();
 	_numPlayers = 0;
@@ -190,10 +193,10 @@ static void buildUI() {
 		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
 		auto* battler = battlers[i];
 		int row = _numPlayers;
-		float rowY = 28.0f + itemsOffsetY + row * 55.0f;
+		float rowY = 28.0f + itemsOffsetY + row * 45.0f;
 
 		UIObjectArgs playerContainerArgs;
-		playerContainerArgs.Rect = {0, rowY, INFO_W - 20, 50};
+		playerContainerArgs.Rect = {0, rowY, INFO_W - 20, 42};
 		playerContainerArgs.Visible = true;
 		playerContainerArgs.Name = "SpoilsPlayerContainer" + to_string(row);
 		playerContainerArgs.Priority = 1;
