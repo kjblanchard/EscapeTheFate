@@ -17,7 +17,7 @@ enum class GameOverState {
 	FadingOut,
 	ShowingGameOver,
 	FadingToTitle,
-	TransitionToTitle,
+	WaitingForSceneLoad,
 };
 
 GameOverState state_ = GameOverState::NotActive;
@@ -94,19 +94,21 @@ void GameOverSystem::Update() {
 			Color c = {255, 255, 255, alpha};
 			GraphicsUpdateFBOColor(&c);
 			if (timer_ >= kFadeToTitleDuration) {
-				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
-				gameOverPanel_ = nullptr;
 				BattleLocation::ClearAllBattleLocations();
 				ResetCameraFollow();
 				GameState::Battle::InBattle = false;
 				GameState::Battle::ExitingFromBattle = false;
 				Engine::LoadScene("cloud", 0.0f, 0.75f, false);
-				state_ = GameOverState::TransitionToTitle;
+				state_ = GameOverState::WaitingForSceneLoad;
 			}
 			break;
 		}
-		case GameOverState::TransitionToTitle: {
-			state_ = GameOverState::NotActive;
+		case GameOverState::WaitingForSceneLoad: {
+			if (Engine::CurrentSceneName() == "cloud") {
+				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
+				gameOverPanel_ = nullptr;
+				state_ = GameOverState::NotActive;
+			}
 			break;
 		}
 	}
