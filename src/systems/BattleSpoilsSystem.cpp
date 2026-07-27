@@ -287,8 +287,10 @@ static void buildUI() {
 	int portraitCount = 0;
 	for (size_t i = 0; i < battlers.size() && portraitCount < MAX_PLAYERS; ++i) {
 		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
+		string portraitFile = battlers[i]->GetBattlerData()->Portrait;
+		if (portraitFile.empty()) portraitFile = "null";
 		UIImageArgs imgArgs;
-		imgArgs.Filename = "null";
+		imgArgs.Filename = portraitFile;
 		imgArgs.Name = "SpoilsPortrait" + to_string(portraitCount);
 		imgArgs.Rect = {20, 10.0f + portraitCount * 60.0f, 64, 64};
 		imgArgs.SourceRect = {0, 0, 64, 64};
