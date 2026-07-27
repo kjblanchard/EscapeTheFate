@@ -4,6 +4,7 @@
         "name": "Attack",
         "animFile": "sword1",
         "animTag": "slash",
+        "playerAnim": "slash2",
         "sfx": "slash1",
         "baseDamage": 1,
         "friendly": false
@@ -13,6 +14,7 @@
         "name": "Cure",
         "animFile": "heal",
         "animTag": "heal2",
+        "playerAnim": "cheer2",
         "sfx": "menuSelect",
         "baseDamage": -3,
         "friendly": true

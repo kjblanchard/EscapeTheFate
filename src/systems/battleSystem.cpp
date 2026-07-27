@@ -130,6 +130,7 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().AnimationFile = jstr(currentJsonObject, "animFile");
 		abilityDatabase_.back().AnimationTag = jstr(currentJsonObject, "animTag");
 		abilityDatabase_.back().SFXName = jstr(currentJsonObject, "sfx");
+		abilityDatabase_.back().PlayerAnim = jstr(currentJsonObject, "playerAnim");
 		abilityDatabase_.back().BaseDamage = jint(currentJsonObject, "baseDamage");
 		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
 	}

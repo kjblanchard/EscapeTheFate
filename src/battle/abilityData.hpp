@@ -6,6 +6,7 @@ struct AbilityData {
 	std::string AnimationFile;
 	std::string AnimationTag;
 	std::string SFXName;
+	std::string PlayerAnim;
 	int BaseDamage = 1;
 	bool Friendly = false;
 };

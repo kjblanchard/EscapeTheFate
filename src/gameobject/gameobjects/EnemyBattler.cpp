@@ -151,6 +151,9 @@ void EnemyBattler::updateImpl() {
 			if (!players.empty()) {
 				auto target = players[0];
 				const auto& ability = BattleSystem::GetAbilityByID(0);
+				if (!ability.PlayerAnim.empty() && _animator->GetAnimationDuration(ability.PlayerAnim) > 0) {
+					_animator->PlayAnimationThenLoopSecond(ability.PlayerAnim, _battlerData->IdleAnimation);
+				}
 				target->TakeDamage(ability.BaseDamage);
 				target->PlayHitAnimation(ability);
 			}
@@ -173,6 +176,7 @@ void EnemyBattler::takeDamageImpl(int damage) {
 	if (hpPercent < 0) hpPercent = 0;
 	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
 	if (_currentHP < 1 && !_deathEffectPlaying) {
+		if (_barPanel) _barPanel->SetVisible(false);
 		Engine::Audio::PlaySFXBuffer("enemyDead", 1.0);
 		_deathEffectPlaying = true;
 		_deathEffectTime = 0.0f;

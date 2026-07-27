@@ -300,9 +300,10 @@ void PlayerBattler::handleInputTargetSelection() {
 		getAllTargets(targets);
 		if (targets.empty()) return;
 		const auto battler = targets.at(_currentTargetBattler);
-		_animator->PlayAnimationThenLoopSecond("slash2", _battlerData->IdleAnimation);
+		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
+		_animator->PlayAnimationThenLoopSecond(playerAnim, _battlerData->IdleAnimation);
 		if (battler) {
-			const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
 			if (ability.BaseDamage < 0) {
 				battler->Heal(-ability.BaseDamage);
 			} else {
