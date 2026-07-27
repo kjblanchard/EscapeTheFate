@@ -63,6 +63,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/SplashSystem.cpp
   src/systems/SceneNameSystem.cpp
   src/systems/TitleScreenSystem.cpp
+  src/systems/GameOverSystem.cpp
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp

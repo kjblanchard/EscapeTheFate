@@ -256,6 +256,10 @@ static void triggerStateChange() {
 		case BattleEnd:
 			battleEnd();
 			break;
+		case BattleGameOver:
+			battleUI_.RootPanel->SetVisible(false);
+			_battlers.clear();
+			break;
 		default:
 			break;
 	}
@@ -275,6 +279,11 @@ void BattleSystem::TriggerBattleSpoils() {
 }
 void BattleSystem::TriggerBattleEnd() {
 	nextBattleState_ = BattleEnd;
+	triggerStateChange();
+}
+
+void BattleSystem::TriggerGameOver() {
+	nextBattleState_ = BattleGameOver;
 	triggerStateChange();
 }
 void BattleSystem::TriggerBattleVictoryStart() {

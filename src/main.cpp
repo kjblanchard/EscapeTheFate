@@ -17,6 +17,7 @@
 #include <systems/BattleSpoilsSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/SceneNameSystem.hpp>
+#include <systems/GameOverSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/dialogSystem.hpp>
 using namespace Etf;
@@ -72,6 +73,9 @@ void InitializeGame() {
 		{
 			.Start = TitleScreenSystem::Start,
 			.Update = TitleScreenSystem::Update,
+		},
+		{
+			.Update = GameOverSystem::Update,
 		}};
 	Engine::RegisterSystems(systems_);
 }

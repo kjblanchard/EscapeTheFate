@@ -13,6 +13,7 @@ enum class BattleStates {
 	BattleVictory,
 	BattleSpoils,
 	BattleEnd,
+	BattleGameOver,
 };
 using enum BattleStates;
 
@@ -21,6 +22,7 @@ void TriggerBattleStart();
 void TriggerBattleVictoryStart();
 void TriggerBattleSpoils();
 void TriggerBattleEnd();
+void TriggerGameOver();
 void BattleSystemUpdate();
 void SendBattleDamage(int battlerNum, int damage);
 void InitializeBattleSystem();
