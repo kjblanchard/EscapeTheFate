@@ -29,17 +29,23 @@ static const float PORTRAIT_ANIM_TIME = 0.45f;
 static const float ACCUM_DURATION = 1.5f;
 static const float TICK_INTERVAL = 0.1f;
 
-static const float BACKDROP_REST_X = 60.0f;
-static const float BACKDROP_REST_Y = 20.0f;
-static const float BACKDROP_START_Y = -200.0f;
+static const float BACKDROP_REST_X = 40.0f;
+static const float BACKDROP_REST_Y = 15.0f;
+static const float BACKDROP_START_Y = -270.0f;
+static const float BACKDROP_W = 400.0f;
+static const float BACKDROP_H = 240.0f;
 
-static const float INFO_REST_X = 80.0f;
-static const float INFO_REST_Y = 40.0f;
-static const float INFO_START_X = 480.0f;
+static const float INFO_REST_X = 10.0f;
+static const float INFO_REST_Y = 30.0f;
+static const float INFO_START_X = 440.0f;
+static const float INFO_W = 260.0f;
+static const float INFO_H = 195.0f;
 
-static const float PORTRAIT_REST_X = 330.0f;
-static const float PORTRAIT_REST_Y = 40.0f;
-static const float PORTRAIT_START_X = -160.0f;
+static const float PORTRAIT_REST_X = 280.0f;
+static const float PORTRAIT_REST_Y = 30.0f;
+static const float PORTRAIT_START_X = -130.0f;
+static const float PORTRAIT_W = 110.0f;
+static const float PORTRAIT_H = 195.0f;
 
 static const int MAX_PLAYERS = 3;
 
@@ -50,6 +56,7 @@ static float _accumTime = 0.0f;
 static float _tickTimer = 0.0f;
 static int _xpGained = 0;
 
+static UIObject* _spoilsRoot = nullptr;
 static UINineSlice* _backdrop = nullptr;
 static UINineSlice* _infoPanel = nullptr;
 static UINineSlice* _portraitPanel = nullptr;
@@ -69,42 +76,36 @@ static int _numPlayers = 0;
 static void buildUI() {
 	auto root = UI::GetRootUIObject();
 
+	UIObjectArgs rootArgs;
+	rootArgs.Rect = {0, 0, 480, 270};
+	rootArgs.Visible = true;
+	rootArgs.Name = "SpoilsRoot";
+	rootArgs.Priority = 10;
+	_spoilsRoot = new UIObject(rootArgs);
+	root->AddChild(_spoilsRoot);
+
 	UINineSliceArgs backdropArgs;
 	backdropArgs.Filename = "uibase";
 	backdropArgs.Name = "SpoilsBackdrop";
-	backdropArgs.Rect = {BACKDROP_REST_X, BACKDROP_START_Y, 360, 200};
+	backdropArgs.Rect = {BACKDROP_REST_X, BACKDROP_START_Y, BACKDROP_W, BACKDROP_H};
 	backdropArgs.SourceRect = {0, 0, 64, 64};
 	backdropArgs.Xoffset = 8;
 	backdropArgs.Yoffset = 8;
 	backdropArgs.Scale = 1.0f;
-	backdropArgs.DrawColor = {20, 0, 40, 230};
-	backdropArgs.Priority = 10;
+	backdropArgs.DrawColor = {20, 0, 40, 255};
+	backdropArgs.Priority = 0;
 	backdropArgs.Visible = true;
 	_backdrop = new UINineSlice(backdropArgs);
-	root->AddChild(_backdrop);
-
-	UINineSliceArgs infoArgs;
-	infoArgs.Filename = "uibase";
-	infoArgs.Name = "SpoilsInfoPanel";
-	infoArgs.Rect = {INFO_START_X, INFO_REST_Y, 240, 160};
-	infoArgs.SourceRect = {0, 0, 64, 64};
-	infoArgs.Xoffset = 8;
-	infoArgs.Yoffset = 8;
-	infoArgs.Scale = 1.0f;
-	infoArgs.DrawColor = {80, 0, 120, 235};
-	infoArgs.Priority = 11;
-	infoArgs.Visible = true;
-	_infoPanel = new UINineSlice(infoArgs);
-	root->AddChild(_infoPanel);
+	_spoilsRoot->AddChild(_backdrop);
 
 	UITextArgs titleArgs;
 	titleArgs.FontName = "PressStart2P";
 	titleArgs.FontSize = 8;
-	titleArgs.Rect = {10, 8, 220, 16};
+	titleArgs.Rect = {10, 8, BACKDROP_W - 20, 16};
 	titleArgs.TextToDraw = "BATTLE SPOILS";
 	titleArgs.Name = "SpoilsTitleText";
 	titleArgs.NumCharsToDraw = 100;
-	titleArgs.Priority = 12;
+	titleArgs.Priority = 1;
 	titleArgs.TextColor = {255, 255, 255, 255};
 	titleArgs.CenteredX = true;
 	titleArgs.CenteredY = false;
@@ -112,7 +113,21 @@ static void buildUI() {
 	titleArgs.Visible = true;
 	titleArgs.DebugBox = false;
 	_titleText = new UIText(titleArgs);
-	_infoPanel->AddChild(_titleText);
+	_backdrop->AddChild(_titleText);
+
+	UINineSliceArgs infoArgs;
+	infoArgs.Filename = "uibase";
+	infoArgs.Name = "SpoilsInfoPanel";
+	infoArgs.Rect = {INFO_START_X, INFO_REST_Y, INFO_W, INFO_H};
+	infoArgs.SourceRect = {0, 0, 64, 64};
+	infoArgs.Xoffset = 8;
+	infoArgs.Yoffset = 8;
+	infoArgs.Scale = 1.0f;
+	infoArgs.DrawColor = {80, 0, 120, 200};
+	infoArgs.Priority = 1;
+	infoArgs.Visible = true;
+	_infoPanel = new UINineSlice(infoArgs);
+	_backdrop->AddChild(_infoPanel);
 
 	auto& battlers = BattleSystem::GetEnemyBattlers();
 	_numPlayers = 0;
@@ -120,16 +135,24 @@ static void buildUI() {
 		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
 		auto* battler = battlers[i];
 		int row = _numPlayers;
-		float rowY = 30.0f + row * 40.0f;
+		float rowY = 10.0f + row * 55.0f;
+
+		UIObjectArgs playerContainerArgs;
+		playerContainerArgs.Rect = {0, rowY, INFO_W - 20, 50};
+		playerContainerArgs.Visible = true;
+		playerContainerArgs.Name = "SpoilsPlayerContainer" + to_string(row);
+		playerContainerArgs.Priority = 1;
+		auto* playerContainer = new UIObject(playerContainerArgs);
+		_infoPanel->AddChild(playerContainer);
 
 		UITextArgs nameArgs;
 		nameArgs.FontName = "PressStart2P";
 		nameArgs.FontSize = 8;
-		nameArgs.Rect = {10, rowY, 100, 12};
+		nameArgs.Rect = {10, 0, 200, 12};
 		nameArgs.TextToDraw = battler->Name();
 		nameArgs.Name = "SpoilsPlayerName" + to_string(row);
 		nameArgs.NumCharsToDraw = 100;
-		nameArgs.Priority = 12;
+		nameArgs.Priority = 1;
 		nameArgs.TextColor = {255, 255, 255, 255};
 		nameArgs.CenteredX = false;
 		nameArgs.CenteredY = false;
@@ -137,16 +160,16 @@ static void buildUI() {
 		nameArgs.Visible = true;
 		nameArgs.DebugBox = false;
 		_playerRows[row].nameText = new UIText(nameArgs);
-		_infoPanel->AddChild(_playerRows[row].nameText);
+		playerContainer->AddChild(_playerRows[row].nameText);
 
 		UITextArgs xpArgs;
 		xpArgs.FontName = "PressStart2P";
 		xpArgs.FontSize = 8;
-		xpArgs.Rect = {10, rowY + 14, 200, 12};
+		xpArgs.Rect = {10, 14, 220, 12};
 		xpArgs.TextToDraw = "XP: 0 / " + to_string(battler->GetBattlerData()->XPToNextLevel);
 		xpArgs.Name = "SpoilsXPText" + to_string(row);
 		xpArgs.NumCharsToDraw = 100;
-		xpArgs.Priority = 12;
+		xpArgs.Priority = 1;
 		xpArgs.TextColor = {200, 200, 255, 255};
 		xpArgs.CenteredX = false;
 		xpArgs.CenteredY = false;
@@ -154,18 +177,18 @@ static void buildUI() {
 		xpArgs.Visible = true;
 		xpArgs.DebugBox = false;
 		_playerRows[row].xpText = new UIText(xpArgs);
-		_infoPanel->AddChild(_playerRows[row].xpText);
+		playerContainer->AddChild(_playerRows[row].xpText);
 
 		UIProgressBarArgs barArgs;
 		barArgs.Name = "SpoilsXPBar" + to_string(row);
-		barArgs.Rect = {10, rowY + 28, 200, 6};
-		barArgs.BarRect = {0, 0, 200, 6};
+		barArgs.Rect = {10, 30, 220, 8};
+		barArgs.BarRect = {0, 0, 220, 8};
 		barArgs.BarColor = {100, 200, 255, 255};
 		barArgs.BackgroundColor = {30, 30, 60, 200};
-		barArgs.Priority = 12;
+		barArgs.Priority = 1;
 		barArgs.Visible = true;
 		_playerRows[row].xpBar = new UIProgressBar(barArgs);
-		_infoPanel->AddChild(_playerRows[row].xpBar);
+		playerContainer->AddChild(_playerRows[row].xpBar);
 
 		_playerRows[row].xpToNext = battler->GetBattlerData()->XPToNextLevel;
 		_playerRows[row].startXP = battler->GetBattlerData()->CurrentXP;
@@ -175,11 +198,11 @@ static void buildUI() {
 	UITextArgs promptArgs;
 	promptArgs.FontName = "PressStart2P";
 	promptArgs.FontSize = 8;
-	promptArgs.Rect = {10, 140, 220, 12};
+	promptArgs.Rect = {10, INFO_H - 20, INFO_W - 20, 12};
 	promptArgs.TextToDraw = "Press A to collect";
 	promptArgs.Name = "SpoilsPromptText";
 	promptArgs.NumCharsToDraw = 100;
-	promptArgs.Priority = 12;
+	promptArgs.Priority = 1;
 	promptArgs.TextColor = {200, 255, 200, 255};
 	promptArgs.CenteredX = true;
 	promptArgs.CenteredY = false;
@@ -192,16 +215,16 @@ static void buildUI() {
 	UINineSliceArgs portraitArgs;
 	portraitArgs.Filename = "uibase";
 	portraitArgs.Name = "SpoilsPortraitPanel";
-	portraitArgs.Rect = {PORTRAIT_START_X, PORTRAIT_REST_Y, 100, 160};
+	portraitArgs.Rect = {PORTRAIT_START_X, PORTRAIT_REST_Y, PORTRAIT_W, PORTRAIT_H};
 	portraitArgs.SourceRect = {0, 0, 64, 64};
 	portraitArgs.Xoffset = 8;
 	portraitArgs.Yoffset = 8;
 	portraitArgs.Scale = 1.0f;
 	portraitArgs.DrawColor = {60, 0, 100, 200};
-	portraitArgs.Priority = 11;
+	portraitArgs.Priority = 1;
 	portraitArgs.Visible = true;
 	_portraitPanel = new UINineSlice(portraitArgs);
-	root->AddChild(_portraitPanel);
+	_backdrop->AddChild(_portraitPanel);
 
 	int portraitCount = 0;
 	for (size_t i = 0; i < battlers.size() && portraitCount < MAX_PLAYERS; ++i) {
@@ -209,11 +232,11 @@ static void buildUI() {
 		UIImageArgs imgArgs;
 		imgArgs.Filename = "null";
 		imgArgs.Name = "SpoilsPortrait" + to_string(portraitCount);
-		imgArgs.Rect = {18, 10.0f + portraitCount * 50.0f, 64, 64};
+		imgArgs.Rect = {20, 10.0f + portraitCount * 60.0f, 64, 64};
 		imgArgs.SourceRect = {0, 0, 64, 64};
 		imgArgs.Scale = 1.0f;
 		imgArgs.DrawColor = {255, 255, 255, 255};
-		imgArgs.Priority = 12;
+		imgArgs.Priority = 1;
 		imgArgs.Visible = true;
 		auto* img = new UIImage(imgArgs);
 		_portraitPanel->AddChild(img);
@@ -253,7 +276,8 @@ static void updateAnimatingIn() {
 		Engine::Tweening::TweenEaseTypes::QuintOut);
 	_portraitPanel->SetX(portraitX);
 
-	if (_animTime >= BACKDROP_ANIM_TIME) {
+	float longestAnim = BACKDROP_ANIM_TIME;
+	if (_animTime >= longestAnim) {
 		_backdrop->SetY(BACKDROP_REST_Y);
 		_infoPanel->SetX(INFO_REST_X);
 		_portraitPanel->SetX(PORTRAIT_REST_X);
