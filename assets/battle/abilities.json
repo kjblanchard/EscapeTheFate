@@ -15,7 +15,7 @@
         "animFile": "heal",
         "animTag": "heal2",
         "playerAnim": "cheer2",
-        "sfx": "menuSelect",
+        "sfx": "heal1",
         "baseDamage": -3,
         "friendly": true
     }

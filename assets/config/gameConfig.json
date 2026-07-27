@@ -26,7 +26,7 @@
                 "UIName": "",
                 "BGMName": "forest1",
                 "BGMVolume": 1.0,
-                "DisplayName": "South Fields"
+                "DisplayName": "Shotka Trail"
             },
             {
                 "MapName": "debugTownHome",
@@ -54,7 +54,7 @@
                 "UIName": "cloudU",
                 "BGMName": "town1",
                 "BGMVolume": 1.0,
-                "DisplayName": "Cloud Kingdom"
+                "DisplayName": ""
             }
         ]
     }
