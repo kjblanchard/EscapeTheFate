@@ -14,7 +14,7 @@
         "xpToNextLevel": 100,
         "itemDrops": [],
         "sprite": "player1Battler",
-        "portrait": "kevinPortrait",
+        "portrait": "portrait1",
         "rect": { "x": -5, "y": -10, "w": 48, "h": 48 },
         "hpBarOffsetX": 0,
         "hpBarOffsetY": 0,
