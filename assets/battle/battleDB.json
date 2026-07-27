@@ -13,8 +13,8 @@
         "rect": { "x": -5, "y": -10, "w": 48, "h": 48 },
         "hpBarOffsetX": 0,
         "hpBarOffsetY": 0,
-        "animOffsetX": 8,
-        "animOffsetY": 8,
+        "animOffsetX": 0,
+        "animOffsetY": 0,
         "idle": "idle1"
     },
     {
@@ -29,7 +29,7 @@
         "pow": 100,
         "sprite": "blackBird",
         "rect": { "x": -5, "y": -15, "w": 61, "h": 57 },
-        "hpBarOffsetX": 0,
+        "hpBarOffsetX": -5,
         "hpBarOffsetY": -12,
         "animOffsetX": 14,
         "animOffsetY": 12,
