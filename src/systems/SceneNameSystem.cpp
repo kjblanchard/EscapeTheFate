@@ -6,7 +6,6 @@
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiText.hpp>
 
-
 using namespace Etf;
 using namespace std;
 
@@ -20,7 +19,7 @@ enum class SceneNameState {
 static const float Slide_Time = 0.3f;
 static const float Hold_Duration = 2.0f;
 static const float Panel_Rest_Y = 4.0f;
-static const float Panel_Hidden_Y = -30.0f;
+static const float Panel_Hidden_Y = -60.0f;
 
 static SceneNameState _currentState = SceneNameState::Hidden;
 static UIObject* _panel = nullptr;
@@ -33,7 +32,7 @@ void SceneNameSystem::Start() {
 	UINineSliceArgs nsArgs;
 	nsArgs.Name = "SceneNameBanner";
 	nsArgs.Filename = "uibase";
-	nsArgs.Rect = {170.0f, Panel_Hidden_Y, 140.0f, 20.0f};
+	nsArgs.Rect = {155.0f, Panel_Hidden_Y, 170.0f, 40.0f};
 	nsArgs.SourceRect = {0, 0, 64, 64};
 	nsArgs.DrawColor = {80, 0, 120, 235};
 	nsArgs.Xoffset = 8;
@@ -42,14 +41,13 @@ void SceneNameSystem::Start() {
 	nsArgs.Priority = 20;
 	nsArgs.Visible = true;
 	nsArgs.DebugBox = false;
-
 	auto* banner = new UINineSlice(nsArgs);
 	banner->SetDoNotDestroy(true);
 
 	UITextArgs textArgs;
 	textArgs.FontName = "PressStart2P";
 	textArgs.FontSize = 8;
-	textArgs.Rect = {8.0f, 2.0f, 124.0f, 16.0f};
+	textArgs.Rect = {6.0f, 6.0f, 156.0f, 28.0f};
 	textArgs.TextToDraw = "";
 	textArgs.Name = "SceneNameText";
 	textArgs.NumCharsToDraw = 64;
@@ -73,7 +71,7 @@ void SceneNameSystem::Start() {
 
 void SceneNameSystem::Update() {
 	auto& currentScene = Engine::CurrentSceneName();
-	if (currentScene.empty() || currentScene == "cloud") return;
+	if (currentScene.empty() || currentScene == "cloud" || GameState::Battle::InBattle) return;
 
 	if (currentScene != _lastSceneName) {
 		_lastSceneName = currentScene;
@@ -130,4 +128,9 @@ void SceneNameSystem::Update() {
 			break;
 		}
 	}
+}
+
+void SceneNameSystem::End() {
+	_panel->SetY(Panel_Hidden_Y);
+	_currentState = SceneNameState::Hidden;
 }

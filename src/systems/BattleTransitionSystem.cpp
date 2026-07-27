@@ -9,9 +9,10 @@
 #include <string>
 #include <systems/BattleTransitionSystem.hpp>
 
+#include "systems/SceneNameSystem.hpp"
+
 using namespace Etf;
 using namespace std;
-
 
 namespace {
 constexpr float transitionDuration_ = 0.5f;
@@ -54,6 +55,7 @@ void BattleTransitionSystem::TriggerTransition(const string& battleScene) {
 	ShaderSetUniformFloat(activeShader_, "time", 0.0f, false);
 	ShaderSetUniformVector2f(activeShader_, "resolution", resX_, resY_, false);
 	startBattleBGM(battleScene);
+	SceneNameSystem::End();
 }
 
 void BattleTransitionSystem::Update() {

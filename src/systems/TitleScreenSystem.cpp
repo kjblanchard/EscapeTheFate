@@ -6,6 +6,8 @@
 #include <ui/uiImage.hpp>
 #include <ui/uiObject.hpp>
 
+#include "gameState.hpp"
+
 using namespace Etf;
 
 namespace {
@@ -38,38 +40,37 @@ void TitleScreenSystem::Start() {
 
 void TitleScreenSystem::Update() {
 	if (Engine::CurrentSceneName() != "cloud") return;
-
 	if (!_initialized) {
 		auto root = UI::GetRootUIObject();
 		if (!root->GetChildByName("CloudPanel")) return;
-
 		_menuItems[0] = root->GetChildByName("NewGameText");
 		_menuItems[1] = root->GetChildByName("LoadText");
 		_menuItems[2] = root->GetChildByName("OptionsText");
 		_finger = static_cast<UIImage*>(root->GetChildByName("MenuFinger"));
-
 		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_finger) return;
-
 		_initialized = true;
 		positionFinger();
 		return;
 	}
-
+	if (GameState::CurrentFadeState != (int)LoadingScreenFadeTypes::NotFading) return;
+	_finger->SetVisible(true);
 	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
-
 	if (player->IsButtonJustPressed(ControllerButtons::Up)) {
 		_selectedIndex = (_selectedIndex - 1 + kNumMenuItems) % kNumMenuItems;
+		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 		positionFinger();
 	}
 
 	if (player->IsButtonJustPressed(ControllerButtons::Down)) {
 		_selectedIndex = (_selectedIndex + 1) % kNumMenuItems;
+		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 		positionFinger();
 	}
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		if (kMenuItemEnabled[_selectedIndex]) {
-			Engine::LoadScene("debugTown");
+			Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
 		}
 	}
 }

@@ -91,7 +91,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		UINineSliceArgs infoBoxArgs;
 		infoBoxArgs.Filename = "uibase";
 		infoBoxArgs.Name = "TargetInfoBox";
-		infoBoxArgs.Rect = {5, 5, 90, 18};
+		infoBoxArgs.Rect = {5, 5, 90, 32};
 		infoBoxArgs.SourceRect = {0, 0, 64, 64};
 		infoBoxArgs.Xoffset = 8;
 		infoBoxArgs.Yoffset = 8;
@@ -105,7 +105,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		UITextArgs infoTextArgs;
 		infoTextArgs.FontName = "PressStart2P";
 		infoTextArgs.FontSize = 8;
-		infoTextArgs.Rect = {6, 3, 78, 12};
+		infoTextArgs.Rect = {6, 6, 78, 20};
 		infoTextArgs.TextToDraw = "";
 		infoTextArgs.Name = "TargetInfoText";
 		infoTextArgs.NumCharsToDraw = 100;
