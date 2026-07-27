@@ -1,5 +1,6 @@
 #include <Supergoon/Input/keyboard.h>
 
+#include <cstdlib>
 #include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
@@ -57,10 +58,12 @@ static float _tickTimer = 0.0f;
 static int _xpGained = 0;
 
 static UIObject* _spoilsRoot = nullptr;
+static UIProgressBar* _solidBacking = nullptr;
 static UINineSlice* _backdrop = nullptr;
 static UINineSlice* _infoPanel = nullptr;
 static UINineSlice* _portraitPanel = nullptr;
 static UIText* _titleText = nullptr;
+static UIText* _xpGainedText = nullptr;
 static UIText* _promptText = nullptr;
 
 struct PlayerSpoilsRow {
@@ -72,6 +75,7 @@ struct PlayerSpoilsRow {
 };
 static PlayerSpoilsRow _playerRows[MAX_PLAYERS];
 static int _numPlayers = 0;
+static vector<string> _wonItems;
 
 static void buildUI() {
 	auto root = UI::GetRootUIObject();
@@ -84,6 +88,18 @@ static void buildUI() {
 	_spoilsRoot = new UIObject(rootArgs);
 	root->AddChild(_spoilsRoot);
 
+	UIProgressBarArgs backingArgs;
+	backingArgs.Name = "SpoilsSolidBacking";
+	backingArgs.Rect = {BACKDROP_REST_X, BACKDROP_START_Y, BACKDROP_W, BACKDROP_H};
+	backingArgs.BarRect = {0, 0, BACKDROP_W, BACKDROP_H};
+	backingArgs.BarColor = {40, 10, 60, 255};
+	backingArgs.BackgroundColor = {40, 10, 60, 255};
+	backingArgs.Priority = 0;
+	backingArgs.Visible = true;
+	_solidBacking = new UIProgressBar(backingArgs);
+	_solidBacking->SetBarPercent(100.0f);
+	_spoilsRoot->AddChild(_solidBacking);
+
 	UINineSliceArgs backdropArgs;
 	backdropArgs.Filename = "uibase";
 	backdropArgs.Name = "SpoilsBackdrop";
@@ -92,8 +108,8 @@ static void buildUI() {
 	backdropArgs.Xoffset = 8;
 	backdropArgs.Yoffset = 8;
 	backdropArgs.Scale = 1.0f;
-	backdropArgs.DrawColor = {20, 0, 40, 255};
-	backdropArgs.Priority = 0;
+	backdropArgs.DrawColor = {40, 10, 60, 255};
+	backdropArgs.Priority = 1;
 	backdropArgs.Visible = true;
 	_backdrop = new UINineSlice(backdropArgs);
 	_spoilsRoot->AddChild(_backdrop);
@@ -123,11 +139,50 @@ static void buildUI() {
 	infoArgs.Xoffset = 8;
 	infoArgs.Yoffset = 8;
 	infoArgs.Scale = 1.0f;
-	infoArgs.DrawColor = {80, 0, 120, 200};
+	infoArgs.DrawColor = {80, 0, 120, 255};
 	infoArgs.Priority = 1;
 	infoArgs.Visible = true;
 	_infoPanel = new UINineSlice(infoArgs);
 	_backdrop->AddChild(_infoPanel);
+
+	UITextArgs xpGainedArgs;
+	xpGainedArgs.FontName = "PressStart2P";
+	xpGainedArgs.FontSize = 8;
+	xpGainedArgs.Rect = {10, 10, INFO_W - 20, 12};
+	xpGainedArgs.TextToDraw = "EXP Gained: " + to_string(_xpGained);
+	xpGainedArgs.Name = "SpoilsXPGainedText";
+	xpGainedArgs.NumCharsToDraw = 100;
+	xpGainedArgs.Priority = 1;
+	xpGainedArgs.TextColor = {255, 220, 100, 255};
+	xpGainedArgs.CenteredX = false;
+	xpGainedArgs.CenteredY = false;
+	xpGainedArgs.WordWrap = false;
+	xpGainedArgs.Visible = true;
+	xpGainedArgs.DebugBox = false;
+	_xpGainedText = new UIText(xpGainedArgs);
+	_infoPanel->AddChild(_xpGainedText);
+
+	float itemsOffsetY = 0.0f;
+	for (size_t idx = 0; idx < _wonItems.size(); ++idx) {
+		UITextArgs itemArgs;
+		itemArgs.FontName = "PressStart2P";
+		itemArgs.FontSize = 8;
+		itemArgs.Rect = {10, 24.0f + idx * 12.0f, INFO_W - 20, 12};
+		itemArgs.TextToDraw = "Got: " + _wonItems[idx];
+		itemArgs.Name = "SpoilsItem" + to_string(idx);
+		itemArgs.NumCharsToDraw = 100;
+		itemArgs.Priority = 1;
+		itemArgs.TextColor = {150, 255, 150, 255};
+		itemArgs.CenteredX = false;
+		itemArgs.CenteredY = false;
+		itemArgs.WordWrap = false;
+		itemArgs.Visible = true;
+		itemArgs.DebugBox = false;
+		auto* itemText = new UIText(itemArgs);
+		_infoPanel->AddChild(itemText);
+		itemsOffsetY = (idx + 1) * 12.0f;
+	}
+	if (!_wonItems.empty()) itemsOffsetY += 4.0f;
 
 	auto& battlers = BattleSystem::GetEnemyBattlers();
 	_numPlayers = 0;
@@ -135,7 +190,7 @@ static void buildUI() {
 		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
 		auto* battler = battlers[i];
 		int row = _numPlayers;
-		float rowY = 10.0f + row * 55.0f;
+		float rowY = 28.0f + itemsOffsetY + row * 55.0f;
 
 		UIObjectArgs playerContainerArgs;
 		playerContainerArgs.Rect = {0, rowY, INFO_W - 20, 50};
@@ -184,7 +239,7 @@ static void buildUI() {
 		barArgs.Rect = {10, 30, 220, 8};
 		barArgs.BarRect = {0, 0, 220, 8};
 		barArgs.BarColor = {100, 200, 255, 255};
-		barArgs.BackgroundColor = {30, 30, 60, 200};
+		barArgs.BackgroundColor = {30, 30, 60, 255};
 		barArgs.Priority = 1;
 		barArgs.Visible = true;
 		_playerRows[row].xpBar = new UIProgressBar(barArgs);
@@ -220,7 +275,7 @@ static void buildUI() {
 	portraitArgs.Xoffset = 8;
 	portraitArgs.Yoffset = 8;
 	portraitArgs.Scale = 1.0f;
-	portraitArgs.DrawColor = {60, 0, 100, 200};
+	portraitArgs.DrawColor = {60, 0, 100, 255};
 	portraitArgs.Priority = 1;
 	portraitArgs.Visible = true;
 	_portraitPanel = new UINineSlice(portraitArgs);
@@ -255,6 +310,21 @@ static void calculateXP() {
 	}
 }
 
+static void calculateDrops() {
+	_wonItems.clear();
+	auto& battlers = BattleSystem::GetEnemyBattlers();
+	for (size_t i = 0; i < battlers.size(); ++i) {
+		if (!battlers[i] || battlers[i]->IsPlayer()) continue;
+		if (battlers[i]->CurrentHP() != 0) continue;
+		for (auto& drop : battlers[i]->GetBattlerData()->ItemDrops) {
+			int roll = rand() % 100;
+			if (roll < drop.DropPercent) {
+				_wonItems.push_back(drop.Name);
+			}
+		}
+	}
+}
+
 static void updateAnimatingIn() {
 	_animTime += GameState::DeltaTimeSeconds;
 
@@ -263,6 +333,7 @@ static void updateAnimatingIn() {
 		_animTime, BACKDROP_ANIM_TIME,
 		Engine::Tweening::TweenEaseTypes::QuintOut);
 	_backdrop->SetY(backdropY);
+	_solidBacking->SetY(backdropY);
 
 	float infoX = Engine::Tweening::GetTweenedValue(
 		INFO_START_X, INFO_REST_X,
@@ -279,6 +350,7 @@ static void updateAnimatingIn() {
 	float longestAnim = BACKDROP_ANIM_TIME;
 	if (_animTime >= longestAnim) {
 		_backdrop->SetY(BACKDROP_REST_Y);
+		_solidBacking->SetY(BACKDROP_REST_Y);
 		_infoPanel->SetX(INFO_REST_X);
 		_portraitPanel->SetX(PORTRAIT_REST_X);
 		_currentState = SpoilsState::WaitingForInput;
@@ -302,6 +374,13 @@ static void updateAccumulating() {
 		t, ACCUM_DURATION,
 		Engine::Tweening::TweenEaseTypes::Linear);
 
+	int remaining = _xpGained - displayed;
+	if (remaining > 0) {
+		_xpGainedText->UpdateText("EXP Gained: " + to_string(remaining));
+	} else {
+		_xpGainedText->SetVisible(false);
+	}
+
 	for (int i = 0; i < _numPlayers; ++i) {
 		int totalXP = _playerRows[i].startXP + displayed;
 		int xpToNext = _playerRows[i].xpToNext;
@@ -314,12 +393,14 @@ static void updateAccumulating() {
 
 	if (_accumTime >= ACCUM_DURATION) {
 		_currentState = SpoilsState::Done;
+		_xpGainedText->SetVisible(false);
 		_promptText->UpdateText("Press A to continue");
 	}
 }
 
 static void skipAccumulation() {
 	_accumTime = ACCUM_DURATION;
+	_xpGainedText->SetVisible(false);
 	for (int i = 0; i < _numPlayers; ++i) {
 		int totalXP = _playerRows[i].startXP + _xpGained;
 		int xpToNext = _playerRows[i].xpToNext;
@@ -340,6 +421,7 @@ void BattleSpoilsSystem::TriggerBattleSpoils() {
 	_tickTimer = 0.0f;
 	_currentState = SpoilsState::AnimatingIn;
 	calculateXP();
+	calculateDrops();
 	buildUI();
 }
 

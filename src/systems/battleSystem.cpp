@@ -114,6 +114,18 @@ static void loadBattleDB() {
 		battlerDatabase_.back().XPReward = jint(currentJsonObject, "xpReward");
 		battlerDatabase_.back().CurrentXP = jint(currentJsonObject, "currentXP");
 		battlerDatabase_.back().XPToNextLevel = jint(currentJsonObject, "xpToNextLevel");
+		auto itemDropsArray = jobj(currentJsonObject, "itemDrops");
+		if (itemDropsArray) {
+			auto numDrops = jGetObjectArrayLength(itemDropsArray);
+			for (auto d = 0; d < numDrops; ++d) {
+				auto dropObj = jGetObjectInObjectWithIndex(itemDropsArray, d);
+				if (!dropObj) continue;
+				ItemDrop drop;
+				drop.Name = jstr(dropObj, "name");
+				drop.DropPercent = jint(dropObj, "percent");
+				battlerDatabase_.back().ItemDrops.push_back(std::move(drop));
+			}
+		}
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);

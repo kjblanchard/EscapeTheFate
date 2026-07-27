@@ -1,7 +1,14 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <Supergoon/Primitives/rectangle.h>
 namespace Etf {
+
+struct ItemDrop {
+	std::string Name;
+	int DropPercent = 0;
+};
+
 struct BattlerData {
 	std::string Name, Sprite, IdleAnimation;
 	int HP, Str, Mag, Def, MDef, Spd, Pow;
@@ -10,6 +17,7 @@ struct BattlerData {
 	int XPReward = 0;
 	int CurrentXP = 0;
 	int XPToNextLevel = 100;
+	std::vector<ItemDrop> ItemDrops;
 	RectangleF Location;
 };
 
