@@ -36,6 +36,7 @@ class Battler : public GameObject {
 	inline unsigned int CurrentHP() { return _currentHP; }
 	inline int Def() { return _battlerData->Def; }
 	inline const std::string& Name() const { return _battlerData->Name; }
+	inline BattlerData* GetBattlerData() const { return _battlerData; }
 	virtual bool IsPlayer() = 0;
 	void PlayHitAnimation(const AbilityData& ability);
 

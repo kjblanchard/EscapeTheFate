@@ -15,6 +15,7 @@
 #include <gameobject/gameobjects/BattleLocation.hpp>
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
+#include <systems/BattleSpoilsSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
 #include <vector>
@@ -110,6 +111,9 @@ static void loadBattleDB() {
 		battlerDatabase_.back().HpBarOffsetY = jint(currentJsonObject, "hpBarOffsetY");
 		battlerDatabase_.back().AnimOffsetX = jint(currentJsonObject, "animOffsetX");
 		battlerDatabase_.back().AnimOffsetY = jint(currentJsonObject, "animOffsetY");
+		battlerDatabase_.back().XPReward = jint(currentJsonObject, "xpReward");
+		battlerDatabase_.back().CurrentXP = jint(currentJsonObject, "currentXP");
+		battlerDatabase_.back().XPToNextLevel = jint(currentJsonObject, "xpToNextLevel");
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
@@ -227,6 +231,10 @@ static void triggerStateChange() {
 		case BattleVictory:
 			battleVictory();
 			break;
+		case BattleSpoils:
+			battleUI_.VictoryPanel->SetVisible(false);
+			BattleSpoilsSystem::TriggerBattleSpoils();
+			break;
 		case BattleEnd:
 			battleEnd();
 			break;
@@ -242,6 +250,10 @@ void BattleSystem::TriggerBattleStart() {
 		nextBattleState_ = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
 	}
+}
+void BattleSystem::TriggerBattleSpoils() {
+	nextBattleState_ = BattleSpoils;
+	triggerStateChange();
 }
 void BattleSystem::TriggerBattleEnd() {
 	nextBattleState_ = BattleEnd;
@@ -264,6 +276,11 @@ void BattleSystem::BattleSystemUpdate() {
 			break;
 		case Battle:
 			BattleUpdate();
+			break;
+		case BattleSpoils:
+			if (BattleSpoilsSystem::IsBattleSpoilsDone()) {
+				nextBattleState_ = BattleEnd;
+			}
 			break;
 		default:
 			break;

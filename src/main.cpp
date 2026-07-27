@@ -14,6 +14,7 @@
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
+#include <systems/BattleSpoilsSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/SceneNameSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
@@ -49,6 +50,9 @@ void InitializeGame() {
 		},
 		{
 			.Update = BattleSystem::BattleSystemUpdate,
+		},
+		{
+			.Update = BattleSpoilsSystem::Update,
 		},
 		{
 			.Start = BattleZoneSystem::Start,

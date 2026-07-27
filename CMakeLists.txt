@@ -55,6 +55,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
+  src/systems/BattleSpoilsSystem.cpp
   src/systems/PlayerControllerSystem.cpp
   src/systems/GameObjectSystem.cpp
   src/systems/BattleZoneSystem.cpp

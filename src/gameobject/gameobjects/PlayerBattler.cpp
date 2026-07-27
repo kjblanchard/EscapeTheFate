@@ -349,8 +349,11 @@ void PlayerBattler::handleInput() {
 			break;
 		case BattlerStates::BattleEndIdle:
 			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
-				handleStateChange(BattlerStates::BattleEnd);
+				handleStateChange(BattlerStates::BattleSpoils);
+				BattleSystem::TriggerBattleSpoils();
 			}
+			break;
+		case BattlerStates::BattleSpoils:
 			break;
 		default:
 			break;

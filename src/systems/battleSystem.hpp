@@ -11,6 +11,7 @@ enum class BattleStates {
 	BattleStartTriggered,
 	Battle,
 	BattleVictory,
+	BattleSpoils,
 	BattleEnd,
 };
 using enum BattleStates;
@@ -18,6 +19,7 @@ using enum BattleStates;
 namespace BattleSystem {
 void TriggerBattleStart();
 void TriggerBattleVictoryStart();
+void TriggerBattleSpoils();
 void TriggerBattleEnd();
 void BattleSystemUpdate();
 void SendBattleDamage(int battlerNum, int damage);
