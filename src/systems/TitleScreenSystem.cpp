@@ -22,8 +22,8 @@ bool _initialized = false;
 void positionFinger() {
 	if (!_finger || !_menuItems[0]) return;
 	auto pos = _menuItems[0]->AbsolutePosition();
-	auto x = pos.x - 15;
-	auto y = pos.y + (kMenuSpacing * _selectedIndex);
+	auto x = static_cast<int>(pos.x) - 15;
+	auto y = static_cast<int>(pos.y) + (kMenuSpacing * _selectedIndex);
 	_finger->AbsolutePosition(x, y);
 }
 
@@ -58,29 +58,17 @@ void TitleScreenSystem::Update() {
 	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
 
 	if (player->IsButtonJustPressed(ControllerButtons::Up)) {
-		int next = _selectedIndex;
-		do {
-			next = (next - 1 + kNumMenuItems) % kNumMenuItems;
-		} while (!kMenuItemEnabled[next] && next != _selectedIndex);
-		if (next != _selectedIndex) {
-			_selectedIndex = next;
-			positionFinger();
-		}
+		_selectedIndex = (_selectedIndex - 1 + kNumMenuItems) % kNumMenuItems;
+		positionFinger();
 	}
 
 	if (player->IsButtonJustPressed(ControllerButtons::Down)) {
-		int next = _selectedIndex;
-		do {
-			next = (next + 1) % kNumMenuItems;
-		} while (!kMenuItemEnabled[next] && next != _selectedIndex);
-		if (next != _selectedIndex) {
-			_selectedIndex = next;
-			positionFinger();
-		}
+		_selectedIndex = (_selectedIndex + 1) % kNumMenuItems;
+		positionFinger();
 	}
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
-		if (_selectedIndex == 0) {
+		if (kMenuItemEnabled[_selectedIndex]) {
 			Engine::LoadScene("debugTown");
 		}
 	}
