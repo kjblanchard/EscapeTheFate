@@ -459,10 +459,19 @@
                 "file": "battleTurnMarker",
                 "scale": 1.0,
                 "color": { "R": 255, "G": 255, "B": 255, "A": 255 }
-            },
-            "GameOverPanel": {
+            }
+
+        }
+    },
+    "GameOverPanel": {
+        "doNotDestroy": true,
+        "visible": false,
+        "rect": { "x": 0, "y": 0, "w": 480, "h": 270 },
+        "priority": 100,
+        "children": {
+            "GameOverNineSlice": {
                 "type": "nineSlice",
-                "visible": false,
+                "visible": true,
                 "file": "uibase",
                 "scale": 1.0,
                 "color": { "R": 0, "G": 0, "B": 0, "A": 255 },
@@ -485,7 +494,6 @@
                     }
                 }
             }
-
         }
     }
 }

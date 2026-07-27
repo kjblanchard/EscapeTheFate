@@ -41,9 +41,7 @@ void cacheUI() {
 	if (gameOverPanel_) return;
 	auto* root = UI::GetRootUIObject();
 	if (!root) return;
-	auto* battlePanel = root->GetChildByName("BattlePanel");
-	if (!battlePanel) return;
-	gameOverPanel_ = battlePanel->GetChildByName("GameOverPanel");
+	gameOverPanel_ = root->GetChildByName("GameOverPanel");
 }
 
 }  // namespace
@@ -70,9 +68,9 @@ void GameOverSystem::Update() {
 			Color c = {255, 255, 255, alpha};
 			GraphicsUpdateFBOColor(&c);
 			if (timer_ >= kFadeOutDuration) {
+				if (gameOverPanel_) gameOverPanel_->SetVisible(true);
 				Color white = {255, 255, 255, 255};
 				GraphicsUpdateFBOColor(&white);
-				if (gameOverPanel_) gameOverPanel_->SetVisible(true);
 				timer_ = 0.0f;
 				state_ = GameOverState::ShowingGameOver;
 			}

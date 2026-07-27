@@ -56,7 +56,9 @@ class PlayerBattler : public Battler {
 	bool _targetingFriendly = false;
 	BattlerStates _currentBattlerState = BattlerStates::Default;
 	float _damageAnimTimer = 0.0f;
+	float _deathHoldTimer = 0.0f;
 	bool _isPlayingDamageAnim = false;
+	bool _isDead = false;
 };
 
 }  // namespace Etf

@@ -109,6 +109,15 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 
 void PlayerBattler::updateImpl() {
 	_battlerUI->UpdateAnimations();
+	if (_isDead) {
+		if (_deathHoldTimer > 0) {
+			_deathHoldTimer -= GameState::DeltaTimeSeconds;
+			if (_deathHoldTimer <= 0) {
+				_animator->UpdateAnimatorSpeed(0.0f);
+			}
+		}
+		return;
+	}
 	if (_currentHP <= 0) return;
 	if (_isPlayingDamageAnim) {
 		_damageAnimTimer -= GameState::DeltaTimeSeconds;
@@ -148,6 +157,9 @@ void PlayerBattler::takeDamageImpl(int damage) {
 	if (_currentHP <= 0) {
 		Engine::Audio::PlaySFXBuffer("hit2", 1.0f);
 		_animator->StartAnimation("death1", 1);
+		_isDead = true;
+		_deathHoldTimer = _animator->GetAnimationDuration("death1");
+		_isPlayingDamageAnim = false;
 		_battlerUI->CloseCommandsMenu();
 		_battlerUI->CloseTargetSelection();
 		_battlerUI->EndPlayerTurn(this);

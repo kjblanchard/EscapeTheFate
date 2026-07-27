@@ -39,7 +39,10 @@ void TitleScreenSystem::Start() {
 }
 
 void TitleScreenSystem::Update() {
-	if (Engine::CurrentSceneName() != "cloud") return;
+	if (Engine::CurrentSceneName() != "cloud") {
+		_initialized = false;
+		return;
+	}
 	if (!_initialized) {
 		auto root = UI::GetRootUIObject();
 		if (!root->GetChildByName("CloudPanel")) return;
