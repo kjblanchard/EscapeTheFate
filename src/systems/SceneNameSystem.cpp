@@ -73,7 +73,7 @@ void SceneNameSystem::Start() {
 
 void SceneNameSystem::Update() {
 	auto& currentScene = Engine::CurrentSceneName();
-	if (currentScene.empty()) return;
+	if (currentScene.empty() || currentScene == "cloud") return;
 
 	if (currentScene != _lastSceneName) {
 		_lastSceneName = currentScene;

@@ -12,7 +12,7 @@
         "title": "Escape The Fate"
     },
     "scene": {
-        "defaultScene": "debugTown",
+        "defaultScene": "cloud",
         "scenes": [
             {
                 "MapName": "debugTown",
@@ -51,7 +51,7 @@
             },
             {
                 "MapName": "cloud",
-                "UIName": "",
+                "UIName": "cloudU",
                 "BGMName": "town1",
                 "BGMVolume": 1.0,
                 "DisplayName": "Cloud Kingdom"

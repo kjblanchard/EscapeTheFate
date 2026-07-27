@@ -16,6 +16,7 @@
 #include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/SceneNameSystem.hpp>
+#include <systems/TitleScreenSystem.hpp>
 #include <systems/dialogSystem.hpp>
 using namespace Etf;
 
@@ -63,6 +64,10 @@ void InitializeGame() {
 		{
 			.Start = SceneNameSystem::Start,
 			.Update = SceneNameSystem::Update,
+		},
+		{
+			.Start = TitleScreenSystem::Start,
+			.Update = TitleScreenSystem::Update,
 		}};
 	Engine::RegisterSystems(systems_);
 }
