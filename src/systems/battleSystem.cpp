@@ -109,6 +109,10 @@ static void loadBattleDB() {
 		battlerDatabase_.back().IdleAnimation = jstr(currentJsonObject, "idle");
 		auto portraitStr = jstr(currentJsonObject, "portrait");
 		battlerDatabase_.back().Portrait = portraitStr ? portraitStr : "";
+		auto portraitRectObj = jobj(currentJsonObject, "portraitRect");
+		if (portraitRectObj) {
+			battlerDatabase_.back().PortraitRect = Engine::Json::GetRectFromObject(currentJsonObject, "portraitRect");
+		}
 		battlerDatabase_.back().HpBarOffsetX = jint(currentJsonObject, "hpBarOffsetX");
 		battlerDatabase_.back().HpBarOffsetY = jint(currentJsonObject, "hpBarOffsetY");
 		battlerDatabase_.back().AnimOffsetX = jint(currentJsonObject, "animOffsetX");

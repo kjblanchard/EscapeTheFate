@@ -15,6 +15,7 @@
         "itemDrops": [],
         "sprite": "player1Battler",
         "portrait": "portrait1",
+        "portraitRect": { "x": 0, "y": 0, "w": 48, "h": 48 },
         "rect": { "x": -5, "y": -10, "w": 48, "h": 48 },
         "hpBarOffsetX": 0,
         "hpBarOffsetY": 0,

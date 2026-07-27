@@ -193,10 +193,10 @@ static void buildUI() {
 		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
 		auto* battler = battlers[i];
 		int row = _numPlayers;
-		float rowY = 28.0f + itemsOffsetY + row * 45.0f;
+		float rowY = 26.0f + itemsOffsetY + row * 38.0f;
 
 		UIObjectArgs playerContainerArgs;
-		playerContainerArgs.Rect = {0, rowY, INFO_W - 20, 42};
+		playerContainerArgs.Rect = {0, rowY, INFO_W - 20, 36};
 		playerContainerArgs.Visible = true;
 		playerContainerArgs.Name = "SpoilsPlayerContainer" + to_string(row);
 		playerContainerArgs.Priority = 1;
@@ -223,7 +223,7 @@ static void buildUI() {
 		UITextArgs xpArgs;
 		xpArgs.FontName = "PressStart2P";
 		xpArgs.FontSize = 8;
-		xpArgs.Rect = {10, 14, 220, 12};
+		xpArgs.Rect = {10, 13, 220, 12};
 		xpArgs.TextToDraw = "XP: 0 / " + to_string(battler->GetBattlerData()->XPToNextLevel);
 		xpArgs.Name = "SpoilsXPText" + to_string(row);
 		xpArgs.NumCharsToDraw = 100;
@@ -239,8 +239,8 @@ static void buildUI() {
 
 		UIProgressBarArgs barArgs;
 		barArgs.Name = "SpoilsXPBar" + to_string(row);
-		barArgs.Rect = {10, 30, 220, 8};
-		barArgs.BarRect = {0, 0, 220, 8};
+		barArgs.Rect = {10, 27, 220, 6};
+		barArgs.BarRect = {0, 0, 220, 6};
 		barArgs.BarColor = {100, 200, 255, 255};
 		barArgs.BackgroundColor = {30, 30, 60, 255};
 		barArgs.Priority = 1;
@@ -256,7 +256,7 @@ static void buildUI() {
 	UITextArgs promptArgs;
 	promptArgs.FontName = "PressStart2P";
 	promptArgs.FontSize = 8;
-	promptArgs.Rect = {10, INFO_H - 20, INFO_W - 20, 12};
+	promptArgs.Rect = {10, INFO_H - 16, INFO_W - 20, 12};
 	promptArgs.TextToDraw = "Press A to collect";
 	promptArgs.Name = "SpoilsPromptText";
 	promptArgs.NumCharsToDraw = 100;
@@ -287,13 +287,15 @@ static void buildUI() {
 	int portraitCount = 0;
 	for (size_t i = 0; i < battlers.size() && portraitCount < MAX_PLAYERS; ++i) {
 		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
-		string portraitFile = battlers[i]->GetBattlerData()->Portrait;
+		auto* data = battlers[i]->GetBattlerData();
+		string portraitFile = data->Portrait;
 		if (portraitFile.empty()) portraitFile = "null";
+		auto& pr = data->PortraitRect;
 		UIImageArgs imgArgs;
 		imgArgs.Filename = portraitFile;
 		imgArgs.Name = "SpoilsPortrait" + to_string(portraitCount);
-		imgArgs.Rect = {20, 10.0f + portraitCount * 60.0f, 64, 64};
-		imgArgs.SourceRect = {0, 0, 64, 64};
+		imgArgs.Rect = {20, 10.0f + portraitCount * 60.0f, pr.w, pr.h};
+		imgArgs.SourceRect = {pr.x, pr.y, pr.w, pr.h};
 		imgArgs.Scale = 1.0f;
 		imgArgs.DrawColor = {255, 255, 255, 255};
 		imgArgs.Priority = 1;
