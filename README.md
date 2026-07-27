@@ -20,9 +20,9 @@
 - Cross platform cmake
 - Package with cmake for installing on desktops
 - C/Cpp practice
-- Learn OpenGL
-- Better with vim
-- Release a game on steam
+- Learn OpenGL, or at least fake it until you make it
+- Better with vim for full IDE
+- Release a game on steam instead of remaking the same thing every year :)
 
 ## Installation
 

@@ -147,7 +147,7 @@ void PlayerBattler::takeDamageImpl(int damage) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 	if (_currentHP <= 0) {
 		Engine::Audio::PlaySFXBuffer("hit2", 1.0f);
-		_animator->StartAnimation("death1", 1);
+		_animator->StartAnimation("dead1", 1);
 		_battlerUI->CloseCommandsMenu();
 		_battlerUI->CloseTargetSelection();
 		_battlerUI->EndPlayerTurn(this);
