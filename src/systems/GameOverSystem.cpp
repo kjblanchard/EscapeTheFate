@@ -54,8 +54,8 @@ void GameOverSystem::Update() {
 			if (!allPlayersDead()) return;
 			cacheUI();
 			BattleSystem::TriggerGameOver();
-			Engine::Audio::StopBGM();
-			Engine::Audio::PlayBGM("gameover");
+			// Engine::Audio::StopBGM();
+			// Engine::Audio::PlayBGM("gameover");
 			timer_ = 0.0f;
 			state_ = GameOverState::FadingOut;
 			break;
