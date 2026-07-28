@@ -1,4 +1,5 @@
 #include <engine.hpp>
+#include <systems/CharacterSelectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/battleSystem.hpp>
@@ -57,6 +58,18 @@ void TitleScreenSystem::Update() {
 		return;
 	}
 	if (GameState::CurrentFadeState != (int)LoadingScreenFadeTypes::NotFading) return;
+	if (CharacterSelectSystem::IsActive()) {
+		CharacterSelectSystem::Update();
+		if (!CharacterSelectSystem::IsActive()) {
+			// Returned from character select via B press, restore title UI
+			auto root = UI::GetRootUIObject();
+			auto* titlePanel = root->GetChildByName("TitleNineSlice");
+			auto* menuPanel = root->GetChildByName("MenuNineSlice");
+			if (titlePanel) titlePanel->SetVisible(true);
+			if (menuPanel) menuPanel->SetVisible(true);
+		}
+		return;
+	}
 	_finger->SetVisible(true);
 	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
 	if (player->IsButtonJustPressed(ControllerButtons::Up)) {
@@ -74,9 +87,13 @@ void TitleScreenSystem::Update() {
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		if (kMenuItemEnabled[_selectedIndex]) {
 			Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
-			GameState::ResetForNewGame();
-			BattleSystem::ResetAfterGameOver();
-			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
+			auto root = UI::GetRootUIObject();
+			auto* titlePanel = root->GetChildByName("TitleNineSlice");
+			auto* menuPanel = root->GetChildByName("MenuNineSlice");
+			if (titlePanel) titlePanel->SetVisible(false);
+			if (menuPanel) menuPanel->SetVisible(false);
+			_finger->SetVisible(false);
+			CharacterSelectSystem::Activate();
 		}
 	}
 }

@@ -1,0 +1,13 @@
+[
+    {
+        "id": 0,
+        "name": "Kevin",
+        "description": "A balanced warrior with sword skills.",
+        "overworldSprite": "player1",
+        "battleSprite": "player1Battler",
+        "portrait": "portrait1",
+        "portraitRect": { "x": 0, "y": 0, "w": 48, "h": 48 },
+        "idle": "idle1",
+        "battlerDBIndex": 0
+    }
+]

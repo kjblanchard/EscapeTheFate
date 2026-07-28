@@ -161,7 +161,7 @@ static void loadAbilityDB() {
 }
 
 static void loadPlayers() {
-	const int playerData = 0;
+	const int playerData = GameState::SelectedPlayerCharacter;
 	const int playerSpawnLocation = 1;
 	auto& p1BattlerData = battlerDatabase_.at(playerData);
 	auto spawnLocation = BattleLocation::GetBattleLocation(playerSpawnLocation);
