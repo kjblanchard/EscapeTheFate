@@ -16,6 +16,7 @@
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <systems/BattleSpoilsSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
 #include <vector>
@@ -169,6 +170,7 @@ static void loadPlayers() {
 	args.BattleData = &p1BattlerData;
 	args.X = spawnLocation->X();
 	args.Y = spawnLocation->Y();
+	args.Controller = PlayerControllerSystem::GetPlayerByNum(0);
 	auto battler = new PlayerBattler(args);
 	_battlers.at(playerSpawnLocation) = battler;
 }

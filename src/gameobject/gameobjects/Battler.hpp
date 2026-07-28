@@ -11,10 +11,12 @@ struct Sprite;
 namespace Etf {
 struct AbilityData;
 class UIText;
+class PlayerController;
 
 struct BattlerArgs {
 	BattlerData* BattleData;
 	int X, Y, CurrentHP, BattlerNum;
+	std::shared_ptr<PlayerController> Controller;
 };
 
 class Battler : public GameObject {

@@ -1,10 +1,10 @@
-#include <Supergoon/Input/keyboard.h>
 #include <Supergoon/Primitives/Point.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/map.h>
 #include <Supergoon/sprite.h>
 #include <sgtools/log.h>
 
+#include <cmath>
 #include <components/PlayerController.hpp>
 #include <engine.hpp>
 #include <gameConfig.hpp>
@@ -90,7 +90,9 @@ LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController
 void LocalPlayer::Start() {}
 void LocalPlayer::Update() {
 	GameState::Players::LocalPlayerData[0].MovedThisFrame = false;
-	handlePlayerMovement();
+	if (!handlePlayerMovement()) {
+		handleplayerJoystickMovement();
+	}
 	handleInteractions();
 	if (handleMapExits()) {
 		return;
@@ -152,29 +154,39 @@ void LocalPlayer::handleInteractions() {
 }
 
 void LocalPlayer::handleplayerJoystickMovement() {
-	// auto& controller = Player_->GetController();
-	// auto xStick = controller.JoystickAxisState(JoystickAxis::LeftThumbstickX);
-	// auto yStick = controller.JoystickAxisState(JoystickAxis::LeftThumbstickY);
-	// auto direction = Direction_;
-	// if (fabs(xStick) > fabs(yStick)) {
-	// 	if (xStick > 0.1f) {
-	// 		direction = Direction::East;
-	// 	} else if (xStick < -0.1f) {
-	// 		direction = Direction::West;
-	// 	}
-	// } else {
-	// 	if (yStick > 0.1f) {
-	// 		direction = Direction::South;
-	// 	} else if (yStick < -0.1f) {
-	// 		direction = Direction::North;
-	// 	}
-	// }
-	// 	// Check for joystick movement
-	// if (xStick || yStick) {
-	// 	auto moveX = sMoveSpeed * xStick * GameState::DeltaTimeSeconds;
-	// 	auto moveY = sMoveSpeed * yStick * GameState::DeltaTimeSeconds;
-	// 	// moved = true;
-	// }
+	if (GameState::InDialog || GameState::Battle::InBattle) return;
+	auto xStick = Player_->JoystickAxisState(JoystickAxis::LeftThumbstickX);
+	auto yStick = Player_->JoystickAxisState(JoystickAxis::LeftThumbstickY);
+	if (fabs(xStick) < 0.1f && fabs(yStick) < 0.1f) return;
+
+	auto previousDirection = Direction_;
+	if (fabs(xStick) > fabs(yStick)) {
+		Direction_ = xStick > 0.0f ? Direction::East : Direction::West;
+	} else {
+		Direction_ = yStick > 0.0f ? Direction::South : Direction::North;
+	}
+	if (Direction_ != previousDirection) {
+		Animator_->StartAnimation(getAnimNameFromDirection());
+		GameState::NextLoadDirection = static_cast<int>(Direction_);
+	}
+
+	float desiredX = X() + sMoveSpeed * xStick * GameState::DeltaTimeSeconds;
+	float desiredY = Y() + sMoveSpeed * yStick * GameState::DeltaTimeSeconds;
+	CollisionRect_ = {desiredX + sCollisionOffsetAndSizeRect.x, desiredY + sCollisionOffsetAndSizeRect.y,
+					  sCollisionOffsetAndSizeRect.w, sCollisionOffsetAndSizeRect.h};
+	CheckRectForCollisionWithSolids(&CollisionRect_);
+	CollisionRect_.x = roundCollisionResolve(CollisionRect_.x);
+	CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
+	SetX(CollisionRect_.x - sCollisionOffsetAndSizeRect.x);
+	SetY(CollisionRect_.y - sCollisionOffsetAndSizeRect.y);
+	GameState::NextLoadLocation.X = X();
+	GameState::NextLoadLocation.Y = Y();
+	Animator_->UpdateAnimatorSpeed(1.0f);
+	GameState::Players::LocalPlayerData[0].MovedThisFrame = true;
+	GameState::Players::LocalPlayerData[0].Location.x = X();
+	GameState::Players::LocalPlayerData[0].Location.y = Y();
+	GameState::Players::LocalPlayerData[0].Location.w = 4;
+	GameState::Players::LocalPlayerData[0].Location.h = 4;
 }
 
 bool LocalPlayer::handlePlayerMovement() {

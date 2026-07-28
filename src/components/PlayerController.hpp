@@ -14,19 +14,16 @@ class PlayerController : public IController {
 	bool IsButtonJustReleased(ControllerButtons button) const final;
 	float JoystickAxisState(JoystickAxis axis) const final;
 	float JoystickAxisThisFrameMovement(JoystickAxis axis) const final;
+	void AssignGamepadToController(int gamepadNum);
+	static void ResetPlayerNumCounter();
 
    private:
 	ControllerConfig ControllerConfig_;
 	int PlayerNum_;
 	int JoystickAssigned_ = -1;
-	void AssignGamepadToController(int gamepadNum);
 	std::array<int, static_cast<int>(ControllerButtons::NUM_GAME_BUTTONS)> KeyboardKeyConfig_;
 	std::array<int, static_cast<int>(ControllerButtons::NUM_GAME_BUTTONS)> JoystickButtonConfig_;
 
-	// ImGUI debugging PlayerSystem manages the player controllers?
 	friend void DisplayPlayerControllerTab();
-	friend void StartPlayerSystem();
-	friend void UpdatePlayerSystem();
-	friend void ShutdownPlayerSystem();
 };
 }  // namespace Etf

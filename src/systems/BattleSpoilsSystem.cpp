@@ -1,11 +1,10 @@
-#include <Supergoon/Input/keyboard.h>
-
 #include <cstdlib>
 #include <engine.hpp>
-#include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <systems/BattleSpoilsSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
+#include <types/ControllerButtons.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -439,25 +438,26 @@ bool BattleSpoilsSystem::IsBattleSpoilsDone() {
 void BattleSpoilsSystem::Update() {
 	if (_currentState == SpoilsState::Inactive) return;
 
+	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
 	switch (_currentState) {
 		case SpoilsState::AnimatingIn:
 			updateAnimatingIn();
 			break;
 		case SpoilsState::WaitingForInput:
-			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+			if (player->IsButtonJustPressed(ControllerButtons::A)) {
 				_currentState = SpoilsState::Accumulating;
 				_promptText->UpdateText("");
 			}
 			break;
 		case SpoilsState::Accumulating:
-			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+			if (player->IsButtonJustPressed(ControllerButtons::A)) {
 				skipAccumulation();
 			} else {
 				updateAccumulating();
 			}
 			break;
 		case SpoilsState::Done:
-			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+			if (player->IsButtonJustPressed(ControllerButtons::A)) {
 				_isDone = true;
 				_currentState = SpoilsState::Inactive;
 			}

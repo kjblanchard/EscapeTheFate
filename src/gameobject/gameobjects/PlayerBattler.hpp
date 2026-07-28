@@ -1,5 +1,6 @@
 #pragma once
 #include <battle/battlerUI.hpp>
+#include <components/PlayerController.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
 namespace Etf {
@@ -47,6 +48,7 @@ class PlayerBattler : public Battler {
 #endif
 
    private:
+	std::shared_ptr<PlayerController> _controller;
 	std::unique_ptr<BattlerUI> _battlerUI;
 	unsigned int _currentMenuLocation = 0;
 	unsigned int _magicMenuRow = 0;

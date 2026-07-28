@@ -1,13 +1,13 @@
-#include <Supergoon/Input/keyboard.h>
 #include <sgtools/log.h>
 
 #include <algorithm>
+#include <components/PlayerController.hpp>
 #include <engine.hpp>
-#include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <iterator>
 #include <systems/battleSystem.hpp>
+#include <types/ControllerButtons.hpp>
 
 using namespace Etf;
 using namespace std;
@@ -24,7 +24,7 @@ bool PlayerBattler::shouldBattleEnd() {
 	return false;
 }
 
-PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
+PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controller(args.Controller), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 }
 
@@ -178,11 +178,11 @@ void PlayerBattler::healImpl(int amount) {
 
 void PlayerBattler::handleInputCommandsMenu() {
 	auto newLocation = _currentMenuLocation;
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
+	if (_controller->IsButtonJustPressed(ControllerButtons::Up)) {
 		--newLocation;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
 		++newLocation;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		switch (_currentMenuLocation) {
 			case 0:
 				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
@@ -264,15 +264,15 @@ void PlayerBattler::moveFingerToTargetNum(int targetNum) {
 void PlayerBattler::handleInputMagicMenu() {
 	auto newRow = _magicMenuRow;
 	auto newCol = _magicMenuCol;
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
+	if (_controller->IsButtonJustPressed(ControllerButtons::Up)) {
 		if (newRow > 0) --newRow;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
 		if (newRow < 3) ++newRow;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.LEFT)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Left)) {
 		if (newCol > 0) --newCol;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.RIGHT)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Right)) {
 		if (newCol < 1) ++newCol;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
 		_selectedAbilityID = slotIndex + 1;
 		if (!BattleSystem::HasAbility(_selectedAbilityID)) {
@@ -284,7 +284,7 @@ void PlayerBattler::handleInputMagicMenu() {
 		_targetingFriendly = ability.Friendly;
 		handleStateChange(TargetSelection);
 		return;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.B)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		_battlerUI->CloseMagicMenu();
 		_currentBattlerState = CommandSelection;
@@ -302,20 +302,20 @@ void PlayerBattler::handleInputMagicMenu() {
 void PlayerBattler::handleInputTargetSelection() {
 	int newTarget = _currentTargetBattler;
 
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
+	if (_controller->IsButtonJustPressed(ControllerButtons::Up)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		--newTarget;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		++newTarget;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.LEFT) ||
-			   IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.RIGHT)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Left) ||
+			   _controller->IsButtonJustPressed(ControllerButtons::Right)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		_targetingFriendly = !_targetingFriendly;
 		_currentTargetBattler = 0;
 		moveFingerToTargetNum(0);
 		return;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 		vector<Battler*> targets;
 		getAllTargets(targets);
@@ -335,7 +335,7 @@ void PlayerBattler::handleInputTargetSelection() {
 		_currentATBCharge = 0;
 		handleStateChange(ATBCharging);
 		return;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.B)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		_battlerUI->CloseTargetSelection();
 		if (_selectedAbilityID > 0) {
@@ -369,7 +369,7 @@ void PlayerBattler::handleInput() {
 			handleInputTargetSelection();
 			break;
 		case BattlerStates::BattleEndIdle:
-			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+			if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 				handleStateChange(BattlerStates::BattleSpoils);
 				BattleSystem::TriggerBattleSpoils();
 			}
