@@ -1,6 +1,7 @@
 #include <engine.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
+#include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
@@ -73,6 +74,8 @@ void TitleScreenSystem::Update() {
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		if (kMenuItemEnabled[_selectedIndex]) {
 			Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+			GameState::ResetForNewGame();
+			BattleSystem::ResetAfterGameOver();
 			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
 		}
 	}

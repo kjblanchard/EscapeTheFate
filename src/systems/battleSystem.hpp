@@ -23,6 +23,7 @@ void TriggerBattleVictoryStart();
 void TriggerBattleSpoils();
 void TriggerBattleEnd();
 void TriggerGameOver();
+void ResetAfterGameOver();
 void BattleSystemUpdate();
 void SendBattleDamage(int battlerNum, int damage);
 void InitializeBattleSystem();

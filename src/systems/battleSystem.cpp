@@ -287,6 +287,13 @@ void BattleSystem::TriggerGameOver() {
 	nextBattleState_ = BattleGameOver;
 	triggerStateChange();
 }
+
+void BattleSystem::ResetAfterGameOver() {
+	currentBattleState_ = NotInBattle;
+	nextBattleState_ = NotInBattle;
+	battleInitialized_ = false;
+	_battlers.clear();
+}
 void BattleSystem::TriggerBattleVictoryStart() {
 	nextBattleState_ = BattleVictory;
 	triggerStateChange();

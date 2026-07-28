@@ -12,6 +12,7 @@ struct PlayerData {
 
 class LocalPlayer;
 struct GameState {
+	static void ResetForNewGame();
 	static int CurrentFadeState;
 	// This is the location that we will load on the next screen, used when switching maps to one of the predefined places.
 	static int NextLoadScreen;

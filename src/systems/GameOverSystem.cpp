@@ -16,7 +16,6 @@ enum class GameOverState {
 	NotActive,
 	FadingOut,
 	ShowingGameOver,
-	FadingToTitle,
 	WaitingForSceneLoad,
 };
 
@@ -24,7 +23,6 @@ GameOverState state_ = GameOverState::NotActive;
 float timer_ = 0.0f;
 constexpr float kFadeOutDuration = 1.5f;
 constexpr float kShowDuration = 2.5f;
-constexpr float kFadeToTitleDuration = 1.0f;
 UIObject* gameOverPanel_ = nullptr;
 
 bool allPlayersDead() {
@@ -81,19 +79,9 @@ void GameOverSystem::Update() {
 		case GameOverState::ShowingGameOver: {
 			timer_ += GameState::DeltaTimeSeconds;
 			if (timer_ >= kShowDuration) {
-				timer_ = 0.0f;
-				state_ = GameOverState::FadingToTitle;
-			}
-			break;
-		}
-		case GameOverState::FadingToTitle: {
-			timer_ += GameState::DeltaTimeSeconds;
-			float t = timer_ / kFadeToTitleDuration;
-			if (t > 1.0f) t = 1.0f;
-			unsigned char alpha = (unsigned char)(255 * (1.0f - t));
-			Color c = {255, 255, 255, alpha};
-			GraphicsUpdateFBOColor(&c);
-			if (timer_ >= kFadeToTitleDuration) {
+				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
+				Color black = {255, 255, 255, 0};
+				GraphicsUpdateFBOColor(&black);
 				BattleLocation::ClearAllBattleLocations();
 				ResetCameraFollow();
 				GameState::Battle::InBattle = false;
@@ -105,6 +93,7 @@ void GameOverSystem::Update() {
 		}
 		case GameOverState::WaitingForSceneLoad: {
 			if (Engine::CurrentSceneName() == "cloud") {
+				BattleSystem::ResetAfterGameOver();
 				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
 				gameOverPanel_ = nullptr;
 				state_ = GameOverState::NotActive;
