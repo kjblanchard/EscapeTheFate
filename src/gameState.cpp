@@ -8,6 +8,7 @@ void GameState::ResetForNewGame() {
 	NextLoadMapName = "";
 	NextLoadDirection = 0;
 	InDialog = false;
+	Paused = false;
 	CurrentFadeState = (int)LoadingScreenFadeTypes::NotFading;
 	Battle::InBattle = false;
 	Battle::NextBattleGroup = 1;
@@ -26,6 +27,7 @@ sgVector2 GameState::NextLoadLocation = {0, 0};
 float GameState::DeltaTimeSeconds;
 float GameState::DeltaTimeMilliseconds;
 bool GameState::InDialog = false;
+bool GameState::Paused = false;
 int GameState::CurrentFadeState = (int)LoadingScreenFadeTypes::NotFading;
 PlayerData GameState::Players::LocalPlayerData[2];
 bool GameState::Battle::InBattle = false;

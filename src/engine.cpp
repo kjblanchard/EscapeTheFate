@@ -26,6 +26,8 @@
 #include <gameobject/GameObject.hpp>
 #include <string>
 #include <systems/GameObjectSystem.hpp>
+#include <systems/PauseSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
@@ -135,6 +137,10 @@ void update() {
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	if (!handleMapLoad()) return;
 	for (auto& system : systems_) {
+		if (GameState::Paused && system.Update != PlayerControllerSystem::Update &&
+			system.Update != PauseSystem::Update) {
+			continue;
+		}
 		system.Update();
 	}
 }
@@ -425,6 +431,7 @@ void Engine::Sprites::SetSpriteVisible(Sprite* sprite, bool visible) {
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
 	if (currentLoadingState_ != CurrentSceneLoadingState::NotLoading) return;
+	GameState::Paused = false;
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName.empty()) {

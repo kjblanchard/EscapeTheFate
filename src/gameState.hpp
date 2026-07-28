@@ -25,6 +25,7 @@ struct GameState {
 	static float DeltaTimeSeconds;
 	static float DeltaTimeMilliseconds;
 	static bool InDialog;
+	static bool Paused;
 	struct Players {
 		static PlayerData LocalPlayerData[2];
 	} Players;

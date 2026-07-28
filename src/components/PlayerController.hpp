@@ -16,6 +16,7 @@ class PlayerController : public IController {
 	float JoystickAxisThisFrameMovement(JoystickAxis axis) const final;
 	void AssignGamepadToController(int gamepadNum);
 	inline bool HasGamepadAssigned() const { return JoystickAssigned_ != -1; }
+	inline int GetAssignedGamepad() const { return JoystickAssigned_; }
 	void Update();
 	static void ResetPlayerNumCounter();
 

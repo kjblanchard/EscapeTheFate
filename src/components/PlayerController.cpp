@@ -26,6 +26,9 @@ PlayerController::PlayerController() : PlayerNum_(sCurrentPlayerNum_++) {
 	JoystickButtonConfig_[5] = gameconfig.Controls.Joystick.B;
 	JoystickButtonConfig_[6] = gameconfig.Controls.Joystick.LB;
 	JoystickButtonConfig_[7] = gameconfig.Controls.Joystick.RB;
+
+	KeyboardKeyConfig_[static_cast<int>(ControllerButtons::Start)] = gameconfig.Controls.Keyboard.START;
+	JoystickButtonConfig_[static_cast<int>(ControllerButtons::Start)] = gameconfig.Controls.Joystick.START;
 }
 
 bool PlayerController::IsButtonJustPressed(ControllerButtons button) const {

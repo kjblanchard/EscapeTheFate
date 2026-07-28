@@ -18,6 +18,7 @@
 #include <systems/battleSystem.hpp>
 #include <systems/SceneNameSystem.hpp>
 #include <systems/GameOverSystem.hpp>
+#include <systems/PauseSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/dialogSystem.hpp>
 using namespace Etf;
@@ -76,6 +77,10 @@ void InitializeGame() {
 		},
 		{
 			.Update = GameOverSystem::Update,
+		},
+		{
+			.Start = PauseSystem::Start,
+			.Update = PauseSystem::Update,
 		}};
 	Engine::RegisterSystems(systems_);
 }
