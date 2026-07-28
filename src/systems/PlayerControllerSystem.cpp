@@ -21,6 +21,15 @@ void Etf::PlayerControllerSystem::Start() {
 }
 
 void Etf::PlayerControllerSystem::Update() {
+	for (auto i = 0; i < sMaxNumLocalPlayers_; ++i) {
+		sPlayers[i]->Update();
+	}
+	auto nConnected = SG_GetCurrentNumControllers();
+	for (auto i = 0; i < nConnected && i < sMaxNumLocalPlayers_; ++i) {
+		if (!sPlayers[i]->HasGamepadAssigned()) {
+			sPlayers[i]->AssignGamepadToController(i);
+		}
+	}
 }
 
 void Etf::PlayerControllerSystem::Shutdown() {

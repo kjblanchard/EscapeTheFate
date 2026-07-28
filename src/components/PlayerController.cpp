@@ -30,18 +30,19 @@ PlayerController::PlayerController() : PlayerNum_(sCurrentPlayerNum_++) {
 
 bool PlayerController::IsButtonJustPressed(ControllerButtons button) const {
 	auto idx = static_cast<int>(button);
+	auto stickPressed = isStickDirectionJustPressed(button);
 	if (PlayerNum_ == 0) {
 		auto keyboardPressed = IsKeyboardKeyJustPressed(KeyboardKeyConfig_[idx]);
 		auto joystickPressed = false;
 		if (JoystickAssigned_ != -1) {
 			joystickPressed = geGamepadButtonJustPressed(JoystickAssigned_, JoystickButtonConfig_[idx]);
 		}
-		return keyboardPressed || joystickPressed;
+		return keyboardPressed || joystickPressed || stickPressed;
 	}
 	if (JoystickAssigned_ != -1) {
-		return geGamepadButtonJustPressed(JoystickAssigned_, JoystickButtonConfig_[idx]);
+		return geGamepadButtonJustPressed(JoystickAssigned_, JoystickButtonConfig_[idx]) || stickPressed;
 	}
-	return false;
+	return stickPressed;
 }
 
 bool PlayerController::IsButtonPressed(ControllerButtons button) const {
@@ -97,6 +98,39 @@ bool PlayerController::IsButtonJustReleased(ControllerButtons button) const {
 		return geGamepadButtonJustReleased(JoystickAssigned_, JoystickButtonConfig_[idx]);
 	}
 	return false;
+}
+
+void PlayerController::Update() {
+	StickWasUp_ = StickIsUp_;
+	StickWasDown_ = StickIsDown_;
+	StickWasLeft_ = StickIsLeft_;
+	StickWasRight_ = StickIsRight_;
+	if (JoystickAssigned_ == -1) {
+		StickIsUp_ = StickIsDown_ = StickIsLeft_ = StickIsRight_ = false;
+		return;
+	}
+	constexpr float kThreshold = 0.5f;
+	auto x = geGamepadLeftAxisXFloat(JoystickAssigned_);
+	auto y = geGamepadLeftAxisYFloat(JoystickAssigned_);
+	StickIsLeft_ = x < -kThreshold;
+	StickIsRight_ = x > kThreshold;
+	StickIsUp_ = y < -kThreshold;
+	StickIsDown_ = y > kThreshold;
+}
+
+bool PlayerController::isStickDirectionJustPressed(ControllerButtons button) const {
+	switch (button) {
+		case ControllerButtons::Up:
+			return StickIsUp_ && !StickWasUp_;
+		case ControllerButtons::Down:
+			return StickIsDown_ && !StickWasDown_;
+		case ControllerButtons::Left:
+			return StickIsLeft_ && !StickWasLeft_;
+		case ControllerButtons::Right:
+			return StickIsRight_ && !StickWasRight_;
+		default:
+			return false;
+	}
 }
 
 void PlayerController::AssignGamepadToController(int gamepadNum) {

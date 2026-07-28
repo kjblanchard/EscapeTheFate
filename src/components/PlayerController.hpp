@@ -15,14 +15,25 @@ class PlayerController : public IController {
 	float JoystickAxisState(JoystickAxis axis) const final;
 	float JoystickAxisThisFrameMovement(JoystickAxis axis) const final;
 	void AssignGamepadToController(int gamepadNum);
+	inline bool HasGamepadAssigned() const { return JoystickAssigned_ != -1; }
+	void Update();
 	static void ResetPlayerNumCounter();
 
    private:
+	bool isStickDirectionJustPressed(ControllerButtons button) const;
 	ControllerConfig ControllerConfig_;
 	int PlayerNum_;
 	int JoystickAssigned_ = -1;
 	std::array<int, static_cast<int>(ControllerButtons::NUM_GAME_BUTTONS)> KeyboardKeyConfig_;
 	std::array<int, static_cast<int>(ControllerButtons::NUM_GAME_BUTTONS)> JoystickButtonConfig_;
+	bool StickWasUp_ = false;
+	bool StickWasDown_ = false;
+	bool StickWasLeft_ = false;
+	bool StickWasRight_ = false;
+	bool StickIsUp_ = false;
+	bool StickIsDown_ = false;
+	bool StickIsLeft_ = false;
+	bool StickIsRight_ = false;
 
 	friend void DisplayPlayerControllerTab();
 };
