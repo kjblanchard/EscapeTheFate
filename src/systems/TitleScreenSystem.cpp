@@ -95,6 +95,7 @@ void TitleScreenSystem::Update() {
 					return;
 				}
 				GameState::IsMultiplayer = true;
+				PlayerControllerSystem::AssignControllersForMultiplayer();
 			} else {
 				GameState::IsMultiplayer = false;
 			}

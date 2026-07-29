@@ -10,6 +10,7 @@ namespace PlayerControllerSystem {
 void Start();
 void Update();
 void Shutdown();
+void AssignControllersForMultiplayer();
 const std::shared_ptr<PlayerController>& GetPlayerByNum(int playerNum);
 }  // namespace PlayerSystem
 

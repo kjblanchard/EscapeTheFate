@@ -35,6 +35,14 @@ void Etf::PlayerControllerSystem::Update() {
 	}
 }
 
+void Etf::PlayerControllerSystem::AssignControllersForMultiplayer() {
+	sPlayers[0]->AssignGamepadToController(-1);
+	auto nConnected = SG_GetCurrentNumControllers();
+	if (nConnected > 0) {
+		sPlayers[1]->AssignGamepadToController(0);
+	}
+}
+
 void Etf::PlayerControllerSystem::Shutdown() {
 	for (auto player : sPlayers) {
 		player.reset();
