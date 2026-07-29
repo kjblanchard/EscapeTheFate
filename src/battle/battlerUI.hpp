@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <vector>
 #include <ui/uiAnimation.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -46,6 +47,7 @@ class BattlerUI {
 	void OpenMagicMenu();
 	void CloseMagicMenu();
 	void MoveCursorInMagicMenu(unsigned int col, unsigned int row);
+	void UpdateMagicMenuSlots(const std::vector<std::string>& abilityNames);
 	void UpdateAnimations();
 	void StartPlayerTurn(Battler* battler);
 	void EndPlayerTurn(Battler* battler);

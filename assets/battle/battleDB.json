@@ -21,7 +21,8 @@
         "hpBarOffsetY": 0,
         "animOffsetX": -5,
         "animOffsetY": 0,
-        "idle": "idle1"
+        "idle": "idle1",
+        "abilities": [3, 4]
     },
     {
         "id": 1,
@@ -71,7 +72,8 @@
         "hpBarOffsetY": 0,
         "animOffsetX": -5,
         "animOffsetY": 0,
-        "idle": "idle1"
+        "idle": "idle1",
+        "abilities": [1, 2]
     },
     {
         "id": 3,
@@ -95,6 +97,7 @@
         "hpBarOffsetY": 0,
         "animOffsetX": -5,
         "animOffsetY": 0,
-        "idle": "idle1"
+        "idle": "idle1",
+        "abilities": [5, 6]
     }
 ]

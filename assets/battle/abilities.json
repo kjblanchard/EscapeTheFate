@@ -7,7 +7,8 @@
         "playerAnim": "slash2",
         "sfx": "slash1",
         "baseDamage": 1,
-        "friendly": false
+        "friendly": false,
+        "damageType": "physical"
     },
     {
         "id": 1,
@@ -16,7 +17,63 @@
         "animTag": "heal2",
         "playerAnim": "cheer2",
         "sfx": "heal1",
-        "baseDamage": -3,
-        "friendly": true
+        "baseDamage": 0,
+        "friendly": true,
+        "damageType": "magic"
+    },
+    {
+        "id": 2,
+        "name": "Fire",
+        "animFile": "heal",
+        "animTag": "heal2",
+        "playerAnim": "cheer2",
+        "sfx": "hit2",
+        "baseDamage": 2,
+        "friendly": false,
+        "damageType": "magic"
+    },
+    {
+        "id": 3,
+        "name": "Power Strike",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "playerAnim": "slash2",
+        "sfx": "slash1",
+        "baseDamage": 3,
+        "friendly": false,
+        "damageType": "physical"
+    },
+    {
+        "id": 4,
+        "name": "Shield Bash",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "playerAnim": "slash2",
+        "sfx": "hit1",
+        "baseDamage": 1,
+        "friendly": false,
+        "damageType": "physical"
+    },
+    {
+        "id": 5,
+        "name": "Cheap Shot",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "playerAnim": "slash2",
+        "sfx": "slash1",
+        "baseDamage": 2,
+        "friendly": false,
+        "damageType": "physical"
+    },
+    {
+        "id": 6,
+        "name": "Mug",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "playerAnim": "slash2",
+        "sfx": "slash1",
+        "baseDamage": 1,
+        "friendly": false,
+        "damageType": "physical"
     }
 ]

@@ -133,6 +133,14 @@ static void loadBattleDB() {
 				battlerDatabase_.back().ItemDrops.push_back(std::move(drop));
 			}
 		}
+		auto abilitiesArray = jobj(currentJsonObject, "abilities");
+		if (abilitiesArray) {
+			auto numAbilities = jGetObjectArrayLength(abilitiesArray);
+			for (auto a = 0; a < numAbilities; ++a) {
+				auto abilityId = jintIndex(abilitiesArray, a);
+				battlerDatabase_.back().Abilities.push_back(abilityId);
+			}
+		}
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
@@ -156,6 +164,12 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().PlayerAnim = jstr(currentJsonObject, "playerAnim");
 		abilityDatabase_.back().BaseDamage = jint(currentJsonObject, "baseDamage");
 		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
+		auto dmgTypeStr = jstr(currentJsonObject, "damageType");
+		if (dmgTypeStr && string(dmgTypeStr) == "magic") {
+			abilityDatabase_.back().DamageType = AbilityDamageType::Magic;
+		} else {
+			abilityDatabase_.back().DamageType = AbilityDamageType::Physical;
+		}
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }

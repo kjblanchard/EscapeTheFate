@@ -43,11 +43,19 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
 			_battlerUI->StartPlayerTurn(this);
 			break;
-		case BattlerStates::MagicSelection:
+		case BattlerStates::MagicSelection: {
 			_magicMenuRow = 0;
 			_magicMenuCol = 0;
+			vector<string> abilityNames;
+			for (auto id : _battlerData->Abilities) {
+				if (BattleSystem::HasAbility(id)) {
+					abilityNames.push_back(BattleSystem::GetAbilityByID(id).Name);
+				}
+			}
+			_battlerUI->UpdateMagicMenuSlots(abilityNames);
 			_battlerUI->OpenMagicMenu();
 			break;
+		}
 		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
 			_battlerUI->StartTargetSelection();
@@ -282,7 +290,12 @@ void PlayerBattler::handleInputMagicMenu() {
 		if (newCol < 1) ++newCol;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-		_selectedAbilityID = slotIndex + 1;
+		const auto& charAbilities = _battlerData->Abilities;
+		if (slotIndex >= (int)charAbilities.size()) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
+		_selectedAbilityID = charAbilities[slotIndex];
 		if (!BattleSystem::HasAbility(_selectedAbilityID)) {
 			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 			return;
@@ -333,10 +346,16 @@ void PlayerBattler::handleInputTargetSelection() {
 		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
 		_animator->PlayAnimationThenLoopSecond(playerAnim, _battlerData->IdleAnimation);
 		if (battler) {
-			if (ability.BaseDamage < 0) {
-				battler->Heal(-ability.BaseDamage);
+			int finalValue = ability.BaseDamage;
+			if (ability.DamageType == AbilityDamageType::Physical) {
+				finalValue += _battlerData->Str;
+			} else if (ability.DamageType == AbilityDamageType::Magic) {
+				finalValue += _battlerData->Mag;
+			}
+			if (ability.Friendly) {
+				battler->Heal(finalValue);
 			} else {
-				battler->TakeDamage(ability.BaseDamage);
+				battler->TakeDamage(finalValue);
 			}
 			battler->PlayHitAnimation(ability);
 		}

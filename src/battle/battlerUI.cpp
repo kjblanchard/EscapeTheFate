@@ -258,6 +258,23 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 	_finger->AbsolutePosition(x, y);
 }
 
+void BattlerUI::UpdateMagicMenuSlots(const std::vector<std::string>& abilityNames) {
+	for (int i = 0; i < 8; ++i) {
+		if (!_magicMenuItems[i]) continue;
+		auto* textSlot = static_cast<UIText*>(_magicMenuItems[i]);
+		if (!textSlot) continue;
+		if (i < (int)abilityNames.size()) {
+			Color activeColor = {255, 255, 255, 255};
+			textSlot->UpdateDrawColor(activeColor);
+			textSlot->UpdateText(abilityNames[i]);
+		} else {
+			Color dimColor = {100, 100, 100, 255};
+			textSlot->UpdateDrawColor(dimColor);
+			textSlot->UpdateText("---");
+		}
+	}
+}
+
 void BattlerUI::OpenMagicMenu() {
 	if (!_magicMenu) return;
 	_magicMenu->SetVisible(true);
