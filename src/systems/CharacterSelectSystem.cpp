@@ -69,7 +69,7 @@ void loadCharacterData() {
 		c.OverworldFrameH = jint(entry, "overworldFrameH");
 		if (c.OverworldFrameW == 0) c.OverworldFrameW = 32;
 		if (c.OverworldFrameH == 0) c.OverworldFrameH = 32;
-		_characters.push_back(move(c));
+		_characters.push_back(std::move(c));
 	}
 	jReleaseObjectFromFile(obj);
 }

@@ -125,8 +125,12 @@ void PlayerBattler::updateImpl() {
 			_isPlayingDamageAnim = false;
 		}
 	}
-	if (_currentBattlerState != BattleEndStart && _currentBattlerState != BattleEndIdle &&
-		_currentBattlerState != BattleSpoils && _currentBattlerState != BattleEnd && shouldBattleEnd()) {
+
+	if (_currentBattlerState != BattleEndStart &&
+		_currentBattlerState != BattleEndIdle &&
+		_currentBattlerState != BattlerStates::BattleSpoils &&
+		_currentBattlerState != BattlerStates::BattleEnd &&
+		shouldBattleEnd()) {
 		handleStateChange(BattleEndStart);
 	}
 	switch (_currentBattlerState) {
