@@ -352,12 +352,12 @@ void PlayerBattler::handleInputTargetSelection() {
 			} else if (ability.DamageType == AbilityDamageType::Magic) {
 				finalValue += _battlerData->Mag;
 			}
+			battler->PlayHitAnimation(ability);
 			if (ability.Friendly) {
 				battler->Heal(finalValue);
 			} else {
 				battler->TakeDamage(finalValue);
 			}
-			battler->PlayHitAnimation(ability);
 		}
 		_currentATBCharge = 0;
 		handleStateChange(ATBCharging);
