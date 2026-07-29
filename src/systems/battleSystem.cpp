@@ -291,6 +291,7 @@ void BattleSystem::TriggerBattleStart() {
 	}
 }
 void BattleSystem::TriggerBattleSpoils() {
+	if (currentBattleState_ == BattleSpoils || nextBattleState_ == BattleSpoils) return;
 	nextBattleState_ = BattleSpoils;
 	triggerStateChange();
 }
@@ -311,6 +312,7 @@ void BattleSystem::ResetAfterGameOver() {
 	_battlers.clear();
 }
 void BattleSystem::TriggerBattleVictoryStart() {
+	if (currentBattleState_ == BattleVictory || nextBattleState_ == BattleVictory) return;
 	nextBattleState_ = BattleVictory;
 	triggerStateChange();
 }
