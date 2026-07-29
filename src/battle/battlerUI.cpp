@@ -82,6 +82,12 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 		}
 		_targetSelectionFinger->SetVisible(false);
 
+		if (battlerNum == 1) {
+			Color p2Color = {100, 255, 180, 255};
+			if (_finger) _finger->UpdateDrawColor(p2Color);
+			if (_targetSelectionFinger) _targetSelectionFinger->UpdateDrawColor(p2Color);
+		}
+
 		auto hpName = format("P{}Health", to_string(battlerNum + 1));
 		auto hpObject = UI::GetRootUIObject()->GetChildByName(hpName);
 		_hpObject = static_cast<UIText*>(hpObject);

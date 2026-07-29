@@ -435,29 +435,38 @@ bool BattleSpoilsSystem::IsBattleSpoilsDone() {
 	return _isDone;
 }
 
+static bool anyPlayerPressedA() {
+	auto& p1 = PlayerControllerSystem::GetPlayerByNum(0);
+	if (p1->IsButtonJustPressed(ControllerButtons::A)) return true;
+	if (GameState::IsMultiplayer) {
+		auto& p2 = PlayerControllerSystem::GetPlayerByNum(1);
+		if (p2->IsButtonJustPressed(ControllerButtons::A)) return true;
+	}
+	return false;
+}
+
 void BattleSpoilsSystem::Update() {
 	if (_currentState == SpoilsState::Inactive) return;
 
-	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
 	switch (_currentState) {
 		case SpoilsState::AnimatingIn:
 			updateAnimatingIn();
 			break;
 		case SpoilsState::WaitingForInput:
-			if (player->IsButtonJustPressed(ControllerButtons::A)) {
+			if (anyPlayerPressedA()) {
 				_currentState = SpoilsState::Accumulating;
 				_promptText->UpdateText("");
 			}
 			break;
 		case SpoilsState::Accumulating:
-			if (player->IsButtonJustPressed(ControllerButtons::A)) {
+			if (anyPlayerPressedA()) {
 				skipAccumulation();
 			} else {
 				updateAccumulating();
 			}
 			break;
 		case SpoilsState::Done:
-			if (player->IsButtonJustPressed(ControllerButtons::A)) {
+			if (anyPlayerPressedA()) {
 				_isDone = true;
 				_currentState = SpoilsState::Inactive;
 			}
