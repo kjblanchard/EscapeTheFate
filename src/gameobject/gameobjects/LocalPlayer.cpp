@@ -81,10 +81,13 @@ LocalPlayer::~LocalPlayer() {
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player) : GameObject(objData->X, objData->Y), Player_(player) {
-	Sprite_ = Engine::Sprites::CreateSpriteFull("player1.png", &X_, &Y_, {0, 0, 32, 32}, {0, 0, 32, 32});
+	auto spriteName = GameState::SelectedOverworldSprite + ".png";
+	float fw = (float)GameState::SelectedOverworldFrameW;
+	float fh = (float)GameState::SelectedOverworldFrameH;
+	Sprite_ = Engine::Sprites::CreateSpriteFull(spriteName, &X_, &Y_, {0, 0, fw, fh}, {0, 0, fw, fh});
 	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
-	Animator_ = make_unique<SpriteAnimator>("player1", Sprite_);
+	Animator_ = make_unique<SpriteAnimator>(GameState::SelectedOverworldSprite, Sprite_);
 }
 
 void LocalPlayer::Start() {}

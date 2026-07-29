@@ -8,6 +8,21 @@
         "portrait": "portrait1",
         "portraitRect": { "x": 0, "y": 0, "w": 48, "h": 48 },
         "idle": "idle1",
-        "battlerDBIndex": 0
+        "battlerDBIndex": 0,
+        "overworldFrameW": 32,
+        "overworldFrameH": 32
+    },
+    {
+        "id": 1,
+        "name": "Aria",
+        "description": "A swift mage with arcane power.",
+        "overworldSprite": "player2",
+        "battleSprite": "player2Battler",
+        "portrait": "portrait2",
+        "portraitRect": { "x": 48, "y": 0, "w": 48, "h": 48 },
+        "idle": "idle1",
+        "battlerDBIndex": 2,
+        "overworldFrameW": 26,
+        "overworldFrameH": 36
     }
 ]

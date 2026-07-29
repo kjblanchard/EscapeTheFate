@@ -27,6 +27,9 @@ struct GameState {
 	static bool InDialog;
 	static bool Paused;
 	static int SelectedPlayerCharacter;
+	static std::string SelectedOverworldSprite;
+	static int SelectedOverworldFrameW;
+	static int SelectedOverworldFrameH;
 	struct Players {
 		static PlayerData LocalPlayerData[2];
 	} Players;

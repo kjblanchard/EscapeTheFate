@@ -25,6 +25,8 @@ struct CharacterEntry {
 	RectangleF PortraitRect;
 	string IdleAnim;
 	int BattlerDBIndex;
+	int OverworldFrameW;
+	int OverworldFrameH;
 };
 
 namespace {
@@ -61,6 +63,10 @@ void loadCharacterData() {
 		auto idle = jstr(entry, "idle");
 		c.IdleAnim = idle ? idle : "idle1";
 		c.BattlerDBIndex = jint(entry, "battlerDBIndex");
+		c.OverworldFrameW = jint(entry, "overworldFrameW");
+		c.OverworldFrameH = jint(entry, "overworldFrameH");
+		if (c.OverworldFrameW == 0) c.OverworldFrameW = 32;
+		if (c.OverworldFrameH == 0) c.OverworldFrameH = 32;
 		_characters.push_back(move(c));
 	}
 	jReleaseObjectFromFile(obj);
@@ -256,9 +262,12 @@ void CharacterSelectSystem::Update() {
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
-		auto selectedBattlerIndex = _characters[_selectedIndex].BattlerDBIndex;
+		auto& ch = _characters[_selectedIndex];
 		GameState::ResetForNewGame();
-		GameState::SelectedPlayerCharacter = selectedBattlerIndex;
+		GameState::SelectedPlayerCharacter = ch.BattlerDBIndex;
+		GameState::SelectedOverworldSprite = ch.OverworldSprite;
+		GameState::SelectedOverworldFrameW = ch.OverworldFrameW;
+		GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
 		BattleSystem::ResetAfterGameOver();
 		destroyUI();
 		_active = false;
