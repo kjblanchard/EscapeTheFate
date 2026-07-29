@@ -24,5 +24,18 @@
         "battlerDBIndex": 2,
         "overworldFrameW": 26,
         "overworldFrameH": 36
+    },
+    {
+        "id": 2,
+        "name": "Rook",
+        "description": "A sturdy defender with high resilience.",
+        "overworldSprite": "player3",
+        "battleSprite": "player3Battler",
+        "portrait": "portrait3",
+        "portraitRect": { "x": 0, "y": 48, "w": 48, "h": 48 },
+        "idle": "idle1",
+        "battlerDBIndex": 3,
+        "overworldFrameW": 26,
+        "overworldFrameH": 36
     }
 ]

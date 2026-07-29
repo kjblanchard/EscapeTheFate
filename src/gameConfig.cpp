@@ -36,8 +36,11 @@ const vector<string> preloadTextures_ = {
 	"null",
 	"player1",
 	"player2Battler",
+	"player3",
+	"player3Battler",
 	"portrait1",
 	"portrait2",
+	"portrait3",
 	"supergoongameslogo",
 	"terrain",
 };

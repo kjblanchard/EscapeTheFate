@@ -72,5 +72,29 @@
         "animOffsetX": -5,
         "animOffsetY": 0,
         "idle": "idle1"
+    },
+    {
+        "id": 3,
+        "name": "Rook",
+        "hp": 3,
+        "str": 6,
+        "mag": 3,
+        "def": 7,
+        "mdef": 5,
+        "spd": 2,
+        "pow": 100,
+        "xpReward": 0,
+        "currentXP": 0,
+        "xpToNextLevel": 100,
+        "itemDrops": [],
+        "sprite": "player3Battler",
+        "portrait": "portrait3",
+        "portraitRect": { "x": 0, "y": 48, "w": 48, "h": 48 },
+        "rect": { "x": -5, "y": -10, "w": 48, "h": 48 },
+        "hpBarOffsetX": 0,
+        "hpBarOffsetY": 0,
+        "animOffsetX": -5,
+        "animOffsetY": 0,
+        "idle": "idle1"
     }
 ]
