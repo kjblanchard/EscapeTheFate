@@ -34,7 +34,6 @@ void LocalPlayer::Create(TiledObject* objData) {
 	Direction direction = Direction::South;
 	for (auto i = 0; i < objData->NumProperties; ++i) {
 		auto prop = objData->Properties[i];
-		// Only load player if we are on the right map start.
 		if (prop.Name == string_view("loadLocation")) {
 			loadLocation = prop.Data.IntData;
 		} else if (prop.Name == string_view("direction")) {
@@ -43,35 +42,37 @@ void LocalPlayer::Create(TiledObject* objData) {
 	}
 	if (loadLocation != GameState::NextLoadScreen) return;
 	sgLogDebug("Making player start at pos %d!!", loadLocation);
-	// We should assign player to this, based on what we are creating.. for now, just assign the initial player to it.
-	auto player = PlayerControllerSystem::GetPlayerByNum(0);
 
-	auto p1 = new LocalPlayer(objData, player);
-	vector<LocalPlayer*> players = {p1};
-	// We should override this if we are exiting from a battle.
-	for (auto i = 0; i < players.size(); ++i) {
-		auto currentPlayer = players[i];
-		if (GameState::Battle::ExitingFromBattle) {
-			currentPlayer->SetX(GameState::NextLoadLocation.X);
-			currentPlayer->SetY(GameState::NextLoadLocation.Y);
-			currentPlayer->Direction_ = static_cast<Direction>(GameState::NextLoadDirection);
-			GameState::NextLoadLocation = {0, 0};
-		} else {
-			currentPlayer->Direction_ = direction;
-		}
-		currentPlayer->Animator_->StartAnimation(p1->getAnimNameFromDirection());
-		// We should only do this for the first player.
-		if (i == 0) {
-			SetCameraFollowTarget(p1->GetXHandle(), p1->GetYHandle());
-			// make load location to where we are now incase we don't move and get into a battle.
-			GameState::NextLoadLocation.X = currentPlayer->X();
-			GameState::NextLoadLocation.Y = currentPlayer->Y();
+	auto player1Controller = PlayerControllerSystem::GetPlayerByNum(0);
+	auto p1 = new LocalPlayer(objData, player1Controller, 0,
+							  GameState::SelectedOverworldSprite, GameState::SelectedOverworldFrameW, GameState::SelectedOverworldFrameH);
 
-		} else {
-			currentPlayer->SetX(GameState::NextLoadLocation.X + 5);
-			currentPlayer->SetY(GameState::NextLoadLocation.Y + 5);
-		}
-		AddGameObjectToGameObjectSystem(currentPlayer);
+	if (GameState::Battle::ExitingFromBattle) {
+		p1->SetX(GameState::NextLoadLocation.X);
+		p1->SetY(GameState::NextLoadLocation.Y);
+		p1->Direction_ = static_cast<Direction>(GameState::NextLoadDirection);
+	} else {
+		p1->Direction_ = direction;
+	}
+	p1->Animator_->StartAnimation(p1->getAnimNameFromDirection());
+	SetCameraFollowTarget(p1->GetXHandle(), p1->GetYHandle());
+	GameState::NextLoadLocation.X = p1->X();
+	GameState::NextLoadLocation.Y = p1->Y();
+	AddGameObjectToGameObjectSystem(p1);
+
+	if (GameState::IsMultiplayer) {
+		auto player2Controller = PlayerControllerSystem::GetPlayerByNum(1);
+		auto p2 = new LocalPlayer(objData, player2Controller, 1,
+								  GameState::SelectedOverworldSprite2, GameState::SelectedOverworldFrameW2, GameState::SelectedOverworldFrameH2);
+		p2->SetX(p1->X() + 16);
+		p2->SetY(p1->Y());
+		p2->Direction_ = p1->Direction_;
+		p2->Animator_->StartAnimation(p2->getAnimNameFromDirection());
+		AddGameObjectToGameObjectSystem(p2);
+	}
+
+	if (GameState::Battle::ExitingFromBattle) {
+		GameState::NextLoadLocation = {0, 0};
 	}
 }
 
@@ -80,25 +81,29 @@ LocalPlayer::~LocalPlayer() {
 	DestroySprite(InteractionSprite_);
 }
 
-LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player) : GameObject(objData->X, objData->Y), Player_(player) {
-	auto spriteName = GameState::SelectedOverworldSprite + ".png";
-	float fw = (float)GameState::SelectedOverworldFrameW;
-	float fh = (float)GameState::SelectedOverworldFrameH;
+LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player, int playerIndex,
+						   const string& overworldSprite, int frameW, int frameH)
+	: GameObject(objData->X, objData->Y), PlayerIndex_(playerIndex), Player_(player) {
+	auto spriteName = overworldSprite + ".png";
+	float fw = (float)frameW;
+	float fh = (float)frameH;
 	Sprite_ = Engine::Sprites::CreateSpriteFull(spriteName, &X_, &Y_, {0, 0, fw, fh}, {0, 0, fw, fh});
 	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
-	Animator_ = make_unique<SpriteAnimator>(GameState::SelectedOverworldSprite, Sprite_);
+	Animator_ = make_unique<SpriteAnimator>(overworldSprite, Sprite_);
 }
 
 void LocalPlayer::Start() {}
 void LocalPlayer::Update() {
-	GameState::Players::LocalPlayerData[0].MovedThisFrame = false;
+	GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = false;
 	if (!handlePlayerMovement()) {
 		handleplayerJoystickMovement();
 	}
-	handleInteractions();
-	if (handleMapExits()) {
-		return;
+	if (PlayerIndex_ == 0) {
+		handleInteractions();
+		if (handleMapExits()) {
+			return;
+		}
 	}
 }
 
@@ -170,7 +175,7 @@ void LocalPlayer::handleplayerJoystickMovement() {
 	}
 	if (Direction_ != previousDirection) {
 		Animator_->StartAnimation(getAnimNameFromDirection());
-		GameState::NextLoadDirection = static_cast<int>(Direction_);
+		if (PlayerIndex_ == 0) GameState::NextLoadDirection = static_cast<int>(Direction_);
 	}
 
 	float desiredX = X() + sMoveSpeed * xStick * GameState::DeltaTimeSeconds;
@@ -182,14 +187,16 @@ void LocalPlayer::handleplayerJoystickMovement() {
 	CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
 	SetX(CollisionRect_.x - sCollisionOffsetAndSizeRect.x);
 	SetY(CollisionRect_.y - sCollisionOffsetAndSizeRect.y);
-	GameState::NextLoadLocation.X = X();
-	GameState::NextLoadLocation.Y = Y();
+	if (PlayerIndex_ == 0) {
+		GameState::NextLoadLocation.X = X();
+		GameState::NextLoadLocation.Y = Y();
+	}
 	Animator_->UpdateAnimatorSpeed(1.0f);
-	GameState::Players::LocalPlayerData[0].MovedThisFrame = true;
-	GameState::Players::LocalPlayerData[0].Location.x = X();
-	GameState::Players::LocalPlayerData[0].Location.y = Y();
-	GameState::Players::LocalPlayerData[0].Location.w = 4;
-	GameState::Players::LocalPlayerData[0].Location.h = 4;
+	GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = true;
+	GameState::Players::LocalPlayerData[PlayerIndex_].Location.x = X();
+	GameState::Players::LocalPlayerData[PlayerIndex_].Location.y = Y();
+	GameState::Players::LocalPlayerData[PlayerIndex_].Location.w = 4;
+	GameState::Players::LocalPlayerData[PlayerIndex_].Location.h = 4;
 }
 
 bool LocalPlayer::handlePlayerMovement() {
@@ -221,7 +228,7 @@ bool LocalPlayer::handlePlayerMovement() {
 
 	if (Direction_ != previousDirection) {
 		Animator_->StartAnimation(getAnimNameFromDirection());
-		GameState::NextLoadDirection = static_cast<int>(Direction_);
+		if (PlayerIndex_ == 0) GameState::NextLoadDirection = static_cast<int>(Direction_);
 	}
 
 	if (moved) {
@@ -233,16 +240,16 @@ bool LocalPlayer::handlePlayerMovement() {
 		CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
 		SetX(CollisionRect_.x - sCollisionOffsetAndSizeRect.x);
 		SetY(CollisionRect_.y - sCollisionOffsetAndSizeRect.y);
-		// Update gamestate with players location.
-		GameState::NextLoadLocation.X = X();
-		GameState::NextLoadLocation.Y = Y();
+		if (PlayerIndex_ == 0) {
+			GameState::NextLoadLocation.X = X();
+			GameState::NextLoadLocation.Y = Y();
+		}
 		Animator_->UpdateAnimatorSpeed(1.0f);
-		GameState::Players::LocalPlayerData[0].MovedThisFrame = true;
-		GameState::Players::LocalPlayerData[0].Location.x = X();
-		GameState::Players::LocalPlayerData[0].Location.y = Y();
-		GameState::Players::LocalPlayerData[0].Location.w = 4;
-		GameState::Players::LocalPlayerData[0].Location.h = 4;
-
+		GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = true;
+		GameState::Players::LocalPlayerData[PlayerIndex_].Location.x = X();
+		GameState::Players::LocalPlayerData[PlayerIndex_].Location.y = Y();
+		GameState::Players::LocalPlayerData[PlayerIndex_].Location.w = 4;
+		GameState::Players::LocalPlayerData[PlayerIndex_].Location.h = 4;
 	} else {
 		Animator_->UpdateAnimatorSpeed(0.0f);
 	}

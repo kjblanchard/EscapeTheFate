@@ -173,6 +173,20 @@ static void loadPlayers() {
 	args.Controller = PlayerControllerSystem::GetPlayerByNum(0);
 	auto battler = new PlayerBattler(args);
 	_battlers.at(playerSpawnLocation) = battler;
+
+	if (GameState::IsMultiplayer) {
+		const int p2SpawnLocation = 2;
+		auto& p2BattlerData = battlerDatabase_.at(GameState::SelectedPlayerCharacter2);
+		auto p2Spawn = BattleLocation::GetBattleLocation(p2SpawnLocation);
+		BattlerArgs p2Args;
+		p2Args.BattlerNum = 1;
+		p2Args.BattleData = &p2BattlerData;
+		p2Args.X = p2Spawn->X();
+		p2Args.Y = p2Spawn->Y();
+		p2Args.Controller = PlayerControllerSystem::GetPlayerByNum(1);
+		auto p2Battler = new PlayerBattler(p2Args);
+		_battlers.at(p2SpawnLocation) = p2Battler;
+	}
 }
 
 static void loadEnemies() {

@@ -3,6 +3,7 @@
 #include <Supergoon/Input/joystick.h>
 #include <Supergoon/Input/keyboard.h>
 #include <gameConfig.hpp>
+#include <gameState.hpp>
 using namespace Etf;
 
 static int sCurrentPlayerNum_ = 0;
@@ -36,6 +37,9 @@ bool PlayerController::IsButtonJustPressed(ControllerButtons button) const {
 	auto stickPressed = isStickDirectionJustPressed(button);
 	if (PlayerNum_ == 0) {
 		auto keyboardPressed = IsKeyboardKeyJustPressed(KeyboardKeyConfig_[idx]);
+		if (GameState::IsMultiplayer) {
+			return keyboardPressed;
+		}
 		auto joystickPressed = false;
 		if (JoystickAssigned_ != -1) {
 			joystickPressed = geGamepadButtonJustPressed(JoystickAssigned_, JoystickButtonConfig_[idx]);
@@ -52,6 +56,9 @@ bool PlayerController::IsButtonPressed(ControllerButtons button) const {
 	auto idx = static_cast<int>(button);
 	if (PlayerNum_ == 0) {
 		auto keyboardPressed = IsKeyboardKeyDown(KeyboardKeyConfig_[idx]);
+		if (GameState::IsMultiplayer) {
+			return keyboardPressed;
+		}
 		auto joystickPressed = false;
 		if (JoystickAssigned_ != -1) {
 			joystickPressed = geGamepadButtonHeldDown(JoystickAssigned_, JoystickButtonConfig_[idx]);
@@ -65,6 +72,7 @@ bool PlayerController::IsButtonPressed(ControllerButtons button) const {
 }
 float PlayerController::JoystickAxisState(JoystickAxis axis) const {
 	if (JoystickAssigned_ == -1) return 0.0f;
+	if (GameState::IsMultiplayer && PlayerNum_ == 0) return 0.0f;
 	switch (axis) {
 		case JoystickAxis::LeftThumbstickX:
 			return geGamepadLeftAxisXFloat(JoystickAssigned_);
@@ -77,6 +85,7 @@ float PlayerController::JoystickAxisState(JoystickAxis axis) const {
 
 float PlayerController::JoystickAxisThisFrameMovement(JoystickAxis axis) const {
 	if (JoystickAssigned_ == -1) return 0.0f;
+	if (GameState::IsMultiplayer && PlayerNum_ == 0) return 0.0f;
 	switch (axis) {
 		case JoystickAxis::LeftThumbstickX:
 			return static_cast<float>(geGamepadLeftAxisXThisFrameMovement(JoystickAssigned_));
@@ -91,6 +100,9 @@ bool PlayerController::IsButtonJustReleased(ControllerButtons button) const {
 	auto idx = static_cast<int>(button);
 	if (PlayerNum_ == 0) {
 		auto keyboardReleased = IsKeyboardKeyJustReleased(KeyboardKeyConfig_[idx]);
+		if (GameState::IsMultiplayer) {
+			return keyboardReleased;
+		}
 		auto joystickReleased = false;
 		if (JoystickAssigned_ != -1) {
 			joystickReleased = geGamepadButtonJustReleased(JoystickAssigned_, JoystickButtonConfig_[idx]);

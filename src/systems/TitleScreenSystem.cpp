@@ -1,3 +1,5 @@
+#include <Supergoon/Input/joystick.h>
+
 #include <engine.hpp>
 #include <systems/CharacterSelectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
@@ -14,9 +16,9 @@ using namespace Etf;
 
 namespace {
 
-const int kNumMenuItems = 3;
+const int kNumMenuItems = 4;
 const int kMenuSpacing = 15;
-const bool kMenuItemEnabled[kNumMenuItems] = {true, false, false};
+const bool kMenuItemEnabled[kNumMenuItems] = {true, true, false, false};
 
 UIObject* _menuItems[kNumMenuItems] = {};
 UIImage* _finger = nullptr;
@@ -49,10 +51,11 @@ void TitleScreenSystem::Update() {
 		auto root = UI::GetRootUIObject();
 		if (!root->GetChildByName("CloudPanel")) return;
 		_menuItems[0] = root->GetChildByName("NewGameText");
-		_menuItems[1] = root->GetChildByName("LoadText");
-		_menuItems[2] = root->GetChildByName("OptionsText");
+		_menuItems[1] = root->GetChildByName("MultiplayerText");
+		_menuItems[2] = root->GetChildByName("LoadText");
+		_menuItems[3] = root->GetChildByName("OptionsText");
 		_finger = static_cast<UIImage*>(root->GetChildByName("MenuFinger"));
-		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_finger) return;
+		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_menuItems[3] || !_finger) return;
 		_initialized = true;
 		positionFinger();
 		return;
@@ -86,6 +89,15 @@ void TitleScreenSystem::Update() {
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		if (kMenuItemEnabled[_selectedIndex]) {
+			if (_selectedIndex == 1) {
+				if (SG_GetCurrentNumControllers() < 1) {
+					Engine::Audio::PlaySFXBuffer("error1", 0.75f);
+					return;
+				}
+				GameState::IsMultiplayer = true;
+			} else {
+				GameState::IsMultiplayer = false;
+			}
 			Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
 			auto root = UI::GetRootUIObject();
 			auto* titlePanel = root->GetChildByName("TitleNineSlice");

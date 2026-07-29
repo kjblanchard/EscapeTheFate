@@ -26,10 +26,15 @@ struct GameState {
 	static float DeltaTimeMilliseconds;
 	static bool InDialog;
 	static bool Paused;
+	static bool IsMultiplayer;
 	static int SelectedPlayerCharacter;
 	static std::string SelectedOverworldSprite;
 	static int SelectedOverworldFrameW;
 	static int SelectedOverworldFrameH;
+	static int SelectedPlayerCharacter2;
+	static std::string SelectedOverworldSprite2;
+	static int SelectedOverworldFrameW2;
+	static int SelectedOverworldFrameH2;
 	struct Players {
 		static PlayerData LocalPlayerData[2];
 	} Players;

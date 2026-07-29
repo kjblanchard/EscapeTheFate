@@ -37,6 +37,8 @@ bool _active = false;
 bool _uiBuilt = false;
 vector<CharacterEntry> _characters;
 int _selectedIndex = 0;
+int _selectingPlayer = 0;
+int _p1SelectedIndex = 0;
 
 UIObject* _panel = nullptr;
 UIAnimation* _battleAnim = nullptr;
@@ -102,7 +104,11 @@ void buildUI() {
 	titleArgs.FontName = "PressStart2P";
 	titleArgs.FontSize = 8;
 	titleArgs.Rect = {0, 10, 360, 16};
-	titleArgs.TextToDraw = "~ Choose Your Character ~";
+	if (GameState::IsMultiplayer) {
+		titleArgs.TextToDraw = _selectingPlayer == 0 ? "~ P1: Choose Character ~" : "~ P2: Choose Character ~";
+	} else {
+		titleArgs.TextToDraw = "~ Choose Your Character ~";
+	}
 	titleArgs.Name = "CharSelectTitle";
 	titleArgs.NumCharsToDraw = 100;
 	titleArgs.Priority = 2;
@@ -223,6 +229,8 @@ void CharacterSelectSystem::Activate() {
 	loadCharacterData();
 	_active = true;
 	_selectedIndex = 0;
+	_selectingPlayer = 0;
+	_p1SelectedIndex = 0;
 	buildUI();
 }
 
@@ -234,9 +242,16 @@ void CharacterSelectSystem::Update() {
 	if (!_active) return;
 	if (GameState::CurrentFadeState != (int)LoadingScreenFadeTypes::NotFading) return;
 
-	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
+	auto& player = PlayerControllerSystem::GetPlayerByNum(_selectingPlayer);
 
 	if (player->IsButtonJustPressed(ControllerButtons::B)) {
+		if (GameState::IsMultiplayer && _selectingPlayer == 1) {
+			_selectingPlayer = 0;
+			_selectedIndex = _p1SelectedIndex;
+			destroyUI();
+			buildUI();
+			return;
+		}
 		destroyUI();
 		_active = false;
 		return;
@@ -263,14 +278,39 @@ void CharacterSelectSystem::Update() {
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
 		auto& ch = _characters[_selectedIndex];
-		GameState::ResetForNewGame();
-		GameState::SelectedPlayerCharacter = ch.BattlerDBIndex;
-		GameState::SelectedOverworldSprite = ch.OverworldSprite;
-		GameState::SelectedOverworldFrameW = ch.OverworldFrameW;
-		GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
-		BattleSystem::ResetAfterGameOver();
-		destroyUI();
-		_active = false;
-		Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
+
+		if (!GameState::IsMultiplayer) {
+			GameState::ResetForNewGame();
+			GameState::SelectedPlayerCharacter = ch.BattlerDBIndex;
+			GameState::SelectedOverworldSprite = ch.OverworldSprite;
+			GameState::SelectedOverworldFrameW = ch.OverworldFrameW;
+			GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
+			BattleSystem::ResetAfterGameOver();
+			destroyUI();
+			_active = false;
+			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
+		} else if (_selectingPlayer == 0) {
+			_p1SelectedIndex = _selectedIndex;
+			_selectingPlayer = 1;
+			_selectedIndex = 0;
+			destroyUI();
+			buildUI();
+		} else {
+			GameState::ResetForNewGame();
+			GameState::IsMultiplayer = true;
+			auto& p1ch = _characters[_p1SelectedIndex];
+			GameState::SelectedPlayerCharacter = p1ch.BattlerDBIndex;
+			GameState::SelectedOverworldSprite = p1ch.OverworldSprite;
+			GameState::SelectedOverworldFrameW = p1ch.OverworldFrameW;
+			GameState::SelectedOverworldFrameH = p1ch.OverworldFrameH;
+			GameState::SelectedPlayerCharacter2 = ch.BattlerDBIndex;
+			GameState::SelectedOverworldSprite2 = ch.OverworldSprite;
+			GameState::SelectedOverworldFrameW2 = ch.OverworldFrameW;
+			GameState::SelectedOverworldFrameH2 = ch.OverworldFrameH;
+			BattleSystem::ResetAfterGameOver();
+			destroyUI();
+			_active = false;
+			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
+		}
 	}
 }
