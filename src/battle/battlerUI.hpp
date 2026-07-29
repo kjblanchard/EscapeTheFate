@@ -68,6 +68,7 @@ class BattlerUI {
 	UIAnimation* _progressBarAnim;
 	UIProgressBar* _progressBar;
 	bool _player;
+	unsigned int _battlerNum;
 	float _currentAnimationTime = 0;
 	float _magicAnimationTime = 0;
 	float _menuBoxStartX, _menuBoxStartY;

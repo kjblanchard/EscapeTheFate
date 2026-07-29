@@ -3,6 +3,7 @@
 
 #include <battle/battlerUI.hpp>
 #include <engine.hpp>
+#include <format>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -32,8 +33,7 @@ void BattlerUI::EndPlayerTurn(Battler* battler) {
 	_turnMarkerAnim->SetVisible(false);
 }
 
-BattlerUI::BattlerUI(unsigned int battlerNum) {
-	// turnmarker test
+BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 	auto turnMarker = UI::GetRootUIObject()->GetChildByName("TurnMarker");
 	if (!turnMarker) sgLogCritical("Could not find turnMarker, exiting");
 	_turnMarkerAnim = static_cast<UIAnimation*>(turnMarker);
@@ -42,17 +42,21 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 
 	_player = battlerNum < 3;
 	if (_player) {
-		_commandMenu = UI::GetRootUIObject()->GetChildByName("CommandsNineSlice");
+		auto playerUIName = format("Player{}CommandsUI", to_string(battlerNum + 1));
+		auto playerRoot = UI::GetRootUIObject()->GetChildByName(playerUIName);
+		if (!playerRoot) sgLogCritical("Could not find %s, exiting", playerUIName.c_str());
+
+		_commandMenu = playerRoot->GetChildByName("CommandsNineSlice");
 		if (!_commandMenu) {
-			sgLogCritical("Could not fild child CommandsNineSlice, exiting");
+			sgLogCritical("Could not find child CommandsNineSlice, exiting");
 		}
 		_menuBoxStartX = _commandMenu->OriginalX();
 		_menuBoxStartY = _commandMenu->OriginalY();
 		_commandMenu->SetVisible(false);
 		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
-		auto vlg = UI::GetRootUIObject()->GetChildByName("CommandsVLG");
+		auto vlg = playerRoot->GetChildByName("CommandsVLG");
 		if (!vlg) {
-			sgLogCritical("Could not fild child commandsvlg, exiting");
+			sgLogCritical("Could not find child CommandsVLG, exiting");
 		}
 		_menuItems[0] = vlg->GetChildByName("AttackText");
 		_menuItems[1] = vlg->GetChildByName("MagicText");
@@ -61,30 +65,35 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		Color disabledColor = {180, 180, 180, 255};
 		for (int i = 0; i < 4; ++i) {
 			if (!_menuItems[i])
-				sgLogCritical("Could not fild child thing, exiting");
+				sgLogCritical("Could not find child menu item, exiting");
 			if (i >= 2) {
 				auto menuCasted = static_cast<UIText*>(_menuItems[i]);
 				if (menuCasted) menuCasted->UpdateDrawColor(disabledColor);
 			}
 		}
-		auto finger = UI::GetRootUIObject()->GetChildByName("Finger");
+		auto finger = playerRoot->GetChildByName("Finger");
 		if (finger) {
 			_finger = static_cast<UIImage*>(finger);
 		}
 		finger->SetVisible(false);
-		auto ui = UI::GetRootUIObject()->GetChildByName("Player1CommandsUI");
-		auto tsFinger = ui->GetChildByName("BattleSelectionFinger");
+		auto tsFinger = playerRoot->GetChildByName("BattleSelectionFinger");
 		if (tsFinger) {
 			_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
 		}
 		_targetSelectionFinger->SetVisible(false);
-		auto hpObject = UI::GetRootUIObject()->GetChildByName("P1Health");
+
+		auto hpName = format("P{}Health", to_string(battlerNum + 1));
+		auto hpObject = UI::GetRootUIObject()->GetChildByName(hpName);
 		_hpObject = static_cast<UIText*>(hpObject);
-		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName("P1ATB");
+
+		auto atbName = format("P{}ATB", to_string(battlerNum + 1));
+		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName(atbName);
 		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
 		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
 		StartATBIdleAnim();
-		auto progressBarObject = UI::GetRootUIObject()->GetChildByName("P1ATBProgressBar");
+
+		auto atbBarName = format("P{}ATBProgressBar", to_string(battlerNum + 1));
+		auto progressBarObject = UI::GetRootUIObject()->GetChildByName(atbBarName);
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
 
@@ -119,16 +128,16 @@ BattlerUI::BattlerUI(unsigned int battlerNum) {
 		_targetInfoText = new UIText(infoTextArgs);
 		_targetInfoBox->AddChild(_targetInfoText);
 
-		_magicMenu = UI::GetRootUIObject()->GetChildByName("MagicNineSlice");
+		_magicMenu = playerRoot->GetChildByName("MagicNineSlice");
 		if (_magicMenu) {
 			_magicMenuStartX = _magicMenu->OriginalX();
 			_magicMenu->SetVisible(false);
 			_magicMenu->SetX(_magicMenuStartX + Animation_Offset);
 		}
 		for (int i = 0; i < 8; ++i) {
-			_magicMenuItems[i] = UI::GetRootUIObject()->GetChildByName("MagicSlot" + to_string(i));
+			_magicMenuItems[i] = playerRoot->GetChildByName("MagicSlot" + to_string(i));
 		}
-		auto magicFingerObj = UI::GetRootUIObject()->GetChildByName("MagicFinger");
+		auto magicFingerObj = playerRoot->GetChildByName("MagicFinger");
 		if (magicFingerObj) {
 			_magicFinger = static_cast<UIImage*>(magicFingerObj);
 			_magicFinger->SetVisible(false);

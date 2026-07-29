@@ -99,11 +99,9 @@ void LocalPlayer::Update() {
 	if (!handlePlayerMovement()) {
 		handleplayerJoystickMovement();
 	}
-	if (PlayerIndex_ == 0) {
-		handleInteractions();
-		if (handleMapExits()) {
-			return;
-		}
+	handleInteractions();
+	if (handleMapExits()) {
+		return;
 	}
 }
 
