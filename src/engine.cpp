@@ -319,7 +319,7 @@ void loadAllMaps() {
 		sceneData_.SceneToLoad = &scene;
 		auto name = scene.MapName + ".tmj";
 		auto result = GetDataFromDirectory(name.c_str(), &buf, &sz, directory_);
-		if(!result){
+		if (!result) {
 			sgLogDebug("Could not preload map file %s", name.c_str());
 			continue;
 		}
@@ -374,12 +374,14 @@ void loadSceneInternal() {
 	LoadMapFromBuffer(sceneData_.NextScene.c_str(), buf, sz);
 }
 
-void playBGMInternal(const string& name, float volume) {
+const int kLoopEndless_ = -1;
+
+void playBGMInternal(const string& name, float volume, int loops = kLoopEndless_) {
 	auto fullPath = std::format("{}.ogg", name);
 	char* buf;
 	size_t sz;
 	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, directory_);
-	LoadBgmBuffer(fullPath.c_str(), volume, -1, buf, sz);
+	LoadBgmBuffer(fullPath.c_str(), volume, loops, buf, sz);
 	PlayBgm();
 }
 }  // namespace
@@ -445,14 +447,14 @@ void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, 
 	sceneData_.NextScene = newName;
 }
 
-void Engine::Audio::PlayBGM(const std::string& name, float volume) {
+void Engine::Audio::PlayBGM(const std::string& name, float volume, int loops) {
 	if (currentBGM_ == name) {
 		sgLogDebug("Backing out, not playing bgm %s", name.c_str());
 		return;
 	}
 	sgLogDebug("Playin, bgm %s", name.c_str());
 	SetBgmTrack(0);
-	playBGMInternal(name, volume);
+	playBGMInternal(name, volume, loops);
 	currentBGM_ = name;
 }
 

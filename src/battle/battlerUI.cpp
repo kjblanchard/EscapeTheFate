@@ -298,3 +298,7 @@ void BattlerUI::ClosePlayerInfoBox() {
 		menu->SetVisible(false);
 	}
 }
+
+void BattlerUI::EndBattle() {
+	
+}

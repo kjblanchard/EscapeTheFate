@@ -230,6 +230,7 @@
             },
             "Player2CommandsUI": {
                 "rect": { "x": 365, "y": 112, "w": 72, "h": 72 },
+                "visible" : false,
                 "children": {
                     "Finger": {
                         "type": "image",
@@ -600,6 +601,7 @@
                                             },
                                             "Player2StatusHUD": {
                                                 "rect": { "x": 0, "y": 0, "w": 148, "h": 13 },
+                                                "visible": false,
                                                 "children": {
                                                     "P2NameText": {
                                                         "type": "text",
@@ -725,7 +727,7 @@
             "GameOverNineSlice": {
                 "type": "nineSlice",
                 "visible": true,
-                "file": "uibase",
+                "file": "null",
                 "scale": 1.0,
                 "color": { "R": 0, "G": 0, "B": 0, "A": 255 },
                 "rect": { "x": 0, "y": 0, "w": 480, "h": 270 },
@@ -738,8 +740,9 @@
                     "GameOverText": {
                         "type": "text",
                         "font": "PressStart2P",
-                        "fontSize": 12,
+                        "fontSize": 24,
                         "rect": { "x": 0, "y": 0, "w": 480, "h": 270 },
+                        "color": { "R": 200, "G": 0, "B": 0, "A": 255 },
                         "text": "Game Over",
                         "centeredX": true,
                         "centeredY": true,

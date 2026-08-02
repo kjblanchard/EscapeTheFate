@@ -49,6 +49,7 @@ class BattlerUI {
 	void UpdateAnimations();
 	void StartPlayerTurn(Battler* battler);
 	void EndPlayerTurn(Battler* battler);
+	static void EndBattle();
 	static void ClosePlayerInfoBox();
 
    private:
