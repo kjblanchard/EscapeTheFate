@@ -2,7 +2,7 @@
     {
         "id": 0,
         "name": "Kevin",
-        "hp": 2,
+        "hp": 12,
         "str": 5,
         "mag": 5,
         "def": 5,
@@ -52,7 +52,7 @@
     {
         "id": 2,
         "name": "Aria",
-        "hp": 2,
+        "hp": 8,
         "str": 4,
         "mag": 7,
         "def": 3,
@@ -76,7 +76,7 @@
     {
         "id": 3,
         "name": "Rook",
-        "hp": 3,
+        "hp": 10,
         "str": 6,
         "mag": 3,
         "def": 7,

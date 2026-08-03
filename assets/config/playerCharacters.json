@@ -1,21 +1,21 @@
 [
     {
         "id": 0,
-        "name": "Kevin",
-        "description": "A balanced warrior with sword skills.",
+        "name": "Warrior",
+        "description": "Focused on dealing and tanking damage.",
         "overworldSprite": "player1",
         "battleSprite": "player1Battler",
         "portrait": "portrait1",
         "portraitRect": { "x": 0, "y": 0, "w": 48, "h": 48 },
         "idle": "idle1",
         "battlerDBIndex": 0,
-        "overworldFrameW": 32,
-        "overworldFrameH": 32
+        "overworldFrameW": 26,
+        "overworldFrameH": 36
     },
     {
         "id": 1,
-        "name": "Aria",
-        "description": "A swift mage with arcane power.",
+        "name": "Red Mage",
+        "description": "Debuffing, Buffing, Status Effects",
         "overworldSprite": "player2",
         "battleSprite": "player2Battler",
         "portrait": "portrait2",
@@ -27,8 +27,8 @@
     },
     {
         "id": 2,
-        "name": "Rook",
-        "description": "A sturdy defender with high resilience.",
+        "name": "Gunblade",
+        "description": "Fast and nimble, daggers and guns",
         "overworldSprite": "player3",
         "battleSprite": "player3Battler",
         "portrait": "portrait3",

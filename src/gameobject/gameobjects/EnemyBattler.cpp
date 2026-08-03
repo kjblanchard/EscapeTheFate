@@ -18,8 +18,12 @@ using namespace Etf;
 using namespace std;
 using enum EnemyBattlerStates;
 
-static const Color kWhite = {255, 255, 255, 255};
-static const Color kBlack = {0, 0, 0, 255};
+namespace {
+constexpr Color kWhite = {255, 255, 255, 255};
+constexpr Color kBlack = {0, 0, 0, 255};
+constexpr Color kEnemyPanelBorderColor = {255, 235, 235, 255};
+}
+
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_deathShader = ShaderCreate();
@@ -28,8 +32,8 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	constexpr float kBarWidth = 18;
 	constexpr float kBarHeight = 3;
 	constexpr float kPadding = 1;
-	constexpr float kPanelW = kBarWidth + kPadding * 2;
-	constexpr float kPanelH = kBarHeight * 2 + kPadding * 2;
+	constexpr float kPanelW = kBarWidth + kPadding;
+	constexpr float kPanelH = kBarHeight * 2 + kPadding;
 
 	float panelX = X() + (SpriteWidth() / 2) - (kPanelW / 2) + _battlerData->HpBarOffsetX;
 	float panelY = Y() + SpriteHeight() + _battlerData->HpBarOffsetY;
@@ -38,7 +42,7 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	panelArgs.Name = "EnemyBarPanel";
 	panelArgs.Rect = {panelX, panelY, kPanelW, kPanelH};
 	panelArgs.FillColor = {0, 0, 0, 0};
-	panelArgs.BorderColor = {80, 80, 100, 255};
+	panelArgs.BorderColor = kEnemyPanelBorderColor;
 	panelArgs.Priority = 0;
 	panelArgs.Visible = true;
 	_barPanel = new UIPanel(panelArgs);
@@ -46,7 +50,7 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 
 	UIProgressBarArgs hpBarArgs;
 	hpBarArgs.Name = "EnemyHPBar";
-	hpBarArgs.Rect = {kPadding, kPadding, kBarWidth, kBarHeight};
+	hpBarArgs.Rect = {0, 0, kBarWidth, kBarHeight};
 	hpBarArgs.BarRect = {0, 0, kBarWidth, kBarHeight};
 	hpBarArgs.BarColor = {50, 200, 50, 255};
 	hpBarArgs.BackgroundColor = {30, 30, 30, 255};
@@ -58,7 +62,7 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 
 	UIProgressBarArgs pbArgs;
 	pbArgs.Name = "EnemyATBProgress";
-	pbArgs.Rect = {kPadding, kPadding + kBarHeight, kBarWidth, kBarHeight};
+	pbArgs.Rect = {0, kBarHeight, kBarWidth, kBarHeight};
 	pbArgs.BarRect = {0, 0, kBarWidth, kBarHeight};
 	pbArgs.BarColor = {255, 140, 0, 255};
 	pbArgs.BackgroundColor = {30, 30, 30, 255};

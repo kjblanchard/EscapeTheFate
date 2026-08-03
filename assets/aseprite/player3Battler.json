@@ -33,7 +33,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 175
+    "duration": 115
    },
    {
     "filename": "player3Battler 4.aseprite",
@@ -42,7 +42,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 175
+    "duration": 115
    },
    {
     "filename": "player3Battler 5.aseprite",
@@ -51,7 +51,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 175
+    "duration": 115
    },
    {
     "filename": "player3Battler 6.aseprite",
@@ -494,8 +494,9 @@
   "size": { "w": 7776, "h": 144 },
   "scale": "1",
   "frameTags": [
+   { "name": "slash2", "from": 3, "to": 5, "direction": "forward", "color": "#000000ff" },
    { "name": "idle1", "from": 9, "to": 11, "direction": "forward", "color": "#000000ff" },
-   { "name": "slash2", "from": 12, "to": 14, "direction": "forward", "color": "#000000ff" },
+   { "name": "slash1", "from": 12, "to": 14, "direction": "forward", "color": "#000000ff" },
    { "name": "cheer1", "from": 15, "to": 17, "direction": "forward", "color": "#000000ff" },
    { "name": "cheer2", "from": 18, "to": 20, "direction": "forward", "color": "#000000ff" },
    { "name": "damage1", "from": 36, "to": 38, "direction": "forward", "color": "#000000ff" },
