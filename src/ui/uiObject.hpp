@@ -18,15 +18,17 @@ class UIObject {
    public:
 	UIObject(UIObjectArgs args);
 	UIObject() = default;
-	inline float X() {return _location.x;}
-	inline float Y() {return _location.y;}
-	inline float OriginalX() {return _originalLocation.x;}
-	inline float OriginalY() {return _originalLocation.y;}
-	inline void SetX(float x){_location.x = x;}
-	inline void SetY(float y){_location.y = y;}
+	inline float X() { return _location.x; }
+	inline float Y() { return _location.y; }
+	inline float OriginalX() { return _originalLocation.x; }
+	inline float OriginalY() { return _originalLocation.y; }
+	inline void SetX(float x) { _location.x = x; }
+	inline void SetY(float y) { _location.y = y; }
+	inline float Width() { return _location.w; }
+	inline float Height() { return _location.h; }
 	// Gets the position on the screen currently, currently recursive call to root so can be expensive.
 	RectangleF AbsolutePosition() const;
-	//Sets the position based on absolute position, can be expensive as it calls getAbsolute position on itself
+	// Sets the position based on absolute position, can be expensive as it calls getAbsolute position on itself
 	void AbsolutePosition(int x, int y);
 	// What to do when this is dirty, called before
 	virtual void OnDirty() {}
@@ -36,7 +38,7 @@ class UIObject {
 	virtual void OnDraw(float offsetX, float offsetY) {}
 	// Calls ondraw and then draws all children, left virtual for hlg/vlg
 	virtual void Draw(float offsetX, float offsetY);
-	//Called by imgui if in debug mode
+	// Called by imgui if in debug mode
 	virtual void DebugDraw();
 	virtual ~UIObject() = default;
 	// Recursive search, can be expensive if you search high
@@ -68,7 +70,7 @@ class UIObject {
 	UIObject* _parent = nullptr;
 	// local location; Offset to parent and size
 	RectangleF _location = {0, 0, 0, 0};
-	const RectangleF _originalLocation = {0,0,0,0};
+	const RectangleF _originalLocation = {0, 0, 0, 0};
 	bool _debugBox = false;
 	friend void DisplayUITab();
 };

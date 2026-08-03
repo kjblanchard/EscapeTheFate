@@ -6,7 +6,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 1.aseprite",
@@ -15,7 +15,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 2.aseprite",
@@ -24,7 +24,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 3.aseprite",
@@ -33,7 +33,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 4.aseprite",
@@ -42,7 +42,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 5.aseprite",
@@ -51,7 +51,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 6.aseprite",
@@ -60,7 +60,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 7.aseprite",
@@ -69,7 +69,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 8.aseprite",
@@ -78,7 +78,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 9.aseprite",
@@ -87,7 +87,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 200
+    "duration": 175
    },
    {
     "filename": "player1Battler 10.aseprite",
@@ -96,7 +96,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 200
+    "duration": 175
    },
    {
     "filename": "player1Battler 11.aseprite",
@@ -105,7 +105,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 200
+    "duration": 175
    },
    {
     "filename": "player1Battler 12.aseprite",
@@ -114,7 +114,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 125
    },
    {
     "filename": "player1Battler 13.aseprite",
@@ -123,7 +123,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 125
    },
    {
     "filename": "player1Battler 14.aseprite",
@@ -132,7 +132,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 125
    },
    {
     "filename": "player1Battler 15.aseprite",
@@ -141,7 +141,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 16.aseprite",
@@ -150,7 +150,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 17.aseprite",
@@ -159,7 +159,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 18.aseprite",
@@ -168,7 +168,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 200
+    "duration": 175
    },
    {
     "filename": "player1Battler 19.aseprite",
@@ -177,7 +177,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 200
+    "duration": 175
    },
    {
     "filename": "player1Battler 20.aseprite",
@@ -186,7 +186,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 200
+    "duration": 175
    },
    {
     "filename": "player1Battler 21.aseprite",
@@ -195,7 +195,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 22.aseprite",
@@ -204,7 +204,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 23.aseprite",
@@ -213,7 +213,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 24.aseprite",
@@ -222,7 +222,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 25.aseprite",
@@ -231,7 +231,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 26.aseprite",
@@ -240,7 +240,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 27.aseprite",
@@ -249,7 +249,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 28.aseprite",
@@ -258,7 +258,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 29.aseprite",
@@ -267,7 +267,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 30.aseprite",
@@ -276,7 +276,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 31.aseprite",
@@ -285,7 +285,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 32.aseprite",
@@ -294,7 +294,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 33.aseprite",
@@ -303,7 +303,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 34.aseprite",
@@ -312,7 +312,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 35.aseprite",
@@ -321,7 +321,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 36.aseprite",
@@ -330,7 +330,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 37.aseprite",
@@ -339,7 +339,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 38.aseprite",
@@ -348,7 +348,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 39.aseprite",
@@ -357,7 +357,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 40.aseprite",
@@ -366,7 +366,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 41.aseprite",
@@ -375,7 +375,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 42.aseprite",
@@ -384,7 +384,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 43.aseprite",
@@ -393,7 +393,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 44.aseprite",
@@ -402,7 +402,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 45.aseprite",
@@ -411,7 +411,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 46.aseprite",
@@ -420,7 +420,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 47.aseprite",
@@ -429,7 +429,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 48.aseprite",
@@ -438,7 +438,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 49.aseprite",
@@ -447,7 +447,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 150
+    "duration": 175
    },
    {
     "filename": "player1Battler 50.aseprite",
@@ -456,7 +456,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 51.aseprite",
@@ -465,7 +465,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 52.aseprite",
@@ -474,7 +474,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    },
    {
     "filename": "player1Battler 53.aseprite",
@@ -483,7 +483,7 @@
     "trimmed": false,
     "spriteSourceSize": { "x": 0, "y": 0, "w": 144, "h": 144 },
     "sourceSize": { "w": 144, "h": 144 },
-    "duration": 100
+    "duration": 175
    }
  ],
  "meta": {
@@ -494,20 +494,27 @@
   "size": { "w": 7776, "h": 144 },
   "scale": "1",
   "frameTags": [
-   { "name": "idle3", "from": 0, "to": 2, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle1", "from": 0, "to": 2, "direction": "forward", "color": "#000000ff" },
    { "name": "slash1", "from": 3, "to": 5, "direction": "forward", "color": "#000000ff" },
-   { "name": "walk1", "from": 6, "to": 8, "direction": "pingpong", "color": "#000000ff" },
-   { "name": "idle1", "from": 9, "to": 11, "direction": "forward", "color": "#000000ff" },
+   { "name": "walk1", "from": 6, "to": 8, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle2", "from": 9, "to": 11, "direction": "forward", "color": "#000000ff" },
    { "name": "slash2", "from": 12, "to": 14, "direction": "forward", "color": "#000000ff" },
-   { "name": "cheer1", "from": 15, "to": 17, "direction": "pingpong", "color": "#000000ff" },
-   { "name": "cheer2", "from": 18, "to": 20, "direction": "pingpong", "color": "#000000ff" },
+   { "name": "cheer1", "from": 15, "to": 17, "direction": "forward", "color": "#000000ff" },
+   { "name": "cheer2", "from": 18, "to": 20, "direction": "forward", "color": "#000000ff" },
+   { "name": "bow1", "from": 21, "to": 23, "direction": "forward", "color": "#000000ff" },
+   { "name": "hurt1", "from": 24, "to": 26, "direction": "forward", "color": "#000000ff" },
+   { "name": "idle3", "from": 27, "to": 29, "direction": "forward", "color": "#000000ff" },
+   { "name": "slash3", "from": 30, "to": 32, "direction": "forward", "color": "#000000ff" },
+   { "name": "hurt2", "from": 33, "to": 35, "direction": "forward", "color": "#000000ff" },
    { "name": "damage1", "from": 36, "to": 38, "direction": "forward", "color": "#000000ff" },
-   { "name": "damage2", "from": 45, "to": 47, "direction": "forward", "color": "#000000ff" },
-   { "name": "clap1", "from": 48, "to": 49, "direction": "forward", "color": "#000000ff" },
+   { "name": "cheer3", "from": 39, "to": 41, "direction": "forward", "color": "#000000ff" },
+   { "name": "hurt3", "from": 42, "to": 44, "direction": "forward", "color": "#000000ff" },
+   { "name": "hurt5", "from": 45, "to": 47, "direction": "forward", "color": "#000000ff" },
+   { "name": "cheer4", "from": 48, "to": 49, "direction": "forward", "color": "#000000ff" },
    { "name": "dead1", "from": 51, "to": 53, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
-   { "name": "Layer 1", "opacity": 255, "blendMode": "normal" }
+   { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" }
   ],
   "slices": [
   ]

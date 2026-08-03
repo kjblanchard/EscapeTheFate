@@ -287,8 +287,8 @@ void BattlerUI::MoveCursorInMagicMenu(unsigned int col, unsigned int row) {
 }
 
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
-	auto x = battler->X() + (battler->SpriteWidth() / 2);
-	auto y = battler->Y();
+	auto x = battler->X() + (battler->SpriteWidth() / 2) - (_targetSelectionFinger->Width() / 2);
+	auto y = battler->Y() - (_targetSelectionFinger->Height() - 5);
 	_targetSelectionFinger->AbsolutePosition(x, y);
 }
 
@@ -300,5 +300,4 @@ void BattlerUI::ClosePlayerInfoBox() {
 }
 
 void BattlerUI::EndBattle() {
-	
 }

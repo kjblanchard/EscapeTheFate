@@ -68,7 +68,6 @@ static void loadWindowSettingsToConfig(gameConfig* config, json_object* rootObje
 	config->window.title = jstr(windowObject, "title");
 }
 
-
 static void loadLogosToConfig(gameConfig* config, json_object* rootObject) {
 	auto logosObj = jobj(rootObject, "logos");
 	if (!logosObj) return;
@@ -77,6 +76,12 @@ static void loadLogosToConfig(gameConfig* config, json_object* rootObject) {
 		auto name = jstrIndex(logosObj, i);
 		if (name) config->logos.emplace_back(name);
 	}
+#ifdef NDEBUG
+	// If release and if no logos, add supergoongameslogo Release build (typically)
+	if (numLogos == 0) {
+		config->logos.emplace_back("supergoongameslogo");
+	}
+#endif
 }
 
 static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObject) {
