@@ -5,10 +5,10 @@ namespace Etf {
 
 static constexpr int kDamageNumberPoolSize = 8;
 static constexpr float kDamageNumberDuration = 0.9f;
-static constexpr float kDamageNumberArcHeight = 18.0f;
-static constexpr float kDamageNumberArcWidth = 14.0f;
-static constexpr float kDamageNumberGravity = 80.0f;
-static constexpr float kDamageNumberFadeStart = 0.4f;
+static constexpr float kDamageNumberArcHeight = 12.0f;
+static constexpr float kDamageNumberArcWidth = 24.0f;
+static constexpr float kDamageNumberGravity = 90.0f;
+static constexpr float kDamageNumberFadeStart = 0.6f;
 
 struct DamageNumberSlot {
 	char text[8] = {};
