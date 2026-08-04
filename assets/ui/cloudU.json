@@ -5,7 +5,7 @@
             "TitleNineSlice": {
                 "type": "nineSlice",
                 "file": "uibase",
-                "visible": true,
+                "visible": false,
                 "scale": 1.0,
                 "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
                 "rect": { "x": 90, "y": 60, "w": 300, "h": 40 },
@@ -30,7 +30,7 @@
             "MenuNineSlice": {
                 "type": "nineSlice",
                 "file": "uibase",
-                "visible": true,
+                "visible": false,
                 "scale": 1.0,
                 "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
                 "rect": { "x": 160, "y": 115, "w": 160, "h": 75 },

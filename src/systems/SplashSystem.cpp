@@ -1,10 +1,13 @@
+#include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
+#include <sgtools/log.h>
 
 #include <engine.hpp>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <systems/SplashSystem.hpp>
+#include <ui/ui.hpp>
 #include <vector>
 
 using namespace Etf;
@@ -17,7 +20,11 @@ constexpr float FADE_OUT_TIME = 0.75f;
 constexpr int LOGICAL_W = 480;
 constexpr int LOGICAL_H = 270;
 
-enum class SplashState { Inactive, FadingIn, Holding, FadingOut, Done };
+enum class SplashState { Inactive,
+						 FadingIn,
+						 Holding,
+						 FadingOut,
+						 Done };
 
 struct LogoEntry {
 	Texture* texture;
@@ -37,6 +44,13 @@ void advanceToNextLogo() {
 	if (currentLogoIndex_ >= (int)logos_.size()) {
 		state_ = SplashState::Done;
 		active_ = false;
+		auto niner = UI::GetRootUIObject()->GetChildByName("TitleNineSlice");
+		auto ninertwo = UI::GetRootUIObject()->GetChildByName("MenuNineSlice");
+		if (!niner || !ninertwo) sgLogCritical("Can not do it!");
+		auto color = (Color){255, 255, 255, 0};
+		GraphicsUpdateFBOColor(&color);
+		niner->SetVisible(true);
+		ninertwo->SetVisible(true);
 		Engine::LoadScene("", 0.1f, 1.75f, false);
 		return;
 	}
