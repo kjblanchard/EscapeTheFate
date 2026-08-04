@@ -26,6 +26,15 @@ bool PlayerBattler::shouldBattleEnd() {
 
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controller(args.Controller), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
+	_battlerUI->UpdateAP(to_string(_currentAP));
+}
+
+void PlayerBattler::onAPGained() {
+	_battlerUI->UpdateAP(to_string(_currentAP));
+	if (_isDead || _currentHP <= 0) return;
+	if (_currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
+		handleStateChange(ATBFullyCharged);
+	}
 }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
@@ -140,7 +149,8 @@ void PlayerBattler::updateImpl() {
 		case BattlerStates::ATBCharging: {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
 			_battlerUI->UpdateProgressBar(progress);
-			if (_currentATBCharge >= _maxATBCharge) {
+			if (_reopenMenuAfterClose && _battlerUI->IsMenuClosed()) {
+				_reopenMenuAfterClose = false;
 				handleStateChange(ATBFullyCharged);
 			}
 			break;
@@ -149,8 +159,13 @@ void PlayerBattler::updateImpl() {
 			handleStateChange(CommandSelection);
 			break;
 		}
-		case TargetSelection:
+		case CommandSelection:
+		case MagicSelection:
+		case TargetSelection: {
+			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
+			_battlerUI->UpdateProgressBar(progress);
 			break;
+		}
 		case BattleEndStart:
 			handleStateChange(BattleEndIdle);
 			break;
@@ -192,12 +207,18 @@ void PlayerBattler::handleInputCommandsMenu() {
 		++newLocation;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		switch (_currentMenuLocation) {
-			case 0:
+			case 0: {
+				const auto& ability = BattleSystem::GetAbilityByID(0);
+				if (_currentAP < ability.APCost) {
+					Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+					return;
+				}
 				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 				_selectedAbilityID = 0;
 				_targetingFriendly = false;
 				handleStateChange(TargetSelection);
 				return;
+			}
 			case 1:
 				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 				handleStateChange(MagicSelection);
@@ -287,8 +308,12 @@ void PlayerBattler::handleInputMagicMenu() {
 			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 			return;
 		}
-		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		if (_currentAP < ability.APCost) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
+		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 		_targetingFriendly = ability.Friendly;
 		handleStateChange(TargetSelection);
 		return;
@@ -340,7 +365,10 @@ void PlayerBattler::handleInputTargetSelection() {
 			}
 			battler->PlayHitAnimation(ability);
 		}
+		SpendAP(ability.APCost);
+		_battlerUI->UpdateAP(to_string(_currentAP));
 		_currentATBCharge = 0;
+		_reopenMenuAfterClose = _currentAP > 0;
 		handleStateChange(ATBCharging);
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {

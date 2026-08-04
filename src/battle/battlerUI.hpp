@@ -20,7 +20,9 @@ class BattlerUI {
 	BattlerUI(unsigned int battlerNum);
 	~BattlerUI();
 	void UpdateHP(const std::string& hp);
+	void UpdateAP(const std::string& ap);
 	void UpdateProgressBar(float percent);
+	bool IsMenuClosed() const { return _currentState == PlayerUIAnimationStates::Closed; }
 	inline void OpenCommandsMenu() {
 		_commandMenu->SetVisible(true);
 		_currentState = PlayerUIAnimationStates::Opening;
@@ -62,6 +64,7 @@ class BattlerUI {
 	int _magicMenuCols = 2;
 	UIImage* _magicFinger = nullptr;
 	UIText* _hpObject;
+	UIText* _apObject = nullptr;
 	UIImage* _finger;
 	UIImage* _targetSelectionFinger;
 	UINineSlice* _targetInfoBox;

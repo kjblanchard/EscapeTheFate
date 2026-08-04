@@ -93,6 +93,16 @@ void EnemyBattler::getPlayerBattlers(std::vector<Battler*>& out) {
 	});
 }
 
+void EnemyBattler::onAPGained() {
+	if (_enemyState != ATBCharging) return;
+	const auto& ability = BattleSystem::GetAbilityByID(2);
+	if (_currentAP >= ability.APCost) {
+		_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
+		_attackDelayTimer = 0.0f;
+		_enemyState = DelayBeforeAttack;
+	}
+}
+
 void EnemyBattler::updateImpl() {
 	if (_deathEffectPlaying) {
 		_deathEffectTime += GameState::DeltaTimeSeconds;
@@ -115,11 +125,6 @@ void EnemyBattler::updateImpl() {
 		case ATBCharging: {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.0f;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(progress);
-			if (_currentATBCharge >= _maxATBCharge) {
-				_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
-				_attackDelayTimer = 0.0f;
-				_enemyState = DelayBeforeAttack;
-			}
 			break;
 		}
 		case DelayBeforeAttack: {
@@ -160,6 +165,7 @@ void EnemyBattler::updateImpl() {
 				}
 				target->TakeDamage(ability.BaseDamage);
 				target->PlayHitAnimation(ability);
+				SpendAP(ability.APCost);
 			}
 			_currentATBCharge = 0;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);

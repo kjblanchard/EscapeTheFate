@@ -38,6 +38,8 @@ class Battler : public GameObject {
 
    public:
 	inline unsigned int CurrentHP() { return _currentHP; }
+	inline int CurrentAP() const { return _currentAP; }
+	inline int MaxAP() const { return _maxAP; }
 	inline int Def() { return _battlerData->Def; }
 	inline const std::string& Name() const { return _battlerData->Name; }
 	inline BattlerData* GetBattlerData() const { return _battlerData; }
@@ -51,6 +53,8 @@ class Battler : public GameObject {
 	inline int& DebugHP() { return _currentHP; }
 	inline float& DebugATBCharge() { return _currentATBCharge; }
 	inline int DebugMaxATB() { return _maxATBCharge; }
+	inline int& DebugAP() { return _currentAP; }
+	inline int DebugMaxAP() { return _maxAP; }
 	inline BattlerData* DebugData() { return _battlerData; }
 #endif
 
@@ -58,12 +62,16 @@ class Battler : public GameObject {
 	virtual void updateImpl() {}
 	virtual void takeDamageImpl(int damage) = 0;
 	virtual void healImpl(int amount) {}
+	virtual void onAPGained() {}
+	bool SpendAP(int cost);
 
    protected:
 	BattlerData* _battlerData;
 	int _currentHP;
 	float _currentATBCharge;
 	int _maxATBCharge;
+	int _currentAP = 0;
+	int _maxAP = 3;
 
    protected:
 	Sprite* _sprite;

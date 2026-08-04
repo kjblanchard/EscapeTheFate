@@ -26,6 +26,7 @@ class PlayerBattler : public Battler {
 
    private:
 	void updateImpl() override;
+	void onAPGained() override;
 	void takeDamageImpl(int damage) override;
 	void healImpl(int amount) override;
 	void handleInputCommandsMenu();
@@ -61,6 +62,7 @@ class PlayerBattler : public Battler {
 	float _deathHoldTimer = 0.0f;
 	bool _isPlayingDamageAnim = false;
 	bool _isDead = false;
+	bool _reopenMenuAfterClose = false;
 };
 
 }  // namespace Etf

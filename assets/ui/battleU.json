@@ -563,8 +563,8 @@
                                                         "type": "text",
                                                         "font": "PressStart2P",
                                                         "fontSize": 8,
-                                                        "rect": { "x": 80, "y": 0, "w": 16, "h": 12 },
-                                                        "text": "M:",
+                                                        "rect": { "x": 80, "y": 0, "w": 20, "h": 12 },
+                                                        "text": "AP",
                                                         "centeredX": false,
                                                         "centeredY": false,
                                                         "numCharsToDraw": 100
@@ -573,8 +573,8 @@
                                                         "type": "text",
                                                         "font": "PressStart2P",
                                                         "fontSize": 8,
-                                                        "rect": { "x": 96, "y": 0, "w": 16, "h": 12 },
-                                                        "text": "99",
+                                                        "rect": { "x": 100, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "0",
                                                         "centeredX": false,
                                                         "centeredY": false,
                                                         "numCharsToDraw": 100
@@ -637,8 +637,8 @@
                                                         "type": "text",
                                                         "font": "PressStart2P",
                                                         "fontSize": 8,
-                                                        "rect": { "x": 80, "y": 0, "w": 16, "h": 12 },
-                                                        "text": "M:",
+                                                        "rect": { "x": 80, "y": 0, "w": 20, "h": 12 },
+                                                        "text": "AP",
                                                         "centeredX": false,
                                                         "centeredY": false,
                                                         "numCharsToDraw": 100
@@ -647,8 +647,8 @@
                                                         "type": "text",
                                                         "font": "PressStart2P",
                                                         "fontSize": 8,
-                                                        "rect": { "x": 96, "y": 0, "w": 16, "h": 12 },
-                                                        "text": "99",
+                                                        "rect": { "x": 100, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "0",
                                                         "centeredX": false,
                                                         "centeredY": false,
                                                         "numCharsToDraw": 100

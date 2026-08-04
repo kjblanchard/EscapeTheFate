@@ -25,6 +25,8 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_currentHP = _battlerData->HP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
+	_currentAP = 0;
+	_maxAP = _battlerData->MaxAP;
 	AddGameObjectToGameObjectSystem(this);
 }
 
@@ -74,11 +76,24 @@ void Battler::updateDamageNumbers() {
 }
 
 void Battler::updateATBGauge() {
-	if (_currentATBCharge >= _maxATBCharge) return;
+	if (_currentAP >= _maxAP) return;
+	if (_currentATBCharge >= _maxATBCharge) {
+		_currentATBCharge = 0;
+		_currentAP++;
+		if (_currentAP > _maxAP) _currentAP = _maxAP;
+		onAPGained();
+		return;
+	}
 	auto delta = DeltaTimeSeconds * 20;
 	auto gaguePower = delta * _battlerData->Spd;
 	_currentATBCharge += gaguePower;
 	_currentATBCharge = _currentATBCharge > _maxATBCharge ? _maxATBCharge : _currentATBCharge;
+}
+
+bool Battler::SpendAP(int cost) {
+	if (_currentAP < cost) return false;
+	_currentAP -= cost;
+	return true;
 }
 
 void Battler::Draw() {

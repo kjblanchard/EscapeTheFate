@@ -9,5 +9,6 @@ struct AbilityData {
 	std::string PlayerAnim;
 	int BaseDamage = 1;
 	bool Friendly = false;
+	int APCost = 1;
 };
 }  // namespace Etf

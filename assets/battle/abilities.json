@@ -7,7 +7,8 @@
         "playerAnim": "slash2",
         "sfx": "slash1",
         "baseDamage": 1,
-        "friendly": false
+        "friendly": false,
+        "apCost": 1
     },
     {
         "id": 1,
@@ -17,7 +18,8 @@
         "playerAnim": "cheer2",
         "sfx": "heal1",
         "baseDamage": -3,
-        "friendly": true
+        "friendly": true,
+        "apCost": 2
     },
     {
         "id": 2,
@@ -27,6 +29,7 @@
         "playerAnim": "",
         "sfx": "slash1",
         "baseDamage": 1,
-        "friendly": false
+        "friendly": false,
+        "apCost": 1
     }
 ]

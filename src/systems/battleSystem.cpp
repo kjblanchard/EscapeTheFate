@@ -134,6 +134,7 @@ static void loadBattleDB() {
 			}
 		}
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
+		battlerDatabase_.back().MaxAP = jKeyExists(currentJsonObject, "maxAP") ? jint(currentJsonObject, "maxAP") : 3;
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }
@@ -156,6 +157,7 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().PlayerAnim = jstr(currentJsonObject, "playerAnim");
 		abilityDatabase_.back().BaseDamage = jint(currentJsonObject, "baseDamage");
 		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
+		abilityDatabase_.back().APCost = jKeyExists(currentJsonObject, "apCost") ? jint(currentJsonObject, "apCost") : 1;
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }

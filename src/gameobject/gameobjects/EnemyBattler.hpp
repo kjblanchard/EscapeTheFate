@@ -23,6 +23,7 @@ class EnemyBattler : public Battler {
    protected:
 	void takeDamageImpl(int damage) override;
 	void healImpl(int amount) override;
+	void onAPGained() override;
 
    private:
 	void getPlayerBattlers(std::vector<Battler*>& out);

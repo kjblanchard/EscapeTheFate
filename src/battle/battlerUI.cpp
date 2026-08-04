@@ -92,6 +92,10 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 		auto hpObject = UI::GetRootUIObject()->GetChildByName(hpName);
 		_hpObject = static_cast<UIText*>(hpObject);
 
+		auto apName = format("P{}Magic", to_string(battlerNum + 1));
+		auto apObject = UI::GetRootUIObject()->GetChildByName(apName);
+		_apObject = static_cast<UIText*>(apObject);
+
 		auto atbName = format("P{}ATB", to_string(battlerNum + 1));
 		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName(atbName);
 		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
@@ -179,6 +183,11 @@ void BattlerUI::UpdateTargetInfo(const std::string& displayName) {
 void BattlerUI::UpdateHP(const string& hp) {
 	if (!_hpObject) return;
 	_hpObject->UpdateText(hp);
+}
+
+void BattlerUI::UpdateAP(const string& ap) {
+	if (!_apObject) return;
+	_apObject->UpdateText(ap);
 }
 
 void BattlerUI::UpdateAnimations() {

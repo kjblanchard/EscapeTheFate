@@ -141,8 +141,11 @@ void Etf::DisplayBattleTab() {
 						if (isPlayer) {
 							ImGui::SetNextItemWidth(150.0f);
 							ImGui::SliderFloat("ATB", &atb, 0.0f, (float)maxATB);
+							ImGui::SetNextItemWidth(80.0f);
+							ImGui::SliderInt("AP", &battler->DebugAP(), 0, battler->DebugMaxAP());
 						} else {
 							ImGui::Text("ATB: %.1f / %d", atb, maxATB);
+							ImGui::Text("AP: %d / %d", battler->CurrentAP(), battler->DebugMaxAP());
 						}
 						ImGui::Separator();
 						if (isPlayer) {
