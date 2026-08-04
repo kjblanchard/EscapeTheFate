@@ -78,9 +78,9 @@ void Battler::updateDamageNumbers() {
 void Battler::updateATBGauge() {
 	if (_currentAP >= _maxAP) return;
 	if (_currentATBCharge >= _maxATBCharge) {
-		_currentATBCharge = 0;
 		_currentAP++;
 		if (_currentAP > _maxAP) _currentAP = _maxAP;
+		_currentATBCharge = (_currentAP >= _maxAP) ? (float)_maxATBCharge : 0;
 		onAPGained();
 		return;
 	}
