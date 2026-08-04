@@ -18,5 +18,15 @@
         "sfx": "heal1",
         "baseDamage": -3,
         "friendly": true
+    },
+    {
+        "id": 2,
+        "name": "Enemy Slash",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "playerAnim": "",
+        "sfx": "slash1",
+        "baseDamage": 1,
+        "friendly": false
     }
 ]

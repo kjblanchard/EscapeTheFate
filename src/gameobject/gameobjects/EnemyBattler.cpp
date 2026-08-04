@@ -154,7 +154,7 @@ void EnemyBattler::updateImpl() {
 			getPlayerBattlers(players);
 			if (!players.empty()) {
 				auto target = players[0];
-				const auto& ability = BattleSystem::GetAbilityByID(0);
+				const auto& ability = BattleSystem::GetAbilityByID(2);
 				if (!ability.PlayerAnim.empty() && _animator->GetAnimationDuration(ability.PlayerAnim) > 0) {
 					_animator->PlayAnimationThenLoopSecond(ability.PlayerAnim, _battlerData->IdleAnimation);
 				}
