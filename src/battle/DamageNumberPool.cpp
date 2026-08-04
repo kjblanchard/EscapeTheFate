@@ -7,25 +7,24 @@
 using namespace Etf;
 
 void DamageNumberPool::Show(int amount, float x, float y, bool isHeal) {
+	DamageNumberSlot* target = nullptr;
 	for (int i = 0; i < kDamageNumberPoolSize; ++i) {
 		if (!_slots[i].active) {
-			auto& slot = _slots[i];
-			snprintf(slot.text, sizeof(slot.text), "%d", amount);
-			slot.startX = x;
-			slot.startY = y;
-			slot.timer = 0.0f;
-			slot.active = true;
-			slot.isHeal = isHeal;
-			return;
+			target = &_slots[i];
+			break;
 		}
 	}
-	auto& slot = _slots[0];
-	snprintf(slot.text, sizeof(slot.text), "%d", amount);
-	slot.startX = x;
-	slot.startY = y;
-	slot.timer = 0.0f;
-	slot.active = true;
-	slot.isHeal = isHeal;
+	if (!target) target = &_slots[0];
+
+	snprintf(target->text, sizeof(target->text), "%d", amount);
+	target->startX = x;
+	target->startY = y;
+	target->velocityX = kDamageNumberArcWidth * _nextDirection;
+	target->velocityY = -kDamageNumberArcHeight / (kDamageNumberDuration * 0.4f);
+	target->timer = 0.0f;
+	target->active = true;
+	target->isHeal = isHeal;
+	_nextDirection = -_nextDirection;
 }
 
 void DamageNumberPool::Update(float deltaSeconds) {
@@ -43,8 +42,11 @@ void DamageNumberPool::Draw(const char* fontName, unsigned int fontSize) {
 		auto& slot = _slots[i];
 		if (!slot.active) continue;
 
-		float progress = slot.timer / kDamageNumberDuration;
-		float yOffset = Engine::Tweening::GetTweenedValue(0.0f, -kDamageNumberRise, slot.timer, kDamageNumberDuration, Engine::Tweening::TweenEaseTypes::QuintOut);
+		float t = slot.timer;
+		float progress = t / kDamageNumberDuration;
+
+		float xOffset = slot.velocityX * t;
+		float yOffset = slot.velocityY * t + 0.5f * kDamageNumberGravity * t * t;
 
 		uint8_t alpha = 255;
 		if (progress > kDamageNumberFadeStart) {
@@ -60,7 +62,7 @@ void DamageNumberPool::Draw(const char* fontName, unsigned int fontSize) {
 		}
 
 		int width = TextMeasureStringDirect(slot.text, fontName, fontSize);
-		float drawX = slot.startX - width / 2.0f;
+		float drawX = slot.startX + xOffset - width / 2.0f;
 		float drawY = slot.startY + yOffset;
 		TextDrawStringDirect(slot.text, fontName, fontSize, drawX, drawY, &color, 0);
 	}

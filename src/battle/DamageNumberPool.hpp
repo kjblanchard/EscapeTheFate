@@ -4,14 +4,18 @@
 namespace Etf {
 
 static constexpr int kDamageNumberPoolSize = 8;
-static constexpr float kDamageNumberDuration = 0.8f;
-static constexpr float kDamageNumberRise = 20.0f;
-static constexpr float kDamageNumberFadeStart = 0.35f;
+static constexpr float kDamageNumberDuration = 0.9f;
+static constexpr float kDamageNumberArcHeight = 18.0f;
+static constexpr float kDamageNumberArcWidth = 14.0f;
+static constexpr float kDamageNumberGravity = 80.0f;
+static constexpr float kDamageNumberFadeStart = 0.4f;
 
 struct DamageNumberSlot {
 	char text[8] = {};
 	float startX = 0.0f;
 	float startY = 0.0f;
+	float velocityX = 0.0f;
+	float velocityY = 0.0f;
 	float timer = 0.0f;
 	bool active = false;
 	bool isHeal = false;
@@ -25,6 +29,7 @@ class DamageNumberPool {
 
    private:
 	DamageNumberSlot _slots[kDamageNumberPoolSize] = {};
+	int _nextDirection = 1;
 };
 
 }  // namespace Etf
