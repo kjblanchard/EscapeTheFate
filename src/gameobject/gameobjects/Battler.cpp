@@ -38,12 +38,14 @@ float Battler::SpriteHeight() {
 
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
+	_damageNumberPool.Show(damage, SpriteX() + SpriteWidth() / 2.0f, SpriteY() - 4.0f, false);
 	takeDamageImpl(damage);
 }
 
 void Battler::Heal(int amount) {
 	_currentHP += amount;
 	if (_currentHP > _battlerData->HP) _currentHP = _battlerData->HP;
+	_damageNumberPool.Show(amount, SpriteX() + SpriteWidth() / 2.0f, SpriteY() - 4.0f, true);
 	healImpl(amount);
 }
 
@@ -67,6 +69,10 @@ void Battler::updateHitAnims() {
 	}
 }
 
+void Battler::updateDamageNumbers() {
+	_damageNumberPool.Update(DeltaTimeSeconds);
+}
+
 void Battler::updateATBGauge() {
 	if (_currentATBCharge >= _maxATBCharge) return;
 	auto delta = DeltaTimeSeconds * 20;
@@ -79,4 +85,5 @@ void Battler::Draw() {
 	for (auto& [key, pool] : _hitAnimPools) {
 		pool->Draw();
 	}
+	_damageNumberPool.Draw(kDamageFont, kDamageFontSize);
 }

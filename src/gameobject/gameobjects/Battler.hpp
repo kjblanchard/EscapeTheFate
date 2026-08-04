@@ -1,4 +1,5 @@
 #pragma once
+#include <battle/DamageNumberPool.hpp>
 #include <battle/HitAnimPool.hpp>
 #include <battle/battlerData.hpp>
 #include <battle/battlerUI.hpp>
@@ -31,6 +32,7 @@ class Battler : public GameObject {
 	inline void Update() override final {
 		updateATBGauge();
 		updateHitAnims();
+		updateDamageNumbers();
 		updateImpl();
 	}
 
@@ -68,10 +70,14 @@ class Battler : public GameObject {
 	int _locationX, _locationY;
 	std::unique_ptr<SpriteAnimator> _animator;
 	std::unordered_map<std::string, std::unique_ptr<HitAnimPool>> _hitAnimPools;
+	DamageNumberPool _damageNumberPool;
 
    private:
+	static constexpr const char* kDamageFont = "PressStart2P";
+	static constexpr unsigned int kDamageFontSize = 8;
 	void updateATBGauge();
 	void updateHitAnims();
+	void updateDamageNumbers();
 };
 
 }  // namespace Etf
