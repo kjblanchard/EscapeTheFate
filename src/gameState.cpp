@@ -5,6 +5,7 @@ using namespace Etf;
 void GameState::ResetForNewGame() {
 	NextLoadScreen = 0;
 	NextLoadLocation = {0, 0};
+	NextLoadLocation2 = {0, 0};
 	NextLoadMapName = "";
 	NextLoadDirection = 0;
 	InDialog = false;
@@ -35,6 +36,7 @@ void GameState::ResetForNewGame() {
 // int GameState::IsEngineStarted = false;
 int GameState::NextLoadScreen = 0;
 sgVector2 GameState::NextLoadLocation = {0, 0};
+sgVector2 GameState::NextLoadLocation2 = {0, 0};
 float GameState::DeltaTimeSeconds;
 float GameState::DeltaTimeMilliseconds;
 float GameState::TotalPlaytimeSeconds = 0.0f;

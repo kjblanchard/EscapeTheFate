@@ -259,6 +259,11 @@ static void loadBattle() {
 	battleUI_.RootPanel->SetVisible(true);
 	battleUI_.PlayerHUD->SetVisible(true);
 	battleUI_.VictoryPanel->SetVisible(false);
+	if (GameState::IsMultiplayer) {
+		battleUI_.PlayerCommandsObjects[1]->SetVisible(true);
+		auto p2StatusHUD = battleUI_.PlayerHUD->GetChildByName("Player2StatusHUD");
+		if (p2StatusHUD) p2StatusHUD->SetVisible(true);
+	}
 }
 
 static void battleVictory() {

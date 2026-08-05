@@ -18,6 +18,7 @@ struct GameState {
 	static int NextLoadScreen;
 	// Used when we are exiting a battle, so that we load from this location.
 	static sgVector2 NextLoadLocation;
+	static sgVector2 NextLoadLocation2;
 	// Used when we are exiting a battle, so that we load this map
 	static std::string NextLoadMapName;
 	// Used when we are exiting a battle, so we know what direction we should be facing.

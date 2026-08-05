@@ -261,11 +261,15 @@ void CharacterSelectSystem::Update() {
 		bool changed = false;
 		if (player->IsButtonJustPressed(ControllerButtons::Left)) {
 			_selectedIndex = (_selectedIndex - 1 + (int)_characters.size()) % (int)_characters.size();
+			if (GameState::IsMultiplayer && _selectingPlayer == 1 && _selectedIndex == _p1SelectedIndex)
+				_selectedIndex = (_selectedIndex - 1 + (int)_characters.size()) % (int)_characters.size();
 			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			changed = true;
 		}
 		if (player->IsButtonJustPressed(ControllerButtons::Right)) {
 			_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
+			if (GameState::IsMultiplayer && _selectingPlayer == 1 && _selectedIndex == _p1SelectedIndex)
+				_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
 			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			changed = true;
 		}
@@ -293,9 +297,15 @@ void CharacterSelectSystem::Update() {
 			_p1SelectedIndex = _selectedIndex;
 			_selectingPlayer = 1;
 			_selectedIndex = 0;
+			if (_selectedIndex == _p1SelectedIndex)
+				_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
 			destroyUI();
 			buildUI();
 		} else {
+			if (_selectedIndex == _p1SelectedIndex) {
+				Engine::Audio::PlaySFXBuffer("error1", 0.75f);
+				return;
+			}
 			GameState::ResetForNewGame();
 			GameState::IsMultiplayer = true;
 			auto& p1ch = _characters[_p1SelectedIndex];

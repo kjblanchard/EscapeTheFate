@@ -110,12 +110,12 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 		UINineSliceArgs infoBoxArgs;
 		infoBoxArgs.Filename = "uibase";
 		infoBoxArgs.Name = "TargetInfoBox";
-		infoBoxArgs.Rect = {5, 5, 90, 32};
+		infoBoxArgs.Rect = (battlerNum == 1) ? RectangleF{5, 40, 90, 32} : RectangleF{5, 5, 90, 32};
 		infoBoxArgs.SourceRect = {0, 0, 64, 64};
 		infoBoxArgs.Xoffset = 8;
 		infoBoxArgs.Yoffset = 8;
 		infoBoxArgs.Scale = 1.0f;
-		infoBoxArgs.DrawColor = {80, 0, 120, 235};
+		infoBoxArgs.DrawColor = (battlerNum == 1) ? Color{50, 130, 100, 235} : Color{80, 0, 120, 235};
 		infoBoxArgs.Priority = 2;
 		infoBoxArgs.Visible = false;
 		_targetInfoBox = new UINineSlice(infoBoxArgs);

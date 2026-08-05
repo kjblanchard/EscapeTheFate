@@ -64,8 +64,13 @@ void LocalPlayer::Create(TiledObject* objData) {
 		auto player2Controller = PlayerControllerSystem::GetPlayerByNum(1);
 		auto p2 = new LocalPlayer(objData, player2Controller, 1,
 								  GameState::SelectedOverworldSprite2, GameState::SelectedOverworldFrameW2, GameState::SelectedOverworldFrameH2);
-		p2->SetX(p1->X() + 16);
-		p2->SetY(p1->Y());
+		if (GameState::Battle::ExitingFromBattle && (GameState::NextLoadLocation2.X != 0 || GameState::NextLoadLocation2.Y != 0)) {
+			p2->SetX(GameState::NextLoadLocation2.X);
+			p2->SetY(GameState::NextLoadLocation2.Y);
+		} else {
+			p2->SetX(p1->X() + 16);
+			p2->SetY(p1->Y());
+		}
 		p2->Direction_ = p1->Direction_;
 		p2->Animator_->StartAnimation(p2->getAnimNameFromDirection());
 		AddGameObjectToGameObjectSystem(p2);
@@ -73,6 +78,7 @@ void LocalPlayer::Create(TiledObject* objData) {
 
 	if (GameState::Battle::ExitingFromBattle) {
 		GameState::NextLoadLocation = {0, 0};
+		GameState::NextLoadLocation2 = {0, 0};
 	}
 }
 
@@ -190,6 +196,9 @@ void LocalPlayer::handleplayerJoystickMovement() {
 	if (PlayerIndex_ == 0) {
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
+	} else if (PlayerIndex_ == 1) {
+		GameState::NextLoadLocation2.X = X();
+		GameState::NextLoadLocation2.Y = Y();
 	}
 	Animator_->UpdateAnimatorSpeed(1.0f);
 	GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = true;
@@ -244,6 +253,9 @@ bool LocalPlayer::handlePlayerMovement() {
 		if (PlayerIndex_ == 0) {
 			GameState::NextLoadLocation.X = X();
 			GameState::NextLoadLocation.Y = Y();
+		} else if (PlayerIndex_ == 1) {
+			GameState::NextLoadLocation2.X = X();
+			GameState::NextLoadLocation2.Y = Y();
 		}
 		Animator_->UpdateAnimatorSpeed(1.0f);
 		GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = true;
