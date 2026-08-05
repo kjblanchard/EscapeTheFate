@@ -64,7 +64,7 @@ void LocalPlayer::Create(TiledObject* objData) {
 		auto player2Controller = PlayerControllerSystem::GetPlayerByNum(1);
 		auto p2 = new LocalPlayer(objData, player2Controller, 1,
 								  GameState::SelectedOverworldSprite2, GameState::SelectedOverworldFrameW2, GameState::SelectedOverworldFrameH2);
-		if (GameState::Battle::ExitingFromBattle && (GameState::NextLoadLocation2.X != 0 || GameState::NextLoadLocation2.Y != 0)) {
+		if (GameState::Battle::ExitingFromBattle) {
 			p2->SetX(GameState::NextLoadLocation2.X);
 			p2->SetY(GameState::NextLoadLocation2.Y);
 		} else {
@@ -73,6 +73,8 @@ void LocalPlayer::Create(TiledObject* objData) {
 		}
 		p2->Direction_ = p1->Direction_;
 		p2->Animator_->StartAnimation(p2->getAnimNameFromDirection());
+		GameState::NextLoadLocation2.X = p2->X();
+		GameState::NextLoadLocation2.Y = p2->Y();
 		AddGameObjectToGameObjectSystem(p2);
 	}
 
