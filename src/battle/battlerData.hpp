@@ -11,6 +11,7 @@ struct ItemDrop {
 
 struct BattlerData {
 	std::string Name, Sprite, IdleAnimation, Portrait;
+	std::string AIStrategy;
 	RectangleF PortraitRect = {0, 0, 48, 48};
 	int HP, Str, Mag, Def, MDef, Spd, Pow;
 	int MaxAP = 3;

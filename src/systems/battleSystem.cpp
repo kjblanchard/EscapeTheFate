@@ -135,6 +135,8 @@ static void loadBattleDB() {
 		}
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 		battlerDatabase_.back().MaxAP = jKeyExists(currentJsonObject, "maxAP") ? jint(currentJsonObject, "maxAP") : 3;
+		auto aiStr = jKeyExists(currentJsonObject, "ai") ? jstr(currentJsonObject, "ai") : nullptr;
+		battlerDatabase_.back().AIStrategy = aiStr ? aiStr : "basic";
 		auto abilitiesArray = jobj(currentJsonObject, "abilities");
 		if (abilitiesArray) {
 			auto numAbilities = jGetObjectArrayLength(abilitiesArray);

@@ -42,6 +42,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameobject/gameobjects/BattleLocation.cpp
   src/gameobject/gameobjects/BattleZone.cpp
   src/battle/battlerUI.cpp
+  src/battle/enemyAI.cpp
   src/battle/HitAnimPool.cpp
   src/battle/DamageNumberPool.cpp
   src/ui/ui.cpp

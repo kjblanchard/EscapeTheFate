@@ -43,6 +43,8 @@
             { "name": "Potion", "percent": 50 },
             { "name": "Ether", "percent": 15 }
         ],
+        "abilities": [2],
+        "ai": "basic",
         "sprite": "blackBird",
         "portrait": "",
         "rect": { "x": -5, "y": -15, "w": 61, "h": 57 },

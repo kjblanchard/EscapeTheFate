@@ -26,6 +26,7 @@ constexpr Color kEnemyPanelBorderColor = {255, 235, 235, 255};
 
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
+	_ai.reset(CreateEnemyAI(args.BattleData->AIStrategy));
 	_deathShader = ShaderCreate();
 	ShaderCompile(_deathShader, "2dSpriteVertex", "deathDissolveFragment");
 
@@ -93,14 +94,28 @@ void EnemyBattler::getPlayerBattlers(std::vector<Battler*>& out) {
 	});
 }
 
+void EnemyBattler::getEnemyAllies(std::vector<Battler*>& out) {
+	auto& all = BattleSystem::GetEnemyBattlers();
+	copy_if(all.begin(), all.end(), back_inserter(out), [this](Battler* b) {
+		return b && !b->IsPlayer() && b->CurrentHP() > 0;
+	});
+}
+
 void EnemyBattler::onAPGained() {
 	if (_enemyState != ATBCharging) return;
-	const auto& ability = BattleSystem::GetAbilityByID(2);
-	if (_currentAP >= ability.APCost) {
-		_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
-		_attackDelayTimer = 0.0f;
-		_enemyState = DelayBeforeAttack;
-	}
+
+	vector<Battler*> players;
+	vector<Battler*> allies;
+	getPlayerBattlers(players);
+	getEnemyAllies(allies);
+
+	AIAction action = _ai->SelectAction(this, allies, players);
+	if (action.AbilityID < 0 || !action.Target) return;
+
+	_pendingAction = action;
+	_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
+	_attackDelayTimer = 0.0f;
+	_enemyState = DelayBeforeAttack;
 }
 
 void EnemyBattler::updateImpl() {
@@ -155,18 +170,21 @@ void EnemyBattler::updateImpl() {
 			break;
 		}
 		case Attacking: {
-			vector<Battler*> players;
-			getPlayerBattlers(players);
-			if (!players.empty()) {
-				auto target = players[0];
-				const auto& ability = BattleSystem::GetAbilityByID(2);
+			auto target = _pendingAction.Target;
+			if (target && target->CurrentHP() > 0) {
+				const auto& ability = BattleSystem::GetAbilityByID(_pendingAction.AbilityID);
 				if (!ability.PlayerAnim.empty() && _animator->GetAnimationDuration(ability.PlayerAnim) > 0) {
 					_animator->PlayAnimationThenLoopSecond(ability.PlayerAnim, _battlerData->IdleAnimation);
 				}
-				target->TakeDamage(ability.BaseDamage);
+				if (ability.BaseDamage < 0) {
+					target->Heal(-ability.BaseDamage);
+				} else {
+					target->TakeDamage(ability.BaseDamage);
+				}
 				target->PlayHitAnimation(ability);
 				SpendAP(ability.APCost);
 			}
+			_pendingAction = {};
 			_currentATBCharge = 0;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
 			_enemyState = ATBCharging;

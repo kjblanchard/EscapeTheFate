@@ -1,5 +1,7 @@
 #pragma once
+#include <battle/enemyAI.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
+#include <memory>
 #include <vector>
 struct Shader;
 namespace Etf {
@@ -27,8 +29,11 @@ class EnemyBattler : public Battler {
 
    private:
 	void getPlayerBattlers(std::vector<Battler*>& out);
+	void getEnemyAllies(std::vector<Battler*>& out);
 
    private:
+	std::unique_ptr<EnemyAIStrategy> _ai;
+	AIAction _pendingAction;
 	Shader* _deathShader = nullptr;
 	float _deathEffectTime = 0.0f;
 	bool _deathEffectPlaying = false;
