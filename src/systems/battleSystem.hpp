@@ -30,5 +30,6 @@ void InitializeBattleSystem();
 const std::vector<Battler*>& GetEnemyBattlers();
 const AbilityData& GetAbilityByID(int id);
 bool HasAbility(int id);
+const BattlerData* GetPlayerBattlerData(int playerIndex);
 };	// namespace BattleSystem
 }  // namespace Etf

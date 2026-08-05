@@ -137,6 +137,7 @@ void LocalPlayer::updateInteractionRect() {
 }
 
 void LocalPlayer::handleInteractions() {
+	if (GameState::Menu::MenuOpen[PlayerIndex_]) return;
 	updateInteractionRect();
 	IInteractable* interactable = nullptr;
 	for (auto interact : GameObjectSystem::GetGameObjectsOfType<IInteractable>()) {
@@ -161,6 +162,7 @@ void LocalPlayer::handleInteractions() {
 
 void LocalPlayer::handleplayerJoystickMovement() {
 	if (GameState::InDialog || GameState::Battle::InBattle) return;
+	if (GameState::Menu::MenuOpen[PlayerIndex_]) return;
 	auto xStick = Player_->JoystickAxisState(JoystickAxis::LeftThumbstickX);
 	auto yStick = Player_->JoystickAxisState(JoystickAxis::LeftThumbstickY);
 	if (fabs(xStick) < 0.1f && fabs(yStick) < 0.1f) return;
@@ -199,6 +201,7 @@ void LocalPlayer::handleplayerJoystickMovement() {
 
 bool LocalPlayer::handlePlayerMovement() {
 	if (GameState::InDialog || GameState::Battle::InBattle) return false;
+	if (GameState::Menu::MenuOpen[PlayerIndex_]) return false;
 	auto moved = false;
 	auto previousDirection = Direction_;
 	auto velocityX = 0;

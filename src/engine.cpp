@@ -26,6 +26,7 @@
 #include <gameobject/GameObject.hpp>
 #include <string>
 #include <systems/GameObjectSystem.hpp>
+#include <systems/MenuSystem.hpp>
 #include <systems/PauseSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
@@ -138,7 +139,8 @@ void update() {
 	if (!handleMapLoad()) return;
 	for (auto& system : systems_) {
 		if (GameState::Paused && system.Update != PlayerControllerSystem::Update &&
-			system.Update != PauseSystem::Update) {
+			system.Update != PauseSystem::Update &&
+			system.Update != MenuSystem::Update) {
 			continue;
 		}
 		system.Update();

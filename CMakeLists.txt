@@ -67,6 +67,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/CharacterSelectSystem.cpp
   src/systems/GameOverSystem.cpp
   src/systems/PauseSystem.cpp
+  src/systems/MenuSystem.cpp
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp

@@ -18,10 +18,13 @@ void GameState::ResetForNewGame() {
 	SelectedOverworldFrameW2 = 32;
 	SelectedOverworldFrameH2 = 32;
 	CurrentFadeState = (int)LoadingScreenFadeTypes::NotFading;
+	TotalPlaytimeSeconds = 0.0f;
 	Battle::InBattle = false;
 	Battle::NextBattleGroup = 1;
 	Battle::ExitingFromBattle = false;
 	Battle::CurrentStepsWithoutBattle = 0;
+	Menu::MenuOpen[0] = false;
+	Menu::MenuOpen[1] = false;
 	for (auto& pd : Players::LocalPlayerData) {
 		pd.Location = {0, 0, 0, 0};
 		pd.MovedThisFrame = false;
@@ -34,6 +37,8 @@ int GameState::NextLoadScreen = 0;
 sgVector2 GameState::NextLoadLocation = {0, 0};
 float GameState::DeltaTimeSeconds;
 float GameState::DeltaTimeMilliseconds;
+float GameState::TotalPlaytimeSeconds = 0.0f;
+bool GameState::Menu::MenuOpen[2] = {false, false};
 bool GameState::InDialog = false;
 bool GameState::Paused = false;
 bool GameState::IsMultiplayer = false;

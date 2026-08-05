@@ -18,6 +18,7 @@
 #include <systems/battleSystem.hpp>
 #include <systems/SceneNameSystem.hpp>
 #include <systems/GameOverSystem.hpp>
+#include <systems/MenuSystem.hpp>
 #include <systems/PauseSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/dialogSystem.hpp>
@@ -81,6 +82,10 @@ void InitializeGame() {
 		{
 			.Start = PauseSystem::Start,
 			.Update = PauseSystem::Update,
+		},
+		{
+			.Start = MenuSystem::Start,
+			.Update = MenuSystem::Update,
 		}};
 	Engine::RegisterSystems(systems_);
 }

@@ -24,6 +24,7 @@ struct GameState {
 	static int NextLoadDirection;
 	static float DeltaTimeSeconds;
 	static float DeltaTimeMilliseconds;
+	static float TotalPlaytimeSeconds;
 	static bool InDialog;
 	static bool Paused;
 	static bool IsMultiplayer;
@@ -46,6 +47,9 @@ struct GameState {
 		static bool InBattle;
 		static int NextBattleGroup;
 	} Battle;
+	struct Menu {
+		static bool MenuOpen[2];
+	} Menu;
 };
 
 }  // namespace Etf

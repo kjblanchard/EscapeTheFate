@@ -38,6 +38,7 @@ struct gameConfig {
 			static const int LB = 18;
 			static const int RB = 19;
 			static const int START = 40;
+			static const int Y = 43;
 		} Keyboard;
 		struct joystick {
 			static const int UP = 11;

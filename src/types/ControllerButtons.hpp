@@ -14,6 +14,7 @@ enum class ControllerButtons {
 	Start,
 	Select,
 	Guide,
+	Y,
 	NUM_GAME_BUTTONS,
 };
 

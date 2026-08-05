@@ -370,3 +370,9 @@ const AbilityData& BattleSystem::GetAbilityByID(int id) {
 bool BattleSystem::HasAbility(int id) {
 	return id >= 0 && id < (int)abilityDatabase_.size();
 }
+
+const BattlerData* BattleSystem::GetPlayerBattlerData(int playerIndex) {
+	int dbIdx = (playerIndex == 0) ? GameState::SelectedPlayerCharacter : GameState::SelectedPlayerCharacter2;
+	if (dbIdx < 0 || dbIdx >= (int)battlerDatabase_.size()) return nullptr;
+	return &battlerDatabase_[dbIdx];
+}
