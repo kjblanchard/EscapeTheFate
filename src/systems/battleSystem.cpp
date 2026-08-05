@@ -135,6 +135,14 @@ static void loadBattleDB() {
 		}
 		battlerDatabase_.back().Location = Engine::Json::GetRectFromObject(currentJsonObject, "rect");
 		battlerDatabase_.back().MaxAP = jKeyExists(currentJsonObject, "maxAP") ? jint(currentJsonObject, "maxAP") : 3;
+		auto abilitiesArray = jobj(currentJsonObject, "abilities");
+		if (abilitiesArray) {
+			auto numAbilities = jGetObjectArrayLength(abilitiesArray);
+			for (auto a = 0; a < numAbilities; ++a) {
+				auto abilityID = jintIndex(abilitiesArray, a);
+				battlerDatabase_.back().Abilities.push_back(abilityID);
+			}
+		}
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }

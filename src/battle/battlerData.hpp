@@ -20,6 +20,7 @@ struct BattlerData {
 	int CurrentXP = 0;
 	int XPToNextLevel = 100;
 	std::vector<ItemDrop> ItemDrops;
+	std::vector<int> Abilities;
 	RectangleF Location;
 };
 

@@ -50,6 +50,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->EndPlayerTurn(this);
 			break;
 		case BattlerStates::ATBFullyCharged:
+			_currentMenuLocation = 0;
 			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
 			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
@@ -59,8 +60,8 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_magicMenuRow = 0;
 			_magicMenuCol = 0;
 			_battlerUI->OpenMagicMenu();
-			if (BattleSystem::HasAbility(1)) {
-				const auto& ability = BattleSystem::GetAbilityByID(1);
+			if (!_battlerData->Abilities.empty()) {
+				const auto& ability = BattleSystem::GetAbilityByID(_battlerData->Abilities[0]);
 				_battlerUI->ShowAPCostBox(_currentAP, ability.APCost);
 				_battlerUI->ShowMagicDescription(ability.Description);
 			}
@@ -311,11 +312,11 @@ void PlayerBattler::handleInputMagicMenu() {
 		if (newCol < 1) ++newCol;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-		_selectedAbilityID = slotIndex + 1;
-		if (!BattleSystem::HasAbility(_selectedAbilityID)) {
+		if (slotIndex >= (int)_battlerData->Abilities.size()) {
 			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 			return;
 		}
+		_selectedAbilityID = _battlerData->Abilities[slotIndex];
 		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
 		if (_currentAP < ability.APCost) {
 			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
@@ -339,8 +340,8 @@ void PlayerBattler::handleInputMagicMenu() {
 		_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-		int abilityID = slotIndex + 1;
-		if (BattleSystem::HasAbility(abilityID)) {
+		if (slotIndex < (int)_battlerData->Abilities.size()) {
+			int abilityID = _battlerData->Abilities[slotIndex];
 			const auto& ab = BattleSystem::GetAbilityByID(abilityID);
 			_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
 			_battlerUI->ShowMagicDescription(ab.Description);
@@ -396,8 +397,8 @@ void PlayerBattler::handleInputTargetSelection() {
 		if (_selectedAbilityID > 0) {
 			_currentBattlerState = MagicSelection;
 			int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-			int abilityID = slotIndex + 1;
-			if (BattleSystem::HasAbility(abilityID)) {
+			if (slotIndex < (int)_battlerData->Abilities.size()) {
+				int abilityID = _battlerData->Abilities[slotIndex];
 				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
 				_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
 				_battlerUI->ShowMagicDescription(ab.Description);

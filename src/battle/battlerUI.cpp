@@ -256,6 +256,7 @@ void BattlerUI::UpdateAnimations() {
 			_currentAnimationTime += DeltaTimeSeconds;
 			if (_currentAnimationTime >= Animation_Open_Time) {
 				_currentState = Opened;
+				MoveCursorInMenu(0);
 				_finger->SetVisible(true);
 				break;
 			}
