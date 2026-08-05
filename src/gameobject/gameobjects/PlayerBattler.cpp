@@ -176,8 +176,8 @@ void PlayerBattler::updateImpl() {
 			if (_currentBattlerState == TargetSelection) {
 				std::vector<Battler*> targets;
 				getAllTargets(targets);
-				if (!targets.empty() && _currentTargetBattler >= (int)targets.size()) {
-					moveFingerToTargetNum(0);
+				if (!targets.empty()) {
+					moveFingerToTargetNum(_currentTargetBattler);
 				}
 			}
 			break;
