@@ -90,6 +90,10 @@ void GameOverSystem::Update() {
 		}
 		case GameOverState::WaitingForSceneLoad: {
 			if (Engine::CurrentSceneName() == "cloud") {
+				auto niner = UI::GetRootUIObject()->GetChildByName("TitleNineSlice");
+				auto ninertwo = UI::GetRootUIObject()->GetChildByName("MenuNineSlice");
+				niner->SetVisible(true);
+				ninertwo->SetVisible(true);
 				BattleSystem::ResetAfterGameOver();
 				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
 				gameOverPanel_ = nullptr;

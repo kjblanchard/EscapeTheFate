@@ -44,13 +44,15 @@ void advanceToNextLogo() {
 	if (currentLogoIndex_ >= (int)logos_.size()) {
 		state_ = SplashState::Done;
 		active_ = false;
+		//Hack to try and hide the UI, need to fix this in a //TODO
 		auto niner = UI::GetRootUIObject()->GetChildByName("TitleNineSlice");
 		auto ninertwo = UI::GetRootUIObject()->GetChildByName("MenuNineSlice");
 		if (!niner || !ninertwo) sgLogCritical("Can not do it!");
-		auto color = (Color){255, 255, 255, 0};
+		auto color = Color{255, 255, 255, 0};
 		GraphicsUpdateFBOColor(&color);
 		niner->SetVisible(true);
 		ninertwo->SetVisible(true);
+		//end hack
 		Engine::LoadScene("", 0.1f, 1.75f, false);
 		return;
 	}
