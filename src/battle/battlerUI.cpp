@@ -152,6 +152,37 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 			_magicFinger = static_cast<UIImage*>(magicFingerObj);
 			_magicFinger->SetVisible(false);
 		}
+
+		UINineSliceArgs apCostBoxArgs;
+		apCostBoxArgs.Filename = "uibase";
+		apCostBoxArgs.Name = "APCostBox";
+		apCostBoxArgs.Rect = {0, 74, 72, 16};
+		apCostBoxArgs.SourceRect = {0, 0, 64, 64};
+		apCostBoxArgs.Xoffset = 8;
+		apCostBoxArgs.Yoffset = 8;
+		apCostBoxArgs.Scale = 1.0f;
+		apCostBoxArgs.DrawColor = {80, 0, 120, 235};
+		apCostBoxArgs.Priority = 3;
+		apCostBoxArgs.Visible = false;
+		_apCostBox = new UINineSlice(apCostBoxArgs);
+		_commandMenu->AddChild(_apCostBox);
+
+		UITextArgs apCostTextArgs;
+		apCostTextArgs.FontName = "PressStart2P";
+		apCostTextArgs.FontSize = 8;
+		apCostTextArgs.Rect = {2, 2, 68, 12};
+		apCostTextArgs.TextToDraw = "";
+		apCostTextArgs.Name = "APCostText";
+		apCostTextArgs.NumCharsToDraw = 10;
+		apCostTextArgs.Priority = 4;
+		apCostTextArgs.TextColor = {255, 255, 255, 255};
+		apCostTextArgs.CenteredX = true;
+		apCostTextArgs.CenteredY = true;
+		apCostTextArgs.WordWrap = false;
+		apCostTextArgs.Visible = true;
+		apCostTextArgs.DebugBox = false;
+		_apCostText = new UIText(apCostTextArgs);
+		_apCostBox->AddChild(_apCostText);
 	}
 }
 
@@ -178,6 +209,31 @@ void BattlerUI::CloseTargetSelection() {
 
 void BattlerUI::UpdateTargetInfo(const std::string& displayName) {
 	if (_targetInfoText) _targetInfoText->UpdateText(displayName);
+}
+
+void BattlerUI::ShowAPCostBox(int currentAP, int abilityCost) {
+	if (!_apCostBox || !_apCostText) return;
+	_currentAbilityCost = abilityCost;
+	_apCostBox->SetVisible(true);
+	_apCostText->UpdateText(to_string(currentAP) + ":" + to_string(abilityCost));
+}
+
+void BattlerUI::UpdateAPCostCurrent(int currentAP) {
+	if (!_apCostBox || !_apCostText) return;
+	_apCostText->UpdateText(to_string(currentAP) + ":" + to_string(_currentAbilityCost));
+}
+
+void BattlerUI::HideAPCostBox() {
+	if (_apCostBox) _apCostBox->SetVisible(false);
+}
+
+void BattlerUI::ShowMagicDescription(const std::string& description) {
+	if (_targetInfoBox) _targetInfoBox->SetVisible(true);
+	if (_targetInfoText) _targetInfoText->UpdateText(description);
+}
+
+void BattlerUI::HideMagicDescription() {
+	if (_targetInfoBox) _targetInfoBox->SetVisible(false);
 }
 
 void BattlerUI::UpdateHP(const string& hp) {
@@ -282,6 +338,8 @@ void BattlerUI::CloseMagicMenu() {
 	_magicMenuState = PlayerUIAnimationStates::Closing;
 	_magicAnimationTime = 0;
 	if (_magicFinger) _magicFinger->SetVisible(false);
+	HideAPCostBox();
+	HideMagicDescription();
 }
 
 void BattlerUI::MoveCursorInMagicMenu(unsigned int col, unsigned int row) {

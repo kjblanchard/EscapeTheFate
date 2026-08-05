@@ -32,6 +32,9 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controll
 void PlayerBattler::onAPGained() {
 	_battlerUI->UpdateAP(to_string(_currentAP));
 	if (_isDead || _currentHP <= 0) return;
+	if (_currentBattlerState == BattlerStates::MagicSelection) {
+		_battlerUI->UpdateAPCostCurrent(_currentAP);
+	}
 	if (_currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
 		handleStateChange(ATBFullyCharged);
 	}
@@ -56,6 +59,11 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_magicMenuRow = 0;
 			_magicMenuCol = 0;
 			_battlerUI->OpenMagicMenu();
+			if (BattleSystem::HasAbility(1)) {
+				const auto& ability = BattleSystem::GetAbilityByID(1);
+				_battlerUI->ShowAPCostBox(_currentAP, ability.APCost);
+				_battlerUI->ShowMagicDescription(ability.Description);
+			}
 			break;
 		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
@@ -315,6 +323,7 @@ void PlayerBattler::handleInputMagicMenu() {
 		}
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
 		_targetingFriendly = ability.Friendly;
+		_battlerUI->HideAPCostBox();
 		handleStateChange(TargetSelection);
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
@@ -329,6 +338,16 @@ void PlayerBattler::handleInputMagicMenu() {
 		_magicMenuCol = newCol;
 		_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+		int abilityID = slotIndex + 1;
+		if (BattleSystem::HasAbility(abilityID)) {
+			const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+			_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+			_battlerUI->ShowMagicDescription(ab.Description);
+		} else {
+			_battlerUI->HideAPCostBox();
+			_battlerUI->ShowMagicDescription("");
+		}
 	}
 }
 
@@ -376,6 +395,13 @@ void PlayerBattler::handleInputTargetSelection() {
 		_battlerUI->CloseTargetSelection();
 		if (_selectedAbilityID > 0) {
 			_currentBattlerState = MagicSelection;
+			int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+			int abilityID = slotIndex + 1;
+			if (BattleSystem::HasAbility(abilityID)) {
+				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+				_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+				_battlerUI->ShowMagicDescription(ab.Description);
+			}
 		} else {
 			_currentBattlerState = CommandSelection;
 		}

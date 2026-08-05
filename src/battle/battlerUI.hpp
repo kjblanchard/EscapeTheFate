@@ -44,6 +44,11 @@ class BattlerUI {
 	void MoveFingerToBattlerLocation(Battler* battler);
 	void CloseTargetSelection();
 	void UpdateTargetInfo(const std::string& displayName);
+	void ShowAPCostBox(int currentAP, int abilityCost);
+	void UpdateAPCostCurrent(int currentAP);
+	void HideAPCostBox();
+	void ShowMagicDescription(const std::string& description);
+	void HideMagicDescription();
 	void MoveCursorInMenu(unsigned int newLocation);
 	void OpenMagicMenu();
 	void CloseMagicMenu();
@@ -69,6 +74,9 @@ class BattlerUI {
 	UIImage* _targetSelectionFinger;
 	UINineSlice* _targetInfoBox;
 	UIText* _targetInfoText;
+	UINineSlice* _apCostBox = nullptr;
+	UIText* _apCostText = nullptr;
+	int _currentAbilityCost = 0;
 	UIAnimation* _progressBarAnim;
 	UIProgressBar* _progressBar;
 	bool _player;

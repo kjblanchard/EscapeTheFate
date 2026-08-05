@@ -10,5 +10,6 @@ struct AbilityData {
 	int BaseDamage = 1;
 	bool Friendly = false;
 	int APCost = 1;
+	std::string Description;
 };
 }  // namespace Etf

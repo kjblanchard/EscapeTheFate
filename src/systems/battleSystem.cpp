@@ -158,6 +158,7 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().BaseDamage = jint(currentJsonObject, "baseDamage");
 		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
 		abilityDatabase_.back().APCost = jKeyExists(currentJsonObject, "apCost") ? jint(currentJsonObject, "apCost") : 1;
+		abilityDatabase_.back().Description = jKeyExists(currentJsonObject, "description") ? jstr(currentJsonObject, "description") : "";
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }

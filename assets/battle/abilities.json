@@ -8,7 +8,8 @@
         "sfx": "slash1",
         "baseDamage": 1,
         "friendly": false,
-        "apCost": 1
+        "apCost": 1,
+        "description": "Slash foe"
     },
     {
         "id": 1,
@@ -19,7 +20,8 @@
         "sfx": "heal1",
         "baseDamage": -3,
         "friendly": true,
-        "apCost": 2
+        "apCost": 2,
+        "description": "Heals ally"
     },
     {
         "id": 2,
@@ -30,6 +32,7 @@
         "sfx": "slash1",
         "baseDamage": 1,
         "friendly": false,
-        "apCost": 1
+        "apCost": 1,
+        "description": ""
     }
 ]
