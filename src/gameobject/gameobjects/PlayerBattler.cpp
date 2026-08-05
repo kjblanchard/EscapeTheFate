@@ -173,6 +173,13 @@ void PlayerBattler::updateImpl() {
 		case TargetSelection: {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
 			_battlerUI->UpdateProgressBar(progress);
+			if (_currentBattlerState == TargetSelection) {
+				std::vector<Battler*> targets;
+				getAllTargets(targets);
+				if (!targets.empty() && _currentTargetBattler >= (int)targets.size()) {
+					moveFingerToTargetNum(0);
+				}
+			}
 			break;
 		}
 		case BattleEndStart:
