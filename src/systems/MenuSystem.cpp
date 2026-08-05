@@ -24,14 +24,17 @@ static const float kPanelW = 230.0f;
 static const float kPanelH = 260.0f;
 static const float kPanelY = 5.0f;
 static const float kPanelX[2] = {5.0f, 245.0f};
-static const float kItemStartY = 55.0f;
+static const float kItemStartY = 30.0f;
 static const float kItemSpacing = 18.0f;
+
+static const int kNumStatLines = 7;
 
 static UIObject* _panels[2] = {nullptr, nullptr};
 static UIObject* _statsPanels[2] = {nullptr, nullptr};
 static UIImage* _fingers[2] = {nullptr, nullptr};
+static UIImage* _portraits[2] = {nullptr, nullptr};
 static UIText* _timeTexts[2] = {nullptr, nullptr};
-static UIText* _statTexts[2] = {nullptr, nullptr};
+static UIText* _statLineTexts[2][kNumStatLines] = {};
 static int _selectedIndex[2] = {0, 0};
 static bool _statsOpen[2] = {false, false};
 static bool _initialized = false;
@@ -56,22 +59,38 @@ static void updateTimeText() {
 
 static void openStatsPanel(int playerIdx) {
 	auto* data = BattleSystem::GetPlayerBattlerData(playerIdx);
-	if (!data || !_statTexts[playerIdx]) return;
-	auto text = std::format(
-		"{}\n\n"
-		"HP:  {}\n"
-		"STR: {}  MAG: {}\n"
-		"DEF: {}  MDF: {}\n"
-		"SPD: {}  POW: {}\n"
-		"AP:  {}\n"
+	if (!data) return;
+
+	const char* labels[kNumStatLines] = {
+		"",
+		"HP:  {}",
+		"STR: {}   MAG: {}",
+		"DEF: {}   MDF: {}",
+		"SPD: {}   POW: {}",
+		"AP:  {}",
 		"XP:  {}/{}",
-		data->Name, data->HP,
-		data->Str, data->Mag,
-		data->Def, data->MDef,
-		data->Spd, data->Pow,
-		data->MaxAP,
-		data->CurrentXP, data->XPToNextLevel);
-	_statTexts[playerIdx]->UpdateText(text);
+	};
+
+	std::string lines[kNumStatLines];
+	lines[0] = data->Name;
+	lines[1] = std::format("HP:  {}", data->HP);
+	lines[2] = std::format("STR: {}   MAG: {}", data->Str, data->Mag);
+	lines[3] = std::format("DEF: {}   MDF: {}", data->Def, data->MDef);
+	lines[4] = std::format("SPD: {}   POW: {}", data->Spd, data->Pow);
+	lines[5] = std::format("AP:  {}", data->MaxAP);
+	lines[6] = std::format("XP:  {}/{}", data->CurrentXP, data->XPToNextLevel);
+
+	for (int i = 0; i < kNumStatLines; ++i) {
+		if (_statLineTexts[playerIdx][i]) {
+			_statLineTexts[playerIdx][i]->UpdateText(lines[i]);
+		}
+	}
+
+	// Update portrait
+	if (_portraits[playerIdx]) {
+		_portraits[playerIdx]->SetVisible(true);
+	}
+
 	if (_statsPanels[playerIdx]) _statsPanels[playerIdx]->SetVisible(true);
 	_statsOpen[playerIdx] = true;
 }
@@ -126,25 +145,6 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	playerLabelArgs.DebugBox = false;
 	panel->AddChild(new UIText(playerLabelArgs));
 
-	// Time text
-	UITextArgs timeArgs;
-	timeArgs.FontName = "PressStart2P";
-	timeArgs.FontSize = 8;
-	timeArgs.Rect = {10.0f, 38.0f, 200.0f, 12.0f};
-	timeArgs.TextToDraw = "TIME 00:00";
-	timeArgs.Name = std::format("MenuTime{}", playerIdx);
-	timeArgs.NumCharsToDraw = 20;
-	timeArgs.Priority = 0;
-	timeArgs.TextColor = {200, 200, 200, 255};
-	timeArgs.CenteredX = false;
-	timeArgs.CenteredY = false;
-	timeArgs.WordWrap = false;
-	timeArgs.Visible = true;
-	timeArgs.DebugBox = false;
-	auto* timeText = new UIText(timeArgs);
-	panel->AddChild(timeText);
-	_timeTexts[playerIdx] = timeText;
-
 	// Menu items
 	for (int i = 0; i < kNumItems; ++i) {
 		UITextArgs itemArgs;
@@ -179,47 +179,29 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	panel->AddChild(finger);
 	_fingers[playerIdx] = finger;
 
-	// Stats sub-panel
-	UINineSliceArgs statsArgs;
-	statsArgs.Name = std::format("StatsPanel{}", playerIdx);
-	statsArgs.Filename = "uibase";
-	statsArgs.Rect = {4.0f, kItemStartY - 2.0f, kPanelW - 8.0f, 160.0f};
-	statsArgs.SourceRect = {0, 0, 64, 64};
-	statsArgs.DrawColor = {60, 0, 90, 245};
-	statsArgs.Xoffset = 8;
-	statsArgs.Yoffset = 8;
-	statsArgs.Scale = 1.0f;
-	statsArgs.Priority = 2;
-	statsArgs.Visible = false;
-	statsArgs.DebugBox = false;
-	auto* statsPanel = new UINineSlice(statsArgs);
-
-	UITextArgs statsTextArgs;
-	statsTextArgs.FontName = "PressStart2P";
-	statsTextArgs.FontSize = 8;
-	statsTextArgs.Rect = {8.0f, 8.0f, kPanelW - 24.0f, 140.0f};
-	statsTextArgs.TextToDraw = "No data";
-	statsTextArgs.Name = std::format("StatsText{}", playerIdx);
-	statsTextArgs.NumCharsToDraw = 200;
-	statsTextArgs.Priority = 0;
-	statsTextArgs.TextColor = {255, 255, 255, 255};
-	statsTextArgs.CenteredX = false;
-	statsTextArgs.CenteredY = false;
-	statsTextArgs.WordWrap = true;
-	statsTextArgs.Visible = true;
-	statsTextArgs.DebugBox = false;
-	auto* statsText = new UIText(statsTextArgs);
-	statsPanel->AddChild(statsText);
-	_statTexts[playerIdx] = statsText;
-
-	panel->AddChild(statsPanel);
-	_statsPanels[playerIdx] = statsPanel;
+	// Portrait (bottom of menu, above time/hint)
+	auto* battlerData = BattleSystem::GetPlayerBattlerData(playerIdx);
+	if (battlerData && !battlerData->Portrait.empty()) {
+		UIImageArgs portraitArgs;
+		portraitArgs.Filename = battlerData->Portrait;
+		portraitArgs.Name = std::format("MenuPortrait{}", playerIdx);
+		portraitArgs.Rect = {kPanelW - 58.0f, kPanelH - 72.0f, battlerData->PortraitRect.w, battlerData->PortraitRect.h};
+		portraitArgs.SourceRect = battlerData->PortraitRect;
+		portraitArgs.Scale = 1.0f;
+		portraitArgs.DrawColor = {255, 255, 255, 255};
+		portraitArgs.Priority = 1;
+		portraitArgs.Visible = true;
+		portraitArgs.DebugBox = false;
+		auto* portrait = new UIImage(portraitArgs);
+		panel->AddChild(portrait);
+		_portraits[playerIdx] = portrait;
+	}
 
 	// Hint text
 	UITextArgs hintArgs;
 	hintArgs.FontName = "PressStart2P";
 	hintArgs.FontSize = 8;
-	hintArgs.Rect = {0.0f, kPanelH - 18.0f, kPanelW, 12.0f};
+	hintArgs.Rect = {0.0f, kPanelH - 24.0f, kPanelW, 12.0f};
 	hintArgs.TextToDraw = "B:Close  A:Select";
 	hintArgs.Name = std::format("MenuHint{}", playerIdx);
 	hintArgs.NumCharsToDraw = 30;
@@ -231,6 +213,64 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	hintArgs.Visible = true;
 	hintArgs.DebugBox = false;
 	panel->AddChild(new UIText(hintArgs));
+
+	// Time text (bottom, below hint)
+	UITextArgs timeArgs;
+	timeArgs.FontName = "PressStart2P";
+	timeArgs.FontSize = 8;
+	timeArgs.Rect = {0.0f, kPanelH - 12.0f, kPanelW, 12.0f};
+	timeArgs.TextToDraw = "TIME 00:00";
+	timeArgs.Name = std::format("MenuTime{}", playerIdx);
+	timeArgs.NumCharsToDraw = 20;
+	timeArgs.Priority = 0;
+	timeArgs.TextColor = {180, 180, 180, 255};
+	timeArgs.CenteredX = true;
+	timeArgs.CenteredY = false;
+	timeArgs.WordWrap = false;
+	timeArgs.Visible = true;
+	timeArgs.DebugBox = false;
+	auto* timeText = new UIText(timeArgs);
+	panel->AddChild(timeText);
+	_timeTexts[playerIdx] = timeText;
+
+	// Stats sub-panel (covers menu items area when viewing stats)
+	UINineSliceArgs statsArgs;
+	statsArgs.Name = std::format("StatsPanel{}", playerIdx);
+	statsArgs.Filename = "uibase";
+	statsArgs.Rect = {4.0f, kItemStartY - 4.0f, kPanelW - 8.0f, 130.0f};
+	statsArgs.SourceRect = {0, 0, 64, 64};
+	statsArgs.DrawColor = {60, 0, 90, 245};
+	statsArgs.Xoffset = 8;
+	statsArgs.Yoffset = 8;
+	statsArgs.Scale = 1.0f;
+	statsArgs.Priority = 2;
+	statsArgs.Visible = false;
+	statsArgs.DebugBox = false;
+	auto* statsPanel = new UINineSlice(statsArgs);
+
+	// Individual stat lines (no word wrap issues)
+	for (int i = 0; i < kNumStatLines; ++i) {
+		UITextArgs lineArgs;
+		lineArgs.FontName = "PressStart2P";
+		lineArgs.FontSize = 8;
+		lineArgs.Rect = {10.0f, 10.0f + (i * 16.0f), kPanelW - 28.0f, 14.0f};
+		lineArgs.TextToDraw = " ";
+		lineArgs.Name = std::format("StatLine{}_{}", i, playerIdx);
+		lineArgs.NumCharsToDraw = 40;
+		lineArgs.Priority = 0;
+		lineArgs.TextColor = (i == 0) ? Color{255, 255, 200, 255} : kEnabledColor;
+		lineArgs.CenteredX = false;
+		lineArgs.CenteredY = false;
+		lineArgs.WordWrap = false;
+		lineArgs.Visible = true;
+		lineArgs.DebugBox = false;
+		auto* lineText = new UIText(lineArgs);
+		statsPanel->AddChild(lineText);
+		_statLineTexts[playerIdx][i] = lineText;
+	}
+
+	panel->AddChild(statsPanel);
+	_statsPanels[playerIdx] = statsPanel;
 
 	UI::GetRootUIObject()->AddChild(panel);
 	_panels[playerIdx] = panel;
@@ -245,8 +285,11 @@ void MenuSystem::Start() {
 	for (auto& p : _panels) p = nullptr;
 	for (auto& p : _statsPanels) p = nullptr;
 	for (auto& f : _fingers) f = nullptr;
+	for (auto& p : _portraits) p = nullptr;
 	for (auto& t : _timeTexts) t = nullptr;
-	for (auto& t : _statTexts) t = nullptr;
+	for (auto& row : _statLineTexts) {
+		for (auto& t : row) t = nullptr;
+	}
 	buildMenuPanelForPlayer(0);
 	buildMenuPanelForPlayer(1);
 	_initialized = true;
