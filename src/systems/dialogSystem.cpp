@@ -1,3 +1,4 @@
+#include <Supergoon/Input/mouse.h>
 #include <Supergoon/Tweening/easing.h>
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
@@ -7,6 +8,7 @@
 #include <format>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
+#include <systems/MouseInputSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
 #include <systems/dialogSystem.hpp>
 #include <ui/ui.hpp>
@@ -232,6 +234,23 @@ void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 }
 
 void DialogSystem::Update() {
+	if (GameState::InDialog && IsMouseButtonJustPressed(MouseButtonsLeftClick)) {
+		float mx, my;
+		MouseInputSystem::GetMouseGamePos(mx, my);
+		if (mx >= 0 && my >= 0) {
+			switch (_currentState) {
+				case DialogBoxStates::AnimatingOpen:
+				case DialogBoxStates::DisplayingText:
+					finishCurrentInteraction();
+					break;
+				case DialogBoxStates::DisplayingFinished:
+					progressCurrentInteraction();
+					break;
+				default:
+					break;
+			}
+		}
+	}
 	switch (_currentState) {
 		case DialogBoxStates::Unloaded:
 			initializeDialogBox();

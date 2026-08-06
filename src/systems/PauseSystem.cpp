@@ -190,17 +190,25 @@ void PauseSystem::Start() {
 	hintArgs.DebugBox = false;
 	panel->AddChild(new UIText(hintArgs));
 
+	auto resumeAction = []() {
+		if (!GameState::Paused) return;
+		GameState::Paused = false;
+		_panel->SetVisible(false);
+	};
+
 	UIButtonArgs swapBtnArgs;
 	swapBtnArgs.Rect = {10.0f, 28.0f, 180.0f, 40.0f};
 	swapBtnArgs.Name = "PauseSwapBtn";
 	swapBtnArgs.Priority = 5;
 	swapBtnArgs.Visible = true;
+	swapBtnArgs.Layer = 2;
 	auto* swapBtn = new UIButton(swapBtnArgs);
 	swapBtn->SetClickCallback([]() {
 		if (!GameState::Paused) return;
 		swapControllers();
 		syncIcons();
 	});
+	swapBtn->SetRightClickCallback(resumeAction);
 	panel->AddChild(swapBtn);
 	MouseInputSystem::RegisterButton(swapBtn);
 
@@ -209,12 +217,10 @@ void PauseSystem::Start() {
 	resumeBtnArgs.Name = "PauseResumeBtn";
 	resumeBtnArgs.Priority = 5;
 	resumeBtnArgs.Visible = true;
+	resumeBtnArgs.Layer = 2;
 	auto* resumeBtn = new UIButton(resumeBtnArgs);
-	resumeBtn->SetClickCallback([]() {
-		if (!GameState::Paused) return;
-		GameState::Paused = false;
-		_panel->SetVisible(false);
-	});
+	resumeBtn->SetClickCallback(resumeAction);
+	resumeBtn->SetRightClickCallback(resumeAction);
 	panel->AddChild(resumeBtn);
 	MouseInputSystem::RegisterButton(resumeBtn);
 

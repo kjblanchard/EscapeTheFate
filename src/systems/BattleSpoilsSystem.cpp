@@ -1,3 +1,4 @@
+#include <Supergoon/Input/mouse.h>
 #include <cstdlib>
 #include <engine.hpp>
 #include <gameState.hpp>
@@ -452,6 +453,7 @@ bool BattleSpoilsSystem::IsBattleSpoilsDone() {
 }
 
 static bool anyPlayerPressedA() {
+	if (IsMouseButtonJustPressed(MouseButtonsLeftClick)) return true;
 	auto& p1 = PlayerControllerSystem::GetPlayerByNum(0);
 	if (p1->IsButtonJustPressed(ControllerButtons::A)) return true;
 	if (GameState::IsMultiplayer) {

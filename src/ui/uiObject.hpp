@@ -47,7 +47,9 @@ class UIObject {
 	// Do we have a child object with this name
 	bool HasChildOfName(const std::string& name);
 	// Do we have a child object with this name, or do we have a child that has it
+	inline bool IsVisible() const { return _visible; }
 	inline void SetVisible(bool isVisible) { _visible = isVisible; }
+	inline UIObject* GetParent() const { return _parent; }
 	inline void SetDoNotDestroy(bool v) { _doNotDestroy = v; }
 	bool HasChildOfNameInAllChildren(const std::string& name);
 	void DestroyChildByName(const std::string& name, bool force = false);

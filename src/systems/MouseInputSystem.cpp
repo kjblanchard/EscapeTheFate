@@ -13,6 +13,7 @@
 using namespace Etf;
 
 static std::vector<UIButton*> sButtons;
+static UIButton* sLastHovered = nullptr;
 
 static void getGameMousePosition(float& outX, float& outY) {
 #ifdef imgui
@@ -37,24 +38,41 @@ static void getGameMousePosition(float& outX, float& outY) {
 #endif
 }
 
+static UIButton* findTopButton(float gameX, float gameY) {
+	UIButton* best = nullptr;
+	int bestLayer = -1;
+	for (auto* btn : sButtons) {
+		if (btn->HitTest(gameX, gameY)) {
+			if (btn->GetLayer() > bestLayer) {
+				bestLayer = btn->GetLayer();
+				best = btn;
+			}
+		}
+	}
+	return best;
+}
+
 void MouseInputSystem::Update() {
 	float gameX, gameY;
 	getGameMousePosition(gameX, gameY);
-	if (gameX < 0 || gameY < 0) return;
-
-	for (auto* btn : sButtons) {
-		if (btn->HitTest(gameX, gameY)) {
-			btn->Hover();
-		}
+	if (gameX < 0 || gameY < 0) {
+		sLastHovered = nullptr;
+		return;
 	}
 
-	if (!IsMouseButtonJustPressed(MouseButtonsLeftClick)) return;
+	UIButton* hovered = findTopButton(gameX, gameY);
 
-	for (auto* btn : sButtons) {
-		if (btn->HitTest(gameX, gameY)) {
-			btn->Fire();
-			break;
-		}
+	if (hovered != sLastHovered) {
+		if (hovered) hovered->Hover();
+		sLastHovered = hovered;
+	}
+
+	if (IsMouseButtonJustPressed(MouseButtonsLeftClick) && hovered) {
+		hovered->Fire();
+	}
+
+	if (IsMouseButtonJustPressed(MouseButtonsRightClick) && hovered) {
+		hovered->FireRightClick();
 	}
 }
 
@@ -63,9 +81,15 @@ void MouseInputSystem::RegisterButton(UIButton* button) {
 }
 
 void MouseInputSystem::UnregisterButton(UIButton* button) {
+	if (sLastHovered == button) sLastHovered = nullptr;
 	sButtons.erase(std::remove(sButtons.begin(), sButtons.end(), button), sButtons.end());
 }
 
 void MouseInputSystem::ClearButtons() {
+	sLastHovered = nullptr;
 	sButtons.clear();
+}
+
+void MouseInputSystem::GetMouseGamePos(float& outX, float& outY) {
+	getGameMousePosition(outX, outY);
 }

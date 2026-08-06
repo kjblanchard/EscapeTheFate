@@ -210,8 +210,10 @@ void buildUI() {
 		leftBtnArgs.Name = "CharSelectLeftBtn";
 		leftBtnArgs.Priority = 3;
 		leftBtnArgs.Visible = true;
+		leftBtnArgs.Layer = 1;
 		auto* leftBtn = new UIButton(leftBtnArgs);
 		leftBtn->SetClickCallback([]() { navigateLeft(); });
+		leftBtn->SetRightClickCallback([]() { cancelCharacterSelect(); });
 		bg->AddChild(leftBtn);
 		MouseInputSystem::RegisterButton(leftBtn);
 		_charSelectButtons[0] = leftBtn;
@@ -221,8 +223,10 @@ void buildUI() {
 		rightBtnArgs.Name = "CharSelectRightBtn";
 		rightBtnArgs.Priority = 3;
 		rightBtnArgs.Visible = true;
+		rightBtnArgs.Layer = 1;
 		auto* rightBtn = new UIButton(rightBtnArgs);
 		rightBtn->SetClickCallback([]() { navigateRight(); });
+		rightBtn->SetRightClickCallback([]() { cancelCharacterSelect(); });
 		bg->AddChild(rightBtn);
 		MouseInputSystem::RegisterButton(rightBtn);
 		_charSelectButtons[1] = rightBtn;
@@ -232,8 +236,10 @@ void buildUI() {
 		confirmBtnArgs.Name = "CharSelectConfirmBtn";
 		confirmBtnArgs.Priority = 3;
 		confirmBtnArgs.Visible = true;
+		confirmBtnArgs.Layer = 1;
 		auto* confirmBtn = new UIButton(confirmBtnArgs);
 		confirmBtn->SetClickCallback([]() { confirmCharacter(); });
+		confirmBtn->SetRightClickCallback([]() { cancelCharacterSelect(); });
 		bg->AddChild(confirmBtn);
 		MouseInputSystem::RegisterButton(confirmBtn);
 		_charSelectButtons[2] = confirmBtn;
@@ -280,6 +286,20 @@ void navigateRight() {
 	Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 	destroyUI();
 	buildUI();
+}
+
+void cancelCharacterSelect() {
+	if (!_active) return;
+	if (_selectingPlayer != 0) return;
+	if (GameState::IsMultiplayer && _selectingPlayer == 1) {
+		_selectingPlayer = 0;
+		_selectedIndex = _p1SelectedIndex;
+		destroyUI();
+		buildUI();
+		return;
+	}
+	destroyUI();
+	_active = false;
 }
 
 void confirmCharacter() {

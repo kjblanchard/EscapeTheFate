@@ -58,6 +58,10 @@ class BattlerUI {
 	void EndPlayerTurn(Battler* battler);
 	static void EndBattle();
 	static void ClosePlayerInfoBox();
+	UIObject* GetMenuItem(int index) const { return (index >= 0 && index < 4) ? _menuItems[index] : nullptr; }
+	UIObject* GetMagicMenuItem(int index) const { return (index >= 0 && index < 8) ? _magicMenuItems[index] : nullptr; }
+	bool IsCommandMenuOpen() const { return _currentState == PlayerUIAnimationStates::Opened; }
+	bool IsMagicMenuOpen() const { return _magicMenuState == PlayerUIAnimationStates::Opened; }
 
    private:
 	static UIAnimation* _turnMarkerAnim;

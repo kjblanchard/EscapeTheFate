@@ -1,3 +1,4 @@
+#include <Supergoon/Input/mouse.h>
 #include <sgtools/log.h>
 
 #include <algorithm>
@@ -6,6 +7,7 @@
 #include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <iterator>
+#include <systems/MouseInputSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 
@@ -189,6 +191,196 @@ void PlayerBattler::updateImpl() {
 			break;
 	}
 	handleInput();
+	if (_controller->PlayerNum_ == 0) handleClickAction();
+}
+
+void PlayerBattler::handleClickAction() {
+	float mouseX, mouseY;
+	MouseInputSystem::GetMouseGamePos(mouseX, mouseY);
+	if (mouseX < 0 || mouseY < 0) return;
+
+	bool leftClick = IsMouseButtonJustPressed(MouseButtonsLeftClick);
+	bool rightClick = IsMouseButtonJustPressed(MouseButtonsRightClick);
+
+	switch (_currentBattlerState) {
+		case BattlerStates::CommandSelection: {
+			if (!_battlerUI->IsCommandMenuOpen()) break;
+			if (rightClick) break;
+			if (!leftClick) {
+				for (unsigned int i = 0; i < 4; ++i) {
+					auto* item = _battlerUI->GetMenuItem(i);
+					if (!item) continue;
+					auto pos = item->AbsolutePosition();
+					float itemY = pos.y + (15.0f * i);
+					if (mouseX >= pos.x - 15 && mouseX < pos.x + pos.w &&
+						mouseY >= itemY && mouseY < itemY + 15.0f) {
+						if (_currentMenuLocation != i) {
+							_currentMenuLocation = i;
+							_battlerUI->MoveCursorInMenu(_currentMenuLocation);
+							Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+						}
+						break;
+					}
+				}
+				break;
+			}
+			for (unsigned int i = 0; i < 4; ++i) {
+				auto* item = _battlerUI->GetMenuItem(i);
+				if (!item) continue;
+				auto pos = item->AbsolutePosition();
+				float itemY = pos.y + (15.0f * i);
+				if (mouseX >= pos.x - 15 && mouseX < pos.x + pos.w &&
+					mouseY >= itemY && mouseY < itemY + 15.0f) {
+					_currentMenuLocation = i;
+					_battlerUI->MoveCursorInMenu(i);
+					switch (i) {
+						case 0: {
+							const auto& ability = BattleSystem::GetAbilityByID(0);
+							if (_currentAP < ability.APCost) {
+								Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+								return;
+							}
+							Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+							_selectedAbilityID = 0;
+							_targetingFriendly = false;
+							handleStateChange(TargetSelection);
+							return;
+						}
+						case 1:
+							Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+							handleStateChange(MagicSelection);
+							return;
+						default:
+							Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+							break;
+					}
+					break;
+				}
+			}
+			break;
+		}
+		case BattlerStates::MagicSelection: {
+			if (!_battlerUI->IsMagicMenuOpen()) break;
+			if (rightClick) {
+				Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+				_battlerUI->CloseMagicMenu();
+				_currentBattlerState = CommandSelection;
+				break;
+			}
+			for (int col = 0; col < 2; ++col) {
+				for (int row = 0; row < 4; ++row) {
+					auto* slot0 = _battlerUI->GetMagicMenuItem(0);
+					if (!slot0) continue;
+					auto pos = slot0->AbsolutePosition();
+					float slotX = pos.x - 15 + (50.0f * col);
+					float slotY = pos.y + (15.0f * row);
+					if (mouseX >= slotX && mouseX < slotX + 50.0f &&
+						mouseY >= slotY && mouseY < slotY + 15.0f) {
+						if (!leftClick) {
+							if (_magicMenuCol != (unsigned)col || _magicMenuRow != (unsigned)row) {
+								_magicMenuCol = col;
+								_magicMenuRow = row;
+								_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
+								Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+								int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+								if (slotIndex < (int)_battlerData->Abilities.size()) {
+									int abilityID = _battlerData->Abilities[slotIndex];
+									const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+									_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+									_battlerUI->ShowMagicDescription(ab.Description);
+								} else {
+									_battlerUI->HideAPCostBox();
+									_battlerUI->ShowMagicDescription("");
+								}
+							}
+						} else {
+							_magicMenuCol = col;
+							_magicMenuRow = row;
+							_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
+							int slotIndex = col * 4 + row;
+							if (slotIndex >= (int)_battlerData->Abilities.size()) {
+								Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+								return;
+							}
+							_selectedAbilityID = _battlerData->Abilities[slotIndex];
+							const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+							if (_currentAP < ability.APCost) {
+								Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+								return;
+							}
+							Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+							_targetingFriendly = ability.Friendly;
+							_battlerUI->HideAPCostBox();
+							handleStateChange(TargetSelection);
+						}
+						return;
+					}
+				}
+			}
+			break;
+		}
+		case BattlerStates::TargetSelection: {
+			if (rightClick) {
+				Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+				_battlerUI->CloseTargetSelection();
+				if (_selectedAbilityID > 0) {
+					_currentBattlerState = MagicSelection;
+					int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+					if (slotIndex < (int)_battlerData->Abilities.size()) {
+						int abilityID = _battlerData->Abilities[slotIndex];
+						const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+						_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+						_battlerUI->ShowMagicDescription(ab.Description);
+					}
+				} else {
+					_currentBattlerState = CommandSelection;
+				}
+				break;
+			}
+			if (!leftClick) break;
+			std::vector<Battler*> targets;
+			getAllTargets(targets);
+			for (int i = 0; i < (int)targets.size(); ++i) {
+				auto* battler = targets[i];
+				if (!battler) continue;
+				float bx = battler->SpriteX();
+				float by = battler->SpriteY();
+				float bw = battler->SpriteWidth();
+				float bh = battler->SpriteHeight();
+				if (mouseX >= bx && mouseX < bx + bw &&
+					mouseY >= by && mouseY < by + bh) {
+					_currentTargetBattler = i;
+					moveFingerToTargetNum(i);
+					Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+					const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+					const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
+					_animator->PlayAnimationThenLoopSecond(playerAnim, _battlerData->IdleAnimation);
+					if (ability.BaseDamage < 0) {
+						battler->Heal(-ability.BaseDamage);
+					} else {
+						battler->TakeDamage(ability.BaseDamage);
+					}
+					battler->PlayHitAnimation(ability);
+					SpendAP(ability.APCost);
+					_battlerUI->UpdateAP(std::to_string(_currentAP));
+					_currentATBCharge = 0;
+					_reopenMenuAfterClose = _currentAP > 0;
+					handleStateChange(ATBCharging);
+					return;
+				}
+			}
+			break;
+		}
+		case BattlerStates::BattleEndIdle: {
+			if (leftClick) {
+				handleStateChange(BattlerStates::BattleSpoils);
+				BattleSystem::TriggerBattleSpoils();
+			}
+			break;
+		}
+		default:
+			break;
+	}
 }
 
 void PlayerBattler::takeDamageImpl(int damage) {

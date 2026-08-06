@@ -171,6 +171,23 @@ static void handleMenuItemHover(int idx) {
 	}
 }
 
+static void handleMenuRightClick() {
+	if (!GameState::Menu::MenuOpen[0]) return;
+	if (_statsOpen[0]) {
+		_statsOpen[0] = false;
+		if (_statsPanels[0]) _statsPanels[0]->SetVisible(false);
+		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+	} else if (_itemsOpen[0]) {
+		_itemsOpen[0] = false;
+		if (_itemsPanels[0]) _itemsPanels[0]->SetVisible(false);
+		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+	} else {
+		GameState::Menu::MenuOpen[0] = false;
+		if (_panels[0]) _panels[0]->SetVisible(false);
+		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+	}
+}
+
 static void buildMenuPanelForPlayer(int playerIdx) {
 	UINineSliceArgs panelArgs;
 	panelArgs.Name = std::format("MenuPanel{}", playerIdx);
@@ -387,16 +404,28 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	_itemsPanels[playerIdx] = itemsPanel;
 
 	if (playerIdx == 0) {
+		UIButtonArgs bgBtnArgs;
+		bgBtnArgs.Rect = {0.0f, 0.0f, kPanelW, kPanelH};
+		bgBtnArgs.Name = "MenuBgBtn";
+		bgBtnArgs.Priority = 1;
+		bgBtnArgs.Visible = true;
+		auto* bgBtn = new UIButton(bgBtnArgs);
+		bgBtn->SetRightClickCallback([]() { handleMenuRightClick(); });
+		panel->AddChild(bgBtn);
+		MouseInputSystem::RegisterButton(bgBtn);
+
 		for (int i = 0; i < kNumItems; ++i) {
 			UIButtonArgs btnArgs;
 			btnArgs.Rect = {7.0f, kItemStartY + (i * kItemSpacing), kPanelW - 14.0f, kItemSpacing};
 			btnArgs.Name = std::format("MenuBtn{}", i);
 			btnArgs.Priority = 3;
 			btnArgs.Visible = true;
+			btnArgs.Layer = 1;
 			auto* btn = new UIButton(btnArgs);
 			int idx = i;
 			btn->SetClickCallback([idx]() { handleMenuItemClick(idx); });
 			btn->SetHoverCallback([idx]() { handleMenuItemHover(idx); });
+			btn->SetRightClickCallback([]() { handleMenuRightClick(); });
 			panel->AddChild(btn);
 			MouseInputSystem::RegisterButton(btn);
 			_menuButtons[i] = btn;
