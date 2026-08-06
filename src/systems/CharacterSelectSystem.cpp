@@ -2,11 +2,13 @@
 #include <engine.hpp>
 #include <gameState.hpp>
 #include <systems/CharacterSelectSystem.hpp>
+#include <systems/MouseInputSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiAnimation.hpp>
+#include <ui/uiButton.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiObject.hpp>
@@ -45,6 +47,11 @@ UIAnimation* _battleAnim = nullptr;
 UIImage* _portraitImage = nullptr;
 UIText* _nameText = nullptr;
 UIText* _descText = nullptr;
+UIButton* _charSelectButtons[3] = {};
+
+void confirmCharacter();
+void navigateLeft();
+void navigateRight();
 
 void loadCharacterData() {
 	if (!_characters.empty()) return;
@@ -197,11 +204,52 @@ void buildUI() {
 	promptArgs.DebugBox = false;
 	bg->AddChild(new UIText(promptArgs));
 
+	if (_selectingPlayer == 0) {
+		UIButtonArgs leftBtnArgs;
+		leftBtnArgs.Rect = {0, 40, 80, 144};
+		leftBtnArgs.Name = "CharSelectLeftBtn";
+		leftBtnArgs.Priority = 3;
+		leftBtnArgs.Visible = true;
+		auto* leftBtn = new UIButton(leftBtnArgs);
+		leftBtn->SetClickCallback([]() { navigateLeft(); });
+		bg->AddChild(leftBtn);
+		MouseInputSystem::RegisterButton(leftBtn);
+		_charSelectButtons[0] = leftBtn;
+
+		UIButtonArgs rightBtnArgs;
+		rightBtnArgs.Rect = {280, 40, 80, 144};
+		rightBtnArgs.Name = "CharSelectRightBtn";
+		rightBtnArgs.Priority = 3;
+		rightBtnArgs.Visible = true;
+		auto* rightBtn = new UIButton(rightBtnArgs);
+		rightBtn->SetClickCallback([]() { navigateRight(); });
+		bg->AddChild(rightBtn);
+		MouseInputSystem::RegisterButton(rightBtn);
+		_charSelectButtons[1] = rightBtn;
+
+		UIButtonArgs confirmBtnArgs;
+		confirmBtnArgs.Rect = {60, 185, 240, 20};
+		confirmBtnArgs.Name = "CharSelectConfirmBtn";
+		confirmBtnArgs.Priority = 3;
+		confirmBtnArgs.Visible = true;
+		auto* confirmBtn = new UIButton(confirmBtnArgs);
+		confirmBtn->SetClickCallback([]() { confirmCharacter(); });
+		bg->AddChild(confirmBtn);
+		MouseInputSystem::RegisterButton(confirmBtn);
+		_charSelectButtons[2] = confirmBtn;
+	}
+
 	_uiBuilt = true;
 }
 
 void destroyUI() {
 	if (!_uiBuilt) return;
+	for (auto& btn : _charSelectButtons) {
+		if (btn) {
+			MouseInputSystem::UnregisterButton(btn);
+			btn = nullptr;
+		}
+	}
 	auto root = UI::GetRootUIObject();
 	root->DestroyChildByName(kPanelName);
 	_panel = nullptr;
@@ -210,6 +258,54 @@ void destroyUI() {
 	_nameText = nullptr;
 	_descText = nullptr;
 	_uiBuilt = false;
+}
+
+void navigateLeft() {
+	if (!_active || _characters.size() <= 1) return;
+	if (_selectingPlayer != 0) return;
+	_selectedIndex = (_selectedIndex - 1 + (int)_characters.size()) % (int)_characters.size();
+	if (GameState::IsMultiplayer && _selectingPlayer == 1 && _selectedIndex == _p1SelectedIndex)
+		_selectedIndex = (_selectedIndex - 1 + (int)_characters.size()) % (int)_characters.size();
+	Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+	destroyUI();
+	buildUI();
+}
+
+void navigateRight() {
+	if (!_active || _characters.size() <= 1) return;
+	if (_selectingPlayer != 0) return;
+	_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
+	if (GameState::IsMultiplayer && _selectingPlayer == 1 && _selectedIndex == _p1SelectedIndex)
+		_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
+	Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+	destroyUI();
+	buildUI();
+}
+
+void confirmCharacter() {
+	if (!_active) return;
+	if (_selectingPlayer != 0) return;
+	Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+	auto& ch = _characters[_selectedIndex];
+	if (!GameState::IsMultiplayer) {
+		GameState::ResetForNewGame();
+		GameState::SelectedPlayerCharacter = ch.BattlerDBIndex;
+		GameState::SelectedOverworldSprite = ch.OverworldSprite;
+		GameState::SelectedOverworldFrameW = ch.OverworldFrameW;
+		GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
+		BattleSystem::ResetAfterGameOver();
+		destroyUI();
+		_active = false;
+		Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
+	} else if (_selectingPlayer == 0) {
+		_p1SelectedIndex = _selectedIndex;
+		_selectingPlayer = 1;
+		_selectedIndex = 0;
+		if (_selectedIndex == _p1SelectedIndex)
+			_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
+		destroyUI();
+		buildUI();
+	}
 }
 
 }  // namespace

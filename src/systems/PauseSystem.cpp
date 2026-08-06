@@ -1,9 +1,11 @@
 #include <engine.hpp>
 #include <gameState.hpp>
+#include <systems/MouseInputSystem.hpp>
 #include <systems/PauseSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <types/ControllerButtons.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiButton.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiLine.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -187,6 +189,34 @@ void PauseSystem::Start() {
 	hintArgs.Visible = true;
 	hintArgs.DebugBox = false;
 	panel->AddChild(new UIText(hintArgs));
+
+	UIButtonArgs swapBtnArgs;
+	swapBtnArgs.Rect = {10.0f, 28.0f, 180.0f, 40.0f};
+	swapBtnArgs.Name = "PauseSwapBtn";
+	swapBtnArgs.Priority = 5;
+	swapBtnArgs.Visible = true;
+	auto* swapBtn = new UIButton(swapBtnArgs);
+	swapBtn->SetClickCallback([]() {
+		if (!GameState::Paused) return;
+		swapControllers();
+		syncIcons();
+	});
+	panel->AddChild(swapBtn);
+	MouseInputSystem::RegisterButton(swapBtn);
+
+	UIButtonArgs resumeBtnArgs;
+	resumeBtnArgs.Rect = {10.0f, 75.0f, 180.0f, 35.0f};
+	resumeBtnArgs.Name = "PauseResumeBtn";
+	resumeBtnArgs.Priority = 5;
+	resumeBtnArgs.Visible = true;
+	auto* resumeBtn = new UIButton(resumeBtnArgs);
+	resumeBtn->SetClickCallback([]() {
+		if (!GameState::Paused) return;
+		GameState::Paused = false;
+		_panel->SetVisible(false);
+	});
+	panel->AddChild(resumeBtn);
+	MouseInputSystem::RegisterButton(resumeBtn);
 
 	UI::GetRootUIObject()->AddChild(panel);
 	_panel = panel;

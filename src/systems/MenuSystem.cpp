@@ -2,10 +2,12 @@
 #include <format>
 #include <gameState.hpp>
 #include <systems/MenuSystem.hpp>
+#include <systems/MouseInputSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiButton.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiText.hpp>
@@ -40,6 +42,7 @@ static UIText* _timeTexts[2] = {nullptr, nullptr};
 static UIText* _statLineTexts[2][kNumStatLines] = {};
 static UIText* _itemLineTexts[2][kMaxItemLines] = {};
 static UIText* _portraitNameTexts[2] = {nullptr, nullptr};
+static UIButton* _menuButtons[kNumItems] = {};
 static int _selectedIndex[2] = {0, 0};
 static bool _statsOpen[2] = {false, false};
 static bool _itemsOpen[2] = {false, false};
@@ -140,6 +143,32 @@ static void openItemsPanel(int playerIdx) {
 	}
 	if (_itemsPanels[playerIdx]) _itemsPanels[playerIdx]->SetVisible(true);
 	_itemsOpen[playerIdx] = true;
+}
+
+static void handleMenuItemClick(int idx) {
+	if (!GameState::Menu::MenuOpen[0]) return;
+	if (_statsOpen[0] || _itemsOpen[0]) return;
+	if (!kItemEnabled[idx]) {
+		Engine::Audio::PlaySFXBuffer("error1", 0.75f);
+		return;
+	}
+	if (idx == 0) {
+		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+		openItemsPanel(0);
+	} else if (idx == 4) {
+		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+		openStatsPanel(0);
+	}
+}
+
+static void handleMenuItemHover(int idx) {
+	if (!GameState::Menu::MenuOpen[0]) return;
+	if (_statsOpen[0] || _itemsOpen[0]) return;
+	if (_selectedIndex[0] != idx) {
+		_selectedIndex[0] = idx;
+		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+		positionFinger(0);
+	}
 }
 
 static void buildMenuPanelForPlayer(int playerIdx) {
@@ -356,6 +385,23 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 
 	panel->AddChild(itemsPanel);
 	_itemsPanels[playerIdx] = itemsPanel;
+
+	if (playerIdx == 0) {
+		for (int i = 0; i < kNumItems; ++i) {
+			UIButtonArgs btnArgs;
+			btnArgs.Rect = {7.0f, kItemStartY + (i * kItemSpacing), kPanelW - 14.0f, kItemSpacing};
+			btnArgs.Name = std::format("MenuBtn{}", i);
+			btnArgs.Priority = 3;
+			btnArgs.Visible = true;
+			auto* btn = new UIButton(btnArgs);
+			int idx = i;
+			btn->SetClickCallback([idx]() { handleMenuItemClick(idx); });
+			btn->SetHoverCallback([idx]() { handleMenuItemHover(idx); });
+			panel->AddChild(btn);
+			MouseInputSystem::RegisterButton(btn);
+			_menuButtons[i] = btn;
+		}
+	}
 
 	UI::GetRootUIObject()->AddChild(panel);
 	_panels[playerIdx] = panel;
