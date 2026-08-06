@@ -3,6 +3,7 @@
 #include <Supergoon/Primitives/rectangle.h>
 
 #include <string>
+#include <vector>
 namespace Etf {
 struct PlayerData {
 	RectangleF Location = {0, 0, 0, 0};
@@ -51,6 +52,15 @@ struct GameState {
 	struct Menu {
 		static bool MenuOpen[2];
 	} Menu;
+	struct Save {
+		struct PlayerSaveData {
+			int CurrentHP = -1;
+			int CurrentXP = 0;
+			int XPToNextLevel = 100;
+		};
+		static PlayerSaveData PlayerData[2];
+		static std::vector<std::string> Inventory;
+	} Save;
 };
 
 }  // namespace Etf

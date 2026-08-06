@@ -22,7 +22,7 @@ Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location
 	_sprite = Engine::Sprites::CreateSpriteFull(spriteName.c_str(), &X_, &Y_, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	_animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), _sprite);
 	_animator->StartAnimation(args.BattleData->IdleAnimation);
-	_currentHP = _battlerData->HP;
+	_currentHP = args.CurrentHP;
 	_currentATBCharge = 0;
 	_maxATBCharge = 100;
 	_currentAP = 0;

@@ -31,6 +31,9 @@ void GameState::ResetForNewGame() {
 		pd.MovedThisFrame = false;
 		pd.Spawned = false;
 	}
+	Save::PlayerData[0] = {-1, 0, 100};
+	Save::PlayerData[1] = {-1, 0, 100};
+	Save::Inventory.clear();
 }
 
 // int GameState::IsEngineStarted = false;
@@ -60,3 +63,5 @@ bool GameState::Battle::ExitingFromBattle = false;
 std::string GameState::NextLoadMapName = "";
 int GameState::NextLoadDirection = 0;
 float GameState::Battle::CurrentStepsWithoutBattle = 0;
+GameState::Save::PlayerSaveData GameState::Save::PlayerData[2] = {};
+std::vector<std::string> GameState::Save::Inventory;

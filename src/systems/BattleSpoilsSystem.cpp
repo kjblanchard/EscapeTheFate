@@ -420,6 +420,22 @@ static void skipAccumulation() {
 	_promptText->UpdateText("Press A to continue");
 }
 
+static void commitSpoilsToGameState() {
+	auto& battlers = BattleSystem::GetEnemyBattlers();
+	int saveSlot = 0;
+	for (size_t i = 0; i < battlers.size() && saveSlot < 2; ++i) {
+		if (!battlers[i] || !battlers[i]->IsPlayer()) continue;
+		int newXP = battlers[i]->GetBattlerData()->CurrentXP + _xpGained;
+		battlers[i]->GetBattlerData()->CurrentXP = newXP;
+		GameState::Save::PlayerData[saveSlot].CurrentXP = newXP;
+		GameState::Save::PlayerData[saveSlot].XPToNextLevel = battlers[i]->GetBattlerData()->XPToNextLevel;
+		++saveSlot;
+	}
+	for (auto& item : _wonItems) {
+		GameState::Save::Inventory.push_back(item);
+	}
+}
+
 void BattleSpoilsSystem::TriggerBattleSpoils() {
 	_isDone = false;
 	_animTime = 0.0f;
@@ -467,6 +483,7 @@ void BattleSpoilsSystem::Update() {
 			break;
 		case SpoilsState::Done:
 			if (anyPlayerPressedA()) {
+				commitSpoilsToGameState();
 				_isDone = true;
 				_currentState = SpoilsState::Inactive;
 			}

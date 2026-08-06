@@ -14,7 +14,7 @@ using namespace Etf;
 
 static const int kNumItems = 6;
 static const char* kItemLabels[kNumItems] = {"Items", "Abilities", "Equipment", "Magic", "Stats", "Save"};
-static const bool kItemEnabled[kNumItems] = {false, false, false, false, true, false};
+static const bool kItemEnabled[kNumItems] = {true, false, false, false, true, false};
 
 static const Color kEnabledColor = {255, 255, 255, 255};
 static const Color kDisabledColor = {150, 150, 150, 128};
@@ -30,14 +30,19 @@ static const float kItemSpacing = 14.0f;
 static const int kNumStatLines = 7;
 static const float kStatLineSpacing = 14.0f;
 
+static const int kMaxItemLines = 8;
+
 static UIObject* _panels[2] = {nullptr, nullptr};
 static UIObject* _statsPanels[2] = {nullptr, nullptr};
+static UIObject* _itemsPanels[2] = {nullptr, nullptr};
 static UIImage* _fingers[2] = {nullptr, nullptr};
 static UIText* _timeTexts[2] = {nullptr, nullptr};
 static UIText* _statLineTexts[2][kNumStatLines] = {};
+static UIText* _itemLineTexts[2][kMaxItemLines] = {};
 static UIText* _portraitNameTexts[2] = {nullptr, nullptr};
 static int _selectedIndex[2] = {0, 0};
 static bool _statsOpen[2] = {false, false};
+static bool _itemsOpen[2] = {false, false};
 static bool _initialized = false;
 
 static void positionFinger(int playerIdx) {
@@ -90,14 +95,19 @@ static void openStatsPanel(int playerIdx) {
 	auto* data = BattleSystem::GetPlayerBattlerData(playerIdx);
 	if (!data) return;
 
+	auto& save = GameState::Save::PlayerData[playerIdx];
+	int currentHP = (save.CurrentHP < 0) ? data->HP : save.CurrentHP;
+	int currentXP = (save.CurrentHP < 0) ? data->CurrentXP : save.CurrentXP;
+	int xpToNext = (save.CurrentHP < 0) ? data->XPToNextLevel : save.XPToNextLevel;
+
 	std::string lines[kNumStatLines];
 	lines[0] = data->Name;
-	lines[1] = std::format("HP:  {}", data->HP);
+	lines[1] = std::format("HP:  {}/{}", currentHP, data->HP);
 	lines[2] = std::format("STR: {}  MAG: {}", data->Str, data->Mag);
 	lines[3] = std::format("DEF: {}  MDF: {}", data->Def, data->MDef);
 	lines[4] = std::format("SPD: {}  POW: {}", data->Spd, data->Pow);
 	lines[5] = std::format("AP:  {}", data->MaxAP);
-	lines[6] = std::format("XP:  {}/{}", data->CurrentXP, data->XPToNextLevel);
+	lines[6] = std::format("XP:  {}/{}", currentXP, xpToNext);
 
 	for (int i = 0; i < kNumStatLines; ++i) {
 		if (_statLineTexts[playerIdx][i]) {
@@ -107,6 +117,29 @@ static void openStatsPanel(int playerIdx) {
 
 	if (_statsPanels[playerIdx]) _statsPanels[playerIdx]->SetVisible(true);
 	_statsOpen[playerIdx] = true;
+}
+
+static void openItemsPanel(int playerIdx) {
+	auto& inventory = GameState::Save::Inventory;
+	for (int i = 0; i < kMaxItemLines; ++i) {
+		if (!_itemLineTexts[playerIdx][i]) continue;
+		if (i == 0) {
+			if (inventory.empty()) {
+				_itemLineTexts[playerIdx][i]->UpdateText("(empty)");
+			} else {
+				_itemLineTexts[playerIdx][i]->UpdateText("ITEMS");
+			}
+		} else {
+			int itemIdx = i - 1;
+			if (itemIdx < (int)inventory.size()) {
+				_itemLineTexts[playerIdx][i]->UpdateText(inventory[itemIdx]);
+			} else {
+				_itemLineTexts[playerIdx][i]->UpdateText("");
+			}
+		}
+	}
+	if (_itemsPanels[playerIdx]) _itemsPanels[playerIdx]->SetVisible(true);
+	_itemsOpen[playerIdx] = true;
 }
 
 static void buildMenuPanelForPlayer(int playerIdx) {
@@ -286,6 +319,44 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	panel->AddChild(statsPanel);
 	_statsPanels[playerIdx] = statsPanel;
 
+	// Items sub-panel
+	UINineSliceArgs itemsPanelArgs;
+	itemsPanelArgs.Name = std::format("ItemsPanel{}", playerIdx);
+	itemsPanelArgs.Filename = "uibase";
+	itemsPanelArgs.Rect = {3.0f, kItemStartY - 4.0f, kPanelW - 6.0f, kMaxItemLines * kStatLineSpacing + 16.0f};
+	itemsPanelArgs.SourceRect = {0, 0, 64, 64};
+	itemsPanelArgs.DrawColor = {40, 0, 60, 220};
+	itemsPanelArgs.Xoffset = 8;
+	itemsPanelArgs.Yoffset = 8;
+	itemsPanelArgs.Scale = 1.0f;
+	itemsPanelArgs.Priority = 2;
+	itemsPanelArgs.Visible = false;
+	itemsPanelArgs.DebugBox = false;
+	auto* itemsPanel = new UINineSlice(itemsPanelArgs);
+
+	for (int i = 0; i < kMaxItemLines; ++i) {
+		UITextArgs lineArgs;
+		lineArgs.FontName = "PressStart2P";
+		lineArgs.FontSize = 8;
+		lineArgs.Rect = {8.0f, 8.0f + (i * kStatLineSpacing), kPanelW - 22.0f, 10.0f};
+		lineArgs.TextToDraw = " ";
+		lineArgs.Name = std::format("ItemLine{}_{}", i, playerIdx);
+		lineArgs.NumCharsToDraw = 30;
+		lineArgs.Priority = 0;
+		lineArgs.TextColor = (i == 0) ? Color{255, 255, 200, 255} : kEnabledColor;
+		lineArgs.CenteredX = false;
+		lineArgs.CenteredY = false;
+		lineArgs.WordWrap = false;
+		lineArgs.Visible = true;
+		lineArgs.DebugBox = false;
+		auto* lineText = new UIText(lineArgs);
+		itemsPanel->AddChild(lineText);
+		_itemLineTexts[playerIdx][i] = lineText;
+	}
+
+	panel->AddChild(itemsPanel);
+	_itemsPanels[playerIdx] = itemsPanel;
+
 	UI::GetRootUIObject()->AddChild(panel);
 	_panels[playerIdx] = panel;
 }
@@ -296,12 +367,18 @@ void MenuSystem::Start() {
 	_selectedIndex[1] = 0;
 	_statsOpen[0] = false;
 	_statsOpen[1] = false;
+	_itemsOpen[0] = false;
+	_itemsOpen[1] = false;
 	for (auto& p : _panels) p = nullptr;
 	for (auto& p : _statsPanels) p = nullptr;
+	for (auto& p : _itemsPanels) p = nullptr;
 	for (auto& f : _fingers) f = nullptr;
 	for (auto& t : _timeTexts) t = nullptr;
 	for (auto& t : _portraitNameTexts) t = nullptr;
 	for (auto& row : _statLineTexts) {
+		for (auto& t : row) t = nullptr;
+	}
+	for (auto& row : _itemLineTexts) {
 		for (auto& t : row) t = nullptr;
 	}
 	buildMenuPanelForPlayer(0);
@@ -338,7 +415,9 @@ void MenuSystem::Update() {
 				GameState::Menu::MenuOpen[i] = true;
 				_selectedIndex[i] = 0;
 				_statsOpen[i] = false;
+				_itemsOpen[i] = false;
 				if (_statsPanels[i]) _statsPanels[i]->SetVisible(false);
+				if (_itemsPanels[i]) _itemsPanels[i]->SetVisible(false);
 				if (_panels[i]) _panels[i]->SetVisible(true);
 				rebuildPortrait(i);
 				updateTimeText();
@@ -357,6 +436,10 @@ void MenuSystem::Update() {
 				_statsOpen[i] = false;
 				if (_statsPanels[i]) _statsPanels[i]->SetVisible(false);
 				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+			} else if (_itemsOpen[i]) {
+				_itemsOpen[i] = false;
+				if (_itemsPanels[i]) _itemsPanels[i]->SetVisible(false);
+				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			} else {
 				GameState::Menu::MenuOpen[i] = false;
 				if (_panels[i]) _panels[i]->SetVisible(false);
@@ -365,7 +448,7 @@ void MenuSystem::Update() {
 			continue;
 		}
 
-		if (_statsOpen[i]) continue;
+		if (_statsOpen[i] || _itemsOpen[i]) continue;
 
 		if (player->IsButtonJustPressed(ControllerButtons::Up)) {
 			_selectedIndex[i] = (_selectedIndex[i] - 1 + kNumItems) % kNumItems;
@@ -382,6 +465,9 @@ void MenuSystem::Update() {
 			int idx = _selectedIndex[i];
 			if (!kItemEnabled[idx]) {
 				Engine::Audio::PlaySFXBuffer("error1", 0.75f);
+			} else if (idx == 0) {
+				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+				openItemsPanel(i);
 			} else if (idx == 4) {
 				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
 				openStatsPanel(i);

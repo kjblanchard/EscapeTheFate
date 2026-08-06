@@ -51,6 +51,17 @@ struct BattleUI {
 }  // namespace
 
 static void battleEnd() {
+	auto writeBack = [](int battlerSlot, int saveSlot) {
+		if (battlerSlot >= (int)_battlers.size()) return;
+		auto* b = _battlers[battlerSlot];
+		if (!b || !b->IsPlayer()) return;
+		GameState::Save::PlayerData[saveSlot].CurrentHP = (int)b->CurrentHP();
+		GameState::Save::PlayerData[saveSlot].CurrentXP = b->GetBattlerData()->CurrentXP;
+		GameState::Save::PlayerData[saveSlot].XPToNextLevel = b->GetBattlerData()->XPToNextLevel;
+	};
+	writeBack(1, 0);
+	if (GameState::IsMultiplayer) writeBack(2, 1);
+
 	battleUI_.VictoryPanel->SetVisible(false);
 	BattleLocation::ClearAllBattleLocations();
 	_battlers.clear();
@@ -177,10 +188,16 @@ static void loadPlayers() {
 	const int playerData = GameState::SelectedPlayerCharacter;
 	const int playerSpawnLocation = 1;
 	auto& p1BattlerData = battlerDatabase_.at(playerData);
+	auto& save0 = GameState::Save::PlayerData[0];
+	if (save0.CurrentHP >= 0) {
+		p1BattlerData.CurrentXP = save0.CurrentXP;
+		p1BattlerData.XPToNextLevel = save0.XPToNextLevel;
+	}
 	auto spawnLocation = BattleLocation::GetBattleLocation(playerSpawnLocation);
 	BattlerArgs args;
 	args.BattlerNum = 0;
 	args.BattleData = &p1BattlerData;
+	args.CurrentHP = (save0.CurrentHP < 0) ? p1BattlerData.HP : save0.CurrentHP;
 	args.X = spawnLocation->X();
 	args.Y = spawnLocation->Y();
 	args.Controller = PlayerControllerSystem::GetPlayerByNum(0);
@@ -190,10 +207,16 @@ static void loadPlayers() {
 	if (GameState::IsMultiplayer) {
 		const int p2SpawnLocation = 2;
 		auto& p2BattlerData = battlerDatabase_.at(GameState::SelectedPlayerCharacter2);
+		auto& save1 = GameState::Save::PlayerData[1];
+		if (save1.CurrentHP >= 0) {
+			p2BattlerData.CurrentXP = save1.CurrentXP;
+			p2BattlerData.XPToNextLevel = save1.XPToNextLevel;
+		}
 		auto p2Spawn = BattleLocation::GetBattleLocation(p2SpawnLocation);
 		BattlerArgs p2Args;
 		p2Args.BattlerNum = 1;
 		p2Args.BattleData = &p2BattlerData;
+		p2Args.CurrentHP = (save1.CurrentHP < 0) ? p2BattlerData.HP : save1.CurrentHP;
 		p2Args.X = p2Spawn->X();
 		p2Args.Y = p2Spawn->Y();
 		p2Args.Controller = PlayerControllerSystem::GetPlayerByNum(1);
@@ -216,6 +239,7 @@ static void loadEnemies() {
 		args.X = spawnLocation->X();
 		args.Y = spawnLocation->Y();
 		args.BattleData = &battlerDatabase_.at(battlerID);
+		args.CurrentHP = args.BattleData->HP;
 		auto battler = new EnemyBattler(args);
 		_battlers.at(i + 4) = battler;
 		++i;
