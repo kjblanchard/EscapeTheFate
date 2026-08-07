@@ -5,6 +5,7 @@
 #include <ui/ui.hpp>
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiText.hpp>
+#include <string>
 
 using namespace Etf;
 using namespace std;
@@ -15,24 +16,27 @@ enum class SceneNameState {
 	Holding,
 	SlidingOut,
 };
+using enum SceneNameState;
 
-static const float Slide_Time = 0.3f;
-static const float Hold_Duration = 2.0f;
-static const float Panel_Rest_Y = 4.0f;
-static const float Panel_Hidden_Y = -60.0f;
+namespace {
+constexpr float kSlideTime = 0.3f;
+constexpr float kHoldDuration = 2.0f;
+constexpr float kPanelRestY = 4.0f;
+constexpr float kPanelHiddenY = -60.0f;
 
-static SceneNameState _currentState = SceneNameState::Hidden;
-static UIObject* _panel = nullptr;
-static UIText* _text = nullptr;
-static float _animTime = 0.0f;
-static float _holdTime = 0.0f;
-static string _lastSceneName;
+SceneNameState currentState_ = Hidden;
+UIObject* panel_ = nullptr;
+UIText* text_ = nullptr;
+float animTime_ = 0.0f;
+float holdTime_ = 0.0f;
+string lastSceneName_;
+}  // namespace
 
 void SceneNameSystem::Start() {
 	UINineSliceArgs nsArgs;
 	nsArgs.Name = "SceneNameBanner";
 	nsArgs.Filename = "uibase";
-	nsArgs.Rect = {155.0f, Panel_Hidden_Y, 170.0f, 40.0f};
+	nsArgs.Rect = {155.0f, kPanelHiddenY, 170.0f, 40.0f};
 	nsArgs.SourceRect = {0, 0, 64, 64};
 	nsArgs.DrawColor = {80, 0, 120, 235};
 	nsArgs.Xoffset = 8;
@@ -64,73 +68,73 @@ void SceneNameSystem::Start() {
 
 	UI::GetRootUIObject()->AddChild(banner);
 
-	_panel = banner;
-	_text = label;
-	_lastSceneName = "";
+	panel_ = banner;
+	text_ = label;
+	lastSceneName_ = "";
 }
 
 void SceneNameSystem::Update() {
 	auto& currentScene = Engine::CurrentSceneName();
 	if (currentScene.empty() || currentScene == "cloud" || GameState::Battle::InBattle) return;
 
-	if (currentScene != _lastSceneName) {
-		_lastSceneName = currentScene;
+	if (currentScene != lastSceneName_) {
+		lastSceneName_ = currentScene;
 		auto& scenes = GameConfig::GetGameConfig().scene.scenes;
 		for (auto& s : scenes) {
 			if (s.MapName == currentScene && !s.DisplayName.empty()) {
-				_text->UpdateText(s.DisplayName);
-				_panel->SetY(Panel_Hidden_Y);
-				_animTime = 0.0f;
-				_holdTime = 0.0f;
-				_currentState = SceneNameState::SlidingIn;
+				text_->UpdateText(s.DisplayName);
+				panel_->SetY(kPanelHiddenY);
+				animTime_ = 0.0f;
+				holdTime_ = 0.0f;
+				currentState_ = SlidingIn;
 				break;
 			}
 		}
 		return;
 	}
 
-	switch (_currentState) {
-		case SceneNameState::Hidden:
+	switch (currentState_) {
+		case Hidden:
 			break;
 
-		case SceneNameState::SlidingIn: {
-			_animTime += GameState::DeltaTimeSeconds;
-			if (_animTime >= Slide_Time) {
-				_panel->SetY(Panel_Rest_Y);
-				_animTime = 0.0f;
-				_currentState = SceneNameState::Holding;
+		case SlidingIn: {
+			animTime_ += GameState::DeltaTimeSeconds;
+			if (animTime_ >= kSlideTime) {
+				panel_->SetY(kPanelRestY);
+				animTime_ = 0.0f;
+				currentState_ = Holding;
 				break;
 			}
-			auto newY = Engine::Tweening::GetTweenedValue(Panel_Hidden_Y, Panel_Rest_Y, _animTime, Slide_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
-			_panel->SetY(newY);
+			auto newY = Engine::Tweening::GetTweenedValue(kPanelHiddenY, kPanelRestY, animTime_, kSlideTime, Engine::Tweening::TweenEaseTypes::QuintOut);
+			panel_->SetY(newY);
 			break;
 		}
 
-		case SceneNameState::Holding: {
-			_holdTime += GameState::DeltaTimeSeconds;
-			if (_holdTime >= Hold_Duration) {
-				_holdTime = 0.0f;
-				_animTime = 0.0f;
-				_currentState = SceneNameState::SlidingOut;
+		case Holding: {
+			holdTime_ += GameState::DeltaTimeSeconds;
+			if (holdTime_ >= kHoldDuration) {
+				holdTime_ = 0.0f;
+				animTime_ = 0.0f;
+				currentState_ = SlidingOut;
 			}
 			break;
 		}
 
-		case SceneNameState::SlidingOut: {
-			_animTime += GameState::DeltaTimeSeconds;
-			if (_animTime >= Slide_Time) {
-				_panel->SetY(Panel_Hidden_Y);
-				_currentState = SceneNameState::Hidden;
+		case SlidingOut: {
+			animTime_ += GameState::DeltaTimeSeconds;
+			if (animTime_ >= kSlideTime) {
+				panel_->SetY(kPanelHiddenY);
+				currentState_ = Hidden;
 				break;
 			}
-			auto newY = Engine::Tweening::GetTweenedValue(Panel_Rest_Y, Panel_Hidden_Y, _animTime, Slide_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
-			_panel->SetY(newY);
+			auto newY = Engine::Tweening::GetTweenedValue(kPanelRestY, kPanelHiddenY, animTime_, kSlideTime, Engine::Tweening::TweenEaseTypes::QuintOut);
+			panel_->SetY(newY);
 			break;
 		}
 	}
 }
 
 void SceneNameSystem::End() {
-	_panel->SetY(Panel_Hidden_Y);
-	_currentState = SceneNameState::Hidden;
+	panel_->SetY(kPanelHiddenY);
+	currentState_ = Hidden;
 }

@@ -10,26 +10,29 @@
 #include <ui/uiText.hpp>
 
 using namespace Etf;
+using namespace std;
 
-static UIObject* _panel = nullptr;
-static UIImage* _p1ControllerIcon = nullptr;
-static UIImage* _p1KeyboardIcon = nullptr;
-static UIImage* _p2ControllerIcon = nullptr;
-static UIImage* _p2KeyboardIcon = nullptr;
+namespace {
 
-static const Color kActiveColor = {255, 255, 255, 255};
-static const Color kInactiveColor = {255, 255, 255, 80};
+constexpr Color kActiveColor = {255, 255, 255, 255};
+constexpr Color kInactiveColor = {255, 255, 255, 80};
 
-static void syncIcons() {
+UIObject* panel_ = nullptr;
+UIImage* p1ControllerIcon_ = nullptr;
+UIImage* p1KeyboardIcon_ = nullptr;
+UIImage* p2ControllerIcon_ = nullptr;
+UIImage* p2KeyboardIcon_ = nullptr;
+
+void syncIcons() {
 	bool p0HasGamepad = PlayerControllerSystem::GetPlayerByNum(0)->HasGamepadAssigned();
 	bool p1HasGamepad = PlayerControllerSystem::GetPlayerByNum(1)->HasGamepadAssigned();
-	_p1ControllerIcon->UpdateDrawColor(p0HasGamepad ? kActiveColor : kInactiveColor);
-	_p1KeyboardIcon->UpdateDrawColor(kActiveColor);
-	_p2ControllerIcon->UpdateDrawColor(p1HasGamepad ? kActiveColor : kInactiveColor);
-	_p2KeyboardIcon->UpdateDrawColor(p1HasGamepad ? kInactiveColor : kActiveColor);
+	p1ControllerIcon_->UpdateDrawColor(p0HasGamepad ? kActiveColor : kInactiveColor);
+	p1KeyboardIcon_->UpdateDrawColor(kActiveColor);
+	p2ControllerIcon_->UpdateDrawColor(p1HasGamepad ? kActiveColor : kInactiveColor);
+	p2KeyboardIcon_->UpdateDrawColor(p1HasGamepad ? kInactiveColor : kActiveColor);
 }
 
-static void swapControllers() {
+void swapControllers() {
 	auto& p0 = PlayerControllerSystem::GetPlayerByNum(0);
 	auto& p1 = PlayerControllerSystem::GetPlayerByNum(1);
 	int pad0 = p0->GetAssignedGamepad();
@@ -37,6 +40,8 @@ static void swapControllers() {
 	p0->AssignGamepadToController(pad1);
 	p1->AssignGamepadToController(pad0);
 }
+
+}  // namespace
 
 void PauseSystem::Start() {
 	UINineSliceArgs panelArgs;
@@ -70,7 +75,6 @@ void PauseSystem::Start() {
 	titleArgs.DebugBox = false;
 	panel->AddChild(new UIText(titleArgs));
 
-	// P1 section
 	UITextArgs p1LabelArgs;
 	p1LabelArgs.FontName = "PressStart2P";
 	p1LabelArgs.FontSize = 8;
@@ -97,8 +101,8 @@ void PauseSystem::Start() {
 	p1CtrlArgs.Priority = 0;
 	p1CtrlArgs.Visible = true;
 	p1CtrlArgs.DebugBox = false;
-	_p1ControllerIcon = new UIImage(p1CtrlArgs);
-	panel->AddChild(_p1ControllerIcon);
+	p1ControllerIcon_ = new UIImage(p1CtrlArgs);
+	panel->AddChild(p1ControllerIcon_);
 
 	UIImageArgs p1KbArgs;
 	p1KbArgs.Filename = "keyboard";
@@ -110,10 +114,9 @@ void PauseSystem::Start() {
 	p1KbArgs.Priority = 0;
 	p1KbArgs.Visible = true;
 	p1KbArgs.DebugBox = false;
-	_p1KeyboardIcon = new UIImage(p1KbArgs);
-	panel->AddChild(_p1KeyboardIcon);
+	p1KeyboardIcon_ = new UIImage(p1KbArgs);
+	panel->AddChild(p1KeyboardIcon_);
 
-	// Separator
 	UIObjectArgs sepObjArgs;
 	sepObjArgs.Rect = {100.0f, 30.0f, 0.0f, 0.0f};
 	sepObjArgs.Visible = true;
@@ -128,7 +131,6 @@ void PauseSystem::Start() {
 	sepLineArgs.LineColor = {255, 0, 255, 255};
 	panel->AddChild(new UILine(sepLineArgs, sepObjArgs));
 
-	// P2 section
 	UITextArgs p2LabelArgs;
 	p2LabelArgs.FontName = "PressStart2P";
 	p2LabelArgs.FontSize = 8;
@@ -155,8 +157,8 @@ void PauseSystem::Start() {
 	p2CtrlArgs.Priority = 0;
 	p2CtrlArgs.Visible = true;
 	p2CtrlArgs.DebugBox = false;
-	_p2ControllerIcon = new UIImage(p2CtrlArgs);
-	panel->AddChild(_p2ControllerIcon);
+	p2ControllerIcon_ = new UIImage(p2CtrlArgs);
+	panel->AddChild(p2ControllerIcon_);
 
 	UIImageArgs p2KbArgs;
 	p2KbArgs.Filename = "keyboard";
@@ -168,10 +170,9 @@ void PauseSystem::Start() {
 	p2KbArgs.Priority = 0;
 	p2KbArgs.Visible = true;
 	p2KbArgs.DebugBox = false;
-	_p2KeyboardIcon = new UIImage(p2KbArgs);
-	panel->AddChild(_p2KeyboardIcon);
+	p2KeyboardIcon_ = new UIImage(p2KbArgs);
+	panel->AddChild(p2KeyboardIcon_);
 
-	// Hint text
 	UITextArgs hintArgs;
 	hintArgs.FontName = "PressStart2P";
 	hintArgs.FontSize = 8;
@@ -189,7 +190,7 @@ void PauseSystem::Start() {
 	panel->AddChild(new UIText(hintArgs));
 
 	UI::GetRootUIObject()->AddChild(panel);
-	_panel = panel;
+	panel_ = panel;
 }
 
 void PauseSystem::Update() {
@@ -202,7 +203,7 @@ void PauseSystem::Update() {
 		if (p0->IsButtonJustPressed(ControllerButtons::Start) ||
 			p1->IsButtonJustPressed(ControllerButtons::Start)) {
 			GameState::Paused = true;
-			_panel->SetVisible(true);
+			panel_->SetVisible(true);
 			syncIcons();
 		}
 		return;
@@ -211,7 +212,7 @@ void PauseSystem::Update() {
 	if (p0->IsButtonJustPressed(ControllerButtons::Start) ||
 		p1->IsButtonJustPressed(ControllerButtons::Start)) {
 		GameState::Paused = false;
-		_panel->SetVisible(false);
+		panel_->SetVisible(false);
 		return;
 	}
 

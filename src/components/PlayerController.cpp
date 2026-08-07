@@ -6,9 +6,11 @@
 #include <gameState.hpp>
 using namespace Etf;
 
-static int sCurrentPlayerNum_ = 0;
+namespace {
+int currentPlayerNum_ = 0;
+}  // namespace
 
-PlayerController::PlayerController() : PlayerNum_(sCurrentPlayerNum_++) {
+PlayerController::PlayerController() : PlayerNum_(currentPlayerNum_++) {
 	auto& gameconfig = GameConfig::GetGameConfig();
 	KeyboardKeyConfig_[0] = gameconfig.Controls.Keyboard.UP;
 	KeyboardKeyConfig_[1] = gameconfig.Controls.Keyboard.LEFT;
@@ -153,5 +155,5 @@ void PlayerController::AssignGamepadToController(int gamepadNum) {
 }
 
 void PlayerController::ResetPlayerNumCounter() {
-	sCurrentPlayerNum_ = 0;
+	currentPlayerNum_ = 0;
 }

@@ -39,18 +39,18 @@ class LocalPlayer : public GameObject {
 	inline float roundCollisionResolve(float x, float grid = 0.01) { return std::round(x / grid) * grid; }
 
    private:
-	static std::vector<std::unique_ptr<LocalPlayer>> Players_;
+	static std::vector<std::unique_ptr<LocalPlayer>> players_;
 	LocalPlayer(TiledObject* objData, const std::shared_ptr<PlayerController>& player, int playerIndex,
 				const std::string& spriteName, int frameW, int frameH);
-	int PlayerIndex_ = 0;
-	Sprite* Sprite_;
-	Sprite* InteractionSprite_;
-	Direction Direction_ = Direction::South;
-	std::unique_ptr<SpriteAnimator> Animator_;
-	RectangleF CollisionRect_ = {};
-	RectangleF InteractionRect_ = {};
-	IInteractable* CurrentInteractable_ = nullptr;
-	const std::shared_ptr<PlayerController> Player_;
+	int playerIndex_ = 0;
+	Sprite* sprite_;
+	Sprite* interactionSprite_;
+	Direction direction_ = Direction::South;
+	std::unique_ptr<SpriteAnimator> animator_;
+	RectangleF collisionRect_ = {};
+	RectangleF interactionRect_ = {};
+	IInteractable* currentInteractable_ = nullptr;
+	const std::shared_ptr<PlayerController> player_;
 };
 
 }  // namespace Etf

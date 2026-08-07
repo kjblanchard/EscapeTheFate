@@ -9,15 +9,15 @@
 #include <ui/uiNineSlice.hpp>
 #include <ui/uiText.hpp>
 
-#include "ui/uiAnimation.hpp"
+#include <ui/uiAnimation.hpp>
 using namespace Etf;
 using namespace std;
 using enum PlayerUIAnimationStates;
 
 namespace {
-const float Animation_Offset = 120.0f;
-const float Animation_Open_Time = 0.15f;
-const float Animation_Close_Time = 0.10;
+constexpr float kAnimOffset = 120.0f;
+constexpr float kAnimOpenTime = 0.15f;
+constexpr float kAnimCloseTime = 0.10f;
 }  // namespace
 
 UIAnimation* BattlerUI::_turnMarkerAnim = nullptr;
@@ -53,7 +53,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 		_menuBoxStartX = _commandMenu->OriginalX();
 		_menuBoxStartY = _commandMenu->OriginalY();
 		_commandMenu->SetVisible(false);
-		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
+		_commandMenu->SetX(_menuBoxStartX + kAnimOffset);
 		auto vlg = playerRoot->GetChildByName("CommandsVLG");
 		if (!vlg) {
 			sgLogCritical("Could not find child CommandsVLG, exiting");
@@ -74,13 +74,13 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 		auto finger = playerRoot->GetChildByName("Finger");
 		if (finger) {
 			_finger = static_cast<UIImage*>(finger);
+			_finger->SetVisible(false);
 		}
-		finger->SetVisible(false);
 		auto tsFinger = playerRoot->GetChildByName("BattleSelectionFinger");
 		if (tsFinger) {
 			_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
+			_targetSelectionFinger->SetVisible(false);
 		}
-		_targetSelectionFinger->SetVisible(false);
 
 		if (battlerNum == 1) {
 			Color p2Color = {100, 255, 180, 255};
@@ -142,7 +142,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 		if (_magicMenu) {
 			_magicMenuStartX = _magicMenu->OriginalX();
 			_magicMenu->SetVisible(false);
-			_magicMenu->SetX(_magicMenuStartX + Animation_Offset);
+			_magicMenu->SetX(_magicMenuStartX + kAnimOffset);
 		}
 		for (int i = 0; i < 8; ++i) {
 			_magicMenuItems[i] = playerRoot->GetChildByName("MagicSlot" + to_string(i));
@@ -254,24 +254,24 @@ void BattlerUI::UpdateAnimations() {
 			break;
 		case Opening: {
 			_currentAnimationTime += DeltaTimeSeconds;
-			if (_currentAnimationTime >= Animation_Open_Time) {
+			if (_currentAnimationTime >= kAnimOpenTime) {
 				_currentState = Opened;
 				MoveCursorInMenu(0);
 				_finger->SetVisible(true);
 				break;
 			}
-			auto newX = Engine::Tweening::GetTweenedValue(_menuBoxStartX + Animation_Offset, _menuBoxStartX, _currentAnimationTime, Animation_Open_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+			auto newX = Engine::Tweening::GetTweenedValue(_menuBoxStartX + kAnimOffset, _menuBoxStartX, _currentAnimationTime, kAnimOpenTime, Engine::Tweening::TweenEaseTypes::QuintOut);
 			_commandMenu->SetX(newX);
 			break;
 		}
 		case Closing: {
 			_currentAnimationTime += DeltaTimeSeconds;
-			if (_currentAnimationTime > Animation_Open_Time) {
+			if (_currentAnimationTime > kAnimOpenTime) {
 				_commandMenu->SetVisible(false);
 				_currentState = Closed;
 				break;
 			}
-			auto newX = Engine::Tweening::GetTweenedValue(_menuBoxStartX, _menuBoxStartX + Animation_Offset, _currentAnimationTime, Animation_Close_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+			auto newX = Engine::Tweening::GetTweenedValue(_menuBoxStartX, _menuBoxStartX + kAnimOffset, _currentAnimationTime, kAnimCloseTime, Engine::Tweening::TweenEaseTypes::QuintOut);
 			_commandMenu->SetX(newX);
 			break;
 		}
@@ -286,25 +286,25 @@ void BattlerUI::UpdateAnimations() {
 				break;
 			case Opening: {
 				_magicAnimationTime += DeltaTimeSeconds;
-				if (_magicAnimationTime >= Animation_Open_Time) {
+				if (_magicAnimationTime >= kAnimOpenTime) {
 					_magicMenuState = Opened;
 					_magicMenu->SetX(_magicMenuStartX);
 					MoveCursorInMagicMenu(_pendingMagicCol, _pendingMagicRow);
 					if (_magicFinger) _magicFinger->SetVisible(true);
 					break;
 				}
-				auto newX = Engine::Tweening::GetTweenedValue(_magicMenuStartX + Animation_Offset, _magicMenuStartX, _magicAnimationTime, Animation_Open_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+				auto newX = Engine::Tweening::GetTweenedValue(_magicMenuStartX + kAnimOffset, _magicMenuStartX, _magicAnimationTime, kAnimOpenTime, Engine::Tweening::TweenEaseTypes::QuintOut);
 				_magicMenu->SetX(newX);
 				break;
 			}
 			case Closing: {
 				_magicAnimationTime += DeltaTimeSeconds;
-				if (_magicAnimationTime > Animation_Close_Time) {
+				if (_magicAnimationTime > kAnimCloseTime) {
 					_magicMenu->SetVisible(false);
 					_magicMenuState = Closed;
 					break;
 				}
-				auto newX = Engine::Tweening::GetTweenedValue(_magicMenuStartX, _magicMenuStartX + Animation_Offset, _magicAnimationTime, Animation_Close_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+				auto newX = Engine::Tweening::GetTweenedValue(_magicMenuStartX, _magicMenuStartX + kAnimOffset, _magicAnimationTime, kAnimCloseTime, Engine::Tweening::TweenEaseTypes::QuintOut);
 				_magicMenu->SetX(newX);
 				break;
 			}

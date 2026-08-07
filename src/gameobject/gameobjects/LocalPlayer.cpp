@@ -16,15 +16,17 @@
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 
-#include "interfaces/IController.hpp"
+#include <interfaces/IController.hpp>
 
 using namespace std;
 using namespace Etf;
 
-static const int sMoveSpeed = 100;
-static const RectangleF sCollisionOffsetAndSizeRect = {8, 8, 16, 22};
-static const Point sInteractionEastWestWidthHeight = {26, 8};
-static const Point sInteractionNorthSouthWidthHeight = {8, 26};
+namespace {
+constexpr int kMoveSpeed = 100;
+constexpr RectangleF kCollisionOffsetAndSize = {8, 8, 16, 22};
+constexpr Point kInteractionEastWestSize = {26, 8};
+constexpr Point kInteractionNorthSouthSize = {8, 26};
+}  // namespace
 
 void LocalPlayer::CreatePlayerTwo(TiledObject* objData) {
 }
@@ -50,11 +52,11 @@ void LocalPlayer::Create(TiledObject* objData) {
 	if (GameState::Battle::ExitingFromBattle) {
 		p1->SetX(GameState::NextLoadLocation.X);
 		p1->SetY(GameState::NextLoadLocation.Y);
-		p1->Direction_ = static_cast<Direction>(GameState::NextLoadDirection);
+		p1->direction_ = static_cast<Direction>(GameState::NextLoadDirection);
 	} else {
-		p1->Direction_ = direction;
+		p1->direction_ = direction;
 	}
-	p1->Animator_->StartAnimation(p1->getAnimNameFromDirection());
+	p1->animator_->StartAnimation(p1->getAnimNameFromDirection());
 	SetCameraFollowTarget(p1->GetXHandle(), p1->GetYHandle());
 	GameState::NextLoadLocation.X = p1->X();
 	GameState::NextLoadLocation.Y = p1->Y();
@@ -66,8 +68,8 @@ void LocalPlayer::Create(TiledObject* objData) {
 								  GameState::SelectedOverworldSprite2, GameState::SelectedOverworldFrameW2, GameState::SelectedOverworldFrameH2);
 		p2->SetX(p1->X() + 16);
 		p2->SetY(p1->Y());
-		p2->Direction_ = p1->Direction_;
-		p2->Animator_->StartAnimation(p2->getAnimNameFromDirection());
+		p2->direction_ = p1->direction_;
+		p2->animator_->StartAnimation(p2->getAnimNameFromDirection());
 		AddGameObjectToGameObjectSystem(p2);
 	}
 
@@ -77,25 +79,25 @@ void LocalPlayer::Create(TiledObject* objData) {
 }
 
 LocalPlayer::~LocalPlayer() {
-	DestroySprite(Sprite_);
-	DestroySprite(InteractionSprite_);
+	DestroySprite(sprite_);
+	DestroySprite(interactionSprite_);
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player, int playerIndex,
 						   const string& overworldSprite, int frameW, int frameH)
-	: GameObject(objData->X, objData->Y), PlayerIndex_(playerIndex), Player_(player) {
+	: GameObject(objData->X, objData->Y), playerIndex_(playerIndex), player_(player) {
 	auto spriteName = overworldSprite + ".png";
 	float fw = (float)frameW;
 	float fh = (float)frameH;
-	Sprite_ = Engine::Sprites::CreateSpriteFull(spriteName, &X_, &Y_, {0, 0, fw, fh}, {0, 0, fw, fh});
-	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
-	Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
-	Animator_ = make_unique<SpriteAnimator>(overworldSprite, Sprite_);
+	sprite_ = Engine::Sprites::CreateSpriteFull(spriteName, &X_, &Y_, {0, 0, fw, fh}, {0, 0, fw, fh});
+	interactionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
+	Engine::Sprites::SetSpriteVisible(interactionSprite_, false);
+	animator_ = make_unique<SpriteAnimator>(overworldSprite, sprite_);
 }
 
 void LocalPlayer::Start() {}
 void LocalPlayer::Update() {
-	GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = false;
+	GameState::Players::LocalPlayerData[playerIndex_].MovedThisFrame = false;
 	if (!handlePlayerMovement()) {
 		handleplayerJoystickMovement();
 	}
@@ -106,30 +108,30 @@ void LocalPlayer::Update() {
 }
 
 void LocalPlayer::updateInteractionRect() {
-	switch (Direction_) {
+	switch (direction_) {
 		case Direction::East:
-			InteractionRect_.x = CollisionRect_.x + CollisionRect_.w;
-			InteractionRect_.y = CollisionRect_.y + (CollisionRect_.h / 2.0f) - (sInteractionEastWestWidthHeight.Y / 2.0f);
-			InteractionRect_.w = sInteractionEastWestWidthHeight.X;
-			InteractionRect_.h = sInteractionEastWestWidthHeight.Y;
+			interactionRect_.x = collisionRect_.x + collisionRect_.w;
+			interactionRect_.y = collisionRect_.y + (collisionRect_.h / 2.0f) - (kInteractionEastWestSize.Y / 2.0f);
+			interactionRect_.w = kInteractionEastWestSize.X;
+			interactionRect_.h = kInteractionEastWestSize.Y;
 			break;
 		case Direction::West:
-			InteractionRect_.x = CollisionRect_.x - sInteractionEastWestWidthHeight.X;
-			InteractionRect_.y = CollisionRect_.y + (CollisionRect_.h / 2.0f) - (sInteractionEastWestWidthHeight.Y / 2.0f);
-			InteractionRect_.w = sInteractionEastWestWidthHeight.X;
-			InteractionRect_.h = sInteractionEastWestWidthHeight.Y;
+			interactionRect_.x = collisionRect_.x - kInteractionEastWestSize.X;
+			interactionRect_.y = collisionRect_.y + (collisionRect_.h / 2.0f) - (kInteractionEastWestSize.Y / 2.0f);
+			interactionRect_.w = kInteractionEastWestSize.X;
+			interactionRect_.h = kInteractionEastWestSize.Y;
 			break;
 		case Direction::North:
-			InteractionRect_.x = CollisionRect_.x + (CollisionRect_.w / 2.0f) - (sInteractionNorthSouthWidthHeight.X / 2.0f);
-			InteractionRect_.y = CollisionRect_.y - sInteractionNorthSouthWidthHeight.Y;
-			InteractionRect_.w = sInteractionNorthSouthWidthHeight.X;
-			InteractionRect_.h = sInteractionNorthSouthWidthHeight.Y;
+			interactionRect_.x = collisionRect_.x + (collisionRect_.w / 2.0f) - (kInteractionNorthSouthSize.X / 2.0f);
+			interactionRect_.y = collisionRect_.y - kInteractionNorthSouthSize.Y;
+			interactionRect_.w = kInteractionNorthSouthSize.X;
+			interactionRect_.h = kInteractionNorthSouthSize.Y;
 			break;
 		case Direction::South:
-			InteractionRect_.x = CollisionRect_.x + (CollisionRect_.w / 2.0f) - (sInteractionNorthSouthWidthHeight.X / 2.0f);
-			InteractionRect_.y = CollisionRect_.y + CollisionRect_.h;
-			InteractionRect_.w = sInteractionNorthSouthWidthHeight.X;
-			InteractionRect_.h = sInteractionNorthSouthWidthHeight.Y;
+			interactionRect_.x = collisionRect_.x + (collisionRect_.w / 2.0f) - (kInteractionNorthSouthSize.X / 2.0f);
+			interactionRect_.y = collisionRect_.y + collisionRect_.h;
+			interactionRect_.w = kInteractionNorthSouthSize.X;
+			interactionRect_.h = kInteractionNorthSouthSize.Y;
 			break;
 		default:
 			return;
@@ -140,126 +142,126 @@ void LocalPlayer::handleInteractions() {
 	updateInteractionRect();
 	IInteractable* interactable = nullptr;
 	for (auto interact : GameObjectSystem::GetGameObjectsOfType<IInteractable>()) {
-		if (Engine::CheckForRectCollision(InteractionRect_, interact->InteractionRect)) {
+		if (Engine::CheckForRectCollision(interactionRect_, interact->InteractionRect)) {
 			interactable = interact;
 			break;
 		}
 	}
 	// Hide or show the interaction rect based off state
-	if (interactable && !CurrentInteractable_) {
-		Engine::Sprites::SetSpriteVisible(InteractionSprite_, true);
-	} else if (!interactable && CurrentInteractable_) {
-		Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
+	if (interactable && !currentInteractable_) {
+		Engine::Sprites::SetSpriteVisible(interactionSprite_, true);
+	} else if (!interactable && currentInteractable_) {
+		Engine::Sprites::SetSpriteVisible(interactionSprite_, false);
 	}
-	CurrentInteractable_ = interactable;
-	if (CurrentInteractable_ && Player_->IsButtonJustPressed(ControllerButtons::A)) {
+	currentInteractable_ = interactable;
+	if (currentInteractable_ && player_->IsButtonJustPressed(ControllerButtons::A)) {
 		// if (_currentInteractable && Controller::IsButtonJustPressed(GameButtons::A)) {
-		CurrentInteractable_->Interact();
-		Animator_->UpdateAnimatorSpeed(0.0);
+		currentInteractable_->Interact();
+		animator_->UpdateAnimatorSpeed(0.0);
 	}
 }
 
 void LocalPlayer::handleplayerJoystickMovement() {
 	if (GameState::InDialog || GameState::Battle::InBattle) return;
-	auto xStick = Player_->JoystickAxisState(JoystickAxis::LeftThumbstickX);
-	auto yStick = Player_->JoystickAxisState(JoystickAxis::LeftThumbstickY);
+	auto xStick = player_->JoystickAxisState(JoystickAxis::LeftThumbstickX);
+	auto yStick = player_->JoystickAxisState(JoystickAxis::LeftThumbstickY);
 	if (fabs(xStick) < 0.1f && fabs(yStick) < 0.1f) return;
 
-	auto previousDirection = Direction_;
+	auto previousDirection = direction_;
 	if (fabs(xStick) > fabs(yStick)) {
-		Direction_ = xStick > 0.0f ? Direction::East : Direction::West;
+		direction_ = xStick > 0.0f ? Direction::East : Direction::West;
 	} else {
-		Direction_ = yStick > 0.0f ? Direction::South : Direction::North;
+		direction_ = yStick > 0.0f ? Direction::South : Direction::North;
 	}
-	if (Direction_ != previousDirection) {
-		Animator_->StartAnimation(getAnimNameFromDirection());
-		if (PlayerIndex_ == 0) GameState::NextLoadDirection = static_cast<int>(Direction_);
+	if (direction_ != previousDirection) {
+		animator_->StartAnimation(getAnimNameFromDirection());
+		if (playerIndex_ == 0) GameState::NextLoadDirection = static_cast<int>(direction_);
 	}
 
-	float desiredX = X() + sMoveSpeed * xStick * GameState::DeltaTimeSeconds;
-	float desiredY = Y() + sMoveSpeed * yStick * GameState::DeltaTimeSeconds;
-	CollisionRect_ = {desiredX + sCollisionOffsetAndSizeRect.x, desiredY + sCollisionOffsetAndSizeRect.y,
-					  sCollisionOffsetAndSizeRect.w, sCollisionOffsetAndSizeRect.h};
-	CheckRectForCollisionWithSolids(&CollisionRect_);
-	CollisionRect_.x = roundCollisionResolve(CollisionRect_.x);
-	CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
-	SetX(CollisionRect_.x - sCollisionOffsetAndSizeRect.x);
-	SetY(CollisionRect_.y - sCollisionOffsetAndSizeRect.y);
-	if (PlayerIndex_ == 0) {
+	float desiredX = X() + kMoveSpeed * xStick * GameState::DeltaTimeSeconds;
+	float desiredY = Y() + kMoveSpeed * yStick * GameState::DeltaTimeSeconds;
+	collisionRect_ = {desiredX + kCollisionOffsetAndSize.x, desiredY + kCollisionOffsetAndSize.y,
+					  kCollisionOffsetAndSize.w, kCollisionOffsetAndSize.h};
+	CheckRectForCollisionWithSolids(&collisionRect_);
+	collisionRect_.x = roundCollisionResolve(collisionRect_.x);
+	collisionRect_.y = roundCollisionResolve(collisionRect_.y);
+	SetX(collisionRect_.x - kCollisionOffsetAndSize.x);
+	SetY(collisionRect_.y - kCollisionOffsetAndSize.y);
+	if (playerIndex_ == 0) {
 		GameState::NextLoadLocation.X = X();
 		GameState::NextLoadLocation.Y = Y();
 	}
-	Animator_->UpdateAnimatorSpeed(1.0f);
-	GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = true;
-	GameState::Players::LocalPlayerData[PlayerIndex_].Location.x = X();
-	GameState::Players::LocalPlayerData[PlayerIndex_].Location.y = Y();
-	GameState::Players::LocalPlayerData[PlayerIndex_].Location.w = 4;
-	GameState::Players::LocalPlayerData[PlayerIndex_].Location.h = 4;
+	animator_->UpdateAnimatorSpeed(1.0f);
+	GameState::Players::LocalPlayerData[playerIndex_].MovedThisFrame = true;
+	GameState::Players::LocalPlayerData[playerIndex_].Location.x = X();
+	GameState::Players::LocalPlayerData[playerIndex_].Location.y = Y();
+	GameState::Players::LocalPlayerData[playerIndex_].Location.w = 4;
+	GameState::Players::LocalPlayerData[playerIndex_].Location.h = 4;
 }
 
 bool LocalPlayer::handlePlayerMovement() {
 	if (GameState::InDialog || GameState::Battle::InBattle) return false;
 	auto moved = false;
-	auto previousDirection = Direction_;
+	auto previousDirection = direction_;
 	auto velocityX = 0;
 	auto velocityY = 0;
-	if (Player_->IsButtonPressed(ControllerButtons::Up)) {
+	if (player_->IsButtonPressed(ControllerButtons::Up)) {
 		moved = true;
 		velocityY -= 1;
-		Direction_ = Direction::North;
+		direction_ = Direction::North;
 	}
-	if (Player_->IsButtonPressed(ControllerButtons::Down)) {
+	if (player_->IsButtonPressed(ControllerButtons::Down)) {
 		moved = true;
 		velocityY += 1;
-		Direction_ = Direction::South;
+		direction_ = Direction::South;
 	}
-	if (Player_->IsButtonPressed(ControllerButtons::Left)) {
+	if (player_->IsButtonPressed(ControllerButtons::Left)) {
 		moved = true;
 		velocityX -= 1;
-		Direction_ = Direction::West;
+		direction_ = Direction::West;
 	}
-	if (Player_->IsButtonPressed(ControllerButtons::Right)) {
+	if (player_->IsButtonPressed(ControllerButtons::Right)) {
 		moved = true;
 		velocityX += 1;
-		Direction_ = Direction::East;
+		direction_ = Direction::East;
 	}
 
-	if (Direction_ != previousDirection) {
-		Animator_->StartAnimation(getAnimNameFromDirection());
-		if (PlayerIndex_ == 0) GameState::NextLoadDirection = static_cast<int>(Direction_);
+	if (direction_ != previousDirection) {
+		animator_->StartAnimation(getAnimNameFromDirection());
+		if (playerIndex_ == 0) GameState::NextLoadDirection = static_cast<int>(direction_);
 	}
 
 	if (moved) {
-		float desiredX = (X() + velocityX * sMoveSpeed * GameState::DeltaTimeSeconds);
-		float desiredY = (Y() + velocityY * sMoveSpeed * GameState::DeltaTimeSeconds);
-		CollisionRect_ = {desiredX + sCollisionOffsetAndSizeRect.x, desiredY + sCollisionOffsetAndSizeRect.y, sCollisionOffsetAndSizeRect.w, sCollisionOffsetAndSizeRect.h};
-		CheckRectForCollisionWithSolids(&CollisionRect_);
-		CollisionRect_.x = roundCollisionResolve(CollisionRect_.x);
-		CollisionRect_.y = roundCollisionResolve(CollisionRect_.y);
-		SetX(CollisionRect_.x - sCollisionOffsetAndSizeRect.x);
-		SetY(CollisionRect_.y - sCollisionOffsetAndSizeRect.y);
-		if (PlayerIndex_ == 0) {
+		float desiredX = (X() + velocityX * kMoveSpeed * GameState::DeltaTimeSeconds);
+		float desiredY = (Y() + velocityY * kMoveSpeed * GameState::DeltaTimeSeconds);
+		collisionRect_ = {desiredX + kCollisionOffsetAndSize.x, desiredY + kCollisionOffsetAndSize.y, kCollisionOffsetAndSize.w, kCollisionOffsetAndSize.h};
+		CheckRectForCollisionWithSolids(&collisionRect_);
+		collisionRect_.x = roundCollisionResolve(collisionRect_.x);
+		collisionRect_.y = roundCollisionResolve(collisionRect_.y);
+		SetX(collisionRect_.x - kCollisionOffsetAndSize.x);
+		SetY(collisionRect_.y - kCollisionOffsetAndSize.y);
+		if (playerIndex_ == 0) {
 			GameState::NextLoadLocation.X = X();
 			GameState::NextLoadLocation.Y = Y();
 		}
-		Animator_->UpdateAnimatorSpeed(1.0f);
-		GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = true;
-		GameState::Players::LocalPlayerData[PlayerIndex_].Location.x = X();
-		GameState::Players::LocalPlayerData[PlayerIndex_].Location.y = Y();
-		GameState::Players::LocalPlayerData[PlayerIndex_].Location.w = 4;
-		GameState::Players::LocalPlayerData[PlayerIndex_].Location.h = 4;
+		animator_->UpdateAnimatorSpeed(1.0f);
+		GameState::Players::LocalPlayerData[playerIndex_].MovedThisFrame = true;
+		GameState::Players::LocalPlayerData[playerIndex_].Location.x = X();
+		GameState::Players::LocalPlayerData[playerIndex_].Location.y = Y();
+		GameState::Players::LocalPlayerData[playerIndex_].Location.w = 4;
+		GameState::Players::LocalPlayerData[playerIndex_].Location.h = 4;
 	} else {
-		Animator_->UpdateAnimatorSpeed(0.0f);
+		animator_->UpdateAnimatorSpeed(0.0f);
 	}
 	return moved;
 }
 
 bool LocalPlayer::handleMapExits() {
-	return MapExit::CheckAndHandleMapExitOverlaps(CollisionRect_);
+	return MapExit::CheckAndHandleMapExitOverlaps(collisionRect_);
 }
 
 constexpr const char* LocalPlayer::getAnimNameFromDirection() {
-	switch (Direction_) {
+	switch (direction_) {
 		case Direction::North:
 			return "walkU";
 		case Direction::East:
@@ -273,5 +275,5 @@ constexpr const char* LocalPlayer::getAnimNameFromDirection() {
 }
 
 void LocalPlayer::Draw() {
-	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect_);
+	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(interactionRect_);
 }

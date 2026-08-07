@@ -7,7 +7,9 @@
 using namespace Etf;
 using namespace std;
 
-static const Color kWhite = {255, 255, 255, 255};
+namespace {
+constexpr Color kWhite = {255, 255, 255, 255};
+}  // namespace
 
 HitAnimPool::HitAnimPool(const string& filename, float frameW, float frameH)
 	: _frameW(frameW), _frameH(frameH) {

@@ -38,6 +38,7 @@ class PlayerBattler : public Battler {
 	void getEnemyBattlers(std::vector<Battler*>& battlerVector);
 	void getPlayerBattlers(std::vector<Battler*>& battlerVector);
 	void getAllTargets(std::vector<Battler*>& battlerVector);
+	void moveFingerToIndex(const std::vector<Battler*>& list, int index);
 	void moveFingerToTargetNum(int targetNum);
 	void moveFingerToEnemyNum(int enemyNum);
 	bool shouldBattleEnd();

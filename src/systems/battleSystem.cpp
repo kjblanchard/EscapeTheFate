@@ -23,6 +23,7 @@
 
 using namespace Etf;
 using namespace std;
+using enum BattleStates;
 
 // Non statics for debugging
 bool battleInitialized_ = false;
@@ -32,9 +33,9 @@ string sceneToLoadAfterBattle_ = "";
 vector<BattlerData> battlerDatabase_;
 vector<AbilityData> abilityDatabase_;
 //  Loaded battle groups from the database, used when loading battle and stays loaded
-vector<vector<int>> _battleGroups;
+vector<vector<int>> battleGroups_;
 // Current battlers spawned in, always the size of all positions.
-vector<Battler*> _battlers;
+vector<Battler*> battlers_;
 
 namespace {
 // Holds all of the UI objects in a (organized?) place.
@@ -53,7 +54,7 @@ struct BattleUI {
 static void battleEnd() {
 	battleUI_.VictoryPanel->SetVisible(false);
 	BattleLocation::ClearAllBattleLocations();
-	_battlers.clear();
+	battlers_.clear();
 	ResetCameraFollow();
 	Engine::LoadScene(sceneToLoadAfterBattle_, 0.75f, 0.25f, false);
 	nextBattleState_ = NotInBattle;
@@ -68,7 +69,7 @@ static void loadBattleGroups() {
 	auto dataRootJsonArray = jGetObjectFromBuffer(buf, sz);
 	if (!dataRootJsonArray) sgLogCritical("No battle groups found");
 	auto numData = jGetObjectArrayLength(dataRootJsonArray);
-	_battleGroups.reserve(numData);
+	battleGroups_.reserve(numData);
 	if (!numData) sgLogCritical("No battle groups found in db, exiting!");
 	for (auto i = 0; i < numData; ++i) {
 		auto currentBattleGroupJsonObject = jGetObjectInObjectWithIndex(dataRootJsonArray, i);
@@ -81,7 +82,7 @@ static void loadBattleGroups() {
 			auto battlerID = jintIndex(currentBattleGroupJsonObject, j);
 			newBattleGroup.push_back(battlerID);
 		}
-		_battleGroups.push_back(std::move(newBattleGroup));
+		battleGroups_.push_back(std::move(newBattleGroup));
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }
@@ -183,7 +184,7 @@ static void loadPlayers() {
 	args.Y = spawnLocation->Y();
 	args.Controller = PlayerControllerSystem::GetPlayerByNum(0);
 	auto battler = new PlayerBattler(args);
-	_battlers.at(playerSpawnLocation) = battler;
+	battlers_.at(playerSpawnLocation) = battler;
 
 	if (GameState::IsMultiplayer) {
 		const int p2SpawnLocation = 2;
@@ -196,12 +197,12 @@ static void loadPlayers() {
 		p2Args.Y = p2Spawn->Y();
 		p2Args.Controller = PlayerControllerSystem::GetPlayerByNum(1);
 		auto p2Battler = new PlayerBattler(p2Args);
-		_battlers.at(p2SpawnLocation) = p2Battler;
+		battlers_.at(p2SpawnLocation) = p2Battler;
 	}
 }
 
 static void loadEnemies() {
-	auto& currentBattleGroup = _battleGroups.at(GameState::Battle::NextBattleGroup);
+	auto& currentBattleGroup = battleGroups_.at(GameState::Battle::NextBattleGroup);
 	int i = 0;
 	for (auto battlerID : currentBattleGroup) {
 		if (battlerID == 0) {
@@ -215,7 +216,7 @@ static void loadEnemies() {
 		args.Y = spawnLocation->Y();
 		args.BattleData = &battlerDatabase_.at(battlerID);
 		auto battler = new EnemyBattler(args);
-		_battlers.at(i + 4) = battler;
+		battlers_.at(i + 4) = battler;
 		++i;
 	}
 }
@@ -244,14 +245,14 @@ static void initializeBattleSystem() {
 	cacheBattleUIElements();
 	battleInitialized_ = true;
 	battleUI_.RootPanel->SetVisible(false);
-	_battlers.clear();
+	battlers_.clear();
 	nextBattleState_ = NotInBattle;
 }
 
 static void loadBattle() {
 	IsGameLoading = true;
 	if (!battleInitialized_) initializeBattleSystem();
-	_battlers.resize(8);
+	battlers_.resize(8);
 	sgLogDebug("loading battle");
 	// Something is terrible with load players.
 	loadPlayers();
@@ -285,7 +286,7 @@ static void triggerStateChange() {
 			break;
 		case BattleGameOver:
 			battleUI_.RootPanel->SetVisible(false);
-			_battlers.clear();
+			battlers_.clear();
 			battleInitialized_ = false;
 			break;
 		default:
@@ -320,7 +321,7 @@ void BattleSystem::ResetAfterGameOver() {
 	currentBattleState_ = NotInBattle;
 	nextBattleState_ = NotInBattle;
 	battleInitialized_ = false;
-	_battlers.clear();
+	battlers_.clear();
 }
 void BattleSystem::TriggerBattleVictoryStart() {
 	if (currentBattleState_ == BattleVictory || nextBattleState_ == BattleVictory) return;
@@ -352,7 +353,7 @@ void BattleSystem::BattleSystemUpdate() {
 }
 
 void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
-	_battlers.at(battlerNum)->TakeDamage(damage);
+	battlers_.at(battlerNum)->TakeDamage(damage);
 }
 
 void BattleSystem::InitializeBattleSystem() {
@@ -360,7 +361,7 @@ void BattleSystem::InitializeBattleSystem() {
 }
 
 const std::vector<Battler*>& BattleSystem::GetEnemyBattlers() {
-	return _battlers;
+	return battlers_;
 }
 
 const AbilityData& BattleSystem::GetAbilityByID(int id) {

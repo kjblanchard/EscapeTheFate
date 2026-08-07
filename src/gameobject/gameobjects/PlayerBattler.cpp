@@ -13,7 +13,9 @@ using namespace Etf;
 using namespace std;
 using enum BattlerStates;
 
-const string VICTORY_STR = "cheer1";
+namespace {
+constexpr const char* kVictoryAnim = "cheer1";
+}  // namespace
 
 bool PlayerBattler::shouldBattleEnd() {
 	std::vector<Battler*> enemyBattlers;
@@ -77,7 +79,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
-			_animator->StartAnimation(VICTORY_STR, -1);
+			_animator->StartAnimation(kVictoryAnim, -1);
 			_battlerUI->EndPlayerTurn(this);
 			BattleSystem::TriggerBattleVictoryStart();
 			break;
@@ -89,30 +91,22 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 	}
 	_currentBattlerState = newState;
 }
-void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
-	sgLogDebug("Trying to move finger to location %d", enemyNum);
-	std::vector<Battler*> enemyBattlers;
-	getEnemyBattlers(enemyBattlers);
-	if (enemyBattlers.empty()) {
-		return;
+void PlayerBattler::moveFingerToIndex(const vector<Battler*>& list, int index) {
+	if (list.empty()) return;
+	if (index > (int)list.size() - 1) {
+		index = 0;
+	} else if (index < 0) {
+		index = (int)list.size() - 1;
 	}
-
-	if (enemyNum > (int)enemyBattlers.size() - 1) {
-		enemyNum = 0;
-	} else if (enemyNum < 0) {
-		enemyNum = (int)enemyBattlers.size() - 1;
-	}
-	sgLogDebug("Trying to move to location bounds %d", enemyNum);
-	const auto battler = enemyBattlers.at(enemyNum);
+	const auto battler = list.at(index);
 	if (battler) {
 		_battlerUI->MoveFingerToBattlerLocation(battler);
-
 		string displayName = battler->Name();
 		int sameNameCount = 0;
 		int ordinal = 0;
-		for (size_t i = 0; i < enemyBattlers.size(); ++i) {
-			if (enemyBattlers[i]->Name() == displayName) {
-				if ((int)i < enemyNum) ++ordinal;
+		for (size_t i = 0; i < list.size(); ++i) {
+			if (list[i]->Name() == displayName) {
+				if ((int)i < index) ++ordinal;
 				++sameNameCount;
 			}
 		}
@@ -122,7 +116,13 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 		}
 		_battlerUI->UpdateTargetInfo(displayName);
 	}
-	_currentTargetBattler = enemyNum;
+	_currentTargetBattler = index;
+}
+
+void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
+	vector<Battler*> enemies;
+	getEnemyBattlers(enemies);
+	moveFingerToIndex(enemies, enemyNum);
 }
 
 void PlayerBattler::updateImpl() {
@@ -268,35 +268,9 @@ void PlayerBattler::getAllTargets(std::vector<Battler*>& battlerVector) {
 }
 
 void PlayerBattler::moveFingerToTargetNum(int targetNum) {
-	std::vector<Battler*> targets;
+	vector<Battler*> targets;
 	getAllTargets(targets);
-	if (targets.empty()) return;
-
-	if (targetNum > (int)targets.size() - 1) {
-		targetNum = 0;
-	} else if (targetNum < 0) {
-		targetNum = (int)targets.size() - 1;
-	}
-	const auto battler = targets.at(targetNum);
-	if (battler) {
-		_battlerUI->MoveFingerToBattlerLocation(battler);
-
-		string displayName = battler->Name();
-		int sameNameCount = 0;
-		int ordinal = 0;
-		for (size_t i = 0; i < targets.size(); ++i) {
-			if (targets[i]->Name() == displayName) {
-				if ((int)i < targetNum) ++ordinal;
-				++sameNameCount;
-			}
-		}
-		if (sameNameCount > 1) {
-			displayName += ' ';
-			displayName += ('A' + ordinal);
-		}
-		_battlerUI->UpdateTargetInfo(displayName);
-	}
-	_currentTargetBattler = targetNum;
+	moveFingerToIndex(targets, targetNum);
 }
 
 void PlayerBattler::handleInputMagicMenu() {

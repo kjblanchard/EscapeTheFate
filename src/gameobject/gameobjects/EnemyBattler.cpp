@@ -22,7 +22,7 @@ namespace {
 constexpr Color kWhite = {255, 255, 255, 255};
 constexpr Color kBlack = {0, 0, 0, 255};
 constexpr Color kEnemyPanelBorderColor = {255, 235, 235, 255};
-}
+}  // namespace
 
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {

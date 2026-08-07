@@ -1,6 +1,7 @@
 #include <Supergoon/Input/joystick.h>
 
 #include <engine.hpp>
+#include <gameState.hpp>
 #include <systems/CharacterSelectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
@@ -10,53 +11,54 @@
 #include <ui/uiImage.hpp>
 #include <ui/uiObject.hpp>
 
-#include "gameState.hpp"
-
 using namespace Etf;
+using namespace std;
 
 namespace {
 
-const int kNumMenuItems = 4;
-const int kMenuSpacing = 15;
-const bool kMenuItemEnabled[kNumMenuItems] = {true, true, false, false};
+constexpr int kNumMenuItems = 4;
+constexpr int kMenuSpacing = 15;
+constexpr bool kMenuItemEnabled[kNumMenuItems] = {true, true, false, false};
+constexpr const char* kTitlePanelName = "TitleNineSlice";
+constexpr const char* kMenuPanelName = "MenuNineSlice";
 
-UIObject* _menuItems[kNumMenuItems] = {};
-UIImage* _finger = nullptr;
-int _selectedIndex = 0;
-bool _initialized = false;
+UIObject* menuItems_[kNumMenuItems] = {};
+UIImage* finger_ = nullptr;
+int selectedIndex_ = 0;
+bool initialized_ = false;
 
 void positionFinger() {
-	if (!_finger || !_menuItems[0]) return;
-	auto pos = _menuItems[0]->AbsolutePosition();
+	if (!finger_ || !menuItems_[0]) return;
+	auto pos = menuItems_[0]->AbsolutePosition();
 	auto x = static_cast<int>(pos.x) - 15;
-	auto y = static_cast<int>(pos.y) + (kMenuSpacing * _selectedIndex);
-	_finger->AbsolutePosition(x, y);
+	auto y = static_cast<int>(pos.y) + (kMenuSpacing * selectedIndex_);
+	finger_->AbsolutePosition(x, y);
 }
 
 }  // namespace
 
 void TitleScreenSystem::Start() {
-	_initialized = false;
-	_selectedIndex = 0;
-	_finger = nullptr;
-	for (auto& item : _menuItems) item = nullptr;
+	initialized_ = false;
+	selectedIndex_ = 0;
+	finger_ = nullptr;
+	for (auto& item : menuItems_) item = nullptr;
 }
 
 void TitleScreenSystem::Update() {
 	if (Engine::CurrentSceneName() != "cloud") {
-		_initialized = false;
+		initialized_ = false;
 		return;
 	}
-	if (!_initialized) {
+	if (!initialized_) {
 		auto root = UI::GetRootUIObject();
 		if (!root->GetChildByName("CloudPanel")) return;
-		_menuItems[0] = root->GetChildByName("NewGameText");
-		_menuItems[1] = root->GetChildByName("MultiplayerText");
-		_menuItems[2] = root->GetChildByName("LoadText");
-		_menuItems[3] = root->GetChildByName("OptionsText");
-		_finger = static_cast<UIImage*>(root->GetChildByName("MenuFinger"));
-		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_menuItems[3] || !_finger) return;
-		_initialized = true;
+		menuItems_[0] = root->GetChildByName("NewGameText");
+		menuItems_[1] = root->GetChildByName("MultiplayerText");
+		menuItems_[2] = root->GetChildByName("LoadText");
+		menuItems_[3] = root->GetChildByName("OptionsText");
+		finger_ = static_cast<UIImage*>(root->GetChildByName("MenuFinger"));
+		if (!menuItems_[0] || !menuItems_[1] || !menuItems_[2] || !menuItems_[3] || !finger_) return;
+		initialized_ = true;
 		positionFinger();
 		return;
 	}
@@ -64,32 +66,31 @@ void TitleScreenSystem::Update() {
 	if (CharacterSelectSystem::IsActive()) {
 		CharacterSelectSystem::Update();
 		if (!CharacterSelectSystem::IsActive()) {
-			// Returned from character select via B press, restore title UI
 			auto root = UI::GetRootUIObject();
-			auto* titlePanel = root->GetChildByName("TitleNineSlice");
-			auto* menuPanel = root->GetChildByName("MenuNineSlice");
+			auto* titlePanel = root->GetChildByName(kTitlePanelName);
+			auto* menuPanel = root->GetChildByName(kMenuPanelName);
 			if (titlePanel) titlePanel->SetVisible(true);
 			if (menuPanel) menuPanel->SetVisible(true);
 		}
 		return;
 	}
-	_finger->SetVisible(true);
+	finger_->SetVisible(true);
 	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
 	if (player->IsButtonJustPressed(ControllerButtons::Up)) {
-		_selectedIndex = (_selectedIndex - 1 + kNumMenuItems) % kNumMenuItems;
+		selectedIndex_ = (selectedIndex_ - 1 + kNumMenuItems) % kNumMenuItems;
 		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 		positionFinger();
 	}
 
 	if (player->IsButtonJustPressed(ControllerButtons::Down)) {
-		_selectedIndex = (_selectedIndex + 1) % kNumMenuItems;
+		selectedIndex_ = (selectedIndex_ + 1) % kNumMenuItems;
 		Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 		positionFinger();
 	}
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
-		if (kMenuItemEnabled[_selectedIndex]) {
-			if (_selectedIndex == 1) {
+		if (kMenuItemEnabled[selectedIndex_]) {
+			if (selectedIndex_ == 1) {
 				if (SG_GetCurrentNumControllers() < 1) {
 					Engine::Audio::PlaySFXBuffer("error1", 0.75f);
 					return;
@@ -101,11 +102,11 @@ void TitleScreenSystem::Update() {
 			}
 			Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
 			auto root = UI::GetRootUIObject();
-			auto* titlePanel = root->GetChildByName("TitleNineSlice");
-			auto* menuPanel = root->GetChildByName("MenuNineSlice");
+			auto* titlePanel = root->GetChildByName(kTitlePanelName);
+			auto* menuPanel = root->GetChildByName(kMenuPanelName);
 			if (titlePanel) titlePanel->SetVisible(false);
 			if (menuPanel) menuPanel->SetVisible(false);
-			_finger->SetVisible(false);
+			finger_->SetVisible(false);
 			CharacterSelectSystem::Activate();
 		}
 	}

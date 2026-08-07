@@ -31,23 +31,23 @@ struct CharacterEntry {
 
 namespace {
 
-const char* kPanelName = "CharSelectPanel";
+constexpr const char* kPanelName = "CharSelectPanel";
 
-bool _active = false;
-bool _uiBuilt = false;
-vector<CharacterEntry> _characters;
-int _selectedIndex = 0;
-int _selectingPlayer = 0;
-int _p1SelectedIndex = 0;
+bool active_ = false;
+bool uiBuilt_ = false;
+vector<CharacterEntry> characters_;
+int selectedIndex_ = 0;
+int selectingPlayer_ = 0;
+int p1SelectedIndex_ = 0;
 
-UIObject* _panel = nullptr;
-UIAnimation* _battleAnim = nullptr;
-UIImage* _portraitImage = nullptr;
-UIText* _nameText = nullptr;
-UIText* _descText = nullptr;
+UIObject* panel_ = nullptr;
+UIAnimation* battleAnim_ = nullptr;
+UIImage* portraitImage_ = nullptr;
+UIText* nameText_ = nullptr;
+UIText* descText_ = nullptr;
 
 void loadCharacterData() {
-	if (!_characters.empty()) return;
+	if (!characters_.empty()) return;
 	auto obj = Engine::Json::GetJsonObjectFromDirectory("playerCharacters");
 	if (!obj) return;
 	auto count = jGetObjectArrayLength(obj);
@@ -69,13 +69,13 @@ void loadCharacterData() {
 		c.OverworldFrameH = jint(entry, "overworldFrameH");
 		if (c.OverworldFrameW == 0) c.OverworldFrameW = 32;
 		if (c.OverworldFrameH == 0) c.OverworldFrameH = 32;
-		_characters.push_back(std::move(c));
+		characters_.push_back(std::move(c));
 	}
 	jReleaseObjectFromFile(obj);
 }
 
 void buildUI() {
-	if (_characters.empty()) return;
+	if (characters_.empty()) return;
 	auto root = UI::GetRootUIObject();
 
 	UIObjectArgs panelArgs;
@@ -83,8 +83,8 @@ void buildUI() {
 	panelArgs.Visible = true;
 	panelArgs.Name = kPanelName;
 	panelArgs.Priority = 5;
-	_panel = new UIObject(panelArgs);
-	root->AddChild(_panel);
+	panel_ = new UIObject(panelArgs);
+	root->AddChild(panel_);
 
 	UINineSliceArgs bgArgs;
 	bgArgs.Filename = "uibase";
@@ -98,14 +98,14 @@ void buildUI() {
 	bgArgs.Priority = 1;
 	bgArgs.Visible = true;
 	auto* bg = new UINineSlice(bgArgs);
-	_panel->AddChild(bg);
+	panel_->AddChild(bg);
 
 	UITextArgs titleArgs;
 	titleArgs.FontName = "PressStart2P";
 	titleArgs.FontSize = 8;
 	titleArgs.Rect = {0, 10, 360, 16};
 	if (GameState::IsMultiplayer) {
-		titleArgs.TextToDraw = _selectingPlayer == 0 ? "~ P1: Choose Character ~" : "~ P2: Choose Character ~";
+		titleArgs.TextToDraw = selectingPlayer_ == 0 ? "~ P1: Choose Character ~" : "~ P2: Choose Character ~";
 	} else {
 		titleArgs.TextToDraw = "~ Choose Your Character ~";
 	}
@@ -120,7 +120,7 @@ void buildUI() {
 	titleArgs.DebugBox = false;
 	bg->AddChild(new UIText(titleArgs));
 
-	auto& ch = _characters[_selectedIndex];
+	auto& ch = characters_[selectedIndex_];
 
 	UIAnimationArgs animArgs;
 	animArgs.Filename = ch.BattleSprite;
@@ -131,9 +131,9 @@ void buildUI() {
 	animArgs.DrawColor = {255, 255, 255, 255};
 	animArgs.Priority = 2;
 	animArgs.Visible = true;
-	_battleAnim = new UIAnimation(animArgs);
-	_battleAnim->GetAnimator().StartAnimation(ch.IdleAnim);
-	bg->AddChild(_battleAnim);
+	battleAnim_ = new UIAnimation(animArgs);
+	battleAnim_->GetAnimator().StartAnimation(ch.IdleAnim);
+	bg->AddChild(battleAnim_);
 
 	UIImageArgs portraitImgArgs;
 	portraitImgArgs.Filename = ch.Portrait;
@@ -144,8 +144,8 @@ void buildUI() {
 	portraitImgArgs.DrawColor = {255, 255, 255, 255};
 	portraitImgArgs.Priority = 2;
 	portraitImgArgs.Visible = true;
-	_portraitImage = new UIImage(portraitImgArgs);
-	bg->AddChild(_portraitImage);
+	portraitImage_ = new UIImage(portraitImgArgs);
+	bg->AddChild(portraitImage_);
 
 	UITextArgs nameArgs;
 	nameArgs.FontName = "PressStart2P";
@@ -161,8 +161,8 @@ void buildUI() {
 	nameArgs.WordWrap = false;
 	nameArgs.Visible = true;
 	nameArgs.DebugBox = false;
-	_nameText = new UIText(nameArgs);
-	bg->AddChild(_nameText);
+	nameText_ = new UIText(nameArgs);
+	bg->AddChild(nameText_);
 
 	UITextArgs descArgs;
 	descArgs.FontName = "PressStart2P";
@@ -178,8 +178,8 @@ void buildUI() {
 	descArgs.WordWrap = true;
 	descArgs.Visible = true;
 	descArgs.DebugBox = false;
-	_descText = new UIText(descArgs);
-	bg->AddChild(_descText);
+	descText_ = new UIText(descArgs);
+	bg->AddChild(descText_);
 
 	UITextArgs promptArgs;
 	promptArgs.FontName = "PressStart2P";
@@ -197,75 +197,75 @@ void buildUI() {
 	promptArgs.DebugBox = false;
 	bg->AddChild(new UIText(promptArgs));
 
-	_uiBuilt = true;
+	uiBuilt_ = true;
 }
 
 void destroyUI() {
-	if (!_uiBuilt) return;
+	if (!uiBuilt_) return;
 	auto root = UI::GetRootUIObject();
 	root->DestroyChildByName(kPanelName);
-	_panel = nullptr;
-	_battleAnim = nullptr;
-	_portraitImage = nullptr;
-	_nameText = nullptr;
-	_descText = nullptr;
-	_uiBuilt = false;
+	panel_ = nullptr;
+	battleAnim_ = nullptr;
+	portraitImage_ = nullptr;
+	nameText_ = nullptr;
+	descText_ = nullptr;
+	uiBuilt_ = false;
 }
 
 }  // namespace
 
 void CharacterSelectSystem::Start() {
-	_active = false;
-	_uiBuilt = false;
-	_selectedIndex = 0;
-	_panel = nullptr;
-	_battleAnim = nullptr;
-	_portraitImage = nullptr;
-	_nameText = nullptr;
-	_descText = nullptr;
+	active_ = false;
+	uiBuilt_ = false;
+	selectedIndex_ = 0;
+	panel_ = nullptr;
+	battleAnim_ = nullptr;
+	portraitImage_ = nullptr;
+	nameText_ = nullptr;
+	descText_ = nullptr;
 }
 
 void CharacterSelectSystem::Activate() {
 	loadCharacterData();
-	_active = true;
-	_selectedIndex = 0;
-	_selectingPlayer = 0;
-	_p1SelectedIndex = 0;
+	active_ = true;
+	selectedIndex_ = 0;
+	selectingPlayer_ = 0;
+	p1SelectedIndex_ = 0;
 	buildUI();
 }
 
 bool CharacterSelectSystem::IsActive() {
-	return _active;
+	return active_;
 }
 
 void CharacterSelectSystem::Update() {
-	if (!_active) return;
+	if (!active_) return;
 	if (GameState::CurrentFadeState != (int)LoadingScreenFadeTypes::NotFading) return;
 
-	auto& player = PlayerControllerSystem::GetPlayerByNum(_selectingPlayer);
+	auto& player = PlayerControllerSystem::GetPlayerByNum(selectingPlayer_);
 
 	if (player->IsButtonJustPressed(ControllerButtons::B)) {
-		if (GameState::IsMultiplayer && _selectingPlayer == 1) {
-			_selectingPlayer = 0;
-			_selectedIndex = _p1SelectedIndex;
+		if (GameState::IsMultiplayer && selectingPlayer_ == 1) {
+			selectingPlayer_ = 0;
+			selectedIndex_ = p1SelectedIndex_;
 			destroyUI();
 			buildUI();
 			return;
 		}
 		destroyUI();
-		_active = false;
+		active_ = false;
 		return;
 	}
 
-	if (_characters.size() > 1) {
+	if (characters_.size() > 1) {
 		bool changed = false;
 		if (player->IsButtonJustPressed(ControllerButtons::Left)) {
-			_selectedIndex = (_selectedIndex - 1 + (int)_characters.size()) % (int)_characters.size();
+			selectedIndex_ = (selectedIndex_ - 1 + (int)characters_.size()) % (int)characters_.size();
 			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			changed = true;
 		}
 		if (player->IsButtonJustPressed(ControllerButtons::Right)) {
-			_selectedIndex = (_selectedIndex + 1) % (int)_characters.size();
+			selectedIndex_ = (selectedIndex_ + 1) % (int)characters_.size();
 			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			changed = true;
 		}
@@ -277,7 +277,7 @@ void CharacterSelectSystem::Update() {
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
-		auto& ch = _characters[_selectedIndex];
+		auto& ch = characters_[selectedIndex_];
 
 		if (!GameState::IsMultiplayer) {
 			GameState::ResetForNewGame();
@@ -287,18 +287,18 @@ void CharacterSelectSystem::Update() {
 			GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
 			BattleSystem::ResetAfterGameOver();
 			destroyUI();
-			_active = false;
+			active_ = false;
 			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
-		} else if (_selectingPlayer == 0) {
-			_p1SelectedIndex = _selectedIndex;
-			_selectingPlayer = 1;
-			_selectedIndex = 0;
+		} else if (selectingPlayer_ == 0) {
+			p1SelectedIndex_ = selectedIndex_;
+			selectingPlayer_ = 1;
+			selectedIndex_ = 0;
 			destroyUI();
 			buildUI();
 		} else {
 			GameState::ResetForNewGame();
 			GameState::IsMultiplayer = true;
-			auto& p1ch = _characters[_p1SelectedIndex];
+			auto& p1ch = characters_[p1SelectedIndex_];
 			GameState::SelectedPlayerCharacter = p1ch.BattlerDBIndex;
 			GameState::SelectedOverworldSprite = p1ch.OverworldSprite;
 			GameState::SelectedOverworldFrameW = p1ch.OverworldFrameW;
@@ -309,7 +309,7 @@ void CharacterSelectSystem::Update() {
 			GameState::SelectedOverworldFrameH2 = ch.OverworldFrameH;
 			BattleSystem::ResetAfterGameOver();
 			destroyUI();
-			_active = false;
+			active_ = false;
 			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);
 		}
 	}

@@ -1,7 +1,9 @@
 #pragma once
 
-namespace Etf::SplashSystem {
+namespace Etf {
+namespace SplashSystem {
 void Start();
 void Update();
 void Draw();
-}  // namespace Etf::SplashSystem
+}  // namespace SplashSystem
+}  // namespace Etf

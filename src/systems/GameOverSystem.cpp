@@ -10,19 +10,25 @@
 #include <ui/uiObject.hpp>
 
 using namespace Etf;
+using namespace std;
 
 namespace {
+
 enum class GameOverState {
 	NotActive,
 	FadingOut,
 	ShowingGameOver,
 	WaitingForSceneLoad,
 };
+using enum GameOverState;
 
-GameOverState state_ = GameOverState::NotActive;
+constexpr float kFadeOutDuration = 1.75f;
+constexpr float kShowDuration = 5.0f;
+constexpr const char* kTitlePanelName = "TitleNineSlice";
+constexpr const char* kMenuPanelName = "MenuNineSlice";
+
+GameOverState state_ = NotActive;
 float timer_ = 0.0f;
-constexpr float kFadeOutDuration_ = 1.75f;
-constexpr float kShowDuration_ = 5.0f;
 UIObject* gameOverPanel_ = nullptr;
 
 bool allPlayersDead() {
@@ -43,39 +49,40 @@ void cacheUI() {
 	if (!root) return;
 	gameOverPanel_ = root->GetChildByName("GameOverPanel");
 }
+
 }  // namespace
 
 void GameOverSystem::Update() {
-	if (!GameState::Battle::InBattle && state_ == GameOverState::NotActive) return;
+	if (!GameState::Battle::InBattle && state_ == NotActive) return;
 	switch (state_) {
-		case GameOverState::NotActive: {
+		case NotActive: {
 			if (!allPlayersDead()) return;
 			cacheUI();
 			BattleSystem::TriggerGameOver();
 			timer_ = 0.0f;
-			state_ = GameOverState::FadingOut;
+			state_ = FadingOut;
 			break;
 		}
-		case GameOverState::FadingOut: {
+		case FadingOut: {
 			timer_ += GameState::DeltaTimeSeconds;
-			float progress = timer_ / kFadeOutDuration_;
+			float progress = timer_ / kFadeOutDuration;
 			if (progress > 1.0f) progress = 1.0f;
 			unsigned char alpha = (unsigned char)(255 * (1.0f - progress));
 			Color c = {255, 255, 255, alpha};
 			GraphicsUpdateFBOColor(&c);
-			if (timer_ >= kFadeOutDuration_) {
+			if (timer_ >= kFadeOutDuration) {
 				if (gameOverPanel_) gameOverPanel_->SetVisible(true);
 				Color white = {255, 255, 255, 255};
 				GraphicsUpdateFBOColor(&white);
 				timer_ = 0.0f;
 				Engine::Audio::PlayBGM("gameover", 1.0f, 0);
-				state_ = GameOverState::ShowingGameOver;
+				state_ = ShowingGameOver;
 			}
 			break;
 		}
-		case GameOverState::ShowingGameOver: {
+		case ShowingGameOver: {
 			timer_ += GameState::DeltaTimeSeconds;
-			if (timer_ >= kShowDuration_) {
+			if (timer_ >= kShowDuration) {
 				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
 				Color black = {255, 255, 255, 0};
 				GraphicsUpdateFBOColor(&black);
@@ -84,20 +91,20 @@ void GameOverSystem::Update() {
 				GameState::Battle::InBattle = false;
 				GameState::Battle::ExitingFromBattle = false;
 				Engine::LoadScene("cloud", 0.0f, 0.75f, false);
-				state_ = GameOverState::WaitingForSceneLoad;
+				state_ = WaitingForSceneLoad;
 			}
 			break;
 		}
-		case GameOverState::WaitingForSceneLoad: {
+		case WaitingForSceneLoad: {
 			if (Engine::CurrentSceneName() == "cloud") {
-				auto niner = UI::GetRootUIObject()->GetChildByName("TitleNineSlice");
-				auto ninertwo = UI::GetRootUIObject()->GetChildByName("MenuNineSlice");
-				niner->SetVisible(true);
-				ninertwo->SetVisible(true);
+				auto* titlePanel = UI::GetRootUIObject()->GetChildByName(kTitlePanelName);
+				auto* menuPanel = UI::GetRootUIObject()->GetChildByName(kMenuPanelName);
+				if (titlePanel) titlePanel->SetVisible(true);
+				if (menuPanel) menuPanel->SetVisible(true);
 				BattleSystem::ResetAfterGameOver();
 				if (gameOverPanel_) gameOverPanel_->SetVisible(false);
 				gameOverPanel_ = nullptr;
-				state_ = GameOverState::NotActive;
+				state_ = NotActive;
 			}
 			break;
 		}

@@ -15,7 +15,6 @@ enum class BattleStates {
 	BattleEnd,
 	BattleGameOver,
 };
-using enum BattleStates;
 
 namespace BattleSystem {
 void TriggerBattleStart();
