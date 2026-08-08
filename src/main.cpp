@@ -4,26 +4,39 @@
 #include <debug/DebugEngine.hpp>
 #include <debug/DebugGameWindow.hpp>
 #include <debug/DebugPlayers.hpp>
+#include <debug/DebugSettings.hpp>
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
 #include <engine.hpp>
 #include <systems/BattleTransitionSystem.hpp>
 #include <systems/BattleZoneSystem.hpp>
+#include <systems/SplashSystem.hpp>
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
+#include <systems/BattleSpoilsSystem.hpp>
 #include <systems/battleSystem.hpp>
+#include <systems/SceneNameSystem.hpp>
+#include <systems/GameOverSystem.hpp>
+#include <systems/MenuSystem.hpp>
+#include <systems/PauseSystem.hpp>
+#include <systems/TitleScreenSystem.hpp>
 #include <systems/dialogSystem.hpp>
 using namespace Etf;
 
 void InitializeGame() {
-	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab});
+	Engine::DebugUI::AddTab({DisplayCameraTab, DisplayPlayerControllerTab, DisplayUITab, DisplayEngineTab, DisplayBattleTab, DisplaySettingsTab});
 	auto name = (std::string) "Console";
 	DebugConsoleWindow::Initialize();
 	Engine::DebugUI::AddWindow({{name, DebugConsoleWindow::Draw}});
 	name = "Game";
 	Engine::DebugUI::AddWindow({{name, DebugGameWindow::Draw}});
 	const std::vector<SystemCallbacks> systems_{
+		{
+			.Start = SplashSystem::Start,
+			.Update = SplashSystem::Update,
+			.Draw = SplashSystem::Draw,
+		},
 		{
 			.Start = GameObjectSystem::Start,
 			.Update = GameObjectSystem::Update,
@@ -42,6 +55,9 @@ void InitializeGame() {
 			.Update = BattleSystem::BattleSystemUpdate,
 		},
 		{
+			.Update = BattleSpoilsSystem::Update,
+		},
+		{
 			.Start = BattleZoneSystem::Start,
 			.Update = BattleZoneSystem::Update,
 			.Draw = BattleZoneSystem::Draw,
@@ -51,6 +67,25 @@ void InitializeGame() {
 			.Start = BattleTransitionSystem::Start,
 			.Update = BattleTransitionSystem::Update,
 			.Shutdown = BattleTransitionSystem::Shutdown,
+		},
+		{
+			.Start = SceneNameSystem::Start,
+			.Update = SceneNameSystem::Update,
+		},
+		{
+			.Start = TitleScreenSystem::Start,
+			.Update = TitleScreenSystem::Update,
+		},
+		{
+			.Update = GameOverSystem::Update,
+		},
+		{
+			.Start = PauseSystem::Start,
+			.Update = PauseSystem::Update,
+		},
+		{
+			.Start = MenuSystem::Start,
+			.Update = MenuSystem::Update,
 		}};
 	Engine::RegisterSystems(systems_);
 }

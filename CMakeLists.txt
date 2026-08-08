@@ -2,7 +2,8 @@
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-project("Escape The Fate" LANGUAGES C CXX VERSION 0.1)
+set(GAME_VERSION "0.1.0" CACHE STRING "Game version string")
+project("Escape The Fate" LANGUAGES C CXX VERSION ${GAME_VERSION})
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
@@ -41,6 +42,9 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameobject/gameobjects/BattleLocation.cpp
   src/gameobject/gameobjects/BattleZone.cpp
   src/battle/battlerUI.cpp
+  src/battle/enemyAI.cpp
+  src/battle/HitAnimPool.cpp
+  src/battle/DamageNumberPool.cpp
   src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiLayoutGroup.cpp
@@ -49,13 +53,22 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
   src/ui/uiProgressBar.cpp
+  src/ui/uiPanel.cpp
   src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
+  src/systems/BattleSpoilsSystem.cpp
   src/systems/PlayerControllerSystem.cpp
   src/systems/GameObjectSystem.cpp
   src/systems/BattleZoneSystem.cpp
   src/systems/BattleTransitionSystem.cpp
+  src/systems/SplashSystem.cpp
+  src/systems/SceneNameSystem.cpp
+  src/systems/TitleScreenSystem.cpp
+  src/systems/CharacterSelectSystem.cpp
+  src/systems/GameOverSystem.cpp
+  src/systems/PauseSystem.cpp
+  src/systems/MenuSystem.cpp
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
@@ -67,6 +80,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/debug/DebugBattle.cpp
   src/debug/DebugConsoleWindow.cpp
   src/debug/DebugGameWindow.cpp
+  src/debug/DebugSettings.cpp
 )
 
 if(IMGUI_DEBUGGING)
@@ -212,7 +226,7 @@ endif(EMSCRIPTEN)
 ###### Packaging
 set(CPACK_PACKAGE_NAME "EscapeTheFate")
 set(CPACK_PACKAGE_VENDOR "Supergoon Games")
-set(CPACK_PACKAGE_VERSION "0.1.0")
+set(CPACK_PACKAGE_VERSION "${GAME_VERSION}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "2D deckbuilding JRPG")
 set(CPACK_NSIS_DISPLAY_NAME "Escape the Fate")
 set(CPACK_NSIS_PACKAGE_NAME "Escape the Fate")

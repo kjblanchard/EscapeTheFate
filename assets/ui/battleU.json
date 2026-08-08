@@ -27,6 +27,143 @@
                         "camera": false,
                         "priority": 3
                     },
+                    "MagicNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "visible": false,
+                        "scale": 1.0,
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": -114, "y": -10, "w": 112, "h": 82 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+                        "camera": false,
+                        "priority": 4,
+                        "xOffset": 8,
+                        "yOffset": 9,
+                        "children": {
+                            "MagicHLG": {
+                                "rect": { "x": 8, "y": 8, "w": 96, "h": 66 },
+                                "type": "hlg",
+                                "spacing": "50",
+                                "visible": true,
+                                "children": {
+                                    "MagicVLG1": {
+                                        "rect": { "x": 0, "y": 0, "w": 46, "h": 66 },
+                                        "type": "vlg",
+                                        "spacing": "15",
+                                        "visible": true,
+                                        "children": {
+                                            "MagicSlot0": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "Cure",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100
+                                            },
+                                            "MagicSlot1": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot2": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot3": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            }
+                                        }
+                                    },
+                                    "MagicVLG2": {
+                                        "rect": { "x": 0, "y": 0, "w": 46, "h": 66 },
+                                        "type": "vlg",
+                                        "spacing": "15",
+                                        "visible": true,
+                                        "children": {
+                                            "MagicSlot4": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot5": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot6": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot7": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "MagicFinger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": false,
+                        "scale": 1.0,
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -124, "y": 0, "w": 16, "h": 16 },
+                        "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
+                        "camera": false,
+                        "priority": 5
+                    },
                     "CommandsNineSlice": {
                         "type": "nineSlice",
                         "file": "uibase",
@@ -92,8 +229,8 @@
                 }
             },
             "Player2CommandsUI": {
-                "visible": false,
                 "rect": { "x": 365, "y": 112, "w": 72, "h": 72 },
+                "visible" : false,
                 "children": {
                     "Finger": {
                         "type": "image",
@@ -105,6 +242,154 @@
                         "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
                         "camera": false,
                         "priority": 3
+                    },
+                    "BattleSelectionFinger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": true,
+                        "scale": 1.0,
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -100, "y": 8, "w": 16, "h": 16 },
+                        "srcRect": { "x": 48, "y": 48, "w": 16, "h": 16 },
+                        "camera": false,
+                        "priority": 3
+                    },
+                    "MagicNineSlice": {
+                        "type": "nineSlice",
+                        "file": "uibase",
+                        "visible": false,
+                        "scale": 1.0,
+                        "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
+                        "rect": { "x": -114, "y": -10, "w": 112, "h": 82 },
+                        "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+                        "camera": false,
+                        "priority": 4,
+                        "xOffset": 8,
+                        "yOffset": 9,
+                        "children": {
+                            "MagicHLG": {
+                                "rect": { "x": 8, "y": 8, "w": 96, "h": 66 },
+                                "type": "hlg",
+                                "spacing": "50",
+                                "visible": true,
+                                "children": {
+                                    "MagicVLG1": {
+                                        "rect": { "x": 0, "y": 0, "w": 46, "h": 66 },
+                                        "type": "vlg",
+                                        "spacing": "15",
+                                        "visible": true,
+                                        "children": {
+                                            "MagicSlot0": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "Cure",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100
+                                            },
+                                            "MagicSlot1": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot2": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot3": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            }
+                                        }
+                                    },
+                                    "MagicVLG2": {
+                                        "rect": { "x": 0, "y": 0, "w": 46, "h": 66 },
+                                        "type": "vlg",
+                                        "spacing": "15",
+                                        "visible": true,
+                                        "children": {
+                                            "MagicSlot4": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot5": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot6": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            },
+                                            "MagicSlot7": {
+                                                "type": "text",
+                                                "font": "PressStart2P",
+                                                "fontSize": 8,
+                                                "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
+                                                "text": "---",
+                                                "centeredX": true,
+                                                "centeredY": true,
+                                                "numCharsToDraw": 100,
+                                                "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "MagicFinger": {
+                        "type": "image",
+                        "file": "fingers",
+                        "visible": false,
+                        "scale": 1.0,
+                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                        "rect": { "x": -124, "y": 0, "w": 16, "h": 16 },
+                        "srcRect": { "x": 16, "y": 48, "w": 16, "h": 16 },
+                        "camera": false,
+                        "priority": 5
                     },
                     "CommandsNineSlice": {
                         "type": "nineSlice",
@@ -118,8 +403,11 @@
                         "xOffset": 8,
                         "yOffset": 9,
                         "children": {
-                            "CommandsOffsetBox": {
-                                "rect": { "x": 8, "y": 10, "w": 56, "h": 12 },
+                            "CommandsVLG": {
+                                "rect": { "x": 8, "y": 8, "w": 56, "h": 12 },
+                                "type": "vlg",
+                                "spacing": "15",
+                                "visible": true,
                                 "children": {
                                     "AttackText": {
                                         "type": "text",
@@ -127,6 +415,36 @@
                                         "fontSize": 8,
                                         "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
                                         "text": "Attack",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    },
+                                    "MagicText": {
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
+                                        "text": "Magic",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    },
+                                    "SkillsText": {
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
+                                        "text": "Skills",
+                                        "centeredX": true,
+                                        "centeredY": true,
+                                        "numCharsToDraw": 100
+                                    },
+                                    "ItemsText": {
+                                        "type": "text",
+                                        "font": "PressStart2P",
+                                        "fontSize": 8,
+                                        "rect": { "x": 0, "y": 0, "w": 56, "h": 12 },
+                                        "text": "Items",
                                         "centeredX": true,
                                         "centeredY": true,
                                         "numCharsToDraw": 100
@@ -245,8 +563,8 @@
                                                         "type": "text",
                                                         "font": "PressStart2P",
                                                         "fontSize": 8,
-                                                        "rect": { "x": 80, "y": 0, "w": 16, "h": 12 },
-                                                        "text": "M:",
+                                                        "rect": { "x": 80, "y": 0, "w": 20, "h": 12 },
+                                                        "text": "AP",
                                                         "centeredX": false,
                                                         "centeredY": false,
                                                         "numCharsToDraw": 100
@@ -255,8 +573,8 @@
                                                         "type": "text",
                                                         "font": "PressStart2P",
                                                         "fontSize": 8,
-                                                        "rect": { "x": 96, "y": 0, "w": 16, "h": 12 },
-                                                        "text": "99",
+                                                        "rect": { "x": 100, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "0",
                                                         "centeredX": false,
                                                         "centeredY": false,
                                                         "numCharsToDraw": 100
@@ -271,6 +589,80 @@
                                                         "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
                                                         "children": {
                                                             "P1ATBProgressBar": {
+                                                                "type": "progressBar",
+                                                                "visible": true,
+                                                                "rect": { "x": 0, "y": 0, "w": 32, "h": 16 },
+                                                                "barRect": { "x": 4, "y": 6, "w": 24, "h": 3 },
+                                                                "barColor": { "R": 77, "G": 77, "B": 255, "A": 255 }
+                                                            }
+                                                        }
+                                                    }
+                                                }
+                                            },
+                                            "Player2StatusHUD": {
+                                                "rect": { "x": 0, "y": 0, "w": 148, "h": 13 },
+                                                "visible": false,
+                                                "children": {
+                                                    "P2NameText": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 0, "y": 0, "w": 32, "h": 12 },
+                                                        "text": "P2",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P2HealthText": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 32, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "H:",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P2Health": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 50, "y": 0, "w": 30, "h": 12 },
+                                                        "text": "999",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P2MagicText": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 80, "y": 0, "w": 20, "h": 12 },
+                                                        "text": "AP",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P2Magic": {
+                                                        "type": "text",
+                                                        "font": "PressStart2P",
+                                                        "fontSize": 8,
+                                                        "rect": { "x": 100, "y": 0, "w": 16, "h": 12 },
+                                                        "text": "0",
+                                                        "centeredX": false,
+                                                        "centeredY": false,
+                                                        "numCharsToDraw": 100
+                                                    },
+                                                    "P2ATB": {
+                                                        "type": "animation",
+                                                        "visible": true,
+                                                        "rect": { "x": 116, "y": -4, "w": 32, "h": 16 },
+                                                        "srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                                                        "file": "atbBar",
+                                                        "scale": 1.0,
+                                                        "color": { "R": 255, "G": 255, "B": 255, "A": 255 },
+                                                        "children": {
+                                                            "P2ATBProgressBar": {
                                                                 "type": "progressBar",
                                                                 "visible": true,
                                                                 "rect": { "x": 0, "y": 0, "w": 32, "h": 16 },
@@ -314,16 +706,49 @@
                     }
                 }
             },
-            "EnemyHP": {
-                "type": "text",
-                "font": "PressStart2P",
-                "debug": true,
-                "fontSize": 8,
-                "rect": { "x": 100, "y": 80, "w": 16, "h": 12 },
-                "text": "10",
-                "centeredX": false,
-                "centeredY": false,
-                "numCharsToDraw": 100
+            "TurnMarker": {
+                "type": "animation",
+                "visible": true,
+                "rect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                "srcRect": { "x": 0, "y": 0, "w": 16, "h": 16 },
+                "file": "battleTurnMarker",
+                "scale": 1.0,
+                "color": { "R": 255, "G": 255, "B": 255, "A": 255 }
+            }
+
+        }
+    },
+    "GameOverPanel": {
+        "doNotDestroy": true,
+        "visible": false,
+        "rect": { "x": 0, "y": 0, "w": 480, "h": 270 },
+        "priority": 100,
+        "children": {
+            "GameOverNineSlice": {
+                "type": "nineSlice",
+                "visible": true,
+                "file": "null",
+                "scale": 1.0,
+                "color": { "R": 0, "G": 0, "B": 0, "A": 255 },
+                "rect": { "x": 0, "y": 0, "w": 480, "h": 270 },
+                "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
+                "camera": false,
+                "priority": 100,
+                "xOffset": 8,
+                "yOffset": 9,
+                "children": {
+                    "GameOverText": {
+                        "type": "text",
+                        "font": "PressStart2P",
+                        "fontSize": 24,
+                        "rect": { "x": 0, "y": 0, "w": 480, "h": 270 },
+                        "color": { "R": 200, "G": 0, "B": 0, "A": 255 },
+                        "text": "Game Over",
+                        "centeredX": true,
+                        "centeredY": true,
+                        "numCharsToDraw": 100
+                    }
+                }
             }
         }
     }

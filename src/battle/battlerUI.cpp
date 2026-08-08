@@ -1,74 +1,191 @@
-#include <sgtools/log.h>
 #include <Supergoon/state.h>
+#include <sgtools/log.h>
 
 #include <battle/battlerUI.hpp>
 #include <engine.hpp>
+#include <format>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiNineSlice.hpp>
+#include <ui/uiText.hpp>
+
+#include "ui/uiAnimation.hpp"
 using namespace Etf;
 using namespace std;
 using enum PlayerUIAnimationStates;
 
-static const float Animation_Offset = 120.0f;
-static const float Animation_Open_Time = 0.15f;
-static const float Animation_Close_Time = 0.10;
+namespace {
+const float Animation_Offset = 120.0f;
+const float Animation_Open_Time = 0.15f;
+const float Animation_Close_Time = 0.10;
+}  // namespace
 
-BattlerUI::BattlerUI(unsigned int battlerNum) {
+UIAnimation* BattlerUI::_turnMarkerAnim = nullptr;
+
+void BattlerUI::StartPlayerTurn(Battler* battler) {
+	auto x = battler->X() + (battler->SpriteWidth() / 2) - 10;
+	auto y = battler->Y() - 3;
+	_turnMarkerAnim->AbsolutePosition(x, y);
+	_turnMarkerAnim->SetVisible(true);
+}
+
+void BattlerUI::EndPlayerTurn(Battler* battler) {
+	_turnMarkerAnim->SetVisible(false);
+}
+
+BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
+	auto turnMarker = UI::GetRootUIObject()->GetChildByName("TurnMarker");
+	if (!turnMarker) sgLogCritical("Could not find turnMarker, exiting");
+	_turnMarkerAnim = static_cast<UIAnimation*>(turnMarker);
+	_turnMarkerAnim->SetVisible(false);
+	_turnMarkerAnim->GetAnimator().StartAnimation("playing");
+
 	_player = battlerNum < 3;
 	if (_player) {
-		_commandMenu = UI::GetRootUIObject()->GetChildByName("CommandsNineSlice");
+		auto playerUIName = format("Player{}CommandsUI", to_string(battlerNum + 1));
+		auto playerRoot = UI::GetRootUIObject()->GetChildByName(playerUIName);
+		if (!playerRoot) sgLogCritical("Could not find %s, exiting", playerUIName.c_str());
+
+		_commandMenu = playerRoot->GetChildByName("CommandsNineSlice");
 		if (!_commandMenu) {
-			sgLogCritical("Could not fild child CommandsNineSlice, exiting");
+			sgLogCritical("Could not find child CommandsNineSlice, exiting");
 		}
 		_menuBoxStartX = _commandMenu->OriginalX();
 		_menuBoxStartY = _commandMenu->OriginalY();
 		_commandMenu->SetVisible(false);
 		_commandMenu->SetX(_menuBoxStartX + Animation_Offset);
-		auto vlg = UI::GetRootUIObject()->GetChildByName("CommandsVLG");
+		auto vlg = playerRoot->GetChildByName("CommandsVLG");
 		if (!vlg) {
-			sgLogCritical("Could not fild child commandsvlg, exiting");
+			sgLogCritical("Could not find child CommandsVLG, exiting");
 		}
 		_menuItems[0] = vlg->GetChildByName("AttackText");
 		_menuItems[1] = vlg->GetChildByName("MagicText");
 		_menuItems[2] = vlg->GetChildByName("SkillsText");
 		_menuItems[3] = vlg->GetChildByName("ItemsText");
-		Color color = {180, 180, 180, 255};
-		auto first = true;
-		for (auto menuItem : _menuItems) {
-			if (!menuItem)
-				sgLogCritical("Could not fild child thing, exiting");
-			auto menuCasted = static_cast<UIText*>(menuItem);
-			if (!menuCasted) continue;
-			if (first) {
-				first = false;
-			} else {
-				menuCasted->UpdateDrawColor(color);
+		Color disabledColor = {180, 180, 180, 255};
+		for (int i = 0; i < 4; ++i) {
+			if (!_menuItems[i])
+				sgLogCritical("Could not find child menu item, exiting");
+			if (i >= 2) {
+				auto menuCasted = static_cast<UIText*>(_menuItems[i]);
+				if (menuCasted) menuCasted->UpdateDrawColor(disabledColor);
 			}
 		}
-		auto finger = UI::GetRootUIObject()->GetChildByName("Finger");
+		auto finger = playerRoot->GetChildByName("Finger");
 		if (finger) {
 			_finger = static_cast<UIImage*>(finger);
 		}
 		finger->SetVisible(false);
-		auto ui = UI::GetRootUIObject()->GetChildByName("Player1CommandsUI");
-		auto tsFinger = ui->GetChildByName("BattleSelectionFinger");
+		auto tsFinger = playerRoot->GetChildByName("BattleSelectionFinger");
 		if (tsFinger) {
 			_targetSelectionFinger = static_cast<UIImage*>(tsFinger);
 		}
 		_targetSelectionFinger->SetVisible(false);
-		auto hpObject = UI::GetRootUIObject()->GetChildByName("P1Health");
+
+		if (battlerNum == 1) {
+			Color p2Color = {100, 255, 180, 255};
+			if (_finger) _finger->UpdateDrawColor(p2Color);
+			if (_targetSelectionFinger) _targetSelectionFinger->UpdateDrawColor(p2Color);
+		}
+		auto nameText = format("P{}NameText", to_string(battlerNum + 1));
+		auto thing = UI::GetRootUIObject()->GetChildByName(nameText);
+		_nameObject = static_cast<UIText*>(thing);
+
+		auto hpName = format("P{}Health", to_string(battlerNum + 1));
+		auto hpObject = UI::GetRootUIObject()->GetChildByName(hpName);
 		_hpObject = static_cast<UIText*>(hpObject);
-		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName("P1ATB");
+
+		auto apName = format("P{}Magic", to_string(battlerNum + 1));
+		auto apObject = UI::GetRootUIObject()->GetChildByName(apName);
+		_apObject = static_cast<UIText*>(apObject);
+
+		auto atbName = format("P{}ATB", to_string(battlerNum + 1));
+		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName(atbName);
 		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
 		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
 		StartATBIdleAnim();
-		auto progressBarObject = UI::GetRootUIObject()->GetChildByName("P1ATBProgressBar");
+
+		auto atbBarName = format("P{}ATBProgressBar", to_string(battlerNum + 1));
+		auto progressBarObject = UI::GetRootUIObject()->GetChildByName(atbBarName);
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);
-	} else {
-		auto hpObject = UI::GetRootUIObject()->GetChildByName("EnemyHP");
-		_hpObject = static_cast<UIText*>(hpObject);
-		if (_hpObject) _hpObject->SetVisible(true);
+
+		UINineSliceArgs infoBoxArgs;
+		infoBoxArgs.Filename = "uibase";
+		infoBoxArgs.Name = "TargetInfoBox";
+		infoBoxArgs.Rect = (battlerNum == 1) ? RectangleF{5, 40, 90, 32} : RectangleF{5, 5, 90, 32};
+		infoBoxArgs.SourceRect = {0, 0, 64, 64};
+		infoBoxArgs.Xoffset = 8;
+		infoBoxArgs.Yoffset = 8;
+		infoBoxArgs.Scale = 1.0f;
+		infoBoxArgs.DrawColor = (battlerNum == 1) ? Color{50, 130, 100, 235} : Color{80, 0, 120, 235};
+		infoBoxArgs.Priority = 2;
+		infoBoxArgs.Visible = false;
+		_targetInfoBox = new UINineSlice(infoBoxArgs);
+		UI::GetRootUIObject()->GetChildByName("BattlePanel")->AddChild(_targetInfoBox);
+
+		UITextArgs infoTextArgs;
+		infoTextArgs.FontName = "PressStart2P";
+		infoTextArgs.FontSize = 8;
+		infoTextArgs.Rect = {6, 6, 78, 20};
+		infoTextArgs.TextToDraw = "";
+		infoTextArgs.Name = "TargetInfoText";
+		infoTextArgs.NumCharsToDraw = 100;
+		infoTextArgs.Priority = 3;
+		infoTextArgs.TextColor = {255, 255, 255, 255};
+		infoTextArgs.CenteredX = true;
+		infoTextArgs.CenteredY = true;
+		infoTextArgs.WordWrap = false;
+		infoTextArgs.Visible = true;
+		infoTextArgs.DebugBox = false;
+		_targetInfoText = new UIText(infoTextArgs);
+		_targetInfoBox->AddChild(_targetInfoText);
+
+		_magicMenu = playerRoot->GetChildByName("MagicNineSlice");
+		if (_magicMenu) {
+			_magicMenuStartX = _magicMenu->OriginalX();
+			_magicMenu->SetVisible(false);
+			_magicMenu->SetX(_magicMenuStartX + Animation_Offset);
+		}
+		for (int i = 0; i < 8; ++i) {
+			_magicMenuItems[i] = playerRoot->GetChildByName("MagicSlot" + to_string(i));
+		}
+		auto magicFingerObj = playerRoot->GetChildByName("MagicFinger");
+		if (magicFingerObj) {
+			_magicFinger = static_cast<UIImage*>(magicFingerObj);
+			_magicFinger->SetVisible(false);
+		}
+
+		UINineSliceArgs apCostBoxArgs;
+		apCostBoxArgs.Filename = "uibase";
+		apCostBoxArgs.Name = "APCostBox";
+		apCostBoxArgs.Rect = {0, 74, 72, 16};
+		apCostBoxArgs.SourceRect = {0, 0, 64, 64};
+		apCostBoxArgs.Xoffset = 8;
+		apCostBoxArgs.Yoffset = 8;
+		apCostBoxArgs.Scale = 1.0f;
+		apCostBoxArgs.DrawColor = {80, 0, 120, 235};
+		apCostBoxArgs.Priority = 3;
+		apCostBoxArgs.Visible = false;
+		_apCostBox = new UINineSlice(apCostBoxArgs);
+		_commandMenu->AddChild(_apCostBox);
+
+		UITextArgs apCostTextArgs;
+		apCostTextArgs.FontName = "PressStart2P";
+		apCostTextArgs.FontSize = 8;
+		apCostTextArgs.Rect = {2, 2, 68, 12};
+		apCostTextArgs.TextToDraw = "";
+		apCostTextArgs.Name = "APCostText";
+		apCostTextArgs.NumCharsToDraw = 10;
+		apCostTextArgs.Priority = 4;
+		apCostTextArgs.TextColor = {255, 255, 255, 255};
+		apCostTextArgs.CenteredX = true;
+		apCostTextArgs.CenteredY = true;
+		apCostTextArgs.WordWrap = false;
+		apCostTextArgs.Visible = true;
+		apCostTextArgs.DebugBox = false;
+		_apCostText = new UIText(apCostTextArgs);
+		_apCostBox->AddChild(_apCostText);
 	}
 }
 
@@ -79,20 +196,62 @@ BattlerUI::~BattlerUI() {
 }
 
 void BattlerUI::UpdateProgressBar(float percent) {
+	if (!_progressBar) return;
 	_progressBar->SetBarPercent(percent);
 }
 
 void BattlerUI::StartTargetSelection() {
 	_targetSelectionFinger->SetVisible(true);
+	if (_targetInfoBox) _targetInfoBox->SetVisible(true);
 }
 
 void BattlerUI::CloseTargetSelection() {
 	_targetSelectionFinger->SetVisible(false);
+	if (_targetInfoBox) _targetInfoBox->SetVisible(false);
+}
+
+void BattlerUI::UpdateTargetInfo(const std::string& displayName) {
+	if (_targetInfoText) _targetInfoText->UpdateText(displayName);
+}
+
+void BattlerUI::ShowAPCostBox(int currentAP, int abilityCost) {
+	if (!_apCostBox || !_apCostText) return;
+	_currentAbilityCost = abilityCost;
+	_apCostBox->SetVisible(true);
+	_apCostText->UpdateText(to_string(currentAP) + ":" + to_string(abilityCost));
+}
+
+void BattlerUI::UpdateAPCostCurrent(int currentAP) {
+	if (!_apCostBox || !_apCostText) return;
+	_apCostText->UpdateText(to_string(currentAP) + ":" + to_string(_currentAbilityCost));
+}
+
+void BattlerUI::HideAPCostBox() {
+	if (_apCostBox) _apCostBox->SetVisible(false);
+}
+
+void BattlerUI::ShowMagicDescription(const std::string& description) {
+	if (_targetInfoBox) _targetInfoBox->SetVisible(true);
+	if (_targetInfoText) _targetInfoText->UpdateText(description);
+}
+
+void BattlerUI::HideMagicDescription() {
+	if (_targetInfoBox) _targetInfoBox->SetVisible(false);
 }
 
 void BattlerUI::UpdateHP(const string& hp) {
 	if (!_hpObject) return;
 	_hpObject->UpdateText(hp);
+}
+
+void BattlerUI::UpdateName(const std::string& name) {
+	if (!_nameObject) return;
+	_nameObject->UpdateText(name);
+}
+
+void BattlerUI::UpdateAP(const string& ap) {
+	if (!_apObject) return;
+	_apObject->UpdateText(ap);
 }
 
 void BattlerUI::UpdateAnimations() {
@@ -105,6 +264,7 @@ void BattlerUI::UpdateAnimations() {
 			_currentAnimationTime += DeltaTimeSeconds;
 			if (_currentAnimationTime >= Animation_Open_Time) {
 				_currentState = Opened;
+				MoveCursorInMenu(0);
 				_finger->SetVisible(true);
 				break;
 			}
@@ -126,6 +286,40 @@ void BattlerUI::UpdateAnimations() {
 		default:
 			break;
 	}
+	if (_magicMenu) {
+		switch (_magicMenuState) {
+			case Closed:
+				break;
+			case Opened:
+				break;
+			case Opening: {
+				_magicAnimationTime += DeltaTimeSeconds;
+				if (_magicAnimationTime >= Animation_Open_Time) {
+					_magicMenuState = Opened;
+					_magicMenu->SetX(_magicMenuStartX);
+					MoveCursorInMagicMenu(_pendingMagicCol, _pendingMagicRow);
+					if (_magicFinger) _magicFinger->SetVisible(true);
+					break;
+				}
+				auto newX = Engine::Tweening::GetTweenedValue(_magicMenuStartX + Animation_Offset, _magicMenuStartX, _magicAnimationTime, Animation_Open_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+				_magicMenu->SetX(newX);
+				break;
+			}
+			case Closing: {
+				_magicAnimationTime += DeltaTimeSeconds;
+				if (_magicAnimationTime > Animation_Close_Time) {
+					_magicMenu->SetVisible(false);
+					_magicMenuState = Closed;
+					break;
+				}
+				auto newX = Engine::Tweening::GetTweenedValue(_magicMenuStartX, _magicMenuStartX + Animation_Offset, _magicAnimationTime, Animation_Close_Time, Engine::Tweening::TweenEaseTypes::QuintOut);
+				_magicMenu->SetX(newX);
+				break;
+			}
+			default:
+				break;
+		}
+	}
 }
 
 void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
@@ -138,9 +332,40 @@ void BattlerUI::MoveCursorInMenu(unsigned int newLocation) {
 	_finger->AbsolutePosition(x, y);
 }
 
+void BattlerUI::OpenMagicMenu() {
+	if (!_magicMenu) return;
+	_magicMenu->SetVisible(true);
+	_magicMenuState = PlayerUIAnimationStates::Opening;
+	_magicAnimationTime = 0;
+	_pendingMagicCol = 0;
+	_pendingMagicRow = 0;
+}
+
+void BattlerUI::CloseMagicMenu() {
+	if (!_magicMenu) return;
+	if (_magicMenuState == PlayerUIAnimationStates::Closed) return;
+	_magicMenuState = PlayerUIAnimationStates::Closing;
+	_magicAnimationTime = 0;
+	if (_magicFinger) _magicFinger->SetVisible(false);
+	HideAPCostBox();
+	HideMagicDescription();
+}
+
+void BattlerUI::MoveCursorInMagicMenu(unsigned int col, unsigned int row) {
+	if (!_magicFinger || !_magicMenu) return;
+	if ((int)col >= _magicMenuCols || (int)row >= _magicMenuRows) return;
+	auto uiobject = _magicMenuItems[0];
+	if (!uiobject) return;
+	auto pos = uiobject->AbsolutePosition();
+	auto x = pos.x - 15 + (50 * col);
+	auto y = pos.y + (15 * row);
+	_magicFinger->AbsolutePosition(x, y);
+}
+
 void BattlerUI::MoveFingerToBattlerLocation(Battler* battler) {
-	auto x = battler->X() + (battler->SpriteWidth() / 2) - 5;
-	auto y = battler->Y() - 10;
+	auto x = battler->X() + (battler->SpriteWidth() / 2) - (_targetSelectionFinger->Width() / 2);
+	auto y = battler->Y() - (_targetSelectionFinger->Height() - 5);
+	if (_battlerNum == 1) x += 4;
 	_targetSelectionFinger->AbsolutePosition(x, y);
 }
 
@@ -149,4 +374,7 @@ void BattlerUI::ClosePlayerInfoBox() {
 	if (menu) {
 		menu->SetVisible(false);
 	}
+}
+
+void BattlerUI::EndBattle() {
 }

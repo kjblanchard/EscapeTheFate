@@ -4,12 +4,13 @@
 
 namespace Etf {
 struct Scene {
-	std::string MapName, UIName, BGMName;
+	std::string MapName, UIName, BGMName, DisplayName;
 	float BGMVolume;
 };
 
 struct gameConfig {
 	static std::vector<std::string> PreloadTextures;
+	std::vector<std::string> logos;
 	struct audio {
 		float bgmVolume, sfxVolume;
 	} audio;
@@ -25,7 +26,6 @@ struct gameConfig {
 		bool interactions;
 		bool mapExits;
 		bool battleZones;
-		int debugLevel;
 	} debug;
 	struct controls {
 		struct keyboard {
@@ -37,6 +37,8 @@ struct gameConfig {
 			static const int B = 27;
 			static const int LB = 18;
 			static const int RB = 19;
+			static const int START = 40;
+			static const int Y = 43;
 		} Keyboard;
 		struct joystick {
 			static const int UP = 11;
@@ -49,6 +51,7 @@ struct gameConfig {
 			static const int Y = 3;
 			static const int LB = 9;
 			static const int RB = 10;
+			static const int START = 6;
 		} Joystick;
 	} Controls;
 };

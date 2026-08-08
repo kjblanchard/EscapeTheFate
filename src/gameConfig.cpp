@@ -31,9 +31,16 @@ const vector<string> preloadTextures_ = {
 	"uibase",
 	"bBlackBird",
 	"gamecontroller",
+	"heal",
 	"inside",
 	"null",
 	"player1",
+	"player2Battler",
+	"player3",
+	"player3Battler",
+	"portrait1",
+	"portrait2",
+	"portrait3",
 	"supergoongameslogo",
 	"terrain",
 };
@@ -61,28 +68,20 @@ static void loadWindowSettingsToConfig(gameConfig* config, json_object* rootObje
 	config->window.title = jstr(windowObject, "title");
 }
 
-static void loadDebugSettingsToConfig(gameConfig* config, json_object* rootObject) {
-	auto debugObj = jobj(rootObject, "debug");
-	if (!debugObj) {
-		sgLogWarn("Could not load debug settings, setting defaults");
-		return;
+static void loadLogosToConfig(gameConfig* config, json_object* rootObject) {
+	auto logosObj = jobj(rootObject, "logos");
+	if (!logosObj) return;
+	auto numLogos = jGetObjectArrayLength(logosObj);
+	for (int i = 0; i < numLogos; ++i) {
+		auto name = jstrIndex(logosObj, i);
+		if (name) config->logos.emplace_back(name);
 	}
-	config->debug.interactions = jbool(debugObj, "interactions");
-	config->debug.mapExits = jbool(debugObj, "mapExits");
-	auto debugLogLevelChar = jstr(debugObj, "logLevel");
-	if (!debugLogLevelChar)
-		config->debug.debugLevel = sgLogLevelError;
-	else {
-		auto debugLevelString = string_view(debugLogLevelChar);
-		if (debugLevelString.starts_with('e'))
-			config->debug.debugLevel = sgLogLevelError;
-		if (debugLevelString.starts_with('w'))
-			config->debug.debugLevel = sgLogLevelWarn;
-		else if (debugLevelString.starts_with('d'))
-			config->debug.debugLevel = sgLogLevelDebug;
-		else if (debugLevelString.starts_with('i'))
-			config->debug.debugLevel = sgLogLevelInfo;
+#ifdef NDEBUG
+	// If release and if no logos, add supergoongameslogo Release build (typically)
+	if (numLogos == 0) {
+		config->logos.emplace_back("supergoongameslogo");
 	}
+#endif
 }
 
 static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObject) {
@@ -109,6 +108,8 @@ static void loadSceneSettingsToConfig(gameConfig* config, json_object* rootObjec
 		config->scene.scenes.back().MapName = jstr(currentSceneObj, "MapName");
 		config->scene.scenes.back().UIName = jstr(currentSceneObj, "UIName");
 		config->scene.scenes.back().BGMVolume = jfloat(currentSceneObj, "BGMVolume");
+		auto displayName = jstr(currentSceneObj, "DisplayName");
+		config->scene.scenes.back().DisplayName = displayName ? displayName : "";
 	}
 }
 
@@ -117,14 +118,13 @@ void GameConfig::LoadGameConfig(const std::string& configFileName) {
 	size_t sz;
 	Engine::Json::GetJsonBufferFromDirectory("gameConfig", &buf, &sz);
 	auto root = jGetObjectFromBuffer(buf, sz);
-	// auto root = jGetObjectFromFile(configFileName.c_str());
 	if (!root) {
 		sgLogCritical("Error reading game config file!");
 	}
 	loadAudioSettingsToConfig(&_config, root);
 	loadWindowSettingsToConfig(&_config, root);
-	loadDebugSettingsToConfig(&_config, root);
 	loadSceneSettingsToConfig(&_config, root);
+	loadLogosToConfig(&_config, root);
 	jReleaseObjectFromFile(root);
 	_config.PreloadTextures = preloadTextures_;
 }

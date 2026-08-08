@@ -26,6 +26,9 @@
 #include <gameobject/GameObject.hpp>
 #include <string>
 #include <systems/GameObjectSystem.hpp>
+#include <systems/MenuSystem.hpp>
+#include <systems/PauseSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
@@ -106,7 +109,6 @@ void initializeEngine(const std::string& configFilename, void (*initializefunc)(
 	ShaderSetDirectory(directory_);
 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 	auto& gameConfig = GameConfig::GetGameConfig();
-	sgSetLogLevel(gameConfig.debug.debugLevel);
 	SetWindowOptions(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title.c_str());
 	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
 }
@@ -125,7 +127,9 @@ void startEngine() {
 	for (auto& system : systems_) {
 		if (system.Start) system.Start();
 	}
-	Engine::LoadScene("", 0.1f, 1.75, false);
+	if (gameConfig.logos.empty()) {
+		Engine::LoadScene("", 0.1f, 1.75, false);
+	}
 	Engine::DebugUI::Start();
 }
 
@@ -134,6 +138,11 @@ void update() {
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
 	if (!handleMapLoad()) return;
 	for (auto& system : systems_) {
+		if (GameState::Paused && system.Update != PlayerControllerSystem::Update &&
+			system.Update != PauseSystem::Update &&
+			system.Update != MenuSystem::Update) {
+			continue;
+		}
 		system.Update();
 	}
 }
@@ -312,16 +321,16 @@ void loadAllMaps() {
 		sceneData_.SceneToLoad = &scene;
 		auto name = scene.MapName + ".tmj";
 		auto result = GetDataFromDirectory(name.c_str(), &buf, &sz, directory_);
-		if(!result){
+		if (!result) {
 			sgLogDebug("Could not preload map file %s", name.c_str());
 			continue;
 		}
-		LoadMapFromBuffer(scene.MapName.c_str(), buf, sz);
+		CacheMapFromBuffer(scene.MapName.c_str(), buf, sz);
 		loadUI();
 		loadDialog();
 	}
 	BattleSystem::InitializeBattleSystem();
-	loadEnd();
+	// loadEnd();
 	// Load all textures
 	ResetCameraFollow();
 }
@@ -367,12 +376,14 @@ void loadSceneInternal() {
 	LoadMapFromBuffer(sceneData_.NextScene.c_str(), buf, sz);
 }
 
-void playBGMInternal(const string& name, float volume) {
+const int kLoopEndless_ = -1;
+
+void playBGMInternal(const string& name, float volume, int loops = kLoopEndless_) {
 	auto fullPath = std::format("{}.ogg", name);
 	char* buf;
 	size_t sz;
 	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, directory_);
-	LoadBgmBuffer(fullPath.c_str(), volume, -1, buf, sz);
+	LoadBgmBuffer(fullPath.c_str(), volume, loops, buf, sz);
 	PlayBgm();
 }
 }  // namespace
@@ -424,6 +435,7 @@ void Engine::Sprites::SetSpriteVisible(Sprite* sprite, bool visible) {
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
 	if (currentLoadingState_ != CurrentSceneLoadingState::NotLoading) return;
+	GameState::Paused = false;
 	auto newName = name;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	if (newName.empty()) {
@@ -437,14 +449,14 @@ void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, 
 	sceneData_.NextScene = newName;
 }
 
-void Engine::Audio::PlayBGM(const std::string& name, float volume) {
+void Engine::Audio::PlayBGM(const std::string& name, float volume, int loops) {
 	if (currentBGM_ == name) {
 		sgLogDebug("Backing out, not playing bgm %s", name.c_str());
 		return;
 	}
 	sgLogDebug("Playin, bgm %s", name.c_str());
 	SetBgmTrack(0);
-	playBGMInternal(name, volume);
+	playBGMInternal(name, volume, loops);
 	currentBGM_ = name;
 }
 
@@ -464,6 +476,12 @@ void Engine::Audio::PlaySFXBuffer(const string& name, float volume) {
 
 void Engine::Audio::SetGlobalBGMVolume(float volume) {
 	SetGlobalBgmVolume(volume);
+}
+
+void Engine::Audio::StopBGM() {
+	SetBgmTrack(0);
+	StopBgm();
+	currentBGM_ = "";
 }
 
 void Engine::Audio::StopBGMBackground() {

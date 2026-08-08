@@ -23,6 +23,7 @@ class SpriteAnimator {
 	void UpdateAnimatorSpeed(float speed);
 	// Adds to the playing queue
 	void AddAnimationToQueue(const std::string& animName, bool clearCurrentQueue = false);
+	float GetAnimationDuration(const std::string& animName) const;
 
    private:
 	std::shared_ptr<AnimationData> _animationData;

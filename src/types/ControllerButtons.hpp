@@ -1,3 +1,4 @@
+#pragma once
 namespace Etf {
 enum class ControllerButtons {
 	Up,
@@ -13,6 +14,7 @@ enum class ControllerButtons {
 	Start,
 	Select,
 	Guide,
+	Y,
 	NUM_GAME_BUTTONS,
 };
 

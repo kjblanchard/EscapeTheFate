@@ -20,9 +20,9 @@
 - Cross platform cmake
 - Package with cmake for installing on desktops
 - C/Cpp practice
-- Learn OpenGL
-- Better with vim
-- Release a game on steam
+- Learn OpenGL, or at least fake it until you make it
+- Better with vim for full IDE
+- Release a game on steam instead of remaking the same thing every year :)
 
 ## Installation
 
@@ -62,3 +62,7 @@ to discuss what you would like to change.
 - [ImGUI](https://github.com/ocornut/imgui) : Debug logging
 - [Gamepad icons](https://greatdocbrown.itch.io/gamepad-ui)
 - [Exe Icon](https://images.hdqwalls.com/download/fantasy-floating-islands-under-sunset-sky-hl-1366x768.jpg)
+- [Heal SFX](https://freesound.org/people/colorsCrimsonTears/sounds/562292/)
+    by colorsCrimsonTears
+- [Game Over SFX](https://freesound.org/people/melokacool/sounds/615457/)
+
