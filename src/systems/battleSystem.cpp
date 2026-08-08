@@ -110,6 +110,8 @@ static void loadBattleDB() {
 		battlerDatabase_.back().IdleAnimation = jstr(currentJsonObject, "idle");
 		auto portraitStr = jstr(currentJsonObject, "portrait");
 		battlerDatabase_.back().Portrait = portraitStr ? portraitStr : "";
+		auto nick = jstr(currentJsonObject, "nick");
+		battlerDatabase_.back().Nick = nick ? nick : "";
 		auto portraitRectObj = jobj(currentJsonObject, "portraitRect");
 		if (portraitRectObj) {
 			battlerDatabase_.back().PortraitRect = Engine::Json::GetRectFromObject(currentJsonObject, "portraitRect");

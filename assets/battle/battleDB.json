@@ -1,7 +1,7 @@
 [
     {
         "id": 0,
-        "name": "Kevin",
+        "name": "Warrior",
         "hp": 12,
         "str": 5,
         "mag": 5,
@@ -27,7 +27,7 @@
     },
     {
         "id": 1,
-        "name": "Black Bird",
+        "name": "Dirtpecker",
         "hp": 2,
         "str": 5,
         "mag": 5,
@@ -56,7 +56,7 @@
     },
     {
         "id": 2,
-        "name": "Aria",
+        "name": "Red Mage",
         "hp": 8,
         "str": 4,
         "mag": 7,
@@ -82,7 +82,7 @@
     },
     {
         "id": 3,
-        "name": "Rook",
+        "name": "Gunblade",
         "hp": 10,
         "str": 6,
         "mag": 3,
@@ -105,5 +105,62 @@
         "animOffsetX": -5,
         "animOffsetY": 0,
         "idle": "idle1"
+    },
+    {
+        "id": 4,
+        "name": "Hookah Plant",
+        "hp": 3,
+        "str": 5,
+        "mag": 5,
+        "def": 5,
+        "mdef": 3,
+        "spd": 1,
+        "pow": 100,
+        "maxAP": 2,
+        "xpReward": 25,
+        "currentXP": 0,
+        "xpToNextLevel": 0,
+        "itemDrops": [
+            { "name": "Herb", "percent": 25 },
+            { "name": "Red Herb", "percent": 15 }
+        ],
+        "abilities": [3],
+        "ai": "basic",
+        "sprite": "plant1",
+        "portrait": "",
+        "rect": { "x": -5, "y": -15, "w": 60, "h": 64 },
+        "hpBarOffsetX": -5,
+        "hpBarOffsetY": -15,
+        "animOffsetX": 5,
+        "animOffsetY": 10,
+        "idle": "1"
+    },{
+        "id": 5,
+        "name": "Spidy Boi",
+        "hp": 3,
+        "str": 5,
+        "mag": 5,
+        "def": 5,
+        "mdef": 3,
+        "spd": 1,
+        "pow": 100,
+        "maxAP": 2,
+        "xpReward": 25,
+        "currentXP": 0,
+        "xpToNextLevel": 0,
+        "itemDrops": [
+            { "name": "Silk", "percent": 25 },
+            { "name": "Antenna", "percent": 15 }
+        ],
+        "abilities": [1,2, 3],
+        "ai": "basic",
+        "sprite": "spider1",
+        "portrait": "",
+        "rect": { "x": -5, "y": -15, "w": 60, "h": 64 },
+        "hpBarOffsetX": -5,
+        "hpBarOffsetY": -15,
+        "animOffsetX": 5,
+        "animOffsetY": 10,
+        "idle": "1"
     }
 ]

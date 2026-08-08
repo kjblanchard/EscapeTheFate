@@ -18,6 +18,7 @@ using namespace std;
 struct CharacterEntry {
 	int Id;
 	string Name;
+	string Nick;
 	string Description;
 	string OverworldSprite;
 	string BattleSprite;
@@ -61,6 +62,7 @@ void loadCharacterData() {
 		c.OverworldSprite = jstr(entry, "overworldSprite");
 		c.BattleSprite = jstr(entry, "battleSprite");
 		c.Portrait = jstr(entry, "portrait");
+		c.Nick = jstr(entry, "nick");
 		c.PortraitRect = Engine::Json::GetRectFromObject(entry, "portraitRect");
 		auto idle = jstr(entry, "idle");
 		c.IdleAnim = idle ? idle : "idle1";
