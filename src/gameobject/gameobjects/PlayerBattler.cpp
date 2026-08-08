@@ -27,6 +27,7 @@ bool PlayerBattler::shouldBattleEnd() {
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controller(args.Controller), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
 	_battlerUI->UpdateAP(to_string(_currentAP));
+	_battlerUI->UpdateName(_battlerData->Nick);
 }
 
 void PlayerBattler::onAPGained() {

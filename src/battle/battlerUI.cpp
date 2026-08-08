@@ -87,6 +87,9 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 			if (_finger) _finger->UpdateDrawColor(p2Color);
 			if (_targetSelectionFinger) _targetSelectionFinger->UpdateDrawColor(p2Color);
 		}
+		auto nameText = format("P{}NameText", to_string(battlerNum + 1));
+		auto thing = UI::GetRootUIObject()->GetChildByName(nameText);
+		_nameObject = static_cast<UIText*>(thing);
 
 		auto hpName = format("P{}Health", to_string(battlerNum + 1));
 		auto hpObject = UI::GetRootUIObject()->GetChildByName(hpName);
@@ -239,6 +242,11 @@ void BattlerUI::HideMagicDescription() {
 void BattlerUI::UpdateHP(const string& hp) {
 	if (!_hpObject) return;
 	_hpObject->UpdateText(hp);
+}
+
+void BattlerUI::UpdateName(const std::string& name) {
+	if (!_nameObject) return;
+	_nameObject->UpdateText(name);
 }
 
 void BattlerUI::UpdateAP(const string& ap) {

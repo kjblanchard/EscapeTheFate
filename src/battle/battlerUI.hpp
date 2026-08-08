@@ -19,6 +19,7 @@ class BattlerUI {
    public:
 	BattlerUI(unsigned int battlerNum);
 	~BattlerUI();
+	void UpdateName(const std::string& name);
 	void UpdateHP(const std::string& hp);
 	void UpdateAP(const std::string& ap);
 	void UpdateProgressBar(float percent);
@@ -69,6 +70,7 @@ class BattlerUI {
 	int _magicMenuCols = 2;
 	UIImage* _magicFinger = nullptr;
 	UIText* _hpObject;
+	UIText* _nameObject = nullptr;
 	UIText* _apObject = nullptr;
 	UIImage* _finger;
 	UIImage* _targetSelectionFinger;
