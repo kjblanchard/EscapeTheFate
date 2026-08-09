@@ -117,7 +117,7 @@ static void buildUI() {
 	titleArgs.FontName = "PressStart2P";
 	titleArgs.FontSize = 8;
 	titleArgs.Rect = {10, 8, BACKDROP_W - 20, 16};
-	titleArgs.TextToDraw = "BATTLE SPOILS";
+	titleArgs.TextToDraw = "Victory!";
 	titleArgs.Name = "SpoilsTitleText";
 	titleArgs.NumCharsToDraw = 100;
 	titleArgs.Priority = 1;

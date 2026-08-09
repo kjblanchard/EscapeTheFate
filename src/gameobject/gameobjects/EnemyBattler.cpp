@@ -36,8 +36,8 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	constexpr float kPanelW = kBarWidth + kPadding;
 	constexpr float kPanelH = kBarHeight * 2 + kPadding;
 
-	float panelX = X() + (SpriteWidth() / 2) - (kPanelW / 2) + _battlerData->HpBarOffsetX;
-	float panelY = Y() + SpriteHeight() + _battlerData->HpBarOffsetY;
+	float panelX = (int)(X() + (SpriteWidth() / 2) - (kPanelW / 2) + _battlerData->HpBarOffsetX);
+	float panelY = (int)(Y() + SpriteHeight() + _battlerData->HpBarOffsetY);
 
 	UIPanelArgs panelArgs;
 	panelArgs.Name = "EnemyBarPanel";

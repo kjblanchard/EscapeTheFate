@@ -39,11 +39,7 @@ float elapsed_ = 0.0f;
 uint8_t currentAlpha_ = 0;
 bool active_ = false;
 
-void advanceToNextLogo() {
-	++currentLogoIndex_;
-	if (currentLogoIndex_ >= (int)logos_.size()) {
-		state_ = SplashState::Done;
-		active_ = false;
+void enableTitleScreen(){
 		//Hack to try and hide the UI, need to fix this in a //TODO
 		auto niner = UI::GetRootUIObject()->GetChildByName("TitleNineSlice");
 		auto ninertwo = UI::GetRootUIObject()->GetChildByName("MenuNineSlice");
@@ -53,7 +49,16 @@ void advanceToNextLogo() {
 		niner->SetVisible(true);
 		ninertwo->SetVisible(true);
 		//end hack
+
+}
+
+void advanceToNextLogo() {
+	++currentLogoIndex_;
+	if (currentLogoIndex_ >= (int)logos_.size()) {
+		state_ = SplashState::Done;
+		active_ = false;
 		Engine::LoadScene("", 0.1f, 1.75f, false);
+		enableTitleScreen();
 		return;
 	}
 	state_ = SplashState::FadingIn;
@@ -66,6 +71,7 @@ void advanceToNextLogo() {
 void SplashSystem::Start() {
 	auto& config = GameConfig::GetGameConfig();
 	if (config.logos.empty()) {
+		enableTitleScreen();
 		state_ = SplashState::Done;
 		return;
 	}

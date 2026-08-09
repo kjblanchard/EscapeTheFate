@@ -15,6 +15,7 @@ struct BattlerData {
 	RectangleF PortraitRect = {0, 0, 48, 48};
 	int HP, Str, Mag, Def, MDef, Spd, Pow;
 	int MaxAP = 3;
+	int DamageOffsetY = 0, DamageOffsetX = 0;
 	int HpBarOffsetX = 0, HpBarOffsetY = 0;
 	int AnimOffsetX = 0, AnimOffsetY = 0;
 	int XPReward = 0;

@@ -116,6 +116,8 @@ static void loadBattleDB() {
 		if (portraitRectObj) {
 			battlerDatabase_.back().PortraitRect = Engine::Json::GetRectFromObject(currentJsonObject, "portraitRect");
 		}
+		battlerDatabase_.back().DamageOffsetX = jint(currentJsonObject, "damageOffsetX");
+		battlerDatabase_.back().DamageOffsetY = jint(currentJsonObject, "damageOffsetY");
 		battlerDatabase_.back().HpBarOffsetX = jint(currentJsonObject, "hpBarOffsetX");
 		battlerDatabase_.back().HpBarOffsetY = jint(currentJsonObject, "hpBarOffsetY");
 		battlerDatabase_.back().AnimOffsetX = jint(currentJsonObject, "animOffsetX");

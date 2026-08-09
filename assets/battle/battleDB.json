@@ -131,11 +131,12 @@
         "ai": "basic",
         "sprite": "plant1",
         "portrait": "",
-        "rect": { "x": -5, "y": -15, "w": 60, "h": 64 },
+        "rect": { "x": -5, "y": -20, "w": 60, "h": 64 },
+        "damageOffsetY": 30,
         "hpBarOffsetX": -5,
-        "hpBarOffsetY": -15,
+        "hpBarOffsetY": -10,
         "animOffsetX": 5,
-        "animOffsetY": 10,
+        "animOffsetY": 20,
         "idle": "1"
     },{
         "id": 5,
@@ -159,11 +160,12 @@
         "ai": "basic",
         "sprite": "spider1",
         "portrait": "",
-        "rect": { "x": -5, "y": -15, "w": 60, "h": 64 },
+        "rect": { "x": -5, "y": -20, "w": 60, "h": 64 },
+        "damageOffsetY": 30,
         "hpBarOffsetX": -5,
-        "hpBarOffsetY": -15,
+        "hpBarOffsetY": -10,
         "animOffsetX": 5,
-        "animOffsetY": 10,
+        "animOffsetY": 20,
         "idle": "1"
     }
 ]

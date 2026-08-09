@@ -40,7 +40,7 @@ float Battler::SpriteHeight() {
 
 void Battler::TakeDamage(int damage) {
 	_currentHP -= damage;
-	_damageNumberPool.Show(damage, SpriteX() + SpriteWidth() / 2.0f, SpriteY() - 4.0f, false);
+	_damageNumberPool.Show(damage, (SpriteX() + SpriteWidth() / 2.0f) + _battlerData->DamageOffsetX, (SpriteY() - 4.0f) + _battlerData->DamageOffsetY, false);
 	takeDamageImpl(damage);
 }
 
