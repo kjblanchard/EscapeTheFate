@@ -135,7 +135,7 @@ jobs:
           fi
         shell: bash
       - name: Actual build
-        run: cd repo && make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
+        run: cd repo && make BUILD_TYPE=Release STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
       - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
