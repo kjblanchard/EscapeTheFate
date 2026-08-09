@@ -58,6 +58,7 @@ void LocalPlayer::Create(TiledObject* objData) {
 	SetCameraFollowTarget(p1->GetXHandle(), p1->GetYHandle());
 	GameState::NextLoadLocation.X = p1->X();
 	GameState::NextLoadLocation.Y = p1->Y();
+	GameState::NextLoadDirection = (int)p1->Direction_;
 	AddGameObjectToGameObjectSystem(p1);
 
 	if (GameState::IsMultiplayer) {
@@ -76,11 +77,6 @@ void LocalPlayer::Create(TiledObject* objData) {
 		GameState::NextLoadLocation2.X = p2->X();
 		GameState::NextLoadLocation2.Y = p2->Y();
 		AddGameObjectToGameObjectSystem(p2);
-	}
-
-	if (GameState::Battle::ExitingFromBattle) {
-		GameState::NextLoadLocation = {0, 0};
-		GameState::NextLoadLocation2 = {0, 0};
 	}
 }
 
