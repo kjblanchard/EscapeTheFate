@@ -9,6 +9,7 @@
 #include <Supergoon/filesystem.h>
 #include <Supergoon/json.h>
 #include <Supergoon/map.h>
+#include <Supergoon/services.h>
 #include <Supergoon/sprite.h>
 #include <Supergoon/state.h>
 #include <Supergoon/text.h>

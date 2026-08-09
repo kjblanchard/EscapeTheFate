@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(GAME_VERSION "0.1.0" CACHE STRING "Game version string")
+set(STEAM_APP_ID 4393160)
 project("Escape The Fate" LANGUAGES C CXX VERSION ${GAME_VERSION})
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
@@ -16,6 +17,7 @@ option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug 
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
+option(STEAM_ENABLED "Does this use steam as a platform?" OFF)
 include(FetchContent)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/Debug)
@@ -222,6 +224,15 @@ if(EMSCRIPTEN)
       CACHE STRING "Icon path")
     # target_link_options(EscapeTheFate PRIVATE "")
 endif(EMSCRIPTEN)
+
+if(STEAM_ENABLED)
+    add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different
+            "${STEAM_RUNTIME_FILES}"
+            "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/libsteam_api.dylib"
+
+        COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}" > "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt" COMMAND_EXPAND_LISTS)
+endif()
 
 ###### Packaging
 set(CPACK_PACKAGE_NAME "EscapeTheFate")
