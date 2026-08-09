@@ -96,7 +96,7 @@ void EnemyBattler::getPlayerBattlers(std::vector<Battler*>& out) {
 
 void EnemyBattler::getEnemyAllies(std::vector<Battler*>& out) {
 	auto& all = BattleSystem::GetEnemyBattlers();
-	copy_if(all.begin(), all.end(), back_inserter(out), [this](Battler* b) {
+	copy_if(all.begin(), all.end(), back_inserter(out), [](Battler* b) {
 		return b && !b->IsPlayer() && b->CurrentHP() > 0;
 	});
 }

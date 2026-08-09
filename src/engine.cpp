@@ -331,8 +331,6 @@ void loadAllMaps() {
 		loadDialog();
 	}
 	BattleSystem::InitializeBattleSystem();
-	// loadEnd();
-	// Load all textures
 	ResetCameraFollow();
 }
 
