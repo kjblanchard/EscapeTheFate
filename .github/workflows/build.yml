@@ -211,7 +211,7 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ADDITIONAL_OPTIONS="-DSTEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin" ${{ matrix.make_cmd }}
+        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
         shell: bash
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
