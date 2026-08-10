@@ -156,4 +156,9 @@ ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
 	@$(SGFORGE) $(ALL_FILES_STRING) -o etf.sg
 
+steam:
+	@./steamcmd +login enf3rno +quit
+	@base64 -i ~/Library/Application\ Support/Steam/config/config.vdf
+
+
 
