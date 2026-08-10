@@ -8,8 +8,8 @@
 
   "depots"
   {
-    "DEPOT_ID_WINDOWS" "depot_windows.vdf"
-    "DEPOT_ID_MACOS" "depot_macos.vdf"
-    "DEPOT_ID_LINUX" "depot_linux.vdf"
+    "4393164" "depot_windows.vdf"
+    "4393162" "depot_macos.vdf"
+    "4393163" "depot_linux.vdf"
   }
 }
