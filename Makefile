@@ -26,13 +26,16 @@ SGFORGE ?= sgforge
 UNAME_S := $(shell uname -s 2>/dev/null)
 ifeq ($(UNAME_S),Darwin)
 REBUILD := mrebuild
+STEAM_REBUILD := msteamrebuild
 # Run from the executable, cause it shows proper debug info
 RUN_CMD := ./build/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
 else ifeq ($(UNAME_S),Linux)
 REBUILD := lrebuild
+STEAM_REBUILD := bsteamrebuild
 RUN_CMD := ./build/$(EXECUTABLE_NAME)
 else
 REBUILD := lrebuild
+STEAM_REBUILD := bsteamrebuild
 endif
 
 .PHONY: all
@@ -45,7 +48,7 @@ configure:
 build:
 	@$(BUILD_COMMAND) $(ADDITIONAL_BUILD_COMMANDS)
 install:
-	@cmake --install $(BUILD_DIR) --config $(BUILD_TYPE)
+	@cmake --install $(BUILD_DIR) --config $(BUILD_TYPE) --prefix $(BUILD_DIR)/install
 run:
 	@$(RUN_CMD)
 
@@ -68,6 +71,16 @@ brebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF clean configure build package
 wrebuild:
 	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF configure build package
+steamrebuild:
+	@$(MAKE) $(STEAM_REBUILD)
+msteamrebuild:
+	@$(MAKE) CMAKE_GENERATOR=$(DEFAULT_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF STEAM_ENABLED=ON STEAM_APPID_FILE=OFF clean configure build install
+xsteamrebuild:
+	@$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF STEAM_ENABLED=ON STEAM_APPID_FILE=OFF clean configure build install
+wsteamrebuild:
+	$(MAKE) CMAKE_GENERATOR=$(WINDOWS_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF STEAM_ENABLED=ON STEAM_APPID_FILE=OFF configure build install
+bsteamrebuild:
+	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF STEAM_ENABLED=ON STEAM_APPID_FILE=OFF clean configure build install
 erebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) IMGUI_DEBUGGING=OFF CONFIGURE_COMMAND=$(EMSCRIPTEN_CONFIGURE_COMMAND) SYSTEM_PACKAGES=OFF clean configure build
 irebuild:

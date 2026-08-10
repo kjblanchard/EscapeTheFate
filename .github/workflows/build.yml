@@ -157,17 +157,14 @@ jobs:
       matrix:
         include:
           - os: windows-2025
-            make_cmd: wrebuild
+            make_cmd: wsteamrebuild
             name: steam-win
-            sdk_platform: win64
           - os: macos-latest
-            make_cmd: xrebuild
+            make_cmd: xsteamrebuild
             name: steam-mac
-            sdk_platform: osx
           - os: ubuntu-latest
-            make_cmd: brebuild
+            make_cmd: bsteamrebuild
             name: steam-linux
-            sdk_platform: linux64
     runs-on: ${{ matrix.os }}
     environment: prod
     steps:
@@ -197,10 +194,6 @@ jobs:
         run: |
           sudo apt update -y
           sudo apt-get install build-essential git make pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev libxtst-dev
-      - name: Install dependencies (Windows only)
-        if: ${{ matrix.os == 'windows-2025' }}
-        run: |
-          choco install nsis -y
       - name: Set version from tag
         id: version
         run: |
@@ -211,16 +204,13 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin STEAM_APPID_FILE=OFF ${{ matrix.make_cmd }}
-        shell: bash
-      - name: Install to staging directory
-        run: cmake --install build --config Release --prefix stage
+        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
         shell: bash
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.name }}-packages
-          path: stage/
+          path: build/install/
    Upload-Steam:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: Build-Steam
