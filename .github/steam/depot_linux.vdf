@@ -1,0 +1,11 @@
+"DepotBuildConfig"
+{
+  "DepotID" "DEPOT_ID_LINUX"
+  "contentroot" "../../steam-builds/"
+  "FileMapping"
+  {
+    "LocalPath" "*.tar.gz"
+    "DepotPath" "."
+    "recursive" "0"
+  }
+}

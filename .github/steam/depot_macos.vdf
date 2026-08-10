@@ -1,0 +1,11 @@
+"DepotBuildConfig"
+{
+  "DepotID" "DEPOT_ID_MACOS"
+  "contentroot" "../../steam-builds/"
+  "FileMapping"
+  {
+    "LocalPath" "*.dmg"
+    "DepotPath" "."
+    "recursive" "0"
+  }
+}

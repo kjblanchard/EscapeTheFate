@@ -226,12 +226,31 @@ if(EMSCRIPTEN)
 endif(EMSCRIPTEN)
 
 if(STEAM_ENABLED)
-    add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E copy_if_different
-            "${STEAM_RUNTIME_FILES}"
-            "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/libsteam_api.dylib"
-
-        COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}" > "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt" COMMAND_EXPAND_LISTS)
+    if(APPLE)
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${STEAM_RUNTIME_FILES}"
+                "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/libsteam_api.dylib"
+            COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
+                > "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt"
+            COMMAND_EXPAND_LISTS)
+    elseif(WIN32)
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${STEAM_RUNTIME_FILES}"
+                "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_api64.dll"
+            COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
+                > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+            COMMAND_EXPAND_LISTS)
+    else()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${STEAM_RUNTIME_FILES}"
+                "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/libsteam_api.so"
+            COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
+                > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+            COMMAND_EXPAND_LISTS)
+    endif()
 endif()
 
 ###### Packaging
