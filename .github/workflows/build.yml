@@ -189,8 +189,8 @@ jobs:
       - name: Download Steam SDK redistributables
         run: |
           aws s3 cp s3://etf-dev-external-site/steam-sdk/redistributable_bin.zip redistributable_bin.zip
-          mkdir -p SupergoonEngine/dist
-          unzip redistributable_bin.zip -d SupergoonEngine/dist/
+          mkdir -p steam-sdk
+          unzip redistributable_bin.zip -d steam-sdk/
         shell: bash
       - name: Install dependencies (Ubuntu only)
         if: ${{ matrix.os == 'ubuntu-latest' }}
@@ -211,7 +211,7 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd }}
+        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ADDITIONAL_OPTIONS="-DSTEAM_SDK_DIR=${{ github.workspace }}/steam-sdk/redistributable_bin" ${{ matrix.make_cmd }}
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
         with:
