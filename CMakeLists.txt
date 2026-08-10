@@ -18,6 +18,7 @@ option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
 option(STEAM_ENABLED "Does this use steam as a platform?" OFF)
+option(STEAM_APPID_FILE "Write steam_appid.txt next to binary (dev only)" ON)
 include(FetchContent)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/Debug)
@@ -227,28 +228,49 @@ endif(EMSCRIPTEN)
 
 if(STEAM_ENABLED)
     if(APPLE)
-        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+        set(_STEAM_COPY_CMDS
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 "${STEAM_RUNTIME_FILES}"
                 "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/libsteam_api.dylib"
-            COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
-                > "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt"
+        )
+        if(STEAM_APPID_FILE)
+            list(APPEND _STEAM_COPY_CMDS
+                COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
+                    > "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt"
+            )
+        endif()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            ${_STEAM_COPY_CMDS}
             COMMAND_EXPAND_LISTS)
     elseif(WIN32)
-        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+        set(_STEAM_COPY_CMDS
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 "${STEAM_RUNTIME_FILES}"
                 "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_api64.dll"
-            COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
-                > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+        )
+        if(STEAM_APPID_FILE)
+            list(APPEND _STEAM_COPY_CMDS
+                COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
+                    > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+            )
+        endif()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            ${_STEAM_COPY_CMDS}
             COMMAND_EXPAND_LISTS)
     else()
-        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+        set(_STEAM_COPY_CMDS
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 "${STEAM_RUNTIME_FILES}"
                 "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/libsteam_api.so"
-            COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
-                > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+        )
+        if(STEAM_APPID_FILE)
+            list(APPEND _STEAM_COPY_CMDS
+                COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
+                    > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+            )
+        endif()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            ${_STEAM_COPY_CMDS}
             COMMAND_EXPAND_LISTS)
     endif()
 endif()
@@ -270,6 +292,9 @@ set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AppIcon.ico")
 set(CPACK_PACKAGE_EXECUTABLES "EscapeTheFate" "Escape the Fate")
 install(TARGETS ${EXECUTABLE_TARGET_NAME} RUNTIME DESTINATION . BUNDLE DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/etf.sg DESTINATION data)
+if(STEAM_ENABLED AND NOT APPLE)
+    install(FILES "${STEAM_RUNTIME_FILES}" DESTINATION .)
+endif()
 if(WIN32)
     set(CPACK_GENERATOR "NSIS")
 elseif(APPLE)

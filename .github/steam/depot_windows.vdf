@@ -1,12 +1,12 @@
 "DepotBuildConfig"
 {
   "DepotID" "4393164"
-  "contentroot" "../../steam-builds/"
+  "contentroot" "../../steam-builds/steam-win-packages/"
   "FileMapping"
   {
-    "LocalPath" "*.exe"
+    "LocalPath" "*"
     "DepotPath" "."
-    "recursive" "0"
+    "recursive" "1"
   }
   "FileExclusion" "*.pdb"
 }

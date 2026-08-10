@@ -1,11 +1,11 @@
 "DepotBuildConfig"
 {
   "DepotID" "4393162"
-  "contentroot" "../../steam-builds/"
+  "contentroot" "../../steam-builds/steam-mac-packages/"
   "FileMapping"
   {
-    "LocalPath" "*.dmg"
+    "LocalPath" "*"
     "DepotPath" "."
-    "recursive" "0"
+    "recursive" "1"
   }
 }

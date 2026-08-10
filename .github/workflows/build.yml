@@ -211,16 +211,16 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
+        run: make BUILD_TYPE=Release STEAM_ENABLED=ON ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin STEAM_APPID_FILE=OFF ${{ matrix.make_cmd }}
+        shell: bash
+      - name: Install to staging directory
+        run: cmake --install build --config Release --prefix stage
         shell: bash
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
         with:
           name: ${{ matrix.name }}-packages
-          path: |
-            build/packages/*.dmg
-            build/packages/*.exe
-            build/packages/*.tar.gz
+          path: stage/
    Upload-Steam:
     if: startsWith(github.ref, 'refs/tags/v')
     needs: Build-Steam
