@@ -1,6 +1,6 @@
 "DepotBuildConfig"
 {
-  "DepotID" "DEPOT_ID_LINUX"
+  "DepotID" "4393163"
   "contentroot" "../../steam-builds/"
   "FileMapping"
   {
