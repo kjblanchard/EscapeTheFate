@@ -9,4 +9,5 @@
     "recursive" "1"
   }
   "FileExclusion" "*.pdb"
+  "FileExclusion" "steam_appid.txt"
 }

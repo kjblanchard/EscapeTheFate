@@ -227,6 +227,9 @@ if(EMSCRIPTEN)
 endif(EMSCRIPTEN)
 
 if(STEAM_ENABLED)
+    if(STEAM_APPID_FILE)
+        file(WRITE "${CMAKE_BINARY_DIR}/steam_appid.txt" "${STEAM_APP_ID}\n")
+    endif()
     if(APPLE)
         set(_STEAM_COPY_CMDS
             COMMAND ${CMAKE_COMMAND} -E copy_if_different
@@ -235,8 +238,9 @@ if(STEAM_ENABLED)
         )
         if(STEAM_APPID_FILE)
             list(APPEND _STEAM_COPY_CMDS
-                COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
-                    > "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${CMAKE_BINARY_DIR}/steam_appid.txt"
+                    "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt"
             )
         endif()
         add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
@@ -250,8 +254,9 @@ if(STEAM_ENABLED)
         )
         if(STEAM_APPID_FILE)
             list(APPEND _STEAM_COPY_CMDS
-                COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
-                    > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${CMAKE_BINARY_DIR}/steam_appid.txt"
+                    "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
             )
         endif()
         add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
@@ -265,8 +270,9 @@ if(STEAM_ENABLED)
         )
         if(STEAM_APPID_FILE)
             list(APPEND _STEAM_COPY_CMDS
-                COMMAND ${CMAKE_COMMAND} -E echo "${STEAM_APP_ID}"
-                    > "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${CMAKE_BINARY_DIR}/steam_appid.txt"
+                    "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
             )
         endif()
         add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD

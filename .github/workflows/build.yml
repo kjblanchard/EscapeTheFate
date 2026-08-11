@@ -264,7 +264,7 @@ jobs:
       - name: Download Build Artifacts
         uses: actions/download-artifact@v7
         with:
-          pattern: "*-packages"
+          pattern: "!(steam-*)-packages"
           path: artifacts
           merge-multiple: true
       - name: Debug downloaded artifacts
