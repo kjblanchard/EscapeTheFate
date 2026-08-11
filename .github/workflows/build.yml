@@ -224,7 +224,6 @@ jobs:
         with:
           pattern: "steam-*-packages"
           path: steam-builds
-          merge-multiple: true
       - name: Debug downloaded artifacts
         run: |
           find steam-builds -type f
