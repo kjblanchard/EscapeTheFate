@@ -4,15 +4,12 @@
   "desc" "Escape The Fate automated build"
   "buildoutput" "../output/"
   "contentroot" ""
-  "setlive" ""
+  "setlive" "default"
 
   "depots"
   {
     "4393164" "depot_windows.vdf"
     "4393162" "depot_macos.vdf"
     "4393163" "depot_linux.vdf"
-    "4393166" "depot_windows_debug.vdf"
-    "4393165" "depot_macos_debug.vdf"
-    "4393167" "depot_linux_debug.vdf"
   }
 }
