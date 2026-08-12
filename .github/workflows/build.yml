@@ -80,7 +80,7 @@ jobs:
           fi
         shell: bash
       - name: Configure CMake
-        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=OFF STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd}}
+        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=OFF STEAM_ENABLED=OFF SYSTEM_PACKAGES=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd}}
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -135,7 +135,7 @@ jobs:
           fi
         shell: bash
       - name: Actual build
-        run: cd repo && make BUILD_TYPE=Release IMGUI_DEBUGGING=OFF STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
+        run: cd repo && make BUILD_TYPE=Release IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
       - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
@@ -219,7 +219,7 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=${{ matrix.imgui }} ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
+        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=${{ matrix.imgui }} ENGINE_CACHED=OFF SYSTEM_PACKAGES=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
         shell: bash
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
