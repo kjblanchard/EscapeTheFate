@@ -2,8 +2,8 @@
     {
         "id": 0,
         "encounterTime": 2.5,
-        "groups": [0, 1, 2],
-        "maps": ["forest1"]
+        "groups": [0, 1, 2, 5, 6, 7],
+        "maps": ["forest1", "forest2"]
     },
     {
         "id": 1,

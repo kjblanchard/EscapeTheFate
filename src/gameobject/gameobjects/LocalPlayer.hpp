@@ -40,13 +40,13 @@ class LocalPlayer : public GameObject {
 
    private:
 	static std::vector<std::unique_ptr<LocalPlayer>> Players_;
-	LocalPlayer(TiledObject* objData, const std::shared_ptr<PlayerController>& player);
+	LocalPlayer(TiledObject* objData, const std::shared_ptr<PlayerController>& player, int playerIndex,
+				const std::string& spriteName, int frameW, int frameH);
+	int PlayerIndex_ = 0;
 	Sprite* Sprite_;
 	Sprite* InteractionSprite_;
 	Direction Direction_ = Direction::South;
 	std::unique_ptr<SpriteAnimator> Animator_;
-	// bool DoNotDestroy_ = false;
-	// int Width_, Height_;
 	RectangleF CollisionRect_ = {};
 	RectangleF InteractionRect_ = {};
 	IInteractable* CurrentInteractable_ = nullptr;

@@ -66,10 +66,11 @@ void SetSpriteVisible(Sprite* sprite, bool visible);
 }  // namespace Sprites
 
 namespace Audio {
-void PlayBGM(const std::string& name, float volume = 1.0f);
+void PlayBGM(const std::string& name, float volume = 1.0f, int loops = -1);
 void PlayBGMBackground(const std::string& name, float volume = 1.0f);
 void PlaySFXBuffer(const std::string& name, float volume);
 void SetGlobalBGMVolume(float volume);
+void StopBGM();
 void StopBGMBackground();
 }  // namespace Audio
    //

@@ -70,8 +70,17 @@ jobs:
         if: ${{ matrix.os == 'windows-2025' }}
         run: |
           choco install nsis -y
+      - name: Set version from tag
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=0.2.0" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
       - name: Configure CMake
-        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF ${{ matrix.make_cmd}}
+        run: make BUILD_TYPE=Release STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd}}
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -116,8 +125,17 @@ jobs:
       - name: Build dependencies
         run: |
           embuilder build sdl3 freetype ogg libpng vorbis
+      - name: Set version from tag
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=0.2.0" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
       - name: Actual build
-        run: cd repo && make BUILD_TYPE=Release ENGINE_CACHED=OFF erebuild
+        run: cd repo && make BUILD_TYPE=Release STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
       - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
@@ -132,6 +150,106 @@ jobs:
       IAM_USER: ${{ vars.IAM_USER }}
       bucket_region: "us-east-1"
       bucket_name: "etf-dev-external-site"
+   Build-Steam:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: pack-assets
+    strategy:
+      matrix:
+        include:
+          - os: windows-2025
+            make_cmd: wsteamrebuild
+            name: steam-win
+          - os: macos-latest
+            make_cmd: xsteamrebuild
+            name: steam-mac
+          - os: ubuntu-latest
+            make_cmd: bsteamrebuild
+            name: steam-linux
+    runs-on: ${{ matrix.os }}
+    environment: prod
+    steps:
+      - name: Checkout ETF repo
+        uses: actions/checkout@v7
+        with:
+          submodules: recursive
+      - name: Download packed assets
+        uses: actions/download-artifact@v7
+        with:
+          name: etf-assets
+          path: .
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          aws-access-key-id: ${{ vars.IAM_USER }}
+          aws-secret-access-key: ${{ secrets.IAM_SECRET }}
+          aws-region: us-east-1
+      - name: Download Steam SDK redistributables
+        run: |
+          aws s3 cp s3://etf-dev-external-site/steam-sdk/redistributable_bin.zip redistributable_bin.zip
+          mkdir -p steam-sdk
+          unzip redistributable_bin.zip -d steam-sdk/
+        shell: bash
+      - name: Install dependencies (Ubuntu only)
+        if: ${{ matrix.os == 'ubuntu-latest' }}
+        run: |
+          sudo apt update -y
+          sudo apt-get install build-essential git make pkg-config cmake ninja-build gnome-desktop-testing libasound2-dev libpulse-dev libaudio-dev libjack-dev libsndio-dev libx11-dev libxext-dev libxrandr-dev libxcursor-dev libxfixes-dev libxi-dev libxss-dev libxkbcommon-dev libdrm-dev libgbm-dev libgl1-mesa-dev libgles2-mesa-dev libegl1-mesa-dev libdbus-1-dev libibus-1.0-dev libudev-dev fcitx-libs-dev libxtst-dev
+      - name: Set version from tag
+        id: version
+        run: |
+          if [[ "${GITHUB_REF}" == refs/tags/v* ]]; then
+            echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=0.2.0" >> "$GITHUB_OUTPUT"
+          fi
+        shell: bash
+      - name: Build with Steam enabled
+        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
+        shell: bash
+      - name: Upload Steam build artifacts
+        uses: actions/upload-artifact@v7
+        with:
+          name: ${{ matrix.name }}-packages
+          path: build/install/
+   Upload-Steam:
+    if: startsWith(github.ref, 'refs/tags/v')
+    needs: Build-Steam
+    runs-on: ubuntu-latest
+    environment: prod
+    steps:
+      - name: Checkout repo (for VDF files)
+        uses: actions/checkout@v7
+      - name: Download all Steam build artifacts
+        uses: actions/download-artifact@v7
+        with:
+          pattern: "steam-*-packages"
+          path: steam-builds
+      - name: Debug downloaded artifacts
+        run: |
+          find steam-builds -type f
+      - name: Set version from tag
+        id: version
+        run: |
+          echo "value=${GITHUB_REF#refs/tags/v}" >> "$GITHUB_OUTPUT"
+        shell: bash
+      - name: Install SteamCMD
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lib32gcc-s1
+          mkdir -p ~/steamcmd
+          curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar -xz -C ~/steamcmd
+      - name: Write Steam config.vdf
+        run: |
+          mkdir -p ~/Steam/config
+          echo "${{ secrets.STEAM_CONFIG_VDF }}" | base64 -d > ~/Steam/config/config.vdf
+      - name: Upload to Steam
+        run: |
+          ~/steamcmd/steamcmd.sh \
+            +login "${{ secrets.STEAM_USERNAME }}" \
+            +run_app_build "${{ github.workspace }}/.github/steam/app_4393160.vdf" \
+            +quit
+        env:
+          STEAM_BUILD_DESC: "v${{ steps.version.outputs.value }}"
    Create-Release:
     if: startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
@@ -143,12 +261,21 @@ jobs:
         uses: actions/checkout@v7
       - name: Fetch tags
         run: git fetch --tags --force
-      - name: Download Build Artifacts
+      - name: Download Windows artifacts
         uses: actions/download-artifact@v7
         with:
-          pattern: "*-packages"
+          name: win-packages
           path: artifacts
-          merge-multiple: true
+      - name: Download macOS artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: mac-packages
+          path: artifacts
+      - name: Download Linux artifacts
+        uses: actions/download-artifact@v7
+        with:
+          name: linux-packages
+          path: artifacts
       - name: Debug downloaded artifacts
         run: |
           pwd

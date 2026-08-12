@@ -60,3 +60,18 @@ void SpriteAnimator::AddAnimationToQueue(const string& animName, bool clearCurre
 	if (clearCurrentQueue) ClearAnimationQueue(_animator);
 	AddAnimationToAnimatorQueue(_animator, animName.c_str(), -1);
 }
+
+float SpriteAnimator::GetAnimationDuration(const string& animName) const {
+	if (!_animationData) return 0.0f;
+	for (int t = 0; t < _animationData->meta.frameTagCount; ++t) {
+		auto& tag = _animationData->meta.frameTags[t];
+		if (animName == tag.name) {
+			float totalMs = 0;
+			for (int f = tag.from; f <= tag.to; ++f) {
+				totalMs += _animationData->frames[f].duration;
+			}
+			return totalMs / 1000.0f;
+		}
+	}
+	return 0.0f;
+}

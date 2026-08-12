@@ -1,14 +1,13 @@
-#include <Supergoon/Input/keyboard.h>
 #include <sgtools/log.h>
 
 #include <algorithm>
+#include <components/PlayerController.hpp>
 #include <engine.hpp>
-#include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <iterator>
 #include <systems/battleSystem.hpp>
-
+#include <types/ControllerButtons.hpp>
 
 using namespace Etf;
 using namespace std;
@@ -16,40 +15,71 @@ using enum BattlerStates;
 
 const string VICTORY_STR = "cheer1";
 
-PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
+bool PlayerBattler::shouldBattleEnd() {
+	std::vector<Battler*> enemyBattlers;
+	getEnemyBattlers(enemyBattlers);
+	if (enemyBattlers.size() < 1) {
+		return true;
+	}
+	return false;
+}
+
+PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controller(args.Controller), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
 	_battlerUI->UpdateHP(to_string(_currentHP));
+	_battlerUI->UpdateAP(to_string(_currentAP));
+	_battlerUI->UpdateName(_battlerData->Nick);
+}
+
+void PlayerBattler::onAPGained() {
+	_battlerUI->UpdateAP(to_string(_currentAP));
+	if (_isDead || _currentHP <= 0) return;
+	if (_currentBattlerState == BattlerStates::MagicSelection) {
+		_battlerUI->UpdateAPCostCurrent(_currentAP);
+	}
+	if (_currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
+		handleStateChange(ATBFullyCharged);
+	}
 }
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
-	if (newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) {
-		std::vector<Battler*> enemyBattlers;
-		getEnemyBattlers(enemyBattlers);
-		if (enemyBattlers.size() < 1) {
-			newState = BattleEndStart;
-		}
-	}
+	if ((newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) && shouldBattleEnd()) newState = BattleEndStart;
 	switch (newState) {
 		case BattlerStates::ATBCharging:
 			_battlerUI->StartATBIdleAnim();
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
+			_battlerUI->EndPlayerTurn(this);
 			break;
 		case BattlerStates::ATBFullyCharged:
+			_currentMenuLocation = 0;
 			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
 			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
+			_battlerUI->StartPlayerTurn(this);
 			break;
-		case BattlerStates::TargetSelection:
+		case BattlerStates::MagicSelection:
+			_magicMenuRow = 0;
+			_magicMenuCol = 0;
+			_battlerUI->OpenMagicMenu();
+			if (!_battlerData->Abilities.empty()) {
+				const auto& ability = BattleSystem::GetAbilityByID(_battlerData->Abilities[0]);
+				_battlerUI->ShowAPCostBox(_currentAP, ability.APCost);
+				_battlerUI->ShowMagicDescription(ability.Description);
+			}
+			break;
+		case BattlerStates::TargetSelection: {
 			_currentTargetBattler = 0;
 			_battlerUI->StartTargetSelection();
-			moveFingerToEnemyNum(0);
+			moveFingerToTargetNum(0);
 			break;
+		}
 		case BattlerStates::BattleEndStart:
 			Engine::Audio::PlayBGM("victory");
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
-			_animator->AddAnimationToQueue(VICTORY_STR, true);
+			_animator->StartAnimation(VICTORY_STR, -1);
+			_battlerUI->EndPlayerTurn(this);
 			BattleSystem::TriggerBattleVictoryStart();
 			break;
 		case BattlerStates::BattleEnd:
@@ -61,7 +91,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 	_currentBattlerState = newState;
 }
 void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
-	sgLogDebug("Trying to move to location %d", enemyNum);
+	sgLogDebug("Trying to move finger to location %d", enemyNum);
 	std::vector<Battler*> enemyBattlers;
 	getEnemyBattlers(enemyBattlers);
 	if (enemyBattlers.empty()) {
@@ -77,12 +107,51 @@ void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 	const auto battler = enemyBattlers.at(enemyNum);
 	if (battler) {
 		_battlerUI->MoveFingerToBattlerLocation(battler);
+
+		string displayName = battler->Name();
+		int sameNameCount = 0;
+		int ordinal = 0;
+		for (size_t i = 0; i < enemyBattlers.size(); ++i) {
+			if (enemyBattlers[i]->Name() == displayName) {
+				if ((int)i < enemyNum) ++ordinal;
+				++sameNameCount;
+			}
+		}
+		if (sameNameCount > 1) {
+			displayName += ' ';
+			displayName += ('A' + ordinal);
+		}
+		_battlerUI->UpdateTargetInfo(displayName);
 	}
 	_currentTargetBattler = enemyNum;
 }
 
 void PlayerBattler::updateImpl() {
 	_battlerUI->UpdateAnimations();
+	if (_isDead) {
+		if (_deathHoldTimer > 0) {
+			_deathHoldTimer -= GameState::DeltaTimeSeconds;
+			if (_deathHoldTimer <= 0) {
+				_animator->UpdateAnimatorSpeed(0.0f);
+			}
+		}
+		return;
+	}
+	if (_currentHP <= 0) return;
+	if (_isPlayingDamageAnim) {
+		_damageAnimTimer -= GameState::DeltaTimeSeconds;
+		if (_damageAnimTimer <= 0) {
+			_isPlayingDamageAnim = false;
+		}
+	}
+
+	if (_currentBattlerState != BattleEndStart &&
+		_currentBattlerState != BattleEndIdle &&
+		_currentBattlerState != BattlerStates::BattleSpoils &&
+		_currentBattlerState != BattlerStates::BattleEnd &&
+		shouldBattleEnd()) {
+		handleStateChange(BattleEndStart);
+	}
 	switch (_currentBattlerState) {
 		case BattlerStates::Default:
 			handleStateChange(ATBCharging);
@@ -90,7 +159,8 @@ void PlayerBattler::updateImpl() {
 		case BattlerStates::ATBCharging: {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
 			_battlerUI->UpdateProgressBar(progress);
-			if (_currentATBCharge >= _maxATBCharge) {
+			if (_reopenMenuAfterClose && _battlerUI->IsMenuClosed()) {
+				_reopenMenuAfterClose = false;
 				handleStateChange(ATBFullyCharged);
 			}
 			break;
@@ -99,8 +169,20 @@ void PlayerBattler::updateImpl() {
 			handleStateChange(CommandSelection);
 			break;
 		}
-		case TargetSelection:
+		case CommandSelection:
+		case MagicSelection:
+		case TargetSelection: {
+			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
+			_battlerUI->UpdateProgressBar(progress);
+			if (_currentBattlerState == TargetSelection) {
+				std::vector<Battler*> targets;
+				getAllTargets(targets);
+				if (!targets.empty()) {
+					moveFingerToTargetNum(_currentTargetBattler);
+				}
+			}
 			break;
+		}
 		case BattleEndStart:
 			handleStateChange(BattleEndIdle);
 			break;
@@ -110,20 +192,53 @@ void PlayerBattler::updateImpl() {
 	handleInput();
 }
 
-void PlayerBattler::takeDamageImpl(int damage) {}
+void PlayerBattler::takeDamageImpl(int damage) {
+	_battlerUI->UpdateHP(to_string(_currentHP));
+	if (_currentHP <= 0) {
+		Engine::Audio::PlaySFXBuffer("hit2", 1.0f);
+		_animator->StartAnimation("dead1", -1);
+		_isDead = true;
+		_deathHoldTimer = _animator->GetAnimationDuration("dead1");
+		_isPlayingDamageAnim = false;
+		_battlerUI->CloseCommandsMenu();
+		_battlerUI->CloseTargetSelection();
+		_battlerUI->EndPlayerTurn(this);
+		return;
+	}
+	if (!_isPlayingDamageAnim) {
+		_isPlayingDamageAnim = true;
+		_damageAnimTimer = 0.5f;
+		_animator->PlayAnimationThenLoopSecond("damage1", _battlerData->IdleAnimation);
+	}
+}
+
+void PlayerBattler::healImpl(int amount) {
+	_battlerUI->UpdateHP(to_string(_currentHP));
+}
 
 void PlayerBattler::handleInputCommandsMenu() {
 	auto newLocation = _currentMenuLocation;
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
+	if (_controller->IsButtonJustPressed(ControllerButtons::Up)) {
 		--newLocation;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
 		++newLocation;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		switch (_currentMenuLocation) {
-			// Attack pressed, do the thing and back out of handling input here.
-			case 0:
+			case 0: {
+				const auto& ability = BattleSystem::GetAbilityByID(0);
+				if (_currentAP < ability.APCost) {
+					Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+					return;
+				}
 				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+				_selectedAbilityID = 0;
+				_targetingFriendly = false;
 				handleStateChange(TargetSelection);
+				return;
+			}
+			case 1:
+				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+				handleStateChange(MagicSelection);
 				return;
 			default:
 				sgLogDebug("Button not implemented", _currentMenuLocation);
@@ -145,30 +260,165 @@ void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
 	});
 }
 
+void PlayerBattler::getPlayerBattlers(std::vector<Battler*>& battlerVector) {
+	auto battlers = BattleSystem::GetEnemyBattlers();
+	copy_if(battlers.begin(), battlers.end(), back_inserter(battlerVector), [](Battler* battler) {
+		return battler && battler->IsPlayer() && battler->CurrentHP() > 0;
+	});
+}
+
+void PlayerBattler::getAllTargets(std::vector<Battler*>& battlerVector) {
+	if (_targetingFriendly) {
+		getPlayerBattlers(battlerVector);
+	} else {
+		getEnemyBattlers(battlerVector);
+	}
+}
+
+void PlayerBattler::moveFingerToTargetNum(int targetNum) {
+	std::vector<Battler*> targets;
+	getAllTargets(targets);
+	if (targets.empty()) return;
+
+	if (targetNum > (int)targets.size() - 1) {
+		targetNum = 0;
+	} else if (targetNum < 0) {
+		targetNum = (int)targets.size() - 1;
+	}
+	const auto battler = targets.at(targetNum);
+	if (battler) {
+		_battlerUI->MoveFingerToBattlerLocation(battler);
+
+		string displayName = battler->Name();
+		int sameNameCount = 0;
+		int ordinal = 0;
+		for (size_t i = 0; i < targets.size(); ++i) {
+			if (targets[i]->Name() == displayName) {
+				if ((int)i < targetNum) ++ordinal;
+				++sameNameCount;
+			}
+		}
+		if (sameNameCount > 1) {
+			displayName += ' ';
+			displayName += ('A' + ordinal);
+		}
+		_battlerUI->UpdateTargetInfo(displayName);
+	}
+	_currentTargetBattler = targetNum;
+}
+
+void PlayerBattler::handleInputMagicMenu() {
+	auto newRow = _magicMenuRow;
+	auto newCol = _magicMenuCol;
+	if (_controller->IsButtonJustPressed(ControllerButtons::Up)) {
+		if (newRow > 0) --newRow;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
+		if (newRow < 3) ++newRow;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Left)) {
+		if (newCol > 0) --newCol;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Right)) {
+		if (newCol < 1) ++newCol;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
+		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+		if (slotIndex >= (int)_battlerData->Abilities.size()) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
+		_selectedAbilityID = _battlerData->Abilities[slotIndex];
+		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		if (_currentAP < ability.APCost) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
+		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+		_targetingFriendly = ability.Friendly;
+		_battlerUI->HideAPCostBox();
+		handleStateChange(TargetSelection);
+		return;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		_battlerUI->CloseMagicMenu();
+		_currentBattlerState = CommandSelection;
+		return;
+	}
+
+	if (newRow != _magicMenuRow || newCol != _magicMenuCol) {
+		_magicMenuRow = newRow;
+		_magicMenuCol = newCol;
+		_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+		if (slotIndex < (int)_battlerData->Abilities.size()) {
+			int abilityID = _battlerData->Abilities[slotIndex];
+			const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+			_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+			_battlerUI->ShowMagicDescription(ab.Description);
+		} else {
+			_battlerUI->HideAPCostBox();
+			_battlerUI->ShowMagicDescription("");
+		}
+	}
+}
+
 void PlayerBattler::handleInputTargetSelection() {
 	int newTarget = _currentTargetBattler;
 
-	if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.UP)) {
+	if (_controller->IsButtonJustPressed(ControllerButtons::Up)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		--newTarget;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.DOWN)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		++newTarget;
-	} else if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::Left) ||
+			   _controller->IsButtonJustPressed(ControllerButtons::Right)) {
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		_targetingFriendly = !_targetingFriendly;
+		_currentTargetBattler = 0;
+		moveFingerToTargetNum(0);
+		return;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-		vector<Battler*> battlers;
-		getEnemyBattlers(battlers);
-		const auto battler = battlers.at(newTarget);
-		_animator->PlayAnimationThenLoopSecond("slash2", _battlerData->IdleAnimation);
+		vector<Battler*> targets;
+		getAllTargets(targets);
+		if (targets.empty()) return;
+		const auto battler = targets.at(_currentTargetBattler);
+		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
+		_animator->PlayAnimationThenLoopSecond(playerAnim, _battlerData->IdleAnimation);
 		if (battler) {
-			battler->TakeDamage(1);
+			if (ability.BaseDamage < 0) {
+				battler->Heal(-ability.BaseDamage);
+			} else {
+				battler->TakeDamage(ability.BaseDamage);
+			}
+			battler->PlayHitAnimation(ability);
 		}
+		SpendAP(ability.APCost);
+		_battlerUI->UpdateAP(to_string(_currentAP));
 		_currentATBCharge = 0;
+		_reopenMenuAfterClose = _currentAP > 0;
 		handleStateChange(ATBCharging);
+		return;
+	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
+		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		_battlerUI->CloseTargetSelection();
+		if (_selectedAbilityID > 0) {
+			_currentBattlerState = MagicSelection;
+			int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+			if (slotIndex < (int)_battlerData->Abilities.size()) {
+				int abilityID = _battlerData->Abilities[slotIndex];
+				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+				_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+				_battlerUI->ShowMagicDescription(ab.Description);
+			}
+		} else {
+			_currentBattlerState = CommandSelection;
+		}
+		return;
 	}
 
 	if (newTarget != _currentTargetBattler) {
-		moveFingerToEnemyNum(newTarget);
+		moveFingerToTargetNum(newTarget);
 	}
 }
 
@@ -183,13 +433,19 @@ void PlayerBattler::handleInput() {
 		case BattlerStates::CommandSelection:
 			handleInputCommandsMenu();
 			break;
+		case BattlerStates::MagicSelection:
+			handleInputMagicMenu();
+			break;
 		case BattlerStates::TargetSelection:
 			handleInputTargetSelection();
 			break;
 		case BattlerStates::BattleEndIdle:
-			if (IsKeyboardKeyJustPressed(GameConfig::GetGameConfig().Controls.Keyboard.A)) {
-				handleStateChange(BattlerStates::BattleEnd);
+			if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
+				handleStateChange(BattlerStates::BattleSpoils);
+				BattleSystem::TriggerBattleSpoils();
 			}
+			break;
+		case BattlerStates::BattleSpoils:
 			break;
 		default:
 			break;

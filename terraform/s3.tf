@@ -30,7 +30,7 @@ resource "aws_iam_policy" "pipeline_access_policy" {
     Version = "2012-10-17",
     Statement = [{
       Effect = "Allow",
-      Action = ["s3:PutObject", "s3:ListBucket"],
+      Action = ["s3:PutObject", "s3:ListBucket", "s3:GetObject "],
       Resource = [
         aws_s3_bucket.supergoon_world_bucket.arn,
         "${aws_s3_bucket.supergoon_world_bucket.arn}/*",

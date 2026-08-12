@@ -2,7 +2,9 @@
 cmake_minimum_required(VERSION 3.5)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-project("Escape The Fate" LANGUAGES C CXX VERSION 0.1)
+set(GAME_VERSION "0.1.0" CACHE STRING "Game version string")
+set(STEAM_APP_ID 4393160)
+project("Escape The Fate" LANGUAGES C CXX VERSION ${GAME_VERSION})
 option(SYSTEM_PACKAGES "Use system packages if available" ON)
 option(ENGINE_CACHED "Is the engine cloned locally in the ./engine directory or should it be downloaded" ON)
 option(DEBUG_CMAKE_VARIABLES "Print out all debug variables near end of configure" OFF)
@@ -15,6 +17,8 @@ option(DEBUG_ASAN "Use asan for leak and address sanitization checks when debug 
 option(SDL_BACKEND "Does this use SDL backend?" ON)
 option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
+option(STEAM_ENABLED "Does this use steam as a platform?" OFF)
+option(STEAM_APPID_FILE "Write steam_appid.txt next to binary (dev only)" ON)
 include(FetchContent)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/Debug)
@@ -41,6 +45,9 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameobject/gameobjects/BattleLocation.cpp
   src/gameobject/gameobjects/BattleZone.cpp
   src/battle/battlerUI.cpp
+  src/battle/enemyAI.cpp
+  src/battle/HitAnimPool.cpp
+  src/battle/DamageNumberPool.cpp
   src/ui/ui.cpp
   src/ui/uiObject.cpp
   src/ui/uiLayoutGroup.cpp
@@ -49,13 +56,22 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
   src/ui/uiProgressBar.cpp
+  src/ui/uiPanel.cpp
   src/ui/uiLine.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
+  src/systems/BattleSpoilsSystem.cpp
   src/systems/PlayerControllerSystem.cpp
   src/systems/GameObjectSystem.cpp
   src/systems/BattleZoneSystem.cpp
   src/systems/BattleTransitionSystem.cpp
+  src/systems/SplashSystem.cpp
+  src/systems/SceneNameSystem.cpp
+  src/systems/TitleScreenSystem.cpp
+  src/systems/CharacterSelectSystem.cpp
+  src/systems/GameOverSystem.cpp
+  src/systems/PauseSystem.cpp
+  src/systems/MenuSystem.cpp
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
@@ -67,6 +83,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/debug/DebugBattle.cpp
   src/debug/DebugConsoleWindow.cpp
   src/debug/DebugGameWindow.cpp
+  src/debug/DebugSettings.cpp
 )
 
 if(IMGUI_DEBUGGING)
@@ -209,10 +226,65 @@ if(EMSCRIPTEN)
     # target_link_options(EscapeTheFate PRIVATE "")
 endif(EMSCRIPTEN)
 
+if(STEAM_ENABLED)
+    if(STEAM_APPID_FILE)
+        file(WRITE "${CMAKE_BINARY_DIR}/steam_appid.txt" "${STEAM_APP_ID}\n")
+    endif()
+    if(APPLE)
+        set(_STEAM_COPY_CMDS
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${STEAM_RUNTIME_FILES}"
+                "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/libsteam_api.dylib"
+        )
+        if(STEAM_APPID_FILE)
+            list(APPEND _STEAM_COPY_CMDS
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${CMAKE_BINARY_DIR}/steam_appid.txt"
+                    "$<TARGET_BUNDLE_CONTENT_DIR:${EXECUTABLE_TARGET_NAME}>/MacOS/steam_appid.txt"
+            )
+        endif()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            ${_STEAM_COPY_CMDS}
+            COMMAND_EXPAND_LISTS)
+    elseif(WIN32)
+        set(_STEAM_COPY_CMDS
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${STEAM_RUNTIME_FILES}"
+                "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_api64.dll"
+        )
+        if(STEAM_APPID_FILE)
+            list(APPEND _STEAM_COPY_CMDS
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${CMAKE_BINARY_DIR}/steam_appid.txt"
+                    "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+            )
+        endif()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            ${_STEAM_COPY_CMDS}
+            COMMAND_EXPAND_LISTS)
+    else()
+        set(_STEAM_COPY_CMDS
+            COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                "${STEAM_RUNTIME_FILES}"
+                "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/libsteam_api.so"
+        )
+        if(STEAM_APPID_FILE)
+            list(APPEND _STEAM_COPY_CMDS
+                COMMAND ${CMAKE_COMMAND} -E copy_if_different
+                    "${CMAKE_BINARY_DIR}/steam_appid.txt"
+                    "$<TARGET_FILE_DIR:${EXECUTABLE_TARGET_NAME}>/steam_appid.txt"
+            )
+        endif()
+        add_custom_command(TARGET ${EXECUTABLE_TARGET_NAME} POST_BUILD
+            ${_STEAM_COPY_CMDS}
+            COMMAND_EXPAND_LISTS)
+    endif()
+endif()
+
 ###### Packaging
 set(CPACK_PACKAGE_NAME "EscapeTheFate")
 set(CPACK_PACKAGE_VENDOR "Supergoon Games")
-set(CPACK_PACKAGE_VERSION "0.1.0")
+set(CPACK_PACKAGE_VERSION "${GAME_VERSION}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "2D deckbuilding JRPG")
 set(CPACK_NSIS_DISPLAY_NAME "Escape the Fate")
 set(CPACK_NSIS_PACKAGE_NAME "Escape the Fate")
@@ -226,6 +298,9 @@ set(CPACK_NSIS_MUI_UNIICON "${CMAKE_CURRENT_SOURCE_DIR}/cmake/AppIcon.ico")
 set(CPACK_PACKAGE_EXECUTABLES "EscapeTheFate" "Escape the Fate")
 install(TARGETS ${EXECUTABLE_TARGET_NAME} RUNTIME DESTINATION . BUNDLE DESTINATION .)
 install(FILES ${CMAKE_SOURCE_DIR}/etf.sg DESTINATION data)
+if(STEAM_ENABLED AND NOT APPLE)
+    install(FILES "${STEAM_RUNTIME_FILES}" DESTINATION .)
+endif()
 if(WIN32)
     set(CPACK_GENERATOR "NSIS")
 elseif(APPLE)

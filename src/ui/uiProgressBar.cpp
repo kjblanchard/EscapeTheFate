@@ -12,10 +12,15 @@ UIProgressBar::UIProgressBar(const UIProgressBarArgs& args) {
 	_visible = args.Visible;
 	_priority = args.Priority;
 	_barColor = args.BarColor;
+	_backgroundColor = args.BackgroundColor;
 	_debugBox = args.DebugBox;
 }
 
 void UIProgressBar::OnDraw(float offsetX, float offsetY) {
+	if (_backgroundColor.A > 0) {
+		RectangleF bgRect = {offsetX + _location.x + _barRect.x, offsetY + _location.y + _barRect.y, _barRect.w, _barRect.h};
+		DrawRect(&bgRect, &_backgroundColor, true, false);
+	}
 	auto barWidth = _barRect.w * _barPercent / 100.00f;
 	RectangleF drawRect = {offsetX + _location.x + _barRect.x, offsetY + _location.y + _barRect.y, barWidth, _barRect.h};
 	DrawRect(&drawRect, &_barColor, true, false);

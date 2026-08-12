@@ -1,5 +1,5 @@
 { "columns":45,
- "image":"..\/img\/cloud_tileset-export.bmp",
+ "image":"..\/img\/cloud_tileset.png",
  "imageheight":448,
  "imagewidth":720,
  "margin":0,
@@ -170,7 +170,6 @@
          "id":746
         }],
  "tilewidth":16,
- "transparentcolor":"#ff00ff",
  "type":"tileset",
  "version":"1.8"
 }

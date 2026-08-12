@@ -5,24 +5,24 @@
 - Build Status - [![HERE](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml/badge.svg)](https://github.com/kjblanchard/EscapeTheFate/actions/workflows/build.yml)
 - [Progress Board and release milestones](https://github.com/users/kjblanchard/projects/11/)
 - Play the game here, or likely watch its "progress" [Play!](https://escapethefate-dev.supergoon.com)
-- ![Moving status picture](https://github.com/kjblanchard/EscapeTheFate/blob/master/img/moving.gif?raw=true)
-- ![battle status picture](https://github.com/kjblanchard/EscapeTheFate/blob/master/img/battle.gif?raw=true)
+- ![status](./img/preview.gif?raw=true)
 
 ## Details
 
 - A roguelike JRPGlike boardgamelike pixelart game
 - BGMs created by me in Garageband
 - Sprites are mostly purchased from TimeFantasy sprites.
-- Currently no developer signature, will need to allow in macos/windows in privacy settings or Smart Scan.
+- Currently no developer signature, will need to allow in macos/windows in
+  privacy settings or Smart Scan when not playing from github releases.
 
 ## Goals
 
 - Cross platform cmake
 - Package with cmake for installing on desktops
 - C/Cpp practice
-- Learn OpenGL
-- Better with vim
-- Release a game on steam
+- Learn OpenGL, or at least fake it until you make it
+- Better with vim for full IDE
+- Release a game on steam instead of remaking the same thing every year :)
 
 ## Installation
 
@@ -62,3 +62,8 @@ to discuss what you would like to change.
 - [ImGUI](https://github.com/ocornut/imgui) : Debug logging
 - [Gamepad icons](https://greatdocbrown.itch.io/gamepad-ui)
 - [Exe Icon](https://images.hdqwalls.com/download/fantasy-floating-islands-under-sunset-sky-hl-1366x768.jpg)
+- [Heal SFX](https://freesound.org/people/colorsCrimsonTears/sounds/562292/)
+    by colorsCrimsonTears
+- [Game Over SFX](https://freesound.org/people/melokacool/sounds/615457/)
+
+

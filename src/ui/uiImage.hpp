@@ -21,6 +21,7 @@ class UIImage : public UIObject {
 	UIImage(UIImageArgs& args);
 	~UIImage();
 	void OnDraw(float offsetX, float offsetY) override final;
+	inline void UpdateDrawColor(const Color& color) { _color = color; }
 
    private:
 	Texture* _texture;

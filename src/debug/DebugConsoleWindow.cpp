@@ -27,6 +27,12 @@ void DebugConsoleWindow::Initialize() {
 
 void DebugConsoleWindow::Draw() {
 #ifdef imgui
+	const char* logLevels[] = {"Error", "Warn", "Info", "Debug"};
+	const int logLevelValues[] = {sgLogLevelError, sgLogLevelWarn, sgLogLevelInfo, sgLogLevelDebug};
+	static int currentLogLevel = 1;
+	if (ImGui::Combo("Log Level", &currentLogLevel, logLevels, IM_ARRAYSIZE(logLevels))) {
+		sgSetLogLevel(logLevelValues[currentLogLevel]);
+	}
 	ImGui::Checkbox("Autoscroll", &autoScroll);
 	ImGui::SameLine();
 	if (ImGui::Button("Clear Logs")) {
