@@ -4,7 +4,6 @@
   "desc" "Escape The Fate automated debug build"
   "buildoutput" "../output/"
   "contentroot" ""
-  "setlive" "debug"
 
   "depots"
   {
