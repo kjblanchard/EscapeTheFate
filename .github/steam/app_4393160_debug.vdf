@@ -7,8 +7,8 @@
 
   "depots"
   {
-    "4393166" "depot_windows_debug.vdf"
-    "4393165" "depot_macos_debug.vdf"
-    "4393167" "depot_linux_debug.vdf"
+    "4393164" "depot_windows_debug.vdf"
+    "4393162" "depot_macos_debug.vdf"
+    "4393163" "depot_linux_debug.vdf"
   }
 }
