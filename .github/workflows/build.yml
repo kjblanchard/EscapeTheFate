@@ -159,12 +159,27 @@ jobs:
           - os: windows-2025
             make_cmd: wsteamrebuild
             name: steam-win
+            imgui: OFF
           - os: macos-latest
             make_cmd: xsteamrebuild
             name: steam-mac
+            imgui: OFF
           - os: ubuntu-latest
             make_cmd: bsteamrebuild
             name: steam-linux
+            imgui: OFF
+          - os: windows-2025
+            make_cmd: wsteamrebuild
+            name: steam-win-debug
+            imgui: ON
+          - os: macos-latest
+            make_cmd: xsteamrebuild
+            name: steam-mac-debug
+            imgui: ON
+          - os: ubuntu-latest
+            make_cmd: bsteamrebuild
+            name: steam-linux-debug
+            imgui: ON
     runs-on: ${{ matrix.os }}
     environment: prod
     steps:
@@ -204,7 +219,7 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
+        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=${{ matrix.imgui }} ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
         shell: bash
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
