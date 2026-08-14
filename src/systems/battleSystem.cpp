@@ -244,6 +244,7 @@ static void cacheBattleUIElements() {
 }
 
 static void initializeBattleSystem() {
+	sgLogWarn("Initializing battle system and battle db!");
 	loadBattleDB();
 	loadAbilityDB();
 	loadBattleGroups();
@@ -297,7 +298,6 @@ static void triggerStateChange() {
 		case BattleGameOver:
 			battleUI_.RootPanel->SetVisible(false);
 			_battlers.clear();
-			battleInitialized_ = false;
 			break;
 		default:
 			break;
@@ -330,7 +330,6 @@ void BattleSystem::TriggerGameOver() {
 void BattleSystem::ResetAfterGameOver() {
 	currentBattleState_ = NotInBattle;
 	nextBattleState_ = NotInBattle;
-	battleInitialized_ = false;
 	_battlers.clear();
 }
 void BattleSystem::TriggerBattleVictoryStart() {

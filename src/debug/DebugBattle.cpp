@@ -36,8 +36,14 @@ static string getCurrentBattleStateText(BattleStates state) {
 			return "Battle";
 		case Etf::BattleStates::BattleVictory:
 			return "Victory";
+		case Etf::BattleStates::BattleSpoils:
+			return "Spoils";
 		case Etf::BattleStates::BattleEnd:
 			return "End";
+		case Etf::BattleStates::BattleGameOver:
+			return "Game Over";
+		default:
+			return "Not implemented";
 	}
 }
 
@@ -84,9 +90,9 @@ void Etf::DisplayBattleTab() {
 				if (ImGui::TreeNode(nodeLabel.c_str())) {
 					ImGui::Text("Sprite: %s  Idle: %s", bd.Sprite.c_str(), bd.IdleAnimation.c_str());
 					ImGui::Text("HP:%-4d Str:%-3d Mag:%-3d Def:%-3d MDef:%-3d Spd:%-3d Pow:%-3d",
-					            bd.HP, bd.Str, bd.Mag, bd.Def, bd.MDef, bd.Spd, bd.Pow);
+								bd.HP, bd.Str, bd.Mag, bd.Def, bd.MDef, bd.Spd, bd.Pow);
 					ImGui::Text("Rect: x=%.0f y=%.0f w=%.0f h=%.0f",
-					            bd.Location.x, bd.Location.y, bd.Location.w, bd.Location.h);
+								bd.Location.x, bd.Location.y, bd.Location.w, bd.Location.h);
 					ImGui::TreePop();
 				}
 			}
@@ -121,7 +127,7 @@ void Etf::DisplayBattleTab() {
 					bool isPlayer = battler->IsPlayer();
 					auto* data = battler->DebugData();
 					auto slotLabel = "Slot " + to_string(i) + ": " + data->Name +
-					                 (isPlayer ? " [Player]" : " [Enemy]");
+									 (isPlayer ? " [Player]" : " [Enemy]");
 					if (ImGui::TreeNode(slotLabel.c_str())) {
 						if (isPlayer) {
 							auto* pb = static_cast<PlayerBattler*>(battler);
@@ -167,7 +173,7 @@ void Etf::DisplayBattleTab() {
 							ImGui::InputInt("Pow", &data->Pow);
 						} else {
 							ImGui::Text("Str:%-3d Mag:%-3d Def:%-3d MDef:%-3d Spd:%-3d Pow:%-3d",
-							            data->Str, data->Mag, data->Def, data->MDef, data->Spd, data->Pow);
+										data->Str, data->Mag, data->Def, data->MDef, data->Spd, data->Pow);
 						}
 						ImGui::TreePop();
 					}
