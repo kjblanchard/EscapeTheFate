@@ -13,7 +13,7 @@
 - BGMs created by me in Garageband
 - Sprites are mostly purchased from TimeFantasy sprites.
 - Currently no developer signature, will need to allow in macos/windows in
-  privacy settings or Smart Scan when not playing from github releases.
+    privacy settings or Smart Scan when not playing from github releases.
 
 ## Goals
 
@@ -65,5 +65,6 @@ to discuss what you would like to change.
 - [Heal SFX](https://freesound.org/people/colorsCrimsonTears/sounds/562292/)
     by colorsCrimsonTears
 - [Game Over SFX](https://freesound.org/people/melokacool/sounds/615457/)
-
+- [samurai slash by nekoninja](https://freesound.org/s/370204/)
+    License: Creative Commons 0
 

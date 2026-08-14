@@ -156,7 +156,7 @@
             { "name": "Silk", "percent": 25 },
             { "name": "Antenna", "percent": 15 }
         ],
-        "abilities": [1,2, 3],
+        "abilities": [2,3],
         "ai": "basic",
         "sprite": "spider1",
         "portrait": "",
