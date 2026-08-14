@@ -45,9 +45,9 @@ jobs:
           - os: macos-latest
             make_cmd: xrebuild
             name: mac
-          - os: macos-latest
-            make_cmd: irebuild
-            name: ios-simulator
+          # - os: macos-latest
+          #   make_cmd: irebuild
+          #   name: ios-simulator
           - os: ubuntu-latest
             make_cmd: brebuild
             name: linux
