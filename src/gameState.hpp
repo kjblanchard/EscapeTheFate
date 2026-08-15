@@ -29,6 +29,7 @@ struct GameState {
 	static bool InDialog;
 	static bool Paused;
 	static bool IsMultiplayer;
+	static bool IsOnline;
 	static int SelectedPlayerCharacter;
 	static std::string SelectedOverworldSprite;
 	static int SelectedOverworldFrameW;

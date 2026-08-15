@@ -37,6 +37,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/gameState.cpp 
   src/gameobject/GameObject.cpp
   src/gameobject/gameobjects/LocalPlayer.cpp
+  src/gameobject/gameobjects/RemotePlayer.cpp
   src/gameobject/gameobjects/Battler.cpp
   src/gameobject/gameobjects/PlayerBattler.cpp
   src/gameobject/gameobjects/EnemyBattler.cpp
@@ -69,6 +70,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/SceneNameSystem.cpp
   src/systems/TitleScreenSystem.cpp
   src/systems/CharacterSelectSystem.cpp
+  src/systems/NetworkSystem.cpp
   src/systems/GameOverSystem.cpp
   src/systems/PauseSystem.cpp
   src/systems/MenuSystem.cpp

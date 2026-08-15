@@ -2,6 +2,7 @@
 
 #include <engine.hpp>
 #include <systems/CharacterSelectSystem.hpp>
+#include <systems/NetworkSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/battleSystem.hpp>
@@ -9,6 +10,7 @@
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiObject.hpp>
+#include <ui/uiText.hpp>
 
 #include "gameState.hpp"
 #include "sgtools/log.h"
@@ -17,14 +19,23 @@ using namespace Etf;
 
 namespace {
 
-const int kNumMenuItems = 4;
+const int kNumMenuItems = 5;
 const int kMenuSpacing = 15;
-const bool kMenuItemEnabled[kNumMenuItems] = {true, true, false, false};
+const bool kMenuItemEnabled[kNumMenuItems] = {true, true, false, false, true};
 
 UIObject* _menuItems[kNumMenuItems] = {};
 UIImage* _finger = nullptr;
 int _selectedIndex = 0;
 bool _initialized = false;
+
+enum class OnlineState {
+	None,
+	Connecting,
+	Failed,
+};
+OnlineState _onlineState = OnlineState::None;
+UIText* _connectingText = nullptr;
+float _failedTimer = 0.0f;
 
 void positionFinger() {
 	if (!_finger || !_menuItems[0]) return;
@@ -40,6 +51,9 @@ void TitleScreenSystem::Start() {
 	_initialized = false;
 	_selectedIndex = 0;
 	_finger = nullptr;
+	_onlineState = OnlineState::None;
+	_connectingText = nullptr;
+	_failedTimer = 0.0f;
 	for (auto& item : _menuItems) item = nullptr;
 }
 
@@ -55,17 +69,54 @@ void TitleScreenSystem::Update() {
 		_menuItems[1] = root->GetChildByName("MultiplayerText");
 		_menuItems[2] = root->GetChildByName("LoadText");
 		_menuItems[3] = root->GetChildByName("OptionsText");
+		_menuItems[4] = root->GetChildByName("OnlineText");
 		_finger = static_cast<UIImage*>(root->GetChildByName("MenuFinger"));
-		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_menuItems[3] || !_finger) return;
+		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_menuItems[3] || !_menuItems[4] || !_finger) return;
 		_initialized = true;
 		positionFinger();
 		return;
 	}
 	if (GameState::CurrentFadeState != (int)LoadingScreenFadeTypes::NotFading) return;
+
+	// Handle connecting state
+	if (_onlineState == OnlineState::Connecting) {
+		if (NetworkSystem::IsConnected()) {
+			_onlineState = OnlineState::None;
+			if (_connectingText) {
+				_connectingText->SetVisible(false);
+			}
+			CharacterSelectSystem::Activate();
+		} else if (NetworkSystem::ConnectionFailed()) {
+			_onlineState = OnlineState::Failed;
+			_failedTimer = 2.0f;
+			if (_connectingText) {
+				_connectingText->UpdateText("Connection Failed!");
+			}
+			GameState::IsOnline = false;
+		}
+		return;
+	}
+
+	if (_onlineState == OnlineState::Failed) {
+		_failedTimer -= GameState::DeltaTimeSeconds;
+		if (_failedTimer <= 0.0f) {
+			_onlineState = OnlineState::None;
+			if (_connectingText) {
+				_connectingText->SetVisible(false);
+			}
+			auto root = UI::GetRootUIObject();
+			auto* titlePanel = root->GetChildByName("TitleNineSlice");
+			auto* menuPanel = root->GetChildByName("MenuNineSlice");
+			if (titlePanel) titlePanel->SetVisible(true);
+			if (menuPanel) menuPanel->SetVisible(true);
+			_finger->SetVisible(true);
+		}
+		return;
+	}
+
 	if (CharacterSelectSystem::IsActive()) {
 		CharacterSelectSystem::Update();
 		if (!CharacterSelectSystem::IsActive()) {
-			// Returned from character select via B press, restore title UI
 			auto root = UI::GetRootUIObject();
 			auto* titlePanel = root->GetChildByName("TitleNineSlice");
 			auto* menuPanel = root->GetChildByName("MenuNineSlice");
@@ -99,18 +150,61 @@ void TitleScreenSystem::Update() {
 					return;
 				}
 				GameState::IsMultiplayer = true;
+				GameState::IsOnline = false;
 				PlayerControllerSystem::AssignControllersForMultiplayer();
+			} else if (_selectedIndex == 4) {
+				// Online mode
+				GameState::IsOnline = true;
+				GameState::IsMultiplayer = false;
+				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+				auto root = UI::GetRootUIObject();
+				auto* titlePanel = root->GetChildByName("TitleNineSlice");
+				auto* menuPanel = root->GetChildByName("MenuNineSlice");
+				if (titlePanel) titlePanel->SetVisible(false);
+				if (menuPanel) menuPanel->SetVisible(false);
+				_finger->SetVisible(false);
+
+				// Show connecting text
+				if (!_connectingText) {
+					auto* panel = root->GetChildByName("CloudPanel");
+					UITextArgs args;
+					args.FontName = "PressStart2P";
+					args.FontSize = 8;
+					args.Rect = {0, 130, 480, 16};
+					args.TextToDraw = "Connecting...";
+					args.Name = "ConnectingText";
+					args.NumCharsToDraw = 100;
+					args.Priority = 5;
+					args.TextColor = {255, 255, 255, 255};
+					args.CenteredX = true;
+					args.CenteredY = true;
+					args.WordWrap = false;
+					args.Visible = true;
+					args.DebugBox = false;
+					_connectingText = new UIText(args);
+					panel->AddChild(_connectingText);
+				} else {
+					_connectingText->UpdateText("Connecting...");
+					_connectingText->SetVisible(true);
+				}
+
+				_onlineState = OnlineState::Connecting;
+				NetworkSystem::Connect();
+				return;
 			} else {
 				GameState::IsMultiplayer = false;
+				GameState::IsOnline = false;
 			}
-			Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
-			auto root = UI::GetRootUIObject();
-			auto* titlePanel = root->GetChildByName("TitleNineSlice");
-			auto* menuPanel = root->GetChildByName("MenuNineSlice");
-			if (titlePanel) titlePanel->SetVisible(false);
-			if (menuPanel) menuPanel->SetVisible(false);
-			_finger->SetVisible(false);
-			CharacterSelectSystem::Activate();
+			if (_selectedIndex != 4) {
+				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+				auto root = UI::GetRootUIObject();
+				auto* titlePanel = root->GetChildByName("TitleNineSlice");
+				auto* menuPanel = root->GetChildByName("MenuNineSlice");
+				if (titlePanel) titlePanel->SetVisible(false);
+				if (menuPanel) menuPanel->SetVisible(false);
+				_finger->SetVisible(false);
+				CharacterSelectSystem::Activate();
+			}
 		} else {
 			sgLogWarn("Index %d is not enabled, %d", _selectedIndex, kMenuItemEnabled[_selectedIndex]);
 			Engine::Audio::PlaySFXBuffer("error1", 0.75f);

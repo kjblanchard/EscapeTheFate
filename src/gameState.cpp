@@ -8,6 +8,7 @@ void GameState::ResetForNewGame() {
 	NextLoadLocation2 = {0, 0};
 	NextLoadMapName = "";
 	NextLoadDirection = 0;
+	IsOnline = false;
 	InDialog = false;
 	Paused = false;
 	SelectedPlayerCharacter = 0;
@@ -44,6 +45,7 @@ bool GameState::Menu::MenuOpen[2] = {false, false};
 bool GameState::InDialog = false;
 bool GameState::Paused = false;
 bool GameState::IsMultiplayer = false;
+bool GameState::IsOnline = false;
 int GameState::SelectedPlayerCharacter = 0;
 std::string GameState::SelectedOverworldSprite = "player1";
 int GameState::SelectedOverworldFrameW = 32;

@@ -20,6 +20,7 @@
 #include <systems/GameOverSystem.hpp>
 #include <systems/MenuSystem.hpp>
 #include <systems/PauseSystem.hpp>
+#include <systems/NetworkSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/dialogSystem.hpp>
 using namespace Etf;
@@ -46,6 +47,11 @@ void InitializeGame() {
 		{
 			.Start = PlayerControllerSystem::Start,
 			.Update = PlayerControllerSystem::Update,
+		},
+		{
+			.Start = NetworkSystem::Start,
+			.Update = NetworkSystem::Update,
+			.Shutdown = NetworkSystem::Shutdown,
 		},
 		{
 			.Update = DialogSystem::Update,

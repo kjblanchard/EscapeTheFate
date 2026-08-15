@@ -14,6 +14,7 @@
 #include <interfaces/IInteractable.hpp>
 #include <memory>
 #include <systems/GameObjectSystem.hpp>
+#include <systems/NetworkSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 
 #include "interfaces/IController.hpp"
@@ -204,6 +205,9 @@ void LocalPlayer::handleplayerJoystickMovement() {
 	GameState::Players::LocalPlayerData[PlayerIndex_].Location.y = Y();
 	GameState::Players::LocalPlayerData[PlayerIndex_].Location.w = 4;
 	GameState::Players::LocalPlayerData[PlayerIndex_].Location.h = 4;
+	if (GameState::IsOnline && PlayerIndex_ == 0) {
+		NetworkSystem::SendMove(X(), Y(), static_cast<uint8_t>(Direction_), true);
+	}
 }
 
 bool LocalPlayer::handlePlayerMovement() {
@@ -261,6 +265,9 @@ bool LocalPlayer::handlePlayerMovement() {
 		GameState::Players::LocalPlayerData[PlayerIndex_].Location.y = Y();
 		GameState::Players::LocalPlayerData[PlayerIndex_].Location.w = 4;
 		GameState::Players::LocalPlayerData[PlayerIndex_].Location.h = 4;
+		if (GameState::IsOnline && PlayerIndex_ == 0) {
+			NetworkSystem::SendMove(X(), Y(), static_cast<uint8_t>(Direction_), true);
+		}
 	} else {
 		Animator_->UpdateAnimatorSpeed(0.0f);
 	}

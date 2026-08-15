@@ -2,6 +2,7 @@
 #include <engine.hpp>
 #include <gameState.hpp>
 #include <systems/CharacterSelectSystem.hpp>
+#include <systems/NetworkSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
@@ -286,12 +287,17 @@ void CharacterSelectSystem::Update() {
 		auto& ch = _characters[_selectedIndex];
 
 		if (!GameState::IsMultiplayer) {
+			bool isOnline = GameState::IsOnline;
 			GameState::ResetForNewGame();
+			GameState::IsOnline = isOnline;
 			GameState::SelectedPlayerCharacter = ch.BattlerDBIndex;
 			GameState::SelectedOverworldSprite = ch.OverworldSprite;
 			GameState::SelectedOverworldFrameW = ch.OverworldFrameW;
 			GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
 			BattleSystem::ResetAfterGameOver();
+			if (GameState::IsOnline) {
+				NetworkSystem::SendJoin(static_cast<uint8_t>(_selectedIndex));
+			}
 			destroyUI();
 			_active = false;
 			Engine::LoadScene("debugTown", 0.5f, 0.5f, false);

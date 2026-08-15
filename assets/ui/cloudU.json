@@ -33,7 +33,7 @@
                 "visible": false,
                 "scale": 1.0,
                 "color": { "R": 80, "G": 0, "B": 120, "A": 235 },
-                "rect": { "x": 160, "y": 115, "w": 160, "h": 75 },
+                "rect": { "x": 160, "y": 115, "w": 160, "h": 90 },
                 "srcRect": { "x": 0, "y": 0, "w": 64, "h": 64 },
                 "camera": false,
                 "priority": 1,
@@ -61,7 +61,7 @@
                                 "font": "PressStart2P",
                                 "fontSize": 8,
                                 "rect": { "x": 0, "y": 0, "w": 128, "h": 12 },
-                                "text": "Multiplayer",
+                                "text": "Local MP",
                                 "color": { "R": 100, "G": 100, "B": 100, "A": 255 },
                                 "centeredX": true,
                                 "centeredY": true,
@@ -88,6 +88,16 @@
                                 "centeredY": true,
                                 "numCharsToDraw": 100,
                                 "color": { "R": 100, "G": 100, "B": 100, "A": 255 }
+                            },
+                            "OnlineText": {
+                                "type": "text",
+                                "font": "PressStart2P",
+                                "fontSize": 8,
+                                "rect": { "x": 0, "y": 0, "w": 128, "h": 12 },
+                                "text": "Online",
+                                "centeredX": true,
+                                "centeredY": true,
+                                "numCharsToDraw": 100
                             }
                         }
                     }

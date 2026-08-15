@@ -6,6 +6,7 @@
 #include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <iterator>
+#include <systems/NetworkSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 
@@ -392,6 +393,11 @@ void PlayerBattler::handleInputTargetSelection() {
 				battler->TakeDamage(ability.BaseDamage);
 			}
 			battler->PlayHitAnimation(ability);
+			if (GameState::IsOnline) {
+				NetworkSystem::SendBattleAction(
+					static_cast<uint8_t>(_currentTargetBattler),
+					static_cast<int16_t>(ability.BaseDamage));
+			}
 		}
 		SpendAP(ability.APCost);
 		_battlerUI->UpdateAP(to_string(_currentAP));
