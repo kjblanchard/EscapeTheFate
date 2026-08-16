@@ -11,6 +11,7 @@
 #include <gameState.hpp>
 #include <gameobject/gameobjects/LocalPlayer.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
+#include <gameobject/gameobjects/RemotePlayer.hpp>
 #include <interfaces/IInteractable.hpp>
 #include <memory>
 #include <systems/GameObjectSystem.hpp>
@@ -78,6 +79,10 @@ void LocalPlayer::Create(TiledObject* objData) {
 		GameState::NextLoadLocation2.X = p2->X();
 		GameState::NextLoadLocation2.Y = p2->Y();
 		AddGameObjectToGameObjectSystem(p2);
+	}
+
+	if (GameState::IsOnline && !RemotePlayer::HasInstance()) {
+		RemotePlayer::SpawnForOnline(GameState::RemotePlayerCharacterIndex);
 	}
 }
 

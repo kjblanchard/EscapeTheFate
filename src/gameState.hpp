@@ -2,6 +2,7 @@
 #include <Supergoon/Primitives/Vector2.h>
 #include <Supergoon/Primitives/rectangle.h>
 
+#include <cstdint>
 #include <string>
 namespace Etf {
 struct PlayerData {
@@ -30,6 +31,8 @@ struct GameState {
 	static bool Paused;
 	static bool IsMultiplayer;
 	static bool IsOnline;
+	static uint8_t LocalPlayerCharacterIndex;
+	static uint8_t RemotePlayerCharacterIndex;
 	static int SelectedPlayerCharacter;
 	static std::string SelectedOverworldSprite;
 	static int SelectedOverworldFrameW;

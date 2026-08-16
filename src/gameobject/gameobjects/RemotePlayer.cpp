@@ -59,6 +59,10 @@ void RemotePlayer::DestroyRemote() {
 	Instance_ = nullptr;
 }
 
+bool RemotePlayer::HasInstance() {
+	return Instance_ != nullptr;
+}
+
 RemotePlayer::RemotePlayer(const std::string& spriteName, int frameW, int frameH)
 	: GameObject(0, 0) {
 	auto filename = spriteName + ".png";

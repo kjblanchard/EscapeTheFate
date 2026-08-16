@@ -12,6 +12,7 @@ class RemotePlayer : public GameObject {
 	static void SpawnForOnline(uint8_t characterIndex);
 	static void ApplyNetworkMove(float x, float y, uint8_t direction, bool moving);
 	static void DestroyRemote();
+	static bool HasInstance();
 	~RemotePlayer() override;
 
    private:

@@ -6,6 +6,7 @@
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/MapExit.hpp>
+#include <systems/NetworkSystem.hpp>
 
 #include "gameobject/GameObject.hpp"
 using namespace Etf;
@@ -46,6 +47,9 @@ bool MapExit::CheckAndHandleMapExitOverlaps(RectangleF& rect) {
 	for (auto mapExit : _mapExits) {
 		if (Engine::CheckForRectCollision(rect, mapExit->_location)) {
 			GameState::NextLoadScreen = mapExit->_locationToLoad;
+			if (GameState::IsOnline) {
+				NetworkSystem::SendSceneChange(mapExit->_mapToLoad.c_str(), static_cast<uint8_t>(mapExit->_locationToLoad));
+			}
 			Engine::LoadScene(mapExit->_mapToLoad, MAP_FADEOUT_TIME, MAP_FADEIN_TIME);
 			return true;
 		}

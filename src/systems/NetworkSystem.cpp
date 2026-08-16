@@ -2,9 +2,11 @@
 #include <sgtools/log.h>
 
 #include <cstring>
+#include <engine.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/RemotePlayer.hpp>
 #include <networking/NetPackets.hpp>
+#include <systems/BattleTransitionSystem.hpp>
 #include <systems/NetworkSystem.hpp>
 #include <systems/battleSystem.hpp>
 
@@ -28,6 +30,8 @@ size_t packetSizeForType(PacketType type) {
 		case PacketType::BattleAction: return sizeof(BattleActionPacket);
 		case PacketType::PlayerJoin: return sizeof(PlayerJoinPacket);
 		case PacketType::PlayerLeave: return sizeof(PlayerLeavePacket);
+		case PacketType::SceneChange: return sizeof(SceneChangePacket);
+		case PacketType::BattleStart: return sizeof(BattleStartPacket);
 	}
 	return 0;
 }
@@ -45,7 +49,12 @@ void dispatchPacket(const uint8_t* data, size_t size) {
 		case PacketType::PlayerJoin: {
 			if (size < sizeof(PlayerJoinPacket)) return;
 			auto* pkt = reinterpret_cast<const PlayerJoinPacket*>(data);
+			bool firstJoin = !RemotePlayer::HasInstance();
+			GameState::RemotePlayerCharacterIndex = pkt->characterIndex;
 			RemotePlayer::SpawnForOnline(pkt->characterIndex);
+			if (firstJoin) {
+				NetworkSystem::SendJoin(GameState::LocalPlayerCharacterIndex);
+			}
 			break;
 		}
 		case PacketType::PlayerLeave: {
@@ -56,6 +65,22 @@ void dispatchPacket(const uint8_t* data, size_t size) {
 			if (size < sizeof(BattleActionPacket)) return;
 			auto* pkt = reinterpret_cast<const BattleActionPacket*>(data);
 			BattleSystem::SendBattleDamage(pkt->battlerNum, pkt->damage);
+			break;
+		}
+		case PacketType::SceneChange: {
+			if (size < sizeof(SceneChangePacket)) return;
+			auto* pkt = reinterpret_cast<const SceneChangePacket*>(data);
+			GameState::NextLoadScreen = pkt->loadLocation;
+			Engine::LoadScene(pkt->mapName, 0.25f, 0.35f);
+			break;
+		}
+		case PacketType::BattleStart: {
+			if (size < sizeof(BattleStartPacket)) return;
+			auto* pkt = reinterpret_cast<const BattleStartPacket*>(data);
+			GameState::NextLoadMapName = Engine::CurrentSceneName();
+			GameState::Battle::NextBattleGroup = pkt->battleGroup;
+			BattleTransitionSystem::TriggerTransition(pkt->battleScene);
+			GameState::Battle::CurrentStepsWithoutBattle = 0;
 			break;
 		}
 		default:
@@ -180,5 +205,25 @@ void NetworkSystem::SendJoin(uint8_t characterIndex) {
 	pkt.header.type = PacketType::PlayerJoin;
 	pkt.playerSlot = 1;
 	pkt.characterIndex = characterIndex;
+	NetClientSend(_client, &pkt, sizeof(pkt));
+}
+
+void NetworkSystem::SendSceneChange(const char* mapName, uint8_t loadLocation) {
+	if (!_connected || !_client) return;
+	SceneChangePacket pkt{};
+	pkt.header.type = PacketType::SceneChange;
+	pkt.loadLocation = loadLocation;
+	strncpy(pkt.mapName, mapName, sizeof(pkt.mapName) - 1);
+	pkt.mapName[sizeof(pkt.mapName) - 1] = '\0';
+	NetClientSend(_client, &pkt, sizeof(pkt));
+}
+
+void NetworkSystem::SendBattleStart(uint8_t battleGroup, const char* battleScene) {
+	if (!_connected || !_client) return;
+	BattleStartPacket pkt{};
+	pkt.header.type = PacketType::BattleStart;
+	pkt.battleGroup = battleGroup;
+	strncpy(pkt.battleScene, battleScene, sizeof(pkt.battleScene) - 1);
+	pkt.battleScene[sizeof(pkt.battleScene) - 1] = '\0';
 	NetClientSend(_client, &pkt, sizeof(pkt));
 }

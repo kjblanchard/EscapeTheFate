@@ -9,6 +9,8 @@ enum class PacketType : uint8_t {
 	BattleAction = 0x03,
 	PlayerJoin = 0x04,
 	PlayerLeave = 0x05,
+	SceneChange = 0x06,
+	BattleStart = 0x07,
 };
 
 struct PacketHeader {
@@ -44,6 +46,18 @@ struct PlayerJoinPacket {
 struct PlayerLeavePacket {
 	PacketHeader header;
 	uint8_t playerSlot;
+};
+
+struct SceneChangePacket {
+	PacketHeader header;
+	uint8_t loadLocation;
+	char mapName[32];
+};
+
+struct BattleStartPacket {
+	PacketHeader header;
+	uint8_t battleGroup;
+	char battleScene[32];
 };
 
 #pragma pack(pop)

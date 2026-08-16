@@ -8,6 +8,7 @@
 #include <gameobject/gameobjects/BattleZone.hpp>
 #include <systems/BattleTransitionSystem.hpp>
 #include <systems/BattleZoneSystem.hpp>
+#include <systems/NetworkSystem.hpp>
 #include <vector>
 
 using namespace Etf;
@@ -79,6 +80,9 @@ void BattleZoneSystem::Update() {
 					GameState::Battle::NextBattleGroup = battleGroup;
 					auto& nextbattleScene = getBattleSceneRandom(battleZoneData);
 					sgLogDebug("Setting battle scene to be %s", nextbattleScene.c_str());
+					if (GameState::IsOnline) {
+						NetworkSystem::SendBattleStart(static_cast<uint8_t>(battleGroup), nextbattleScene.c_str());
+					}
 					BattleTransitionSystem::TriggerTransition(nextbattleScene);
 					GameState::Battle::CurrentStepsWithoutBattle = 0;
 				}
