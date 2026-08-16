@@ -191,16 +191,19 @@ static void loadPlayers() {
 	auto battler = new PlayerBattler(args);
 	_battlers.at(playerSpawnLocation) = battler;
 
-	if (GameState::IsMultiplayer) {
+	if (GameState::IsMultiplayer || GameState::IsOnline) {
 		const int p2SpawnLocation = 2;
-		auto& p2BattlerData = battlerDatabase_.at(GameState::SelectedPlayerCharacter2);
+		int p2CharIdx = GameState::IsOnline
+			? GameState::RemotePlayerCharacterIndex
+			: GameState::SelectedPlayerCharacter2;
+		auto& p2BattlerData = battlerDatabase_.at(p2CharIdx);
 		auto p2Spawn = BattleLocation::GetBattleLocation(p2SpawnLocation);
 		BattlerArgs p2Args;
 		p2Args.BattlerNum = 1;
 		p2Args.BattleData = &p2BattlerData;
 		p2Args.X = p2Spawn->X();
 		p2Args.Y = p2Spawn->Y();
-		p2Args.Controller = PlayerControllerSystem::GetPlayerByNum(1);
+		p2Args.Controller = GameState::IsOnline ? nullptr : PlayerControllerSystem::GetPlayerByNum(1);
 		auto p2Battler = new PlayerBattler(p2Args);
 		_battlers.at(p2SpawnLocation) = p2Battler;
 	}
@@ -266,7 +269,7 @@ static void loadBattle() {
 	battleUI_.RootPanel->SetVisible(true);
 	battleUI_.PlayerHUD->SetVisible(true);
 	battleUI_.VictoryPanel->SetVisible(false);
-	if (GameState::IsMultiplayer) {
+	if (GameState::IsMultiplayer || GameState::IsOnline) {
 		battleUI_.PlayerCommandsObjects[1]->SetVisible(true);
 		auto p2StatusHUD = battleUI_.PlayerHUD->GetChildByName("Player2StatusHUD");
 		if (p2StatusHUD) p2StatusHUD->SetVisible(true);

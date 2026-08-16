@@ -37,7 +37,7 @@ void PlayerBattler::onAPGained() {
 	if (_currentBattlerState == BattlerStates::MagicSelection) {
 		_battlerUI->UpdateAPCostCurrent(_currentAP);
 	}
-	if (_currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
+	if (_controller && _currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
 		handleStateChange(ATBFullyCharged);
 	}
 }
@@ -160,14 +160,14 @@ void PlayerBattler::updateImpl() {
 		case BattlerStates::ATBCharging: {
 			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
 			_battlerUI->UpdateProgressBar(progress);
-			if (_reopenMenuAfterClose && _battlerUI->IsMenuClosed()) {
+			if (_controller && _reopenMenuAfterClose && _battlerUI->IsMenuClosed()) {
 				_reopenMenuAfterClose = false;
 				handleStateChange(ATBFullyCharged);
 			}
 			break;
 		}
 		case ATBFullyCharged: {
-			handleStateChange(CommandSelection);
+			if (_controller) handleStateChange(CommandSelection);
 			break;
 		}
 		case CommandSelection:
@@ -190,7 +190,7 @@ void PlayerBattler::updateImpl() {
 		default:
 			break;
 	}
-	handleInput();
+	if (_controller) handleInput();
 }
 
 void PlayerBattler::takeDamageImpl(int damage) {
