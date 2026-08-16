@@ -51,6 +51,7 @@ struct GameState {
 		// If this is set to true, the battle system will uddate each frame.
 		static bool InBattle;
 		static int NextBattleGroup;
+		static bool IsHost;
 	} Battle;
 	struct Menu {
 		static bool MenuOpen[2];

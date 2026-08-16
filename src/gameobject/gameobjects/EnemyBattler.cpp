@@ -8,6 +8,7 @@
 #include <gameState.hpp>
 #include <gameobject/gameobjects/EnemyBattler.hpp>
 #include <iterator>
+#include <systems/NetworkSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiLine.hpp>
@@ -103,6 +104,7 @@ void EnemyBattler::getEnemyAllies(std::vector<Battler*>& out) {
 
 void EnemyBattler::onAPGained() {
 	if (_enemyState != ATBCharging) return;
+	if (GameState::IsOnline && !GameState::Battle::IsHost) return;
 
 	vector<Battler*> players;
 	vector<Battler*> allies;
@@ -116,6 +118,17 @@ void EnemyBattler::onAPGained() {
 	_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
 	_attackDelayTimer = 0.0f;
 	_enemyState = DelayBeforeAttack;
+
+	if (GameState::IsOnline) {
+		int mySlot = BattleSystem::GetBattlerSlotIndex(this);
+		int targetSlot = BattleSystem::GetBattlerSlotIndex(action.Target);
+		if (mySlot >= 0 && targetSlot >= 0) {
+			NetworkSystem::SendBattleEnemyAction(
+				static_cast<uint8_t>(mySlot),
+				static_cast<uint8_t>(action.AbilityID),
+				static_cast<uint8_t>(targetSlot));
+		}
+	}
 }
 
 void EnemyBattler::updateImpl() {
@@ -213,4 +226,16 @@ void EnemyBattler::takeDamageImpl(int damage) {
 		ShaderSetUniformFloat(_deathShader, "seed", randomSeed, 1);
 		ShaderSetUniformFloat(_deathShader, "time", 0.0f, 1);
 	}
+}
+
+void EnemyBattler::TriggerRemoteAction(int abilityID, int targetSlot) {
+	if (_enemyState != ATBCharging) return;
+	auto& allBattlers = BattleSystem::GetEnemyBattlers();
+	if (targetSlot < 0 || targetSlot >= (int)allBattlers.size() || !allBattlers[targetSlot]) return;
+
+	_pendingAction.AbilityID = abilityID;
+	_pendingAction.Target = allBattlers[targetSlot];
+	_attackDelay = 0.8f + (rand() % 700) / 1000.0f;
+	_attackDelayTimer = 0.0f;
+	_enemyState = DelayBeforeAttack;
 }

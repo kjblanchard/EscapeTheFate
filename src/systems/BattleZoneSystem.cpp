@@ -81,6 +81,7 @@ void BattleZoneSystem::Update() {
 					auto& nextbattleScene = getBattleSceneRandom(battleZoneData);
 					sgLogDebug("Setting battle scene to be %s", nextbattleScene.c_str());
 					if (GameState::IsOnline) {
+						GameState::Battle::IsHost = true;
 						NetworkSystem::SendBattleStart(static_cast<uint8_t>(battleGroup), nextbattleScene.c_str());
 					}
 					BattleTransitionSystem::TriggerTransition(nextbattleScene);

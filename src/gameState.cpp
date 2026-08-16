@@ -25,6 +25,7 @@ void GameState::ResetForNewGame() {
 	Battle::NextBattleGroup = 1;
 	Battle::ExitingFromBattle = false;
 	Battle::CurrentStepsWithoutBattle = 0;
+	Battle::IsHost = false;
 	Menu::MenuOpen[0] = false;
 	Menu::MenuOpen[1] = false;
 	for (auto& pd : Players::LocalPlayerData) {
@@ -64,3 +65,4 @@ bool GameState::Battle::ExitingFromBattle = false;
 std::string GameState::NextLoadMapName = "";
 int GameState::NextLoadDirection = 0;
 float GameState::Battle::CurrentStepsWithoutBattle = 0;
+bool GameState::Battle::IsHost = false;

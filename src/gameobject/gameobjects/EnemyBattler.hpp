@@ -31,6 +31,9 @@ class EnemyBattler : public Battler {
 	void getPlayerBattlers(std::vector<Battler*>& out);
 	void getEnemyAllies(std::vector<Battler*>& out);
 
+   public:
+	void TriggerRemoteAction(int abilityID, int targetSlot);
+
    private:
 	std::unique_ptr<EnemyAIStrategy> _ai;
 	AIAction _pendingAction;

@@ -59,6 +59,7 @@ static void battleEnd() {
 	nextBattleState_ = NotInBattle;
 	GameState::Battle::InBattle = false;
 	GameState::Battle::ExitingFromBattle = true;
+	GameState::Battle::IsHost = false;
 }
 
 static void loadBattleGroups() {
@@ -310,7 +311,9 @@ static void triggerStateChange() {
 
 void BattleSystem::TriggerBattleStart() {
 	if ((currentBattleState_ == NotInBattle) && nextBattleState_ != BattleStartTriggered) {
-		sceneToLoadAfterBattle_ = Engine::CurrentSceneName();
+		sceneToLoadAfterBattle_ = GameState::NextLoadMapName.empty()
+			? Engine::CurrentSceneName()
+			: GameState::NextLoadMapName;
 		nextBattleState_ = BattleStates::BattleStartTriggered;
 		GameState::Battle::InBattle = true;
 	}
@@ -365,7 +368,8 @@ void BattleSystem::BattleSystemUpdate() {
 }
 
 void BattleSystem::SendBattleDamage(int battlerNum, int damage) {
-	_battlers.at(battlerNum)->TakeDamage(damage);
+	if (battlerNum < 0 || battlerNum >= (int)_battlers.size() || !_battlers[battlerNum]) return;
+	_battlers[battlerNum]->TakeDamage(damage);
 }
 
 void BattleSystem::InitializeBattleSystem() {
@@ -402,4 +406,11 @@ void BattleSystem::ApplyRemoteUIState(uint8_t battlerState, uint8_t menuCursor, 
 	if ((int)_battlers.size() <= remoteSlot || !_battlers[remoteSlot]) return;
 	auto* remoteBattler = static_cast<PlayerBattler*>(_battlers[remoteSlot]);
 	remoteBattler->ApplyRemoteState(battlerState, menuCursor, magicRow, magicCol, targetIndex, targetingFriendly, selectedAbilityID);
+}
+
+void BattleSystem::ApplyEnemyAction(uint8_t enemySlot, uint8_t abilityID, uint8_t targetSlot) {
+	if (enemySlot >= (int)_battlers.size() || !_battlers[enemySlot]) return;
+	if (_battlers[enemySlot]->IsPlayer()) return;
+	auto* enemy = static_cast<EnemyBattler*>(_battlers[enemySlot]);
+	enemy->TriggerRemoteAction(abilityID, targetSlot);
 }

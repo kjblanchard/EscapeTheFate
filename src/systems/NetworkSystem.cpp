@@ -33,6 +33,7 @@ size_t packetSizeForType(PacketType type) {
 		case PacketType::SceneChange: return sizeof(SceneChangePacket);
 		case PacketType::BattleStart: return sizeof(BattleStartPacket);
 		case PacketType::BattleUIState: return sizeof(BattleUIStatePacket);
+		case PacketType::BattleEnemyAction: return sizeof(BattleEnemyActionPacket);
 	}
 	return 0;
 }
@@ -80,6 +81,7 @@ void dispatchPacket(const uint8_t* data, size_t size) {
 			auto* pkt = reinterpret_cast<const BattleStartPacket*>(data);
 			GameState::NextLoadMapName = Engine::CurrentSceneName();
 			GameState::Battle::NextBattleGroup = pkt->battleGroup;
+			GameState::Battle::IsHost = false;
 			BattleTransitionSystem::TriggerTransition(pkt->battleScene);
 			GameState::Battle::CurrentStepsWithoutBattle = 0;
 			break;
@@ -88,6 +90,12 @@ void dispatchPacket(const uint8_t* data, size_t size) {
 			if (size < sizeof(BattleUIStatePacket)) return;
 			auto* pkt = reinterpret_cast<const BattleUIStatePacket*>(data);
 			BattleSystem::ApplyRemoteUIState(pkt->battlerState, pkt->menuCursor, pkt->magicMenuRow, pkt->magicMenuCol, pkt->targetIndex, pkt->targetingFriendly, pkt->selectedAbilityID);
+			break;
+		}
+		case PacketType::BattleEnemyAction: {
+			if (size < sizeof(BattleEnemyActionPacket)) return;
+			auto* pkt = reinterpret_cast<const BattleEnemyActionPacket*>(data);
+			BattleSystem::ApplyEnemyAction(pkt->enemySlot, pkt->abilityID, pkt->targetSlot);
 			break;
 		}
 		default:
@@ -246,5 +254,15 @@ void NetworkSystem::SendBattleUIState(uint8_t battlerState, uint8_t menuCursor, 
 	pkt.targetIndex = targetIndex;
 	pkt.targetingFriendly = targetingFriendly;
 	pkt.selectedAbilityID = selectedAbilityID;
+	NetClientSend(_client, &pkt, sizeof(pkt));
+}
+
+void NetworkSystem::SendBattleEnemyAction(uint8_t enemySlot, uint8_t abilityID, uint8_t targetSlot) {
+	if (!_connected || !_client) return;
+	BattleEnemyActionPacket pkt{};
+	pkt.header.type = PacketType::BattleEnemyAction;
+	pkt.enemySlot = enemySlot;
+	pkt.abilityID = abilityID;
+	pkt.targetSlot = targetSlot;
 	NetClientSend(_client, &pkt, sizeof(pkt));
 }

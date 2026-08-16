@@ -34,5 +34,6 @@ bool HasAbility(int id);
 const BattlerData* GetPlayerBattlerData(int playerIndex);
 int GetBattlerSlotIndex(const Battler* battler);
 void ApplyRemoteUIState(uint8_t battlerState, uint8_t menuCursor, uint8_t magicRow, uint8_t magicCol, uint8_t targetIndex, uint8_t targetingFriendly, uint8_t selectedAbilityID);
+void ApplyEnemyAction(uint8_t enemySlot, uint8_t abilityID, uint8_t targetSlot);
 };	// namespace BattleSystem
 }  // namespace Etf
