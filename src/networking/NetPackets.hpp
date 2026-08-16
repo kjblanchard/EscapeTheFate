@@ -11,6 +11,7 @@ enum class PacketType : uint8_t {
 	PlayerLeave = 0x05,
 	SceneChange = 0x06,
 	BattleStart = 0x07,
+	BattleUIState = 0x08,
 };
 
 struct PacketHeader {
@@ -58,6 +59,17 @@ struct BattleStartPacket {
 	PacketHeader header;
 	uint8_t battleGroup;
 	char battleScene[32];
+};
+
+struct BattleUIStatePacket {
+	PacketHeader header;
+	uint8_t battlerState;
+	uint8_t menuCursor;
+	uint8_t magicMenuRow;
+	uint8_t magicMenuCol;
+	uint8_t targetIndex;
+	uint8_t targetingFriendly;
+	uint8_t selectedAbilityID;
 };
 
 #pragma pack(pop)

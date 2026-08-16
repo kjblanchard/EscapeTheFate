@@ -296,8 +296,8 @@ void CharacterSelectSystem::Update() {
 			GameState::SelectedOverworldFrameH = ch.OverworldFrameH;
 			BattleSystem::ResetAfterGameOver();
 			if (GameState::IsOnline) {
-				GameState::LocalPlayerCharacterIndex = static_cast<uint8_t>(_selectedIndex);
-				NetworkSystem::SendJoin(static_cast<uint8_t>(_selectedIndex));
+				GameState::LocalPlayerCharacterIndex = static_cast<uint8_t>(ch.BattlerDBIndex);
+				NetworkSystem::SendJoin(static_cast<uint8_t>(ch.BattlerDBIndex));
 			}
 			destroyUI();
 			_active = false;

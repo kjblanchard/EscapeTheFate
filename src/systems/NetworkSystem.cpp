@@ -32,6 +32,7 @@ size_t packetSizeForType(PacketType type) {
 		case PacketType::PlayerLeave: return sizeof(PlayerLeavePacket);
 		case PacketType::SceneChange: return sizeof(SceneChangePacket);
 		case PacketType::BattleStart: return sizeof(BattleStartPacket);
+		case PacketType::BattleUIState: return sizeof(BattleUIStatePacket);
 	}
 	return 0;
 }
@@ -81,6 +82,12 @@ void dispatchPacket(const uint8_t* data, size_t size) {
 			GameState::Battle::NextBattleGroup = pkt->battleGroup;
 			BattleTransitionSystem::TriggerTransition(pkt->battleScene);
 			GameState::Battle::CurrentStepsWithoutBattle = 0;
+			break;
+		}
+		case PacketType::BattleUIState: {
+			if (size < sizeof(BattleUIStatePacket)) return;
+			auto* pkt = reinterpret_cast<const BattleUIStatePacket*>(data);
+			BattleSystem::ApplyRemoteUIState(pkt->battlerState, pkt->menuCursor, pkt->magicMenuRow, pkt->magicMenuCol, pkt->targetIndex, pkt->targetingFriendly, pkt->selectedAbilityID);
 			break;
 		}
 		default:
@@ -225,5 +232,19 @@ void NetworkSystem::SendBattleStart(uint8_t battleGroup, const char* battleScene
 	pkt.battleGroup = battleGroup;
 	strncpy(pkt.battleScene, battleScene, sizeof(pkt.battleScene) - 1);
 	pkt.battleScene[sizeof(pkt.battleScene) - 1] = '\0';
+	NetClientSend(_client, &pkt, sizeof(pkt));
+}
+
+void NetworkSystem::SendBattleUIState(uint8_t battlerState, uint8_t menuCursor, uint8_t magicRow, uint8_t magicCol, uint8_t targetIndex, uint8_t targetingFriendly, uint8_t selectedAbilityID) {
+	if (!_connected || !_client) return;
+	BattleUIStatePacket pkt{};
+	pkt.header.type = PacketType::BattleUIState;
+	pkt.battlerState = battlerState;
+	pkt.menuCursor = menuCursor;
+	pkt.magicMenuRow = magicRow;
+	pkt.magicMenuCol = magicCol;
+	pkt.targetIndex = targetIndex;
+	pkt.targetingFriendly = targetingFriendly;
+	pkt.selectedAbilityID = selectedAbilityID;
 	NetClientSend(_client, &pkt, sizeof(pkt));
 }

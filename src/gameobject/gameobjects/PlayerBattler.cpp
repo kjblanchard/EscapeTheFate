@@ -90,7 +90,21 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			break;
 	}
 	_currentBattlerState = newState;
+	sendUIStateIfOnline();
 }
+
+void PlayerBattler::sendUIStateIfOnline() {
+	if (!_controller || !GameState::IsOnline) return;
+	NetworkSystem::SendBattleUIState(
+		static_cast<uint8_t>(_currentBattlerState),
+		static_cast<uint8_t>(_currentMenuLocation),
+		static_cast<uint8_t>(_magicMenuRow),
+		static_cast<uint8_t>(_magicMenuCol),
+		static_cast<uint8_t>(_currentTargetBattler),
+		static_cast<uint8_t>(_targetingFriendly ? 1 : 0),
+		static_cast<uint8_t>(_selectedAbilityID));
+}
+
 void PlayerBattler::moveFingerToEnemyNum(int enemyNum) {
 	sgLogDebug("Trying to move finger to location %d", enemyNum);
 	std::vector<Battler*> enemyBattlers;
@@ -252,6 +266,7 @@ void PlayerBattler::handleInputCommandsMenu() {
 		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
 		_battlerUI->MoveCursorInMenu(_currentMenuLocation);
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
+		sendUIStateIfOnline();
 	}
 }
 void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
@@ -340,6 +355,7 @@ void PlayerBattler::handleInputMagicMenu() {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		_battlerUI->CloseMagicMenu();
 		_currentBattlerState = CommandSelection;
+		sendUIStateIfOnline();
 		return;
 	}
 
@@ -358,6 +374,7 @@ void PlayerBattler::handleInputMagicMenu() {
 			_battlerUI->HideAPCostBox();
 			_battlerUI->ShowMagicDescription("");
 		}
+		sendUIStateIfOnline();
 	}
 }
 
@@ -376,6 +393,7 @@ void PlayerBattler::handleInputTargetSelection() {
 		_targetingFriendly = !_targetingFriendly;
 		_currentTargetBattler = 0;
 		moveFingerToTargetNum(0);
+		sendUIStateIfOnline();
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
@@ -394,9 +412,12 @@ void PlayerBattler::handleInputTargetSelection() {
 			}
 			battler->PlayHitAnimation(ability);
 			if (GameState::IsOnline) {
-				NetworkSystem::SendBattleAction(
-					static_cast<uint8_t>(_currentTargetBattler),
-					static_cast<int16_t>(ability.BaseDamage));
+				int slotIdx = BattleSystem::GetBattlerSlotIndex(battler);
+				if (slotIdx >= 0) {
+					NetworkSystem::SendBattleAction(
+						static_cast<uint8_t>(slotIdx),
+						static_cast<int16_t>(ability.BaseDamage));
+				}
 			}
 		}
 		SpendAP(ability.APCost);
@@ -420,11 +441,13 @@ void PlayerBattler::handleInputTargetSelection() {
 		} else {
 			_currentBattlerState = CommandSelection;
 		}
+		sendUIStateIfOnline();
 		return;
 	}
 
 	if (newTarget != _currentTargetBattler) {
 		moveFingerToTargetNum(newTarget);
+		sendUIStateIfOnline();
 	}
 }
 
@@ -455,5 +478,42 @@ void PlayerBattler::handleInput() {
 			break;
 		default:
 			break;
+	}
+}
+
+void PlayerBattler::ApplyRemoteState(uint8_t battlerState, uint8_t menuCursor, uint8_t magicRow, uint8_t magicCol, uint8_t targetIndex, uint8_t targetingFriendly, uint8_t selectedAbilityID) {
+	auto newState = static_cast<BattlerStates>(battlerState);
+
+	if (newState != _currentBattlerState) {
+		handleStateChange(newState);
+	}
+
+	if (_currentBattlerState == BattlerStates::CommandSelection) {
+		if (menuCursor != _currentMenuLocation) {
+			_currentMenuLocation = menuCursor;
+			_battlerUI->MoveCursorInMenu(_currentMenuLocation);
+		}
+	} else if (_currentBattlerState == BattlerStates::MagicSelection) {
+		if (magicRow != _magicMenuRow || magicCol != _magicMenuCol) {
+			_magicMenuRow = magicRow;
+			_magicMenuCol = magicCol;
+			_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
+			int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+			if (slotIndex < (int)_battlerData->Abilities.size()) {
+				int abilityID = _battlerData->Abilities[slotIndex];
+				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
+				_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+				_battlerUI->ShowMagicDescription(ab.Description);
+			} else {
+				_battlerUI->HideAPCostBox();
+				_battlerUI->ShowMagicDescription("");
+			}
+		}
+	} else if (_currentBattlerState == BattlerStates::TargetSelection) {
+		_targetingFriendly = targetingFriendly != 0;
+		_selectedAbilityID = selectedAbilityID;
+		if (targetIndex != _currentTargetBattler) {
+			moveFingerToTargetNum(targetIndex);
+		}
 	}
 }

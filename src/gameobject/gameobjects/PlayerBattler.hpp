@@ -1,6 +1,7 @@
 #pragma once
 #include <battle/battlerUI.hpp>
 #include <components/PlayerController.hpp>
+#include <cstdint>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
 namespace Etf {
@@ -23,6 +24,7 @@ class PlayerBattler : public Battler {
    public:
 	PlayerBattler(const BattlerArgs& args);
 	inline bool IsPlayer() override final { return true; };
+	void ApplyRemoteState(uint8_t battlerState, uint8_t menuCursor, uint8_t magicRow, uint8_t magicCol, uint8_t targetIndex, uint8_t targetingFriendly, uint8_t selectedAbilityID);
 
    private:
 	void updateImpl() override;
@@ -42,6 +44,7 @@ class PlayerBattler : public Battler {
 	void moveFingerToEnemyNum(int enemyNum);
 	bool shouldBattleEnd();
 	void startATBAnimation();
+	void sendUIStateIfOnline();
 
 #ifdef imgui
    public:

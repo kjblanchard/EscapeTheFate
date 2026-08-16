@@ -389,3 +389,17 @@ const BattlerData* BattleSystem::GetPlayerBattlerData(int playerIndex) {
 	if (dbIdx < 0 || dbIdx >= (int)battlerDatabase_.size()) return nullptr;
 	return &battlerDatabase_[dbIdx];
 }
+
+int BattleSystem::GetBattlerSlotIndex(const Battler* battler) {
+	for (int i = 0; i < (int)_battlers.size(); ++i) {
+		if (_battlers[i] == battler) return i;
+	}
+	return -1;
+}
+
+void BattleSystem::ApplyRemoteUIState(uint8_t battlerState, uint8_t menuCursor, uint8_t magicRow, uint8_t magicCol, uint8_t targetIndex, uint8_t targetingFriendly, uint8_t selectedAbilityID) {
+	const int remoteSlot = 2;
+	if ((int)_battlers.size() <= remoteSlot || !_battlers[remoteSlot]) return;
+	auto* remoteBattler = static_cast<PlayerBattler*>(_battlers[remoteSlot]);
+	remoteBattler->ApplyRemoteState(battlerState, menuCursor, magicRow, magicCol, targetIndex, targetingFriendly, selectedAbilityID);
+}
