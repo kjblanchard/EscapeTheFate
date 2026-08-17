@@ -67,4 +67,6 @@ to discuss what you would like to change.
 - [Game Over SFX](https://freesound.org/people/melokacool/sounds/615457/)
 - [samurai slash by nekoninja](https://freesound.org/s/370204/)
     License: Creative Commons 0
+- [Kyrises icons](https://kyrise.itch.io/kyrises-free-16x16-rpg-icon-pack)
+   License: Creative Commons
 
