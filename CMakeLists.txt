@@ -1,5 +1,5 @@
 # 3.26 is needed for building al on static
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 4.4)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(GAME_VERSION "0.1.0" CACHE STRING "Game version string")

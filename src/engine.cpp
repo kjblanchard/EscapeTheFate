@@ -104,6 +104,11 @@ void debugLogFunc(const char* time, const char* message, int logLevel) {
 void initializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
 	sgSetLogLevel(sgLogLevelWarn);
 	sgSetDebugFunction(debugLogFunc);
+	auto doesExist = DoesFileExistRel("debug.txt");
+	if (doesExist) {
+		sgSetLogLevel(sgLogLevelDebug);
+		sgSetFileLogLevel(sgLogLevelDebug);
+	}
 	SetInitializeFunction(initializefunc);
 	SetStartFunction(startEngine);
 	SetUpdateFunction(update);

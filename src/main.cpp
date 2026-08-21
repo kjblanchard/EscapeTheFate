@@ -1,3 +1,5 @@
+#include <Supergoon/filesystem.h>
+
 #include <debug/DebugBattle.hpp>
 #include <debug/DebugCamera.hpp>
 #include <debug/DebugConsoleWindow.hpp>
@@ -8,20 +10,21 @@
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
 #include <engine.hpp>
+#include <systems/BattleSpoilsSystem.hpp>
 #include <systems/BattleTransitionSystem.hpp>
 #include <systems/BattleZoneSystem.hpp>
-#include <systems/SplashSystem.hpp>
 #include <systems/GameObjectSystem.hpp>
-#include <systems/PlayerControllerSystem.hpp>
-#include <systems/SystemCallbacks.hpp>
-#include <systems/BattleSpoilsSystem.hpp>
-#include <systems/battleSystem.hpp>
-#include <systems/SceneNameSystem.hpp>
 #include <systems/GameOverSystem.hpp>
 #include <systems/MenuSystem.hpp>
 #include <systems/PauseSystem.hpp>
+#include <systems/PlayerControllerSystem.hpp>
+#include <systems/SceneNameSystem.hpp>
+#include <systems/SplashSystem.hpp>
+#include <systems/SystemCallbacks.hpp>
 #include <systems/TitleScreenSystem.hpp>
+#include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
+#include "sgtools/log.h"
 using namespace Etf;
 
 void InitializeGame() {
