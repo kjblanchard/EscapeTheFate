@@ -91,14 +91,14 @@ LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController
 	auto spriteName = overworldSprite + ".png";
 	float fw = (float)frameW;
 	float fh = (float)frameH;
-	Sprite_ = Engine::Sprites::CreateSpriteFull(spriteName, &X_, &Y_, {0, 0, fw, fh}, {0, 0, fw, fh});
-	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &X_, &Y_, {0, 0, 16, 16}, {20, -5, 16, 16});
+	Sprite_ = Engine::Sprites::CreateSpriteFull(spriteName, &x, &y, {0, 0, fw, fh}, {0, 0, fw, fh});
+	InteractionSprite_ = Engine::Sprites::CreateSpriteFull("interaction.png", &x, &y, {0, 0, 16, 16}, {20, -5, 16, 16});
 	Engine::Sprites::SetSpriteVisible(InteractionSprite_, false);
 	Animator_ = make_unique<SpriteAnimator>(overworldSprite, Sprite_);
 }
 
-void LocalPlayer::Start() {}
-void LocalPlayer::Update() {
+void LocalPlayer::start() {}
+void LocalPlayer::update() {
 	GameState::Players::LocalPlayerData[PlayerIndex_].MovedThisFrame = false;
 	if (!handlePlayerMovement()) {
 		handleplayerJoystickMovement();
@@ -285,6 +285,6 @@ constexpr const char* LocalPlayer::getAnimNameFromDirection() {
 	return "walkD";	 // or assert
 }
 
-void LocalPlayer::Draw() {
+void LocalPlayer::draw() {
 	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect_);
 }

@@ -5,6 +5,7 @@
 #include <battle/battlerUI.hpp>
 #include <components/SpriteAnimator.hpp>
 #include <gameobject/GameObject.hpp>
+#include <battle/statuseffects/statusEffects.hpp>
 #include <memory>
 #include <string>
 #include <unordered_map>
@@ -24,12 +25,12 @@ class Battler : public GameObject {
    public:
 	Battler(const BattlerArgs& args);
 	~Battler() override;
-	inline float SpriteX() { return X() + _battlerData->Location.x; }
+	inline float SpriteX() { return X() + battlerData->Location.x; }
 	float SpriteWidth();
 	float SpriteHeight();
-	inline float SpriteY() { return Y() + _battlerData->Location.y; }
-	void Draw() override;
-	inline void Update() override final {
+	inline float SpriteY() { return Y() + battlerData->Location.y; }
+	void draw() override;
+	inline void update() override final {
 		updateATBGauge();
 		updateHitAnims();
 		updateDamageNumbers();
@@ -37,12 +38,12 @@ class Battler : public GameObject {
 	}
 
    public:
-	inline unsigned int CurrentHP() { return _currentHP; }
-	inline int CurrentAP() const { return _currentAP; }
-	inline int MaxAP() const { return _maxAP; }
-	inline int Def() { return _battlerData->Def; }
-	inline const std::string& Name() const { return _battlerData->Name; }
-	inline BattlerData* GetBattlerData() const { return _battlerData; }
+	inline unsigned int CurrentHP() { return currentHP; }
+	inline int CurrentAP() const { return currentAP; }
+	inline int MaxAP() const { return maxAP; }
+	inline int Def() { return battlerData->Def; }
+	inline const std::string& Name() const { return battlerData->Name; }
+	inline BattlerData* GetBattlerData() const { return battlerData; }
 	virtual bool IsPlayer() = 0;
 	void PlayHitAnimation(const AbilityData& ability);
 
@@ -50,12 +51,12 @@ class Battler : public GameObject {
 	void TakeDamage(int damage);
 	void Heal(int amount);
 #ifdef imgui
-	inline int& DebugHP() { return _currentHP; }
-	inline float& DebugATBCharge() { return _currentATBCharge; }
-	inline int DebugMaxATB() { return _maxATBCharge; }
-	inline int& DebugAP() { return _currentAP; }
-	inline int DebugMaxAP() { return _maxAP; }
-	inline BattlerData* DebugData() { return _battlerData; }
+	inline int& DebugHP() { return currentHP; }
+	inline float& DebugATBCharge() { return currentATBCharge; }
+	inline int DebugMaxATB() { return maxATBCharge; }
+	inline int& DebugAP() { return currentAP; }
+	inline int DebugMaxAP() { return maxAP; }
+	inline BattlerData* DebugData() { return battlerData; }
 #endif
 
    protected:
@@ -63,22 +64,23 @@ class Battler : public GameObject {
 	virtual void takeDamageImpl(int damage) = 0;
 	virtual void healImpl(int amount) {}
 	virtual void onAPGained() {}
-	bool SpendAP(int cost);
+	bool spendAP(int cost);
 
    protected:
-	BattlerData* _battlerData;
-	int _currentHP;
-	float _currentATBCharge;
-	int _maxATBCharge;
-	int _currentAP = 0;
-	int _maxAP = 3;
+	BattlerData* battlerData;
+	int currentHP;
+	float currentATBCharge;
+	int maxATBCharge;
+	int currentAP = 0;
+	int maxAP = 3;
 
    protected:
-	Sprite* _sprite;
-	int _locationX, _locationY;
-	std::unique_ptr<SpriteAnimator> _animator;
-	std::unordered_map<std::string, std::unique_ptr<HitAnimPool>> _hitAnimPools;
-	DamageNumberPool _damageNumberPool;
+	Sprite* sprite;
+	int locationX, locationY;
+	std::unique_ptr<SpriteAnimator> animator;
+	std::unordered_map<std::string, std::unique_ptr<HitAnimPool>> hitAnimPools;
+	DamageNumberPool damageNumberPool;
+    std::vector<StatusEffectInstance> statusEffects;
 
    private:
 	static constexpr const char* kDamageFont = "PressStart2P";

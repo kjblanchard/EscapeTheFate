@@ -9,7 +9,7 @@ class Textbox : public GameObject, public IInteractable {
 	static void Create(TiledObject* objData);
 	Textbox(TiledObject* objData);
 	~Textbox();
-	void Draw() override;
+	void draw() override;
 	void Interact() override;
 
    private:

@@ -25,9 +25,9 @@ class LocalPlayer : public GameObject {
 	~LocalPlayer() override;
 
    private:
-	void Start() override;
-	void Update() override;
-	void Draw() override;
+	void start() override;
+	void update() override;
+	void draw() override;
 	void handleplayerJoystickMovement();
 	// Returns if player moved this frame
 	bool handlePlayerMovement();

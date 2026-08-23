@@ -25,16 +25,16 @@ bool PlayerBattler::shouldBattleEnd() {
 }
 
 PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controller(args.Controller), _battlerUI(make_unique<BattlerUI>(args.BattlerNum)) {
-	_battlerUI->UpdateHP(to_string(_currentHP));
-	_battlerUI->UpdateAP(to_string(_currentAP));
-	_battlerUI->UpdateName(_battlerData->Nick);
+	_battlerUI->UpdateHP(to_string(currentHP));
+	_battlerUI->UpdateAP(to_string(currentAP));
+	_battlerUI->UpdateName(battlerData->Nick);
 }
 
 void PlayerBattler::onAPGained() {
-	_battlerUI->UpdateAP(to_string(_currentAP));
-	if (_isDead || _currentHP <= 0) return;
+	_battlerUI->UpdateAP(to_string(currentAP));
+	if (_isDead || currentHP <= 0) return;
 	if (_currentBattlerState == BattlerStates::MagicSelection) {
-		_battlerUI->UpdateAPCostCurrent(_currentAP);
+		_battlerUI->UpdateAPCostCurrent(currentAP);
 	}
 	if (_currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
 		handleStateChange(ATBFullyCharged);
@@ -51,6 +51,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->EndPlayerTurn(this);
 			break;
 		case BattlerStates::ATBFullyCharged:
+            sgLogWarn("Would take damage at start");
 			_currentMenuLocation = 0;
 			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
@@ -61,9 +62,9 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_magicMenuRow = 0;
 			_magicMenuCol = 0;
 			_battlerUI->OpenMagicMenu();
-			if (!_battlerData->Abilities.empty()) {
-				const auto& ability = BattleSystem::GetAbilityByID(_battlerData->Abilities[0]);
-				_battlerUI->ShowAPCostBox(_currentAP, ability.APCost);
+			if (!battlerData->Abilities.empty()) {
+				const auto& ability = BattleSystem::GetAbilityByID(battlerData->Abilities[0]);
+				_battlerUI->ShowAPCostBox(currentAP, ability.APCost);
 				_battlerUI->ShowMagicDescription(ability.Description);
 			}
 			break;
@@ -78,7 +79,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
 			_battlerUI->ClosePlayerInfoBox();
-			_animator->StartAnimation(VICTORY_STR, -1);
+			animator->StartAnimation(VICTORY_STR, -1);
 			_battlerUI->EndPlayerTurn(this);
 			BattleSystem::TriggerBattleVictoryStart();
 			break;
@@ -132,12 +133,12 @@ void PlayerBattler::updateImpl() {
 		if (_deathHoldTimer > 0) {
 			_deathHoldTimer -= GameState::DeltaTimeSeconds;
 			if (_deathHoldTimer <= 0) {
-				_animator->UpdateAnimatorSpeed(0.0f);
+				animator->UpdateAnimatorSpeed(0.0f);
 			}
 		}
 		return;
 	}
-	if (_currentHP <= 0) return;
+	if (currentHP <= 0) return;
 	if (_isPlayingDamageAnim) {
 		_damageAnimTimer -= GameState::DeltaTimeSeconds;
 		if (_damageAnimTimer <= 0) {
@@ -157,7 +158,7 @@ void PlayerBattler::updateImpl() {
 			handleStateChange(ATBCharging);
 			break;
 		case BattlerStates::ATBCharging: {
-			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
+			auto progress = currentATBCharge / maxATBCharge * 100.00f;
 			_battlerUI->UpdateProgressBar(progress);
 			if (_reopenMenuAfterClose && _battlerUI->IsMenuClosed()) {
 				_reopenMenuAfterClose = false;
@@ -172,7 +173,7 @@ void PlayerBattler::updateImpl() {
 		case CommandSelection:
 		case MagicSelection:
 		case TargetSelection: {
-			auto progress = _currentATBCharge / _maxATBCharge * 100.00f;
+			auto progress = currentATBCharge / maxATBCharge * 100.00f;
 			_battlerUI->UpdateProgressBar(progress);
 			if (_currentBattlerState == TargetSelection) {
 				std::vector<Battler*> targets;
@@ -193,12 +194,12 @@ void PlayerBattler::updateImpl() {
 }
 
 void PlayerBattler::takeDamageImpl(int damage) {
-	_battlerUI->UpdateHP(to_string(_currentHP));
-	if (_currentHP <= 0) {
+	_battlerUI->UpdateHP(to_string(currentHP));
+	if (currentHP <= 0) {
 		Engine::Audio::PlaySFXBuffer("hit2", 1.0f);
-		_animator->StartAnimation("dead1", -1);
+		animator->StartAnimation("dead1", -1);
 		_isDead = true;
-		_deathHoldTimer = _animator->GetAnimationDuration("dead1");
+		_deathHoldTimer = animator->GetAnimationDuration("dead1");
 		_isPlayingDamageAnim = false;
 		_battlerUI->CloseCommandsMenu();
 		_battlerUI->CloseTargetSelection();
@@ -208,12 +209,12 @@ void PlayerBattler::takeDamageImpl(int damage) {
 	if (!_isPlayingDamageAnim) {
 		_isPlayingDamageAnim = true;
 		_damageAnimTimer = 0.5f;
-		_animator->PlayAnimationThenLoopSecond("damage1", _battlerData->IdleAnimation);
+		animator->PlayAnimationThenLoopSecond("damage1", battlerData->IdleAnimation);
 	}
 }
 
 void PlayerBattler::healImpl(int amount) {
-	_battlerUI->UpdateHP(to_string(_currentHP));
+	_battlerUI->UpdateHP(to_string(currentHP));
 }
 
 void PlayerBattler::handleInputCommandsMenu() {
@@ -226,7 +227,7 @@ void PlayerBattler::handleInputCommandsMenu() {
 		switch (_currentMenuLocation) {
 			case 0: {
 				const auto& ability = BattleSystem::GetAbilityByID(0);
-				if (_currentAP < ability.APCost) {
+				if (currentAP < ability.APCost) {
 					Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 					return;
 				}
@@ -320,13 +321,13 @@ void PlayerBattler::handleInputMagicMenu() {
 		if (newCol < 1) ++newCol;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
 		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-		if (slotIndex >= (int)_battlerData->Abilities.size()) {
+		if (slotIndex >= (int)battlerData->Abilities.size()) {
 			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 			return;
 		}
-		_selectedAbilityID = _battlerData->Abilities[slotIndex];
+		_selectedAbilityID = battlerData->Abilities[slotIndex];
 		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
-		if (_currentAP < ability.APCost) {
+		if (currentAP < ability.APCost) {
 			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
 			return;
 		}
@@ -348,10 +349,10 @@ void PlayerBattler::handleInputMagicMenu() {
 		_battlerUI->MoveCursorInMagicMenu(_magicMenuCol, _magicMenuRow);
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
 		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-		if (slotIndex < (int)_battlerData->Abilities.size()) {
-			int abilityID = _battlerData->Abilities[slotIndex];
+		if (slotIndex < (int)battlerData->Abilities.size()) {
+			int abilityID = battlerData->Abilities[slotIndex];
 			const auto& ab = BattleSystem::GetAbilityByID(abilityID);
-			_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+			_battlerUI->ShowAPCostBox(currentAP, ab.APCost);
 			_battlerUI->ShowMagicDescription(ab.Description);
 		} else {
 			_battlerUI->HideAPCostBox();
@@ -384,7 +385,7 @@ void PlayerBattler::handleInputTargetSelection() {
 		const auto battler = targets.at(_currentTargetBattler);
 		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
 		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
-		_animator->PlayAnimationThenLoopSecond(playerAnim, _battlerData->IdleAnimation);
+		animator->PlayAnimationThenLoopSecond(playerAnim, battlerData->IdleAnimation);
 		if (battler) {
 			if (ability.BaseDamage < 0) {
 				battler->Heal(-ability.BaseDamage);
@@ -393,10 +394,10 @@ void PlayerBattler::handleInputTargetSelection() {
 			}
 			battler->PlayHitAnimation(ability);
 		}
-		SpendAP(ability.APCost);
-		_battlerUI->UpdateAP(to_string(_currentAP));
-		_currentATBCharge = 0;
-		_reopenMenuAfterClose = _currentAP > 0;
+		spendAP(ability.APCost);
+		_battlerUI->UpdateAP(to_string(currentAP));
+		currentATBCharge = 0;
+		_reopenMenuAfterClose = currentAP > 0;
 		handleStateChange(ATBCharging);
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
@@ -405,10 +406,10 @@ void PlayerBattler::handleInputTargetSelection() {
 		if (_selectedAbilityID > 0) {
 			_currentBattlerState = MagicSelection;
 			int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-			if (slotIndex < (int)_battlerData->Abilities.size()) {
-				int abilityID = _battlerData->Abilities[slotIndex];
+			if (slotIndex < (int)battlerData->Abilities.size()) {
+				int abilityID = battlerData->Abilities[slotIndex];
 				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
-				_battlerUI->ShowAPCostBox(_currentAP, ab.APCost);
+				_battlerUI->ShowAPCostBox(currentAP, ab.APCost);
 				_battlerUI->ShowMagicDescription(ab.Description);
 			}
 		} else {

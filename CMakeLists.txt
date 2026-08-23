@@ -75,6 +75,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
+  src/battle/statuseffects/statuspoison.cpp
   src/debug/DebugWindow.cpp
   src/debug/DebugPlayers.cpp
   src/debug/DebugCamera.cpp
