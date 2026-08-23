@@ -4,26 +4,18 @@
 using namespace Etf;
 
 namespace {
-bool applyFunc(StatusEffectInstance& s, Battler* b, Battler* t) {
-	return true;
-}
-
-bool shouldPerform(StatusEffectInstance& s, Battler* b, Battler* t) {
-	return true;
-}
-
-bool actionFunc(StatusEffectInstance& s, Battler* b, Battler* t) {
-	b->TakeDamage(1);
-	--s.Duration;
-	return true;
-}
-
-std::map<Etf::StatusEffects, StatusEffectData> statusEffects = {
-	{StatusEffects::Poison, {applyFunc, shouldPerform, actionFunc, {StatusEffectTriggers::TurnEnd}, StatusEffects::Poison}}};
+std::map<Etf::StatusEffects, StatusEffectData> statusEffectsMap = {
+	{StatusEffects::Poison, Poison},
+	{StatusEffects::RelicDamageBonus, RelicDamageBonusEffect},
+	{StatusEffects::RelicSpeedBoost, RelicSpeedBoostEffect},
+	{StatusEffects::RelicShield, RelicShieldEffect},
+};
 }  // namespace
 
 void Etf::HandleStatusEffect(StatusEffectInstance& s, StatusEffectTriggers tr, Battler* b, Battler* t) {
-	auto se = statusEffects.at(s.StatusType);
+	auto it = statusEffectsMap.find(s.StatusType);
+	if (it == statusEffectsMap.end()) return;
+	auto& se = it->second;
 
 	StatusFunc func = nullptr;
 
@@ -31,14 +23,17 @@ void Etf::HandleStatusEffect(StatusEffectInstance& s, StatusEffectTriggers tr, B
 		case StatusEffectTriggers::Never:
 			break;
 		case StatusEffectTriggers::TurnStart:
+			func = se.Action;
 			break;
 		case StatusEffectTriggers::DamageTaken:
+			func = se.Action;
 			break;
 		case StatusEffectTriggers::TurnEnd:
 			func = se.Action;
 			break;
 		case StatusEffectTriggers::Always:
+			func = se.Action;
 			break;
 	}
-	func(s, b, t);
+	if (func) func(s, b, t);
 }

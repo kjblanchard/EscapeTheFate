@@ -20,7 +20,9 @@ enum class StatusEffects {
 	Haste,
 	Defend,
 	Critical,
-	Relic,
+	RelicDamageBonus,
+	RelicSpeedBoost,
+	RelicShield,
 };
 
 struct StatusEffectInstance {
@@ -42,6 +44,9 @@ struct StatusEffectData {
 
 // Declare all status effects so we can add them to map
 extern StatusEffectData Poison;
+extern StatusEffectData RelicDamageBonusEffect;
+extern StatusEffectData RelicSpeedBoostEffect;
+extern StatusEffectData RelicShieldEffect;
 
 // Perform status effect s at a specific trigger tr on battler b against battler t, target can be null
 void HandleStatusEffect(StatusEffectInstance& s, StatusEffectTriggers tr, Battler* b, Battler* t);

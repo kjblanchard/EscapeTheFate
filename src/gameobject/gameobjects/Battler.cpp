@@ -54,8 +54,36 @@ void Battler::handleShouldApplyStatus(Battler* b) {
 	}
 }
 
+int Battler::absorbDamage(int rawDamage) {
+	for (auto& s : statusEffects) {
+		if (s.StatusType != StatusEffects::RelicShield) continue;
+		if (s.Duration <= 0) continue;
+		int absorbed = std::min(s.Duration, rawDamage);
+		s.Duration -= absorbed;
+		rawDamage -= absorbed;
+		if (rawDamage <= 0) return 0;
+	}
+	return rawDamage;
+}
+
+int Battler::GetOutgoingDamageBonus() const {
+	int bonus = 0;
+	for (const auto& s : statusEffects) {
+		if (s.StatusType == StatusEffects::RelicDamageBonus && s.Duration != 0) {
+			bonus += 1;
+		}
+	}
+	return bonus;
+}
+
+void Battler::AddSpdBonus(int amount) {
+	spdBonus += amount;
+}
+
 
 void Battler::TakeDamage(int damage) {
+	damage = absorbDamage(damage);
+	if (damage <= 0) return;
 	currentHP -= damage;
 	damageNumberPool.Show(damage, (SpriteX() + SpriteWidth() / 2.0f) + battlerData->DamageOffsetX, (SpriteY() - 4.0f) + battlerData->DamageOffsetY, false);
 	takeDamageImpl(damage);
@@ -102,7 +130,7 @@ void Battler::updateATBGauge() {
 		return;
 	}
 	auto delta = DeltaTimeSeconds * 20;
-	auto gaguePower = delta * battlerData->Spd;
+	auto gaguePower = delta * (battlerData->Spd + spdBonus);
 	currentATBCharge += gaguePower;
 	currentATBCharge = currentATBCharge > maxATBCharge ? maxATBCharge : currentATBCharge;
 }

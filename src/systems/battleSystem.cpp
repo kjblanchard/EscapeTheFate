@@ -267,6 +267,15 @@ static void initializeBattleSystem() {
 	nextBattleState_ = NotInBattle;
 }
 
+static int relicDefaultDuration(StatusEffects type) {
+	switch (type) {
+		case StatusEffects::RelicDamageBonus: return -1;
+		case StatusEffects::RelicSpeedBoost: return 2;
+		case StatusEffects::RelicShield: return 5;
+		default: return 0;
+	}
+}
+
 static void loadBattle() {
 	IsGameLoading = true;
 	if (!battleInitialized_) initializeBattleSystem();
@@ -275,6 +284,17 @@ static void loadBattle() {
 	// Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();
+	for (auto relicType : GameState::Battle::PlayerRelics) {
+		StatusEffectInstance sei = {relicType, relicDefaultDuration(relicType)};
+		for (auto* b : _battlers) {
+			if (b && b->IsPlayer()) {
+				b->ApplyStatusEffect(sei);
+				if (relicType == StatusEffects::RelicSpeedBoost) {
+					b->AddSpdBonus(2);
+				}
+			}
+		}
+	}
 	battleUI_.RootPanel->SetVisible(true);
 	battleUI_.PlayerHUD->SetVisible(true);
 	battleUI_.VictoryPanel->SetVisible(false);

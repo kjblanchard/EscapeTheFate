@@ -409,7 +409,7 @@ void PlayerBattler::handleInputTargetSelection() {
 			if (ability.BaseDamage < 0) {
 				battler->Heal(-ability.BaseDamage);
 			} else {
-				battler->TakeDamage(ability.BaseDamage);
+				battler->TakeDamage(ability.BaseDamage + GetOutgoingDamageBonus());
 			}
 			for (auto& se : ability.StatusEffects) {
 				auto sed = static_cast<StatusEffects>(se.Id);
@@ -424,6 +424,7 @@ void PlayerBattler::handleInputTargetSelection() {
 		_battlerUI->UpdateAP(to_string(currentAP));
 		currentATBCharge = 0;
 		_reopenMenuAfterClose = currentAP > 0;
+		handleTurnEndStatus();
 		handleStateChange(ATBCharging);
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {

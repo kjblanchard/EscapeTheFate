@@ -47,6 +47,8 @@ class Battler : public GameObject {
 	inline void ApplyStatusEffect(StatusEffectInstance& s) { statusEffects.push_back(s); }
 	virtual bool IsPlayer() = 0;
 	void PlayHitAnimation(const AbilityData& ability);
+	int GetOutgoingDamageBonus() const;
+	void AddSpdBonus(int amount);
 
    public:
 	void TakeDamage(int damage);
@@ -68,6 +70,7 @@ class Battler : public GameObject {
 	void handleTurnStartStatus();
 	void handleTurnEndStatus();
 	void handleShouldApplyStatus(Battler* b);
+	int absorbDamage(int rawDamage);
 	bool spendAP(int cost);
 
    protected:
@@ -77,6 +80,7 @@ class Battler : public GameObject {
 	int maxATBCharge;
 	int currentAP = 0;
 	int maxAP = 3;
+	int spdBonus = 0;
 
    protected:
 	Sprite* sprite;

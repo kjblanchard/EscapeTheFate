@@ -1,6 +1,7 @@
 #include <imgui.h>
 
 #include <battle/battlerData.hpp>
+#include <battle/statuseffects/statusEffects.hpp>
 #include <debug/DebugBattle.hpp>
 #include <engine.hpp>
 #include <gameState.hpp>
@@ -179,6 +180,26 @@ void Etf::DisplayBattleTab() {
 					}
 				}
 			}
+		}
+		if (ImGui::CollapsingHeader("Relics")) {
+			auto& relics = GameState::Battle::PlayerRelics;
+			ImGui::Text("Player Relics (%d):", (int)relics.size());
+			for (int i = 0; i < (int)relics.size(); ++i) {
+				const char* name = "Unknown";
+				switch (relics[i]) {
+					case StatusEffects::RelicDamageBonus: name = "+1 Damage"; break;
+					case StatusEffects::RelicSpeedBoost: name = "+2 Speed (2 turns)"; break;
+					case StatusEffects::RelicShield: name = "Shield (5 dmg)"; break;
+					default: break;
+				}
+				ImGui::BulletText("%s", name);
+			}
+			if (ImGui::Button("Add +1 Damage")) relics.push_back(StatusEffects::RelicDamageBonus);
+			ImGui::SameLine();
+			if (ImGui::Button("Add Speed Boost")) relics.push_back(StatusEffects::RelicSpeedBoost);
+			ImGui::SameLine();
+			if (ImGui::Button("Add Shield")) relics.push_back(StatusEffects::RelicShield);
+			if (ImGui::Button("Clear Relics")) relics.clear();
 		}
 	}
 #else

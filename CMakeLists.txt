@@ -77,6 +77,9 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/components/PlayerController.cpp
   src/battle/statuseffects/statusEffects.cpp
   src/battle/statuseffects/statuspoison.cpp
+  src/battle/statuseffects/statusRelicDamageBonus.cpp
+  src/battle/statuseffects/statusRelicSpeedBoost.cpp
+  src/battle/statuseffects/statusRelicShield.cpp
   src/debug/DebugWindow.cpp
   src/debug/DebugPlayers.cpp
   src/debug/DebugCamera.cpp
