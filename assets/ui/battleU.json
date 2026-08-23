@@ -58,7 +58,7 @@
                                                 "font": "PressStart2P",
                                                 "fontSize": 8,
                                                 "rect": { "x": 0, "y": 0, "w": 46, "h": 12 },
-                                                "text": "Cure",
+                                                "text": "Cur",
                                                 "centeredX": true,
                                                 "centeredY": true,
                                                 "numCharsToDraw": 100

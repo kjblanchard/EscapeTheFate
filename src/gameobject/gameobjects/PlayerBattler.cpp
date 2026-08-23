@@ -28,6 +28,23 @@ PlayerBattler::PlayerBattler(const BattlerArgs& args) : Battler(args), _controll
 	_battlerUI->UpdateHP(to_string(currentHP));
 	_battlerUI->UpdateAP(to_string(currentAP));
 	_battlerUI->UpdateName(battlerData->Nick);
+	int i = 0;
+	for (auto a : battlerData->Abilities) {
+		auto& ad = BattleSystem::GetAbilityByID(a);
+		auto n = ad.Name;
+		_battlerUI->UpdateMagicMenu(i, ad.Name);
+		++i;
+	}
+}
+
+void PlayerBattler::updateMagicMenuATBGain() {
+	for (auto i = 0; i < battlerData->Abilities.size(); ++i) {
+		auto aid = battlerData->Abilities[i];
+		auto& ad = BattleSystem::GetAbilityByID(aid);
+		if (ad.APCost < currentAP) continue;
+		auto ac = ad.APCost <= currentAP;
+		_battlerUI->UpdateMagicMenu(i, "", ac);
+	}
 }
 
 void PlayerBattler::onAPGained() {
@@ -39,8 +56,8 @@ void PlayerBattler::onAPGained() {
 	if (_currentBattlerState == BattlerStates::ATBCharging && !_reopenMenuAfterClose) {
 		handleStateChange(ATBFullyCharged);
 	}
+	updateMagicMenuATBGain();
 }
-
 
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	if ((newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) && shouldBattleEnd()) newState = BattleEndStart;
@@ -388,15 +405,14 @@ void PlayerBattler::handleInputTargetSelection() {
 		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
 		animator->PlayAnimationThenLoopSecond(playerAnim, battlerData->IdleAnimation);
 		if (battler) {
-            //We should calculate damage, and we should apply status effects.
+			// We should calculate damage, and we should apply status effects.
 			if (ability.BaseDamage < 0) {
 				battler->Heal(-ability.BaseDamage);
 			} else {
 				battler->TakeDamage(ability.BaseDamage);
 			}
-            if(!ability.StatusEffects.empty()) {
-                
-            }
+			if (!ability.StatusEffects.empty()) {
+			}
 			battler->PlayHitAnimation(ability);
 		}
 		spendAP(ability.APCost);
