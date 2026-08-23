@@ -49,7 +49,7 @@
     },
     {
         "id": 4,
-        "name": "Psn",
+        "name": "PSlsh",
         "animFile": "sword1",
         "animTag": "slash",
         "playerAnim": "",
@@ -59,7 +59,7 @@
         "apCost": 2,
         "description": "Poison and slash",
         "statusEffects": [
-            { "id": 0, "percent": 100.0 }
+            { "id": 1, "percent": 100.0 }
         ]
     }
 ]

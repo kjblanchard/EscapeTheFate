@@ -71,10 +71,10 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_atbProgressBar = new UIProgressBar(pbArgs);
 	_barPanel->AddChild(_atbProgressBar);
 
-	auto p = StatusEffectInstance();
-	p.StatusType = StatusEffects::Poison;
-	p.Duration = 10;
-	statusEffects.push_back(p);
+	// auto p = StatusEffectInstance();
+	// p.StatusType = StatusEffects::Poison;
+	// p.Duration = 10;
+	// statusEffects.push_back(p);
 }
 
 EnemyBattler::~EnemyBattler() {

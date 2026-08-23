@@ -411,8 +411,13 @@ void PlayerBattler::handleInputTargetSelection() {
 			} else {
 				battler->TakeDamage(ability.BaseDamage);
 			}
-			if (!ability.StatusEffects.empty()) {
+			for (auto& se : ability.StatusEffects) {
+				auto sed = static_cast<StatusEffects>(se.Id);
+				StatusEffectInstance sei = {sed, 2};
+				battler->ApplyStatusEffect(sei);
 			}
+			// StatusEffectInstance s = {}
+
 			battler->PlayHitAnimation(ability);
 		}
 		spendAP(ability.APCost);
