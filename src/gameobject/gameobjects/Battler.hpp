@@ -64,6 +64,9 @@ class Battler : public GameObject {
 	virtual void takeDamageImpl(int damage) = 0;
 	virtual void healImpl(int amount) {}
 	virtual void onAPGained() {}
+    void handleTurnStartStatus();
+    void handleTurnEndStatus();
+    void handleShouldApplyStatus(Battler* b);
 	bool spendAP(int cost);
 
    protected:

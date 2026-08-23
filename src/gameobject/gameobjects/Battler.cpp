@@ -38,6 +38,23 @@ float Battler::SpriteHeight() {
 	return sprite->OffsetAndSizeRectF.h;
 }
 
+void Battler::handleTurnStartStatus() {
+	for (auto& s : statusEffects) {
+		HandleStatusEffect(s, StatusEffectTriggers::TurnStart, this, nullptr);
+	}
+}
+void Battler::handleTurnEndStatus() {
+	for (auto& s : statusEffects) {
+		HandleStatusEffect(s, StatusEffectTriggers::TurnEnd, this, nullptr);
+	}
+}
+void Battler::handleShouldApplyStatus(Battler* b) {
+	for (auto& s : statusEffects) {
+		HandleStatusEffect(s, StatusEffectTriggers::DamageTaken, this, b);
+	}
+}
+
+
 void Battler::TakeDamage(int damage) {
 	currentHP -= damage;
 	damageNumberPool.Show(damage, (SpriteX() + SpriteWidth() / 2.0f) + battlerData->DamageOffsetX, (SpriteY() - 4.0f) + battlerData->DamageOffsetY, false);

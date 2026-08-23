@@ -3,20 +3,22 @@
 using namespace Etf;
 
 namespace {
-bool applyFunc(StatusEffectInstance s, Battler* b, Battler* t) {
+bool applyFunc(StatusEffectInstance& s, Battler* b, Battler* t) {
 	return true;
 }
 
-bool shouldPerform(StatusEffectInstance s, Battler* b, Battler* t) {
+bool shouldPerform(StatusEffectInstance& s, Battler* b, Battler* t) {
 	return true;
 }
 
-bool actionFunc(StatusEffectInstance s, Battler* b, Battler* t) {
+bool actionFunc(StatusEffectInstance& s, Battler* b, Battler* t) {
+    b->TakeDamage(1);
+    --s.Duration;
 	return true;
 }
 }  // namespace
 
-StatusEffectData Poison{
+StatusEffectData Etf::Poison{
 	applyFunc,
 	shouldPerform,
 	actionFunc,

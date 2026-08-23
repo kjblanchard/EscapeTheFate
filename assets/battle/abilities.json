@@ -46,5 +46,20 @@
         "friendly": false,
         "apCost": 2,
         "description": ""
+    },
+    {
+        "id": 4,
+        "name": "Psn",
+        "animFile": "sword1",
+        "animTag": "slash",
+        "playerAnim": "",
+        "sfx": "slash2",
+        "baseDamage": 1,
+        "friendly": false,
+        "apCost": 2,
+        "description": "Poison and slash",
+        "statusEffects": [
+            { "id": 0, "percent": 100.0 }
+        ]
     }
 ]

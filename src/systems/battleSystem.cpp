@@ -173,6 +173,18 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
 		abilityDatabase_.back().APCost = jKeyExists(currentJsonObject, "apCost") ? jint(currentJsonObject, "apCost") : 1;
 		abilityDatabase_.back().Description = jKeyExists(currentJsonObject, "description") ? jstr(currentJsonObject, "description") : "";
+		auto statusEffects = jobj(currentJsonObject, "statusEffects");
+		if (statusEffects) {
+			auto n = jGetObjectArrayLength(statusEffects);
+			for (auto j = 0; j < n; ++j) {
+				auto o = jGetObjectInObjectWithIndex(statusEffects, j);
+				if (!o) continue;
+				StatusEffectChance s;
+				s.Id = jint(o, "id");
+				s.ApplyChance = jfloat(o, "percent");
+				abilityDatabase_.back().StatusEffects.push_back(std::move(s));
+			}
+		}
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }

@@ -16,8 +16,6 @@
 #include <systems/GameObjectSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 
-#include "interfaces/IController.hpp"
-
 using namespace std;
 using namespace Etf;
 
@@ -86,7 +84,7 @@ LocalPlayer::~LocalPlayer() {
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player, int playerIndex,
-						   const string& overworldSprite, int frameW, int frameH)
+						 const string& overworldSprite, int frameW, int frameH)
 	: GameObject(objData->X, objData->Y), PlayerIndex_(playerIndex), Player_(player) {
 	auto spriteName = overworldSprite + ".png";
 	float fw = (float)frameW;

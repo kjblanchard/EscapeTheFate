@@ -23,9 +23,12 @@ enum class StatusEffects {
 	Relic,
 };
 
-class StatusEffectInstance {};
+struct StatusEffectInstance {
+	StatusEffects StatusType;
+	int Duration;
+};
 
-using StatusFunc = bool (*)(StatusEffectInstance, Battler*, Battler*);
+using StatusFunc = bool (*)(StatusEffectInstance&, Battler*, Battler*);
 
 struct StatusEffectData {
 	StatusFunc ApplyFunc;
@@ -41,7 +44,7 @@ struct StatusEffectData {
 extern StatusEffectData Poison;
 
 // Perform status effect s at a specific trigger tr on battler b against battler t, target can be null
-// inline void HandleStatusEffect(const StatusEffectData& s, StatusEffectTriggers tr, Battler* b, Battler* t) {
+void HandleStatusEffect(StatusEffectInstance& s, StatusEffectTriggers tr, Battler* b, Battler* t);
 // 	if (s.ShouldPerform(tr)) s.Action(b, t);
 // }
 

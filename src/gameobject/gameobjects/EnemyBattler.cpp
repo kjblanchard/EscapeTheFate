@@ -22,8 +22,7 @@ namespace {
 constexpr Color kWhite = {255, 255, 255, 255};
 constexpr Color kBlack = {0, 0, 0, 255};
 constexpr Color kEnemyPanelBorderColor = {255, 235, 235, 255};
-}
-
+}  // namespace
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_ai.reset(CreateEnemyAI(args.BattleData->AIStrategy));
@@ -71,6 +70,11 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	pbArgs.Visible = true;
 	_atbProgressBar = new UIProgressBar(pbArgs);
 	_barPanel->AddChild(_atbProgressBar);
+
+	auto p = StatusEffectInstance();
+	p.StatusType = StatusEffects::Poison;
+	p.Duration = 10;
+	statusEffects.push_back(p);
 }
 
 EnemyBattler::~EnemyBattler() {
@@ -185,6 +189,7 @@ void EnemyBattler::updateImpl() {
 				spendAP(ability.APCost);
 			}
 			_pendingAction = {};
+            handleTurnEndStatus();
 			currentATBCharge = 0;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
 			_enemyState = ATBCharging;

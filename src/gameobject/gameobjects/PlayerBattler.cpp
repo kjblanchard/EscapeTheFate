@@ -41,6 +41,7 @@ void PlayerBattler::onAPGained() {
 	}
 }
 
+
 void PlayerBattler::handleStateChange(BattlerStates newState) {
 	if ((newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) && shouldBattleEnd()) newState = BattleEndStart;
 	switch (newState) {
@@ -51,7 +52,7 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->EndPlayerTurn(this);
 			break;
 		case BattlerStates::ATBFullyCharged:
-            sgLogWarn("Would take damage at start");
+			sgLogWarn("Would take damage at start");
 			_currentMenuLocation = 0;
 			_battlerUI->StartATBTurnAnim();
 			_battlerUI->OpenCommandsMenu();
@@ -387,11 +388,15 @@ void PlayerBattler::handleInputTargetSelection() {
 		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
 		animator->PlayAnimationThenLoopSecond(playerAnim, battlerData->IdleAnimation);
 		if (battler) {
+            //We should calculate damage, and we should apply status effects.
 			if (ability.BaseDamage < 0) {
 				battler->Heal(-ability.BaseDamage);
 			} else {
 				battler->TakeDamage(ability.BaseDamage);
 			}
+            if(!ability.StatusEffects.empty()) {
+                
+            }
 			battler->PlayHitAnimation(ability);
 		}
 		spendAP(ability.APCost);
