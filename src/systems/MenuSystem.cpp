@@ -302,7 +302,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	UIImageArgs fingerArgs;
 	fingerArgs.Filename = "fingers";
 	fingerArgs.Name = std::format("MenuFinger{}", playerIdx);
-	fingerArgs.Rect = {7.0f, kItemStartY, 10.0f, 10.0f};
+	fingerArgs.Rect = {7.0f, kItemStartY, 16.0f, 16.0f};
 	fingerArgs.SourceRect = {0, 0, 16, 16};
 	fingerArgs.Scale = 1.0f;
 	fingerArgs.DrawColor = {255, 255, 255, 255};
@@ -353,7 +353,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	UITextArgs timeArgs;
 	timeArgs.FontName = "PressStart2P";
 	timeArgs.FontSize = 8;
-	timeArgs.Rect = {0.0f, kPanelH - 10.0f, kPanelW, 10.0f};
+	timeArgs.Rect = {0.0f, kPanelH - 14.0f, kPanelW, 10.0f};
 	timeArgs.TextToDraw = "00:00";
 	timeArgs.Name = std::format("MenuTime{}", playerIdx);
 	timeArgs.NumCharsToDraw = 20;

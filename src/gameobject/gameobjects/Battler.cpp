@@ -80,10 +80,9 @@ void Battler::AddSpdBonus(int amount) {
 	spdBonus += amount;
 }
 
-
 void Battler::TakeDamage(int damage) {
 	damage = absorbDamage(damage);
-	if (damage <= 0) return;
+	if (damage <= 0 || currentHP <= 0) return;
 	currentHP -= damage;
 	damageNumberPool.Show(damage, (SpriteX() + SpriteWidth() / 2.0f) + battlerData->DamageOffsetX, (SpriteY() - 4.0f) + battlerData->DamageOffsetY, false);
 	takeDamageImpl(damage);

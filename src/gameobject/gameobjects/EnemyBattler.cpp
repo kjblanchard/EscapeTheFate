@@ -189,7 +189,7 @@ void EnemyBattler::updateImpl() {
 				spendAP(ability.APCost);
 			}
 			_pendingAction = {};
-            handleTurnEndStatus();
+			handleTurnEndStatus();
 			currentATBCharge = 0;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
 			_enemyState = ATBCharging;

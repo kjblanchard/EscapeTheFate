@@ -38,7 +38,7 @@ class Battler : public GameObject {
 	}
 
    public:
-	inline unsigned int CurrentHP() { return currentHP; }
+	inline int CurrentHP() { return currentHP; }
 	inline int CurrentAP() const { return currentAP; }
 	inline int MaxAP() const { return maxAP; }
 	inline int Def() { return battlerData->Def; }

@@ -6,7 +6,9 @@ on:
       - "v*"
     branches: [master]
   pull_request:
-    branches: [master]
+    branches:
+     - "release/*" 
+     - master
 jobs:
    pack-assets:
     runs-on: ubuntu-latest
@@ -142,6 +144,7 @@ jobs:
           name: s3Artifact
           path: repo/build/Release
    Push-Files-To-S3:
+    if: startsWith(github.event.ref, 'refs/tags/v')
     uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
     needs: Build-Emscripten
     secrets:
