@@ -11,6 +11,7 @@
 #include <ui/uiObject.hpp>
 
 #include "gameState.hpp"
+#include "sgtools/log.h"
 
 using namespace Etf;
 
@@ -74,6 +75,9 @@ void TitleScreenSystem::Update() {
 		return;
 	}
 	_finger->SetVisible(true);
+	auto text = static_cast<UIText*>(_menuItems[1]);
+	auto color = SG_GetCurrentNumControllers() < 1 ? Color{100, 100, 100, 255} : Color{255, 255, 255, 255};
+	text->UpdateDrawColor(color);
 	auto& player = PlayerControllerSystem::GetPlayerByNum(0);
 	if (player->IsButtonJustPressed(ControllerButtons::Up)) {
 		_selectedIndex = (_selectedIndex - 1 + kNumMenuItems) % kNumMenuItems;
@@ -107,6 +111,9 @@ void TitleScreenSystem::Update() {
 			if (menuPanel) menuPanel->SetVisible(false);
 			_finger->SetVisible(false);
 			CharacterSelectSystem::Activate();
+		} else {
+			sgLogWarn("Index %d is not enabled, %d", _selectedIndex, kMenuItemEnabled[_selectedIndex]);
+			Engine::Audio::PlaySFXBuffer("error1", 0.75f);
 		}
 	}
 }

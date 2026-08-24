@@ -1,0 +1,14 @@
+"appbuild"
+{
+  "appid" "4393160"
+  "desc" "Escape The Fate automated debug build"
+  "buildoutput" "../output/"
+  "contentroot" ""
+
+  "depots"
+  {
+    "4393164" "depot_windows_debug.vdf"
+    "4393162" "depot_macos_debug.vdf"
+    "4393163" "depot_linux_debug.vdf"
+  }
+}

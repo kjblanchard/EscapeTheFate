@@ -15,7 +15,7 @@
         "currentXP": 0,
         "xpToNextLevel": 100,
         "itemDrops": [],
-        "abilities": [1],
+        "abilities": [1, 4],
         "sprite": "player1Battler",
         "portrait": "portrait1",
         "portraitRect": { "x": 0, "y": 0, "w": 48, "h": 48 },
@@ -156,7 +156,7 @@
             { "name": "Silk", "percent": 25 },
             { "name": "Antenna", "percent": 15 }
         ],
-        "abilities": [1,2, 3],
+        "abilities": [2,3],
         "ai": "basic",
         "sprite": "spider1",
         "portrait": "",

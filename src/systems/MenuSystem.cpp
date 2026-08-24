@@ -1,3 +1,5 @@
+#include <Supergoon/json.h>
+
 #include <engine.hpp>
 #include <format>
 #include <gameState.hpp>
@@ -5,6 +7,7 @@
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
+#include <ui/UIScrollList.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -12,9 +15,9 @@
 
 using namespace Etf;
 
-static const int kNumItems = 6;
-static const char* kItemLabels[kNumItems] = {"Items", "Abilities", "Equipment", "Magic", "Stats", "Save"};
-static const bool kItemEnabled[kNumItems] = {false, false, false, false, true, false};
+static const int kNumItems = 7;
+static const char* kItemLabels[kNumItems] = {"Items", "Abilities", "Equipment", "Magic", "Stats", "Save", "Relics"};
+static const bool kItemEnabled[kNumItems] = {false, false, false, false, true, false, true};
 
 static const Color kEnabledColor = {255, 255, 255, 255};
 static const Color kDisabledColor = {150, 150, 150, 128};
@@ -39,6 +42,20 @@ static UIText* _portraitNameTexts[2] = {nullptr, nullptr};
 static int _selectedIndex[2] = {0, 0};
 static bool _statsOpen[2] = {false, false};
 static bool _initialized = false;
+
+struct RelicData {
+	int Id;
+	std::string Name;
+	std::string Description;
+	std::string ImageName;
+};
+
+static std::vector<RelicData> _relicDataList;
+static bool _relicDataLoaded = false;
+static UIObject* _relicPanels[2] = {nullptr, nullptr};
+static UIScrollList* _relicScrollLists[2] = {nullptr, nullptr};
+static bool _relicsOpen[2] = {false, false};
+static const float kRelicRowHeight = 36.0f;
 
 static void positionFinger(int playerIdx) {
 	if (!_fingers[playerIdx]) return;
@@ -107,6 +124,109 @@ static void openStatsPanel(int playerIdx) {
 
 	if (_statsPanels[playerIdx]) _statsPanels[playerIdx]->SetVisible(true);
 	_statsOpen[playerIdx] = true;
+}
+
+static void loadRelicData() {
+	if (_relicDataLoaded) return;
+	auto obj = Engine::Json::GetJsonObjectFromDirectory("relics");
+	if (!obj) return;
+	int count = jGetObjectArrayLength(obj);
+	for (int i = 0; i < count; ++i) {
+		auto entry = jGetObjectInObjectWithIndex(obj, i);
+		if (!entry) continue;
+		RelicData rd;
+		rd.Id = jint(entry, "id");
+		auto name = jstr(entry, "name");
+		rd.Name = name ? name : "";
+		auto desc = jstr(entry, "description");
+		rd.Description = desc ? desc : "";
+		auto imgName = jstr(entry, "imageName");
+		rd.ImageName = imgName ? imgName : "relicPlaceholder";
+		_relicDataList.push_back(std::move(rd));
+	}
+	jReleaseObjectFromFile(obj);
+	_relicDataLoaded = true;
+}
+
+static void openRelicPanel(int playerIdx) {
+	if (!_relicPanels[playerIdx] || !_relicScrollLists[playerIdx]) return;
+
+	auto* scrollList = _relicScrollLists[playerIdx];
+	scrollList->ClearChildren();
+	scrollList->SetScrollOffset(0);
+
+	int rowIndex = 0;
+	for (auto& relicType : GameState::Battle::PlayerRelics) {
+		int relicId = static_cast<int>(relicType);
+		const RelicData* found = nullptr;
+		for (auto& rd : _relicDataList) {
+			if (rd.Id == relicId) {
+				found = &rd;
+				break;
+			}
+		}
+		if (!found) continue;
+
+		float rowY = rowIndex * kRelicRowHeight;
+
+		UIObjectArgs rowArgs;
+		rowArgs.Rect = {0.0f, rowY, 148.0f, kRelicRowHeight};
+		rowArgs.Name = std::format("RelicRow{}_{}", rowIndex, playerIdx);
+		rowArgs.Visible = true;
+		rowArgs.Priority = 0;
+		auto* row = new UIObject(rowArgs);
+
+		UIImageArgs iconArgs;
+		iconArgs.Filename = found->ImageName;
+		iconArgs.Name = std::format("RelicIcon{}_{}", rowIndex, playerIdx);
+		iconArgs.Rect = {0.0f, 2.0f, 16.0f, 16.0f};
+		iconArgs.SourceRect = {0, 0, 16, 16};
+		iconArgs.Scale = 1.0f;
+		iconArgs.DrawColor = {255, 255, 255, 255};
+		iconArgs.Priority = 0;
+		iconArgs.Visible = true;
+		iconArgs.DebugBox = false;
+		row->AddChild(new UIImage(iconArgs));
+
+		UITextArgs nameArgs;
+		nameArgs.FontName = "PressStart2P";
+		nameArgs.FontSize = 8;
+		nameArgs.Rect = {20.0f, 2.0f, 128.0f, 10.0f};
+		nameArgs.TextToDraw = found->Name;
+		nameArgs.Name = std::format("RelicName{}_{}", rowIndex, playerIdx);
+		nameArgs.NumCharsToDraw = 16;
+		nameArgs.Priority = 0;
+		nameArgs.TextColor = {255, 255, 200, 255};
+		nameArgs.CenteredX = false;
+		nameArgs.CenteredY = false;
+		nameArgs.WordWrap = false;
+		nameArgs.Visible = true;
+		nameArgs.DebugBox = false;
+		row->AddChild(new UIText(nameArgs));
+
+		UITextArgs descArgs;
+		descArgs.FontName = "PressStart2P";
+		descArgs.FontSize = 8;
+		descArgs.Rect = {20.0f, 14.0f, 128.0f, 10.0f};
+		descArgs.TextToDraw = found->Description;
+		descArgs.Name = std::format("RelicDesc{}_{}", rowIndex, playerIdx);
+		descArgs.NumCharsToDraw = 18;
+		descArgs.Priority = 0;
+		descArgs.TextColor = {180, 180, 255, 255};
+		descArgs.CenteredX = false;
+		descArgs.CenteredY = false;
+		descArgs.WordWrap = false;
+		descArgs.Visible = true;
+		descArgs.DebugBox = false;
+		row->AddChild(new UIText(descArgs));
+
+		scrollList->AddChild(row);
+		++rowIndex;
+	}
+
+	scrollList->SetContentHeight(static_cast<int>(rowIndex * kRelicRowHeight));
+	_relicPanels[playerIdx]->SetVisible(true);
+	_relicsOpen[playerIdx] = true;
 }
 
 static void buildMenuPanelForPlayer(int playerIdx) {
@@ -182,7 +302,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	UIImageArgs fingerArgs;
 	fingerArgs.Filename = "fingers";
 	fingerArgs.Name = std::format("MenuFinger{}", playerIdx);
-	fingerArgs.Rect = {7.0f, kItemStartY, 10.0f, 10.0f};
+	fingerArgs.Rect = {7.0f, kItemStartY, 16.0f, 16.0f};
 	fingerArgs.SourceRect = {0, 0, 16, 16};
 	fingerArgs.Scale = 1.0f;
 	fingerArgs.DrawColor = {255, 255, 255, 255};
@@ -233,7 +353,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	UITextArgs timeArgs;
 	timeArgs.FontName = "PressStart2P";
 	timeArgs.FontSize = 8;
-	timeArgs.Rect = {0.0f, kPanelH - 10.0f, kPanelW, 10.0f};
+	timeArgs.Rect = {0.0f, kPanelH - 14.0f, kPanelW, 10.0f};
 	timeArgs.TextToDraw = "00:00";
 	timeArgs.Name = std::format("MenuTime{}", playerIdx);
 	timeArgs.NumCharsToDraw = 20;
@@ -286,6 +406,49 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	panel->AddChild(statsPanel);
 	_statsPanels[playerIdx] = statsPanel;
 
+	// Relics sub-panel
+	UINineSliceArgs relicPanelArgs;
+	relicPanelArgs.Name = std::format("RelicPanel{}", playerIdx);
+	relicPanelArgs.Filename = "uibase";
+	relicPanelArgs.Rect = {3.0f, kItemStartY - 4.0f, kPanelW - 6.0f, 190.0f};
+	relicPanelArgs.SourceRect = {0, 0, 64, 64};
+	relicPanelArgs.DrawColor = {40, 0, 60, 220};
+	relicPanelArgs.Xoffset = 8;
+	relicPanelArgs.Yoffset = 8;
+	relicPanelArgs.Scale = 1.0f;
+	relicPanelArgs.Priority = 3;
+	relicPanelArgs.Visible = false;
+	relicPanelArgs.DebugBox = false;
+	auto* relicPanel = new UINineSlice(relicPanelArgs);
+
+	UITextArgs relicTitleArgs;
+	relicTitleArgs.FontName = "PressStart2P";
+	relicTitleArgs.FontSize = 8;
+	relicTitleArgs.Rect = {0.0f, 8.0f, kPanelW - 6.0f, 10.0f};
+	relicTitleArgs.TextToDraw = "- RELICS -";
+	relicTitleArgs.Name = std::format("RelicTitle{}", playerIdx);
+	relicTitleArgs.NumCharsToDraw = 20;
+	relicTitleArgs.Priority = 0;
+	relicTitleArgs.TextColor = {255, 255, 200, 255};
+	relicTitleArgs.CenteredX = true;
+	relicTitleArgs.CenteredY = false;
+	relicTitleArgs.WordWrap = false;
+	relicTitleArgs.Visible = true;
+	relicTitleArgs.DebugBox = false;
+	relicPanel->AddChild(new UIText(relicTitleArgs));
+
+	UIScrollListArgs scrollArgs;
+	scrollArgs.Name = std::format("RelicScrollList{}", playerIdx);
+	scrollArgs.Rect = {8.0f, 24.0f, 148.0f, 158.0f};
+	scrollArgs.Priority = 0;
+	scrollArgs.Visible = true;
+	auto* scrollList = new UIScrollList(scrollArgs);
+	relicPanel->AddChild(scrollList);
+	_relicScrollLists[playerIdx] = scrollList;
+
+	panel->AddChild(relicPanel);
+	_relicPanels[playerIdx] = relicPanel;
+
 	UI::GetRootUIObject()->AddChild(panel);
 	_panels[playerIdx] = panel;
 }
@@ -296,14 +459,19 @@ void MenuSystem::Start() {
 	_selectedIndex[1] = 0;
 	_statsOpen[0] = false;
 	_statsOpen[1] = false;
+	_relicsOpen[0] = false;
+	_relicsOpen[1] = false;
 	for (auto& p : _panels) p = nullptr;
 	for (auto& p : _statsPanels) p = nullptr;
+	for (auto& p : _relicPanels) p = nullptr;
+	for (auto& s : _relicScrollLists) s = nullptr;
 	for (auto& f : _fingers) f = nullptr;
 	for (auto& t : _timeTexts) t = nullptr;
 	for (auto& t : _portraitNameTexts) t = nullptr;
 	for (auto& row : _statLineTexts) {
 		for (auto& t : row) t = nullptr;
 	}
+	loadRelicData();
 	buildMenuPanelForPlayer(0);
 	buildMenuPanelForPlayer(1);
 	_initialized = true;
@@ -338,7 +506,9 @@ void MenuSystem::Update() {
 				GameState::Menu::MenuOpen[i] = true;
 				_selectedIndex[i] = 0;
 				_statsOpen[i] = false;
+				_relicsOpen[i] = false;
 				if (_statsPanels[i]) _statsPanels[i]->SetVisible(false);
+				if (_relicPanels[i]) _relicPanels[i]->SetVisible(false);
 				if (_panels[i]) _panels[i]->SetVisible(true);
 				rebuildPortrait(i);
 				updateTimeText();
@@ -353,7 +523,11 @@ void MenuSystem::Update() {
 
 		if (player->IsButtonJustPressed(ControllerButtons::B) ||
 			player->IsButtonJustPressed(ControllerButtons::Y)) {
-			if (_statsOpen[i]) {
+			if (_relicsOpen[i]) {
+				_relicsOpen[i] = false;
+				if (_relicPanels[i]) _relicPanels[i]->SetVisible(false);
+				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+			} else if (_statsOpen[i]) {
 				_statsOpen[i] = false;
 				if (_statsPanels[i]) _statsPanels[i]->SetVisible(false);
 				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
@@ -366,6 +540,18 @@ void MenuSystem::Update() {
 		}
 
 		if (_statsOpen[i]) continue;
+
+		if (_relicsOpen[i]) {
+			if (player->IsButtonJustPressed(ControllerButtons::Up)) {
+				_relicScrollLists[i]->Scroll(static_cast<int>(-kRelicRowHeight));
+				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+			}
+			if (player->IsButtonJustPressed(ControllerButtons::Down)) {
+				_relicScrollLists[i]->Scroll(static_cast<int>(kRelicRowHeight));
+				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+			}
+			continue;
+		}
 
 		if (player->IsButtonJustPressed(ControllerButtons::Up)) {
 			_selectedIndex[i] = (_selectedIndex[i] - 1 + kNumItems) % kNumItems;
@@ -385,6 +571,9 @@ void MenuSystem::Update() {
 			} else if (idx == 4) {
 				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
 				openStatsPanel(i);
+			} else if (idx == 6) {
+				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+				openRelicPanel(i);
 			}
 		}
 	}

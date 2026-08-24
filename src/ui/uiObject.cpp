@@ -106,6 +106,10 @@ void UIObject::DestroyChildIfNotName(const std::vector<std::string> names, bool 
 	}
 }
 
+void UIObject::ClearChildren() {
+	_children.clear();
+}
+
 void UIObject::DebugDrawInternal() {
 #ifndef imgui
 	return;

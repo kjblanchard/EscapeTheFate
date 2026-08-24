@@ -1,6 +1,7 @@
 #include <Supergoon/Primitives/Color.h>
 #include <imgui.h>
 #include <sgtools/log.h>
+#include <SDL3/SDL_messagebox.h>
 
 #include <debug/DebugConsoleWindow.hpp>
 #include <deque>
@@ -19,6 +20,9 @@ static void engineLogFunc(const char* time, const char* message, int logLevel) {
 	}
 	consoleMessages.push_back({logLevel, time + std::string(" ") + std::string(message)});
 	scrollToBottom = true;
+	if(logLevel == sgLogLevelCritical) {
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Critical error", message, NULL);
+	}
 }
 
 void DebugConsoleWindow::Initialize() {

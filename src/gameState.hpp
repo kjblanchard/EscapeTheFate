@@ -2,7 +2,9 @@
 #include <Supergoon/Primitives/Vector2.h>
 #include <Supergoon/Primitives/rectangle.h>
 
+#include <battle/statuseffects/statusEffects.hpp>
 #include <string>
+#include <vector>
 namespace Etf {
 struct PlayerData {
 	RectangleF Location = {0, 0, 0, 0};
@@ -47,6 +49,7 @@ struct GameState {
 		// If this is set to true, the battle system will uddate each frame.
 		static bool InBattle;
 		static int NextBattleGroup;
+		static std::vector<StatusEffects> PlayerRelics;
 	} Battle;
 	struct Menu {
 		static bool MenuOpen[2];
