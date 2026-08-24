@@ -58,6 +58,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiProgressBar.cpp
   src/ui/uiPanel.cpp
   src/ui/uiLine.cpp
+  src/ui/UIScrollList.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
   src/systems/BattleSpoilsSystem.cpp
@@ -75,6 +76,11 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
+  src/battle/statuseffects/statusEffects.cpp
+  src/battle/statuseffects/statuspoison.cpp
+  src/battle/statuseffects/statusRelicDamageBonus.cpp
+  src/battle/statuseffects/statusRelicSpeedBoost.cpp
+  src/battle/statuseffects/statusRelicShield.cpp
   src/debug/DebugWindow.cpp
   src/debug/DebugPlayers.cpp
   src/debug/DebugCamera.cpp
