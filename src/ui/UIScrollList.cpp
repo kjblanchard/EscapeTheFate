@@ -9,8 +9,6 @@
 
 using namespace Etf;
 
-static const int kUIFBOHeight = 270;
-
 UIScrollList::UIScrollList(UIScrollListArgs& args) {
 	_location = args.Rect;
 	_name = args.Name;
@@ -41,10 +39,8 @@ void UIScrollList::Draw(float offsetX, float offsetY) {
 	int clipW = static_cast<int>(_location.w);
 	int clipH = static_cast<int>(_location.h);
 
-	int scissorY = kUIFBOHeight - clipY - clipH;
-
 	glEnable(GL_SCISSOR_TEST);
-	glScissor(clipX, scissorY, clipW, clipH);
+	glScissor(clipX, clipY, clipW, clipH);
 
 	for (auto& child : _children) {
 		child->Draw(absX, absY - static_cast<float>(_scrollOffset));
