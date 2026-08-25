@@ -170,7 +170,7 @@ void draw() {
 
 int handleEngineEvents(void* event) {
 	Engine::DebugUI::HandleEvent(event);
-	if (Engine::TextInput::HandleEvent(event)) return true;
+	Engine::TextInput::HandleEvent(event);
 	return false;
 }
 
