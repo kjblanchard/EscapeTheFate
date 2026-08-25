@@ -87,6 +87,14 @@ Text* CreateText(const std::string& fontName, unsigned int fontSize, RectangleF 
 void DrawText(Text* text, float xOffset, float yOffset, Color& color);
 }  // namespace TextUtils
 
+namespace TextInput {
+void Start();
+void Stop();
+void SetCallback(std::function<void(const char*)> cb);
+void ClearCallback();
+bool HandleEvent(void* sdlEvent);
+}  // namespace TextInput
+
 namespace Json {
 void GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz);
 json_object* GetJsonObjectFromDirectory(const char* name);

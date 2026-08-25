@@ -2,6 +2,7 @@
 
 #include <engine.hpp>
 #include <systems/CharacterSelectSystem.hpp>
+#include <systems/LanMultiplayerSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/battleSystem.hpp>
@@ -9,6 +10,7 @@
 #include <ui/ui.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiObject.hpp>
+#include <ui/uiText.hpp>
 
 #include "gameState.hpp"
 #include "sgtools/log.h"
@@ -17,9 +19,9 @@ using namespace Etf;
 
 namespace {
 
-const int kNumMenuItems = 4;
+const int kNumMenuItems = 5;
 const int kMenuSpacing = 15;
-const bool kMenuItemEnabled[kNumMenuItems] = {true, true, false, false};
+const bool kMenuItemEnabled[kNumMenuItems] = {true, true, true, false, false};
 
 UIObject* _menuItems[kNumMenuItems] = {};
 UIImage* _finger = nullptr;
@@ -53,10 +55,11 @@ void TitleScreenSystem::Update() {
 		if (!root->GetChildByName("CloudPanel")) return;
 		_menuItems[0] = root->GetChildByName("NewGameText");
 		_menuItems[1] = root->GetChildByName("MultiplayerText");
-		_menuItems[2] = root->GetChildByName("LoadText");
-		_menuItems[3] = root->GetChildByName("OptionsText");
+		_menuItems[2] = root->GetChildByName("LanMultiplayerText");
+		_menuItems[3] = root->GetChildByName("LoadText");
+		_menuItems[4] = root->GetChildByName("OptionsText");
 		_finger = static_cast<UIImage*>(root->GetChildByName("MenuFinger"));
-		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_menuItems[3] || !_finger) return;
+		if (!_menuItems[0] || !_menuItems[1] || !_menuItems[2] || !_menuItems[3] || !_menuItems[4] || !_finger) return;
 		_initialized = true;
 		positionFinger();
 		return;
@@ -65,7 +68,17 @@ void TitleScreenSystem::Update() {
 	if (CharacterSelectSystem::IsActive()) {
 		CharacterSelectSystem::Update();
 		if (!CharacterSelectSystem::IsActive()) {
-			// Returned from character select via B press, restore title UI
+			auto root = UI::GetRootUIObject();
+			auto* titlePanel = root->GetChildByName("TitleNineSlice");
+			auto* menuPanel = root->GetChildByName("MenuNineSlice");
+			if (titlePanel) titlePanel->SetVisible(true);
+			if (menuPanel) menuPanel->SetVisible(true);
+		}
+		return;
+	}
+	if (LanMultiplayerSystem::IsActive()) {
+		LanMultiplayerSystem::Update();
+		if (!LanMultiplayerSystem::IsActive()) {
 			auto root = UI::GetRootUIObject();
 			auto* titlePanel = root->GetChildByName("TitleNineSlice");
 			auto* menuPanel = root->GetChildByName("MenuNineSlice");
@@ -93,6 +106,17 @@ void TitleScreenSystem::Update() {
 
 	if (player->IsButtonJustPressed(ControllerButtons::A)) {
 		if (kMenuItemEnabled[_selectedIndex]) {
+			if (_selectedIndex == 2) {
+				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+				auto root = UI::GetRootUIObject();
+				auto* titlePanel = root->GetChildByName("TitleNineSlice");
+				auto* menuPanel = root->GetChildByName("MenuNineSlice");
+				if (titlePanel) titlePanel->SetVisible(false);
+				if (menuPanel) menuPanel->SetVisible(false);
+				_finger->SetVisible(false);
+				LanMultiplayerSystem::Activate();
+				return;
+			}
 			if (_selectedIndex == 1) {
 				if (SG_GetCurrentNumControllers() < 1) {
 					Engine::Audio::PlaySFXBuffer("error1", 0.75f);

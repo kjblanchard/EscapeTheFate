@@ -1,3 +1,4 @@
+#include <SDL3/SDL_events.h>
 #include <SDL3/SDL_messagebox.h>
 #include <Supergoon/Animation/animator.h>
 #include <Supergoon/Audio/Audio.h>
@@ -169,6 +170,7 @@ void draw() {
 
 int handleEngineEvents(void* event) {
 	Engine::DebugUI::HandleEvent(event);
+	if (Engine::TextInput::HandleEvent(event)) return true;
 	return false;
 }
 
@@ -541,6 +543,33 @@ Text* Engine::TextUtils::CreateText(const std::string& fontName, unsigned int fo
 
 void Engine::TextUtils::DrawText(Text* text, float xOffset, float yOffset, Color& color) {
 	TextDraw(text, xOffset, yOffset, &color);
+}
+
+static std::function<void(const char*)> sTextInputCallback;
+
+void Engine::TextInput::Start() {
+	GeStartTextInput();
+}
+
+void Engine::TextInput::Stop() {
+	GeStopTextInput();
+}
+
+void Engine::TextInput::SetCallback(std::function<void(const char*)> cb) {
+	sTextInputCallback = std::move(cb);
+}
+
+void Engine::TextInput::ClearCallback() {
+	sTextInputCallback = nullptr;
+}
+
+bool Engine::TextInput::HandleEvent(void* event) {
+	auto* sdlEvent = static_cast<SDL_Event*>(event);
+	if (sdlEvent->type == SDL_EVENT_TEXT_INPUT && sTextInputCallback) {
+		sTextInputCallback(sdlEvent->text.text);
+		return true;
+	}
+	return false;
 }
 
 void Engine::Json::GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz) {

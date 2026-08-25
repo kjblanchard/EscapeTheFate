@@ -31,6 +31,8 @@ struct GameState {
 	static bool InDialog;
 	static bool Paused;
 	static bool IsMultiplayer;
+	static bool IsLanHost;
+	static std::string LanServerIP;
 	static int SelectedPlayerCharacter;
 	static std::string SelectedOverworldSprite;
 	static int SelectedOverworldFrameW;

@@ -55,6 +55,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiImage.cpp
   src/ui/uiAnimation.cpp
   src/ui/uiText.cpp
+  src/ui/uiTextInput.cpp
   src/ui/uiProgressBar.cpp
   src/ui/uiPanel.cpp
   src/ui/uiLine.cpp
@@ -69,6 +70,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/SplashSystem.cpp
   src/systems/SceneNameSystem.cpp
   src/systems/TitleScreenSystem.cpp
+  src/systems/LanMultiplayerSystem.cpp
   src/systems/CharacterSelectSystem.cpp
   src/systems/GameOverSystem.cpp
   src/systems/PauseSystem.cpp
