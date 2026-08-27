@@ -132,19 +132,19 @@ idebug:
 	@sleep 1
 	lldb -o "platform select ios-simulator" -o "platform connect $(ISIM_UDID)" -o "process attach --name EscapeTheFate --waitfor"
 
+DEVICE_ID ?= $(shell xcrun devicectl list devices 2>/dev/null | grep -v Simulator | awk '/Yes/{print $$NF; exit}')
+
 idev-install:
-	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'make idevices'"; exit 1; fi
 	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
 
 idev-run:
-	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'make idevices'"; exit 1; fi
 	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
 	xcrun devicectl device process launch --device $(DEVICE_ID) $(IOS_BUNDLE_ID)
 
 idev-debug:
-	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'make idevices'"; exit 1; fi
 	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
 	xcrun devicectl device process launch --device $(DEVICE_ID) --start-stopped $(IOS_BUNDLE_ID)
+	lldb -o "platform select remote-ios" -o "platform connect connect://$(DEVICE_ID)" -o "process attach --name EscapeTheFate --waitfor"
 
 .PHONY: isim-list idevices irun idebug idev-install idev-run idev-debug
 
