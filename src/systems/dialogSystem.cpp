@@ -4,7 +4,6 @@
 #include <sgtools/log.h>
 
 #include <engine.hpp>
-#include <format>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/Textbox.hpp>
 #include <systems/SystemCallbacks.hpp>

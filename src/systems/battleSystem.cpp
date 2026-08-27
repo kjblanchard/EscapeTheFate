@@ -9,7 +9,6 @@
 #include <battle/battleZones.hpp>
 #include <battle/battlerData.hpp>
 #include <engine.hpp>
-#include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/gameobjects/BattleLocation.hpp>

@@ -3,7 +3,6 @@
 
 #include <battle/battlerUI.hpp>
 #include <engine.hpp>
-#include <format>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <ui/ui.hpp>
 #include <ui/uiNineSlice.hpp>

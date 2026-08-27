@@ -5,7 +5,6 @@
 
 #include <battle/abilityData.hpp>
 #include <engine.hpp>
-#include <format>
 #include <gameobject/GameObject.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>

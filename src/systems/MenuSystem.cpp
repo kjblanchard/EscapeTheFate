@@ -1,7 +1,8 @@
 #include <Supergoon/json.h>
 
 #include <engine.hpp>
-#include <format>
+#include <string>
+#include <cstdio>
 #include <gameState.hpp>
 #include <systems/MenuSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
@@ -67,7 +68,9 @@ static void updateTimeText() {
 	int total = static_cast<int>(GameState::TotalPlaytimeSeconds);
 	int minutes = total / 60;
 	int seconds = total % 60;
-	auto timeStr = std::format("{:02d}:{:02d}", minutes, seconds);
+	char timeBuf[8];
+	snprintf(timeBuf, sizeof(timeBuf), "%02d:%02d", minutes, seconds);
+	std::string timeStr(timeBuf);
 	for (int i = 0; i < 2; ++i) {
 		if (_timeTexts[i] && GameState::Menu::MenuOpen[i]) {
 			_timeTexts[i]->UpdateText(timeStr);
@@ -80,14 +83,14 @@ static void rebuildPortrait(int playerIdx) {
 	if (!panel) return;
 
 	// Remove old portrait if exists
-	panel->DestroyChildByName(std::format("MenuPortrait{}", playerIdx));
+	panel->DestroyChildByName("MenuPortrait" + std::to_string(playerIdx));
 
 	auto* data = BattleSystem::GetPlayerBattlerData(playerIdx);
 	if (!data || data->Portrait.empty()) return;
 
 	UIImageArgs portraitArgs;
 	portraitArgs.Filename = data->Portrait;
-	portraitArgs.Name = std::format("MenuPortrait{}", playerIdx);
+	portraitArgs.Name = "MenuPortrait" + std::to_string(playerIdx);
 	portraitArgs.Rect = {(kPanelW - data->PortraitRect.w) / 2.0f, kPanelH - 88.0f, data->PortraitRect.w, data->PortraitRect.h};
 	portraitArgs.SourceRect = data->PortraitRect;
 	portraitArgs.Scale = 1.0f;
@@ -109,12 +112,12 @@ static void openStatsPanel(int playerIdx) {
 
 	std::string lines[kNumStatLines];
 	lines[0] = data->Name;
-	lines[1] = std::format("HP:  {}", data->HP);
-	lines[2] = std::format("STR: {}  MAG: {}", data->Str, data->Mag);
-	lines[3] = std::format("DEF: {}  MDF: {}", data->Def, data->MDef);
-	lines[4] = std::format("SPD: {}  POW: {}", data->Spd, data->Pow);
-	lines[5] = std::format("AP:  {}", data->MaxAP);
-	lines[6] = std::format("XP:  {}/{}", data->CurrentXP, data->XPToNextLevel);
+	lines[1] = "HP:  " + std::to_string(data->HP);
+	lines[2] = "STR: " + std::to_string(data->Str) + "  MAG: " + std::to_string(data->Mag);
+	lines[3] = "DEF: " + std::to_string(data->Def) + "  MDF: " + std::to_string(data->MDef);
+	lines[4] = "SPD: " + std::to_string(data->Spd) + "  POW: " + std::to_string(data->Pow);
+	lines[5] = "AP:  " + std::to_string(data->MaxAP);
+	lines[6] = "XP:  " + std::to_string(data->CurrentXP) + "/" + std::to_string(data->XPToNextLevel);
 
 	for (int i = 0; i < kNumStatLines; ++i) {
 		if (_statLineTexts[playerIdx][i]) {
@@ -171,14 +174,14 @@ static void openRelicPanel(int playerIdx) {
 
 		UIObjectArgs rowArgs;
 		rowArgs.Rect = {0.0f, rowY, 148.0f, kRelicRowHeight};
-		rowArgs.Name = std::format("RelicRow{}_{}", rowIndex, playerIdx);
+		rowArgs.Name = "RelicRow" + std::to_string(rowIndex) + "_" + std::to_string(playerIdx);
 		rowArgs.Visible = true;
 		rowArgs.Priority = 0;
 		auto* row = new UIObject(rowArgs);
 
 		UIImageArgs iconArgs;
 		iconArgs.Filename = found->ImageName;
-		iconArgs.Name = std::format("RelicIcon{}_{}", rowIndex, playerIdx);
+		iconArgs.Name = "RelicIcon" + std::to_string(rowIndex) + "_" + std::to_string(playerIdx);
 		iconArgs.Rect = {0.0f, 2.0f, 16.0f, 16.0f};
 		iconArgs.SourceRect = {0, 0, 16, 16};
 		iconArgs.Scale = 1.0f;
@@ -193,7 +196,7 @@ static void openRelicPanel(int playerIdx) {
 		nameArgs.FontSize = 8;
 		nameArgs.Rect = {20.0f, 2.0f, 128.0f, 10.0f};
 		nameArgs.TextToDraw = found->Name;
-		nameArgs.Name = std::format("RelicName{}_{}", rowIndex, playerIdx);
+		nameArgs.Name = "RelicName" + std::to_string(rowIndex) + "_" + std::to_string(playerIdx);
 		nameArgs.NumCharsToDraw = 16;
 		nameArgs.Priority = 0;
 		nameArgs.TextColor = {255, 255, 200, 255};
@@ -209,7 +212,7 @@ static void openRelicPanel(int playerIdx) {
 		descArgs.FontSize = 8;
 		descArgs.Rect = {20.0f, 14.0f, 128.0f, 10.0f};
 		descArgs.TextToDraw = found->Description;
-		descArgs.Name = std::format("RelicDesc{}_{}", rowIndex, playerIdx);
+		descArgs.Name = "RelicDesc" + std::to_string(rowIndex) + "_" + std::to_string(playerIdx);
 		descArgs.NumCharsToDraw = 18;
 		descArgs.Priority = 0;
 		descArgs.TextColor = {180, 180, 255, 255};
@@ -231,7 +234,7 @@ static void openRelicPanel(int playerIdx) {
 
 static void buildMenuPanelForPlayer(int playerIdx) {
 	UINineSliceArgs panelArgs;
-	panelArgs.Name = std::format("MenuPanel{}", playerIdx);
+	panelArgs.Name = "MenuPanel" + std::to_string(playerIdx);
 	panelArgs.Filename = "uibase";
 	panelArgs.Rect = {kPanelX[playerIdx], kPanelY, kPanelW, kPanelH};
 	panelArgs.SourceRect = {0, 0, 64, 64};
@@ -251,7 +254,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	titleArgs.FontSize = 8;
 	titleArgs.Rect = {0.0f, 10.0f, kPanelW, 10.0f};
 	titleArgs.TextToDraw = "- MENU -";
-	titleArgs.Name = std::format("MenuTitle{}", playerIdx);
+	titleArgs.Name = "MenuTitle" + std::to_string(playerIdx);
 	titleArgs.NumCharsToDraw = 20;
 	titleArgs.Priority = 0;
 	titleArgs.TextColor = {255, 255, 200, 255};
@@ -267,8 +270,8 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	playerLabelArgs.FontName = "PressStart2P";
 	playerLabelArgs.FontSize = 8;
 	playerLabelArgs.Rect = {10.0f, 28.0f, 40.0f, 10.0f};
-	playerLabelArgs.TextToDraw = std::format("P{}", playerIdx + 1);
-	playerLabelArgs.Name = std::format("MenuPlayerLabel{}", playerIdx);
+	playerLabelArgs.TextToDraw = "P" + std::to_string(playerIdx + 1);
+	playerLabelArgs.Name = "MenuPlayerLabel" + std::to_string(playerIdx);
 	playerLabelArgs.NumCharsToDraw = 5;
 	playerLabelArgs.Priority = 0;
 	playerLabelArgs.TextColor = {255, 0, 255, 255};
@@ -286,7 +289,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 		itemArgs.FontSize = 8;
 		itemArgs.Rect = {20.0f, kItemStartY + (i * kItemSpacing), 140.0f, 10.0f};
 		itemArgs.TextToDraw = kItemLabels[i];
-		itemArgs.Name = std::format("MenuItem{}_{}", i, playerIdx);
+		itemArgs.Name = "MenuItem" + std::to_string(i) + "_" + std::to_string(playerIdx);
 		itemArgs.NumCharsToDraw = 20;
 		itemArgs.Priority = 0;
 		itemArgs.TextColor = kItemEnabled[i] ? kEnabledColor : kDisabledColor;
@@ -301,7 +304,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	// Finger cursor
 	UIImageArgs fingerArgs;
 	fingerArgs.Filename = "fingers";
-	fingerArgs.Name = std::format("MenuFinger{}", playerIdx);
+	fingerArgs.Name = "MenuFinger" + std::to_string(playerIdx);
 	fingerArgs.Rect = {7.0f, kItemStartY, 16.0f, 16.0f};
 	fingerArgs.SourceRect = {0, 0, 16, 16};
 	fingerArgs.Scale = 1.0f;
@@ -319,7 +322,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	nameArgs.FontSize = 8;
 	nameArgs.Rect = {0.0f, kPanelH - 36.0f, kPanelW, 10.0f};
 	nameArgs.TextToDraw = "";
-	nameArgs.Name = std::format("MenuCharName{}", playerIdx);
+	nameArgs.Name = "MenuCharName" + std::to_string(playerIdx);
 	nameArgs.NumCharsToDraw = 20;
 	nameArgs.Priority = 0;
 	nameArgs.TextColor = {255, 255, 255, 255};
@@ -338,7 +341,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	hintArgs.FontSize = 8;
 	hintArgs.Rect = {0.0f, kPanelH - 22.0f, kPanelW, 10.0f};
 	hintArgs.TextToDraw = "B:Back A:Select";
-	hintArgs.Name = std::format("MenuHint{}", playerIdx);
+	hintArgs.Name = "MenuHint" + std::to_string(playerIdx);
 	hintArgs.NumCharsToDraw = 30;
 	hintArgs.Priority = 0;
 	hintArgs.TextColor = {150, 150, 150, 255};
@@ -355,7 +358,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	timeArgs.FontSize = 8;
 	timeArgs.Rect = {0.0f, kPanelH - 14.0f, kPanelW, 10.0f};
 	timeArgs.TextToDraw = "00:00";
-	timeArgs.Name = std::format("MenuTime{}", playerIdx);
+	timeArgs.Name = "MenuTime" + std::to_string(playerIdx);
 	timeArgs.NumCharsToDraw = 20;
 	timeArgs.Priority = 0;
 	timeArgs.TextColor = {130, 130, 130, 255};
@@ -370,7 +373,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 
 	// Stats sub-panel (covers menu items area when viewing stats)
 	UINineSliceArgs statsArgs;
-	statsArgs.Name = std::format("StatsPanel{}", playerIdx);
+	statsArgs.Name = "StatsPanel" + std::to_string(playerIdx);
 	statsArgs.Filename = "uibase";
 	statsArgs.Rect = {3.0f, kItemStartY - 4.0f, kPanelW - 6.0f, kNumStatLines * kStatLineSpacing + 16.0f};
 	statsArgs.SourceRect = {0, 0, 64, 64};
@@ -389,7 +392,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 		lineArgs.FontSize = 8;
 		lineArgs.Rect = {8.0f, 8.0f + (i * kStatLineSpacing), kPanelW - 22.0f, 10.0f};
 		lineArgs.TextToDraw = " ";
-		lineArgs.Name = std::format("StatLine{}_{}", i, playerIdx);
+		lineArgs.Name = "StatLine" + std::to_string(i) + "_" + std::to_string(playerIdx);
 		lineArgs.NumCharsToDraw = 30;
 		lineArgs.Priority = 0;
 		lineArgs.TextColor = (i == 0) ? Color{255, 255, 200, 255} : kEnabledColor;
@@ -408,7 +411,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 
 	// Relics sub-panel
 	UINineSliceArgs relicPanelArgs;
-	relicPanelArgs.Name = std::format("RelicPanel{}", playerIdx);
+	relicPanelArgs.Name = "RelicPanel" + std::to_string(playerIdx);
 	relicPanelArgs.Filename = "uibase";
 	relicPanelArgs.Rect = {3.0f, kItemStartY - 4.0f, kPanelW - 6.0f, 190.0f};
 	relicPanelArgs.SourceRect = {0, 0, 64, 64};
@@ -426,7 +429,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	relicTitleArgs.FontSize = 8;
 	relicTitleArgs.Rect = {0.0f, 8.0f, kPanelW - 6.0f, 10.0f};
 	relicTitleArgs.TextToDraw = "- RELICS -";
-	relicTitleArgs.Name = std::format("RelicTitle{}", playerIdx);
+	relicTitleArgs.Name = "RelicTitle" + std::to_string(playerIdx);
 	relicTitleArgs.NumCharsToDraw = 20;
 	relicTitleArgs.Priority = 0;
 	relicTitleArgs.TextColor = {255, 255, 200, 255};
@@ -438,7 +441,7 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	relicPanel->AddChild(new UIText(relicTitleArgs));
 
 	UIScrollListArgs scrollArgs;
-	scrollArgs.Name = std::format("RelicScrollList{}", playerIdx);
+	scrollArgs.Name = "RelicScrollList" + std::to_string(playerIdx);
 	scrollArgs.Rect = {8.0f, 24.0f, 148.0f, 158.0f};
 	scrollArgs.Priority = 0;
 	scrollArgs.Visible = true;

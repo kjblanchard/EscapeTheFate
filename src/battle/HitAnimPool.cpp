@@ -2,7 +2,6 @@
 
 #include <battle/HitAnimPool.hpp>
 #include <engine.hpp>
-#include <format>
 
 using namespace Etf;
 using namespace std;

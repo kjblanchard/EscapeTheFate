@@ -22,7 +22,6 @@
 
 #include <algorithm>
 #include <engine.hpp>
-#include <format>
 #include <gameConfig.hpp>
 #include <gameState.hpp>
 #include <gameobject/GameObject.hpp>
@@ -391,7 +390,7 @@ void loadSceneInternal() {
 const int kLoopEndless_ = -1;
 
 void playBGMInternal(const string& name, float volume, int loops = kLoopEndless_) {
-	auto fullPath = std::format("{}.ogg", name);
+	auto fullPath = name + ".ogg";
 	char* buf;
 	size_t sz;
 	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, directory_);
@@ -479,7 +478,7 @@ void Engine::Audio::PlayBGMBackground(const std::string& name, float volume) {
 
 void Engine::Audio::PlaySFXBuffer(const string& name, float volume) {
 	sgLogDebug("Playing sfx %s", name.c_str());
-	auto fullPath = std::format("{}.ogg", name);
+	auto fullPath = name + ".ogg";
 	char* buf;
 	size_t sz;
 	GetDataFromDirectory(fullPath.c_str(), &buf, &sz, directory_);
@@ -544,7 +543,7 @@ void Engine::TextUtils::DrawText(Text* text, float xOffset, float yOffset, Color
 }
 
 void Engine::Json::GetJsonBufferFromDirectory(const char* name, char** buf, size_t* sz) {
-	auto fullPath = std::format("{}.json", name);
+	auto fullPath = std::string(name) + ".json";
 	auto result = GetDataFromDirectory(fullPath.c_str(), buf, sz, directory_);
 	if (!result) {
 		*buf = NULL;
