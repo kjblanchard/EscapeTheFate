@@ -63,5 +63,43 @@ android {
     }
 }
 
+tasks.register('copySDL3JavaSources') {
+    def destDir = file("src/main/java/org/libsdl/app")
+    def cxxDir = file(".cxx")
+
+    outputs.dir destDir
+    doLast {
+        if (destDir.exists() && destDir.listFiles()?.length > 0) {
+            return
+        }
+        def sdlJavaDir = null
+        if (cxxDir.exists()) {
+            cxxDir.eachFileRecurse { f ->
+                if (f.path.contains("sdl3-src/android-project/app/src/main/java/org/libsdl/app") && f.isDirectory()) {
+                    sdlJavaDir = f
+                }
+            }
+        }
+        if (sdlJavaDir != null) {
+            copy {
+                from sdlJavaDir
+                into destDir
+            }
+            logger.lifecycle("Copied SDL3 Java sources from ${sdlJavaDir}")
+        } else {
+            throw new GradleException("SDL3 Java sources not found in .cxx/. CMake may not have run yet. Try building again.")
+        }
+    }
+}
+
+afterEvaluate {
+    tasks.matching { it.name.matches("compile.*JavaWithJavac") }.configureEach {
+        dependsOn 'copySDL3JavaSources'
+    }
+    tasks.matching { it.name.matches("configureCMake.*") }.configureEach { cmakeTask ->
+        tasks.named('copySDL3JavaSources').configure { it.mustRunAfter cmakeTask }
+    }
+}
+
 dependencies {
 }

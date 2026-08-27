@@ -145,41 +145,28 @@ pack:
 # =========================================================
 # Android Build & Deploy
 # =========================================================
-# FULL SETUP (run these commands on the build machine):
+# SETUP (one-time, on the build machine):
 #
-#   # 1. Install command-line tools (no Android Studio GUI needed)
 #   brew install --cask android-commandlinetools
 #   brew install --cask temurin@17
-#   brew install gradle
 #
-#   # 2. Install SDK components via sdkmanager
 #   sdkmanager --sdk_root=$HOME/Library/Android/sdk "platform-tools"
 #   sdkmanager --sdk_root=$HOME/Library/Android/sdk "platforms;android-34"
 #   sdkmanager --sdk_root=$HOME/Library/Android/sdk "build-tools;34.0.0"
 #   sdkmanager --sdk_root=$HOME/Library/Android/sdk "ndk;27.0.12077973"
 #   sdkmanager --sdk_root=$HOME/Library/Android/sdk "cmake;3.31.6"
 #
-#   # 3. Add to ~/.zshrc (or ~/.bashrc):
 #   echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
-#   echo 'export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973' >> ~/.zshrc
-#   echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
-#   echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin' >> ~/.zshrc
 #   source ~/.zshrc
 #
-#   # 4. Generate gradle wrapper (one-time)
-   # cd android && gradle wrapper && cd ..
-#
 # WORKFLOW:
-#   make pack                  # Build etf.sg asset pack
-#   make android-setup         # One-time: fetch SDL3 Java sources
-#   make android-build         # Build debug APK
-#   make android-install       # Push to device
+#   make android-build         # Build debug APK (packs assets automatically)
+#   make android-install       # Push APK to device
 #   make android-run           # Launch app
 #   make android-logcat        # View logs
-#   make android-debug         # Attach native debugger
+#   make android-open          # Open in Android Studio for interactive dev
 # =========================================================
 
-ANDROID_BUILD_DIR ?= build-android
 ANDROID_BUILD_TYPE ?= debug
 ANDROID_PACKAGE = com.supergoon.rpg
 ANDROID_ACTIVITY = $(ANDROID_PACKAGE)/.EscapeTheFateActivity
@@ -187,55 +174,20 @@ ANDROID_APK_DEBUG = android/app/build/outputs/apk/debug/app-debug.apk
 ANDROID_APK_RELEASE = android/app/build/outputs/apk/release/app-release-unsigned.apk
 ANDROID_APK = $(if $(filter release,$(ANDROID_BUILD_TYPE)),$(ANDROID_APK_RELEASE),$(ANDROID_APK_DEBUG))
 ANDROID_HOME ?= $(HOME)/Library/Android/sdk
-ANDROID_NDK_HOME ?= $(shell ls -d $(ANDROID_HOME)/ndk/2* 2>/dev/null | sort -V | tail -1)
 ADB ?= $(ANDROID_HOME)/platform-tools/adb
 GRADLEW = cd android && ./gradlew
-
-android-setup:
-	@echo "=== Running CMake to fetch SDL3 sources (Unix Makefiles, no Ninja) ==="
-	cmake -G "Unix Makefiles" \
-	      -DCMAKE_SYSTEM_NAME=Android \
-	      -DCMAKE_ANDROID_NDK=$(ANDROID_NDK_HOME) \
-	      -DANDROID_ABI=arm64-v8a \
-	      -DANDROID_PLATFORM=android-21 \
-	      -DENGINE_CACHED=ON \
-	      -DIMGUI_DEBUGGING=OFF \
-	      -DDEBUG_ASAN=OFF \
-	      -DSYSTEM_PACKAGES=OFF \
-	      -DPRELOAD_ALL_ASSETS=ON \
-	      -DSDL_BACKEND=ON \
-	      -DSDL_GL=ON \
-	      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-	      -B $(ANDROID_BUILD_DIR) .
-	@echo "=== Copying SDL3 Java sources into android project ==="
-	@mkdir -p android/app/src/main/java/org/libsdl/app
-	@cp -rf $(ANDROID_BUILD_DIR)/_deps/sdl3-src/android-project/app/src/main/java/org/libsdl/app/. \
-	        android/app/src/main/java/org/libsdl/app/
-	@echo "=== Done! SDL3 Java sources installed. ==="
-
-android-studio: android-setup android-assets
-	@echo "=== Project ready for Android Studio ==="
-	@echo "=== Open the 'android/' folder in Android Studio ==="
-	@echo "=== Android Studio will run CMake/Ninja internally — do NOT run make android-build ==="
-
-android-open: android-studio
-	open -a "Android Studio" android/
 
 android-assets: pack
 	@mkdir -p android/app/src/main/assets
 	@cp etf.sg android/app/src/main/assets/etf.sg
-	@echo "=== etf.sg copied to android assets ==="
 
 android-build: android-assets
-	@echo "=== Building Android APK ($(ANDROID_BUILD_TYPE)) ==="
 	$(GRADLEW) assemble$(shell echo $(ANDROID_BUILD_TYPE) | python3 -c "import sys; print(sys.stdin.read().strip().capitalize())")
 
 android-install:
-	@echo "=== Installing APK to device ==="
 	$(ADB) install -r $(ANDROID_APK)
 
 android-run:
-	@echo "=== Launching $(ANDROID_PACKAGE) ==="
 	$(ADB) shell am start -n $(ANDROID_ACTIVITY)
 
 android-stop:
@@ -246,21 +198,16 @@ android-logcat:
 
 android-rebuild: android-build android-install android-run
 
-android-debug:
-	@echo "=== Attaching native debugger ==="
-	@echo "=== Make sure app is running (make android-run) ==="
-	$(ANDROID_NDK_HOME)/prebuilt/darwin-x86_64/bin/ndk-gdb \
-	    --project android/app \
-	    --launch
+android-open:
+	open -a "Android Studio" android/
 
 android-clean:
 	$(GRADLEW) clean
-	@rm -rf $(ANDROID_BUILD_DIR)
 	@rm -f android/app/src/main/assets/etf.sg
+	@rm -rf android/app/src/main/java/org/libsdl/app
 
-.PHONY: android-setup android-studio android-open android-assets android-build \
-        android-install android-run android-stop android-logcat android-rebuild \
-        android-debug android-clean
+.PHONY: android-assets android-build android-install android-run android-stop \
+        android-logcat android-rebuild android-open android-clean
 
 steam:
 	@./steamcmd +login enf3rno +quit
