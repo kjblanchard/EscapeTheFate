@@ -95,21 +95,57 @@ iosrebuild:
 erun:
 	@emrun --no_browser --port 6931 ./build/EscapeTheFate.html
 
-irun:
-	xcrun simctl install 0A997707-21D6-4A93-AA1E-E952675BA32D build/Debug/EscapeTheFate.app
+# =========================================================
+# iOS Deploy & Debug
+# =========================================================
+# Tools needed:
+#   - Xcode (includes xcrun, simctl)
+#   - ios-deploy for physical device: brew install ios-deploy
+#   - For wireless debug: pair device in Xcode first (Window -> Devices)
+#
+# Simulator workflow:
+#   make irebuild && make irun
+# Device workflow:
+#   make iosrebuild && make idev-run
+# =========================================================
+
+IOS_BUNDLE_ID = com.supergoon.rpg
+ISIM_APP_PATH = build/Debug/EscapeTheFate.app
+IOS_DEVICE_APP_PATH = build/Debug-iphoneos/EscapeTheFate.app
+ISIM_UDID ?= $(shell xcrun simctl list devices booted -j 2>/dev/null | python3 -c "import json,sys;d=json.load(sys.stdin);devs=[v for vs in d['devices'].values() for v in vs if v['state']=='Booted'];print(devs[0]['udid'] if devs else '')" 2>/dev/null)
+
+isim-list:
+	xcrun simctl list devices available
+
 idevices:
-	xcrun simctl list devices
-#for debugging on ios simulator, in lldb
-# use idevices and make sure it's booted and installed with irun.
+	xcrun xctrace list devices 2>&1 | grep -v Simulator
+
+irun:
+	@if [ -z "$(ISIM_UDID)" ]; then echo "No booted simulator found. Boot one or set ISIM_UDID=<uuid>"; exit 1; fi
+	xcrun simctl install $(ISIM_UDID) $(ISIM_APP_PATH)
+	xcrun simctl launch $(ISIM_UDID) $(IOS_BUNDLE_ID)
+
 idebug:
-	xcrun simctl launch --wait-for-debugger booted com.supergoon.rpg
-	lldb \
-    -o "platform select ios-simulator" \
-    -o "platform connect 0A997707-21D6-4A93-AA1E-E952675BA32D" \
-    -o "process attach --name EscapeTheFate" \
-	 # br set --name InitializeGraphicsSystem
-	# breakpoint set --name SDL_main
-	# c
+	@if [ -z "$(ISIM_UDID)" ]; then echo "Set ISIM_UDID=<uuid> from 'make isim-list'"; exit 1; fi
+	xcrun simctl install $(ISIM_UDID) $(ISIM_APP_PATH)
+	xcrun simctl launch --wait-for-debugger $(ISIM_UDID) $(IOS_BUNDLE_ID) &
+	@sleep 1
+	lldb -o "platform select ios-simulator" -o "platform connect $(ISIM_UDID)" -o "process attach --name EscapeTheFate --waitfor"
+
+idev-install:
+	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --no-wifi
+
+idev-run:
+	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --no-wifi --justlaunch
+
+idev-debug:
+	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --no-wifi --debug
+
+idev-wireless-debug:
+	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'xcrun xctrace list devices'"; exit 1; fi
+	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --id $(DEVICE_ID) --debug
+
+.PHONY: isim-list idevices irun idebug idev-install idev-run idev-debug idev-wireless-debug
 
 #Sign before we package
 devsign:
@@ -153,6 +189,113 @@ FILES := $(shell find $(DIRS) -type f \
 ALL_FILES_STRING := $(foreach f,$(FILES),$(f) )
 pack:
 	@$(SGFORGE) $(ALL_FILES_STRING) -o etf.sg
+
+# =========================================================
+# Android Build & Deploy
+# =========================================================
+# SETUP GUIDE:
+#   1. Install Android Studio: https://developer.android.com/studio
+#      Open SDK Manager and install:
+#        - Android SDK Platform 34
+#        - Android SDK Build-Tools 34
+#        - NDK (Side by side) latest (27.x)
+#        - CMake 3.28+ (from SDK Manager)
+#
+#   2. Install JDK 17:
+#        brew install --cask temurin@17
+#
+#   3. Set env vars in your shell profile:
+#        export ANDROID_HOME=$HOME/Library/Android/sdk
+#        export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/<version>
+#        export PATH=$PATH:$ANDROID_HOME/platform-tools
+#
+#   4. Generate gradle wrapper (one-time, from android/ dir):
+#        cd android && gradle wrapper
+#      (install gradle first: brew install gradle)
+#
+# WORKFLOW:
+#   make pack                  # Build etf.sg asset pack
+#   make android-setup         # One-time: fetch SDL3 Java sources
+#   make android-build         # Build debug APK
+#   make android-install       # Push to device
+#   make android-run           # Launch app
+#   make android-logcat        # View logs
+#   make android-debug         # Attach native debugger
+# =========================================================
+
+ANDROID_BUILD_DIR ?= build-android
+ANDROID_BUILD_TYPE ?= debug
+ANDROID_PACKAGE = com.supergoon.rpg
+ANDROID_ACTIVITY = $(ANDROID_PACKAGE)/.EscapeTheFateActivity
+ANDROID_APK_DEBUG = android/app/build/outputs/apk/debug/app-debug.apk
+ANDROID_APK_RELEASE = android/app/build/outputs/apk/release/app-release-unsigned.apk
+ANDROID_APK = $(if $(filter release,$(ANDROID_BUILD_TYPE)),$(ANDROID_APK_RELEASE),$(ANDROID_APK_DEBUG))
+ANDROID_HOME ?= $(HOME)/Library/Android/sdk
+ANDROID_NDK_HOME ?= $(shell ls -d $(ANDROID_HOME)/ndk/2* 2>/dev/null | sort -V | tail -1)
+ADB ?= $(ANDROID_HOME)/platform-tools/adb
+GRADLEW = cd android && ./gradlew
+
+android-setup:
+	@echo "=== Running CMake to fetch SDL3 sources ==="
+	cmake -DCMAKE_SYSTEM_NAME=Android \
+	      -DCMAKE_ANDROID_NDK=$(ANDROID_NDK_HOME) \
+	      -DANDROID_ABI=arm64-v8a \
+	      -DANDROID_PLATFORM=android-21 \
+	      -DENGINE_CACHED=ON \
+	      -DIMGUI_DEBUGGING=OFF \
+	      -DDEBUG_ASAN=OFF \
+	      -DSYSTEM_PACKAGES=OFF \
+	      -DPRELOAD_ALL_ASSETS=ON \
+	      -DSDL_BACKEND=ON \
+	      -DSDL_GL=ON \
+	      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+	      -B $(ANDROID_BUILD_DIR) .
+	@echo "=== Copying SDL3 Java sources into android project ==="
+	@mkdir -p android/app/src/main/java/org/libsdl/app
+	@cp -rf $(ANDROID_BUILD_DIR)/_deps/sdl3-src/android-project/app/src/main/java/org/libsdl/app/. \
+	        android/app/src/main/java/org/libsdl/app/
+	@echo "=== Done! SDL3 Java sources installed. ==="
+	@echo "=== Generate gradle wrapper: cd android && gradle wrapper ==="
+
+android-assets: pack
+	@mkdir -p android/app/src/main/assets
+	@cp etf.sg android/app/src/main/assets/etf.sg
+	@echo "=== etf.sg copied to android assets ==="
+
+android-build: android-assets
+	@echo "=== Building Android APK ($(ANDROID_BUILD_TYPE)) ==="
+	$(GRADLEW) assemble$(shell echo $(ANDROID_BUILD_TYPE) | python3 -c "import sys; print(sys.stdin.read().strip().capitalize())")
+
+android-install:
+	@echo "=== Installing APK to device ==="
+	$(ADB) install -r $(ANDROID_APK)
+
+android-run:
+	@echo "=== Launching $(ANDROID_PACKAGE) ==="
+	$(ADB) shell am start -n $(ANDROID_ACTIVITY)
+
+android-stop:
+	$(ADB) shell am force-stop $(ANDROID_PACKAGE)
+
+android-logcat:
+	$(ADB) logcat -s ETF:* SDL:* SDL/APP:* AndroidRuntime:* GLES:*
+
+android-rebuild: android-build android-install android-run
+
+android-debug:
+	@echo "=== Attaching native debugger ==="
+	@echo "=== Make sure app is running (make android-run) ==="
+	$(ANDROID_NDK_HOME)/prebuilt/darwin-x86_64/bin/ndk-gdb \
+	    --project android/app \
+	    --launch
+
+android-clean:
+	$(GRADLEW) clean
+	@rm -rf $(ANDROID_BUILD_DIR)
+	@rm -f android/app/src/main/assets/etf.sg
+
+.PHONY: android-setup android-assets android-build android-install android-run \
+        android-stop android-logcat android-rebuild android-debug android-clean
 
 steam:
 	@./steamcmd +login enf3rno +quit

@@ -19,3 +19,9 @@ steam_appid.txt
 *.sg
 CLAUDE.md
 external/redistributable_bin/
+build-android/
+android/app/build/
+android/app/src/main/assets/etf.sg
+android/app/src/main/java/org/libsdl/
+android/.gradle/
+android/local.properties

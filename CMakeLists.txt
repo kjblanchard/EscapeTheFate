@@ -19,6 +19,14 @@ option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
 option(STEAM_ENABLED "Does this use steam as a platform?" OFF)
 option(STEAM_APPID_FILE "Write steam_appid.txt next to binary (dev only)" ON)
+
+if(ANDROID)
+  set(IMGUI_DEBUGGING OFF CACHE BOOL "" FORCE)
+  set(DEBUG_ASAN OFF CACHE BOOL "" FORCE)
+  set(SYSTEM_PACKAGES OFF CACHE BOOL "" FORCE)
+  add_definitions(-DIS_MOBILE)
+  add_definitions(-DPRELOAD_ALL_ASSETS)
+endif()
 include(FetchContent)
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY_DEBUG   ${CMAKE_BINARY_DIR}/Debug)
@@ -124,12 +132,18 @@ if(APPLE)
         CACHE STRING "Icon path")
 endif(APPLE)
 
-add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32 
-  ${EXECUTABLE_SOURCE_FILES_CORE}
-  ${ICON_PATH}
-  ${ASSET_FILE_LOCATION}
-  cmake/AppIcon.rc
-)
+if(ANDROID)
+  add_library(${EXECUTABLE_TARGET_NAME} SHARED
+    ${EXECUTABLE_SOURCE_FILES_CORE}
+  )
+else()
+  add_executable(${EXECUTABLE_TARGET_NAME} MACOSX_BUNDLE WIN32
+    ${EXECUTABLE_SOURCE_FILES_CORE}
+    ${ICON_PATH}
+    ${ASSET_FILE_LOCATION}
+    cmake/AppIcon.rc
+  )
+endif()
 
 # if(WIN32)
 #   target_sources(${EXECUTABLE_TARGET_NAME} PRIVATE AppIcon.rc)
@@ -193,7 +207,7 @@ target_include_directories(${EXECUTABLE_TARGET_NAME} PRIVATE
 )
 
 if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
-  if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten"))
+  if(NOT (APPLE AND (CMAKE_SYSTEM_NAME STREQUAL "iOS" OR CMAKE_SYSTEM_NAME STREQUAL "iossimulator")) AND NOT (CMAKE_SYSTEM_NAME STREQUAL "Emscripten") AND NOT ANDROID)
     message(STATUS "Enabling AddressSanitizer in Debug mode")
     set(ASAN_FLAGS "-fsanitize=address -fno-omit-frame-pointer")
     set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} ${ASAN_FLAGS}")
@@ -204,6 +218,15 @@ if(DEBUG_ASAN AND CMAKE_BUILD_TYPE STREQUAL "Debug")
 endif()
 
 target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE SupergoonEngine)
+
+if(ANDROID)
+  target_link_libraries(${EXECUTABLE_TARGET_NAME} PRIVATE
+    android
+    log
+    EGL
+    GLESv3
+  )
+endif()
 
 ###### Platform specific executable flags
 if(EMSCRIPTEN)
