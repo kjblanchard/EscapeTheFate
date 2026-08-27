@@ -82,71 +82,21 @@ bsteamrebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) STEAM_ENABLED=ON STEAM_APPID_FILE=OFF clean configure build install
 erebuild:
 	@$(MAKE) CMAKE_GENERATOR=$(BACKUP_GENERATOR) CONFIGURE_COMMAND=$(EMSCRIPTEN_CONFIGURE_COMMAND) clean configure build
-irebuild:
+isim:
 	$(MAKE) CMAKE_GENERATOR=$(APPLE_GENERATOR) ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphonesimulator -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE -DDISABLE_WERROR=YES" clean configure build package
-iosrebuild:
+ios:
 	$(MAKE) \
 		CMAKE_GENERATOR=$(APPLE_GENERATOR) \
 		ADDITIONAL_BUILD_COMMANDS=$(IOS_BUILD_COMMANDS) \
 		ADDITIONAL_OPTIONS="-DCMAKE_SYSTEM_NAME=iOS -DCMAKE_OSX_SYSROOT=iphoneos -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_OSX_DEPLOYMENT_TARGET=12.0 -DTARGET_OS_IOS=TRUE" \
 		IMGUI_DEBUGGING=OFF \
 		clean configure build package
-	# Custom run commands
+xopen:
+	@open build/*.xcodeproj
 erun:
 	@emrun --no_browser --port 6931 ./build/EscapeTheFate.html
 
-# =========================================================
-# iOS Deploy & Debug
-# =========================================================
-# Tools needed:
-#   - Xcode (includes xcrun, simctl)
-#   - ios-deploy for physical device: brew install ios-deploy
-#   - For wireless debug: pair device in Xcode first (Window -> Devices)
-#
-# Simulator workflow:
-#   make irebuild && make irun
-# Device workflow:
-#   make iosrebuild && make idev-run
-# =========================================================
-
-IOS_BUNDLE_ID = com.supergoon.rpg
-ISIM_APP_PATH = build/Debug/EscapeTheFate.app
-IOS_DEVICE_APP_PATH = build/Debug/EscapeTheFate.app
-ISIM_UDID ?= $(shell xcrun simctl list devices booted -j 2>/dev/null | python3 -c "import json,sys;d=json.load(sys.stdin);devs=[v for vs in d['devices'].values() for v in vs if v['state']=='Booted'];print(devs[0]['udid'] if devs else '')" 2>/dev/null)
-
-isim-list:
-	xcrun simctl list devices available
-
-idevices:
-	xcrun xctrace list devices 2>&1 | grep -v Simulator
-
-irun:
-	@if [ -z "$(ISIM_UDID)" ]; then echo "No booted simulator found. Boot one or set ISIM_UDID=<uuid>"; exit 1; fi
-	xcrun simctl install $(ISIM_UDID) $(ISIM_APP_PATH)
-	xcrun simctl launch $(ISIM_UDID) $(IOS_BUNDLE_ID)
-
-idebug:
-	@if [ -z "$(ISIM_UDID)" ]; then echo "Set ISIM_UDID=<uuid> from 'make isim-list'"; exit 1; fi
-	xcrun simctl install $(ISIM_UDID) $(ISIM_APP_PATH)
-	xcrun simctl launch --wait-for-debugger $(ISIM_UDID) $(IOS_BUNDLE_ID) &
-	@sleep 1
-	lldb -o "platform select ios-simulator" -o "platform connect $(ISIM_UDID)" -o "process attach --name EscapeTheFate --waitfor"
-
-DEVICE_ID ?= $(shell xcrun devicectl list devices 2>/dev/null | grep -v Simulator | awk '/Yes/{print $$NF; exit}')
-
-idev-install:
-	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
-
-idev-run:
-	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
-	xcrun devicectl device process launch --device $(DEVICE_ID) $(IOS_BUNDLE_ID)
-
-idev-debug:
-	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
-	xcrun devicectl device process launch --device $(DEVICE_ID) --start-stopped $(IOS_BUNDLE_ID)
-	lldb -o "platform select remote-ios" -o "platform connect connect://$(DEVICE_ID)" -o "process attach --name EscapeTheFate --waitfor"
-
-.PHONY: isim-list idevices irun idebug idev-install idev-run idev-debug
+.PHONY: ios isim xopen
 
 #Sign before we package
 devsign:
