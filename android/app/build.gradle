@@ -25,7 +25,8 @@ android {
                           "-DSDL_RENDERER=OFF",
                           "-DSTEAM_ENABLED=OFF",
                           "-DLINK_M=OFF",
-                          "-DCMAKE_POLICY_VERSION_MINIMUM=3.5"
+                          "-DCMAKE_POLICY_VERSION_MINIMUM=3.5",
+                          "-DCMAKE_CXX_SCAN_FOR_MODULES=OFF"
                 targets "EscapeTheFate"
                 cppFlags "-std=c++23"
                 abiFilters 'arm64-v8a', 'x86_64'
