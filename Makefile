@@ -192,8 +192,9 @@ ADB ?= $(ANDROID_HOME)/platform-tools/adb
 GRADLEW = cd android && ./gradlew
 
 android-setup:
-	@echo "=== Running CMake to fetch SDL3 sources ==="
-	cmake -DCMAKE_SYSTEM_NAME=Android \
+	@echo "=== Running CMake to fetch SDL3 sources (Unix Makefiles, no Ninja) ==="
+	cmake -G "Unix Makefiles" \
+	      -DCMAKE_SYSTEM_NAME=Android \
 	      -DCMAKE_ANDROID_NDK=$(ANDROID_NDK_HOME) \
 	      -DANDROID_ABI=arm64-v8a \
 	      -DANDROID_PLATFORM=android-21 \
@@ -211,7 +212,14 @@ android-setup:
 	@cp -rf $(ANDROID_BUILD_DIR)/_deps/sdl3-src/android-project/app/src/main/java/org/libsdl/app/. \
 	        android/app/src/main/java/org/libsdl/app/
 	@echo "=== Done! SDL3 Java sources installed. ==="
-	@echo "=== Generate gradle wrapper: cd android && gradle wrapper ==="
+
+android-studio: android-setup android-assets
+	@echo "=== Project ready for Android Studio ==="
+	@echo "=== Open the 'android/' folder in Android Studio ==="
+	@echo "=== Android Studio will run CMake/Ninja internally — do NOT run make android-build ==="
+
+android-open: android-studio
+	open -a "Android Studio" android/
 
 android-assets: pack
 	@mkdir -p android/app/src/main/assets
@@ -250,8 +258,9 @@ android-clean:
 	@rm -rf $(ANDROID_BUILD_DIR)
 	@rm -f android/app/src/main/assets/etf.sg
 
-.PHONY: android-setup android-assets android-build android-install android-run \
-        android-stop android-logcat android-rebuild android-debug android-clean
+.PHONY: android-setup android-studio android-open android-assets android-build \
+        android-install android-run android-stop android-logcat android-rebuild \
+        android-debug android-clean
 
 steam:
 	@./steamcmd +login enf3rno +quit
