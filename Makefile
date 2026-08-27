@@ -193,25 +193,29 @@ pack:
 # =========================================================
 # Android Build & Deploy
 # =========================================================
-# SETUP GUIDE:
-#   1. Install Android Studio: https://developer.android.com/studio
-#      Open SDK Manager and install:
-#        - Android SDK Platform 34
-#        - Android SDK Build-Tools 34
-#        - NDK (Side by side) latest (27.x)
-#        - CMake 3.28+ (from SDK Manager)
+# FULL SETUP (run these commands on the build machine):
 #
-#   2. Install JDK 17:
-#        brew install --cask temurin@17
+#   # 1. Install command-line tools (no Android Studio GUI needed)
+#   brew install --cask android-commandlinetools
+#   brew install --cask temurin@17
+#   brew install gradle
 #
-#   3. Set env vars in your shell profile:
-#        export ANDROID_HOME=$HOME/Library/Android/sdk
-#        export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/<version>
-#        export PATH=$PATH:$ANDROID_HOME/platform-tools
+#   # 2. Install SDK components via sdkmanager
+#   sdkmanager --sdk_root=$HOME/Library/Android/sdk "platform-tools"
+#   sdkmanager --sdk_root=$HOME/Library/Android/sdk "platforms;android-34"
+#   sdkmanager --sdk_root=$HOME/Library/Android/sdk "build-tools;34.0.0"
+#   sdkmanager --sdk_root=$HOME/Library/Android/sdk "ndk;27.0.12077973"
+#   sdkmanager --sdk_root=$HOME/Library/Android/sdk "cmake;3.31.6"
 #
-#   4. Generate gradle wrapper (one-time, from android/ dir):
-#        cd android && gradle wrapper
-#      (install gradle first: brew install gradle)
+#   # 3. Add to ~/.zshrc (or ~/.bashrc):
+#   echo 'export ANDROID_HOME=$HOME/Library/Android/sdk' >> ~/.zshrc
+#   echo 'export ANDROID_NDK_HOME=$ANDROID_HOME/ndk/27.0.12077973' >> ~/.zshrc
+#   echo 'export PATH=$PATH:$ANDROID_HOME/platform-tools' >> ~/.zshrc
+#   echo 'export PATH=$PATH:$ANDROID_HOME/cmdline-tools/latest/bin' >> ~/.zshrc
+#   source ~/.zshrc
+#
+#   # 4. Generate gradle wrapper (one-time)
+#   cd android && gradle wrapper && cd ..
 #
 # WORKFLOW:
 #   make pack                  # Build etf.sg asset pack
