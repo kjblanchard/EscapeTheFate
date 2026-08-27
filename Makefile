@@ -167,25 +167,43 @@ pack:
 #   make android-open          # Open in Android Studio for interactive dev
 # =========================================================
 
-ANDROID_BUILD_TYPE ?= debug
+ANDROID_BUILD_TYPE ?= Debug
 ANDROID_PACKAGE = com.supergoon.rpg
 ANDROID_ACTIVITY = $(ANDROID_PACKAGE)/.EscapeTheFateActivity
-ANDROID_APK_DEBUG = android/app/build/outputs/apk/debug/app-debug.apk
-ANDROID_APK_RELEASE = android/app/build/outputs/apk/release/app-release-unsigned.apk
-ANDROID_APK = $(if $(filter release,$(ANDROID_BUILD_TYPE)),$(ANDROID_APK_RELEASE),$(ANDROID_APK_DEBUG))
 ANDROID_HOME ?= $(HOME)/Library/Android/sdk
+ANDROID_NDK_VERSION ?= 27.0.12077973
+ANDROID_NDK = $(ANDROID_HOME)/ndk/$(ANDROID_NDK_VERSION)
+ANDROID_CMAKE = $(ANDROID_HOME)/cmake/3.31.6/bin/cmake
+ANDROID_BUILD_DIR = build-android
+ANDROID_ABI ?= arm64-v8a
 ADB ?= $(ANDROID_HOME)/platform-tools/adb
-GRADLEW = cd android && ./gradlew
 
-android-assets: pack
+android-configure: pack
 	@mkdir -p android/app/src/main/assets
 	@cp etf.sg android/app/src/main/assets/etf.sg
+	$(ANDROID_CMAKE) -B $(ANDROID_BUILD_DIR) \
+		-DCMAKE_TOOLCHAIN_FILE=$(ANDROID_NDK)/build/cmake/android.toolchain.cmake \
+		-DANDROID_ABI=$(ANDROID_ABI) \
+		-DANDROID_PLATFORM=android-21 \
+		-DCMAKE_BUILD_TYPE=$(ANDROID_BUILD_TYPE) \
+		-DENGINE_CACHED=ON \
+		-DIMGUI_DEBUGGING=OFF \
+		-DDEBUG_ASAN=OFF \
+		-DSYSTEM_PACKAGES=OFF \
+		-DPRELOAD_ALL_ASSETS=ON \
+		-DSDL_BACKEND=ON \
+		-DSDL_GL=ON \
+		-DSDL_RENDERER=OFF \
+		-DSTEAM_ENABLED=OFF \
+		-DLINK_M=OFF \
+		-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
+		-DCMAKE_CXX_SCAN_FOR_MODULES=OFF
 
-android-build: android-assets
-	$(GRADLEW) assemble$(shell echo $(ANDROID_BUILD_TYPE) | python3 -c "import sys; print(sys.stdin.read().strip().capitalize())")
+android-build: android-configure
+	$(ANDROID_CMAKE) --build $(ANDROID_BUILD_DIR) -j$$(nproc 2>/dev/null || sysctl -n hw.ncpu)
 
 android-install:
-	$(ADB) install -r $(ANDROID_APK)
+	$(ADB) install -r $(ANDROID_BUILD_DIR)/*.apk
 
 android-run:
 	$(ADB) shell am start -n $(ANDROID_ACTIVITY)
@@ -196,17 +214,16 @@ android-stop:
 android-logcat:
 	$(ADB) logcat -s ETF:* SDL:* SDL/APP:* AndroidRuntime:* GLES:*
 
-android-rebuild: android-build android-install android-run
+android-rebuild: android-clean android-build android-install android-run
 
 android-open:
 	open -a "Android Studio" android/
 
 android-clean:
-	$(GRADLEW) clean
+	@rm -rf $(ANDROID_BUILD_DIR)
 	@rm -f android/app/src/main/assets/etf.sg
-	@rm -rf android/app/src/main/java/org/libsdl/app
 
-.PHONY: android-assets android-build android-install android-run android-stop \
+.PHONY: android-configure android-build android-install android-run android-stop \
         android-logcat android-rebuild android-open android-clean
 
 steam:
