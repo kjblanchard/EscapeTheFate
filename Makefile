@@ -133,19 +133,20 @@ idebug:
 	lldb -o "platform select ios-simulator" -o "platform connect $(ISIM_UDID)" -o "process attach --name EscapeTheFate --waitfor"
 
 idev-install:
-	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --no-wifi
+	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'make idevices'"; exit 1; fi
+	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
 
 idev-run:
-	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --no-wifi --justlaunch
+	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'make idevices'"; exit 1; fi
+	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
+	xcrun devicectl device process launch --device $(DEVICE_ID) $(IOS_BUNDLE_ID)
 
 idev-debug:
-	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --no-wifi --debug
+	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'make idevices'"; exit 1; fi
+	xcrun devicectl device install app --device $(DEVICE_ID) $(IOS_DEVICE_APP_PATH)
+	xcrun devicectl device process launch --device $(DEVICE_ID) --start-stopped $(IOS_BUNDLE_ID)
 
-idev-wireless-debug:
-	@if [ -z "$(DEVICE_ID)" ]; then echo "Set DEVICE_ID=<udid> from 'xcrun xctrace list devices'"; exit 1; fi
-	ios-deploy --bundle $(IOS_DEVICE_APP_PATH) --id $(DEVICE_ID) --debug
-
-.PHONY: isim-list idevices irun idebug idev-install idev-run idev-debug idev-wireless-debug
+.PHONY: isim-list idevices irun idebug idev-install idev-run idev-debug
 
 #Sign before we package
 devsign:
