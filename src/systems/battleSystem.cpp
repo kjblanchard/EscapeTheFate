@@ -245,7 +245,7 @@ static void cacheBattleUIElements() {
 	assert(battleUI_.PlayerHUD && "No hud object found");
 	int battlerNum = 1;
 	for (auto& obj : battleUI_.PlayerCommandsObjects) {
-		auto nameLookup = format("Player{}CommandsUI", to_string(battlerNum));
+		auto nameLookup = "Player" + to_string(battlerNum) + "CommandsUI";
 		obj = battleUI_.RootPanel->GetChildByName(nameLookup);
 		++battlerNum;
 		assert(obj && "No command object found");

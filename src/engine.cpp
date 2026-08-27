@@ -416,7 +416,7 @@ void Engine::Debug::DrawRectPrimitive(const RectangleF& rect, Color color, bool 
 void Engine::Textures::LoadTextureFromBuffer(Texture* tex, const std::string& name) {
 	char* buf;
 	size_t sz;
-	string filename = format("{}.png", name);
+	string filename = name + ".png";
 	auto result = GetDataFromDirectory(filename.c_str(), &buf, &sz, directory_);
 	if (result) {
 		TextureLoadFromPngBuffer(tex, name.c_str(), buf, sz);

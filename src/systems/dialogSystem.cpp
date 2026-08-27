@@ -213,7 +213,7 @@ static void parseJsonIntoMap(json_object* dialogRoot) {
 void DialogSystem::LoadDialogFromJsonFile(const std::string& filename) {
 	_currentMap = filename;
 	if (_loadedDialog.find(filename) != _loadedDialog.end()) return;
-	auto loadString = format("{}D", filename);
+	auto loadString = filename + "D";
 	// TODO since using buffers, commented this out.. not sure if this is doing something laggy
 	//  if (!std::filesystem::exists(loadString)) {
 	//  	sgLogDebug("No dialog file for %s", loadString.c_str());

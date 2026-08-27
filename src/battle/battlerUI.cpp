@@ -41,7 +41,7 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 
 	_player = battlerNum < 3;
 	if (_player) {
-		auto playerUIName = format("Player{}CommandsUI", to_string(battlerNum + 1));
+		auto playerUIName = "Player" + to_string(battlerNum + 1) + "CommandsUI";
 		auto playerRoot = UI::GetRootUIObject()->GetChildByName(playerUIName);
 		if (!playerRoot) sgLogCritical("Could not find %s, exiting", playerUIName.c_str());
 
@@ -86,25 +86,25 @@ BattlerUI::BattlerUI(unsigned int battlerNum) : _battlerNum(battlerNum) {
 			if (_finger) _finger->UpdateDrawColor(p2Color);
 			if (_targetSelectionFinger) _targetSelectionFinger->UpdateDrawColor(p2Color);
 		}
-		auto nameText = format("P{}NameText", to_string(battlerNum + 1));
+		auto nameText = "P" + to_string(battlerNum + 1) + "NameText";
 		auto thing = UI::GetRootUIObject()->GetChildByName(nameText);
 		_nameObject = static_cast<UIText*>(thing);
 
-		auto hpName = format("P{}Health", to_string(battlerNum + 1));
+		auto hpName = "P" + to_string(battlerNum + 1) + "Health";
 		auto hpObject = UI::GetRootUIObject()->GetChildByName(hpName);
 		_hpObject = static_cast<UIText*>(hpObject);
 
-		auto apName = format("P{}Magic", to_string(battlerNum + 1));
+		auto apName = "P" + to_string(battlerNum + 1) + "Magic";
 		auto apObject = UI::GetRootUIObject()->GetChildByName(apName);
 		_apObject = static_cast<UIText*>(apObject);
 
-		auto atbName = format("P{}ATB", to_string(battlerNum + 1));
+		auto atbName = "P" + to_string(battlerNum + 1) + "ATB";
 		auto progressBarAnim = UI::GetRootUIObject()->GetChildByName(atbName);
 		_progressBarAnim = static_cast<UIAnimation*>(progressBarAnim);
 		if (!progressBarAnim) sgLogCritical("Could not find progress bar anim, exiting");
 		StartATBIdleAnim();
 
-		auto atbBarName = format("P{}ATBProgressBar", to_string(battlerNum + 1));
+		auto atbBarName = "P" + to_string(battlerNum + 1) + "ATBProgressBar";
 		auto progressBarObject = UI::GetRootUIObject()->GetChildByName(atbBarName);
 		if (!progressBarObject) sgLogCritical("Could not find progress bar, exiting");
 		_progressBar = static_cast<UIProgressBar*>(progressBarObject);

@@ -10,7 +10,7 @@ static const Color kWhite = {255, 255, 255, 255};
 
 HitAnimPool::HitAnimPool(const string& filename, float frameW, float frameH)
 	: _frameW(frameW), _frameH(frameH) {
-	auto pngName = format("{}.png", filename);
+	auto pngName = filename + ".png";
 	for (int i = 0; i < kHitAnimPoolSize; ++i) {
 		auto& slot = _slots[i];
 		RectangleF sourceRect = {0, 0, _frameW, _frameH};

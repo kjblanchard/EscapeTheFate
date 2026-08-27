@@ -17,7 +17,7 @@ Battler::~Battler() {
 }
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), battlerData(args.BattleData) {
-	auto spriteName = format("{}.png", args.BattleData->Sprite.c_str());
+	auto spriteName = std::string(args.BattleData->Sprite.c_str()) + ".png";
 	sprite = Engine::Sprites::CreateSpriteFull(spriteName.c_str(), &x, &y, {0, 0, args.BattleData->Location.w, args.BattleData->Location.h}, args.BattleData->Location);
 	animator = make_unique<SpriteAnimator>(args.BattleData->Sprite.c_str(), sprite);
 	animator->StartAnimation(args.BattleData->IdleAnimation);
