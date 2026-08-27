@@ -21,6 +21,7 @@
 #include <systems/SceneNameSystem.hpp>
 #include <systems/SplashSystem.hpp>
 #include <systems/SystemCallbacks.hpp>
+#include <systems/PointerInputSystem.hpp>
 #include <systems/TitleScreenSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <systems/dialogSystem.hpp>
@@ -49,6 +50,10 @@ void InitializeGame() {
 		{
 			.Start = PlayerControllerSystem::Start,
 			.Update = PlayerControllerSystem::Update,
+		},
+		{
+			.Start = PointerInputSystem::Start,
+			.Update = PointerInputSystem::Update,
 		},
 		{
 			.Update = DialogSystem::Update,

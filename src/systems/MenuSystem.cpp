@@ -3,8 +3,10 @@
 #include <engine.hpp>
 #include <format>
 #include <gameState.hpp>
+#include <memory>
 #include <systems/MenuSystem.hpp>
 #include <systems/PlayerControllerSystem.hpp>
+#include <systems/PointerInputSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 #include <ui/UIScrollList.hpp>
@@ -56,6 +58,8 @@ static UIObject* _relicPanels[2] = {nullptr, nullptr};
 static UIScrollList* _relicScrollLists[2] = {nullptr, nullptr};
 static bool _relicsOpen[2] = {false, false};
 static const float kRelicRowHeight = 36.0f;
+static std::unique_ptr<UIButtonGroup> _menuButtonGroups[2];
+static UIObject* _menuItemObjects[2][kNumItems] = {};
 
 static void positionFinger(int playerIdx) {
 	if (!_fingers[playerIdx]) return;
@@ -295,7 +299,9 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 		itemArgs.WordWrap = false;
 		itemArgs.Visible = true;
 		itemArgs.DebugBox = false;
-		panel->AddChild(new UIText(itemArgs));
+		auto* item = new UIText(itemArgs);
+		panel->AddChild(item);
+		_menuItemObjects[playerIdx][i] = item;
 	}
 
 	// Finger cursor
@@ -453,7 +459,39 @@ static void buildMenuPanelForPlayer(int playerIdx) {
 	_panels[playerIdx] = panel;
 }
 
+static void activateMenuItem(int playerIdx, int idx) {
+	if (!kItemEnabled[idx]) {
+		Engine::Audio::PlaySFXBuffer("error1", 0.75f);
+	} else if (idx == 4) {
+		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+		openStatsPanel(playerIdx);
+	} else if (idx == 6) {
+		Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
+		openRelicPanel(playerIdx);
+	}
+}
+
+static void buildButtonGroup(int playerIdx) {
+	_menuButtonGroups[playerIdx] = std::make_unique<UIButtonGroup>(
+		[playerIdx](int index) {
+			_selectedIndex[playerIdx] = index;
+			positionFinger(playerIdx);
+			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
+			if (_menuButtonGroups[playerIdx]) _menuButtonGroups[playerIdx]->SetFocusedIndex(index);
+		},
+		[playerIdx](int index) {
+			activateMenuItem(playerIdx, index);
+		});
+	for (int i = 0; i < kNumItems; ++i) {
+		_menuButtonGroups[playerIdx]->AddButton(_menuItemObjects[playerIdx][i], i);
+	}
+}
+
 void MenuSystem::Start() {
+	for (int i = 0; i < 2; ++i) {
+		if (_menuButtonGroups[i]) PointerInputSystem::PopGroup(_menuButtonGroups[i].get());
+		_menuButtonGroups[i].reset();
+	}
 	_initialized = false;
 	_selectedIndex[0] = 0;
 	_selectedIndex[1] = 0;
@@ -471,9 +509,14 @@ void MenuSystem::Start() {
 	for (auto& row : _statLineTexts) {
 		for (auto& t : row) t = nullptr;
 	}
+	for (auto& row : _menuItemObjects) {
+		for (auto& o : row) o = nullptr;
+	}
 	loadRelicData();
 	buildMenuPanelForPlayer(0);
 	buildMenuPanelForPlayer(1);
+	buildButtonGroup(0);
+	buildButtonGroup(1);
 	_initialized = true;
 }
 
@@ -513,6 +556,10 @@ void MenuSystem::Update() {
 				rebuildPortrait(i);
 				updateTimeText();
 				positionFinger(i);
+				if (_menuButtonGroups[i]) {
+					_menuButtonGroups[i]->SetFocusedIndex(0);
+					PointerInputSystem::PushGroup(_menuButtonGroups[i].get());
+				}
 				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
 			}
 			continue;
@@ -534,6 +581,7 @@ void MenuSystem::Update() {
 			} else {
 				GameState::Menu::MenuOpen[i] = false;
 				if (_panels[i]) _panels[i]->SetVisible(false);
+				if (_menuButtonGroups[i]) PointerInputSystem::PopGroup(_menuButtonGroups[i].get());
 				Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			}
 			continue;
@@ -557,24 +605,17 @@ void MenuSystem::Update() {
 			_selectedIndex[i] = (_selectedIndex[i] - 1 + kNumItems) % kNumItems;
 			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			positionFinger(i);
+			if (_menuButtonGroups[i]) _menuButtonGroups[i]->SetFocusedIndex(_selectedIndex[i]);
 		}
 		if (player->IsButtonJustPressed(ControllerButtons::Down)) {
 			_selectedIndex[i] = (_selectedIndex[i] + 1) % kNumItems;
 			Engine::Audio::PlaySFXBuffer("menuMove", 0.75f);
 			positionFinger(i);
+			if (_menuButtonGroups[i]) _menuButtonGroups[i]->SetFocusedIndex(_selectedIndex[i]);
 		}
 
 		if (player->IsButtonJustPressed(ControllerButtons::A)) {
-			int idx = _selectedIndex[i];
-			if (!kItemEnabled[idx]) {
-				Engine::Audio::PlaySFXBuffer("error1", 0.75f);
-			} else if (idx == 4) {
-				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
-				openStatsPanel(i);
-			} else if (idx == 6) {
-				Engine::Audio::PlaySFXBuffer("menuSelect", 0.75f);
-				openRelicPanel(i);
-			}
+			activateMenuItem(i, _selectedIndex[i]);
 		}
 	}
 }

@@ -55,6 +55,8 @@ class BattlerUI {
 	void OpenMagicMenu();
 	void CloseMagicMenu();
 	void MoveCursorInMagicMenu(unsigned int col, unsigned int row);
+	UIObject* GetMenuItem(int index) const { return (index >= 0 && index < 4) ? _menuItems[index] : nullptr; }
+	UIObject* GetMagicMenuItem(int index) const { return (index >= 0 && index < 8) ? _magicMenuItems[index] : nullptr; }
 	void UpdateAnimations();
 	void StartPlayerTurn(Battler* battler);
 	void EndPlayerTurn(Battler* battler);
