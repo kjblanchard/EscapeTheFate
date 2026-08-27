@@ -19,7 +19,7 @@ BUILD_COMMAND ?= cmake --build $(BUILD_DIR) --config $(BUILD_TYPE)
 PACKAGE_COMMAND ?= cpack --config build/CPackConfig.cmake -C $(BUILD_TYPE)
 ADDITIONAL_OPTIONS ?=
 ADDITIONAL_BUILD_COMMANDS ?=
-IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates"
+IOS_BUILD_COMMANDS = "-- -allowProvisioningUpdates -allowProvisioningDeviceRegistration -jobs 8"
 SGFORGE ?= sgforge
 # default, should be used after a rebuild of some sort.
 UNAME_S := $(shell uname -s 2>/dev/null)
@@ -111,7 +111,7 @@ erun:
 
 IOS_BUNDLE_ID = com.supergoon.rpg
 ISIM_APP_PATH = build/Debug/EscapeTheFate.app
-IOS_DEVICE_APP_PATH = build/Debug-iphoneos/EscapeTheFate.app
+IOS_DEVICE_APP_PATH = build/Debug/EscapeTheFate.app
 ISIM_UDID ?= $(shell xcrun simctl list devices booted -j 2>/dev/null | python3 -c "import json,sys;d=json.load(sys.stdin);devs=[v for vs in d['devices'].values() for v in vs if v['state']=='Booted'];print(devs[0]['udid'] if devs else '')" 2>/dev/null)
 
 isim-list:
@@ -152,7 +152,8 @@ devsign:
 	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements build/$(BUILD_TYPE)/EscapeTheFate.app
 # Used when you want to run instruments when not using xcode to build (local dev)
 codesign:
-	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements ./build/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+	# @codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements ./build/Debug/EscapeTheFate.app/Contents/MacOS/EscapeTheFate
+	@codesign --force --deep --sign - --entitlements cmake/EscapeTheFate.entitlements ./build/Debug/EscapeTheFate.app
 
 # This will error if you are using asan if you have leaks, so maybe disable that.
 perf:
@@ -215,7 +216,7 @@ pack:
 #   source ~/.zshrc
 #
 #   # 4. Generate gradle wrapper (one-time)
-#   cd android && gradle wrapper && cd ..
+   # cd android && gradle wrapper && cd ..
 #
 # WORKFLOW:
 #   make pack                  # Build etf.sg asset pack

@@ -19,6 +19,9 @@ option(SDL_GL "Does this use SDL GL backend?" ON)
 option(SDL_RENDERER "Does this use SDL renderer backend?" OFF)
 option(STEAM_ENABLED "Does this use steam as a platform?" OFF)
 option(STEAM_APPID_FILE "Write steam_appid.txt next to binary (dev only)" ON)
+option(IOS_ENABLE_CODE_SIGNING "Enable iOS code signing" ON)
+option(BUILD_MOBILE "Build for mobile/iOS" ON)
+
 
 if(ANDROID)
   set(IMGUI_DEBUGGING OFF CACHE BOOL "" FORCE)
@@ -153,22 +156,39 @@ if(MSVC)
   # set(INSTALL_DIR
 elseif(APPLE)
   if(CMAKE_GENERATOR STREQUAL "Xcode")
-    message(STATUS "Setting Build to Universal Binary")
+   if(BUILD_MOBILE)
+    message(STATUS "Mobile build: arm64")
+    set(CMAKE_OSX_ARCHITECTURES "arm64" CACHE STRING "" FORCE)
+    set(CMAKE_OSX_SYSROOT "iphoneos" CACHE STRING "" FORCE)
+  else()
+    message(STATUS "Desktop build: x86_64;arm64")
     set(CMAKE_OSX_ARCHITECTURES "x86_64;arm64" CACHE STRING "" FORCE)
+  endif()
     set(CMAKE_XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
     set(XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements")
-    set_target_properties(
-      ${EXECUTABLE_TARGET_NAME}
-      PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
-      # XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
-      XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Manual"
+    set_target_properties( ${EXECUTABLE_TARGET_NAME} PROPERTIES XCODE_ATTRIBUTE_CODE_SIGN_ENTITLEMENTS "${CMAKE_SOURCE_DIR}/cmake/EscapeTheFate.entitlements"
+    )
+if(IOS_ENABLE_CODE_SIGNING)
+    add_definitions(-DUSE_GLES) #used in opengl graphics right now
+  set_target_properties(
+    ${EXECUTABLE_TARGET_NAME}
+    PROPERTIES
+      # XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "YES"
+      # XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "YES"
+      XCODE_ATTRIBUTE_CODE_SIGN_STYLE "Automatic"
+      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W" # found inside of downloaded provionsing profile and looking at it.
+      # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
       XCODE_ATTRIBUTE_IPHONEOS_DEPLOYMENT_TARGET "16.3"
-      XCODE_ATTRIBUTE_DEVELOPMENT_TEAM "H34NGW287W"
-      # when building on github, we don't want to sign anything cause there is no cert
+  )
+else()
+  set_target_properties(
+    ${EXECUTABLE_TARGET_NAME}
+    PROPERTIES
       XCODE_ATTRIBUTE_CODE_SIGNING_REQUIRED "NO"
       XCODE_ATTRIBUTE_CODE_SIGNING_ALLOWED "NO"
-      # XCODE_ATTRIBUTE_CODE_SIGN_IDENTITY "Apple Development"
-    )
+  )
+endif()
+
     #Needed for codesigning and cpack
     set(CMAKE_SKIP_RPATH TRUE)
     if(CMAKE_SYSTEM_NAME STREQUAL "iOS")
