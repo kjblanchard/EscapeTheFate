@@ -20,6 +20,8 @@
         <string>10.14</string>
         <key>CFBundleIconFile</key>
         <string>AppIcon.icns</string>
+        <key>UIRequiresFullScreen</key>
+        <true/>
         <key>UISupportedInterfaceOrientations</key>
         <array>
             <string>UIInterfaceOrientationLandscapeLeft</string>

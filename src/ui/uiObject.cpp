@@ -20,9 +20,11 @@ UIObject::UIObject(UIObjectArgs args) : _doNotDestroy(args.DoNotDestroy), _visib
 RectangleF UIObject::AbsolutePosition() const {
 	auto parent = _parent;
 	auto pos = _location;
+	pos.x += _layoutOffsetX;
+	pos.y += _layoutOffsetY;
 	while (parent) {
-		pos.x += parent->_location.x;
-		pos.y += parent->_location.y;
+		pos.x += parent->_location.x + parent->_layoutOffsetX;
+		pos.y += parent->_location.y + parent->_layoutOffsetY;
 		parent = parent->_parent;
 	}
 	return pos;

@@ -72,6 +72,8 @@ class UIObject {
 	// local location; Offset to parent and size
 	RectangleF _location = {0, 0, 0, 0};
 	const RectangleF _originalLocation = {0, 0, 0, 0};
+	float _layoutOffsetX = 0;
+	float _layoutOffsetY = 0;
 	bool _debugBox = false;
 	friend void DisplayUITab();
 };
