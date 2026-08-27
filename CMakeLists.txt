@@ -81,7 +81,6 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/systems/GameOverSystem.cpp
   src/systems/PauseSystem.cpp
   src/systems/MenuSystem.cpp
-  src/systems/PointerInputSystem.cpp
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp

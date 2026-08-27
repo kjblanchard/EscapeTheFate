@@ -3,7 +3,6 @@
 #include <components/PlayerController.hpp>
 #include <gameobject/gameobjects/Battler.hpp>
 #include <memory>
-#include <systems/PointerInputSystem.hpp>
 namespace Etf {
 
 enum class BattlerStates {
@@ -51,19 +50,8 @@ class PlayerBattler : public Battler {
 #endif
 
    private:
-	void setupCommandButtonGroup();
-	void setupMagicButtonGroup();
-	void setupTargetButtonGroup();
-	void popAllButtonGroups();
-	void activateCommandItem(int index);
-	void activateMagicItem(int index);
-	void activateTarget(int index);
-
 	std::shared_ptr<PlayerController> _controller;
 	std::unique_ptr<BattlerUI> _battlerUI;
-	std::unique_ptr<UIButtonGroup> _commandButtonGroup;
-	std::unique_ptr<UIButtonGroup> _magicButtonGroup;
-	std::unique_ptr<UIButtonGroupRect> _targetButtonGroup;
 	unsigned int _currentMenuLocation = 0;
 	unsigned int _magicMenuRow = 0;
 	unsigned int _magicMenuCol = 0;

@@ -1,4 +1,3 @@
-#include <Supergoon/camera.h>
 #include <sgtools/log.h>
 
 #include <algorithm>
@@ -7,7 +6,6 @@
 #include <gameState.hpp>
 #include <gameobject/gameobjects/PlayerBattler.hpp>
 #include <iterator>
-#include <systems/PointerInputSystem.hpp>
 #include <systems/battleSystem.hpp>
 #include <types/ControllerButtons.hpp>
 
@@ -65,7 +63,6 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 	if ((newState == ATBCharging || newState == ATBFullyCharged || newState == TargetSelection) && shouldBattleEnd()) newState = BattleEndStart;
 	switch (newState) {
 		case BattlerStates::ATBCharging:
-			popAllButtonGroups();
 			_battlerUI->StartATBIdleAnim();
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
@@ -78,12 +75,8 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 			_battlerUI->OpenCommandsMenu();
 			Engine::Audio::PlaySFXBuffer("playerTurn", 5.0f);
 			_battlerUI->StartPlayerTurn(this);
-			setupCommandButtonGroup();
-			_commandButtonGroup->SetFocusedIndex(0);
-			PointerInputSystem::PushGroup(_commandButtonGroup.get());
 			break;
 		case BattlerStates::MagicSelection:
-			if (_commandButtonGroup) PointerInputSystem::PopGroup(_commandButtonGroup.get());
 			_magicMenuRow = 0;
 			_magicMenuCol = 0;
 			_battlerUI->OpenMagicMenu();
@@ -92,23 +85,14 @@ void PlayerBattler::handleStateChange(BattlerStates newState) {
 				_battlerUI->ShowAPCostBox(currentAP, ability.APCost);
 				_battlerUI->ShowMagicDescription(ability.Description);
 			}
-			setupMagicButtonGroup();
-			_magicButtonGroup->SetFocusedIndex(0);
-			PointerInputSystem::PushGroup(_magicButtonGroup.get());
 			break;
 		case BattlerStates::TargetSelection: {
-			if (_magicButtonGroup) PointerInputSystem::PopGroup(_magicButtonGroup.get());
-			if (_commandButtonGroup) PointerInputSystem::PopGroup(_commandButtonGroup.get());
 			_currentTargetBattler = 0;
 			_battlerUI->StartTargetSelection();
 			moveFingerToTargetNum(0);
-			setupTargetButtonGroup();
-			_targetButtonGroup->SetFocusedIndex(0);
-			PointerInputSystem::PushGroupRect(_targetButtonGroup.get());
 			break;
 		}
 		case BattlerStates::BattleEndStart:
-			popAllButtonGroups();
 			Engine::Audio::PlayBGM("victory");
 			_battlerUI->CloseCommandsMenu();
 			_battlerUI->CloseTargetSelection();
@@ -258,15 +242,34 @@ void PlayerBattler::handleInputCommandsMenu() {
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::Down)) {
 		++newLocation;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
-		activateCommandItem(_currentMenuLocation);
-		return;
+		switch (_currentMenuLocation) {
+			case 0: {
+				const auto& ability = BattleSystem::GetAbilityByID(0);
+				if (currentAP < ability.APCost) {
+					Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+					return;
+				}
+				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+				_selectedAbilityID = 0;
+				_targetingFriendly = false;
+				handleStateChange(TargetSelection);
+				return;
+			}
+			case 1:
+				Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+				handleStateChange(MagicSelection);
+				return;
+			default:
+				sgLogDebug("Button not implemented", _currentMenuLocation);
+				Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+				break;
+		}
 	}
 
 	if (newLocation != _currentMenuLocation) {
 		_currentMenuLocation = newLocation > 3 ? _currentMenuLocation == 3 ? 0 : 3 : newLocation;
 		_battlerUI->MoveCursorInMenu(_currentMenuLocation);
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-		if (_commandButtonGroup) _commandButtonGroup->SetFocusedIndex(_currentMenuLocation);
 	}
 }
 void PlayerBattler::getEnemyBattlers(std::vector<Battler*>& battlerVector) {
@@ -335,17 +338,26 @@ void PlayerBattler::handleInputMagicMenu() {
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::Right)) {
 		if (newCol < 1) ++newCol;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
-		int magicIndex = _magicMenuCol * 4 + _magicMenuRow;
-		activateMagicItem(magicIndex);
+		int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
+		if (slotIndex >= (int)battlerData->Abilities.size()) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
+		_selectedAbilityID = battlerData->Abilities[slotIndex];
+		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		if (currentAP < ability.APCost) {
+			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
+			return;
+		}
+		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+		_targetingFriendly = ability.Friendly;
+		_battlerUI->HideAPCostBox();
+		handleStateChange(TargetSelection);
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-		if (_magicButtonGroup) PointerInputSystem::PopGroup(_magicButtonGroup.get());
 		_battlerUI->CloseMagicMenu();
 		_currentBattlerState = CommandSelection;
-		setupCommandButtonGroup();
-		_commandButtonGroup->SetFocusedIndex(_currentMenuLocation);
-		PointerInputSystem::PushGroup(_commandButtonGroup.get());
 		return;
 	}
 
@@ -364,7 +376,6 @@ void PlayerBattler::handleInputMagicMenu() {
 			_battlerUI->HideAPCostBox();
 			_battlerUI->ShowMagicDescription("");
 		}
-		if (_magicButtonGroup) _magicButtonGroup->SetFocusedIndex(slotIndex);
 	}
 }
 
@@ -383,24 +394,45 @@ void PlayerBattler::handleInputTargetSelection() {
 		_targetingFriendly = !_targetingFriendly;
 		_currentTargetBattler = 0;
 		moveFingerToTargetNum(0);
-		if (_targetButtonGroup) PointerInputSystem::PopGroupRect(_targetButtonGroup.get());
-		setupTargetButtonGroup();
-		_targetButtonGroup->SetFocusedIndex(0);
-		PointerInputSystem::PushGroupRect(_targetButtonGroup.get());
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::A)) {
-		activateTarget(_currentTargetBattler);
+		Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
+		vector<Battler*> targets;
+		getAllTargets(targets);
+		if (targets.empty()) return;
+		const auto battler = targets.at(_currentTargetBattler);
+		const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
+		const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
+		animator->PlayAnimationThenLoopSecond(playerAnim, battlerData->IdleAnimation);
+		if (battler) {
+			// We should calculate damage, and we should apply status effects.
+			if (ability.BaseDamage < 0) {
+				battler->Heal(-ability.BaseDamage);
+			} else {
+				battler->TakeDamage(ability.BaseDamage + GetOutgoingDamageBonus());
+			}
+			for (auto& se : ability.StatusEffects) {
+				auto sed = static_cast<StatusEffects>(se.Id);
+				StatusEffectInstance sei = {sed, 2};
+				battler->ApplyStatusEffect(sei);
+			}
+			// StatusEffectInstance s = {}
+
+			battler->PlayHitAnimation(ability);
+		}
+		spendAP(ability.APCost);
+		_battlerUI->UpdateAP(to_string(currentAP));
+		currentATBCharge = 0;
+		_reopenMenuAfterClose = currentAP > 0;
+		handleTurnEndStatus();
+		handleStateChange(ATBCharging);
 		return;
 	} else if (_controller->IsButtonJustPressed(ControllerButtons::B)) {
 		Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-		if (_targetButtonGroup) PointerInputSystem::PopGroupRect(_targetButtonGroup.get());
 		_battlerUI->CloseTargetSelection();
 		if (_selectedAbilityID > 0) {
 			_currentBattlerState = MagicSelection;
-			setupMagicButtonGroup();
 			int slotIndex = _magicMenuCol * 4 + _magicMenuRow;
-			_magicButtonGroup->SetFocusedIndex(slotIndex);
-			PointerInputSystem::PushGroup(_magicButtonGroup.get());
 			if (slotIndex < (int)battlerData->Abilities.size()) {
 				int abilityID = battlerData->Abilities[slotIndex];
 				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
@@ -409,16 +441,12 @@ void PlayerBattler::handleInputTargetSelection() {
 			}
 		} else {
 			_currentBattlerState = CommandSelection;
-			setupCommandButtonGroup();
-			_commandButtonGroup->SetFocusedIndex(_currentMenuLocation);
-			PointerInputSystem::PushGroup(_commandButtonGroup.get());
 		}
 		return;
 	}
 
 	if (newTarget != _currentTargetBattler) {
 		moveFingerToTargetNum(newTarget);
-		if (_targetButtonGroup) _targetButtonGroup->SetFocusedIndex(_currentTargetBattler);
 	}
 }
 
@@ -450,164 +478,4 @@ void PlayerBattler::handleInput() {
 		default:
 			break;
 	}
-}
-
-void PlayerBattler::activateCommandItem(int index) {
-	switch (index) {
-		case 0: {
-			const auto& ability = BattleSystem::GetAbilityByID(0);
-			if (currentAP < ability.APCost) {
-				Engine::Audio::PlaySFXBuffer("error1", 1.0f);
-				return;
-			}
-			Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-			_selectedAbilityID = 0;
-			_targetingFriendly = false;
-			handleStateChange(TargetSelection);
-			break;
-		}
-		case 1:
-			Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-			handleStateChange(MagicSelection);
-			break;
-		default:
-			sgLogDebug("Button not implemented", index);
-			Engine::Audio::PlaySFXBuffer("error1", 1.0f);
-			break;
-	}
-}
-
-void PlayerBattler::activateMagicItem(int index) {
-	int row = index % 4;
-	int col = index / 4;
-	int slotIndex = col * 4 + row;
-	if (slotIndex >= (int)battlerData->Abilities.size()) {
-		Engine::Audio::PlaySFXBuffer("error1", 1.0f);
-		return;
-	}
-	_selectedAbilityID = battlerData->Abilities[slotIndex];
-	const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
-	if (currentAP < ability.APCost) {
-		Engine::Audio::PlaySFXBuffer("error1", 1.0f);
-		return;
-	}
-	Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-	_targetingFriendly = ability.Friendly;
-	_battlerUI->HideAPCostBox();
-	handleStateChange(TargetSelection);
-}
-
-void PlayerBattler::activateTarget(int index) {
-	Engine::Audio::PlaySFXBuffer("menuSelect", 1.0f);
-	vector<Battler*> targets;
-	getAllTargets(targets);
-	if (targets.empty() || index >= (int)targets.size()) return;
-	_currentTargetBattler = index;
-	const auto battler = targets.at(index);
-	const auto& ability = BattleSystem::GetAbilityByID(_selectedAbilityID);
-	const auto& playerAnim = ability.PlayerAnim.empty() ? "slash2" : ability.PlayerAnim;
-	animator->PlayAnimationThenLoopSecond(playerAnim, battlerData->IdleAnimation);
-	if (battler) {
-		if (ability.BaseDamage < 0) {
-			battler->Heal(-ability.BaseDamage);
-		} else {
-			battler->TakeDamage(ability.BaseDamage + GetOutgoingDamageBonus());
-		}
-		for (auto& se : ability.StatusEffects) {
-			auto sed = static_cast<StatusEffects>(se.Id);
-			StatusEffectInstance sei = {sed, 2};
-			battler->ApplyStatusEffect(sei);
-		}
-		battler->PlayHitAnimation(ability);
-	}
-	spendAP(ability.APCost);
-	_battlerUI->UpdateAP(to_string(currentAP));
-	currentATBCharge = 0;
-	_reopenMenuAfterClose = currentAP > 0;
-	handleTurnEndStatus();
-	handleStateChange(ATBCharging);
-}
-
-void PlayerBattler::setupCommandButtonGroup() {
-	_commandButtonGroup = std::make_unique<UIButtonGroup>(
-		[this](int index) {
-			_currentMenuLocation = index;
-			_battlerUI->MoveCursorInMenu(index);
-			Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-			_commandButtonGroup->SetFocusedIndex(index);
-		},
-		[this](int index) {
-			activateCommandItem(index);
-		});
-	for (int i = 0; i < 4; ++i) {
-		auto* item = _battlerUI->GetMenuItem(i);
-		if (item) _commandButtonGroup->AddButton(item, i);
-	}
-}
-
-void PlayerBattler::setupMagicButtonGroup() {
-	_magicButtonGroup = std::make_unique<UIButtonGroup>(
-		[this](int index) {
-			int row = index % 4;
-			int col = index / 4;
-			_magicMenuRow = row;
-			_magicMenuCol = col;
-			_battlerUI->MoveCursorInMagicMenu(col, row);
-			Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-			int slotIndex = col * 4 + row;
-			if (slotIndex < (int)battlerData->Abilities.size()) {
-				int abilityID = battlerData->Abilities[slotIndex];
-				const auto& ab = BattleSystem::GetAbilityByID(abilityID);
-				_battlerUI->ShowAPCostBox(currentAP, ab.APCost);
-				_battlerUI->ShowMagicDescription(ab.Description);
-			} else {
-				_battlerUI->HideAPCostBox();
-				_battlerUI->ShowMagicDescription("");
-			}
-			_magicButtonGroup->SetFocusedIndex(index);
-		},
-		[this](int index) {
-			activateMagicItem(index);
-		});
-	for (int i = 0; i < 8; ++i) {
-		auto* item = _battlerUI->GetMagicMenuItem(i);
-		if (item) _magicButtonGroup->AddButton(item, i);
-	}
-}
-
-void PlayerBattler::setupTargetButtonGroup() {
-	_targetButtonGroup = std::make_unique<UIButtonGroupRect>(
-		[this](int index) {
-			moveFingerToTargetNum(index);
-			Engine::Audio::PlaySFXBuffer("menuMove", 1.0f);
-			_targetButtonGroup->SetFocusedIndex(index);
-		},
-		[this](int index) {
-			activateTarget(index);
-		});
-
-	vector<Battler*> targets;
-	getAllTargets(targets);
-	float camX = CameraGetX();
-	float camY = CameraGetY();
-	for (int i = 0; i < (int)targets.size(); ++i) {
-		auto* t = targets[i];
-		if (!t) continue;
-		RectangleF rect = {
-			t->SpriteX() - camX,
-			t->SpriteY() - camY,
-			t->SpriteWidth(),
-			t->SpriteHeight()};
-		_targetButtonGroup->AddButton(rect, i);
-	}
-}
-
-void PlayerBattler::popAllButtonGroups() {
-	if (_commandButtonGroup) PointerInputSystem::PopGroup(_commandButtonGroup.get());
-	if (_magicButtonGroup) PointerInputSystem::PopGroup(_magicButtonGroup.get());
-	if (_targetButtonGroup) PointerInputSystem::PopGroupRect(_targetButtonGroup.get());
-}
-
-void PlayerBattler::handleClickAction() {
-	// Placeholder — button groups handle clicks via PointerInputSystem callbacks
 }
