@@ -19,6 +19,7 @@ imgui.ini
 steam_appid.txt
 *.sg
 CLAUDE.md
+build-android/
 external/redistributable_bin/
 android/app/build/
 android/app/src/main/assets/etf.sg

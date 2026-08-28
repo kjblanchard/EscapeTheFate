@@ -1,7 +1,14 @@
-#ifndef __EMSCRIPTEN__
+#if !defined(__EMSCRIPTEN__) && !defined(ANDROID) && !defined(USE_GLES)
 #include <glad/glad.h>
+// Need to do glad first
+#include <SDL3/SDL_opengl.h>
+#else
+#ifdef __APPLE__
+#include <OpenGLES/ES3/gl.h>
 #else
 #include <GLES3/gl3.h>
+#endif
+#include <SDL3/SDL_opengles2.h>
 #endif
 
 #include <algorithm>
