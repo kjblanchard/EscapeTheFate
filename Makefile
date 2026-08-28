@@ -179,8 +179,8 @@ ANDROID_ABI ?= arm64-v8a
 ADB ?= $(ANDROID_HOME)/platform-tools/adb
 
 android-configure: pack
-	@mkdir -p android/app/src/main/assets
-	@cp etf.sg android/app/src/main/assets/etf.sg
+	@mkdir -p android/app/src/main/assets/data
+	@cp etf.sg android/app/src/main/assets/data/etf.sg
 	$(ANDROID_CMAKE) -B $(ANDROID_BUILD_DIR) \
 		-DCMAKE_TOOLCHAIN_FILE=$(ANDROID_NDK)/build/cmake/android.toolchain.cmake \
 		-DANDROID_ABI=$(ANDROID_ABI) \
@@ -223,7 +223,7 @@ android-open:
 
 android-clean:
 	@rm -rf $(ANDROID_BUILD_DIR)
-	@rm -f android/app/src/main/assets/etf.sg
+	@rm -f android/app/src/main/assets/data/etf.sg
 
 .PHONY: android-configure android-build android-install android-run android-stop \
         android-logcat android-rebuild android-open android-clean
