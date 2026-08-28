@@ -1,0 +1,3 @@
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/CMakeFiles/lib_sgsound-populate.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/CMakeFiles/edit_cache.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/CMakeFiles/rebuild_cache.dir

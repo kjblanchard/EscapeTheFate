@@ -1,0 +1,3 @@
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/CMakeFiles/lib_openal-populate.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/CMakeFiles/edit_cache.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/CMakeFiles/rebuild_cache.dir

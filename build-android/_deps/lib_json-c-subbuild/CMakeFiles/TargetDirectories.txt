@@ -1,0 +1,3 @@
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/CMakeFiles/lib_json-c-populate.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/CMakeFiles/edit_cache.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/CMakeFiles/rebuild_cache.dir

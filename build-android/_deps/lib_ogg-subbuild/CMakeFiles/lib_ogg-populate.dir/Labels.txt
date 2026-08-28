@@ -1,0 +1,14 @@
+# Target labels
+ lib_ogg-populate
+# Source files and their labels
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/CMakeFiles/lib_ogg-populate
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/CMakeFiles/lib_ogg-populate.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/CMakeFiles/lib_ogg-populate-complete.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-build.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-configure.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-download.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-install.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-mkdir.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-patch.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-test.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_ogg-subbuild/lib_ogg-populate-prefix/src/lib_ogg-populate-stamp/lib_ogg-populate-update.rule

@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/CMakeFiles/lib_openal-populate"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/CMakeFiles/lib_openal-populate.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/CMakeFiles/lib_openal-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-build.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-download.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-install.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-test.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_openal-subbuild/lib_openal-populate-prefix/src/lib_openal-populate-stamp/lib_openal-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"lib_openal-populate"
+		],
+		"name" : "lib_openal-populate"
+	}
+}

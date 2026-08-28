@@ -1,0 +1,3 @@
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_freetype-subbuild/CMakeFiles/lib_freetype-populate.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_freetype-subbuild/CMakeFiles/edit_cache.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_freetype-subbuild/CMakeFiles/rebuild_cache.dir

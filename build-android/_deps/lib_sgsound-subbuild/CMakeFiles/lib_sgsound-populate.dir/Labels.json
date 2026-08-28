@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/CMakeFiles/lib_sgsound-populate"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/CMakeFiles/lib_sgsound-populate.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/CMakeFiles/lib_sgsound-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-build.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-download.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-install.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-test.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgsound-subbuild/lib_sgsound-populate-prefix/src/lib_sgsound-populate-stamp/lib_sgsound-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"lib_sgsound-populate"
+		],
+		"name" : "lib_sgsound-populate"
+	}
+}

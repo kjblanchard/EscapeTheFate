@@ -1,0 +1,14 @@
+# Target labels
+ lib_json-c-populate
+# Source files and their labels
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/CMakeFiles/lib_json-c-populate
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/CMakeFiles/lib_json-c-populate.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/CMakeFiles/lib_json-c-populate-complete.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-build.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-configure.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-download.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-install.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-mkdir.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-patch.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-test.rule
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_json-c-subbuild/lib_json-c-populate-prefix/src/lib_json-c-populate-stamp/lib_json-c-populate-update.rule

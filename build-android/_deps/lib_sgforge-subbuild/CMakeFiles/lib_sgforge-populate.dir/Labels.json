@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/CMakeFiles/lib_sgforge-populate"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/CMakeFiles/lib_sgforge-populate.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/CMakeFiles/lib_sgforge-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-build.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-download.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-install.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-test.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgforge-subbuild/lib_sgforge-populate-prefix/src/lib_sgforge-populate-stamp/lib_sgforge-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"lib_sgforge-populate"
+		],
+		"name" : "lib_sgforge-populate"
+	}
+}

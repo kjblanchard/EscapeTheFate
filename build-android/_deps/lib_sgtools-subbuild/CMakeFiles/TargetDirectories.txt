@@ -1,0 +1,3 @@
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgtools-subbuild/CMakeFiles/lib_sgtools-populate.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgtools-subbuild/CMakeFiles/edit_cache.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_sgtools-subbuild/CMakeFiles/rebuild_cache.dir

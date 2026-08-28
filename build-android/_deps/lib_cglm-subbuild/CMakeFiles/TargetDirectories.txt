@@ -1,0 +1,3 @@
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/CMakeFiles/lib_cglm-populate.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/CMakeFiles/edit_cache.dir
+/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/CMakeFiles/rebuild_cache.dir

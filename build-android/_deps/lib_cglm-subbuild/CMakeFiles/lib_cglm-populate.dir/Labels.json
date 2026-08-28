@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/CMakeFiles/lib_cglm-populate"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/CMakeFiles/lib_cglm-populate.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/CMakeFiles/lib_cglm-populate-complete.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-build.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-configure.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-download.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-install.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-mkdir.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-patch.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-test.rule"
+		},
+		{
+			"file" : "/Users/kevin/git/cpp/EscapeTheFate/build-android/_deps/lib_cglm-subbuild/lib_cglm-populate-prefix/src/lib_cglm-populate-stamp/lib_cglm-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"lib_cglm-populate"
+		],
+		"name" : "lib_cglm-populate"
+	}
+}
