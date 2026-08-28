@@ -96,8 +96,8 @@ afterEvaluate {
     tasks.matching { it.name.matches("compile.*JavaWithJavac") }.configureEach {
         dependsOn 'copySDL3JavaSources'
     }
-    tasks.matching { it.name.matches("configureCMake.*") }.configureEach { cmakeTask ->
-        tasks.named('copySDL3JavaSources').configure { it.mustRunAfter cmakeTask }
+    tasks.matching { it.name.matches("configureCMake.*") }.each { cmakeTask ->
+        tasks.named('copySDL3JavaSources').get().mustRunAfter(cmakeTask)
     }
 }
 
