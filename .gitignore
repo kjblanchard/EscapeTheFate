@@ -27,3 +27,5 @@ android/app/src/main/java/org/libsdl/
 android/.cxx/
 android/.gradle/
 android/local.properties
+android/.idea/
+android/app/.cxx/

@@ -101,30 +101,114 @@ void debugLogFunc(const char* time, const char* message, int logLevel) {
 }
 
 void initializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
-	sgSetLogLevel(sgLogLevelWarn);
-	sgSetDebugFunction(debugLogFunc);
-	auto doesExist = DoesFileExistRel("debug.txt");
-	if (doesExist) {
-		sgSetLogLevel(sgLogLevelDebug);
-		sgSetFileLogLevel(sgLogLevelDebug);
-	}
-	SetInitializeFunction(initializefunc);
-	SetStartFunction(startEngine);
-	SetUpdateFunction(update);
-	SetHandleEventFunction(handleEngineEvents);
-	SetDrawFunction(draw);
-	SetDrawUIFunction(UI::DrawUI);
-	SetQuitFunction(shutdown);
-	auto filePath = GetBasePath();
-	auto fullFile = string(filePath) + "data/etf.sg";
-	directory_ = LoadDirectoryFromFile(fullFile.c_str());
-	AssetDirectory = directory_;
-	ShaderSetDirectory(directory_);
-	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
-	auto& gameConfig = GameConfig::GetGameConfig();
-	SetWindowOptions(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title.c_str());
-	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
+    sgSetLogLevel(sgLogLevelWarn);
+    sgSetDebugFunction(debugLogFunc);
+
+    auto doesExist = DoesFileExistRel("debug.txt");
+    if (doesExist) {
+        sgSetLogLevel(sgLogLevelDebug);
+        sgSetFileLogLevel(sgLogLevelDebug);
+    }
+
+    SetInitializeFunction(initializefunc);
+    SetStartFunction(startEngine);
+    SetUpdateFunction(update);
+    SetHandleEventFunction(handleEngineEvents);
+    SetDrawFunction(draw);
+    SetDrawUIFunction(UI::DrawUI);
+    SetQuitFunction(shutdown);
+
+#ifdef __ANDROID__
+    SDL_IOStream* io = SDL_IOFromFile("data/etf.sg", "rb");
+
+    if (!io) {
+        sgLogCritical("Could not open Android asset data/etf.sg: %s",
+                      SDL_GetError());
+        return;
+    }
+
+    Sint64 size = SDL_GetIOSize(io);
+    if (size < 0) {
+        sgLogCritical("Could not get size of data/etf.sg: %s",
+                      SDL_GetError());
+        SDL_CloseIO(io);
+        return;
+    }
+
+    char* data = static_cast<char*>(malloc(static_cast<size_t>(size)));
+    if (!data) {
+        sgLogCritical("Could not allocate %lld bytes for data/etf.sg",
+                      static_cast<long long>(size));
+        SDL_CloseIO(io);
+        return;
+    }
+
+    size_t bytesRead = SDL_ReadIO(io, data, static_cast<size_t>(size));
+    SDL_CloseIO(io);
+
+    if (bytesRead != static_cast<size_t>(size)) {
+        sgLogCritical("Could not read data/etf.sg");
+        free(data);
+        return;
+    }
+
+    directory_ = sgDeserializeDirectoryFromMemory(
+        "data/etf.sg",
+        data,
+        static_cast<size_t>(size)
+    );
+#else
+    auto filePath = GetBasePath();
+    auto fullFile = string(filePath) + "data/etf.sg";
+    directory_ = LoadDirectoryFromFile(fullFile.c_str());
+#endif
+
+    if (!directory_) {
+        sgLogCritical("Failed to load ETF directory");
+        return;
+    }
+
+    AssetDirectory = directory_;
+    ShaderSetDirectory(directory_);
+
+    GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
+
+    auto& gameConfig = GameConfig::GetGameConfig();
+    SetWindowOptions(
+        gameConfig.window.xWin,
+        gameConfig.window.yWin,
+        gameConfig.window.title.c_str()
+    );
+
+    Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
 }
+
+
+// void initializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
+// 	sgSetLogLevel(sgLogLevelWarn);
+// 	sgSetDebugFunction(debugLogFunc);
+// 	auto doesExist = DoesFileExistRel("debug.txt");
+// 	if (doesExist) {
+// 		sgSetLogLevel(sgLogLevelDebug);
+// 		sgSetFileLogLevel(sgLogLevelDebug);
+// 	}
+// 	SetInitializeFunction(initializefunc);
+// 	SetStartFunction(startEngine);
+// 	SetUpdateFunction(update);
+// 	SetHandleEventFunction(handleEngineEvents);
+// 	SetDrawFunction(draw);
+// 	SetDrawUIFunction(UI::DrawUI);
+// 	SetQuitFunction(shutdown);
+//     auto filePath = GetBasePath();
+//     auto fullFile = string(filePath) + "data/etf.sg";
+// 	directory_ = LoadDirectoryFromFile(fullFile.c_str());
+// 	AssetDirectory = directory_;
+// 	ShaderSetDirectory(directory_);
+// 	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
+// 	auto& gameConfig = GameConfig::GetGameConfig();
+// 	SetWindowOptions(gameConfig.window.xWin, gameConfig.window.yWin, gameConfig.window.title.c_str());
+// 	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
+// }
 
 void startEngine() {
 	auto& gameConfig = GameConfig::GetGameConfig();
