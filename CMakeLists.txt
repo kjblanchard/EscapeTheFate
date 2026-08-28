@@ -23,6 +23,10 @@ option(IOS_ENABLE_CODE_SIGNING "Enable iOS code signing" ON)
 option(BUILD_MOBILE "Build for mobile/iOS" ON)
 
 
+if(EMSCRIPTEN)
+  set(CMAKE_EXECUTABLE_SUFFIX ".html" CACHE STRING "Use html" FORCE)
+endif()
+
 if(ANDROID)
   set(IMGUI_DEBUGGING OFF CACHE BOOL "" FORCE)
   set(DEBUG_ASAN OFF CACHE BOOL "" FORCE)
@@ -251,9 +255,6 @@ endif()
 ###### Platform specific executable flags
 if(EMSCRIPTEN)
   message(STATUS "Enabling Emscripten flags for supergoon engine ")
-  set(CMAKE_EXECUTABLE_SUFFIX
-    ".html"
-    CACHE STRING "Use html" FORCE)
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(LINK_FLAGS
