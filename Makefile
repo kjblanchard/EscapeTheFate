@@ -197,7 +197,9 @@ android-configure: pack
 		-DSTEAM_ENABLED=OFF \
 		-DLINK_M=OFF \
 		-DCMAKE_POLICY_VERSION_MINIMUM=3.5 \
-		-DCMAKE_CXX_SCAN_FOR_MODULES=OFF
+		-DCMAKE_CXX_SCAN_FOR_MODULES=OFF \
+		-DCMAKE_C_STANDARD_LIBRARIES="-lm" \
+		-DCMAKE_CXX_STANDARD_LIBRARIES="-lm"
 
 android-build: android-configure
 	$(ANDROID_CMAKE) --build $(ANDROID_BUILD_DIR) -j$$(nproc 2>/dev/null || sysctl -n hw.ncpu)
