@@ -257,6 +257,9 @@ if(EMSCRIPTEN)
   message(STATUS "Enabling Emscripten flags for supergoon engine ")
   set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -s USE_ZLIB=1  -s USE_VORBIS=1 -s USE_OGG=1 ")
+  set_target_properties(${EXECUTABLE_TARGET_NAME} PROPERTIES SUFFIX ".html"
+  )
+
   set(LINK_FLAGS
     "${LINK_FLAGS} -s ALLOW_MEMORY_GROWTH=1 -s USE_VORBIS=1 -O2 -s USE_OGG=1 -s FULL_ES3=1 -s USE_WEBGL2=1 -s STACK_SIZE=1mb -s EXPORTED_RUNTIME_METHODS=cwrap -s MAX_WEBGL_VERSION=2 -s MIN_WEBGL_VERSION=2 -s 'DEFAULT_LIBRARY_FUNCS_TO_INCLUDE=[\"$autoResumeAudioContext\",\"$dynCall\"]'")
   set_target_properties( ${EXECUTABLE_TARGET_NAME} PROPERTIES LINK_FLAGS
