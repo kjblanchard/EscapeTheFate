@@ -26,7 +26,7 @@ HitAnimPool::~HitAnimPool() {
 	for (int i = 0; i < kHitAnimPoolSize; ++i) {
 		_slots[i].animator.reset();
 		if (_slots[i].sprite) {
-			DestroySpriteManual(_slots[i].sprite);
+			DestroySprite(_slots[i].sprite);
 			_slots[i].sprite = nullptr;
 		}
 	}

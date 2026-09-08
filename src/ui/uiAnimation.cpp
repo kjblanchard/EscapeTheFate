@@ -24,7 +24,7 @@ UIAnimation::UIAnimation(UIAnimationArgs& args) {
 }
 
 UIAnimation::~UIAnimation() {
-	DestroySpriteManual(_sprite);
+	DestroySprite(_sprite);
 }
 
 void UIAnimation::OnDraw(float offsetX, float offsetY) {

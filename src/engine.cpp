@@ -351,8 +351,11 @@ void endScreenFade() {
 }
 
 Sprite* createSpriteInternal(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect, bool manual) {
-	auto func = manual ? NewSpriteManual : NewSprite;
-	auto sprite = func();
+	// auto func = manual ? NewSpriteManual : NewSprite;
+	auto sprite = NewSprite();
+	if (manual) {
+		SpriteSetManual(sprite, true);
+	}
 	sprite->parentX = followX;
 	sprite->parentY = followY;
 	sprite->prevParentX = followX ? *followX : 0;
@@ -436,11 +439,7 @@ Sprite* Engine::Sprites::CreateManualSpriteFull(const std::string& name, float* 
 }
 
 void Engine::Sprites::SetSpriteVisible(Sprite* sprite, bool visible) {
-	if (visible) {
-		sprite->Flags |= SpriteFlagVisible;
-	} else {
-		sprite->Flags &= ~SpriteFlagVisible;
-	}
+	SpriteSetVisible(sprite, visible);
 }
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {
