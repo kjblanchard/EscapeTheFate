@@ -4,6 +4,7 @@
 #include <Supergoon/Graphics/graphics.h>
 #include <Supergoon/Graphics/shader.h>
 #include <Supergoon/Graphics/texture.h>
+#include <Supergoon/Input/mouse.h>
 #include <Supergoon/Tweening/easing.h>
 #include <Supergoon/camera.h>
 #include <Supergoon/engine.h>
@@ -48,6 +49,15 @@
 #include <debug/DebugUI.hpp>
 #include <debug/DebugWindow.hpp>
 #endif
+
+extern "C" {
+extern Texture* _imGUIScreenRenderTargetTexture;
+extern int _logicalX;
+extern int _logicalY;
+}
+extern float _debugGameImageX;
+extern float _debugGameImageY;
+extern float _debugGameImageScale;
 
 using namespace Etf;
 using namespace std;
@@ -101,88 +111,85 @@ void debugLogFunc(const char* time, const char* message, int logLevel) {
 }
 
 void initializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
-    sgSetLogLevel(sgLogLevelWarn);
-    sgSetDebugFunction(debugLogFunc);
+	sgSetLogLevel(sgLogLevelWarn);
+	sgSetDebugFunction(debugLogFunc);
 
-    auto doesExist = DoesFileExistRel("debug.txt");
-    if (doesExist) {
-        sgSetLogLevel(sgLogLevelDebug);
-        sgSetFileLogLevel(sgLogLevelDebug);
-    }
+	auto doesExist = DoesFileExistRel("debug.txt");
+	if (doesExist) {
+		sgSetLogLevel(sgLogLevelDebug);
+		sgSetFileLogLevel(sgLogLevelDebug);
+	}
 
-    SetInitializeFunction(initializefunc);
-    SetStartFunction(startEngine);
-    SetUpdateFunction(update);
-    SetHandleEventFunction(handleEngineEvents);
-    SetDrawFunction(draw);
-    SetDrawUIFunction(UI::DrawUI);
-    SetQuitFunction(shutdown);
+	SetInitializeFunction(initializefunc);
+	SetStartFunction(startEngine);
+	SetUpdateFunction(update);
+	SetHandleEventFunction(handleEngineEvents);
+	SetDrawFunction(draw);
+	SetDrawUIFunction(UI::DrawUI);
+	SetQuitFunction(shutdown);
 
 #ifdef __ANDROID__
-    SDL_IOStream* io = SDL_IOFromFile("data/etf.sg", "rb");
+	SDL_IOStream* io = SDL_IOFromFile("data/etf.sg", "rb");
 
-    if (!io) {
-        sgLogCritical("Could not open Android asset data/etf.sg: %s",
-                      SDL_GetError());
-        return;
-    }
+	if (!io) {
+		sgLogCritical("Could not open Android asset data/etf.sg: %s",
+					  SDL_GetError());
+		return;
+	}
 
-    Sint64 size = SDL_GetIOSize(io);
-    if (size < 0) {
-        sgLogCritical("Could not get size of data/etf.sg: %s",
-                      SDL_GetError());
-        SDL_CloseIO(io);
-        return;
-    }
+	Sint64 size = SDL_GetIOSize(io);
+	if (size < 0) {
+		sgLogCritical("Could not get size of data/etf.sg: %s",
+					  SDL_GetError());
+		SDL_CloseIO(io);
+		return;
+	}
 
-    char* data = static_cast<char*>(malloc(static_cast<size_t>(size)));
-    if (!data) {
-        sgLogCritical("Could not allocate %lld bytes for data/etf.sg",
-                      static_cast<long long>(size));
-        SDL_CloseIO(io);
-        return;
-    }
+	char* data = static_cast<char*>(malloc(static_cast<size_t>(size)));
+	if (!data) {
+		sgLogCritical("Could not allocate %lld bytes for data/etf.sg",
+					  static_cast<long long>(size));
+		SDL_CloseIO(io);
+		return;
+	}
 
-    size_t bytesRead = SDL_ReadIO(io, data, static_cast<size_t>(size));
-    SDL_CloseIO(io);
+	size_t bytesRead = SDL_ReadIO(io, data, static_cast<size_t>(size));
+	SDL_CloseIO(io);
 
-    if (bytesRead != static_cast<size_t>(size)) {
-        sgLogCritical("Could not read data/etf.sg");
-        free(data);
-        return;
-    }
+	if (bytesRead != static_cast<size_t>(size)) {
+		sgLogCritical("Could not read data/etf.sg");
+		free(data);
+		return;
+	}
 
-    directory_ = sgDeserializeDirectoryFromMemory(
-        "data/etf.sg",
-        data,
-        static_cast<size_t>(size)
-    );
+	directory_ = sgDeserializeDirectoryFromMemory(
+		"data/etf.sg",
+		data,
+		static_cast<size_t>(size));
 #else
-    auto filePath = GetBasePath();
-    auto fullFile = string(filePath) + "data/etf.sg";
-    directory_ = LoadDirectoryFromFile(fullFile.c_str());
+	auto filePath = GetBasePath();
+	auto fullFile = string(filePath) + "data/etf.sg";
+	directory_ = LoadDirectoryFromFile(fullFile.c_str());
 #endif
 
-    if (!directory_) {
-        sgLogCritical("Failed to load ETF directory");
-        return;
-    }
+	if (!directory_) {
+		sgLogCritical("Failed to load ETF directory");
+		return;
+	}
 
-    AssetDirectory = directory_;
-    ShaderSetDirectory(directory_);
+	AssetDirectory = directory_;
+	ShaderSetDirectory(directory_);
 
-    GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
+	GameConfig::LoadGameConfig("./assets/config/gameConfig.json");
 
-    auto& gameConfig = GameConfig::GetGameConfig();
-    SetWindowOptions(
-        gameConfig.window.xWin,
-        gameConfig.window.yWin,
-        gameConfig.window.title.c_str()
-    );
+	auto& gameConfig = GameConfig::GetGameConfig();
+	SetWindowOptions(
+		gameConfig.window.xWin,
+		gameConfig.window.yWin,
+		gameConfig.window.title.c_str());
 
-    Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
+	Engine::Audio::SetGlobalBGMVolume(gameConfig.audio.bgmVolume);
 }
-
 
 // void initializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
 // 	sgSetLogLevel(sgLogLevelWarn);
@@ -233,6 +240,11 @@ void startEngine() {
 void update() {
 	GameState::DeltaTimeSeconds = DeltaTimeSeconds;
 	GameState::DeltaTimeMilliseconds = DeltaTimeMilliseconds;
+	float x = 0;
+	float y = 0;
+	Engine::Input::GetActualGameMouse(&x, &y);
+	sgLogWarn("Mouse pos is %f,%f", x, y);
+
 	if (!handleMapLoad()) return;
 	for (auto& system : systems_) {
 		if (GameState::Paused && system.Update != PlayerControllerSystem::Update &&
@@ -610,6 +622,27 @@ float Engine::Tweening::GetTweenedValue(float start, float end, float timeSecond
 	return static_cast<float>(value);
 }
 
+void Engine::Input::GetActualGameMouse(float* x, float* y) {
+#ifdef imgui
+	float mouseX, mouseY;
+	SDL_GetMouseState(&mouseX, &mouseY);
+	float relX = mouseX - _debugGameImageX;
+	float relY = mouseY - _debugGameImageY;
+	float gameWidth = _logicalX * _debugGameImageScale;
+	float gameHeight = _logicalY * _debugGameImageScale;
+	if (relX < 0.0f || relY < 0.0f ||
+		relX >= gameWidth || relY >= gameHeight) {
+		*x = -1.0f;
+		*y = -1.0f;
+		return;
+	}
+	*x = relX / _debugGameImageScale;
+	*y = relY / _debugGameImageScale;
+#else
+	GetGameMousePos(x, y);
+#endif
+}
+
 Text* Engine::TextUtils::CreateText(const std::string& fontName, unsigned int fontSize, RectangleF location, const std::string& text, unsigned int numChars, bool centeredX, bool centeredY) {
 	TextSetFont(fontName.c_str(), fontSize, directory_);
 	auto textPtr = TextCreate(&location, text.c_str());
@@ -710,6 +743,7 @@ void Engine::DebugUI::AddWindow(const std::vector<std::pair<const std::string&, 
 
 // Enable C engine
 extern "C" {
+
 void InitializeEngineFunctions() {
 	initializeEngine("gameConfig.json", InitializeGame);
 }

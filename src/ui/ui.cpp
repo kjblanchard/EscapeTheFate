@@ -4,6 +4,7 @@
 
 #include <engine.hpp>
 #include <ui/ui.hpp>
+#include <ui/uiButton.hpp>
 #include <ui/uiImage.hpp>
 #include <ui/uiLayoutGroup.hpp>
 #include <ui/uiNineSlice.hpp>
@@ -52,6 +53,13 @@ static UILine* createLine(const string& name, json_object* data) {
 	args.Thickness = jint(data, "thickness");
 	getUIObjectArgsFromJson(objArgs, name, data);
 	return new UILine(args, objArgs);
+}
+
+static UIButton* createButton(const string& name, json_object* data) {
+	UIButtonArgs args;
+	UIObjectArgs objArgs;
+	getUIObjectArgsFromJson(objArgs, name, data);
+	return new UIButton(objArgs, args);
 }
 
 static UIText* createText(const string& name, json_object* data) {
@@ -183,6 +191,8 @@ static UIObject* handleTypeCreation(const string& name, const string& type, json
 		return createUIProgressBar(name, data);
 	} else if (type == "line") {
 		return createLine(name, data);
+	} else if (type == "button") {
+		return createButton(name, data);
 	} else {
 		return createUIObject(name, data);
 	}

@@ -411,9 +411,12 @@ void PlayerBattler::handleInputTargetSelection() {
 			} else {
 				battler->TakeDamage(ability.BaseDamage + GetOutgoingDamageBonus());
 			}
+			sgLogWarn("Try apply status effect for, %s, %d", ability.Name.c_str(), ability.StatusEffects.size());
 			for (auto& se : ability.StatusEffects) {
+                sgLogWarn("Try apply status foreach for, %s, %d", ability.Name.c_str(), ability.StatusEffects.size());
 				auto sed = static_cast<StatusEffects>(se.Id);
 				StatusEffectInstance sei = {sed, 2};
+				sgLogWarn("Applying status effect maybe");
 				battler->ApplyStatusEffect(sei);
 			}
 			// StatusEffectInstance s = {}

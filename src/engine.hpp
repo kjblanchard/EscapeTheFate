@@ -64,6 +64,10 @@ Sprite* CreateManualSpriteFull(const std::string& name, float* followX, float* f
 void SetSpriteVisible(Sprite* sprite, bool visible);
 
 }  // namespace Sprites
+   //
+namespace Input {
+void GetActualGameMouse(float* x, float* y);
+}
 
 namespace Audio {
 void PlayBGM(const std::string& name, float volume = 1.0f, int loops = -1);
