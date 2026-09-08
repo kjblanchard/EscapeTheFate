@@ -22,8 +22,7 @@ namespace {
 constexpr Color kWhite = {255, 255, 255, 255};
 constexpr Color kBlack = {0, 0, 0, 255};
 constexpr Color kEnemyPanelBorderColor = {255, 235, 235, 255};
-}
-
+}  // namespace
 
 EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	_ai.reset(CreateEnemyAI(args.BattleData->AIStrategy));
@@ -36,8 +35,8 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	constexpr float kPanelW = kBarWidth + kPadding;
 	constexpr float kPanelH = kBarHeight * 2 + kPadding;
 
-	float panelX = (int)(X() + (SpriteWidth() / 2) - (kPanelW / 2) + _battlerData->HpBarOffsetX);
-	float panelY = (int)(Y() + SpriteHeight() + _battlerData->HpBarOffsetY);
+	float panelX = (int)(X() + (SpriteWidth() / 2) - (kPanelW / 2) + battlerData->HpBarOffsetX);
+	float panelY = (int)(Y() + SpriteHeight() + battlerData->HpBarOffsetY);
 
 	UIPanelArgs panelArgs;
 	panelArgs.Name = "EnemyBarPanel";
@@ -71,6 +70,11 @@ EnemyBattler::EnemyBattler(const BattlerArgs& args) : Battler(args) {
 	pbArgs.Visible = true;
 	_atbProgressBar = new UIProgressBar(pbArgs);
 	_barPanel->AddChild(_atbProgressBar);
+
+	// auto p = StatusEffectInstance();
+	// p.StatusType = StatusEffects::Poison;
+	// p.Duration = 10;
+	// statusEffects.push_back(p);
 }
 
 EnemyBattler::~EnemyBattler() {
@@ -79,8 +83,8 @@ EnemyBattler::~EnemyBattler() {
 		_barPanel->SetVisible(false);
 	}
 	if (_deathShader) {
-		if (_sprite && _sprite->Shader == _deathShader) {
-			_sprite->Shader = GetDefaultShader();
+		if (sprite && sprite->Shader == _deathShader) {
+			sprite->Shader = GetDefaultShader();
 		}
 		ShaderDestroy(_deathShader);
 		_deathShader = nullptr;
@@ -125,8 +129,8 @@ void EnemyBattler::updateImpl() {
 		if (t > 1.0f) t = 1.0f;
 		ShaderSetUniformFloat(_deathShader, "time", t, 1);
 		if (_deathEffectTime >= kDeathEffectDuration) {
-			Engine::Sprites::SetSpriteVisible(_sprite, false);
-			_sprite->Shader = GetDefaultShader();
+			Engine::Sprites::SetSpriteVisible(sprite, false);
+			sprite->Shader = GetDefaultShader();
 			ShaderDestroy(_deathShader);
 			_deathShader = nullptr;
 			_deathEffectPlaying = false;
@@ -134,11 +138,11 @@ void EnemyBattler::updateImpl() {
 		}
 		return;
 	}
-	if (_currentHP < 1) return;
+	if (currentHP < 1) return;
 
 	switch (_enemyState) {
 		case ATBCharging: {
-			auto progress = _currentATBCharge / _maxATBCharge * 100.0f;
+			auto progress = currentATBCharge / maxATBCharge * 100.0f;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(progress);
 			break;
 		}
@@ -158,13 +162,13 @@ void EnemyBattler::updateImpl() {
 			if (_blinkToggleTimer >= threshold) {
 				_blinkToggleTimer = 0.0f;
 				_blinkDark = !_blinkDark;
-				_sprite->DrawColor = _blinkDark ? kBlack : kWhite;
+				sprite->DrawColor = _blinkDark ? kBlack : kWhite;
 				if (!_blinkDark) {
 					++_blinkCount;
 				}
 			}
 			if (_blinkCount >= kBlinkTotal) {
-				_sprite->DrawColor = kWhite;
+				sprite->DrawColor = kWhite;
 				_enemyState = Attacking;
 			}
 			break;
@@ -173,8 +177,8 @@ void EnemyBattler::updateImpl() {
 			auto target = _pendingAction.Target;
 			if (target && target->CurrentHP() > 0) {
 				const auto& ability = BattleSystem::GetAbilityByID(_pendingAction.AbilityID);
-				if (!ability.PlayerAnim.empty() && _animator->GetAnimationDuration(ability.PlayerAnim) > 0) {
-					_animator->PlayAnimationThenLoopSecond(ability.PlayerAnim, _battlerData->IdleAnimation);
+				if (!ability.PlayerAnim.empty() && animator->GetAnimationDuration(ability.PlayerAnim) > 0) {
+					animator->PlayAnimationThenLoopSecond(ability.PlayerAnim, battlerData->IdleAnimation);
 				}
 				if (ability.BaseDamage < 0) {
 					target->Heal(-ability.BaseDamage);
@@ -182,10 +186,11 @@ void EnemyBattler::updateImpl() {
 					target->TakeDamage(ability.BaseDamage);
 				}
 				target->PlayHitAnimation(ability);
-				SpendAP(ability.APCost);
+				spendAP(ability.APCost);
 			}
 			_pendingAction = {};
-			_currentATBCharge = 0;
+			handleTurnEndStatus();
+			currentATBCharge = 0;
 			if (_atbProgressBar) _atbProgressBar->SetBarPercent(0);
 			_enemyState = ATBCharging;
 			break;
@@ -194,21 +199,21 @@ void EnemyBattler::updateImpl() {
 }
 
 void EnemyBattler::healImpl(int amount) {
-	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
+	float hpPercent = (float)currentHP / (float)battlerData->HP * 100.0f;
 	if (hpPercent > 100) hpPercent = 100;
 	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
 }
 
 void EnemyBattler::takeDamageImpl(int damage) {
-	float hpPercent = (float)_currentHP / (float)_battlerData->HP * 100.0f;
+	float hpPercent = (float)currentHP / (float)battlerData->HP * 100.0f;
 	if (hpPercent < 0) hpPercent = 0;
 	if (_hpProgressBar) _hpProgressBar->SetBarPercent(hpPercent);
-	if (_currentHP < 1 && !_deathEffectPlaying) {
+	if (currentHP < 1 && !_deathEffectPlaying) {
 		if (_barPanel) _barPanel->SetVisible(false);
 		Engine::Audio::PlaySFXBuffer("enemyDead", 1.0);
 		_deathEffectPlaying = true;
 		_deathEffectTime = 0.0f;
-		_sprite->Shader = _deathShader;
+		sprite->Shader = _deathShader;
 		float randomSeed = (float)(rand() % 1000) / 1000.0f;
 		ShaderSetUniformFloat(_deathShader, "seed", randomSeed, 1);
 		ShaderSetUniformFloat(_deathShader, "time", 0.0f, 1);

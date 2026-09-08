@@ -24,6 +24,7 @@ void GameState::ResetForNewGame() {
 	Battle::NextBattleGroup = 1;
 	Battle::ExitingFromBattle = false;
 	Battle::CurrentStepsWithoutBattle = 0;
+	Battle::PlayerRelics.clear();
 	Menu::MenuOpen[0] = false;
 	Menu::MenuOpen[1] = false;
 	for (auto& pd : Players::LocalPlayerData) {
@@ -60,3 +61,4 @@ bool GameState::Battle::ExitingFromBattle = false;
 std::string GameState::NextLoadMapName = "";
 int GameState::NextLoadDirection = 0;
 float GameState::Battle::CurrentStepsWithoutBattle = 0;
+std::vector<Etf::StatusEffects> GameState::Battle::PlayerRelics = {};

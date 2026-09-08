@@ -244,6 +244,18 @@ void BattlerUI::UpdateHP(const string& hp) {
 	_hpObject->UpdateText(hp);
 }
 
+void BattlerUI::UpdateMagicMenu(int n, const std::string& t, bool a) {
+	auto tb = static_cast<UIText*>(_magicMenuItems[n]);
+	if (!tb) {
+		sgLogWarn("Could not update magic for num %d for %s : not found", n, t.c_str());
+	}
+	if (!t.empty()) {
+		tb->UpdateText(t);
+	}
+	Color c = a ? Color{255, 255, 255, 255} : Color{150, 150, 150, 255};
+	tb->UpdateDrawColor(c);
+}
+
 void BattlerUI::UpdateName(const std::string& name) {
 	if (!_nameObject) return;
 	_nameObject->UpdateText(name);

@@ -6,7 +6,9 @@ on:
       - "v*"
     branches: [master]
   pull_request:
-    branches: [master]
+    branches:
+     - "release/*" 
+     - master
 jobs:
    pack-assets:
     runs-on: ubuntu-latest
@@ -16,7 +18,7 @@ jobs:
       - name: Download sgforge (Linux release)
         run: |
           curl -L \
-            https://github.com/kjblanchard/sgforge/releases/download/v0.1.4/sgforge-linux.tar.gz \
+            https://github.com/kjblanchard/sgforge/releases/download/v0.1.5/sgforge-linux.tar.gz \
             -o sgforge.tar.gz
           tar -xzf sgforge.tar.gz
           echo "Contents after extraction:"
@@ -45,9 +47,9 @@ jobs:
           - os: macos-latest
             make_cmd: xrebuild
             name: mac
-          - os: macos-latest
-            make_cmd: irebuild
-            name: ios-simulator
+          # - os: macos-latest
+          #   make_cmd: irebuild
+          #   name: ios-simulator
           - os: ubuntu-latest
             make_cmd: brebuild
             name: linux
@@ -80,7 +82,7 @@ jobs:
           fi
         shell: bash
       - name: Configure CMake
-        run: make BUILD_TYPE=Release STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd}}
+        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=OFF STEAM_ENABLED=OFF SYSTEM_PACKAGES=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} ${{ matrix.make_cmd}}
       - name: Upload artifacts
         uses: actions/upload-artifact@v7
         with:
@@ -135,13 +137,14 @@ jobs:
           fi
         shell: bash
       - name: Actual build
-        run: cd repo && make BUILD_TYPE=Release STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
+        run: cd repo && make BUILD_TYPE=Release IMGUI_DEBUGGING=OFF SYSTEM_PACKAGES=OFF STEAM_ENABLED=OFF ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} erebuild
       - uses: actions/upload-artifact@v7
         name: Upload to S3
         with:
           name: s3Artifact
           path: repo/build/Release
    Push-Files-To-S3:
+    if: startsWith(github.event.ref, 'refs/tags/v')
     uses: supergoongaming/sharedWorkflows/.github/workflows/push_to_s3.yml@master
     needs: Build-Emscripten
     secrets:
@@ -159,12 +162,27 @@ jobs:
           - os: windows-2025
             make_cmd: wsteamrebuild
             name: steam-win
+            imgui: OFF
           - os: macos-latest
             make_cmd: xsteamrebuild
             name: steam-mac
+            imgui: OFF
           - os: ubuntu-latest
             make_cmd: bsteamrebuild
             name: steam-linux
+            imgui: OFF
+          - os: windows-2025
+            make_cmd: wsteamrebuild
+            name: steam-win-debug
+            imgui: ON
+          - os: macos-latest
+            make_cmd: xsteamrebuild
+            name: steam-mac-debug
+            imgui: ON
+          - os: ubuntu-latest
+            make_cmd: bsteamrebuild
+            name: steam-linux-debug
+            imgui: ON
     runs-on: ${{ matrix.os }}
     environment: prod
     steps:
@@ -204,7 +222,7 @@ jobs:
           fi
         shell: bash
       - name: Build with Steam enabled
-        run: make BUILD_TYPE=Release ENGINE_CACHED=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
+        run: make BUILD_TYPE=Release IMGUI_DEBUGGING=${{ matrix.imgui }} ENGINE_CACHED=OFF SYSTEM_PACKAGES=OFF GAME_VERSION=${{ steps.version.outputs.value }} STEAM_SDK_DIR=$(pwd)/steam-sdk/redistributable_bin ${{ matrix.make_cmd }}
         shell: bash
       - name: Upload Steam build artifacts
         uses: actions/upload-artifact@v7
@@ -242,14 +260,22 @@ jobs:
         run: |
           mkdir -p ~/Steam/config
           echo "${{ secrets.STEAM_CONFIG_VDF }}" | base64 -d > ~/Steam/config/config.vdf
-      - name: Upload to Steam
+      - name: Upload Release to Steam
         run: |
           ~/steamcmd/steamcmd.sh \
             +login "${{ secrets.STEAM_USERNAME }}" \
-            +run_app_build "${{ github.workspace }}/.github/steam/app_4393160.vdf" \
+            +run_app_build "${{ github.workspace }}/.github/steam/app_4393160_release.vdf" \
             +quit
         env:
           STEAM_BUILD_DESC: "v${{ steps.version.outputs.value }}"
+      - name: Upload Debug to Steam
+        run: |
+          ~/steamcmd/steamcmd.sh \
+            +login "${{ secrets.STEAM_USERNAME }}" \
+            +run_app_build "${{ github.workspace }}/.github/steam/app_4393160_debug.vdf" \
+            +quit
+        env:
+          STEAM_BUILD_DESC: "v${{ steps.version.outputs.value }}-debug"
    Create-Release:
     if: startsWith(github.event.ref, 'refs/tags/v')
     runs-on: ubuntu-latest

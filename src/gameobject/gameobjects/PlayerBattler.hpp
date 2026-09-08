@@ -42,6 +42,7 @@ class PlayerBattler : public Battler {
 	void moveFingerToEnemyNum(int enemyNum);
 	bool shouldBattleEnd();
 	void startATBAnimation();
+    void updateMagicMenuATBGain();
 
 #ifdef imgui
    public:

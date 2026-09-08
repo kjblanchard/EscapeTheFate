@@ -173,6 +173,18 @@ static void loadAbilityDB() {
 		abilityDatabase_.back().Friendly = jbool(currentJsonObject, "friendly");
 		abilityDatabase_.back().APCost = jKeyExists(currentJsonObject, "apCost") ? jint(currentJsonObject, "apCost") : 1;
 		abilityDatabase_.back().Description = jKeyExists(currentJsonObject, "description") ? jstr(currentJsonObject, "description") : "";
+		auto statusEffects = jobj(currentJsonObject, "statusEffects");
+		if (statusEffects) {
+			auto n = jGetObjectArrayLength(statusEffects);
+			for (auto j = 0; j < n; ++j) {
+				auto o = jGetObjectInObjectWithIndex(statusEffects, j);
+				if (!o) continue;
+				StatusEffectChance s;
+				s.Id = jint(o, "id");
+				s.ApplyChance = jfloat(o, "percent");
+				abilityDatabase_.back().StatusEffects.push_back(std::move(s));
+			}
+		}
 	}
 	jReleaseObjectFromFile(dataRootJsonArray);
 }
@@ -244,6 +256,7 @@ static void cacheBattleUIElements() {
 }
 
 static void initializeBattleSystem() {
+	sgLogWarn("Initializing battle system and battle db!");
 	loadBattleDB();
 	loadAbilityDB();
 	loadBattleGroups();
@@ -254,6 +267,15 @@ static void initializeBattleSystem() {
 	nextBattleState_ = NotInBattle;
 }
 
+static int relicDefaultDuration(StatusEffects type) {
+	switch (type) {
+		case StatusEffects::RelicDamageBonus: return -1;
+		case StatusEffects::RelicSpeedBoost: return 2;
+		case StatusEffects::RelicShield: return 5;
+		default: return 0;
+	}
+}
+
 static void loadBattle() {
 	IsGameLoading = true;
 	if (!battleInitialized_) initializeBattleSystem();
@@ -262,6 +284,17 @@ static void loadBattle() {
 	// Something is terrible with load players.
 	loadPlayers();
 	loadEnemies();
+	for (auto relicType : GameState::Battle::PlayerRelics) {
+		StatusEffectInstance sei = {relicType, relicDefaultDuration(relicType)};
+		for (auto* b : _battlers) {
+			if (b && b->IsPlayer()) {
+				b->ApplyStatusEffect(sei);
+				if (relicType == StatusEffects::RelicSpeedBoost) {
+					b->AddSpdBonus(2);
+				}
+			}
+		}
+	}
 	battleUI_.RootPanel->SetVisible(true);
 	battleUI_.PlayerHUD->SetVisible(true);
 	battleUI_.VictoryPanel->SetVisible(false);
@@ -297,7 +330,6 @@ static void triggerStateChange() {
 		case BattleGameOver:
 			battleUI_.RootPanel->SetVisible(false);
 			_battlers.clear();
-			battleInitialized_ = false;
 			break;
 		default:
 			break;
@@ -330,7 +362,6 @@ void BattleSystem::TriggerGameOver() {
 void BattleSystem::ResetAfterGameOver() {
 	currentBattleState_ = NotInBattle;
 	nextBattleState_ = NotInBattle;
-	battleInitialized_ = false;
 	_battlers.clear();
 }
 void BattleSystem::TriggerBattleVictoryStart() {

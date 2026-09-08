@@ -310,7 +310,7 @@ static void calculateXP() {
 	auto& battlers = BattleSystem::GetEnemyBattlers();
 	for (size_t i = 0; i < battlers.size(); ++i) {
 		if (!battlers[i] || battlers[i]->IsPlayer()) continue;
-		if (battlers[i]->CurrentHP() == 0) {
+		if (battlers[i]->CurrentHP() <= 0) {
 			_xpGained += battlers[i]->GetBattlerData()->XPReward;
 		}
 	}

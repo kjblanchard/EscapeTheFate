@@ -28,7 +28,7 @@ static unordered_map<int, function<void(TiledObject* objData)>> gameobjectLoadFu
 void Start() {}
 void Update() {
 	for (auto& gameobject : gameObjects) {
-		gameobject->Update();
+		gameobject->update();
 	}
 }
 
@@ -36,8 +36,8 @@ void Load() {
 	if (!_currentMap) return;
 	BattleLocation::ClearAllBattleLocations();
 	for (auto& currentGo : gameObjects) {
-		if (currentGo->DoNotDestroy_) continue;
-		currentGo->ShouldBeDestroyed_ = true;
+		if (currentGo->doNotDestroy) continue;
+		currentGo->shouldDestroy = true;
 	}
 	// Load new gameobjects
 	for (auto i = 0; i < _currentMap->NumObjects; ++i) {
@@ -51,14 +51,14 @@ void Load() {
 			gameObjects.begin(),
 			gameObjects.end(),
 			[](auto& go) {
-				return go->ShouldBeDestroyed_;
+				return go->shouldDestroy;
 			}),
 		gameObjects.end());
 }
 
 void Draw() {
 	for (auto& gameobject : gameObjects) {
-		gameobject->Draw();
+		gameobject->draw();
 	}
 }
 

@@ -14,7 +14,7 @@ class MapExit : public GameObject {
 	static bool CheckAndHandleMapExitOverlaps(RectangleF& rect);
 	MapExit(TiledObject* objData);
 	~MapExit();
-	void Draw() override;
+	void draw() override;
 
    private:
 	static std::vector<MapExit*> _mapExits;

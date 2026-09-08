@@ -54,6 +54,7 @@ class UIObject {
 	void DestroyChildByName(const std::vector<std::string> names, bool force = false);
 	void DestroyChildIfNotName(const std::string& name, bool force = false);
 	void DestroyChildIfNotName(const std::vector<std::string> names, bool force = false);
+	void ClearChildren();
 
    protected:
 	void DebugDrawInternal();

@@ -1,5 +1,5 @@
 # 3.26 is needed for building al on static
-cmake_minimum_required(VERSION 3.5)
+cmake_minimum_required(VERSION 3.28)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(GAME_VERSION "0.1.0" CACHE STRING "Game version string")
@@ -58,6 +58,7 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/ui/uiProgressBar.cpp
   src/ui/uiPanel.cpp
   src/ui/uiLine.cpp
+  src/ui/UIScrollList.cpp
   src/systems/dialogSystem.cpp
   src/systems/battleSystem.cpp
   src/systems/BattleSpoilsSystem.cpp
@@ -75,6 +76,11 @@ set(EXECUTABLE_SOURCE_FILES_CORE
   src/engine.cpp
   src/components/SpriteAnimator.cpp
   src/components/PlayerController.cpp
+  src/battle/statuseffects/statusEffects.cpp
+  src/battle/statuseffects/statuspoison.cpp
+  src/battle/statuseffects/statusRelicDamageBonus.cpp
+  src/battle/statuseffects/statusRelicSpeedBoost.cpp
+  src/battle/statuseffects/statusRelicShield.cpp
   src/debug/DebugWindow.cpp
   src/debug/DebugPlayers.cpp
   src/debug/DebugCamera.cpp
@@ -288,6 +294,7 @@ set(CPACK_PACKAGE_VERSION "${GAME_VERSION}")
 set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "2D deckbuilding JRPG")
 set(CPACK_NSIS_DISPLAY_NAME "Escape the Fate")
 set(CPACK_NSIS_PACKAGE_NAME "Escape the Fate")
+set(CPACK_NSIS_EXECUTABLES_DIRECTORY ".")
 set(CPACK_PACKAGE_DESCRIPTION_FILE "${CMAKE_SOURCE_DIR}/README.md")
 set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_SOURCE_DIR}/LICENSE")
 set(CPACK_NSIS_CONTACT "kevin@supergoon.com")

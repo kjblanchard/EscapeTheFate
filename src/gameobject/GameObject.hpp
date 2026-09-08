@@ -16,10 +16,10 @@ class GameObject {
 
    protected:
 	GameObject(int x, int y);
-	bool DoNotDestroy_ = false;
-	bool ShouldBeDestroyed_ = false;
-	float X_ = 0;
-	float Y_ = 0;
+	bool doNotDestroy = false;
+	bool shouldDestroy = false;
+	float x = 0;
+	float y = 0;
 
    private:
 	static unsigned int _currentID;
@@ -29,9 +29,9 @@ class GameObject {
 	virtual ~GameObject() = default;
 
    protected:
-	virtual void Start() {};
-	virtual void Update() {};
-	virtual void Draw() {};
+	virtual void start() {};
+	virtual void update() {};
+	virtual void draw() {};
 
 	friend void GameObjectSystem::Update();
 	friend void GameObjectSystem::Load();

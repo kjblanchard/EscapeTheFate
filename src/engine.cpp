@@ -1,3 +1,4 @@
+#include <SDL3/SDL_messagebox.h>
 #include <Supergoon/Animation/animator.h>
 #include <Supergoon/Audio/Audio.h>
 #include <Supergoon/Graphics/graphics.h>
@@ -94,8 +95,20 @@ vector<SystemCallbacks> systems_;
 // non-statics for debugui showing
 string currentBGM_ = "";
 
+void debugLogFunc(const char* time, const char* message, int logLevel) {
+	if (logLevel == sgLogLevelCritical) {
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Critical error", message, NULL);
+	}
+}
+
 void initializeEngine(const std::string& configFilename, void (*initializefunc)(void)) {
 	sgSetLogLevel(sgLogLevelWarn);
+	sgSetDebugFunction(debugLogFunc);
+	auto doesExist = DoesFileExistRel("debug.txt");
+	if (doesExist) {
+		sgSetLogLevel(sgLogLevelDebug);
+		sgSetFileLogLevel(sgLogLevelDebug);
+	}
 	SetInitializeFunction(initializefunc);
 	SetStartFunction(startEngine);
 	SetUpdateFunction(update);

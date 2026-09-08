@@ -5,13 +5,14 @@
 
 #include <debug/DebugGameWindow.hpp>
 
-#include "sgtools/log.h"
 using namespace Etf;
 using namespace std;
 
+extern "C" {
 extern Texture* _imGUIScreenRenderTargetTexture;
 extern int _logicalX;
 extern int _logicalY;
+}
 
 void DebugGameWindow::Initialize() {}
 
@@ -25,7 +26,7 @@ void DebugGameWindow::Draw() {
 	int scaledWidth = _logicalX * scale;
 	int scaledHeight = _logicalY * scale;
 	auto tex = (void*)TextureGetID(_imGUIScreenRenderTargetTexture);
-	if(!tex) return;
+	if (!tex) return;
 	ImGui::Image(tex, ImVec2(scaledWidth, scaledHeight), ImVec2(0, 1), ImVec2(1, 0));
 
 #else

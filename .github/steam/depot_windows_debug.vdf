@@ -1,0 +1,13 @@
+"DepotBuildConfig"
+{
+  "DepotID" "4393164"
+  "contentroot" "../../steam-builds/steam-win-debug-packages/"
+  "FileMapping"
+  {
+    "LocalPath" "*"
+    "DepotPath" "."
+    "recursive" "1"
+  }
+  "FileExclusion" "*.pdb"
+  "FileExclusion" "steam_appid.txt"
+}

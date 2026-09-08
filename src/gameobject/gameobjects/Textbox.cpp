@@ -38,6 +38,6 @@ void Textbox::Interact() {
 	DialogSystem::TextBoxInteractionUpdate(this, _textToWrite);
 }
 
-void Textbox::Draw() {
+void Textbox::draw() {
 	if (GameConfig::GetGameConfig().debug.interactions) Engine::Debug::DrawRectPrimitive(InteractionRect);
 }

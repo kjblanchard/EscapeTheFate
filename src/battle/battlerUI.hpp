@@ -23,6 +23,7 @@ class BattlerUI {
 	void UpdateHP(const std::string& hp);
 	void UpdateAP(const std::string& ap);
 	void UpdateProgressBar(float percent);
+	void UpdateMagicMenu(int n, const std::string& t, bool a = false);
 	bool IsMenuClosed() const { return _currentState == PlayerUIAnimationStates::Closed; }
 	inline void OpenCommandsMenu() {
 		_commandMenu->SetVisible(true);
