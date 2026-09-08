@@ -188,7 +188,6 @@ void shutdown() {
 
 void loadSetupAndBgm() {
 	sgLogDebug("Starting load setup/bgm");
-	IsGameLoading = true;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {
 		return scene.MapName == sceneData_.NextScene;
@@ -288,7 +287,6 @@ bool handleMapLoad() {
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
 			// sgLogDebug("Starting fading in allow update");
 			if (fadeData_.CurrentFadeTime >= fadeData_.FadeTime) {
-				IsGameLoading = false;
 				currentLoadingState_ = CurrentSceneLoadingState::NotLoading;
 				endScreenFade();
 			}
