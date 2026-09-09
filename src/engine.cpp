@@ -352,14 +352,14 @@ void endScreenFade() {
 
 Sprite* createSpriteInternal(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect, bool manual) {
 	// auto func = manual ? NewSpriteManual : NewSprite;
-	auto sprite = NewSprite();
+	auto sprite = SpriteNew();
 	if (manual) {
 		SpriteSetManual(sprite, true);
 	}
-	sprite->parentX = followX;
-	sprite->parentY = followY;
-	sprite->prevParentX = followX ? *followX : 0;
-	sprite->prevParentY = followY ? *followY : 0;
+	sprite->ParentX = followX;
+	sprite->ParentY = followY;
+	sprite->PrevParentX = followX ? *followX : 0;
+	sprite->PrevParentY = followY ? *followY : 0;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
 	char* buf;

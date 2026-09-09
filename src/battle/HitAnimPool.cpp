@@ -26,7 +26,7 @@ HitAnimPool::~HitAnimPool() {
 	for (int i = 0; i < kHitAnimPoolSize; ++i) {
 		_slots[i].animator.reset();
 		if (_slots[i].sprite) {
-			DestroySprite(_slots[i].sprite);
+			SpriteDestroy(_slots[i].sprite);
 			_slots[i].sprite = nullptr;
 		}
 	}
@@ -75,6 +75,6 @@ void HitAnimPool::Draw() {
 		if (!slot.active) continue;
 		RectangleF dst = {0, 0, _frameW, _frameH};
 		Color color = kWhite;
-		DrawSpriteManual(slot.sprite, &dst, &color, false);
+		SpriteDrawManual(slot.sprite, &dst, &color, false);
 	}
 }

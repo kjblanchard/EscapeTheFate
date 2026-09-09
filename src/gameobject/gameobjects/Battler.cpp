@@ -14,7 +14,7 @@ using namespace std;
 using namespace Etf;
 
 Battler::~Battler() {
-	DestroySprite(sprite);
+	SpriteDestroy(sprite);
 }
 
 Battler::Battler(const BattlerArgs& args) : GameObject(args.BattleData->Location.x + args.X, args.BattleData->Location.y + args.Y), battlerData(args.BattleData) {

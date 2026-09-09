@@ -79,8 +79,8 @@ void LocalPlayer::Create(TiledObject* objData) {
 }
 
 LocalPlayer::~LocalPlayer() {
-	DestroySprite(Sprite_);
-	DestroySprite(InteractionSprite_);
+	SpriteDestroy(Sprite_);
+	SpriteDestroy(InteractionSprite_);
 }
 
 LocalPlayer::LocalPlayer(TiledObject* objData, const shared_ptr<PlayerController>& player, int playerIndex,
