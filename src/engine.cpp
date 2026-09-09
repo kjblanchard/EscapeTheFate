@@ -188,7 +188,6 @@ void shutdown() {
 
 void loadSetupAndBgm() {
 	sgLogDebug("Starting load setup/bgm");
-	IsGameLoading = true;
 	auto& gameSceneConfig = GameConfig::GetGameConfig().scene;
 	const auto it = std::find_if(gameSceneConfig.scenes.begin(), gameSceneConfig.scenes.end(), [](Scene& scene) {
 		return scene.MapName == sceneData_.NextScene;
@@ -288,7 +287,6 @@ bool handleMapLoad() {
 		case CurrentSceneLoadingState::FadingInAllowUpdate:
 			// sgLogDebug("Starting fading in allow update");
 			if (fadeData_.CurrentFadeTime >= fadeData_.FadeTime) {
-				IsGameLoading = false;
 				currentLoadingState_ = CurrentSceneLoadingState::NotLoading;
 				endScreenFade();
 			}
@@ -353,12 +351,15 @@ void endScreenFade() {
 }
 
 Sprite* createSpriteInternal(const std::string& name, float* followX, float* followY, RectangleF sourceRect, RectangleF offsetSizeRect, bool manual) {
-	auto func = manual ? NewSpriteManual : NewSprite;
-	auto sprite = func();
-	sprite->parentX = followX;
-	sprite->parentY = followY;
-	sprite->prevParentX = followX ? *followX : 0;
-	sprite->prevParentY = followY ? *followY : 0;
+	// auto func = manual ? NewSpriteManual : NewSprite;
+	auto sprite = SpriteNew();
+	if (manual) {
+		SpriteSetManual(sprite, true);
+	}
+	sprite->ParentX = followX;
+	sprite->ParentY = followY;
+	sprite->PrevParentX = followX ? *followX : 0;
+	sprite->PrevParentY = followY ? *followY : 0;
 	sprite->Flags |= SpriteFlagVisible;
 	sprite->Texture = TextureCreate(name.c_str());
 	char* buf;
@@ -438,11 +439,7 @@ Sprite* Engine::Sprites::CreateManualSpriteFull(const std::string& name, float* 
 }
 
 void Engine::Sprites::SetSpriteVisible(Sprite* sprite, bool visible) {
-	if (visible) {
-		sprite->Flags |= SpriteFlagVisible;
-	} else {
-		sprite->Flags &= ~SpriteFlagVisible;
-	}
+	SpriteSetVisible(sprite, visible);
 }
 
 void Engine::LoadScene(const string& name, float fadeOutTime, float fadeInTime, bool playTransitionSound) {

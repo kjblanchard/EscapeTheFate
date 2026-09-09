@@ -24,7 +24,7 @@ UIAnimation::UIAnimation(UIAnimationArgs& args) {
 }
 
 UIAnimation::~UIAnimation() {
-	DestroySpriteManual(_sprite);
+	SpriteDestroy(_sprite);
 }
 
 void UIAnimation::OnDraw(float offsetX, float offsetY) {
@@ -33,5 +33,5 @@ void UIAnimation::OnDraw(float offsetX, float offsetY) {
 	RectangleF dst = {0, 0, _location.w, _location.h};
 	// RectangleF dst = {0,0, _location.w, _location.h};
 	Color color = {255, 255, 255, 255};
-	DrawSpriteManual(_sprite, &dst, &color, false);
+	SpriteDrawManual(_sprite, &dst, &color, false);
 }

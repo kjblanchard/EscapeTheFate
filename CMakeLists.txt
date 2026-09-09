@@ -181,8 +181,8 @@ else()
     SupergoonEngine
     GIT_REPOSITORY https://github.com/kjblanchard/SupergoonEngine
     # Use master for development, otherwise make sure to pin to proper engine tag for releases GIT_TAG c55aa25 GIT_TAG
-    # GIT_TAG feature/refactor-project
-    GIT_TAG master
+    GIT_TAG feature/refactorthethings
+    #GIT_TAG master
   )
   FetchContent_MakeAvailable(SupergoonEngine)
 endif(ENGINE_CACHED STREQUAL "ON")

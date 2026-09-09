@@ -277,7 +277,6 @@ static int relicDefaultDuration(StatusEffects type) {
 }
 
 static void loadBattle() {
-	IsGameLoading = true;
 	if (!battleInitialized_) initializeBattleSystem();
 	_battlers.resize(8);
 	sgLogDebug("loading battle");
@@ -378,7 +377,6 @@ void BattleSystem::BattleSystemUpdate() {
 			break;
 		case BattleStartTriggered:
 			nextBattleState_ = Battle;
-			IsGameLoading = false;
 			break;
 		case Battle:
 			BattleUpdate();

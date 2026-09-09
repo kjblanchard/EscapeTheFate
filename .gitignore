@@ -19,3 +19,4 @@ steam_appid.txt
 *.sg
 CLAUDE.md
 external/redistributable_bin/
+external/steam/
